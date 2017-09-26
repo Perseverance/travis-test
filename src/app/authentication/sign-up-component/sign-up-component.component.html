@@ -1,3 +1,54 @@
-<p>
-  sign-up-component works!
-</p>
+<h2>Sign up to Propy</h2>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="email">Your Email</label>
+        <input formControlName="email" type="email" class="form-control" id="email" placeholder="Your email">
+        <div *ngIf="email.touched">
+            <div class="alert alert-info" *ngIf="email.pending">Checking...</div>
+            <div class="alert alert-danger" *ngIf="email.invalid && email.errors['required']">This field is required</div>
+            <div class="alert alert-danger" *ngIf="email.invalid && email.errors['email']">This is not a valid email</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input formControlName="firstName" type="text" class="form-control" id="firstName" placeholder="First Name">
+        <div *ngIf="firstName.touched">
+            <div class="alert alert-danger" *ngIf="firstName.invalid && firstName.errors['required']">This field is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="Last Name">
+        <div *ngIf="lastName.touched">
+            <div class="alert alert-danger" *ngIf="lastName.invalid && lastName.errors['required']">This field is required</div>
+        </div>
+    </div>
+    <div formGroupName="passwords">
+        <div class="form-group">
+            <label for="password">New Password</label>
+            <input formControlName="password" type="password" class="form-control" id="password" placeholder="New Password">
+            <div *ngIf="password.touched">
+                <div class="alert alert-danger" *ngIf="password.invalid && password.errors['required']">This field is required</div>
+                <div class="alert alert-danger" *ngIf="password.invalid && password.errors['minlength']">Your pass needs to be atleast 8 symbols</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="repeatPassword">Repeat Password</label>
+            <input formControlName="repeatPassword" type="password" class="form-control" id="repeatPassword" placeholder="Repeat Password">
+            <div *ngIf="repeatPassword.touched">
+                <div class="alert alert-danger" *ngIf="repeatPassword.invalid && repeatPassword.errors['required']">This field is required</div>
+                <div class="alert alert-danger" *ngIf="repeatPassword.invalid && repeatPassword.errors['minlength']">Your pass needs to be longer</div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="password.touched && repeatPassword.touched">
+        <div class="alert alert-danger" *ngIf="passwords.invalid && passwords.errors['passwordsDiffer']">The two passwords differ</div>
+    </div>
+
+    <button class="btn btn-primary" [disabled]="email.invalid || 
+                                                password.invalid || 
+                                                repeatPassword.invalid || 
+                                                firstName.invalid || 
+                                                lastName.invalid">
+                                                Submit</button>
+</form>
