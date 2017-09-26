@@ -9,21 +9,35 @@ export class RestClientService {
   public accessToken: string;
 
   private restUrl: string = environment.apiUrl;
-  private tokenExireTimestamp: number;
+  private tokenExpireTimestamp: number;
 
 
   constructor() {
     // TODO: Get tokens and expiration from localstorage and store them;
   }
 
+  private get bearerHeaderString(): string {
+    if (this.accessToken === undefined) {
+      throw new Error('Trying to work without access token');
+    }
+    return `Bearer ${this.accessToken}`;
+  }
+
+  private get bearerHeaderObject(): object {
+    return {
+      'Authorization': this.bearerHeaderString
+    };
+  }
+
   public get isTokenExpired(): boolean {
-    return true;
+    const now: Date = new Date();
+    return now.getTime() > this.tokenExpireTimestamp;
   }
 
   public set tokenExpiresIn(expiersInSeconds: number) {
     const expiry: Date = new Date();
     expiry.setSeconds(expiry.getSeconds() + expiersInSeconds);
-    this.tokenExireTimestamp = expiry.getTime();
+    this.tokenExpireTimestamp = expiry.getTime();
   }
 
   private forgeUrl(endpoint: string): string {
@@ -69,5 +83,76 @@ export class RestClientService {
     const url = this.forgeUrl(endpoint);
     return axios.delete(url, config);
   }
+
+  /**
+   * getWithAccessToken - makes a get request and adds the stored access token
+   */
+  public getWithAccessToken(endpoint: string, config: object) {
+    const configWithToken = {
+      headers: {
+        ...this.bearerHeaderObject
+      },
+      ...config
+    };
+
+    return this.get(endpoint, configWithToken);
+  }
+
+  /**
+   * postWithAccessToken - makes a post equest and adds the stored access token;
+   */
+  public postWithAccessToken(endpoint: string, data: object, config: object) {
+    const configWithToken = {
+      headers: {
+        ...this.bearerHeaderObject
+      },
+      ...config
+    };
+
+    return this.post(endpoint, data, configWithToken);
+  }
+
+  /**
+   * putWithAccessToken - makes a put equest and adds the stored access token;
+   */
+  public putWithAccessToken(endpoint: string, data: object, config: object) {
+    const configWithToken = {
+      headers: {
+        ...this.bearerHeaderObject
+      },
+      ...config
+    };
+
+    return this.put(endpoint, data, configWithToken);
+  }
+
+  /**
+   * patchWithAccessToken - makes a patch equest and adds the stored access token;
+   */
+  public patchWithAccessToken(endpoint: string, data: object, config: object) {
+    const configWithToken = {
+      headers: {
+        ...this.bearerHeaderObject
+      },
+      ...config
+    };
+
+    return this.patch(endpoint, data, configWithToken);
+  }
+
+  /**
+   * deleteWithAccessToken - makes a delete request and adds the stored access token
+   */
+  public deleteWithAccessToken(endpoint: string, config: object) {
+    const configWithToken = {
+      headers: {
+        ...this.bearerHeaderObject
+      },
+      ...config
+    };
+
+    return this.delete(endpoint, configWithToken);
+  }
+
 
 }
