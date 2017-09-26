@@ -32,7 +32,7 @@ export class LocalStorageService {
 	}
 
 	public set tokenExpireTimestamp(expiryTimestamp: number) {
-		if (expiryTimestamp === undefined || token === null) {
+		if (expiryTimestamp === undefined || expiryTimestamp === null) {
 			throw new Error('Trying to set invalid expiry timestamp!');
 		}
 

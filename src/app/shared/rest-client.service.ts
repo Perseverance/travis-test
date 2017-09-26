@@ -62,7 +62,7 @@ export class RestClientService {
 	/**
 	 * get makes a get request without token
 	 */
-	public get(endpoint: string, config: object) {
+	public get(endpoint: string, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.get(url, config);
 	}
@@ -70,7 +70,7 @@ export class RestClientService {
 	/**
 	 * post - makes a post request without token
 	 */
-	public post(endpoint: string, data: object, config: object) {
+	public post(endpoint: string, data: object, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.post(url, data, config);
 	}
@@ -78,7 +78,7 @@ export class RestClientService {
 	/**
 	 * put - makes a put requiest without token
 	 */
-	public put(endpoint: string, data: object, config: object) {
+	public put(endpoint: string, data: object, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.put(url, data, config);
 	}
@@ -86,7 +86,7 @@ export class RestClientService {
 	/**
 	 * patch - makes a patch requiest without token
 	 */
-	public patch(endpoint: string, data: object, config: object) {
+	public patch(endpoint: string, data: object, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.patch(url, data, config);
 	}
@@ -94,7 +94,7 @@ export class RestClientService {
 	/**
 	 * delete makes a delete request without token
 	 */
-	public delete(endpoint: string, config: object) {
+	public delete(endpoint: string, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.delete(url, config);
 	}
@@ -102,7 +102,7 @@ export class RestClientService {
 	/**
 	 * getWithAccessToken - makes a get request and adds the stored access token
 	 */
-	public getWithAccessToken(endpoint: string, config: object) {
+	public getWithAccessToken(endpoint: string, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -116,7 +116,7 @@ export class RestClientService {
 	/**
 	 * postWithAccessToken - makes a post equest and adds the stored access token;
 	 */
-	public postWithAccessToken(endpoint: string, data: object, config: object) {
+	public postWithAccessToken(endpoint: string, data: object, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -130,7 +130,7 @@ export class RestClientService {
 	/**
 	 * putWithAccessToken - makes a put equest and adds the stored access token;
 	 */
-	public putWithAccessToken(endpoint: string, data: object, config: object) {
+	public putWithAccessToken(endpoint: string, data: object, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -144,7 +144,7 @@ export class RestClientService {
 	/**
 	 * patchWithAccessToken - makes a patch equest and adds the stored access token;
 	 */
-	public patchWithAccessToken(endpoint: string, data: object, config: object) {
+	public patchWithAccessToken(endpoint: string, data: object, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -158,7 +158,7 @@ export class RestClientService {
 	/**
 	 * deleteWithAccessToken - makes a delete request and adds the stored access token
 	 */
-	public deleteWithAccessToken(endpoint: string, config: object) {
+	public deleteWithAccessToken(endpoint: string, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
