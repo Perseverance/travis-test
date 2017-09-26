@@ -3,15 +3,15 @@ import {Routes, RouterModule} from '@angular/router';
 import {AngularGoogleMapsComponent} from './angular-google-maps.component';
 
 const googleMapsRoutes: Routes = [
-    {path: '', component: AngularGoogleMapsComponent}
-  ]
+		{path: '', component: AngularGoogleMapsComponent}
+	]
 ;
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(googleMapsRoutes)
-  ],
-  exports: [RouterModule]
+	imports: [
+		RouterModule.forChild(googleMapsRoutes)
+	],
+	exports: [RouterModule]
 })
 export class AngularGoogleMapsRoutingModule {
 }
