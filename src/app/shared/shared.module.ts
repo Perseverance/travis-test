@@ -4,13 +4,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [],
-  providers: [
-    RestClientService,
-    LocalStorageService
-  ]
+	imports: [
+		CommonModule
+	],
+	declarations: [],
+	providers: [
+		RestClientService,
+		LocalStorageService
+	]
 })
 export class SharedModule { }
