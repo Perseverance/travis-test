@@ -6,26 +6,26 @@ import axios from 'axios';
 @Injectable()
 export class RestClientService {
 
-	public refreshToken: string;
-	public accessToken: string;
+	private _refreshToken: string;
+	private _accessToken: string;
 
-	private tokenExpireTimestamp: number;
-	private restUrl: string;
+	private _tokenExpireTimestamp: number;
+	private _restUrl: string;
 
 
 	constructor(private propyStorage: LocalStorageService) {
-		this.restUrl = environment.apiUrl;
+		this._restUrl = environment.apiUrl;
 
-		this.accessToken = propyStorage.accessToken;
-		this.refreshToken = propyStorage.refreshToken;
-		this.tokenExpireTimestamp = propyStorage.tokenExpireTimestamp;
+		this._accessToken = propyStorage.accessToken;
+		this._refreshToken = propyStorage.refreshToken;
+		this._tokenExpireTimestamp = propyStorage.tokenExpireTimestamp;
 	}
 
 	private get bearerHeaderString(): string {
-		if (this.accessToken === undefined) {
+		if (this._accessToken === undefined) {
 			throw new Error('Trying to work without access token');
 		}
-		return `Bearer ${this.accessToken}`;
+		return `Bearer ${this._accessToken}`;
 	}
 
 	private get bearerHeaderObject(): object {
@@ -36,23 +36,33 @@ export class RestClientService {
 
 	public get isTokenExpired(): boolean {
 		const now: Date = new Date();
-		return now.getTime() > this.tokenExpireTimestamp;
+		return now.getTime() > this._tokenExpireTimestamp;
 	}
 
 	public set tokenExpiresIn(expiersInSeconds: number) {
 		const expiry: Date = new Date();
 		expiry.setSeconds(expiry.getSeconds() + expiersInSeconds);
-		this.tokenExpireTimestamp = expiry.getTime();
+		this._tokenExpireTimestamp = expiry.getTime();
+	}
+
+	public set accessToken(token: string) {
+		this._accessToken = token;
+		this.propyStorage.accessToken = token;
+	}
+
+	public set refreshToken(token: string) {
+		this._refreshToken = token;
+		this.propyStorage.refreshToken = token;
 	}
 
 	private forgeUrl(endpoint: string): string {
-		return `${this.restUrl}${endpoint}`;
+		return `${this._restUrl}${endpoint}`;
 	}
 
 	/**
 	 * get makes a get request without token
 	 */
-	public get(endpoint: string, config: object) {
+	public get(endpoint: string, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.get(url, config);
 	}
@@ -60,7 +70,7 @@ export class RestClientService {
 	/**
 	 * post - makes a post request without token
 	 */
-	public post(endpoint: string, data: object, config: object) {
+	public post(endpoint: string, data: object, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.post(url, data, config);
 	}
@@ -68,7 +78,7 @@ export class RestClientService {
 	/**
 	 * put - makes a put requiest without token
 	 */
-	public put(endpoint: string, data: object, config: object) {
+	public put(endpoint: string, data: object, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.put(url, data, config);
 	}
@@ -76,7 +86,7 @@ export class RestClientService {
 	/**
 	 * patch - makes a patch requiest without token
 	 */
-	public patch(endpoint: string, data: object, config: object) {
+	public patch(endpoint: string, data: object, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.patch(url, data, config);
 	}
@@ -84,7 +94,7 @@ export class RestClientService {
 	/**
 	 * delete makes a delete request without token
 	 */
-	public delete(endpoint: string, config: object) {
+	public delete(endpoint: string, config: object = {}) {
 		const url = this.forgeUrl(endpoint);
 		return axios.delete(url, config);
 	}
@@ -92,7 +102,7 @@ export class RestClientService {
 	/**
 	 * getWithAccessToken - makes a get request and adds the stored access token
 	 */
-	public getWithAccessToken(endpoint: string, config: object) {
+	public getWithAccessToken(endpoint: string, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -106,7 +116,7 @@ export class RestClientService {
 	/**
 	 * postWithAccessToken - makes a post equest and adds the stored access token;
 	 */
-	public postWithAccessToken(endpoint: string, data: object, config: object) {
+	public postWithAccessToken(endpoint: string, data: object, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -120,7 +130,7 @@ export class RestClientService {
 	/**
 	 * putWithAccessToken - makes a put equest and adds the stored access token;
 	 */
-	public putWithAccessToken(endpoint: string, data: object, config: object) {
+	public putWithAccessToken(endpoint: string, data: object, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -134,7 +144,7 @@ export class RestClientService {
 	/**
 	 * patchWithAccessToken - makes a patch equest and adds the stored access token;
 	 */
-	public patchWithAccessToken(endpoint: string, data: object, config: object) {
+	public patchWithAccessToken(endpoint: string, data: object, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
@@ -148,7 +158,7 @@ export class RestClientService {
 	/**
 	 * deleteWithAccessToken - makes a delete request and adds the stored access token
 	 */
-	public deleteWithAccessToken(endpoint: string, config: object) {
+	public deleteWithAccessToken(endpoint: string, config: object = {}) {
 		const configWithToken = {
 			headers: {
 				...this.bearerHeaderObject
