@@ -6,9 +6,6 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule
   ],
-  exports: [
-    RestClientService
-  ],
   declarations: [],
   providers: [
     RestClientService
