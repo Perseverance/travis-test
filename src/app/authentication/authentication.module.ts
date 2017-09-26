@@ -1,4 +1,5 @@
-import { AuthenticationServiceService } from './authentication-service.service';
+import { SharedModule } from './../shared/shared.module';
+import { AuthenticationService } from './authentication.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,6 +10,7 @@ import { SignUpComponentComponent } from './sign-up-component/sign-up-component.
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     AuthenticationRoutingModule
   ],
   declarations: [
@@ -16,7 +18,7 @@ import { SignUpComponentComponent } from './sign-up-component/sign-up-component.
     SignUpComponentComponent
   ],
   providers: [
-    AuthenticationServiceService
+    AuthenticationService
   ]
 })
 export class AuthenticationModule { }
