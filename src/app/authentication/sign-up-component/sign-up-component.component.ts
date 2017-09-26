@@ -50,7 +50,9 @@ export class SignUpComponentComponent implements OnInit {
 		return this.signupForm.get('lastName');
 	}
 
-	public onSubmit() {
+	public async onSubmit() {
+		const result = await this.authService.performSignUp(this.email.value, this.password.value, this.firstName.value, this.lastName.value);
+		// TODO work with the result
 	}
 
 }
