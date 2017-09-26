@@ -6,26 +6,26 @@ import axios from 'axios';
 @Injectable()
 export class RestClientService {
 
-	public refreshToken: string;
-	public accessToken: string;
+	private _refreshToken: string;
+	private _accessToken: string;
 
-	private tokenExpireTimestamp: number;
-	private restUrl: string;
+	private _tokenExpireTimestamp: number;
+	private _restUrl: string;
 
 
 	constructor(private propyStorage: LocalStorageService) {
-		this.restUrl = environment.apiUrl;
+		this._restUrl = environment.apiUrl;
 
-		this.accessToken = propyStorage.accessToken;
-		this.refreshToken = propyStorage.refreshToken;
-		this.tokenExpireTimestamp = propyStorage.tokenExpireTimestamp;
+		this._accessToken = propyStorage.accessToken;
+		this._refreshToken = propyStorage.refreshToken;
+		this._tokenExpireTimestamp = propyStorage.tokenExpireTimestamp;
 	}
 
 	private get bearerHeaderString(): string {
-		if (this.accessToken === undefined) {
+		if (this._accessToken === undefined) {
 			throw new Error('Trying to work without access token');
 		}
-		return `Bearer ${this.accessToken}`;
+		return `Bearer ${this._accessToken}`;
 	}
 
 	private get bearerHeaderObject(): object {
@@ -36,17 +36,27 @@ export class RestClientService {
 
 	public get isTokenExpired(): boolean {
 		const now: Date = new Date();
-		return now.getTime() > this.tokenExpireTimestamp;
+		return now.getTime() > this._tokenExpireTimestamp;
 	}
 
 	public set tokenExpiresIn(expiersInSeconds: number) {
 		const expiry: Date = new Date();
 		expiry.setSeconds(expiry.getSeconds() + expiersInSeconds);
-		this.tokenExpireTimestamp = expiry.getTime();
+		this._tokenExpireTimestamp = expiry.getTime();
+	}
+
+	public set accessToken(token: string) {
+		this._accessToken = token;
+		this.propyStorage.accessToken = token;
+	}
+
+	public set refreshToken(token: string) {
+		this._refreshToken = token;
+		this.propyStorage.refreshToken = token;
 	}
 
 	private forgeUrl(endpoint: string): string {
-		return `${this.restUrl}${endpoint}`;
+		return `${this._restUrl}${endpoint}`;
 	}
 
 	/**
