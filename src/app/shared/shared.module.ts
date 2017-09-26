@@ -1,3 +1,4 @@
+import { LocalStorageService } from './localStorage.service';
 import { RestClientService } from './rest-client.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,8 @@ import { CommonModule } from '@angular/common';
   ],
   declarations: [],
   providers: [
-    RestClientService
+    RestClientService,
+    LocalStorageService
   ]
 })
 export class SharedModule { }
