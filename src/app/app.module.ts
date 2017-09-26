@@ -8,19 +8,19 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularGoogleMapsModule} from './angular-google-maps/angular-google-maps.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AngularGoogleMapsModule,
-    AuthenticationModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		FormsModule,
+		ReactiveFormsModule,
+		AngularGoogleMapsModule,
+		AuthenticationModule,
+		AppRoutingModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
 export class AppModule {
 }
