@@ -5,6 +5,12 @@ const routes: Routes = [
   {
     path: '',
     children: []
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+
   }
 ];
 

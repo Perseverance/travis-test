@@ -1,3 +1,4 @@
+import { AuthenticationModule } from './authentication/authentication.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,6 +11,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    AuthenticationModule,
     AppRoutingModule
   ],
   providers: [],
