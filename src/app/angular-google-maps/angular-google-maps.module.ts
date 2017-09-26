@@ -14,7 +14,7 @@ import {CommonModule} from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBo_Hj_8WUUY1YhUcRugWwFLNymZtMm9dc',
+      apiKey: 'AIzaSyBo_Hj_8WUUY1YhUcRugWwFLNymZtMm9dc', // ToDo: Vladdy's API Key, have to replace with Propy's one
       libraries: ['places']
     })
   ],
