@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { AuthenticationServiceService } from './authentication-service.service';
+import { AuthenticationService } from './authentication.service';
 
 describe('AuthenticationServiceService', () => {
   beforeEach(() => {
