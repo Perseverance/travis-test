@@ -6,7 +6,6 @@ import axios from 'axios';
 @Injectable()
 export class RestClientService {
 
-<<<<<<< HEAD
 	private _refreshToken: string;
 	private _accessToken: string;
 
@@ -27,28 +26,6 @@ export class RestClientService {
 			throw new Error('Trying to work without access token');
 		}
 		return `Bearer ${this._accessToken}`;
-=======
-	public refreshToken: string;
-	public accessToken: string;
-
-	private tokenExpireTimestamp: number;
-	private restUrl: string;
-
-
-	constructor(private propyStorage: LocalStorageService) {
-		this.restUrl = environment.apiUrl;
-
-		this.accessToken = propyStorage.accessToken;
-		this.refreshToken = propyStorage.refreshToken;
-		this.tokenExpireTimestamp = propyStorage.tokenExpireTimestamp;
-	}
-
-	private get bearerHeaderString(): string {
-		if (this.accessToken === undefined) {
-			throw new Error('Trying to work without access token');
-		}
-		return `Bearer ${this.accessToken}`;
->>>>>>> origin/sprint-aragorn
 	}
 
 	private get bearerHeaderObject(): object {
