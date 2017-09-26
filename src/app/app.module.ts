@@ -13,7 +13,6 @@ import {AngularGoogleMapsModule} from './angular-google-maps/angular-google-maps
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     AngularGoogleMapsModule,
