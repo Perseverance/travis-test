@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {AuthenticationModule} from './authentication/authentication.module';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -15,7 +16,9 @@ import {AngularGoogleMapsModule} from './angular-google-maps/angular-google-maps
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularGoogleMapsModule
+    AngularGoogleMapsModule,
+    AuthenticationModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
