@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {environment} from './../../environments/environment';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AgmCoreModule} from '@agm/core';
@@ -16,7 +17,7 @@ import {AngularGoogleMapsRoutingModule} from './angular-google-maps-routing.modu
 		ReactiveFormsModule,
 		AngularGoogleMapsRoutingModule,
 		AgmCoreModule.forRoot({
-			apiKey: 'AIzaSyBo_Hj_8WUUY1YhUcRugWwFLNymZtMm9dc', // ToDo: Vladdy's API Key, have to replace with Propy's one
+			apiKey: environment.googleMapsApiKey,
 			libraries: ['places']
 		})
 	],
