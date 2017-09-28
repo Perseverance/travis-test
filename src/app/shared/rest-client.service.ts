@@ -34,6 +34,10 @@ export class RestClientService {
 		};
 	}
 
+	public get hasUserLoggedIn(): boolean {
+		return this._refreshToken !== undefined && this._refreshToken !== null && this._refreshToken !== '';
+	}
+
 	public get isTokenExpired(): boolean {
 		const now: Date = new Date();
 		return now.getTime() > this._tokenExpireTimestamp;
@@ -48,6 +52,10 @@ export class RestClientService {
 	public set accessToken(token: string) {
 		this._accessToken = token;
 		this.propyStorage.accessToken = token;
+	}
+
+	public get refreshToken(): string {
+		return this._refreshToken;
 	}
 
 	public set refreshToken(token: string) {

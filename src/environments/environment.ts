@@ -6,5 +6,7 @@
 export const environment = {
 	production: false,
 	apiUrl: 'http://servicepropydev.azurewebsites.net/',
-	googleMapsApiKey: 'AIzaSyBo_Hj_8WUUY1YhUcRugWwFLNymZtMm9dc'
+	googleMapsApiKey: 'AIzaSyBo_Hj_8WUUY1YhUcRugWwFLNymZtMm9dc',
+	clientId: 'PropyWebsite',
+	clientSecret: 'PixelIsNotFat'
 };
