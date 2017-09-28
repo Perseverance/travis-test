@@ -2,6 +2,8 @@ import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
 import {} from '@types/googlemaps';
+import {AuthenticationService} from '../authentication/authentication.service';
+import {AngularGoogleMapsService} from './angular-google-maps.service';
 
 @Component({
 	selector: 'app-google-maps',
@@ -22,14 +24,25 @@ export class AngularGoogleMapsComponent implements OnInit {
 
 
 	constructor(private mapsAPILoader: MapsAPILoader,
-				private ngZone: NgZone) {
+				private ngZone: NgZone,
+				private authService: AuthenticationService,
+				public agmService: AngularGoogleMapsService) {
 	}
 
 	ngOnInit() {
+		if (this.authService.hasUserLoggedIn) {
+			const refreshResult = this.authService.refreshStoredAccessToken(true);
+			console.log(refreshResult);
+		} else {
+			this.authService.performAnonymousLogin();
+		}
+
 		// set google maps defaults
 		this.zoom = 12;
 		this.latitude = 37.452961;
 		this.longitude = -122.181725;
+		// load markers for properties in rectangle
+		this.agmService.getPropertiesInRectangle(this.latitude, this.longitude);
 
 		// create search FormControl
 		this.searchControl = new FormControl();
@@ -49,6 +62,8 @@ export class AngularGoogleMapsComponent implements OnInit {
 		navigator.geolocation.getCurrentPosition((position) => {
 			this.latitude = position.coords.latitude;
 			this.longitude = position.coords.longitude;
+			// load markers for properties in rectangle
+			this.agmService.getPropertiesInRectangle(this.latitude, this.longitude);
 		});
 	}
 
@@ -75,6 +90,8 @@ export class AngularGoogleMapsComponent implements OnInit {
 			this.latitude = place.geometry.location.lat();
 			this.longitude = place.geometry.location.lng();
 			this.formatted_address = place.formatted_address;
+			// load markers for properties in rectangle
+			this.agmService.getPropertiesInRectangle(this.latitude, this.longitude);
 		});
 	}
 }

@@ -10,7 +10,8 @@
 
 	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
 		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-		<agm-circle [latitude]="latitude" [longitude]="longitude" [fillColor]="'red'" [radius]="6000"></agm-circle>
+		<agm-marker *ngFor="let m of agmService.propertiesInRectangle" [latitude]="m.latitude"
+					[longitude]="m.longitude"></agm-marker>
 	</agm-map>
 
 	<div class="card">

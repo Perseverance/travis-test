@@ -4,15 +4,30 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class AngularGoogleMapsService {
+	public propertiesInRectangle: any;
 
 	constructor(private restClient: RestClientService, private apiEndpoints: APIEndpointsService) {
 	}
 
-	public getPropertiesInRectangle(rect: Object) {
-		// just for test
-		const query = 'search=/42,43.685,22.234,24.251_coords/1,25_page/';
+	public async getPropertiesInRectangle(latitude: Number, longitude: Number) {
+		const queryPrefix = 'search=/';
+		const querySufix = '_coords/1,25_page/';
+		const bounds = this.createRectangleBounds(latitude, longitude);
+		const query = queryPrefix + bounds.south + ',' + bounds.north + ',' + bounds.west + ',' + bounds.east + querySufix;
 
-		return this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER);
+		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE + query);
+		this.propertiesInRectangle = result.data.data.properties;
+	}
+
+	private createRectangleBounds(latitude: any, longitude: any) {
+		const degreesOfIncreaseAreaOfRectangle: any = 1;
+		const bounds = {
+			north: latitude + degreesOfIncreaseAreaOfRectangle,
+			south: latitude - degreesOfIncreaseAreaOfRectangle,
+			east: longitude + degreesOfIncreaseAreaOfRectangle,
+			west: longitude - degreesOfIncreaseAreaOfRectangle
+		};
+		return bounds;
 	}
 
 }
