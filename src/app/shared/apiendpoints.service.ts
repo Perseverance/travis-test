@@ -8,7 +8,8 @@ export class APIEndpointsService {
 	public EXTERNAL_ENDPOINTS = {};
 
 	public INTERNAL_ENDPOINTS = {
-		REGISTER: `${this.INTERNAL_API_PREFIX}/Users/register`
+		REGISTER: `${this.INTERNAL_API_PREFIX}/Users/register`,
+		PROPERTIES_BY_RECTANGLE: `${this.INTERNAL_API_PREFIX}properties/rect?`
 	};
 
 	constructor() { }
