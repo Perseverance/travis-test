@@ -1,3 +1,4 @@
+import { APIEndpointsService } from './../../shared/apiendpoints.service';
 import { SignUpFormValidators } from './sign-up-components.validators';
 import { AuthenticationService } from './../authentication.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,10 @@ export class SignUpComponentComponent implements OnInit {
 
 	ngOnInit() {
 		this.signupForm = this.formBuilder.group({
-			email: ['', [Validators.required, Validators.email]],
+			email: ['',
+				[Validators.required, Validators.email],
+				[SignUpFormValidators.emailTakenValidator(this.authService.restClient, this.authService.apiEndpoints)]
+			],
 			passwords: this.formBuilder.group({
 				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
 				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
