@@ -1,7 +1,15 @@
 import {APIEndpointsService} from './../shared/apiendpoints.service';
 import {RestClientService} from './../shared/rest-client.service';
 import {Injectable} from '@angular/core';
-import {GetPropertiesResponse} from './properties.responses';
+import {GetPropertiesResponse} from './properties-responses';
+
+interface Bounds {
+	east: number;
+	west: number;
+	north: number;
+	south: number;
+}
+
 
 @Injectable()
 export class PropertiesService {
@@ -18,7 +26,7 @@ export class PropertiesService {
 	}
 
 	public async getPropertiesInRectangle(latitude: number, longitude: number, degreesOfIncreaseArea = 1): Promise<GetPropertiesResponse> {
-		const bounds = this.createRectangleBounds(latitude, longitude, degreesOfIncreaseArea);
+		const bounds: Bounds = this.createRectangleBounds(latitude, longitude, degreesOfIncreaseArea);
 		const query = this.propertiesInRectangleQueryFormat(bounds);
 		const params = {
 			search: query
@@ -28,8 +36,8 @@ export class PropertiesService {
 		return {properties: result.data.data.properties};
 	}
 
-	private createRectangleBounds(latitude: number, longitude: number, degreesOfIncreaseArea: number) {
-		const bounds = {
+	private createRectangleBounds(latitude: number, longitude: number, degreesOfIncreaseArea = 1) {
+		const bounds: Bounds = {
 			north: latitude + degreesOfIncreaseArea,
 			south: latitude - degreesOfIncreaseArea,
 			east: longitude + degreesOfIncreaseArea,

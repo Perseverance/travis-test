@@ -16,9 +16,9 @@ export class AngularGoogleMapsComponent implements OnInit {
 	public latitude: number;
 	public longitude: number;
 	public zoom: number;
-	public formatted_address: string;
+	public formattedAddress: string;
 	private autoComplete: any;
-	public propertiesInRectangle: any;
+	public props: any;
 	public googleSearchForm: FormGroup;
 
 
@@ -35,9 +35,9 @@ export class AngularGoogleMapsComponent implements OnInit {
 
 	async ngOnInit() {
 		if (this.authService.hasUserLoggedIn) {
-			this.authService.refreshStoredAccessToken();
+			await this.authService.refreshStoredAccessToken(true);
 		} else {
-			this.authService.performAnonymousLogin();
+			await this.authService.performAnonymousLogin();
 		}
 
 		this.googleSearchForm = this.formBuilder.group({
@@ -49,7 +49,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 		this.latitude = 37.452961;
 		this.longitude = -122.181725;
 		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-		this.propertiesInRectangle = propertiesResponse.properties;
+		this.props = propertiesResponse.properties;
 
 		// set current position
 		this.setCurrentPosition();
@@ -67,7 +67,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 			this.latitude = position.coords.latitude;
 			this.longitude = position.coords.longitude;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-			this.propertiesInRectangle = propertiesResponse.properties;
+			this.props = propertiesResponse.properties;
 		});
 	}
 
@@ -91,9 +91,9 @@ export class AngularGoogleMapsComponent implements OnInit {
 			// set latitude, longitude and zoom
 			this.latitude = place.geometry.location.lat();
 			this.longitude = place.geometry.location.lng();
-			this.formatted_address = place.formatted_address;
+			this.formattedAddress = place.formatted_address;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-			this.propertiesInRectangle = propertiesResponse.properties;
+			this.props = propertiesResponse.properties;
 		});
 	}
 }
