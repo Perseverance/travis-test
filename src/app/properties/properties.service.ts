@@ -46,7 +46,7 @@ export class PropertiesService {
 		return bounds;
 	}
 
-	private propertiesInRectangleQueryFormat(bounds) {
+	private propertiesInRectangleQueryFormat(bounds: Bounds) {
 		const querySuffix = '_coords/1,25_page/';
 		const query = `/${bounds.south},${bounds.north},${bounds.west},${bounds.east}${querySuffix}`;
 		return query;
