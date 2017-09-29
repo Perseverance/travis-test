@@ -10,8 +10,8 @@
 
 	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
 		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-		<agm-marker *ngFor="let m of agmService.propertiesInRectangle" [latitude]="m.latitude"
-					[longitude]="m.longitude"></agm-marker>
+		<agm-marker *ngFor="let marker of propertiesInRectangle | async" [latitude]="marker.latitude"
+					[longitude]="marker.longitude"></agm-marker>
 	</agm-map>
 
 	<div class="card">
