@@ -13,12 +13,12 @@ import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 })
 export class AngularGoogleMapsComponent implements OnInit {
 
-	public latitude: number;
-	public longitude: number;
-	public zoom: number;
+	public latitude = 37.452961;
+	public longitude = -122.181725;
+	public zoom = 12;
 	public formattedAddress: string;
 	private autoComplete: any;
-	public props: any;
+	public properties: any;
 	public googleSearchForm: FormGroup;
 
 
@@ -31,6 +31,9 @@ export class AngularGoogleMapsComponent implements OnInit {
 				private authService: AuthenticationService,
 				public propertiesService: PropertiesService,
 				private formBuilder: FormBuilder) {
+		this.googleSearchForm = this.formBuilder.group({
+			searchControl: ['', [Validators.required]]
+		});
 	}
 
 	async ngOnInit() {
@@ -40,16 +43,9 @@ export class AngularGoogleMapsComponent implements OnInit {
 			await this.authService.performAnonymousLogin();
 		}
 
-		this.googleSearchForm = this.formBuilder.group({
-			searchControl: ['', [Validators.required]]
-		});
-
 		// set google maps defaults
-		this.zoom = 12;
-		this.latitude = 37.452961;
-		this.longitude = -122.181725;
 		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-		this.props = propertiesResponse.properties;
+		this.properties = propertiesResponse.properties;
 
 		// set current position
 		this.setCurrentPosition();
@@ -67,7 +63,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 			this.latitude = position.coords.latitude;
 			this.longitude = position.coords.longitude;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-			this.props = propertiesResponse.properties;
+			this.properties = propertiesResponse.properties;
 		});
 	}
 
@@ -93,7 +89,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 			this.longitude = place.geometry.location.lng();
 			this.formattedAddress = place.formatted_address;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-			this.props = propertiesResponse.properties;
+			this.properties = propertiesResponse.properties;
 		});
 	}
 }
