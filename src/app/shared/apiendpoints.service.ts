@@ -13,6 +13,7 @@ export class APIEndpointsService {
 	public INTERNAL_ENDPOINTS = {
 		REGISTER: `${this.INTERNAL_API_PREFIX}/Users/register`,
 		EMAIL_AVAILABLE: `${this.INTERNAL_API_PREFIX}/Users/userexists`,
+		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,
 		PROPERTIES_BY_RECTANGLE: `${this.INTERNAL_API_PREFIX}/properties/rect`
 	};
 
