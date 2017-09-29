@@ -1,9 +1,10 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
 import {} from '@types/googlemaps';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {AngularGoogleMapsService} from './angular-google-maps.service';
+import {PropertiesService} from '../properties/properties.service';
+import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+
 
 @Component({
 	selector: 'app-google-maps',
@@ -14,11 +15,12 @@ export class AngularGoogleMapsComponent implements OnInit {
 
 	public latitude: number;
 	public longitude: number;
-	public searchControl: FormControl;
 	public zoom: number;
 	public formatted_address: string;
 	private autoComplete: any;
 	public propertiesInRectangle: any;
+	public googleSearchForm: FormGroup;
+
 
 	@ViewChild('search')
 	public searchElementRef: ElementRef;
@@ -27,30 +29,33 @@ export class AngularGoogleMapsComponent implements OnInit {
 	constructor(private mapsAPILoader: MapsAPILoader,
 				private ngZone: NgZone,
 				private authService: AuthenticationService,
-				public googleMapsService: AngularGoogleMapsService) {
+				public propertiesService: PropertiesService,
+				private formBuilder: FormBuilder) {
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
 		if (this.authService.hasUserLoggedIn) {
-			this.authService.refreshStoredAccessToken(true);
+			this.authService.refreshStoredAccessToken();
 		} else {
 			this.authService.performAnonymousLogin();
 		}
+
+		this.googleSearchForm = this.formBuilder.group({
+			searchControl: ['', [Validators.required]]
+		});
 
 		// set google maps defaults
 		this.zoom = 12;
 		this.latitude = 37.452961;
 		this.longitude = -122.181725;
-		this.propertiesInRectangle = this.googleMapsService.getPropertiesInRectangle(this.latitude, this.longitude);
-
-		// create search FormControl
-		this.searchControl = new FormControl();
+		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+		this.propertiesInRectangle = propertiesResponse.properties;
 
 		// set current position
 		this.setCurrentPosition();
 
 		// load Places Autocomplete
-		this.loadPlacesAutocompleteSearch();
+		await this.loadPlacesAutocompleteSearch();
 	}
 
 	private setCurrentPosition() {
@@ -58,10 +63,11 @@ export class AngularGoogleMapsComponent implements OnInit {
 			return;
 		}
 
-		navigator.geolocation.getCurrentPosition((position) => {
+		navigator.geolocation.getCurrentPosition(async (position) => {
 			this.latitude = position.coords.latitude;
 			this.longitude = position.coords.longitude;
-			this.propertiesInRectangle = this.googleMapsService.getPropertiesInRectangle(this.latitude, this.longitude);
+			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+			this.propertiesInRectangle = propertiesResponse.properties;
 		});
 	}
 
@@ -74,11 +80,9 @@ export class AngularGoogleMapsComponent implements OnInit {
 	}
 
 	private placeChangedHandler(autoComplete: any) {
-		this.ngZone.run(() => {
+		this.ngZone.run(async () => {
 			// get the place result
 			const place: google.maps.places.PlaceResult = this.autoComplete.getPlace();
-
-
 			// verify result
 			if (place.geometry === undefined || place.geometry === null) {
 				return;
@@ -88,7 +92,8 @@ export class AngularGoogleMapsComponent implements OnInit {
 			this.latitude = place.geometry.location.lat();
 			this.longitude = place.geometry.location.lng();
 			this.formatted_address = place.formatted_address;
-			this.propertiesInRectangle = this.googleMapsService.getPropertiesInRectangle(this.latitude, this.longitude);
+			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+			this.propertiesInRectangle = propertiesResponse.properties;
 		});
 	}
 }

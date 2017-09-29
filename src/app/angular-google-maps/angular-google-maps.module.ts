@@ -6,7 +6,6 @@ import {AgmCoreModule} from '@agm/core';
 import {AngularGoogleMapsComponent} from './angular-google-maps.component';
 import {CommonModule} from '@angular/common';
 import {AngularGoogleMapsRoutingModule} from './angular-google-maps-routing.module';
-import {AngularGoogleMapsService} from './angular-google-maps.service';
 
 @NgModule({
 	declarations: [
@@ -22,7 +21,7 @@ import {AngularGoogleMapsService} from './angular-google-maps.service';
 			libraries: ['places']
 		})
 	],
-	providers: [AngularGoogleMapsService],
+	providers: [],
 	bootstrap: []
 })
 export class AngularGoogleMapsModule {
