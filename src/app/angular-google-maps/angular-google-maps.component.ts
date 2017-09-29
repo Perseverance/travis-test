@@ -35,7 +35,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 
 	async ngOnInit() {
 		if (this.authService.hasUserLoggedIn) {
-			await this.authService.refreshStoredAccessToken(true);
+			await this.authService.refreshStoredAccessToken();
 		} else {
 			await this.authService.performAnonymousLogin();
 		}
