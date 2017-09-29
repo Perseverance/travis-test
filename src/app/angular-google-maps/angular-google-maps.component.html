@@ -3,18 +3,20 @@
 
 	<!-- this creates a google map on the page with the given lat/lng from -->
 	<!-- the component as the initial center of the map: -->
-	<div class="form-group">
+	<form [formGroup]="googleSearchForm">
 		<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
-			   class="form-control" #search [formControl]="searchControl" size="100">
-	</div>
+			   class="form-control" #search formControlName="searchControl" size="100">
+	</form>
 
 	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
 		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+		<agm-marker *ngFor="let marker of properties" [latitude]="marker.latitude"
+					[longitude]="marker.longitude"></agm-marker>
 	</agm-map>
 
 	<div class="card">
 		<ul class="list-group list-group-flush">
-			<li class="list-group-item">formatted_address <code>{{formatted_address}}</code></li>
+			<li class="list-group-item">formatted address <code>{{formattedAddress}}</code></li>
 			<li class="list-group-item">latitude <code>{{latitude}}</code></li>
 			<li class="list-group-item">longitude <code>{{longitude}}</code></li>
 			<li class="list-group-item">zoom <code>{{zoom}}</code></li>
