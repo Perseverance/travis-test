@@ -28,7 +28,6 @@ export class AngularGoogleMapsComponent implements OnInit {
 
 	constructor(private mapsAPILoader: MapsAPILoader,
 				private ngZone: NgZone,
-				private authService: AuthenticationService,
 				public propertiesService: PropertiesService,
 				private formBuilder: FormBuilder) {
 		this.googleSearchForm = this.formBuilder.group({
@@ -37,12 +36,6 @@ export class AngularGoogleMapsComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		if (this.authService.hasUserLoggedIn) {
-			await this.authService.refreshStoredAccessToken();
-		} else {
-			await this.authService.performAnonymousLogin();
-		}
-
 		// set google maps defaults
 		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
 		this.properties = propertiesResponse.properties;
