@@ -1,8 +1,8 @@
-import { APIEndpointsService } from './apiendpoints.service';
-import { LocalStorageService } from './localStorage.service';
-import { RestClientService } from './rest-client.service';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {APIEndpointsService} from './apiendpoints.service';
+import {LocalStorageService} from './localStorage.service';
+import {RestClientService} from './rest-client.service';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
 	imports: [
@@ -13,6 +13,8 @@ import { CommonModule } from '@angular/common';
 		RestClientService,
 		LocalStorageService,
 		APIEndpointsService
-	]
+	],
+	exports: []
 })
-export class SharedModule { }
+export class SharedModule {
+}

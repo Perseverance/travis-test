@@ -1,0 +1,279 @@
+{
+	"home-page": {
+		"label": {
+			"new-life-label": "Start your new life",
+			"now-available-title-part-one": "Now available in Dubai, San Francisco and Moscow.",
+			"now-available-title-part-two": "Coming soon in other major global cities.",
+			"search-box-placeholder": "Search for a place...."
+		}
+	},
+	"login-pro": {
+		"no-account-yet": "Don't have an account yet?"
+	},
+	"accepted-connection": {
+		"new-connection-accepted": "is now a connection"
+	},
+	"updated-property": {
+		"was-message": "was",
+		"changed-message": "changed"
+	},
+	"agency-details-edit": {
+		"website-label": "Website"
+	},
+	"agent-details": {
+		"rate-agent-label": "Rate",
+		"does-he-she-know-label": "Does he\/she know the neighbourhood?",
+		"can-y-negotiate-price-label": "Can you negotiate for a price?",
+		"how-honest-agent-label": "How honest was the agent?",
+		"how-pushy-to-sell-label": "How pushy to make a sale?",
+		"was-agent-punctual-label": "Was the agent punctual?"
+	},
+	"agent-recommendation": {
+		"vip-user-label": "Vip User"
+	},
+	"agent-details-edit": {
+		"user-avatar-label": "User Avatar"
+	},
+	"login-partial": {
+		"login-label": "Login",
+		"register-label": "Register",
+		"list-property-label": "List your Property"
+	},
+	"user-partial": {
+		"no-notifications-label": "No new notifications",
+		"no-conversations-label": "No conversations",
+		"list-property-label": "List property",
+		"manage-profile-label": "Manage Profile",
+		"log-out-label": "Log out",
+		"blog-label": "Blog"
+	},
+	"agency-details": {
+		"properties-listing-label": "Properties listings"
+	},
+	"logo-dropzone": {
+		"drop-cover-photo-or-click": "Drop cover photo or click to upload manually"
+	},
+	"own-agents-preview": {
+		"connect-agent-label": "Connect",
+		"pending-agent-label": "Pending"
+	},
+	"conversations-details": {
+		"per-sq-ft-label": "per sqft",
+		"family-house": "Family house",
+		"reward-label": "REWARD",
+		"verified-label": "VERIFIED",
+		"type-message-placeholder": "Type a message here"
+	},
+	"property-preview": {
+		"premium-seller-label": "Premium Seller",
+		"get-reward-label": "Get Reward",
+		"sustainability-label": "Sustainability:",
+		"locked-label": "The seller set privacy. Only available for VIP subscription and \u2019Propy buyer\u2019 members."
+	},
+	"navigation": {
+		"search-for-place-label": "Search for a placeX...",
+		"page-not-found": "Page Not Found"
+	},
+	"manage-profile-content": {
+		"what-property-of-interest": "What properties are you interested in?",
+		"languages-label": "Languages",
+		"occupation-label": "Occupation",
+		"company-label": "Company",
+		"work-location-label": "Work Location",
+		"hobbies-label": "Hobbies",
+		"request-type-label": "Request type",
+		"request-location-label": "Request Location",
+		"property-of-interest": "Property Interests",
+		"your-profile-is-label": "Your profile is ",
+		"complete-small-label": " complete.",
+		"main-info-label": "Main info",
+		"agent-info-label": "Agent info",
+		"type-in-property-type": "Type in property type",
+		"type-in-expertise": "Type in an expertise",
+		"type-in-hobbie": "Type in a hobby",
+		"type-in-location": "Type in a location",
+		"type-in-phone-number": "Enter phone number",
+		"describe-what-you-need-placeholder": "Describe what kind of properties are you interested in",
+		"type-in-work-location-label": "Enter work location"
+	},
+	"list-property": {
+		"my-notes-label": "My Notes",
+		"add-new-note-label": "Add new note",
+		"write-new-note-label": "Write a new note...",
+		"check-out-what-I-found": "Take a look at this property I found on http:\/\/www.propy.com",
+		"like-label": "Like",
+		"home-details-label": "Home details",
+		"social-label": "Social",
+		"economic-label": "Economic",
+		"envioronmental-label": "Environmental",
+		"low-label": "Low",
+		"medium-label": "Medium",
+		"good-label": "Good",
+		"excellent-label": "Excellent",
+		"hazardous-label": "Hazardous",
+		"very-unhealthy-label": "Very Unhealthy",
+		"unhealthy-label": "Unhealthy",
+		"unhealthy-sensitive-label": "Unhealthy for Sensitive Groups",
+		"moderate-label": "Moderate",
+		"sustainability-section-label": "Sustainability Section",
+		"public-transit-label": "Public Transit",
+		"education-label": "Education",
+		"sustainability-score-label": "Sustainability Score:",
+		"air-quality-label": "Air Quality",
+		"of-union-label": "of",
+		"min-stay-label": "Min Stay",
+		"price-per-day-label": "Price per day",
+		"air-bnb-profile-label": "AirBnb Profile",
+		"price-per-month-label": "Price per month",
+		"price-per-year-label": "Price per year",
+		"size-label": "Size",
+		"floor-label": "Floor",
+		"year-built-label": "Year Built",
+		"bathrooms-label": "Bathrooms",
+		"home-app-efficiency-label": "Home appliances energy efficiency",
+		"do-you-have-furniture": "If you have appliances, please select \"Furnished\" on the previous step.",
+		"previous-step-label": "Previous Step",
+		"next-step-label": "Next Step",
+		"description-label": "Description",
+		"furnished-label": "Furnished",
+		"eco-friendly-furniture-label": "Eco-friendly furniture",
+		"revise-furniture-propy-text": "  In case your property is furnished by eco-friendly furniture made from natural and\/or recycled materials please include the evidences in photo gallery and the description of the property. You will get additional points for Sustainability. In case the information is false and the listing is reported, the property will be deleted.",
+		"property-created-label": "Property is being created...",
+		"property-loading-label": "Loading property...",
+		"thank-you-listing-label": "Thank you for listing",
+		"property-is-available-label": "Now your property is available in Propy",
+		"agent-or-owner-label": "Are you an agent or an owner?",
+		"i-am-owner-label": "I am an owner",
+		"where-property-located-label": "Where is your property located?",
+		"search-dots-label": "Search...",
+		"development-label": "Development",
+		"your-property-situated-label": "It seems your property is situated in:",
+		"no-label": "No",
+		"yes-label": "Yes",
+		"upload-prop-image-label": "Upload property images",
+		"register-as-agent": "Register as agent",
+		"add-location-label": "Add location",
+		"add-prop-type": "Add Property Type",
+		"features-label": "Features",
+		"appliances-label": "Appliances",
+		"add-more-info": "Add more info",
+		"upload-photos-label": "Upload photos",
+		"photos-label": "Photos",
+		"final-touch-label": "Final Touch",
+		"back-to-prevous-label": "Back to previous view",
+		"request-user-status": "Request User Status",
+		"no-image-label": "Please upload at least one image of your property before you proceed.",
+		"incorrect-phone-message": "Please enter a valid phone number"
+	},
+	"filters": {
+		"bedrooms-label": "Bedrooms",
+		"buy-label": "Buy",
+		"sell-label": "Sell",
+		"rent-label": "Rent",
+		"show-hidden-label": "Show hidden properties",
+		"days-label": "Days",
+		"months-label": "Months",
+		"years-label": "Years",
+		"rent-for-label": "Rent for",
+		"price-label": "Price",
+		"total-label": "Total",
+		"per-area-unit-sqm": "per sqm",
+		"per-area-unit-sqft": "per sqft",
+		"metrics-label": "per sqm",
+		"property-type-label": "Property Type",
+		"no-filters-message-label": "No filters",
+		"rent-type-label": "Rent Type",
+		"short-term-label": "Short term",
+		"long-term-label": "Long term",
+		"has-air-bnb-label": "Has AirBnb Profile",
+		"size-sqm-label": "sqm",
+		"size-sqft-label": "sqft",
+		"area-label": "Area",
+		"min-label": "min",
+		"max-label": "max",
+		"newest-label": "Newest",
+		"lowest-price-label": "Lowest Price",
+		"lowest-price-sqm-label": "Lowest Price \/ sqm",
+		"verified-only-label": "Verified only",
+		"no-properties": "No properties",
+		"view-details-label": "View Details",
+		"premium-label": "Premium",
+		"locations-label": "Locations",
+		"expert-in-label": "Expert In"
+	},
+	"avatar-dropzone": {
+		"avatar-dropzone-label": "Drop avatar or click to upload manually"
+	},
+	"display-components": {
+		"unspecified-label": "Unspecified"
+	},
+	"advanced-search": {
+		"search-agent": "Search Agent",
+		"no-agents-found": "No agents found",
+		"no-agency-found": "No agency found",
+		"connect-agent-btn": "Connect Agent",
+		"advanced-search-label": "ADVANCED SEARCH",
+		"open-agent-details-btn": "Details"
+	},
+	"common": {
+		"label": {
+			"join-lable": "Join",
+			"email-label": "Email",
+			"password-label": "Password",
+			"propy-inc-US": "Propy Inc., US",
+			"loading-label": "Loading...",
+			"loading-label-no-dots": "Loading",
+			"sign-in": "Sing In",
+			"sign-up": "Sign Up",
+			"name": "Name",
+			"surname": "Surname",
+			"properting-label": "Propy",
+			"facebook-button": "Facebook",
+			"linkedin-button": "Linked In",
+			"disjunction": "or",
+			"error-password-pass": "Wrong username\/password combination.",
+			"error-register-email": "Email already exists.",
+			"forgot-password-label": "Forgot password?",
+			"remember-label": "Remember me",
+			"enter-password": "Enter password",
+			"confirm-password": "Confirm password",
+			"enter-email": "Enter email",
+			"logout-label": "Log out",
+			"first-name-label": "First Name",
+			"last-name-label": "Last Name",
+			"phone-label": "Phone",
+			"info-label": "Info",
+			"i-am-agent-label": "I am an Agent",
+			"enter-phone-num-label": "Enter phone number",
+			"already-account-label": "Already have an account?",
+			"login-label": "Log In",
+			"submit-label": "Submit",
+			"address-label": "Address",
+			"search-agency-input": "Search Agency",
+			"save-changes-label": "Save Changes",
+			"saving-label": "Saving...",
+			"cancel-label": "Cancel",
+			"edit-profile-label": "Edit Profile",
+			"add-filter": "Add",
+			"done-label": "Done",
+			"edit-label": "Edit",
+			"pro-label": "Pro",
+			"request-info-label": "Request Info",
+			"request-info-email-input": "Dear %s, \nI\u2019m interested in the property on %s from http:\/\/www.propy.com\/.\n Could you please send me further information.",
+			"pro-agent-label": "Pro Agent",
+			"agents-label": "Agents",
+			"agency-label": "Agency",
+			"per-day-label": "per day",
+			"per-month-label": "per month",
+			"per-year-label": "per year",
+			"location-label": "Location",
+			"language-label": "Language",
+			"area-unit-label": "Area Unit",
+			"currency-label": "Currency",
+			"send-message-btn": "Send Message"
+		},
+		"placeholder": {
+			"select-language": "Select language"
+		}
+	}
+}
