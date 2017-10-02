@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from './authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-root',
@@ -7,9 +8,16 @@ import {AuthenticationService} from './authentication/authentication.service';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-	title = 'app';
 
-	constructor(private authService: AuthenticationService) {
+	constructor(private authService: AuthenticationService,
+				public translate: TranslateService) {
+
+		translate.addLangs(['en', 'chn']);
+		// this language will be used as a fallback when a translation isn't found in the current language
+		translate.setDefaultLang('en');
+
+		// the lang to use, if the lang isn't available, it will use the current loader to get them
+		translate.use('en');
 	}
 
 	async ngOnInit() {

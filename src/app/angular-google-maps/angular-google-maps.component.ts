@@ -4,6 +4,7 @@ import {} from '@types/googlemaps';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {PropertiesService} from '../properties/properties.service';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class AngularGoogleMapsComponent implements OnInit {
 	constructor(private mapsAPILoader: MapsAPILoader,
 				private ngZone: NgZone,
 				public propertiesService: PropertiesService,
-				private formBuilder: FormBuilder) {
+				private formBuilder: FormBuilder,
+				private translate: TranslateService) {
 		this.googleSearchForm = this.formBuilder.group({
 			searchControl: ['', [Validators.required]]
 		});
