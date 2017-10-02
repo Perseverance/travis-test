@@ -7,14 +7,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularGoogleMapsModule} from './angular-google-maps/angular-google-maps.module';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http);
-}
+import {CoreModule} from './core/core.module';
+import {TranslateStore} from '@ngx-translate/core/src/translate.store';
 
 @NgModule({
 	declarations: [
@@ -24,20 +18,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 		BrowserModule,
 		FormsModule,
 		ReactiveFormsModule,
+		CoreModule,
 		AngularGoogleMapsModule,
 		AuthenticationModule,
 		PropertiesModule,
-		AppRoutingModule,
-		HttpClientModule,
-		TranslateModule.forRoot({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient]
-			}
-		})
+		AppRoutingModule
 	],
-	providers: [HttpClient],
+	providers: [TranslateStore],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

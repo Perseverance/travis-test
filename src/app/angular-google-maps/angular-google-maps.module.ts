@@ -7,6 +7,7 @@ import {AngularGoogleMapsComponent} from './angular-google-maps.component';
 import {CommonModule} from '@angular/common';
 import {AngularGoogleMapsRoutingModule} from './angular-google-maps-routing.module';
 import {TranslateModule} from '@ngx-translate/core';
+import {CoreModule} from '../core/core.module';
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,7 @@ import {TranslateModule} from '@ngx-translate/core';
 			apiKey: environment.googleMapsApiKey,
 			libraries: ['places']
 		}),
-		TranslateModule
+		CoreModule
 	],
 	providers: [],
 	bootstrap: []
