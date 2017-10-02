@@ -1,3 +1,4 @@
+import { GetPropertyResponse } from './../properties-responses';
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { PropertiesService } from './../properties.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -13,7 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class PropertyDetailsComponent implements OnInit, OnDestroy {
 
-	public property;
+	public property: GetPropertyResponse;
 	private idSubscription: Subscription;
 
 	constructor(private route: ActivatedRoute, private propertiesService: PropertiesService, private authService: AuthenticationService) { }
@@ -23,7 +24,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
 		const result = await self.authService.performAnonymousLogin(); // This + authService will be removed with the new wrapping route.
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
-			const res = await self.propertiesService.getProperty(propertyId);
+			self.property = await self.propertiesService.getProperty(propertyId);
 		});
 	}
 

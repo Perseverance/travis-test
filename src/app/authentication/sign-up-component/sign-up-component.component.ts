@@ -13,9 +13,7 @@ export class SignUpComponentComponent implements OnInit {
 
 	public signupForm: FormGroup;
 
-	constructor(private authService: AuthenticationService, private formBuilder: FormBuilder) { }
-
-	ngOnInit() {
+	constructor(private authService: AuthenticationService, private formBuilder: FormBuilder) {
 		this.signupForm = this.formBuilder.group({
 			email: ['',
 				[Validators.required, Validators.email],
@@ -28,6 +26,9 @@ export class SignUpComponentComponent implements OnInit {
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]]
 		});
+	}
+
+	ngOnInit() {
 	}
 
 	public get email() {

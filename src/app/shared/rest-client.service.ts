@@ -179,3 +179,7 @@ export class RestClientService {
 
 
 }
+
+export interface APIResponseWithStatus {
+	message: string;
+}

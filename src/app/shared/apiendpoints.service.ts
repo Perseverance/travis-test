@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class APIEndpointsService {
 
-	private INTERNAL_API_PREFIX = 'api';
+	private INTERNAL_API_PREFIX = '/api';
 
 	public EXTERNAL_ENDPOINTS = {
-		GET_TOKEN: 'token',
-		REFRESH_TOKEN: 'token'
+		GET_TOKEN: '/token',
+		REFRESH_TOKEN: '/token'
 	};
 
 	public INTERNAL_ENDPOINTS = {
