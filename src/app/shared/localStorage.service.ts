@@ -60,7 +60,11 @@ export class LocalStorageService {
 	}
 
 	public get selectedLanguage(): string {
-		return localStorage.getItem(this.KEY_SELECTED_LANGUAGE);
+		const storedLanguage = localStorage.getItem(this.KEY_SELECTED_LANGUAGE);
+		if (storedLanguage == null) {
+			return navigator.language.substring(0, 2);
+		}
+		return storedLanguage;
 	}
 
 }
