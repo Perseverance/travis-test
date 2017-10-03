@@ -25,7 +25,7 @@ export class AuthenticationService {
 		return { message: result.data.message };
 	}
 
-	public async performLogin(email: string, password: string): Promise<boolean> {
+	public async performLogin(email: string, password: string, rememberMe = false): Promise<boolean> {
 		const data = OAuth2GrantTypes.getGrantTypePasswordDataURLParams(email, password);
 		const config = {
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -33,13 +33,19 @@ export class AuthenticationService {
 
 		const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.GET_TOKEN, data, config);
 
-		this.setOAuthTokensInRestService(result.data.token_type, result.data.access_token, result.data.refresh_token, result.data.expires_in);
+		this.setOAuthTokensInRestService(
+			result.data.token_type,
+			result.data.access_token,
+			result.data.refresh_token,
+			result.data.expires_in,
+			rememberMe);
 
 		return true;
 	}
 
 	public performAnonymousLogin(): Promise<boolean> {
-		return this.performLogin('', '');
+		const doNotRememberUser = false;
+		return this.performLogin('', '', doNotRememberUser);
 	}
 
 	/**
@@ -61,14 +67,27 @@ export class AuthenticationService {
 
 		const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.REFRESH_TOKEN, data, config);
 
-		this.setOAuthTokensInRestService(result.data.token_type, result.data.access_token, result.data.refresh_token, result.data.expires_in);
+		const rememberUser = true;
+		// Neither anonymous nor not-remembered users would need to come here as they would be going through the auth flow
+
+		this.setOAuthTokensInRestService(
+			result.data.token_type,
+			result.data.access_token,
+			result.data.refresh_token,
+			result.data.expires_in,
+			rememberUser);
 
 		return true;
 	}
 
-	private setOAuthTokensInRestService(tokenType: string, accessToken: string, refreshToken: string, expiresIn: number) {
+	private setOAuthTokensInRestService(tokenType: string, accessToken: string, refreshToken: string, expiresIn: number, rememberMe: boolean) {
 		if (tokenType !== OAuth2TokenTypes.BEARER) {
 			throw new Error('Wrong type of return token');
+		}
+		if (rememberMe) {
+			this.restClient.shouldRememberUser = RestClientService.REMEMBER_USER;
+		} else {
+			this.restClient.shouldRememberUser = RestClientService.DO_NOT_REMEMBER_USER;
 		}
 		this.restClient.accessToken = accessToken;
 		this.restClient.refreshToken = refreshToken;
