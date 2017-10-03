@@ -89,7 +89,7 @@ export class RestClientService {
 			return;
 		}
 
-		throw new Error('shouldRememberUser not state or set to incorrect state');
+		throw new Error('shouldRememberUser not set or set to incorrect state');
 	}
 
 	public get accessToken(): string {
@@ -107,7 +107,7 @@ export class RestClientService {
 			return;
 		}
 
-		throw new Error('shouldRememberUser not state or set to incorrect state');
+		throw new Error('shouldRememberUser not set or set to incorrect state');
 	}
 
 	public get refreshToken(): string {
@@ -125,7 +125,7 @@ export class RestClientService {
 			return;
 		}
 
-		throw new Error('shouldRememberUser not state or set to incorrect state');
+		throw new Error('shouldRememberUser not set or set to incorrect state');
 	}
 
 	private forgeUrl(endpoint: string): string {
