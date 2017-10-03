@@ -29,6 +29,7 @@ export class LoginComponentComponent implements OnInit {
 	}
 
 	public async onSubmit() {
+		// TODO: Add remember me
 		const result = await this.authService.performLogin(this.email.value, this.password.value);
 	}
 
