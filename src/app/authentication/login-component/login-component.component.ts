@@ -1,23 +1,42 @@
+import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './../authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/filter';
 
 @Component({
 	selector: 'app-login-component',
 	templateUrl: './login-component.component.html',
 	styleUrls: ['./login-component.component.scss']
 })
-export class LoginComponentComponent implements OnInit {
+export class LoginComponentComponent implements OnInit, OnDestroy {
 
 	public loginForm: FormGroup;
+	private queryParamsSubscription: Subscription;
+	private redirectToUrl: string;
 
-	constructor(private authService: AuthenticationService, private formBuilder: FormBuilder) { }
+	constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.loginForm = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
 			password: ['', [Validators.required]]
 		});
+
+		this.queryParamsSubscription = this.setupQueryParamsWatcher();
+	}
+
+	ngOnDestroy() {
+		this.queryParamsSubscription.unsubscribe();
+	}
+
+	private setupQueryParamsWatcher() {
+		return this.route.queryParams
+			.subscribe(params => {
+				console.log(params);
+				this.redirectToUrl = params.redirect;
+			});
 	}
 
 	public get email() {
