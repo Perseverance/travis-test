@@ -20,7 +20,7 @@
 					   aria-expanded="false">Languages <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li *ngFor="let lang of translate.getLangs()">
-							<a #langSelect (click)="translate.use(langSelect.rel)" [rel]="lang"
+							<a #langSelect (click)="selectLanguage(langSelect.rel)" [rel]="lang"
 							   [class.active]="lang === translate.currentLang">{{ lang }}</a>
 						</li>
 					</ul>
