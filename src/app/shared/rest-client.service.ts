@@ -1,3 +1,4 @@
+import { SessionStorageService } from './session-storage.service';
 import { LocalStorageService } from './localStorage.service';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -13,12 +14,31 @@ export class RestClientService {
 	private _restUrl: string;
 
 
-	constructor(private propyStorage: LocalStorageService) {
+	constructor(private propyLocalStorage: LocalStorageService, private propySessionStorage: SessionStorageService) {
 		this._restUrl = environment.apiUrl;
 
-		this._accessToken = propyStorage.accessToken;
-		this._refreshToken = propyStorage.refreshToken;
-		this._tokenExpireTimestamp = propyStorage.tokenExpireTimestamp;
+		if (this.isTokenSavedInLocalStorage) {
+			this.setupTokenFieldsFromLocalStorage();
+			return;
+		}
+
+		this.setupTokenFieldsFromSession();
+	}
+
+	private get isTokenSavedInLocalStorage(): boolean {
+		return this.propyLocalStorage.accessToken !== null;
+	}
+
+	private setupTokenFieldsFromSession() {
+		this._accessToken = this.propySessionStorage.accessToken;
+		this._refreshToken = this.propySessionStorage.refreshToken;
+		this._tokenExpireTimestamp = this.propySessionStorage.tokenExpireTimestamp;
+	}
+
+	private setupTokenFieldsFromLocalStorage() {
+		this._accessToken = this.propyLocalStorage.accessToken;
+		this._refreshToken = this.propyLocalStorage.refreshToken;
+		this._tokenExpireTimestamp = this.propyLocalStorage.tokenExpireTimestamp;
 	}
 
 	private get bearerHeaderString(): string {
@@ -51,7 +71,7 @@ export class RestClientService {
 
 	public set accessToken(token: string) {
 		this._accessToken = token;
-		this.propyStorage.accessToken = token;
+		this.propyLocalStorage.accessToken = token;
 	}
 
 	public get refreshToken(): string {
@@ -60,7 +80,7 @@ export class RestClientService {
 
 	public set refreshToken(token: string) {
 		this._refreshToken = token;
-		this.propyStorage.refreshToken = token;
+		this.propyLocalStorage.refreshToken = token;
 	}
 
 	private forgeUrl(endpoint: string): string {
