@@ -33,4 +33,9 @@ export class LoginComponentComponent implements OnInit {
 		const result = await this.authService.performLogin(this.email.value, this.password.value);
 	}
 
+	public async facebookLogin() {
+		const result = await this.authService.performFacebookLogin();
+		console.log(result);
+	}
+
 }
