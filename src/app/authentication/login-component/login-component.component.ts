@@ -3,7 +3,6 @@ import { AuthenticationService } from './../authentication.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/filter';
 
 @Component({
 	selector: 'app-login-component',
@@ -53,13 +52,12 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 	public async onSubmit() {
 		// TODO: Add remember me
 		const result = await this.authService.performLogin(this.email.value, this.password.value);
-		console.log(this.redirectToUrl);
 		this.router.navigate([this.redirectToUrl]);
 	}
 
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
-		console.log(result);
+		this.router.navigate([this.redirectToUrl]);
 	}
 
 }
