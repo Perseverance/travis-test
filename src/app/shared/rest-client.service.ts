@@ -7,6 +7,12 @@ import axios from 'axios';
 @Injectable()
 export class RestClientService {
 
+	public static REMEMBER_USER = 1;
+	public static DO_NOT_REMEMBER_USER = 2;
+	public static UNINITIALIZED = 0;
+
+	private _rememberUser = 0;
+
 	private _refreshToken: string;
 	private _accessToken: string;
 
@@ -58,6 +64,13 @@ export class RestClientService {
 		return this._refreshToken !== undefined && this._refreshToken !== null && this._refreshToken !== '';
 	}
 
+	public set shouldRememberUser(rememberState: number) {
+		if (rememberState < 1 || rememberState > 2) {
+			throw new Error('Invalid state');
+		}
+		this._rememberUser = rememberState;
+	}
+
 	public get isTokenExpired(): boolean {
 		const now: Date = new Date();
 		return now.getTime() > this._tokenExpireTimestamp;
@@ -67,11 +80,34 @@ export class RestClientService {
 		const expiry: Date = new Date();
 		expiry.setSeconds(expiry.getSeconds() + expiersInSeconds);
 		this._tokenExpireTimestamp = expiry.getTime();
+		if (this._rememberUser === RestClientService.REMEMBER_USER) {
+			this.propyLocalStorage.tokenExpireTimestamp = this._tokenExpireTimestamp;
+			return;
+		}
+		if (this._rememberUser === RestClientService.DO_NOT_REMEMBER_USER) {
+			this.propySessionStorage.tokenExpireTimestamp = this._tokenExpireTimestamp;
+			return;
+		}
+
+		throw new Error('shouldRememberUser not state or set to incorrect state');
+	}
+
+	public get accessToken(): string {
+		return this._accessToken;
 	}
 
 	public set accessToken(token: string) {
 		this._accessToken = token;
-		this.propyLocalStorage.accessToken = token;
+		if (this._rememberUser === RestClientService.REMEMBER_USER) {
+			this.propyLocalStorage.accessToken = token;
+			return;
+		}
+		if (this._rememberUser === RestClientService.DO_NOT_REMEMBER_USER) {
+			this.propySessionStorage.accessToken = token;
+			return;
+		}
+
+		throw new Error('shouldRememberUser not state or set to incorrect state');
 	}
 
 	public get refreshToken(): string {
@@ -80,7 +116,16 @@ export class RestClientService {
 
 	public set refreshToken(token: string) {
 		this._refreshToken = token;
-		this.propyLocalStorage.refreshToken = token;
+		if (this._rememberUser === RestClientService.REMEMBER_USER) {
+			this.propyLocalStorage.refreshToken = token;
+			return;
+		}
+		if (this._rememberUser === RestClientService.DO_NOT_REMEMBER_USER) {
+			this.propySessionStorage.refreshToken = token;
+			return;
+		}
+
+		throw new Error('shouldRememberUser not state or set to incorrect state');
 	}
 
 	private forgeUrl(endpoint: string): string {
