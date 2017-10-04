@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { OAuth2TokenTypes } from './oauth2-token-types';
 import { OAuth2GrantTypes } from './oauth2-grant-types';
 import { APIEndpointsService } from './../shared/apiendpoints.service';
@@ -21,9 +22,9 @@ export class AuthenticationService {
 
 	constructor(public restClient: RestClientService, public apiEndpoints: APIEndpointsService, private fbService: FacebookService) {
 		const initParams: InitParams = {
-			appId: '107043006300971',
-			xfbml: true,
-			version: 'v2.10'
+			appId: environment.fbConfigParams.appId,
+			xfbml: environment.fbConfigParams.xfbml,
+			version: environment.fbConfigParams.version
 		};
 
 		fbService.init(initParams);

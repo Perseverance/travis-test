@@ -57,6 +57,7 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
+		// TODO make use of the result
 		this.router.navigate([this.redirectToUrl]);
 	}
 
