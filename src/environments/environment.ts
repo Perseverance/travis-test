@@ -8,5 +8,11 @@ export const environment = {
 	apiUrl: 'http://servicepropydev.azurewebsites.net',
 	googleMapsApiKey: 'AIzaSyBo_Hj_8WUUY1YhUcRugWwFLNymZtMm9dc',
 	clientId: 'PropyWebsite',
-	clientSecret: 'PixelIsNotFat'
+	clientSecret: 'PixelIsNotFat',
+	fbConfigParams: {
+		appId: '107043006300971',
+		xfbml: true,
+		version: 'v2.10'
+	},
+	linkedInApiKey: '758vh4r0yqsbn9' // Otherwise known as ClientID
 };

@@ -1,3 +1,4 @@
+import {environment} from './../environments/environment';
 import {PropertiesModule} from './properties/properties.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
@@ -11,6 +12,7 @@ import {CoreModule} from './core/core.module';
 import {TranslateStore} from '@ngx-translate/core/src/translate.store';
 import {FacebookModule} from 'ngx-facebook';
 import {HomeModule} from './home/home.module';
+import {LinkedInSdkModule} from 'angular-linkedin-sdk';
 
 @NgModule({
 	declarations: [
@@ -26,9 +28,14 @@ import {HomeModule} from './home/home.module';
 		AuthenticationModule,
 		PropertiesModule,
 		AppRoutingModule,
-		FacebookModule.forRoot()
+		FacebookModule.forRoot(),
+		LinkedInSdkModule
 	],
-	providers: [TranslateStore],
+	providers: [
+		TranslateStore,
+		{provide: 'apiKey', useValue: environment.linkedInApiKey},
+		{provide: 'authorize', useValue: true}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

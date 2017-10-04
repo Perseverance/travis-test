@@ -24,6 +24,7 @@
 		"@angular/router": "^4.3.4",
 		"@ngx-translate/core": "^8.0.0",
 		"@ngx-translate/http-loader": "^2.0.0",
+		"angular-linkedin-sdk": "^0.1.7",
 		"axios": "^0.16.2",
 		"bootstrap": "^3.3.7",
 		"core-js": "^2.4.1",

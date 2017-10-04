@@ -1,9 +1,11 @@
+import { environment } from './../../environments/environment.prod';
 import { OAuth2TokenTypes } from './oauth2-token-types';
 import { OAuth2GrantTypes } from './oauth2-grant-types';
 import { APIEndpointsService } from './../shared/apiendpoints.service';
 import { RestClientService, APIResponseWithStatus } from './../shared/rest-client.service';
 import { Injectable } from '@angular/core';
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
+import { LinkedInService } from 'angular-linkedin-sdk';
 
 export enum ExternalAuthenticationProviders {
 	FACEBOOK = 'facebook',
@@ -16,14 +18,24 @@ export interface ExternalLoginRequest {
 	accessToken: string;
 }
 
+export interface LinkedInAuthParams {
+	userId: string;
+	accessToken: string;
+}
+
 @Injectable()
 export class AuthenticationService {
 
-	constructor(public restClient: RestClientService, public apiEndpoints: APIEndpointsService, private fbService: FacebookService) {
+	constructor(
+		public restClient: RestClientService,
+		public apiEndpoints: APIEndpointsService,
+		private fbService: FacebookService,
+		private linkedinService: LinkedInService) {
+
 		const initParams: InitParams = {
-			appId: '107043006300971',
-			xfbml: true,
-			version: 'v2.10'
+			appId: environment.fbConfigParams.appId,
+			xfbml: environment.fbConfigParams.xfbml,
+			version: environment.fbConfigParams.version
 		};
 
 		fbService.init(initParams);
@@ -67,35 +79,85 @@ export class AuthenticationService {
 		return this.performLogin('', '', doNotRememberUser);
 	}
 
-	public async performFacebookLogin(): Promise<boolean | Error> {
-		try {
-			const options: LoginOptions = {
-				scope: 'public_profile,email'
-			};
-			const result: LoginResponse = await this.fbService.login();
-			return await this.externalLogin(ExternalAuthenticationProviders.FACEBOOK, result.authResponse.userID, result.authResponse.accessToken);
-		} catch (error) {
-			return error;
-		}
+	public async performFacebookLogin(): Promise<boolean> {
+
+		const options: LoginOptions = {
+			scope: 'public_profile,email'
+		};
+
+		const result: LoginResponse = await this.fbService.login();
+
+		await this.externalLogin(ExternalAuthenticationProviders.FACEBOOK, result.authResponse.userID, result.authResponse.accessToken);
+		this.rememberUserCredentials(true);
+
+		return true;
 	}
 
+	public async performLinkedInLogin(): Promise<boolean> {
+
+		await this.waitForLinkedInToInitialize();
+
+		const linkedInAuthParams = await this.signInAtLinkedIn();
+
+		await this.externalLogin(ExternalAuthenticationProviders.LINKEDIN, linkedInAuthParams.userId, linkedInAuthParams.accessToken);
+		this.rememberUserCredentials(true);
+
+		return true;
+
+	}
+
+	private waitForLinkedInToInitialize() {
+		return new Promise<boolean>((resolve, reject) => {
+			this.linkedinService.isInitialized$.subscribe({
+				complete: () => {
+					resolve();
+				}
+			});
+		});
+	}
+
+	private async signInAtLinkedIn(): Promise<LinkedInAuthParams> {
+		return new Promise<LinkedInAuthParams>(async (resolve, reject) => {
+			this.linkedinService.login()
+				.subscribe({
+					complete: async () => {
+						const linkedInParams = this.getLinkedInAuthParams();
+						resolve(linkedInParams);
+					}
+				});
+		});
+	}
+
+	private getLinkedInAuthParams(): LinkedInAuthParams {
+		const linkedInMainObject = this.linkedinService.getSdkIN();
+		if (!linkedInMainObject) {
+			throw new Error('Could not get params from linked in. Please try again');
+		}
+		const linkedInAuthObject = linkedInMainObject.ENV.auth;
+		return {
+			userId: linkedInAuthObject.member_id,
+			accessToken: linkedInAuthObject.oauth_token
+		};
+
+	}
+
+
+	/**
+	 * @notice External login just upgrades the anonymous user to not anonymous one
+	 * @param externalLoginService - Facebook or Linkedin
+	 * @param userId - the userid in the appropriate login service
+	 * @param accessToken - the oauth access token of the corresponding login service
+	 */
 	private async externalLogin(
 		externalLoginService: ExternalAuthenticationProviders,
 		userId: string,
-		accessToken: string): Promise<boolean | Error> {
+		accessToken: string): Promise<boolean> {
 		const data: ExternalLoginRequest = {
 			loginProvider: externalLoginService,
 			providerKey: userId,
 			accessToken
 		};
-		const result = await this.restClient.post(this.apiEndpoints.INTERNAL_ENDPOINTS.EXTERNAL_LOGIN, data);
-		const doRememberMe = true;
-		this.setOAuthTokensInRestService(
-			result.data.token_type,
-			result.data.access_token,
-			result.data.refresh_token,
-			result.data.expires_in,
-			doRememberMe);
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.EXTERNAL_LOGIN, data);
 
 		return true;
 	}
@@ -132,15 +194,19 @@ export class AuthenticationService {
 		return true;
 	}
 
-	private setOAuthTokensInRestService(tokenType: string, accessToken: string, refreshToken: string, expiresIn: number, rememberMe: boolean) {
-		if (tokenType !== OAuth2TokenTypes.BEARER) {
-			throw new Error('Wrong type of return token');
-		}
+	private rememberUserCredentials(rememberMe: boolean) {
 		if (rememberMe) {
 			this.restClient.shouldRememberUser = RestClientService.REMEMBER_USER;
 		} else {
 			this.restClient.shouldRememberUser = RestClientService.DO_NOT_REMEMBER_USER;
 		}
+	}
+
+	private setOAuthTokensInRestService(tokenType: string, accessToken: string, refreshToken: string, expiresIn: number, rememberMe: boolean) {
+		if (tokenType !== OAuth2TokenTypes.BEARER) {
+			throw new Error('Wrong type of return token');
+		}
+		this.rememberUserCredentials(rememberMe);
 		this.restClient.accessToken = accessToken;
 		this.restClient.refreshToken = refreshToken;
 		this.restClient.tokenExpiresIn = expiresIn;
