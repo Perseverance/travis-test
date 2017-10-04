@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { SignUpComponentComponent } from './sign-up-component/sign-up-component.component';
+import { LinkedinButtonComponent } from './linkedin-button/linkedin-button.component';
+import { FacebookButtonComponent } from './facebook-button/facebook-button.component';
 
 @NgModule({
 	imports: [
@@ -18,7 +20,9 @@ import { SignUpComponentComponent } from './sign-up-component/sign-up-component.
 	],
 	declarations: [
 		LoginComponentComponent,
-		SignUpComponentComponent
+		SignUpComponentComponent,
+		LinkedinButtonComponent,
+		FacebookButtonComponent
 	],
 	providers: [
 		AuthenticationService
