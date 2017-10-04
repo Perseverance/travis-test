@@ -28,7 +28,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 	async ngOnInit() {
 		const self = this;
-		const result = await self.authService.performAnonymousLogin(); // This + authService will be removed with the new wrapping route.
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
 			self.property = await self.propertiesService.getProperty(propertyId);

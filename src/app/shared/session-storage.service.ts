@@ -46,7 +46,7 @@ export class SessionStorageService {
 	}
 
 	public get tokenExpireTimestamp(): number {
-		const expiryTimestampString = sessionStorage.getItem(this.KEY_SESSION_REFRESH_TOKEN);
+		const expiryTimestampString = sessionStorage.getItem(this.KEY_SESSION_EXPIRY_TIMESTAMP);
 		return Number.parseInt(expiryTimestampString);
 	}
 

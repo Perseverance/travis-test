@@ -45,6 +45,10 @@ export class AuthenticationService {
 		return this.restClient.hasUserLoggedIn;
 	}
 
+	public get hasAuthCredentials(): boolean {
+		return this.restClient.accessToken != null;
+	}
+
 	public async performSignUp(email: string, password: string, firstName: string, lastName: string): Promise<APIResponseWithStatus> {
 		const data = {
 			email,
@@ -88,9 +92,8 @@ export class AuthenticationService {
 		const result: LoginResponse = await this.fbService.login();
 
 		await this.externalLogin(ExternalAuthenticationProviders.FACEBOOK, result.authResponse.userID, result.authResponse.accessToken);
-		this.rememberUserCredentials(true);
 
-		return true;
+		return this.refreshStoredAccessToken(true);
 	}
 
 	public async performLinkedInLogin(): Promise<boolean> {
@@ -100,9 +103,8 @@ export class AuthenticationService {
 		const linkedInAuthParams = await this.signInAtLinkedIn();
 
 		await this.externalLogin(ExternalAuthenticationProviders.LINKEDIN, linkedInAuthParams.userId, linkedInAuthParams.accessToken);
-		this.rememberUserCredentials(true);
 
-		return true;
+		return this.refreshStoredAccessToken(true);
 
 	}
 

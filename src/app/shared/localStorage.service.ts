@@ -48,7 +48,7 @@ export class LocalStorageService {
 	}
 
 	public get tokenExpireTimestamp(): number {
-		const expiryTimestampString = localStorage.getItem(this.KEY_REFRESH_TOKEN);
+		const expiryTimestampString = localStorage.getItem(this.KEY_EXPIRY_TIMESTAMP);
 		return Number.parseInt(expiryTimestampString);
 	}
 
