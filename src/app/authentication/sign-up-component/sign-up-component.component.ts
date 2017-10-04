@@ -47,6 +47,9 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 	private setupQueryParamsWatcher() {
 		return this.route.queryParams
 			.subscribe(params => {
+				if (!params.redirect) {
+					return;
+				}
 				this.redirectToUrl = params.redirect;
 			});
 	}
@@ -77,6 +80,12 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 
 	public async onSubmit() {
 		const result = await this.authService.performSignUp(this.email.value, this.password.value, this.firstName.value, this.lastName.value);
+		// TODO make use of the result
+		this.router.navigate([this.redirectToUrl]);
+	}
+
+	public async linkedInLogin() {
+		const result = await this.authService.performLinkedInLogin();
 		// TODO make use of the result
 		this.router.navigate([this.redirectToUrl]);
 	}
