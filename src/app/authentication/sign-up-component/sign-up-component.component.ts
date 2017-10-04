@@ -1,19 +1,27 @@
 import { APIEndpointsService } from './../../shared/apiendpoints.service';
 import { SignUpFormValidators } from './sign-up-components.validators';
 import { AuthenticationService } from './../authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-sign-up-component',
 	templateUrl: './sign-up-component.component.html',
 	styleUrls: ['./sign-up-component.component.scss']
 })
-export class SignUpComponentComponent implements OnInit {
+export class SignUpComponentComponent implements OnInit, OnDestroy {
 
 	public signupForm: FormGroup;
+	private queryParamsSubscription: Subscription;
+	private redirectToUrl = '';
 
-	constructor(private authService: AuthenticationService, private formBuilder: FormBuilder) {
+	constructor(
+		private authService: AuthenticationService,
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private route: ActivatedRoute) {
 		this.signupForm = this.formBuilder.group({
 			email: ['',
 				[Validators.required, Validators.email],
@@ -29,6 +37,18 @@ export class SignUpComponentComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.queryParamsSubscription = this.setupQueryParamsWatcher();
+	}
+
+	ngOnDestroy() {
+		this.queryParamsSubscription.unsubscribe();
+	}
+
+	private setupQueryParamsWatcher() {
+		return this.route.queryParams
+			.subscribe(params => {
+				this.redirectToUrl = params.redirect;
+			});
 	}
 
 	public get email() {
@@ -57,7 +77,7 @@ export class SignUpComponentComponent implements OnInit {
 
 	public async onSubmit() {
 		const result = await this.authService.performSignUp(this.email.value, this.password.value, this.firstName.value, this.lastName.value);
-		// TODO work with the result
+		this.router.navigate([this.redirectToUrl]);
 	}
 
 }

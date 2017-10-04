@@ -4,6 +4,7 @@ import { LocalStorageService } from './localStorage.service';
 import { RestClientService } from './rest-client.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RedirectableComponent } from './redirectable/redirectable.component';
 
 @NgModule({
 	imports: [
