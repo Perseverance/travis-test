@@ -9,7 +9,7 @@
 			   class="form-control" #search formControlName="searchControl" size="100">
 	</form>
 
-	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" id="map-visualization">
+	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
 		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
 		<agm-marker *ngFor="let marker of properties" [latitude]="marker.latitude"
 					[longitude]="marker.longitude"></agm-marker>
