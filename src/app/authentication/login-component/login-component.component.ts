@@ -37,6 +37,9 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 	private setupQueryParamsWatcher() {
 		return this.route.queryParams
 			.subscribe(params => {
+				if (!params.redirect) {
+					return;
+				}
 				this.redirectToUrl = params.redirect;
 			});
 	}
@@ -57,6 +60,12 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
+		// TODO make use of the result
+		this.router.navigate([this.redirectToUrl]);
+	}
+
+	public async linkedInLogin() {
+		const result = await this.authService.performLinkedInLogin();
 		// TODO make use of the result
 		this.router.navigate([this.redirectToUrl]);
 	}
