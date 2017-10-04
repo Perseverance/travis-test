@@ -84,6 +84,12 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	public async facebookLogin() {
+		const result = await this.authService.performFacebookLogin();
+		// TODO make use of the result
+		this.router.navigate([this.redirectToUrl]);
+	}
+
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
 		// TODO make use of the result
