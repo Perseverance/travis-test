@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
 			// verify result
 			if (place.geometry === undefined || place.geometry === null) {
 				const autoCompleteService = new google.maps.places.AutocompleteService();
-				autoCompleteService.getPlacePredictions({
+				await autoCompleteService.getPlacePredictions({
 					'input': place.name,
 					'offset': place.name.length
 				}, (list, status) => this.firstPlacePredictionOnEnter(list, status));
@@ -56,10 +56,10 @@ export class HomeComponent implements OnInit {
 		});
 	}
 
-	private firstPlacePredictionOnEnter(list: any, status: any) {
+	private async firstPlacePredictionOnEnter(list: any, status: any) {
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
 			const placesService = new google.maps.places.PlacesService(document.createElement('div'));
-			placesService.getDetails({
+			await placesService.getDetails({
 				placeId: list[0].place_id
 			}, function detailsResult(detailsResult, placesServiceStatus) {
 				if (placesServiceStatus === google.maps.places.PlacesServiceStatus.OK) {
