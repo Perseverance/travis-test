@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {AngularGoogleMapsComponent} from './angular-google-maps.component';
 
 const googleMapsRoutes: Routes = [
-		{path: '', component: AngularGoogleMapsComponent}
+		{path: 'map', component: AngularGoogleMapsComponent}
 	]
 ;
 
