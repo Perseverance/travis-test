@@ -4,8 +4,7 @@ import {LocalStorageService} from './localStorage.service';
 import {RestClientService} from './rest-client.service';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RedirectableComponent} from './redirectable/redirectable.component';
-import {GoogleSearchComponent} from '../google-search/google-search.component';
+import {PropertySearchComponent} from '../property-search/property-search.component';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
@@ -13,14 +12,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 		CommonModule,
 		ReactiveFormsModule
 	],
-	declarations: [GoogleSearchComponent],
+	declarations: [PropertySearchComponent],
 	providers: [
 		RestClientService,
 		LocalStorageService,
 		SessionStorageService,
 		APIEndpointsService
 	],
-	exports: [GoogleSearchComponent]
+	exports: [PropertySearchComponent]
 })
 export class SharedModule {
 }

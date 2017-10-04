@@ -4,14 +4,17 @@ import {} from '@types/googlemaps';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 
 @Component({
-	selector: 'app-google-search',
-	templateUrl: './google-search.component.html',
-	styleUrls: ['./google-search.component.scss']
+	selector: 'app-property-search',
+	templateUrl: './property-search.component.html',
+	styleUrls: ['./property-search.component.scss']
 })
-export class GoogleSearchComponent implements OnInit {
+export class PropertySearchComponent implements OnInit {
 	private autoComplete: any;
 	public properties: any;
 	public googleSearchForm: FormGroup;
+	public latitude: number
+	public longitude: number
+	public zoom = 12;
 
 
 	@ViewChild('search')
@@ -22,7 +25,7 @@ export class GoogleSearchComponent implements OnInit {
 				private ngZone: NgZone,
 				private formBuilder: FormBuilder) {
 		this.googleSearchForm = this.formBuilder.group({
-			searchControl: ['', [Validators.required]]
+			searchControl: ['']
 		});
 	}
 
@@ -51,6 +54,8 @@ export class GoogleSearchComponent implements OnInit {
 				}, (list, status) => this.firstPlacePredictionOnEnter(list, status));
 				return;
 			}
+			this.latitude = place.geometry.location.lat();
+			this.longitude = place.geometry.location.lng();
 			console.log('Selected from dropdown');
 		});
 	}
@@ -63,6 +68,8 @@ export class GoogleSearchComponent implements OnInit {
 				placeId: list[0].place_id
 			}, function detailsResult(detailsResult, placesServiceStatus) {
 				if (placesServiceStatus === google.maps.places.PlacesServiceStatus.OK) {
+					this.latitude = detailsResult.geometry.location.lat();
+					this.longitude = detailsResult.geometry.location.lng();
 					console.log(detailsResult.geometry.location.lng(), detailsResult.geometry.location.lat());
 				}
 			});
