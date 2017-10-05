@@ -3,6 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import { NextObserver } from 'rxjs/Observer';
 
 export interface DisplayableError {
+	errorTitle?: string;
 	errorMessage: string;
 	errorTime: number;
 }
