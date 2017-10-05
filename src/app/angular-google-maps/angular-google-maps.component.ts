@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PropertiesService} from '../properties/properties.service';
-import {TranslateService} from '@ngx-translate/core';
-
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
 	selector: 'app-google-maps',
@@ -16,17 +15,27 @@ export class AngularGoogleMapsComponent implements OnInit {
 	public formattedAddress: string;
 	public properties: any;
 
-	constructor(public propertiesService: PropertiesService,
-				public translate: TranslateService) {
+	constructor(private route: ActivatedRoute,
+				public propertiesService: PropertiesService) {
 	}
 
 	async ngOnInit() {
-		// set google maps defaults
-		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-		this.properties = propertiesResponse.properties;
+		const paramLatitude = this.route.snapshot.paramMap.get('latitude');
+		const paramLongitude = this.route.snapshot.paramMap.get('longitude');
 
-		// set current position
-		this.setCurrentPosition();
+		if (paramLatitude === undefined || paramLatitude === null || paramLongitude === undefined || paramLongitude == null) {
+			// set google maps defaults
+			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+			this.properties = propertiesResponse.properties;
+
+			// set current position
+			this.setCurrentPosition();
+		} else {
+			this.latitude = +paramLatitude;
+			this.longitude = +paramLongitude;
+			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+			this.properties = propertiesResponse.properties;
+		}
 	}
 
 	private setCurrentPosition() {
