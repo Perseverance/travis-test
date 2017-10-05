@@ -15,7 +15,7 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
-	private redirectToUrl = '';
+	private redirectToUrl = '/map';
 
 	constructor(
 		private authService: AuthenticationService,

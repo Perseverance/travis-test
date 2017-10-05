@@ -19,6 +19,11 @@
                     <div class="alert alert-danger" *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and a number</div>
                 </div>
             </div>
+            <div class="form-group checkbox">
+                <label class="center-block">
+                    <input type="checkbox" formControlName="rememberMe">Remember Me
+                </label>
+            </div>
 
             <button class="btn btn-primary" [disabled]="email.invalid || password.invalid">Login</button>
         </form>
@@ -30,5 +35,10 @@
     </div>
     <div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
         <app-linkedin-button (click)="linkedInLogin()"></app-linkedin-button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 text-center">
+        <a routerLink="/signup">Not a member yet? Sign up here!</a>
     </div>
 </div>
