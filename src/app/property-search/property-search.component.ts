@@ -16,6 +16,8 @@ interface PropertyLocation {
 })
 export class PropertySearchComponent implements OnInit {
 	private autoComplete: any;
+	private autoCompleteService: any;
+	private placesService: any;
 	public properties: any;
 	public googleSearchForm: FormGroup;
 
@@ -42,17 +44,21 @@ export class PropertySearchComponent implements OnInit {
 		this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
 			types: ['(regions)']
 		});
+		this.autoCompleteService = new google.maps.places.AutocompleteService();
+		const dummyElement = document.createElement('div');
+		this.placesService = new google.maps.places.PlacesService(dummyElement);
+
 		this.autoComplete.addListener('place_changed', () => this.placeChangedHandler(this.autoComplete));
 	}
 
 	private placeChangedHandler(autoComplete: any) {
-		this.ngZone.run(async () => {
+		this.ngZone.run(() => {
 			// get the place result
 			const place: google.maps.places.PlaceResult = this.autoComplete.getPlace();
 			// verify result
 			if (place.geometry === undefined || place.geometry === null) {
-				const autoCompleteService = new google.maps.places.AutocompleteService();
-				await autoCompleteService.getPlacePredictions({
+				// const autoCompleteService = new google.maps.places.AutocompleteService();
+				this.autoCompleteService.getPlacePredictions({
 					'input': place.name,
 					'offset': place.name.length
 				}, (list, status) => this.firstPlacePredictionOnEnter(list, status));
@@ -60,16 +66,17 @@ export class PropertySearchComponent implements OnInit {
 			}
 			const latitude = place.geometry.location.lat();
 			const longitude = place.geometry.location.lng();
+			// console.log((latitude + longitude));
 			this.onLocationFound.emit({latitude, longitude});
 		});
 	}
 
-	private async firstPlacePredictionOnEnter(list: any, status: any) {
+	private firstPlacePredictionOnEnter(list: any, status: any) {
 		const self = this;
-		const dummyElement = document.createElement('div');
+		// const dummyElement = document.createElement('div');
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
-			const placesService = new google.maps.places.PlacesService(dummyElement);
-			await placesService.getDetails({
+			// const placesService = new google.maps.places.PlacesService(dummyElement);
+			this.placesService.getDetails({
 				placeId: list[0].place_id
 			}, function detailsResult(detailsResult, placesServiceStatus) {
 				if (placesServiceStatus === google.maps.places.PlacesServiceStatus.OK) {
