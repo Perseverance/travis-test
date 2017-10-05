@@ -4,9 +4,11 @@
 
 	<!-- this creates a google map on the page with the given lat/lng from -->
 	<!-- the component as the initial center of the map: -->
-	<app-property-search></app-property-search>
+	<app-property-search
+		(onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-property-search>
 
-	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+	<agm-map [latitude]="latitude" [longitude]="longitude"
+			 [zoom]="zoom">
 		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
 		<agm-marker *ngFor="let marker of properties" [latitude]="marker.latitude"
 					[longitude]="marker.longitude"></agm-marker>

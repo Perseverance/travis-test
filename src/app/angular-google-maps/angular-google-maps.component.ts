@@ -41,4 +41,12 @@ export class AngularGoogleMapsComponent implements OnInit {
 			this.properties = propertiesResponse.properties;
 		});
 	}
+
+	async onLocationFoundHandler(latitude: number, longitude: number, zoom = this.zoom) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.zoom = zoom;
+		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+		this.properties = propertiesResponse.properties;
+	}
 }
