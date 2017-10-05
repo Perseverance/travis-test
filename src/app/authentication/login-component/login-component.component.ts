@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from './../authentication.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -13,7 +14,7 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 
 	public loginForm: FormGroup;
 	private queryParamsSubscription: Subscription;
-	private redirectToUrl = '';
+	private redirectToUrl = environment.defaultRedirectRoute;
 
 	constructor(
 		private authService: AuthenticationService,
@@ -24,7 +25,8 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.loginForm = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
-			password: ['', [Validators.required]]
+			password: ['', [Validators.required]],
+			rememberMe: [true]
 		});
 
 		this.queryParamsSubscription = this.setupQueryParamsWatcher();
@@ -52,9 +54,13 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 		return this.loginForm.get('password');
 	}
 
+	public get rememberMe() {
+		return this.loginForm.get('rememberMe');
+	}
+
 	public async onSubmit() {
 		// TODO: Add remember me
-		const result = await this.authService.performLogin(this.email.value, this.password.value);
+		const result = await this.authService.performLogin(this.email.value, this.password.value, this.rememberMe.value);
 		this.router.navigate([this.redirectToUrl]);
 	}
 

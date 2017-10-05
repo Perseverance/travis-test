@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { APIEndpointsService } from './../../shared/apiendpoints.service';
 import { SignUpFormValidators } from './sign-up-components.validators';
 import { AuthenticationService } from './../authentication.service';
@@ -15,7 +16,7 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
-	private redirectToUrl = '';
+	private redirectToUrl = environment.defaultRedirectRoute;
 
 	constructor(
 		private authService: AuthenticationService,

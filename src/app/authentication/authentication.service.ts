@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment';
 import { OAuth2TokenTypes } from './oauth2-token-types';
 import { OAuth2GrantTypes } from './oauth2-grant-types';
 import { APIEndpointsService } from './../shared/apiendpoints.service';
