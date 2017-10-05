@@ -3,6 +3,12 @@ import {MapsAPILoader} from '@agm/core';
 import {} from '@types/googlemaps';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
+interface PropertyLocation {
+	latitude: number;
+	longitude: number;
+	zoom?: number;
+}
+
 @Component({
 	selector: 'app-property-search',
 	templateUrl: './property-search.component.html',
@@ -13,7 +19,7 @@ export class PropertySearchComponent implements OnInit {
 	public properties: any;
 	public googleSearchForm: FormGroup;
 
-	@Output() onLocationFound = new EventEmitter<object>();
+	@Output() onLocationFound = new EventEmitter<PropertyLocation>();
 
 	@ViewChild('search')
 	public searchElementRef: ElementRef;
