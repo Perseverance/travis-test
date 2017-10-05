@@ -49,7 +49,7 @@ export class PropertySearchComponent implements OnInit {
 				await autoCompleteService.getPlacePredictions({
 					'input': place.name,
 					'offset': place.name.length
-				}, (list, status): object => this.firstPlacePredictionOnEnter(list, status));
+				}, (list, status) => this.firstPlacePredictionOnEnter(list, status));
 				return;
 			}
 			const latitude = place.geometry.location.lat();
