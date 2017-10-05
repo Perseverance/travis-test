@@ -3,10 +3,14 @@ import { Router } from '@angular/router';
 
 export class RedirectableComponent {
 
-	constructor(protected router: Router) { }
+	constructor(protected router: Router, protected skippedRoutes: Array<string> = [], protected defaultRoute: string = '') { }
 
 	public get componentUrl(): string {
-		return this.router.url;
+		const routeUrl = this.router.url;
+		if (this.skippedRoutes.includes(routeUrl)) {
+			return this.defaultRoute;
+		}
+		return routeUrl;
 	}
 
 }
