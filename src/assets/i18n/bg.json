@@ -1,10 +1,7 @@
 {
-	"home-page": {
-		"label": {
-			"new-life-label": "Започни нов живот!",
-			"now-available-title-part-one": "Now available in Dubai, San Francisco and Moscow.",
-			"now-available-title-part-two": "Coming soon in other major global cities.",
-			"search-box-placeholder": "Search for a place...."
-		}
-	}
+    "common": {
+        "label": {
+            "authentication-error": "\u0413\u0440\u0435\u0448\u043a\u0430 \u043f\u0440\u0438 \u0430\u0443\u0442\u0435\u043d\u0442\u0438\u043a\u0430\u0446\u0438\u044f\u0442\u0430"
+        }
+    }
 }
