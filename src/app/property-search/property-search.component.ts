@@ -44,9 +44,9 @@ export class PropertySearchComponent implements OnInit {
 		this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
 			types: ['(regions)']
 		});
-		this.autoCompleteService = new google.maps.places.AutocompleteService();
-		const dummyElement = document.createElement('div');
-		this.placesService = new google.maps.places.PlacesService(dummyElement);
+		// this.autoCompleteService = new google.maps.places.AutocompleteService();
+		// const dummyElement = document.createElement('div');
+		// this.placesService = new google.maps.places.PlacesService(dummyElement);
 
 		this.autoComplete.addListener('place_changed', () => this.placeChangedHandler(this.autoComplete));
 	}
@@ -57,11 +57,11 @@ export class PropertySearchComponent implements OnInit {
 			const place: google.maps.places.PlaceResult = this.autoComplete.getPlace();
 			// verify result
 			if (place.geometry === undefined || place.geometry === null) {
-				// const autoCompleteService = new google.maps.places.AutocompleteService();
-				this.autoCompleteService.getPlacePredictions({
-					'input': place.name,
-					'offset': place.name.length
-				}, (list, status) => this.firstPlacePredictionOnEnter(list, status));
+				// ToDo: First result selected on enter
+				// this.autoCompleteService.getPlacePredictions({
+				// 	'input': place.name,
+				// 	'offset': place.name.length
+				// }, (list, status) => this.firstPlacePredictionOnEnter(list, status));
 				return;
 			}
 			const latitude = place.geometry.location.lat();
@@ -73,9 +73,7 @@ export class PropertySearchComponent implements OnInit {
 
 	private firstPlacePredictionOnEnter(list: any, status: any) {
 		const self = this;
-		// const dummyElement = document.createElement('div');
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
-			// const placesService = new google.maps.places.PlacesService(dummyElement);
 			this.placesService.getDetails({
 				placeId: list[0].place_id
 			}, function detailsResult(detailsResult, placesServiceStatus) {
