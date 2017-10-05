@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 @Component({
 	selector: 'app-home',
@@ -8,10 +9,12 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-	constructor(private router: Router) {
+	constructor(private router: Router,
+				private authService: AuthenticationService) {
 	}
 
 	ngOnInit() {
+		this.authService.refreshTokenOrLoginAnonym();
 	}
 
 	onLocationFoundHandler(latitude: number, longitude: number, zoom: number) {

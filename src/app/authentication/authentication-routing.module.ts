@@ -2,15 +2,18 @@ import {LoginComponentComponent} from './login-component/login-component.compone
 import {SignUpComponentComponent} from './sign-up-component/sign-up-component.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {TokenGuard} from './token-guard.service';
 
 const routes: Routes = [
 	{
 		path: 'login',
-		component: LoginComponentComponent
+		component: LoginComponentComponent,
+		canActivate: [TokenGuard]
 	},
 	{
 		path: 'signup',
-		component: SignUpComponentComponent
+		component: SignUpComponentComponent,
+		canActivate: [TokenGuard]
 	}
 ];
 
