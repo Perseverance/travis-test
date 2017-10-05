@@ -1,11 +1,11 @@
-import { environment } from './../../environments/environment';
-import { OAuth2TokenTypes } from './oauth2-token-types';
-import { OAuth2GrantTypes } from './oauth2-grant-types';
-import { APIEndpointsService } from './../shared/apiendpoints.service';
-import { RestClientService, APIResponseWithStatus } from './../shared/rest-client.service';
-import { Injectable } from '@angular/core';
-import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
-import { LinkedInService } from 'angular-linkedin-sdk';
+import {environment} from './../../environments/environment';
+import {OAuth2TokenTypes} from './oauth2-token-types';
+import {OAuth2GrantTypes} from './oauth2-grant-types';
+import {APIEndpointsService} from './../shared/apiendpoints.service';
+import {RestClientService, APIResponseWithStatus} from './../shared/rest-client.service';
+import {Injectable} from '@angular/core';
+import {FacebookService, InitParams, LoginResponse, LoginOptions} from 'ngx-facebook';
+import {LinkedInService} from 'angular-linkedin-sdk';
 
 export enum ExternalAuthenticationProviders {
 	FACEBOOK = 'facebook',
@@ -26,11 +26,10 @@ export interface LinkedInAuthParams {
 @Injectable()
 export class AuthenticationService {
 
-	constructor(
-		public restClient: RestClientService,
-		public apiEndpoints: APIEndpointsService,
-		private fbService: FacebookService,
-		private linkedinService: LinkedInService) {
+	constructor(public restClient: RestClientService,
+				public apiEndpoints: APIEndpointsService,
+				private fbService: FacebookService,
+				private linkedinService: LinkedInService) {
 
 		const initParams: InitParams = {
 			appId: environment.fbConfigParams.appId,
@@ -57,13 +56,13 @@ export class AuthenticationService {
 			lastName
 		};
 		const result = await this.restClient.post(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
-		return { message: result.data.message };
+		return {message: result.data.message};
 	}
 
 	public async performLogin(email: string, password: string, rememberMe = false): Promise<boolean> {
 		const data = OAuth2GrantTypes.getGrantTypePasswordDataURLParams(email, password);
 		const config = {
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 		};
 
 		const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.GET_TOKEN, data, config);
@@ -150,10 +149,9 @@ export class AuthenticationService {
 	 * @param userId - the userid in the appropriate login service
 	 * @param accessToken - the oauth access token of the corresponding login service
 	 */
-	private async externalLogin(
-		externalLoginService: ExternalAuthenticationProviders,
-		userId: string,
-		accessToken: string): Promise<boolean> {
+	private async externalLogin(externalLoginService: ExternalAuthenticationProviders,
+								userId: string,
+								accessToken: string): Promise<boolean> {
 		const data: ExternalLoginRequest = {
 			loginProvider: externalLoginService,
 			providerKey: userId,
@@ -178,7 +176,7 @@ export class AuthenticationService {
 
 		const data = OAuth2GrantTypes.getGrantTypeRefreshTokenDataURLParams(this.restClient.refreshToken);
 		const config = {
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 		};
 
 		const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.REFRESH_TOKEN, data, config);
@@ -194,6 +192,14 @@ export class AuthenticationService {
 			rememberUser);
 
 		return true;
+	}
+
+	public async refreshTokenOrLoginAnonym(): Promise<boolean> {
+		if (this.hasUserLoggedIn) {
+			return this.refreshStoredAccessToken();
+		} else {
+			return this.performAnonymousLogin();
+		}
 	}
 
 	private rememberUserCredentials(rememberMe: boolean) {
@@ -213,5 +219,4 @@ export class AuthenticationService {
 		this.restClient.refreshToken = refreshToken;
 		this.restClient.tokenExpiresIn = expiresIn;
 	}
-
 }

@@ -14,11 +14,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		if (this.authService.hasUserLoggedIn) {
-			this.authService.refreshStoredAccessToken();
-		} else {
-			this.authService.performAnonymousLogin();
-		}
+		this.authService.refreshTokenOrLoginAnonym();
 	}
 
 	onLocationFoundHandler(latitude: number, longitude: number, zoom: number) {

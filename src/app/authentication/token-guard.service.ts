@@ -17,11 +17,7 @@ export class TokenGuard implements CanActivate {
 	}
 
 	async getToken(): Promise<boolean> {
-		if (this.authService.hasUserLoggedIn) {
-			await this.authService.refreshStoredAccessToken();
-		} else {
-			await this.authService.performAnonymousLogin();
-		}
+		await this.authService.refreshTokenOrLoginAnonym();
 
 		if (!this.authService.hasAuthCredentials) {
 			throw new Error('Could not get auth credentials');
