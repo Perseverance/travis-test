@@ -1,7 +1,7 @@
-import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild} from '@angular/core';
 import {MapsAPILoader} from '@agm/core';
 import {} from '@types/googlemaps';
-import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
 	selector: 'app-property-search',
@@ -12,10 +12,8 @@ export class PropertySearchComponent implements OnInit {
 	private autoComplete: any;
 	public properties: any;
 	public googleSearchForm: FormGroup;
-	public latitude: number
-	public longitude: number
-	public zoom = 12;
 
+	@Output() onLocationFound = new EventEmitter<object>();
 
 	@ViewChild('search')
 	public searchElementRef: ElementRef;
@@ -51,16 +49,17 @@ export class PropertySearchComponent implements OnInit {
 				await autoCompleteService.getPlacePredictions({
 					'input': place.name,
 					'offset': place.name.length
-				}, (list, status) => this.firstPlacePredictionOnEnter(list, status));
+				}, (list, status): object => this.firstPlacePredictionOnEnter(list, status));
 				return;
 			}
-			this.latitude = place.geometry.location.lat();
-			this.longitude = place.geometry.location.lng();
-			console.log('Selected from dropdown');
+			const latitude = place.geometry.location.lat();
+			const longitude = place.geometry.location.lng();
+			this.onLocationFound.emit({latitude, longitude});
 		});
 	}
 
 	private async firstPlacePredictionOnEnter(list: any, status: any) {
+		const self = this;
 		const dummyElement = document.createElement('div');
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
 			const placesService = new google.maps.places.PlacesService(dummyElement);
@@ -68,9 +67,10 @@ export class PropertySearchComponent implements OnInit {
 				placeId: list[0].place_id
 			}, function detailsResult(detailsResult, placesServiceStatus) {
 				if (placesServiceStatus === google.maps.places.PlacesServiceStatus.OK) {
-					this.latitude = detailsResult.geometry.location.lat();
-					this.longitude = detailsResult.geometry.location.lng();
+					const latitude = detailsResult.geometry.location.lat();
+					const longitude = detailsResult.geometry.location.lng();
 					console.log(detailsResult.geometry.location.lng(), detailsResult.geometry.location.lat());
+					self.onLocationFound.emit({latitude, longitude});
 				}
 			});
 		}
