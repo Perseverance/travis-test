@@ -6,6 +6,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HeaderComponent } from './header/header.component';
 import { SharedModule } from '../shared/shared.module';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -26,13 +27,17 @@ export function HttpLoaderFactory(http: HttpClient) {
 		}),
 		SharedModule
 	],
-	declarations: [HeaderComponent],
+	declarations: [
+		HeaderComponent,
+		ErrorMessageComponent
+	],
 	providers: [
 		HttpClient
 	],
 	exports: [
 		TranslateModule,
-		HeaderComponent
+		HeaderComponent,
+		ErrorMessageComponent
 	]
 })
 export class CoreModule {

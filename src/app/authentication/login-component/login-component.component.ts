@@ -1,3 +1,5 @@
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors.service';
 import { environment } from './../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from './../authentication.service';
@@ -14,13 +16,19 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 
 	public loginForm: FormGroup;
 	private queryParamsSubscription: Subscription;
+	private errorStringSubscription: Subscription;
+
+	private authenticationErrorTitle: string;
+
 	private redirectToUrl = environment.defaultRedirectRoute;
 
 	constructor(
 		private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private route: ActivatedRoute) { }
+		private route: ActivatedRoute,
+		private errorsService: ErrorsService,
+		private translateService: TranslateService) { }
 
 	ngOnInit() {
 		this.loginForm = this.formBuilder.group({
@@ -29,14 +37,16 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 			rememberMe: [true]
 		});
 
+		this.errorStringSubscription = this.setupAuthErrorTranslation();
 		this.queryParamsSubscription = this.setupQueryParamsWatcher();
 	}
 
 	ngOnDestroy() {
 		this.queryParamsSubscription.unsubscribe();
+		this.errorStringSubscription.unsubscribe();
 	}
 
-	private setupQueryParamsWatcher() {
+	private setupQueryParamsWatcher(): Subscription {
 		return this.route.queryParams
 			.subscribe(params => {
 				if (!params.redirect) {
@@ -44,6 +54,12 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 				}
 				this.redirectToUrl = params.redirect;
 			});
+	}
+
+	private setupAuthErrorTranslation(): Subscription {
+		return this.translateService.get('common.label.authentication-error').subscribe((res: string) => {
+			this.authenticationErrorTitle = res;
+		});
 	}
 
 	public get email() {
@@ -59,9 +75,17 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 	}
 
 	public async onSubmit() {
-		// TODO: Add remember me
-		const result = await this.authService.performLogin(this.email.value, this.password.value, this.rememberMe.value);
-		this.router.navigate([this.redirectToUrl]);
+		try {
+			const result = await this.authService.performLogin(this.email.value, this.password.value, this.rememberMe.value);
+			this.router.navigate([this.redirectToUrl]);
+		} catch (error) {
+			const errorResponseData = error.response.data;
+			this.errorsService.pushError({
+				errorTitle: this.authenticationErrorTitle,
+				errorMessage: errorResponseData.error,
+				errorTime: (new Date()).getTime()
+			});
+		}
 	}
 
 	public async facebookLogin() {
