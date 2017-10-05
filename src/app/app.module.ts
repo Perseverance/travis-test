@@ -13,7 +13,6 @@ import {TranslateStore} from '@ngx-translate/core/src/translate.store';
 import {FacebookModule} from 'ngx-facebook';
 import {HomeModule} from './home/home.module';
 import {LinkedInSdkModule} from 'angular-linkedin-sdk';
-import {TokenGuard} from './authentication/token-guard.service';
 
 @NgModule({
 	declarations: [
@@ -35,8 +34,7 @@ import {TokenGuard} from './authentication/token-guard.service';
 	providers: [
 		TranslateStore,
 		{provide: 'apiKey', useValue: environment.linkedInApiKey},
-		{provide: 'authorize', useValue: true},
-		TokenGuard
+		{provide: 'authorize', useValue: true}
 	],
 	bootstrap: [AppComponent]
 })
