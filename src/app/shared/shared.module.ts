@@ -1,11 +1,12 @@
-import {SessionStorageService} from './session-storage.service';
-import {APIEndpointsService} from './apiendpoints.service';
-import {LocalStorageService} from './localStorage.service';
-import {RestClientService} from './rest-client.service';
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {PropertySearchComponent} from '../property-search/property-search.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import { ErrorsService } from './errors.service';
+import { SessionStorageService } from './session-storage.service';
+import { APIEndpointsService } from './apiendpoints.service';
+import { LocalStorageService } from './localStorage.service';
+import { RestClientService } from './rest-client.service';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PropertySearchComponent } from '../property-search/property-search.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	imports: [
@@ -17,7 +18,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 		RestClientService,
 		LocalStorageService,
 		SessionStorageService,
-		APIEndpointsService
+		APIEndpointsService,
+		ErrorsService
 	],
 	exports: [PropertySearchComponent]
 })
