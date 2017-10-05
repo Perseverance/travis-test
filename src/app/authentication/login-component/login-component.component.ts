@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from './../authentication.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -13,7 +14,7 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 
 	public loginForm: FormGroup;
 	private queryParamsSubscription: Subscription;
-	private redirectToUrl = '/map';
+	private redirectToUrl = environment.defaultRedirectRoute;
 
 	constructor(
 		private authService: AuthenticationService,
