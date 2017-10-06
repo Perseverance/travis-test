@@ -1,8 +1,13 @@
-import { environment } from './../../environments/environment';
-import { APIEndpointsService } from './../shared/apiendpoints.service';
-import { RestClientService } from './../shared/rest-client.service';
-import { Injectable } from '@angular/core';
-import { GetPropertiesResponse, GetPropertyResponse, PropertyAgentResponse } from './properties-responses';
+import {environment} from './../../environments/environment';
+import {APIEndpointsService} from './../shared/apiendpoints.service';
+import {RestClientService} from './../shared/rest-client.service';
+import {Injectable} from '@angular/core';
+import {
+	GetPropertiesResponse,
+	GetPropertyResponse,
+	PropertyAgentResponse,
+	GetFavouriteLocationResponse
+} from './properties-responses';
 
 interface Bounds {
 	east: number;
@@ -22,7 +27,7 @@ export class PropertiesService {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params});
 		const imageUrls = new Array<string>();
 		for (const path of result.data.data.imageUrls) {
 			imageUrls.push(`${environment.apiUrl}${path}`);
@@ -67,8 +72,8 @@ export class PropertiesService {
 			search: query
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
-		return { properties: result.data.data.properties };
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
+		return {properties: result.data.data.properties};
 	}
 
 	private createRectangleBounds(latitude: number, longitude: number, degreesOfIncreaseArea = 1) {
@@ -85,5 +90,10 @@ export class PropertiesService {
 		const querySuffix = '_coords/1,25_page/';
 		const query = `/${bounds.south},${bounds.north},${bounds.west},${bounds.east}${querySuffix}`;
 		return query;
+	}
+
+	public async getFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS);
+		return result.data.data;
 	}
 }
