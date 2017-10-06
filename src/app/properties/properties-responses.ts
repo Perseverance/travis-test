@@ -40,7 +40,3 @@ export interface GetFavouriteLocationResponse {
 	zoomLevel: number;
 	imageUrls: string[];
 }
-
-export interface GetFavouriteLocationsResponse {
-	locations: GetFavouriteLocationResponse[];
-}

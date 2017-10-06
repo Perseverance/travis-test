@@ -6,8 +6,7 @@ import {
 	GetPropertiesResponse,
 	GetPropertyResponse,
 	PropertyAgentResponse,
-	GetFavouriteLocationResponse,
-	GetFavouriteLocationsResponse
+	GetFavouriteLocationResponse
 } from './properties-responses';
 
 interface Bounds {
@@ -93,7 +92,7 @@ export class PropertiesService {
 		return query;
 	}
 
-	public async getFavouriteLocations(): Promise<GetFavouriteLocationsResponse> {
+	public async getFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
 		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS);
 		const locations = new Array<GetFavouriteLocationResponse>();
 		const imageUrls = new Array<string>();
@@ -110,6 +109,6 @@ export class PropertiesService {
 				imageUrls: imageUrls
 			});
 		}
-		return {locations: locations};
+		return locations;
 	}
 }

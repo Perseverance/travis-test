@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {PropertiesService} from '../properties/properties.service';
 
 @Component({
 	selector: 'app-home',
@@ -9,15 +8,12 @@ import {PropertiesService} from '../properties/properties.service';
 	styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-	public favouriteLocations: object;
 
 	constructor(private router: Router,
-				private authService: AuthenticationService,
-				private propertiesService: PropertiesService) {
+				private authService: AuthenticationService) {
 	}
 
-	async ngOnInit() {
-		this.favouriteLocations = await this.propertiesService.getFavouriteLocations();
+	ngOnInit() {
 		this.authService.refreshTokenOrLoginAnonym();
 	}
 
