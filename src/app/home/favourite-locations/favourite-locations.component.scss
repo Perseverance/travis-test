@@ -1,0 +1,22 @@
+.top-locations {
+	margin-top: 40px;
+	.location-holder {
+		margin-bottom: 10px;
+		.image-holder {
+			margin: 0;
+			img {
+				width: auto;
+				height: 120px;
+			}
+		}
+		.info-holder {
+			margin: 0;
+			p {
+				display: inline-block;
+			}
+			span {
+				float: right;
+			}
+		}
+	}
+}
