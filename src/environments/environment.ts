@@ -6,7 +6,10 @@
 export const environment = {
 	production: false,
 	apiUrl: 'http://servicepropydev.azurewebsites.net',
-	googleMapsApiKey: 'AIzaSyBo_Hj_8WUUY1YhUcRugWwFLNymZtMm9dc',
+	googleMaps: {
+		apiKey: 'AIzaSyAcgGhw1a6q4Y0ZOIeHFw0NrBT3XtXUhQU',
+		defaultLanguage: 'en'
+	},
 	clientId: 'PropyWebsite',
 	clientSecret: 'PixelIsNotFat',
 	fbConfigParams: {
@@ -16,5 +19,5 @@ export const environment = {
 	},
 	linkedInApiKey: '758vh4r0yqsbn9', // Otherwise known as ClientID
 	skippedRedirectRoutes: ['/login', '/signup'],
-	defaultRedirectRoute: '/map'
+	defaultRedirectRoute: '/map',
 };
