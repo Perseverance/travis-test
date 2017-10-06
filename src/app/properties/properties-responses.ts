@@ -31,3 +31,16 @@ export interface GetPropertyResponse {
 	latitude: number;
 	agents: PropertyAgentResponse[];
 }
+
+export interface GetFavouriteLocationResponse {
+	cityName: string;
+	propertiesCount: number;
+	longitude: number;
+	latitude: number;
+	zoomLevel: number;
+	imageUrls: string[];
+}
+
+export interface GetFavouriteLocationsResponse {
+	locations: GetFavouriteLocationResponse[];
+}
