@@ -20,7 +20,6 @@ export class FavouriteLocationsComponent implements OnInit {
 	}
 
 	cityItemClicked(location: GetFavouriteLocationResponse) {
-		console.log(location);
 		this.router.navigate(['map', {
 			latitude: location.latitude,
 			longitude: location.longitude,
