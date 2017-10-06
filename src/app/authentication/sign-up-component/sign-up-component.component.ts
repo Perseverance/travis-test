@@ -43,6 +43,11 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
+			iAmAnAgent: [false],
+			agentFields: this.formBuilder.group({
+				phoneNumber: ['', [Validators.required, SignUpFormValidators.phoneNumberValidator]],
+				expertise: ['', [Validators.required]]
+			}),
 			rememberMe: [true]
 		});
 	}
@@ -87,6 +92,22 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	public get lastName() {
 		return this.signupForm.get('lastName');
+	}
+
+	public get iAmAnAgent() {
+		return this.signupForm.get('iAmAnAgent');
+	}
+
+	public get agentFields() {
+		return this.signupForm.get('agentFields');
+	}
+
+	public get phoneNumber() {
+		return this.agentFields.get('phoneNumber');
+	}
+
+	public get expertise() {
+		return this.agentFields.get('expertise');
 	}
 
 	public get rememberMe() {

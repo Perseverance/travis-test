@@ -50,15 +50,40 @@
 
             <div class="form-group checkbox">
                 <label class="center-block">
-                        <input type="checkbox" formControlName="rememberMe">Remember Me
-                    </label>
+                    <input type="checkbox" formControlName="iAmAnAgent">I am an agent (Check if you are an agent)
+                </label>
+            </div>
+
+            <div formGroupName="agentFields" *ngIf="iAmAnAgent.value">
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input formControlName="phoneNumber" type="tel" class="form-control" id="phoneNumber" placeholder="e.g. +1 284 852 5500">
+                    <div *ngIf="phoneNumber.touched">
+                        <div class="alert alert-danger" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">This field is required</div>
+                        <div class="alert alert-danger" *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">Your phone number appears to be invalid</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="expertise">Expertise</label>
+                    <input formControlName="expertise" type="text" class="form-control" id="expertise" placeholder="Expertise">
+                    <div *ngIf="expertise.touched">
+                        <div class="alert alert-danger" *ngIf="expertise.invalid && expertise.errors['required']">This field is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group checkbox">
+                <label class="center-block">
+                    <input type="checkbox" formControlName="rememberMe">Remember Me
+                </label>
             </div>
 
             <button class="btn btn-primary" [disabled]="email.invalid || 
                                                 password.invalid || 
                                                 repeatPassword.invalid || 
                                                 firstName.invalid || 
-                                                lastName.invalid">
+                                                lastName.invalid ||
+                                                (iAmAnAgent.value && agentFields.invalid)">
                                                 Submit</button>
         </form>
     </div>
