@@ -1,5 +1,7 @@
-import { ErrorsService } from './../../shared/errors.service';
+import { ErrorsService } from './../../shared/errors/errors.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decorators';
 import { environment } from './../../../environments/environment';
 import { APIEndpointsService } from './../../shared/apiendpoints.service';
 import { SignUpFormValidators } from './sign-up-components.validators';
@@ -14,7 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 	templateUrl: './sign-up-component.component.html',
 	styleUrls: ['./sign-up-component.component.scss']
 })
-export class SignUpComponentComponent implements OnInit, OnDestroy {
+export class SignUpComponentComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
@@ -25,7 +27,11 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 		private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private route: ActivatedRoute) {
+		private route: ActivatedRoute,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
+
+		super(errorsService, translateService);
 		this.signupForm = this.formBuilder.group({
 			email: ['',
 				[Validators.required, Validators.email],
@@ -87,7 +93,7 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 		return this.signupForm.get('rememberMe');
 	}
 
-	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
 		const result = await this.authService
 			.performSignUp(
@@ -100,13 +106,13 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 		this.router.navigate([this.redirectToUrl]);
 	}
 
-	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	// @ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
 		this.router.navigate([this.redirectToUrl]);
 	}
 
-	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	// @ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
 		this.router.navigate([this.redirectToUrl]);

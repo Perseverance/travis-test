@@ -1,4 +1,4 @@
-import { ErrorsService, DisplayableError } from './../../shared/errors.service';
+import { ErrorsService, DisplayableError } from './../../shared/errors/errors.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

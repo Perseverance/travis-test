@@ -14,35 +14,8 @@ export class ErrorsService {
 
 	private errorsSubject: Subject<DisplayableError>;
 
-	constructor(private translateService: TranslateService) {
+	constructor() {
 		this.errorsSubject = new Subject();
-	}
-
-	/**
-	 * Decorator - Wraps Error handling for API calls and makes them display certain error
-	 * @param errorStringKey - the key to the translation that is going to be the title
-	 */
-	static DefaultAsyncAPIErrorHandling(errorStringKey: string) {
-		return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
-			const originalMethod = descriptor.value;
-
-			descriptor.value = async function (...args: any[]) {
-				try {
-					const result = await originalMethod.apply(this, args);
-				} catch (error) {
-					const errorResponseData = error.response.data;
-					this.translateService.get(errorStringKey).subscribe((keyTranslation: string) => {
-						this.errorsService.pushError({
-							errorTitle: keyTranslation,
-							errorMessage: errorResponseData.error,
-							errorTime: (new Date()).getTime()
-						});
-					});
-
-				}
-			};
-			return descriptor;
-		};
 	}
 
 	/**
