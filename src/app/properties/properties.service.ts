@@ -94,21 +94,6 @@ export class PropertiesService {
 
 	public async getFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
 		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS);
-		const locations = new Array<GetFavouriteLocationResponse>();
-		const imageUrls = new Array<string>();
-		for (const location of result.data.data) {
-			for (const path of location.imageUrls) {
-				imageUrls.push(`${path}`);
-			}
-			locations.push({
-				cityName: location.cityName,
-				propertiesCount: location.propertiesCount,
-				longitude: location.longitude,
-				latitude: location.latitude,
-				zoomLevel: location.zoomLevel,
-				imageUrls: imageUrls
-			});
-		}
-		return locations;
+		return result.data.data;
 	}
 }
