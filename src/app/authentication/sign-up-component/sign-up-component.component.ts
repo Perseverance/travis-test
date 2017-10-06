@@ -1,3 +1,5 @@
+import { Agency } from './../../models/agency.model';
+import { AgencySuggestionsService } from './../agency-suggestions.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
@@ -18,9 +20,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SignUpComponentComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
+	private AGENCY_SUGGESTIONS_MIN_LEN = 3;
+	private AGENCY_SUGGESTIONS_WAIT_MS = 200;
+	private AGENCY_MAX_SUGGESTIONS = 5;
+
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
+
+	private agencyInputSubscription: Subscription;
 	private _agentLocation: string = null;
+
+	private _agencySuggestions: Agency[];
 
 	private redirectToUrl = environment.defaultRedirectRoute;
 
@@ -29,6 +39,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
+		private agencySuggestionsService: AgencySuggestionsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 
@@ -47,7 +58,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			iAmAnAgent: [false],
 			agentFields: this.formBuilder.group({
 				phoneNumber: ['', [Validators.required, SignUpFormValidators.phoneNumberValidator]],
-				expertise: ['', [Validators.required]]
+				expertise: ['', [Validators.required]],
+				agency: ['', [Validators.required]]
 			}),
 			rememberMe: [true]
 		});
@@ -55,10 +67,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	ngOnInit() {
 		this.queryParamsSubscription = this.setupQueryParamsWatcher();
+		this.agencyInputSubscription = this.setupAgencyInputWatcher();
 	}
 
 	ngOnDestroy() {
 		this.queryParamsSubscription.unsubscribe();
+		this.agencyInputSubscription.unsubscribe();
 	}
 
 	private setupQueryParamsWatcher() {
@@ -69,6 +83,37 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				}
 				this.redirectToUrl = params.redirect;
 			});
+	}
+
+	private setupAgencyInputWatcher() {
+		return this.agency.valueChanges
+			.debounceTime(this.AGENCY_SUGGESTIONS_WAIT_MS)
+			.subscribe(agencyPart => {
+				if (agencyPart.length < this.AGENCY_SUGGESTIONS_MIN_LEN) {
+					return;
+				}
+				this.getAgencySuggestions(agencyPart);
+			});
+	}
+
+	private async getAgencySuggestions(userInput: string) {
+		this._agencySuggestions = await this.agencySuggestionsService.getAgencySuggestions(userInput);
+	}
+
+	public get agencySuggestions(): Agency[] {
+		if (!this._agencySuggestions) {
+			return this._agencySuggestions;
+		}
+		if (this._agencySuggestions.length < 2) {
+			return [];
+		}
+		return this._agencySuggestions.filter((element: Agency, index: number) => {
+			return index < this.AGENCY_MAX_SUGGESTIONS;
+		});
+	}
+
+	public trackByAgency(index: number, agency: Agency): string {
+		return agency.id;
 	}
 
 	public get email() {
@@ -111,6 +156,22 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		return this.agentFields.get('expertise');
 	}
 
+	public get agency() {
+		return this.agentFields.get('agency');
+	}
+
+	public get agencyId() {
+		if (!this._agencySuggestions) {
+			return null;
+		}
+		for (const agencySuggestion of this._agencySuggestions) {
+			if (agencySuggestion.name === this.agency.value) {
+				return agencySuggestion.id;
+			}
+		}
+		return null;
+	}
+
 	public get rememberMe() {
 		return this.signupForm.get('rememberMe');
 	}
@@ -125,8 +186,6 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
 		this._agentLocation = locationAddress;
 	}
-
-
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {

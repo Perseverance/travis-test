@@ -1,3 +1,4 @@
+import { AgencySuggestionsService } from './agency-suggestions.service';
 import { SharedModule } from './../shared/shared.module';
 import { AuthenticationService } from './authentication.service';
 import { NgModule } from '@angular/core';
@@ -25,7 +26,8 @@ import { FacebookButtonComponent } from './facebook-button/facebook-button.compo
 		FacebookButtonComponent
 	],
 	providers: [
-		AuthenticationService
+		AuthenticationService,
+		AgencySuggestionsService
 	]
 })
 export class AuthenticationModule { }

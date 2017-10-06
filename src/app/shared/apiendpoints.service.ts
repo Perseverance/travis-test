@@ -12,6 +12,7 @@ export class APIEndpointsService {
 
 	public INTERNAL_ENDPOINTS = {
 		REGISTER: `${this.INTERNAL_API_PREFIX}/Users/register`,
+		AGENCY_SUGGESTIONS: `${this.INTERNAL_API_PREFIX}/Agencies/find`,
 		EXTERNAL_LOGIN: `${this.INTERNAL_API_PREFIX}/Users/extLogin`,
 		EMAIL_AVAILABLE: `${this.INTERNAL_API_PREFIX}/Users/userexists`,
 		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,
