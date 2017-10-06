@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ErrorMessageComponent implements OnInit {
 
 	private DEFAULT_ERROR_TITLE = 'An Error Occured!';
-	private DEFAULT_ERROR_TIME = 125000;
+	private DEFAULT_ERROR_TIME = 5000;
 
 	public errorMessage: string;
 	public errorTitle: string;

@@ -1,3 +1,5 @@
+import { ErrorsService } from './../../shared/errors.service';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from './../../../environments/environment';
 import { APIEndpointsService } from './../../shared/apiendpoints.service';
 import { SignUpFormValidators } from './sign-up-components.validators';
@@ -16,6 +18,7 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
+
 	private redirectToUrl = environment.defaultRedirectRoute;
 
 	constructor(
@@ -33,7 +36,8 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
 			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
 			firstName: ['', [Validators.required]],
-			lastName: ['', [Validators.required]]
+			lastName: ['', [Validators.required]],
+			rememberMe: [true]
 		});
 	}
 
@@ -79,21 +83,32 @@ export class SignUpComponentComponent implements OnInit, OnDestroy {
 		return this.signupForm.get('lastName');
 	}
 
+	public get rememberMe() {
+		return this.signupForm.get('rememberMe');
+	}
+
+	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
-		const result = await this.authService.performSignUp(this.email.value, this.password.value, this.firstName.value, this.lastName.value);
-		// TODO make use of the result
+		const result = await this.authService
+			.performSignUp(
+			this.email.value,
+			this.password.value,
+			this.firstName.value,
+			this.lastName.value,
+			this.rememberMe.value
+			);
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
-		// TODO make use of the result
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
-		// TODO make use of the result
 		this.router.navigate([this.redirectToUrl]);
 	}
 

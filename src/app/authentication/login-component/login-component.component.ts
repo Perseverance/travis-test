@@ -16,9 +16,6 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 
 	public loginForm: FormGroup;
 	private queryParamsSubscription: Subscription;
-	private errorStringSubscription: Subscription;
-
-	private authenticationErrorTitle: string;
 
 	private redirectToUrl = environment.defaultRedirectRoute;
 
@@ -26,9 +23,7 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 		private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private route: ActivatedRoute,
-		private errorsService: ErrorsService,
-		private translateService: TranslateService) { }
+		private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.loginForm = this.formBuilder.group({
@@ -37,13 +32,11 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 			rememberMe: [true]
 		});
 
-		this.errorStringSubscription = this.setupAuthErrorTranslation();
 		this.queryParamsSubscription = this.setupQueryParamsWatcher();
 	}
 
 	ngOnDestroy() {
 		this.queryParamsSubscription.unsubscribe();
-		this.errorStringSubscription.unsubscribe();
 	}
 
 	private setupQueryParamsWatcher(): Subscription {
@@ -54,12 +47,6 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 				}
 				this.redirectToUrl = params.redirect;
 			});
-	}
-
-	private setupAuthErrorTranslation(): Subscription {
-		return this.translateService.get('common.label.authentication-error').subscribe((res: string) => {
-			this.authenticationErrorTitle = res;
-		});
 	}
 
 	public get email() {
@@ -74,29 +61,21 @@ export class LoginComponentComponent implements OnInit, OnDestroy {
 		return this.loginForm.get('rememberMe');
 	}
 
+	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
-		try {
-			const result = await this.authService.performLogin(this.email.value, this.password.value, this.rememberMe.value);
-			this.router.navigate([this.redirectToUrl]);
-		} catch (error) {
-			const errorResponseData = error.response.data;
-			this.errorsService.pushError({
-				errorTitle: this.authenticationErrorTitle,
-				errorMessage: errorResponseData.error,
-				errorTime: (new Date()).getTime()
-			});
-		}
-	}
-
-	public async facebookLogin() {
-		const result = await this.authService.performFacebookLogin();
-		// TODO make use of the result
+		const result = await this.authService.performLogin(this.email.value, this.password.value, this.rememberMe.value);
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	public async facebookLogin() {
+		const result = await this.authService.performFacebookLogin();
+		this.router.navigate([this.redirectToUrl]);
+	}
+
+	@ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
-		// TODO make use of the result
 		this.router.navigate([this.redirectToUrl]);
 	}
 
