@@ -1,38 +1,35 @@
-import {Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild} from '@angular/core';
-import {MapsAPILoader} from '@agm/core';
-import {} from '@types/googlemaps';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { MapsAPILoader } from '@agm/core';
+import { } from '@types/googlemaps';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-interface PropertyLocation {
+interface SearchLocation {
 	latitude: number;
 	longitude: number;
+	locationAddress: string;
 	zoom?: number;
 }
 
 @Component({
-	selector: 'app-property-search',
-	templateUrl: './property-search.component.html',
-	styleUrls: ['./property-search.component.scss']
+	selector: 'app-location-search',
+	templateUrl: './location-search.component.html',
+	styleUrls: ['./location-search.component.scss']
 })
-export class PropertySearchComponent implements OnInit {
+export class LocationSearchComponent implements OnInit {
 	private autoComplete: any;
 	private autoCompleteService: any;
 	private placesService: any;
 	public properties: any;
-	public googleSearchForm: FormGroup;
 
-	@Output() onLocationFound = new EventEmitter<PropertyLocation>();
+	@Output() onLocationFound = new EventEmitter<SearchLocation>();
 
 	@ViewChild('search')
 	public searchElementRef: ElementRef;
 
 
 	constructor(private mapsAPILoader: MapsAPILoader,
-				private ngZone: NgZone,
-				private formBuilder: FormBuilder) {
-		this.googleSearchForm = this.formBuilder.group({
-			searchControl: ['']
-		});
+		private ngZone: NgZone,
+		private formBuilder: FormBuilder) {
 	}
 
 	async ngOnInit() {
@@ -41,9 +38,7 @@ export class PropertySearchComponent implements OnInit {
 
 	async loadPlacesAutoCompleteSearch() {
 		await this.mapsAPILoader.load();
-		this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-			types: ['(regions)']
-		});
+		this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {});
 		// this.autoCompleteService = new google.maps.places.AutocompleteService();
 		// const dummyElement = document.createElement('div');
 		// this.placesService = new google.maps.places.PlacesService(dummyElement);
@@ -66,8 +61,8 @@ export class PropertySearchComponent implements OnInit {
 			}
 			const latitude = place.geometry.location.lat();
 			const longitude = place.geometry.location.lng();
-			// console.log((latitude + longitude));
-			this.onLocationFound.emit({latitude, longitude});
+			const locationAddress = place.formatted_address;
+			this.onLocationFound.emit({ latitude, longitude, locationAddress });
 		});
 	}
 
@@ -80,8 +75,8 @@ export class PropertySearchComponent implements OnInit {
 				if (placesServiceStatus === google.maps.places.PlacesServiceStatus.OK) {
 					const latitude = detailsResult.geometry.location.lat();
 					const longitude = detailsResult.geometry.location.lng();
-					console.log(detailsResult.geometry.location.lng(), detailsResult.geometry.location.lat());
-					self.onLocationFound.emit({latitude, longitude});
+					const locationAddress = detailsResult.formatted_address;
+					self.onLocationFound.emit({ latitude, longitude, locationAddress });
 				}
 			});
 		}

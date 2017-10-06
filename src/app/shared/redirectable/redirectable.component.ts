@@ -6,7 +6,10 @@ export class RedirectableComponent {
 
 	public get componentUrl(): string {
 		let routeUrl = this.router.url;
-		routeUrl = routeUrl.substring(0, routeUrl.indexOf('?'));
+		const questionIndex = routeUrl.indexOf('?');
+		if (questionIndex > 0) {
+			routeUrl = routeUrl.substring(0, questionIndex);
+		}
 		if (this.skippedRoutes.includes(routeUrl)) {
 			return this.defaultRoute;
 		}

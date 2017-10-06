@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {AuthenticationService} from './authentication.service';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
@@ -10,7 +10,11 @@ export class TokenGuard implements CanActivate {
 	async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
 		if (this.authService.hasAuthCredentials) {
-			return true;
+			const result = await this.authService.refreshStoredAccessToken();
+			const refreshWasNotNeeded = null;
+			if (result || result === refreshWasNotNeeded) {
+				return true;
+			}
 		}
 
 		return await this.getToken();

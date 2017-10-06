@@ -20,6 +20,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
+	private _agentLocation: string = null;
 
 	private redirectToUrl = environment.defaultRedirectRoute;
 
@@ -43,6 +44,11 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
+			iAmAnAgent: [false],
+			agentFields: this.formBuilder.group({
+				phoneNumber: ['', [Validators.required, SignUpFormValidators.phoneNumberValidator]],
+				expertise: ['', [Validators.required]]
+			}),
 			rememberMe: [true]
 		});
 	}
@@ -89,9 +95,38 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		return this.signupForm.get('lastName');
 	}
 
+	public get iAmAnAgent() {
+		return this.signupForm.get('iAmAnAgent');
+	}
+
+	public get agentFields() {
+		return this.signupForm.get('agentFields');
+	}
+
+	public get phoneNumber() {
+		return this.agentFields.get('phoneNumber');
+	}
+
+	public get expertise() {
+		return this.agentFields.get('expertise');
+	}
+
 	public get rememberMe() {
 		return this.signupForm.get('rememberMe');
 	}
+
+	public get agentLocation(): string {
+		if (this._agentLocation === '') {
+			return null;
+		}
+		return this._agentLocation;
+	}
+
+	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
+		this._agentLocation = locationAddress;
+	}
+
+
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
@@ -106,13 +141,13 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.router.navigate([this.redirectToUrl]);
 	}
 
-	// @ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
 		this.router.navigate([this.redirectToUrl]);
 	}
 
-	// @ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
 		this.router.navigate([this.redirectToUrl]);

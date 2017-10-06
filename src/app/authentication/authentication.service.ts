@@ -179,7 +179,7 @@ export class AuthenticationService {
 			throw new Error('Incorrect state: trying to refresh without user ever logged in');
 		}
 		if (!this.restClient.isTokenExpired && !forceRefresh) {
-			return null;
+			return true;
 		}
 
 		const data = OAuth2GrantTypes.getGrantTypeRefreshTokenDataURLParams(this.restClient.refreshToken);
