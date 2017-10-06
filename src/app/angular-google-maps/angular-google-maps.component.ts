@@ -22,6 +22,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 	async ngOnInit() {
 		const paramLatitude = this.route.snapshot.paramMap.get('latitude');
 		const paramLongitude = this.route.snapshot.paramMap.get('longitude');
+		const paramZoom = this.route.snapshot.paramMap.get('zoom');
 
 		if (paramLatitude === undefined || paramLatitude === null || paramLongitude === undefined || paramLongitude == null) {
 			// set google maps defaults
@@ -33,6 +34,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 		} else {
 			this.latitude = +paramLatitude;
 			this.longitude = +paramLongitude;
+			this.zoom = paramZoom ? +paramZoom : this.zoom;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
 			this.properties = propertiesResponse.properties;
 		}
