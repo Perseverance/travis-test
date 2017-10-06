@@ -20,6 +20,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
+	private _agentLocation: string = null;
 
 	private redirectToUrl = environment.defaultRedirectRoute;
 
@@ -114,6 +115,19 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		return this.signupForm.get('rememberMe');
 	}
 
+	public get agentLocation(): string {
+		if (this._agentLocation === '') {
+			return null;
+		}
+		return this._agentLocation;
+	}
+
+	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
+		this._agentLocation = locationAddress;
+	}
+
+
+
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
 		const result = await this.authService
@@ -127,13 +141,13 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.router.navigate([this.redirectToUrl]);
 	}
 
-	// @ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
 		this.router.navigate([this.redirectToUrl]);
 	}
 
-	// @ErrorsService.DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
 		this.router.navigate([this.redirectToUrl]);

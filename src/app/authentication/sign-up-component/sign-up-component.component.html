@@ -70,6 +70,10 @@
                         <div class="alert alert-danger" *ngIf="expertise.invalid && expertise.errors['required']">This field is required</div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="location">Location of Operations</label>
+                    <app-location-search id="location" (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"></app-location-search>
+                </div>
             </div>
 
             <div class="form-group checkbox">
@@ -83,7 +87,8 @@
                                                 repeatPassword.invalid || 
                                                 firstName.invalid || 
                                                 lastName.invalid ||
-                                                (iAmAnAgent.value && agentFields.invalid)">
+                                                (iAmAnAgent.value && agentFields.invalid)||
+                                                (iAmAnAgent.value && agentLocation === null)">
                                                 Submit</button>
         </form>
     </div>

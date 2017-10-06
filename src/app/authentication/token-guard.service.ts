@@ -10,7 +10,11 @@ export class TokenGuard implements CanActivate {
 	async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
 		if (this.authService.hasAuthCredentials) {
-			return this.authService.refreshStoredAccessToken();
+			const result = await this.authService.refreshStoredAccessToken();
+			const refreshWasNotNeeded = null;
+			if (result || result === refreshWasNotNeeded) {
+				return true;
+			}
 		}
 
 		return await this.getToken();
