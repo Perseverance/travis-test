@@ -11,10 +11,10 @@ export class BigNumberFormatPipe implements PipeTransform {
 				returnValue = (+value / Math.pow(10, 12)).toFixed(1) + 'T';
 			} else if (abs >= Math.pow(10, 9)) {
 				// billion
-				returnValue = (+value / Math.pow(10, 12)).toFixed(1) + 'B';
+				returnValue = (+value / Math.pow(10, 9)).toFixed(1) + 'B';
 			} else if (abs >= Math.pow(10, 6)) {
 				// million
-				returnValue = (+value / Math.pow(10, 12)).toFixed(1) + 'M';
+				returnValue = (+value / Math.pow(10, 6)).toFixed(1) + 'M';
 			} else if (abs >= Math.pow(10, 3)) {
 				// thousand
 				returnValue = (+value / Math.pow(10, 3)).toFixed(1) + 'K';
