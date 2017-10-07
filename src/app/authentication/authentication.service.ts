@@ -18,6 +18,17 @@ export interface ExternalLoginRequest {
 	accessToken: string;
 }
 
+export interface RegisterAgentRequest {
+	firstName: string;
+	lastName: string;
+	email: string;
+	agencyId: string;
+	agencyName: string;
+	locations: string[];
+	info: string;
+	phoneNumber: string;
+}
+
 export interface LinkedInAuthParams {
 	userId: string;
 	accessToken: string;
@@ -226,5 +237,10 @@ export class AuthenticationService {
 		this.restClient.accessToken = accessToken;
 		this.restClient.refreshToken = refreshToken;
 		this.restClient.tokenExpiresIn = expiresIn;
+	}
+
+	public async performAgentSignup(data: RegisterAgentRequest): Promise<boolean> {
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER_AGENT, data);
+		return true;
 	}
 }

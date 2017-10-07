@@ -59,7 +59,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			agentFields: this.formBuilder.group({
 				phoneNumber: ['', [Validators.required, SignUpFormValidators.phoneNumberValidator]],
 				expertise: ['', [Validators.required]],
-				agency: ['', [Validators.required]]
+				agency: ['', [Validators.required]],
+				agencyPassword: ['', [Validators.required]]
 			}),
 			rememberMe: [true]
 		});
@@ -172,6 +173,10 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		return null;
 	}
 
+	public get agencyPassword() {
+		return this.agentFields.get('agencyPassword');
+	}
+
 	public get rememberMe() {
 		return this.signupForm.get('rememberMe');
 	}
@@ -197,6 +202,18 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			this.lastName.value,
 			this.rememberMe.value
 			);
+		if (this.iAmAnAgent.value) {
+			const agentResult = await this.authService.performAgentSignup({
+				firstName: this.firstName.value,
+				lastName: this.lastName.value,
+				email: this.email.value,
+				agencyId: this.agencyId,
+				agencyName: this.agency.value,
+				locations: [this._agentLocation],
+				info: this.expertise.value,
+				phoneNumber: this.phoneNumber.value
+			});
+		}
 		this.router.navigate([this.redirectToUrl]);
 	}
 
