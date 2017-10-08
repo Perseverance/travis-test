@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {PropertiesService} from '../properties/properties.service';
 import {ActivatedRoute} from '@angular/router';
 
@@ -16,7 +16,15 @@ export class AngularGoogleMapsComponent implements OnInit {
 	public properties: any;
 
 	constructor(private route: ActivatedRoute,
-				public propertiesService: PropertiesService) {
+				public propertiesService: PropertiesService,
+				private cdr: ChangeDetectorRef) {
+		// workaround to activate change detection manually(bug in angular > 4.1.3), remove delay between constructor and ngOnInit hook
+		setTimeout(() => this.setChanged(), 0);
+	}
+
+	setChanged() {
+		this.cdr.markForCheck();
+		this.cdr.detectChanges();
 	}
 
 	async ngOnInit() {
@@ -59,5 +67,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 		this.zoom = zoom;
 		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
 		this.properties = propertiesResponse.properties;
+		// workaround to activate change detection manually
+		setTimeout(() => this.setChanged(), 0);
 	}
 }
