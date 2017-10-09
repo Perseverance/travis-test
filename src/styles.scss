@@ -1,75 +1,98 @@
 /* You can add global styles to this file, and also import other style files */
+
 // Variables
 @import "variables";
 // Mixins
 @import 'mixins';
 // Fonts
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700");
-
-html, body {
-	height: 100%;
-	#wrap {
-		min-height: 100%;
-		#main {
-			overflow: auto;
-			padding-bottom: $footer-height + 1px; /* this needs to be bigger than footer height*/
-		}
-	}
-	font-family: $font-family-open-sans;
-	font-size: $font-size-base;
-	h1, h2, h3, h4, h6, a, p {
-		font-weight: normal;
-	}
-	h1 {
-		font-size: 60px;
-	}
-	h2 {
-		font-size: 45px;
-	}
-	h3 {
-		font-size: 25px;
-	}
-	h4 {
-		font-size: 20px;
-	}
-	h5 {
-		font-size: $font-size-base;
-		font-weight: bold;
-	}
-	h6 {
-		font-size: $font-size-small;
-	}
-	input.propy-control {
-		@include border-radius(5px);
-		border: 1px solid $border-default;
-		outline: none;
-		box-shadow: none;
-		height: 50px;
-		font-size: 25px;
-	}
-	button.propy-control {
-		border: none;
-		outline: none;
-		&.button-big {
-			@include border-radius(5px);
-			background-color: $blue-main;
-			height: 50px;
-			font-size: 25px;
-			color: $white;
-			&:hover {
-				background-color: $blue-light;
-			}
-		}
-		&.button-small {
-			@include border-radius(5px);
-			background-color: $gray-dark;
-			height: 35px;
-			font-size: 20px;
-			color: $white;
-			&:hover {
-				background-color: $gray-light;
-			}
-		}
-	}
+html,
+body {
+    height: 100%;
+    #wrap {
+        min-height: 100%;
+        #main {
+            overflow: auto;
+            padding-bottom: $footer-height + 1px;
+            /* this needs to be bigger than footer height*/
+        }
+    }
+    font-family: $font-family-open-sans;
+    font-size: $font-size-base;
+    h1,
+    h2,
+    h3,
+    h4,
+    h6,
+    a,
+    p {
+        color: $text-color-main;
+        font-weight: 300;
+        &.propy-custom-heading {
+            padding-left: 30px;
+            border-left: 2px solid $blue-main;
+        }
+    }
+    h1 {
+        font-size: 60px;
+    }
+    h2 {
+        font-size: 45px;
+    }
+    h3 {
+        font-size: 25px;
+    }
+    h4 {
+        font-size: 20px;
+    }
+    h5 {
+        font-size: $font-size-base;
+        font-weight: bold;
+    }
+    h6 {
+        font-size: $font-size-small;
+    }
+    input.propy-control {
+        @include border-radius(5px);
+        border: 1px solid $border-default;
+        outline: none;
+        box-shadow: none;
+        height: 50px;
+        font-size: 25px;
+        margin-bottom: 25px;
+        &.ng-no-margin {
+            margin-bottom: 0px;
+        }
+        &.ng-touched.ng-invalid {
+            border-color: $red-main;
+        }
+    }
+    button.propy-control {
+        border: none;
+        outline: none;
+        &.button-big {
+            @include border-radius(5px);
+            background-color: $blue-main;
+            height: 50px;
+            font-size: 25px;
+            color: $white;
+            &:hover {
+                background-color: $blue-light;
+            }
+        }
+        &.button-small {
+            @include border-radius(5px);
+            background-color: $gray-dark;
+            height: 35px;
+            font-size: 20px;
+            color: $white;
+            &:hover {
+                background-color: $gray-light;
+            }
+        }
+    }
+    .propy-form {
+        padding: 25px;
+        background-color: white;
+    }
 }
-
