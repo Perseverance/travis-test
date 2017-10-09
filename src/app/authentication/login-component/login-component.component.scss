@@ -1,0 +1,15 @@
+@import "../../../variables";
+
+.login-holder {
+	h2.propy-custom-heading {
+		color: $white;
+		margin: 100px 0;
+	}
+	form {
+		.input-group {
+			button.propy-control {
+				padding: 6px 30px;
+			}
+		}
+	}
+}
