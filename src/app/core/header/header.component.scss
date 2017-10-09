@@ -1,51 +1,52 @@
 @import "../../../_variables.scss";
-
 .propy-header {
-	.nav {
-		.dropdown {
-			.dropdown-menu {
-				min-width: 80px;
-				li {
-					&:hover {
-						background-color: darken(white, 5%);
-					}
-				}
-			}
-			a.dropdown-toggle {
-				height: 40px;
-				margin-top: 10px;
-				span {
-					margin-left: 15px;
-				}
-			}
-			a {
-				background-size: 30px !important;
-				background-repeat: no-repeat !important;
-				height: 30px;
-				margin-left: 25px;
-				&.ar {
-					background: url('/assets/images/country-flags/flag_of_united_arab_emirates.png');
-				}
-				&.bg {
-					background: url('/assets/images/country-flags/flag_of_bulgaria.png');
-				}
-				&.en {
-					background: url('/assets/images/country-flags/flag_united_states.png');
-				}
-				&.es {
-					background: url('/assets/images/country-flags/flag_of_spain.png');
-				}
-				&.fr {
-					background: url('/assets/images/country-flags/flag_of_france.png');
-				}
-				&.ru {
-					background: url('/assets/images/country-flags/flag_of_russia.png');
-				}
-				&.zh {
-					background: url('/assets/images/country-flags/flag_of_china.png');
-				}
-
-			}
-		}
-	}
+    &.navbar {
+        margin: 0px;
+    }
+    .nav {
+        .dropdown {
+            .dropdown-menu {
+                min-width: 80px;
+                li {
+                    &:hover {
+                        background-color: darken(white, 5%);
+                    }
+                }
+            }
+            a.dropdown-toggle {
+                height: 40px;
+                margin-top: 10px;
+                span {
+                    margin-left: 15px;
+                }
+            }
+            a {
+                background-size: 30px !important;
+                background-repeat: no-repeat !important;
+                height: 30px;
+                margin-left: 25px;
+                &.ar {
+                    background: url('/assets/images/country-flags/flag_of_united_arab_emirates.png');
+                }
+                &.bg {
+                    background: url('/assets/images/country-flags/flag_of_bulgaria.png');
+                }
+                &.en {
+                    background: url('/assets/images/country-flags/flag_united_states.png');
+                }
+                &.es {
+                    background: url('/assets/images/country-flags/flag_of_spain.png');
+                }
+                &.fr {
+                    background: url('/assets/images/country-flags/flag_of_france.png');
+                }
+                &.ru {
+                    background: url('/assets/images/country-flags/flag_of_russia.png');
+                }
+                &.zh {
+                    background: url('/assets/images/country-flags/flag_of_china.png');
+                }
+            }
+        }
+    }
 }

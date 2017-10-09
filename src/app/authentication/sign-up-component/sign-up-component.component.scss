@@ -1,6 +1,20 @@
 @import "../../../variables";
 @import "../../../mixins";
+$header-margin: 80px;
 .signup {
+    padding-top: $header-margin;
+    background-color: darken($blue-main, 15%);
+    .form-group {
+        margin: 0px;
+        &.agency-form-group,
+        &.location-form-group {
+            margin-bottom: 25px;
+        }
+    }
+    h2.propy-custom-heading {
+        color: white;
+        margin-bottom: $header-margin;
+    }
     .agent-locations {
         padding-top: 10px;
         .location {
