@@ -28,8 +28,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
 
-	private _agentLocation: string = null;
-	private _agencyId: string = null;
+	public agencyId: string = null;
+
+	public agentLocations: string[] = new Array<string>();
 	private redirectToUrl = environment.defaultRedirectRoute;
 
 	protected agencyAutoCompleteDataService: RemoteData;
@@ -145,26 +146,27 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		return this.signupForm.get('rememberMe');
 	}
 
-	public get agentLocation(): string {
-		if (this._agentLocation === '') {
-			return null;
-		}
-		return this._agentLocation;
+	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
+		this.addAgentLocation(locationAddress);
 	}
 
-	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
-		this._agentLocation = locationAddress;
+	public addAgentLocation(locationAddress: string) {
+		this.agentLocations.push(locationAddress);
+	}
+
+	public removeAgentLocationAtIndex(index: number) {
+		this.agentLocations.splice(index, 1);
 	}
 
 	public onAgencySelected(selected: CompleterItem) {
 		if (selected == null) {
 			return;
 		}
-		this._agencyId = selected.originalObject.id;
+		this.agencyId = selected.originalObject.id;
 	}
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
-	public async onSubmit() {
+	public async registerUser() {
 		const result = await this.authService
 			.performSignUp(
 			this.email.value,
@@ -178,15 +180,16 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				firstName: this.firstName.value,
 				lastName: this.lastName.value,
 				email: this.email.value,
-				agencyId: this._agencyId,
+				agencyId: this.agencyId,
 				agencyName: this.agency.value,
-				locations: [this._agentLocation],
+				locations: this.agentLocations,
 				info: this.expertise.value,
 				phoneNumber: this.phoneNumber.value
 			});
 		}
 		this.router.navigate([this.redirectToUrl]);
 	}
+
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {

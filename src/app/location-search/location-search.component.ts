@@ -1,7 +1,7 @@
-import {Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild} from '@angular/core';
-import {MapsAPILoader} from '@agm/core';
-import {} from '@types/googlemaps';
-import {FormBuilder} from '@angular/forms';
+import { Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild, Input } from '@angular/core';
+import { MapsAPILoader } from '@agm/core';
+import { } from '@types/googlemaps';
+import { FormBuilder } from '@angular/forms';
 
 interface SearchLocation {
 	latitude: number;
@@ -20,6 +20,9 @@ export class LocationSearchComponent implements OnInit {
 	private autoCompleteService: any;
 	public properties: any;
 
+	@Input() resetAfterSearch = false;
+	@Input() searchOnEnter = true;
+
 	@Output() onLocationFound = new EventEmitter<SearchLocation>();
 
 	@ViewChild('search')
@@ -27,8 +30,8 @@ export class LocationSearchComponent implements OnInit {
 
 
 	constructor(private mapsAPILoader: MapsAPILoader,
-				private ngZone: NgZone,
-				private formBuilder: FormBuilder) {
+		private ngZone: NgZone,
+		private formBuilder: FormBuilder) {
 	}
 
 	async ngOnInit() {
@@ -49,14 +52,14 @@ export class LocationSearchComponent implements OnInit {
 			const place: google.maps.places.PlaceResult = this.autoComplete.getPlace();
 			// verify result
 			if (place.geometry === undefined || place.geometry === null) {
-				this.autoCompleteService.getQueryPredictions({input: place.name},
+				this.autoCompleteService.getQueryPredictions({ input: place.name },
 					(predictions, status) => this.displaySuggestions(predictions, status));
 				return;
 			}
 			const latitude = place.geometry.location.lat();
 			const longitude = place.geometry.location.lng();
 			const locationAddress = place.formatted_address;
-			this.onLocationFound.emit({latitude, longitude, locationAddress});
+			this.emitLocationFound({ latitude, longitude, locationAddress });
 		});
 	}
 
@@ -66,15 +69,22 @@ export class LocationSearchComponent implements OnInit {
 		}
 		const self = this;
 		const geocoder = new google.maps.Geocoder;
-		geocoder.geocode({'placeId': predictions[0].place_id}, function (results, status) {
+		geocoder.geocode({ 'placeId': predictions[0].place_id }, function (results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
 				if (results[0]) {
 					const latitude = results[0].geometry.location.lat();
 					const longitude = results[0].geometry.location.lng();
 					const locationAddress = results[0].formatted_address;
-					self.onLocationFound.emit({latitude, longitude, locationAddress});
+					self.emitLocationFound({ latitude, longitude, locationAddress });
 				}
 			}
 		});
+	}
+
+	private emitLocationFound(value: SearchLocation) {
+		this.onLocationFound.emit(value);
+		if (this.resetAfterSearch) {
+			this.searchElementRef.nativeElement.value = '';
+		}
 	}
 }
