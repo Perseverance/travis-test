@@ -1,0 +1,22 @@
+@import "../../../variables";
+@import "../../../mixins";
+.signup {
+    .agent-locations {
+        padding-top: 10px;
+        .location {
+            border: 1px solid $gray-light;
+            margin-top: 2px;
+            @include border-radius(3px);
+            padding: 10px 0px;
+            .location-name {
+                padding-left: 10px;
+            }
+            .close-icon {
+                cursor: pointer;
+                i {
+                    color: $gray-dark;
+                }
+            }
+        }
+    }
+}
