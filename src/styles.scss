@@ -1,3 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
-
+// Variables
+@import "variables";
+// Mixins
 @import 'mixins';
+// Fonts
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700");
+
+body {
+	font-family: $font-family-open-sans !important;
+	font-size: $font-size-base;
+	h1, h2, h3, h4, h6, a, p {
+		font-weight: normal;
+	}
+	h1 {
+		font-size: 60px;
+	}
+	h2 {
+		font-size: 45px;
+	}
+	h3 {
+		font-size: 25px;
+	}
+	h4 {
+		font-size: 20px;
+	}
+	h5 {
+		font-size: $font-size-base;
+		font-weight: bold;
+	}
+	h6 {
+		font-size: $font-size-small;
+	}
+	input {
+		@include border-radius(5px !important);
+		border: 1px solid $border-default !important;
+		outline: none !important;
+		box-shadow: none !important;
+	}
+	button {
+		border: none !important;
+		outline: none !important;
+		padding: 0 15px !important;
+	}
+	button.button-big {
+		@include border-radius(5px !important);
+		background-color: $blue-main;
+		height: 50px !important;
+		font-size: 25px !important;
+		color: $white;
+		&:hover {
+			background-color: $blue-light;
+		}
+	}
+	button.button-small {
+		@include border-radius(5px !important);
+		background-color: $gray-dark;
+		height: 35px !important;
+		font-size: 20px !important;
+		color: $white;
+		&:hover {
+			background-color: $gray-light;
+		}
+	}
+}
+
