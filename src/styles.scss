@@ -6,8 +6,16 @@
 // Fonts
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700");
 
-body {
-	font-family: $font-family-open-sans !important;
+html, body {
+	height: 100%;
+	#wrap {
+		min-height: 100%;
+		#main {
+			overflow: auto;
+			padding-bottom: $footer-height + 1px; /* this needs to be bigger than footer height*/
+		}
+	}
+	font-family: $font-family-open-sans;
 	font-size: $font-size-base;
 	h1, h2, h3, h4, h6, a, p {
 		font-weight: normal;
@@ -31,35 +39,36 @@ body {
 	h6 {
 		font-size: $font-size-small;
 	}
-	input {
-		@include border-radius(5px !important);
-		border: 1px solid $border-default !important;
-		outline: none !important;
-		box-shadow: none !important;
+	input.propy-control {
+		@include border-radius(5px);
+		border: 1px solid $border-default;
+		outline: none;
+		box-shadow: none;
+		height: 50px;
+		font-size: 25px;
 	}
-	button {
-		border: none !important;
-		outline: none !important;
-		padding: 0 15px !important;
-	}
-	button.button-big {
-		@include border-radius(5px !important);
-		background-color: $blue-main;
-		height: 50px !important;
-		font-size: 25px !important;
-		color: $white;
-		&:hover {
-			background-color: $blue-light;
+	button.propy-control {
+		border: none;
+		outline: none;
+		&.button-big {
+			@include border-radius(5px);
+			background-color: $blue-main;
+			height: 50px;
+			font-size: 25px;
+			color: $white;
+			&:hover {
+				background-color: $blue-light;
+			}
 		}
-	}
-	button.button-small {
-		@include border-radius(5px !important);
-		background-color: $gray-dark;
-		height: 35px !important;
-		font-size: 20px !important;
-		color: $white;
-		&:hover {
-			background-color: $gray-light;
+		&.button-small {
+			@include border-radius(5px);
+			background-color: $gray-dark;
+			height: 35px;
+			font-size: 20px;
+			color: $white;
+			&:hover {
+				background-color: $gray-light;
+			}
 		}
 	}
 }
