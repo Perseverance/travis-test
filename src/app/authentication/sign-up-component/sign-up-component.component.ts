@@ -1,3 +1,4 @@
+import { CompleterService, RemoteData, CompleterItem } from 'ng2-completer';
 import { Agency } from './../../models/agency.model';
 import { AgencySuggestionsService } from './../agency-suggestions.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
@@ -27,12 +28,11 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	public signupForm: FormGroup;
 	private queryParamsSubscription: Subscription;
 
-	private agencyInputSubscription: Subscription;
 	private _agentLocation: string = null;
-
-	private _agencySuggestions: Agency[];
-
+	private _agencyId: string = null;
 	private redirectToUrl = environment.defaultRedirectRoute;
+
+	protected agencyAutoCompleteDataService: RemoteData;
 
 	constructor(
 		private authService: AuthenticationService,
@@ -40,10 +40,18 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		private router: Router,
 		private route: ActivatedRoute,
 		private agencySuggestionsService: AgencySuggestionsService,
+		private completerService: CompleterService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 
 		super(errorsService, translateService);
+
+		this.agencyAutoCompleteDataService = completerService.remote('', 'name', 'name');
+		this.agencyAutoCompleteDataService.urlFormater((term: string) => {
+			return `${this.agencySuggestionsService.agenciesSearchURL}${term}`;
+		});
+		this.agencyAutoCompleteDataService.dataField('data');
+
 		this.signupForm = this.formBuilder.group({
 			email: ['',
 				[Validators.required, Validators.email],
@@ -67,13 +75,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	ngOnInit() {
+		const self = this;
 		this.queryParamsSubscription = this.setupQueryParamsWatcher();
-		this.agencyInputSubscription = this.setupAgencyInputWatcher();
 	}
 
 	ngOnDestroy() {
 		this.queryParamsSubscription.unsubscribe();
-		this.agencyInputSubscription.unsubscribe();
 	}
 
 	private setupQueryParamsWatcher() {
@@ -84,37 +91,6 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				}
 				this.redirectToUrl = params.redirect;
 			});
-	}
-
-	private setupAgencyInputWatcher() {
-		return this.agency.valueChanges
-			.debounceTime(this.AGENCY_SUGGESTIONS_WAIT_MS)
-			.subscribe(agencyPart => {
-				if (agencyPart.length < this.AGENCY_SUGGESTIONS_MIN_LEN) {
-					return;
-				}
-				this.getAgencySuggestions(agencyPart);
-			});
-	}
-
-	private async getAgencySuggestions(userInput: string) {
-		this._agencySuggestions = await this.agencySuggestionsService.getAgencySuggestions(userInput);
-	}
-
-	public get agencySuggestions(): Agency[] {
-		if (!this._agencySuggestions) {
-			return this._agencySuggestions;
-		}
-		if (this._agencySuggestions.length < 2) {
-			return [];
-		}
-		return this._agencySuggestions.filter((element: Agency, index: number) => {
-			return index < this.AGENCY_MAX_SUGGESTIONS;
-		});
-	}
-
-	public trackByAgency(index: number, agency: Agency): string {
-		return agency.id;
 	}
 
 	public get email() {
@@ -161,18 +137,6 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		return this.agentFields.get('agency');
 	}
 
-	public get agencyId() {
-		if (!this._agencySuggestions) {
-			return null;
-		}
-		for (const agencySuggestion of this._agencySuggestions) {
-			if (agencySuggestion.name === this.agency.value) {
-				return agencySuggestion.id;
-			}
-		}
-		return null;
-	}
-
 	public get agencyPassword() {
 		return this.agentFields.get('agencyPassword');
 	}
@@ -192,6 +156,13 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this._agentLocation = locationAddress;
 	}
 
+	public onAgencySelected(selected: CompleterItem) {
+		if (selected == null) {
+			return;
+		}
+		this._agencyId = selected.originalObject.id;
+	}
+
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
 		const result = await this.authService
@@ -207,7 +178,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				firstName: this.firstName.value,
 				lastName: this.lastName.value,
 				email: this.email.value,
-				agencyId: this.agencyId,
+				agencyId: this._agencyId,
 				agencyName: this.agency.value,
 				locations: [this._agentLocation],
 				info: this.expertise.value,

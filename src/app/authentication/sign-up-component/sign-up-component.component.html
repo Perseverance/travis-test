@@ -72,11 +72,8 @@
                 </div>
                 <div class="form-group">
                     <label for="agency">Agency</label>
-                    <input list="browsers" formControlName="agency" type="text" class="form-control" id="agency" placeholder="Agency">
-
-                    <datalist id="browsers">
-                        <option [value]="agency.name" *ngFor="let agency of agencySuggestions; trackBy:trackByAgency">
-                    </datalist>
+                    <ng2-completer formControlName="agency" [datasource]="agencyAutoCompleteDataService" fillHighlighted="false" inputId="agency" inputName="agency"
+                        inputClass="form-control" (selected)="onAgencySelected($event)" [autoMatch]="true" placeholder="Agency" minSearchLength="3"></ng2-completer>
                 </div>
                 <div class="form-group">
                     <label for="agencyPassword">Agency Password</label>
