@@ -1,0 +1,39 @@
+//Colors
+$gray-darker: #646464;
+$gray-dark: #B9B9B9;
+$gray-light: #C8C8C8;
+$gray-lighter: #EBEBEB;
+$blue-main: #64CAFD;
+$blue-light: #7FD4FE;
+$white: #FFFFFF;
+$red-main: #C50000;
+//Background colors
+$background-blue: $blue-main;
+$background-gray: $gray-lighter;
+$background-white: $white;
+//Text color 
+$text-color-main: $gray-darker;
+$text-color-action: $blue-main;
+$text-color-action-light: $blue-light;
+$text-color-secondary: $white;
+//Borders 
+$border-default: $gray-dark;
+$border-error: $red-main;
+//Buttons
+$button-blue: $blue-main;
+$button-blue-hover: $blue-light;
+$button-gray: $gray-dark;
+$button-gray-hover: $gray-light;
+// Typography	
+$font-family-open-sans: 'Open Sans', sans-serif;
+$font-size-base: 16px;
+$font-size-small: 14px;
+// Footer 
+$footer-height: 60px;
+
+// Media queries
+$xxs: "(max-width: 500px)";
+$xs: "(max-width: 768px)";
+$sm: "(max-width: 995px)";
+$md: "(max-width: 1200px)";
+$lg: "(min-width: 1200px)";

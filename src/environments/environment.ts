@@ -4,5 +4,20 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+	production: false,
+	apiUrl: 'http://servicepropydev.azurewebsites.net',
+	googleMaps: {
+		apiKey: 'AIzaSyAcgGhw1a6q4Y0ZOIeHFw0NrBT3XtXUhQU',
+		defaultLanguage: 'en'
+	},
+	clientId: 'PropyWebsite',
+	clientSecret: 'PixelIsNotFat',
+	fbConfigParams: {
+		appId: '107043006300971',
+		xfbml: true,
+		version: 'v2.10'
+	},
+	linkedInApiKey: '758vh4r0yqsbn9', // Otherwise known as ClientID
+	skippedRedirectRoutes: ['/login', '/signup'],
+	defaultRedirectRoute: '/map',
 };

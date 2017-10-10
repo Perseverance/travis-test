@@ -1,0 +1,12 @@
+<div class="row top-locations">
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let location of favouriteLocations">
+		<div class="location-holder" (click)="cityItemClicked(location)">
+			<div class="row image-holder" [ngStyle]="{'background-image': 'url(' + location.imageUrls[0] + ')'}">
+			</div>
+			<div class="row info-holder">
+				<p>{{ location.cityName }}</p>
+				<span>{{ location.propertiesCount | bigNumberFormat}}</span>
+			</div>
+		</div>
+	</div>
+</div>

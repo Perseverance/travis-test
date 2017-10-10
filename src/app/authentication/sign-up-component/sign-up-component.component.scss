@@ -1,0 +1,66 @@
+@import "../../../variables";
+@import "../../../mixins";
+$header-margin: 60px;
+.signup {
+    .form-group {
+        margin: 0px;
+        &.agency-form-group,
+        &.location-form-group {
+            margin-bottom: 25px;
+        }
+    }
+    h2.propy-custom-heading {
+        color: white;
+        margin-bottom: $header-margin;
+        @media #{$sm} {
+            margin-bottom: 10px;
+        }
+    }
+    .checkbox.form-check {
+        margin-bottom: 20px;
+    }
+    .social-signup {
+        padding-top: 50px;
+        @media #{$sm} {
+            padding-top: 10px;
+        }
+        .login {
+            h3 {
+                color: white;
+                a {
+                    color: white;
+                    text-decoration: underline;
+                }
+            }
+            margin-bottom: 25px;
+            @media #{$sm} {
+                margin-bottom: 10px;
+            }
+        }
+        .signup-option {
+            margin-bottom: 25px;
+            @media #{$sm} {
+                margin-bottom: 10px;
+            }
+        }
+    }
+    .agent-locations {
+        padding-top: 10px;
+        margin-bottom: 20px;
+        .location {
+            border: 1px solid $gray-light;
+            margin-top: 2px;
+            @include border-radius(3px);
+            padding: 10px 0px;
+            .location-name {
+                padding-left: 10px;
+            }
+            .close-icon {
+                cursor: pointer;
+                i {
+                    color: $gray-dark;
+                }
+            }
+        }
+    }
+}
