@@ -25,6 +25,7 @@
 		"@ngx-translate/core": "^8.0.0",
 		"@ngx-translate/http-loader": "^2.0.0",
 		"angular-linkedin-sdk": "^0.1.7",
+		"awesome-bootstrap-checkbox": "^1.0.0",
 		"axios": "^0.16.2",
 		"bootstrap": "^3.3.7",
 		"bootstrap-social": "^5.1.1",
