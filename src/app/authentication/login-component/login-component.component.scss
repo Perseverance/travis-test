@@ -12,7 +12,7 @@
 			}
 		}
 		.checkbox {
-			padding-top: 34px;
+			padding-top: 26px;
 			label {
 				color: $gray-dark;
 			}
@@ -26,21 +26,22 @@
 		.signup {
 			h3 {
 				color: white;
+				margin-top: 15px;
 				a {
 					color: white;
 					text-decoration: underline;
 					&:hover {
-						color: darken($white, 15%);	
+						color: darken($white, 15%);
 					}
 				}
 			}
-			margin-bottom: 25px;
+			margin-bottom: 28px;
 			@media #{$sm} {
 				margin-bottom: 10px;
 			}
 		}
 		.signup-option {
-			margin-bottom: 25px;
+			margin-bottom: 28px;
 			@media #{$sm} {
 				margin-bottom: 10px;
 			}
