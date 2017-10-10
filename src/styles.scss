@@ -28,7 +28,7 @@ body {
 	a,
 	p {
 		color: $text-color-main;
-		font-weight: 300;
+		font-weight: 100;
 		&.propy-custom-heading {
 			padding-left: 30px;
 			border-left: 2px solid $blue-main;
@@ -53,6 +53,9 @@ body {
 	h6 {
 		font-size: $font-size-small;
 	}
+	span {
+		font-weight: 100;
+	}
 	input.propy-control {
 		@include border-radius(5px);
 		border: 1px solid $border-default;
@@ -60,6 +63,7 @@ body {
 		box-shadow: none;
 		height: 50px;
 		font-size: 25px;
+		font-weight: 100;
 		margin-bottom: 25px;
 		&.ng-no-margin {
 			margin-bottom: 0px;
@@ -76,6 +80,7 @@ body {
 			background-color: $blue-main;
 			height: 50px;
 			font-size: 25px;
+			font-weight: 100;
 			color: $white;
 			&:hover {
 				background-color: $blue-light;
@@ -86,6 +91,7 @@ body {
 			background-color: $gray-dark;
 			height: 35px;
 			font-size: 20px;
+			font-weight: 100;
 			color: $white;
 			&:hover {
 				background-color: $gray-light;

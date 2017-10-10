@@ -44,23 +44,24 @@
 					</div>
 					<div class="form-group checkbox">
 						<label class="center-block">
-							<input type="checkbox" formControlName="rememberMe">Remember Me
+							<input type="checkbox"
+								   formControlName="rememberMe">Remember Me
 						</label>
 					</div>
 				</form>
 			</div>
-			<div class="col-xs-12 col-md-6">
-				<div class="row">
+			<div class="col-xs-12 col-md-6 signup-ref-holder">
+				<div class="row register-link">
+					<div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 text-left">
+						<a routerLink="/signup">Register</a><span> or</span>
+					</div>
+				</div>
+				<div class="row social-links">
 					<div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 						<app-facebook-button (click)="facebookLogin()"></app-facebook-button>
 					</div>
 					<div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 						<app-linkedin-button (click)="linkedInLogin()"></app-linkedin-button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 text-center">
-						<a routerLink="/signup">Not a member yet? Sign up here!</a>
 					</div>
 				</div>
 			</div>

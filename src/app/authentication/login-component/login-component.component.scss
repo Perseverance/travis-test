@@ -11,5 +11,28 @@
 				padding: 6px 30px;
 			}
 		}
+		padding-bottom: 40px;
+
+	}
+	.signup-ref-holder {
+		margin-top: 280px;
+		a {
+			color: $white;
+			font-size: 25px;
+			text-decoration: underline;
+		}
+		span {
+			color: $white;
+			font-size: 25px;
+		}
+		.register-link {
+			font-size: 25px;
+			margin-bottom: 36px;
+		}
+		.social-links {
+			div:first-child {
+				margin-bottom: 22px;
+			}
+		}
 	}
 }
