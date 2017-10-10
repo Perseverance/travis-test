@@ -1,6 +1,10 @@
 @import "../../../_variables.scss";
 
 .propy-header {
+	.navbar-header {
+		.logo-holder {
+		}
+	}
 	&.navbar {
 		margin: 0px;
 	}
