@@ -324,7 +324,7 @@
 }
 
 @mixin background-image-cover($image-address) {
-    background: url($image-address) no-repeat center center;
+    background: url($image-address) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

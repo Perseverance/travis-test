@@ -16,6 +16,9 @@ $header-margin: 60px;
             margin-bottom: 10px;
         }
     }
+    .checkbox.form-check {
+        margin-bottom: 20px;
+    }
     .social-signup {
         padding-top: 50px;
         @media #{$sm} {
@@ -43,6 +46,7 @@ $header-margin: 60px;
     }
     .agent-locations {
         padding-top: 10px;
+        margin-bottom: 20px;
         .location {
             border: 1px solid $gray-light;
             margin-top: 2px;

@@ -1,0 +1,18 @@
+// Variables
+@import "variables";
+// Mixins
+@import 'mixins';
+.propy-validation-errors-box {}
+
+.propy-validation {
+    margin-top: -20px;
+    font-size: 14px;
+    color: $red-main;
+    margin-bottom: 25px;
+    &:last-child {
+        margin-bottom: 5px;
+    }
+    &.propy-pending-validation {
+        color: $blue-main;
+    }
+}

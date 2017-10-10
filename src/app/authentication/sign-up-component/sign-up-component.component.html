@@ -6,67 +6,72 @@
         <form [formGroup]="signupForm" class="propy-form">
             <div class="form-group">
                 <input formControlName="email" type="email" class="form-control propy-control" id="email" placeholder="Your email">
-                <div *ngIf="email.touched">
-                    <div class="alert alert-info" *ngIf="email.pending">Checking...</div>
-                    <div class="alert alert-danger" *ngIf="email.invalid && email.errors['required']">This field is required</div>
-                    <div class="alert alert-danger" *ngIf="email.invalid && email.errors['email']">This is not a valid email</div>
-                    <div class="alert alert-danger" *ngIf="email.invalid && email.errors['emailTaken']">This email is already registered</div>
+                <div class="propy-validation-errors-box">
+                    <div class="propy-validation propy-pending-validation" *ngIf="email.pending">Checking...</div>
+                    <div class="propy-validation" *ngIf="email.invalid && email.errors['emailTaken']">This email is already registered</div>
+                </div>
+                <div *ngIf="email.touched" class="propy-validation-errors-box">
+                    <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">This field is required</div>
+                    <div class="propy-validation" *ngIf="email.invalid && email.errors['email']">This is not a valid email</div>
                 </div>
             </div>
             <div class="form-group">
                 <input formControlName="firstName" type="text" class="form-control propy-control" id="firstName" placeholder="First Name">
-                <div *ngIf="firstName.touched">
-                    <div class="alert alert-danger" *ngIf="firstName.invalid && firstName.errors['required']">This field is required</div>
+                <div *ngIf="firstName.touched" class="propy-validation-errors-box">
+                    <div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">This field is required</div>
                 </div>
             </div>
             <div class="form-group">
                 <input formControlName="lastName" type="text" class="form-control propy-control" id="lastName" placeholder="Last Name">
-                <div *ngIf="lastName.touched">
-                    <div class="alert alert-danger" *ngIf="lastName.invalid && lastName.errors['required']">This field is required</div>
+                <div *ngIf="lastName.touched" class="propy-validation-errors-box">
+                    <div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">This field is required</div>
                 </div>
             </div>
             <div formGroupName="passwords">
                 <div class="form-group">
                     <input formControlName="password" type="password" class="form-control propy-control" id="password" placeholder="New Password">
-                    <div *ngIf="password.touched">
-                        <div class="alert alert-danger" *ngIf="password.invalid && password.errors['required']">This field is required</div>
-                        <div class="alert alert-danger" *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and
+                    <div *ngIf="password.touched" class="propy-validation-errors-box">
+                        <div class="propy-validation" *ngIf="password.invalid && password.errors['required']">This field is required</div>
+                        <div class="propy-validation" *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and
                             a number
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <input formControlName="repeatPassword" type="password" class="form-control propy-control" id="repeatPassword" placeholder="Repeat Password">
-                    <div *ngIf="repeatPassword.touched">
-                        <div class="alert alert-danger" *ngIf="repeatPassword.invalid && repeatPassword.errors['required']">This field is required</div>
-                        <div class="alert alert-danger" *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and
+                    <div *ngIf="repeatPassword.touched" class="propy-validation-errors-box">
+                        <div class="propy-validation" *ngIf="repeatPassword.invalid && repeatPassword.errors['required']">This field is required</div>
+                        <div class="propy-validation" *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and
                             a number
                         </div>
                     </div>
                 </div>
             </div>
             <div *ngIf="password.touched && repeatPassword.touched">
-                <div class="alert alert-danger" *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">The two passwords differ</div>
+                <div class="propy-validation" *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">The two passwords differ</div>
             </div>
 
             <div class="form-group checkbox">
-                <label class="center-block">
-                    <input type="checkbox" formControlName="iAmAnAgent">I am an agent (Check if you are an agent)
-                </label>
+                <div class="form-group checkbox form-check abc-checkbox">
+                    <input type="checkbox" class="form-check-input" formControlName="iAmAnAgent" id="agentCheckbox">
+                    <label class="center-block form-check-label" for="agentCheckbox">
+                        I am an agent
+                    </label>
+                </div>
             </div>
 
             <div formGroupName="agentFields" *ngIf="iAmAnAgent.value">
                 <div class="form-group">
                     <input formControlName="phoneNumber" type="tel" class="form-control propy-control" id="phoneNumber" placeholder="e.g. +1 284 852 5500">
-                    <div *ngIf="phoneNumber.touched">
-                        <div class="alert alert-danger" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">This field is required</div>
-                        <div class="alert alert-danger" *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">Your phone number appears to be invalid</div>
+                    <div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
+                        <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">This field is required</div>
+                        <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">Your phone number appears to be invalid</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <input formControlName="expertise" type="text" class="form-control propy-control" id="expertise" placeholder="Expertise">
-                    <div *ngIf="expertise.touched">
-                        <div class="alert alert-danger" *ngIf="expertise.invalid && expertise.errors['required']">This field is required</div>
+                    <div *ngIf="expertise.touched" class="propy-validation-errors-box">
+                        <div class="propy-validation" *ngIf="expertise.invalid && expertise.errors['required']">This field is required</div>
                     </div>
                 </div>
                 <div class="form-group agency-form-group">
@@ -76,8 +81,8 @@
                 </div>
                 <div class="form-group">
                     <input formControlName="agencyPassword" type="password" class="form-control propy-control" id="agencyPassword" placeholder="Agency Password">
-                    <div *ngIf="agencyPassword.touched">
-                        <div class="alert alert-danger" *ngIf="password.invalid && password.errors['required']">This field is required</div>
+                    <div *ngIf="agencyPassword.touched" class="propy-validation-errors-box">
+                        <div class="propy-validation" *ngIf="agencyPassword.invalid && agencyPassword.errors['required']">This field is required</div>
                     </div>
                 </div>
                 <div class="form-group location-form-group">
@@ -93,9 +98,10 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group checkbox">
-                        <label class="center-block">
-                            <input type="checkbox" formControlName="rememberMe">Remember Me
+                    <div class="form-group checkbox form-check abc-checkbox">
+                        <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="rememberMeCheckbox">
+                        <label class="center-block form-check-label" for="rememberMeCheckbox">
+                            Remember me
                         </label>
                     </div>
                 </div>
