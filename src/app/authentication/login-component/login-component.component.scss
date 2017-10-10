@@ -23,12 +23,15 @@
 		@media #{$sm} {
 			padding-top: 10px;
 		}
-		.login {
+		.signup {
 			h3 {
 				color: white;
 				a {
 					color: white;
 					text-decoration: underline;
+					&:hover {
+						color: darken($white, 15%);	
+					}
 				}
 			}
 			margin-bottom: 25px;
