@@ -1,0 +1,7 @@
+@import "../_variables.scss";
+.propy-content {
+    padding-top: 120px;
+    @media #{$sm} {
+        padding-top: 60px;
+    }
+}
