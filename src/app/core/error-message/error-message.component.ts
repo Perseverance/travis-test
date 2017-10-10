@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErrorMessageComponent implements OnInit {
 
-	private DEFAULT_ERROR_TITLE = 'An Error Occured!';
 	private DEFAULT_ERROR_TIME = 5000;
 
 	public errorMessage: string;
@@ -25,11 +24,7 @@ export class ErrorMessageComponent implements OnInit {
 				clearTimeout(this.timer);
 				this.hideError();
 
-				this.errorTitle = this.DEFAULT_ERROR_TITLE;
-				if (error.errorTitle) {
-					this.errorTitle = error.errorTitle;
-				}
-
+				this.errorTitle = error.errorTitle;
 				this.errorMessage = error.errorMessage;
 				this.showError();
 

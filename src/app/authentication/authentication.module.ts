@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { AgencySuggestionsService } from './agency-suggestions.service';
 import { SharedModule } from './../shared/shared.module';
 import { AuthenticationService } from './authentication.service';
@@ -18,7 +19,8 @@ import { FacebookButtonComponent } from './facebook-button/facebook-button.compo
 		ReactiveFormsModule,
 		SharedModule,
 		AuthenticationRoutingModule,
-		Ng2CompleterModule
+		Ng2CompleterModule,
+		TranslateModule
 	],
 	declarations: [
 		LoginComponentComponent,

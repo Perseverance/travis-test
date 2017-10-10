@@ -1,50 +1,49 @@
 @import "../../../variables";
-
 .login-holder {
-	h2.propy-custom-heading {
-		color: $white;
-		margin-bottom: 60px;
-	}
-	form {
-		.input-group {
-			button.propy-control {
-				padding: 6px 30px;
-			}
-		}
-		.checkbox {
-			padding-top: 26px;
-			label {
-				color: $gray-dark;
-			}
-		}
-	}
-	.social-signup {
-		padding-top: 20px;
-		@media #{$sm} {
-			padding-top: 10px;
-		}
-		.signup {
-			h3 {
-				color: white;
-				margin-top: 15px;
-				a {
-					color: white;
-					text-decoration: underline;
-					&:hover {
-						color: darken($white, 15%);
-					}
-				}
-			}
-			margin-bottom: 28px;
-			@media #{$sm} {
-				margin-bottom: 10px;
-			}
-		}
-		.signup-option {
-			margin-bottom: 28px;
-			@media #{$sm} {
-				margin-bottom: 10px;
-			}
-		}
-	}
+    h2.propy-custom-heading {
+        color: $white;
+        margin-bottom: 60px;
+    }
+    form {
+        .input-group {
+            button.propy-control {
+                padding: 6px 30px;
+            }
+        }
+        .checkbox {
+            padding-top: 26px;
+            label {
+                color: $gray-dark;
+            }
+        }
+    }
+    .social-signup {
+        padding-top: 20px;
+        @media #{$sm} {
+            padding-top: 10px;
+        }
+        .signup {
+            h3 {
+                color: white;
+                margin-top: 15px;
+                a {
+                    color: white;
+                    text-decoration: underline;
+                    &:hover {
+                        color: darken($white, 15%);
+                    }
+                }
+            }
+            margin-bottom: 28px;
+            @media #{$sm} {
+                margin-bottom: 10px;
+            }
+        }
+        .signup-option {
+            margin-bottom: 28px;
+            @media #{$sm} {
+                margin-bottom: 10px;
+            }
+        }
+    }
 }

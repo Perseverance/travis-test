@@ -16,10 +16,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right propy-links">
                 <li>
-                    <a routerLink="/login" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">Login</a>
+                    <a routerLink="/login" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">{{ 'common.label.login' | translate }}</a>
                 </li>
                 <li>
-                    <a routerLink="/signup" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">Sign up</a>
+                    <a routerLink="/signup" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">{{ 'common.label.signup' | translate }}</a>
                 </li>
                 <li class="separator">&nbsp;</li>
                 <li class="dropdown">
