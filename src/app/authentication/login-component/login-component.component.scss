@@ -3,7 +3,7 @@
 .login-holder {
 	h2.propy-custom-heading {
 		color: $white;
-		margin: 100px 0;
+		margin-bottom: 60px;
 	}
 	form {
 		.input-group {
@@ -11,27 +11,35 @@
 				padding: 6px 30px;
 			}
 		}
-		padding-bottom: 40px;
-
+		.checkbox {
+			padding-top: 34px;
+			label {
+				color: $gray-dark;
+			}
+		}
 	}
-	.signup-ref-holder {
-		margin-top: 280px;
-		a {
-			color: $white;
-			font-size: 25px;
-			text-decoration: underline;
+	.social-signup {
+		padding-top: 20px;
+		@media #{$sm} {
+			padding-top: 10px;
 		}
-		span {
-			color: $white;
-			font-size: 25px;
+		.login {
+			h3 {
+				color: white;
+				a {
+					color: white;
+					text-decoration: underline;
+				}
+			}
+			margin-bottom: 25px;
+			@media #{$sm} {
+				margin-bottom: 10px;
+			}
 		}
-		.register-link {
-			font-size: 25px;
-			margin-bottom: 36px;
-		}
-		.social-links {
-			div:first-child {
-				margin-bottom: 22px;
+		.signup-option {
+			margin-bottom: 25px;
+			@media #{$sm} {
+				margin-bottom: 10px;
 			}
 		}
 	}
