@@ -1,2 +1,10 @@
-<input placeholder="Search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control propy-control ng-no-margin"
-    #search size="100">
+<div [ngClass]="{'input-group': searchButtonVisible}">
+	<input placeholder="Search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+		   class="form-control propy-control ng-no-margin"
+		   #search size="100">
+	<span class="input-group-btn" *ngIf="searchButtonVisible">
+		<button class="btn btn-primary propy-control button-big" (click)="searchButtonClicked()">
+			<i class="fa fa-search" aria-hidden="true"></i>
+		</button>
+	</span>
+</div>	
