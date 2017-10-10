@@ -18,6 +18,7 @@ body {
 		}
 	}
 	@include background-image-cover('./assets/images/propy-bg-image.jpg');
+	background-color: $background-gray;
 	font-family: $font-family-open-sans;
 	font-size: $font-size-base;
 	h1,
@@ -28,7 +29,7 @@ body {
 	a,
 	p {
 		color: $text-color-main;
-		font-weight: 100;
+		font-weight: 300;
 		&.propy-custom-heading {
 			padding-left: 30px;
 			border-left: 2px solid $blue-main;
@@ -53,6 +54,9 @@ body {
 	h6 {
 		font-size: $font-size-small;
 	}
+	p {
+		font-size: $font-size-base;
+	}
 	span {
 		font-weight: 100;
 	}
@@ -63,8 +67,8 @@ body {
 		box-shadow: none;
 		height: 50px;
 		font-size: 25px;
-		font-weight: 100;
 		margin-bottom: 25px;
+		font-weight: 300;
 		&.ng-no-margin {
 			margin-bottom: 0px;
 		}
@@ -75,12 +79,12 @@ body {
 	button.propy-control {
 		border: none;
 		outline: none;
+		font-weight: 300;
 		&.button-big {
 			@include border-radius(5px);
 			background-color: $blue-main;
 			height: 50px;
 			font-size: 25px;
-			font-weight: 100;
 			color: $white;
 			&:hover {
 				background-color: $blue-light;
@@ -91,7 +95,6 @@ body {
 			background-color: $gray-dark;
 			height: 35px;
 			font-size: 20px;
-			font-weight: 100;
 			color: $white;
 			&:hover {
 				background-color: $gray-light;
@@ -101,5 +104,9 @@ body {
 	.propy-form {
 		padding: 25px;
 		background-color: white;
+		margin-bottom: 30px;
+		@media #{$sm} {
+			margin-bottom: 0px;
+		}
 	}
 }

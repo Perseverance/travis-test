@@ -1,5 +1,11 @@
 @import '../../../mixins';
+@import '../../../variables';
 div.alert-error {
+    strong {
+        font-weight: 400;
+    }
+    font-family: $font-family-open-sans;
+    font-weight: 300;
     position: absolute;
     top: 0;
     left: 10px;

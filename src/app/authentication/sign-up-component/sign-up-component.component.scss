@@ -1,9 +1,7 @@
 @import "../../../variables";
 @import "../../../mixins";
-$header-margin: 80px;
+$header-margin: 60px;
 .signup {
-    padding-top: $header-margin;
-    background-color: darken($blue-main, 15%);
     .form-group {
         margin: 0px;
         &.agency-form-group,
@@ -14,6 +12,34 @@ $header-margin: 80px;
     h2.propy-custom-heading {
         color: white;
         margin-bottom: $header-margin;
+        @media #{$sm} {
+            margin-bottom: 10px;
+        }
+    }
+    .social-signup {
+        padding-top: 50px;
+        @media #{$sm} {
+            padding-top: 10px;
+        }
+        .login {
+            h3 {
+                color: white;
+                a {
+                    color: white;
+                    text-decoration: underline;
+                }
+            }
+            margin-bottom: 25px;
+            @media #{$sm} {
+                margin-bottom: 10px;
+            }
+        }
+        .signup-option {
+            margin-bottom: 25px;
+            @media #{$sm} {
+                margin-bottom: 10px;
+            }
+        }
     }
     .agent-locations {
         padding-top: 10px;
