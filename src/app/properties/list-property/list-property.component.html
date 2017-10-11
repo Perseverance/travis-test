@@ -1,10 +1,10 @@
-<div class="row" *ngIf="hasLoaded && isUserAnonymous">
+<div class="row" *ngIf="hasLoaded && !isUserAnonymous">
 	<div class="col-xs-12">
 		<h1>You are not authenticated!</h1>
 		<h2>Please either signup or login</h2>
 	</div>
 </div>
-<div class="row list-property" *ngIf="hasLoaded && !isUserAnonymous">
+<div class="row list-property" *ngIf="hasLoaded && isUserAnonymous">
 	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-offset-2">
 		<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.heading' | translate }}</h2>
 	</div>
@@ -16,13 +16,12 @@
 									 inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}"></app-location-search>
 			</div>
 			<div class="form-group location-form-group">
-				<p-fileUpload name="demo[]" url="./upload.php" (uploadHandler)="myUploader($event)"
+				<p-fileUpload name="demo[]" url="./upload.php" (onSelect)="selectFile($event)"
+							  auto="false"
+							  showUploadButton="false"
+							  showCancelButton="false"
+							  (onRemove)="removeFile($event)"
 							  multiple="multiple" customUpload="true" accept="image/*" maxFileSize="1000000">
-					<ng-template pTemplate type="content">
-						<ul *ngIf="uploadedFiles.length">
-							<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-						</ul>
-					</ng-template>
 				</p-fileUpload>
 			</div>
 
