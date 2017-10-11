@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/primeng';
 import { SelectItem } from 'primeng/components/common/selectitem';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 
 @Component({
 	selector: 'app-list-property',
@@ -191,6 +192,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return base64;
 	}
 
+	@DefaultAsyncAPIErrorHandling('list-property.error-listing-property')
 	public async onSubmit() {
 		this.notificationService.pushInfo({
 			title: 'Loading...',
