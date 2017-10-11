@@ -1,3 +1,17 @@
-<p>
-  list-property works!
-</p>
+<div class="row list-property">
+	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-offset-2">
+		<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.heading' | translate }}</h2>
+	</div>
+	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+		<form [formGroup]="listPropertyForm" class="propy-form">
+			<div class="form-group">
+				<input formControlName="email" type="email" class="form-control propy-control" id="email"
+					   placeholder="{{ 'list-property.form-fields.address' | translate }}">
+			</div>
+
+			<button type="button" class="btn btn-block propy-control button-big">
+				{{ 'list-property.submit-button' | translate }}
+			</button>
+		</form>
+	</div>
+</div>
