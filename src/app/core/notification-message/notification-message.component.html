@@ -1,0 +1,7 @@
+<div class="alert alert-notification" *ngIf="isNotificationShown" [ngClass]="{
+    'propy-alert-error': notificationType == 'error',
+    'alert-info': notificationType == 'info',
+    'alert-success': notificationType == 'success'
+}">
+    <strong>{{title}}</strong> {{message}}
+</div>

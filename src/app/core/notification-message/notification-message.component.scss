@@ -1,0 +1,33 @@
+@import '../../../mixins';
+@import '../../../variables';
+div.alert-notification {
+    font-family: $font-family-open-sans;
+    strong {
+        font-weight: 400;
+    }
+    font-weight: 300;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    height: 55px;
+    z-index: 3000;
+    border-top: none;
+    @include border-radius-separate(0px, 0px, 5px, 5px);
+    @include box-shadow();
+    &.propy-alert-error {
+        border-color: $red-main;
+        color: $red-main;
+        background-color: $gray-lighter;
+    }
+    &.propy-alert-info {
+        border-color: $blue-main;
+        color: $blue-main;
+        background-color: lighten($blue-main, 15%);
+    }
+    &.propy-alert-success {
+        border-color: $green-main;
+        color: $green-main;
+        background-color: lighten($green-main, 15%);
+    }
+}
