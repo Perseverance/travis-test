@@ -5,7 +5,7 @@ echo Handling swip frontend deployment.
 IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   pushd "%DEPLOYMENT_SOURCE%"
   call npm install npm@latest -g
-  call npm install
+  call npm install --no-optional
   call npm cache clean  
   call ng build
   IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
