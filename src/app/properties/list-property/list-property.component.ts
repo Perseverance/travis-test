@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
-=======
-import { CreatePropertyResponse } from './../properties-responses';
->>>>>>> origin/sprint-boromir
 import { PropertiesService } from './../properties.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { AuthenticationService } from './../../authentication/authentication.service';
@@ -13,14 +9,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/primeng';
 import { SelectItem } from 'primeng/components/common/selectitem';
-<<<<<<< HEAD
-=======
-
-interface PropertyImage {
-	name: string;
-	file: string;
-}
->>>>>>> origin/sprint-boromir
 
 @Component({
 	selector: 'app-list-property',
