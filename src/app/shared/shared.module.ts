@@ -1,3 +1,4 @@
+import { NotificationsService } from './notifications/notifications.service';
 import { ErrorsService } from './errors/errors.service';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from './../../environments/environment';
@@ -28,6 +29,7 @@ import { TokenGuard } from '../authentication/token-guard.service';
 		SessionStorageService,
 		APIEndpointsService,
 		ErrorsService,
+		NotificationsService,
 		TokenGuard
 	],
 	exports: [LocationSearchComponent]
