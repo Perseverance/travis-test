@@ -99,6 +99,7 @@ export class PropertiesService {
 	}
 
 	public async createProperty(data: CreatePropertyRequest): Promise<CreatePropertyResponse> {
-		return null;
+		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.CREATE_PROPERTY, data);
+		return result.data;
 	}
 }

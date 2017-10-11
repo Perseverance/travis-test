@@ -22,9 +22,9 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public propertyTypes: SelectItem[];
 	public currencies: SelectItem[];
 	public areaUnits: SelectItem[];
-	public languages: SelectItem[];
 	public propertyLat: number = null;
 	public propertyLon: number = null;
+	public address: string = null;
 
 	msgs: Message[];
 
@@ -71,17 +71,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.areaUnits.push({ label: 'sqm', value: 1 });
 		this.areaUnits.push({ label: 'sqft', value: 2 });
 
-		this.languages = [];
-		this.languages.push({ label: 'Select Description Language', value: null });
-		this.languages.push({ label: 'English', value: 0 });
-		this.languages.push({ label: 'Spanish', value: 1 });
-		this.languages.push({ label: 'German', value: 2 });
-		this.languages.push({ label: 'French', value: 3 });
-		this.languages.push({ label: 'Russian', value: 4 });
-		this.languages.push({ label: 'Arabic', value: 5 });
-		this.languages.push({ label: 'Chinese', value: 6 });
-		this.languages.push({ label: 'Bulgarian', value: 7 });
-
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
 			furnished: [''],
@@ -92,8 +81,25 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			floor: [''],
 			area: [''],
 			areaUnit: ['1'],
-			description: [''],
-			language: [null]
+			description: ['']
+		});
+	}
+
+	async ngOnInit() {
+		this.notificationService.pushInfo({
+			title: 'Loading...',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 15000
+		});
+		const result = await this.authService.isUserAnyonymous();
+		this.isUserAnonymous = result;
+		this.hasLoaded = true;
+		this.notificationService.pushSuccess({
+			title: 'Account Loaded...',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 1500
 		});
 	}
 
@@ -141,25 +147,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('language');
 	}
 
-
-	async ngOnInit() {
-		this.notificationService.pushInfo({
-			title: 'Loading...',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 15000
-		});
-		const result = await this.authService.isUserAnyonymous();
-		this.isUserAnonymous = result;
-		this.hasLoaded = true;
-		this.notificationService.pushSuccess({
-			title: 'Account Loaded...',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 1500
-		});
-	}
-
 	myUploader(event) {
 		console.log(event);
 
@@ -176,12 +163,33 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public async onSubmit() {
-		const result: CreatePropertyResponse = await this.propertiesService.createProperty({ field: 'any' });
-		console.log(result);
+		const request = {
+			bedrooms: this.bedrooms.value,
+			furnished: this.furnished.value,
+			floor: this.floor.value,
+			price: {
+				value: this.price.value,
+				type: this.currency.value
+			},
+			latitude: this.propertyLat,
+			longitude: this.propertyLon,
+			size: {
+				value: this.area.value,
+				type: this.areaUnit.value
+			},
+			type: this.propertyType.value,
+			description: this.description.value,
+			address: this.address,
+			status: 1
+		};
+		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
+		const propertyId = result.data;
+		console.log(propertyId);
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
 		this.propertyLat = latitude;
 		this.propertyLon = longitude;
+		this.address = locationAddress;
 	}
 }

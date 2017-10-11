@@ -49,9 +49,6 @@
             <div class="form-group">
                 <textarea [rows]="5" [cols]="60" pInputTextarea autoResize="autoResize" formControlName="description"></textarea>
             </div>
-            <div class="form-group">
-                <p-dropdown [options]="languages" formControlName="language"></p-dropdown>
-            </div>
             <div class="form-group location-form-group">
                 <p-fileUpload name="demo[]" url="./upload.php" (uploadHandler)="myUploader($event)" multiple="multiple" customUpload="true"
                     accept="image/*" maxFileSize="1000000">
@@ -68,10 +65,9 @@
             price.invalid ||
             currency.invalid ||
             description.invalid ||
-            language.invalid ||
+            address === null ||
             propertyLat === null ||
-            propertyLon === null ||
-            ((description.value.length > 0) && language.value == null)"> {{ 'list-property.submit-button'
+            propertyLon === null"> {{ 'list-property.submit-button'
             | translate }}
             </button>
         </form>
