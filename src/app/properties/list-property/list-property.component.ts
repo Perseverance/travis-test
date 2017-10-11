@@ -19,6 +19,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public listPropertyForm: FormGroup;
 	public propertyTypes: SelectItem[];
 	public currencies: SelectItem[];
+	public areaUnits: SelectItem[];
 
 	msgs: Message[];
 
@@ -60,12 +61,20 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.currencies.push({ label: 'BGN', value: 8 });
 		this.currencies.push({ label: 'CNY', value: 9 });
 
+		this.areaUnits = [];
+		this.areaUnits.push({ label: 'sqm', value: 1 });
+		this.areaUnits.push({ label: 'sqft', value: 2 });
+
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
 			furnished: [''],
 			price: ['', Validators.required],
 			currency: ['1', Validators.required],
 			year: [''],
+			bedrooms: [''],
+			floor: [''],
+			area: [''],
+			areaUnit: ['1'],
 		});
 	}
 
@@ -87,6 +96,22 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public get year() {
 		return this.listPropertyForm.get('year');
+	}
+
+	public get bedrooms() {
+		return this.listPropertyForm.get('bedrooms');
+	}
+
+	public get floor() {
+		return this.listPropertyForm.get('floor');
+	}
+
+	public get area() {
+		return this.listPropertyForm.get('area');
+	}
+
+	public get areaUnit() {
+		return this.listPropertyForm.get('areaUnit');
 	}
 
 	async ngOnInit() {

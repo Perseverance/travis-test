@@ -28,6 +28,18 @@
             <div class="form-group">
                 <input type="number" pInputText placeholder="Year built" formControlName="year">
             </div>
+            <div class="form-group">
+                <input type="number" pInputText placeholder="Bedrooms" formControlName="bedrooms">
+            </div>
+            <div class="form-group">
+                <input type="number" pInputText placeholder="Floor" formControlName="floor">
+            </div>
+            <div class="form-group">
+                <div class="ui-inputgroup">
+                    <input type="number" formControlName="area" pInputText placeholder="Area">
+                    <span class="ui-inputgroup-addon"><p-dropdown [options]="areaUnits" formControlName="areaUnit"></p-dropdown></span>
+                </div>
+            </div>
             <div class="form-group location-form-group">
                 <app-location-search id="location" inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}"></app-location-search>
             </div>
