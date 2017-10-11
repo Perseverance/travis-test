@@ -65,3 +65,8 @@ export interface CreatePropertyRequest {
 export interface CreatePropertyResponse {
 	data: string;
 }
+
+export interface PropertyImage {
+	name: string;
+	file: string;
+}

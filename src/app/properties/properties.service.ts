@@ -8,7 +8,8 @@ import {
 	PropertyAgentResponse,
 	GetFavouriteLocationResponse,
 	CreatePropertyRequest,
-	CreatePropertyResponse
+	CreatePropertyResponse,
+	PropertyImage
 } from './properties-responses';
 
 interface Bounds {
@@ -100,6 +101,17 @@ export class PropertiesService {
 
 	public async createProperty(data: CreatePropertyRequest): Promise<CreatePropertyResponse> {
 		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.CREATE_PROPERTY, data);
+		return result.data;
+	}
+
+	public async uploadImages(propertyId: string, images: PropertyImage[]): Promise<Object> {
+		const queryParams = {
+			id: propertyId
+		};
+		const result = await this.restService.postWithAccessToken(
+			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
+			images,
+			{ params: queryParams });
 		return result.data;
 	}
 }

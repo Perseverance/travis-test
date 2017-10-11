@@ -1,4 +1,4 @@
-import { CreatePropertyResponse } from './../properties-responses';
+import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
 import { PropertiesService } from './../properties.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { AuthenticationService } from './../../authentication/authentication.service';
@@ -9,11 +9,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/primeng';
 import { SelectItem } from 'primeng/components/common/selectitem';
-
-interface PropertyImage {
-	name: string;
-	file: string;
-}
 
 @Component({
 	selector: 'app-list-property',
@@ -35,7 +30,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	uploadedFiles: any[] = [];
 	public selectedImages = [];
-	public propertyImages: object[] = new Array<PropertyImage>();
+	public propertyImages: PropertyImage[] = new Array<PropertyImage>();
 
 	constructor(private formBuilder: FormBuilder,
 		private authService: AuthenticationService,
@@ -225,8 +220,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
 		const propertyId = result.data;
 		await this.prepareImages();
-		// ToDO: submit logic
-		this.propertyImages = [];
+		const imagesResult = await this.propertiesService.uploadImages(propertyId, this.propertyImages);
+		this.propertyImages = new Array<PropertyImage>();
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
