@@ -19,7 +19,15 @@
             <div class="form-group">
                 <p-checkbox formControlName="furnished" label="Property is furnished"></p-checkbox>
             </div>
-
+            <div class="form-group">
+                <div class="ui-inputgroup">
+                    <input type="number" formControlName="price" pInputText placeholder="Price">
+                    <span class="ui-inputgroup-addon"><p-dropdown [options]="currencies" formControlName="currency"></p-dropdown></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="number" pInputText placeholder="Year built" formControlName="year">
+            </div>
             <div class="form-group location-form-group">
                 <app-location-search id="location" inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}"></app-location-search>
             </div>
@@ -34,7 +42,11 @@
                 </p-fileUpload>
             </div>
 
-            <button type="button" class="btn btn-block propy-control button-big" [disabled]="propertyType.invalid" (click)="onSubmit()">
+            <button type="button" class="btn btn-block propy-control button-big" (click)="onSubmit()" [disabled]="
+            propertyType.invalid ||
+            furnished.invalid ||
+            price.invalid ||
+            currency.invalid">
 				{{ 'list-property.submit-button' | translate }}
 			</button>
         </form>

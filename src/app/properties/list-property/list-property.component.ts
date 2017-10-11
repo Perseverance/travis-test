@@ -18,6 +18,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public hasLoaded: boolean;
 	public listPropertyForm: FormGroup;
 	public propertyTypes: SelectItem[];
+	public currencies: SelectItem[];
 
 	msgs: Message[];
 
@@ -48,9 +49,23 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.propertyTypes.push({ label: 'Bungalow', value: 14 });
 		this.propertyTypes.push({ label: 'StudentRoom', value: 15 });
 
+		this.currencies = [];
+		this.currencies.push({ label: 'USD', value: 1 });
+		this.currencies.push({ label: 'EUR', value: 2 });
+		this.currencies.push({ label: 'RUB', value: 3 });
+		this.currencies.push({ label: 'AED', value: 4 });
+		this.currencies.push({ label: 'HKD', value: 5 });
+		this.currencies.push({ label: 'SGD', value: 6 });
+		this.currencies.push({ label: 'GBP', value: 7 });
+		this.currencies.push({ label: 'BGN', value: 8 });
+		this.currencies.push({ label: 'CNY', value: 9 });
+
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
-			furnished: ['']
+			furnished: [''],
+			price: ['', Validators.required],
+			currency: ['1', Validators.required],
+			year: [''],
 		});
 	}
 
@@ -60,6 +75,18 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public get furnished() {
 		return this.listPropertyForm.get('furnished');
+	}
+
+	public get price() {
+		return this.listPropertyForm.get('price');
+	}
+
+	public get currency() {
+		return this.listPropertyForm.get('currency');
+	}
+
+	public get year() {
+		return this.listPropertyForm.get('year');
 	}
 
 	async ngOnInit() {
@@ -96,6 +123,9 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public onSubmit() {
-		console.log(this.propertyType.value);
+		console.log(this.propertyType);
+		console.log(this.furnished);
+		console.log(this.price);
+		console.log(this.currency);
 	}
 }
