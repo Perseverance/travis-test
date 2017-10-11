@@ -20,6 +20,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public propertyTypes: SelectItem[];
 	public currencies: SelectItem[];
 	public areaUnits: SelectItem[];
+	public propertyLat: number = null;
+	public propertyLon: number = null;
 
 	msgs: Message[];
 
@@ -114,6 +116,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('areaUnit');
 	}
 
+
 	async ngOnInit() {
 		this.notificationService.pushInfo({
 			title: 'Loading...',
@@ -152,5 +155,10 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		console.log(this.furnished);
 		console.log(this.price);
 		console.log(this.currency);
+	}
+
+	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
+		this.propertyLat = latitude;
+		this.propertyLon = longitude;
 	}
 }
