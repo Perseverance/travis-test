@@ -5,7 +5,11 @@ import {ErrorsService} from './../../shared/errors/errors.service';
 import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Message} from 'primeng/primeng';
+
+interface PropertyImage {
+	name: string;
+	file: string;
+}
 
 @Component({
 	selector: 'app-list-property',
@@ -16,10 +20,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public isUserAnonymous: boolean;
 	public hasLoaded: boolean;
 	public listPropertyForm: FormGroup;
-
-	msgs: Message[];
-
-	uploadedFiles: any[] = [];
+	public selectedImages = [];
+	public propertyImages: object[] = new Array<PropertyImage>();
 
 	constructor(private formBuilder: FormBuilder,
 				private authService: AuthenticationService,
@@ -49,18 +51,51 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 	}
 
-	myUploader(event) {
-		console.log(event);
+	public selectFile(event) {
+		if (event.files[0]) {
+			this.selectedImages.push(event.files[0]);
+		}
+	}
 
-		const blob = event.files[0]; // .objectURL.changingThisBreaksApplicationSecurity;
-		console.log(blob);
+	public removeFile(event) {
+		const idx = this.selectedImages.indexOf(event.file);
+		this.selectedImages.splice(idx, 1);
+		console.log(this.selectedImages);
+	}
 
-		const reader = new FileReader();
+	public async submitProperty() {
+		await this.prepareImages();
+		// ToDO: submit logic
+		this.propertyImages = [];
+	}
 
-		reader.readAsDataURL(blob);
-		reader.onloadend = function () {
-			const base64data = reader.result;
-			console.log(base64data);
-		};
+	public async prepareImages() {
+		for (const img of this.selectedImages) {
+			const imageName = img.name;
+
+			const base64 = await this.convertToBase64(img);
+
+			const currentImageObj: PropertyImage = {
+				name: imageName,
+				file: base64
+			};
+
+			this.propertyImages.push(currentImageObj);
+		}
+	}
+
+	public async convertToBase64(img): Promise<string> {
+		let base64data;
+
+		const base64 = await(new Promise<string>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = function () {
+				base64data = reader.result;
+				resolve(base64data);
+			};
+
+			reader.readAsDataURL(img);
+		}));
+		return base64;
 	}
 }
