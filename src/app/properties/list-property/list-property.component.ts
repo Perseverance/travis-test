@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ErrorsService} from '../../shared/errors/errors.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
 	selector: 'app-list-property',
@@ -10,10 +11,12 @@ import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable
 	styleUrls: ['./list-property.component.scss']
 })
 export class ListPropertyComponent extends ErrorsDecoratableComponent implements OnInit {
+	public isUserAnonymous: boolean;
+	public hasLoaded: boolean;
 	public listPropertyForm: FormGroup;
 
-
 	constructor(private formBuilder: FormBuilder,
+				private authService: AuthenticationService,
 				errorsService: ErrorsService,
 				translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -27,7 +30,9 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
+		const result = await this.authService.isUserAnyonymous();
+		this.isUserAnonymous = result;
+		this.hasLoaded = true;
 	}
-
 }

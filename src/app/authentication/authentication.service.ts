@@ -1,11 +1,16 @@
-import {environment} from './../../environments/environment';
-import {OAuth2TokenTypes} from './oauth2-token-types';
-import {OAuth2GrantTypes} from './oauth2-grant-types';
-import {APIEndpointsService} from './../shared/apiendpoints.service';
-import {RestClientService} from './../shared/rest-client.service';
-import {Injectable} from '@angular/core';
-import {FacebookService, InitParams, LoginResponse, LoginOptions} from 'ngx-facebook';
-import {LinkedInService} from 'angular-linkedin-sdk';
+import { environment } from './../../environments/environment';
+import { OAuth2TokenTypes } from './oauth2-token-types';
+import { OAuth2GrantTypes } from './oauth2-grant-types';
+import { APIEndpointsService } from './../shared/apiendpoints.service';
+import { RestClientService } from './../shared/rest-client.service';
+import { Injectable } from '@angular/core';
+import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
+import { LinkedInService } from 'angular-linkedin-sdk';
+
+export class AnonymousUserCredentials {
+	public static firstName = 'Anonymous';
+	public static lastName = 'Anonymous';
+}
 
 export enum ExternalAuthenticationProviders {
 	FACEBOOK = 'facebook',
@@ -38,9 +43,9 @@ export interface LinkedInAuthParams {
 export class AuthenticationService {
 
 	constructor(public restClient: RestClientService,
-				public apiEndpoints: APIEndpointsService,
-				private fbService: FacebookService,
-				private linkedinService: LinkedInService) {
+		public apiEndpoints: APIEndpointsService,
+		private fbService: FacebookService,
+		private linkedinService: LinkedInService) {
 
 		const initParams: InitParams = {
 			appId: environment.fbConfigParams.appId,
@@ -60,10 +65,10 @@ export class AuthenticationService {
 	}
 
 	public async performSignUp(email: string,
-							   password: string,
-							   firstName: string,
-							   lastName: string,
-							   rememberMe = false): Promise<boolean> {
+		password: string,
+		firstName: string,
+		lastName: string,
+		rememberMe = false): Promise<boolean> {
 		const data = {
 			email,
 			password,
@@ -80,7 +85,7 @@ export class AuthenticationService {
 	public async performLogin(email: string, password: string, rememberMe = false): Promise<boolean> {
 		const data = OAuth2GrantTypes.getGrantTypePasswordDataURLParams(email, password);
 		const config = {
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		};
 
 		const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.GET_TOKEN, data, config);
@@ -168,8 +173,8 @@ export class AuthenticationService {
 	 * @param accessToken - the oauth access token of the corresponding login service
 	 */
 	private async externalLogin(externalLoginService: ExternalAuthenticationProviders,
-								userId: string,
-								accessToken: string): Promise<boolean> {
+		userId: string,
+		accessToken: string): Promise<boolean> {
 		const data: ExternalLoginRequest = {
 			loginProvider: externalLoginService,
 			providerKey: userId,
@@ -194,7 +199,7 @@ export class AuthenticationService {
 
 		const data = OAuth2GrantTypes.getGrantTypeRefreshTokenDataURLParams(this.restClient.refreshToken);
 		const config = {
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		};
 
 		const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.REFRESH_TOKEN, data, config);
@@ -241,5 +246,24 @@ export class AuthenticationService {
 	public async performAgentSignup(data: RegisterAgentRequest): Promise<boolean> {
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER_AGENT, data);
 		return true;
+	}
+
+	public async getCurrentUser(): Promise<any> {
+		return this.getUser('');
+	}
+
+	public async getUser(id: string): Promise<any> {
+		const params = {
+			id
+		};
+		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_USER, { params });
+		return result;
+	}
+
+	public async isUserAnyonymous(): Promise<boolean> {
+		const result = await this.getCurrentUser();
+		const anonymousFirstName = (result.data.data.firstName === AnonymousUserCredentials.firstName);
+		const anonymousLastName = (result.data.data.lastName === AnonymousUserCredentials.lastName);
+		return (anonymousFirstName && anonymousLastName);
 	}
 }
