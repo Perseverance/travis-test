@@ -40,3 +40,28 @@ export interface GetFavouriteLocationResponse {
 	zoomLevel: number;
 	imageUrls: string[];
 }
+
+interface CreatePropertyRequestTypedValue {
+	value: number;
+	type: number;
+}
+
+
+export interface CreatePropertyRequest {
+	bedrooms: number;
+	furnished: boolean;
+	floor: number;
+	price: CreatePropertyRequestTypedValue;
+	latitude: number;
+	longitude: number;
+	size: CreatePropertyRequestTypedValue;
+	type: number;
+	address: string;
+	description: string;
+	status: number;
+
+}
+
+export interface CreatePropertyResponse {
+	data: string;
+}
