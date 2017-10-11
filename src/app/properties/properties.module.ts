@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 
 import { PropertiesRoutingModule } from './properties-routing.module';
 import { PropertyDetailsComponent } from './property-details/property-details.component';
+import { ListPropertyComponent } from './list-property/list-property.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		PropertiesRoutingModule
 	],
-	declarations: [PropertyDetailsComponent],
+	declarations: [PropertyDetailsComponent, ListPropertyComponent],
 	providers: [
 		PropertiesService
 	]
