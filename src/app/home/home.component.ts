@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 		this.authService.refreshTokenOrLoginAnonym();
 	}
 
-	onLocationFoundHandler(latitude: number, longitude: number, zoom: number) {
+	onLocationFoundHandler(latitude: number, longitude: number) {
 		this.router.navigate(['map', {latitude: latitude, longitude: longitude}]);
 	}
 }
