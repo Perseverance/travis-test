@@ -8,8 +8,12 @@ import {
 	PropertyAgentResponse,
 	GetFavouriteLocationResponse,
 	CreatePropertyRequest,
+<<<<<<< HEAD
 	CreatePropertyResponse,
 	PropertyImage
+=======
+	CreatePropertyResponse
+>>>>>>> origin/sprint-boromir
 } from './properties-responses';
 
 interface Bounds {
