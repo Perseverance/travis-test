@@ -104,14 +104,15 @@ export class PropertiesService {
 		return result.data;
 	}
 
-	public async uploadImages(propertyId: string, images: PropertyImage[]): Promise<Object> {
+	public async uploadPropertyImages(propertyId: string, propertyImages: PropertyImage[]): Promise<boolean> {
 		const queryParams = {
 			id: propertyId
 		};
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
-			images,
+			propertyImages,
 			{ params: queryParams });
-		return result.data;
+
+		return true;
 	}
 }
