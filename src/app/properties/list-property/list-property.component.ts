@@ -10,6 +10,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message } from 'primeng/primeng';
 import { SelectItem } from 'primeng/components/common/selectitem';
 
+interface PropertyImage {
+	name: string;
+	file: string;
+}
+
 @Component({
 	selector: 'app-list-property',
 	templateUrl: './list-property.component.html',
@@ -29,6 +34,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	msgs: Message[];
 
 	uploadedFiles: any[] = [];
+	public selectedImages = [];
+	public propertyImages: object[] = new Array<PropertyImage>();
 
 	constructor(private formBuilder: FormBuilder,
 		private authService: AuthenticationService,
@@ -147,22 +154,55 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('language');
 	}
 
-	myUploader(event) {
-		console.log(event);
+	public selectFile(event) {
+		if (event.files[0]) {
+			this.selectedImages.push(event.files[0]);
+		}
+	}
 
-		const blob = event.files[0]; // .objectURL.changingThisBreaksApplicationSecurity;
-		console.log(blob);
+	public removeFile(event) {
+		const idx = this.selectedImages.indexOf(event.file);
+		this.selectedImages.splice(idx, 1);
+		console.log(this.selectedImages);
+	}
 
-		const reader = new FileReader();
+	public async prepareImages() {
+		for (const img of this.selectedImages) {
+			const imageName = img.name;
 
-		reader.readAsDataURL(blob);
-		reader.onloadend = function () {
-			const base64data = reader.result;
-			console.log(base64data);
-		};
+			const base64 = await this.convertToBase64(img);
+
+			const currentImageObj: PropertyImage = {
+				name: imageName,
+				file: base64
+			};
+
+			this.propertyImages.push(currentImageObj);
+		}
+	}
+
+	public async convertToBase64(img): Promise<string> {
+		let base64data;
+
+		const base64 = await (new Promise<string>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = function () {
+				base64data = reader.result;
+				resolve(base64data);
+			};
+
+			reader.readAsDataURL(img);
+		}));
+		return base64;
 	}
 
 	public async onSubmit() {
+		this.notificationService.pushInfo({
+			title: 'Loading...',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 15000
+		});
 		const request = {
 			bedrooms: this.bedrooms.value,
 			furnished: this.furnished.value,
@@ -184,7 +224,9 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		};
 		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
 		const propertyId = result.data;
-		console.log(propertyId);
+		await this.prepareImages();
+		// ToDO: submit logic
+		this.propertyImages = [];
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {

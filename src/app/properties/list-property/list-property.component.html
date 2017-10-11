@@ -50,13 +50,8 @@
                 <textarea [rows]="5" [cols]="60" pInputTextarea autoResize="autoResize" formControlName="description"></textarea>
             </div>
             <div class="form-group location-form-group">
-                <p-fileUpload name="demo[]" url="./upload.php" (uploadHandler)="myUploader($event)" multiple="multiple" customUpload="true"
-                    accept="image/*" maxFileSize="1000000">
-                    <ng-template pTemplate type="content">
-                        <ul *ngIf="uploadedFiles.length">
-                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                        </ul>
-                    </ng-template>
+                <p-fileUpload name="demo[]" url="./upload.php" (onSelect)="selectFile($event)" auto="false" showUploadButton="false" showCancelButton="false"
+                    (onRemove)="removeFile($event)" multiple="multiple" customUpload="true" accept="image/*" maxFileSize="1000000">
                 </p-fileUpload>
             </div>
             <button type="button" class="btn btn-block propy-control button-big" (click)="onSubmit()" [disabled]="
@@ -67,7 +62,8 @@
             description.invalid ||
             address === null ||
             propertyLat === null ||
-            propertyLon === null"> {{ 'list-property.submit-button'
+            propertyLon === null ||
+            propertyImages.length === 0"> {{ 'list-property.submit-button'
             | translate }}
             </button>
         </form>
