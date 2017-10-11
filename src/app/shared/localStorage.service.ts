@@ -6,8 +6,10 @@ export class LocalStorageService {
 	private KEY_ACCESS_TOKEN = 'propyAccessToken';
 	private KEY_REFRESH_TOKEN = 'propyRefreshToken';
 	private KEY_EXPIRY_TIMESTAMP = 'propyExpiryTimestamp';
+	private KEY_SELECTED_LANGUAGE = 'selectedLanguage';
 
-	constructor() { }
+	constructor() {
+	}
 
 	public set accessToken(token: string) {
 		if (token === undefined || token === null || token === '') {
@@ -46,8 +48,23 @@ export class LocalStorageService {
 	}
 
 	public get tokenExpireTimestamp(): number {
-		const expiryTimestampString = localStorage.getItem(this.KEY_REFRESH_TOKEN);
+		const expiryTimestampString = localStorage.getItem(this.KEY_EXPIRY_TIMESTAMP);
 		return Number.parseInt(expiryTimestampString);
+	}
+
+	public set selectedLanguage(selectedLanguage: string) {
+		if (selectedLanguage === undefined || selectedLanguage === null || selectedLanguage === '') {
+			throw new Error('Trying to set invalid language!');
+		}
+		localStorage.setItem(this.KEY_SELECTED_LANGUAGE, selectedLanguage);
+	}
+
+	public get selectedLanguage(): string {
+		const storedLanguage = localStorage.getItem(this.KEY_SELECTED_LANGUAGE);
+		if (storedLanguage == null) {
+			return navigator.language.substring(0, 2);
+		}
+		return storedLanguage;
 	}
 
 }

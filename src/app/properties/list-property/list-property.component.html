@@ -1,0 +1,11 @@
+<div class="row" *ngIf="hasLoaded && isUserAnonymous">
+    <div class="col-xs-12">
+        <h1>You are not authenticated!</h1>
+        <h2>Please either signup or login</h2>
+    </div>
+</div>
+<div class="row" *ngIf="hasLoaded && !isUserAnonymous">
+    <div class="col-xs-12">
+        <h1>You are authenticated</h1>
+    </div>
+</div>

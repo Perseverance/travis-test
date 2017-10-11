@@ -1,8 +1,10 @@
-<app-header></app-header>
-<div class="container-fluid">
-
-	<a routerLink="/login" routerLinkActive="active">Login</a>
-	<a routerLink="/signup" routerLinkActive="active">Signup</a>
-
-	<router-outlet></router-outlet>
+<div id="wrap">
+    <div id="main">
+        <app-error-message></app-error-message>
+        <app-header></app-header>
+        <div class="container-fluid propy-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>
+<app-footer></app-footer>

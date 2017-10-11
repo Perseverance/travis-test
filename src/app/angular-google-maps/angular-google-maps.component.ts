@@ -1,10 +1,6 @@
-import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {MapsAPILoader} from '@agm/core';
-import {} from '@types/googlemaps';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {PropertiesService} from '../properties/properties.service';
-import {FormBuilder, Validators, FormGroup} from '@angular/forms';
-import {TranslateService} from '@ngx-translate/core';
-
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
 	selector: 'app-google-maps',
@@ -17,35 +13,39 @@ export class AngularGoogleMapsComponent implements OnInit {
 	public longitude = -122.181725;
 	public zoom = 12;
 	public formattedAddress: string;
-	private autoComplete: any;
 	public properties: any;
-	public googleSearchForm: FormGroup;
 
-
-	@ViewChild('search')
-	public searchElementRef: ElementRef;
-
-
-	constructor(private mapsAPILoader: MapsAPILoader,
-				private ngZone: NgZone,
+	constructor(private route: ActivatedRoute,
 				public propertiesService: PropertiesService,
-				private formBuilder: FormBuilder,
-				public translate: TranslateService) {
-		this.googleSearchForm = this.formBuilder.group({
-			searchControl: ['', [Validators.required]]
-		});
+				private cdr: ChangeDetectorRef) {
+		// workaround to activate change detection manually(bug in angular > 4.1.3), remove delay between constructor and ngOnInit hook
+		setTimeout(() => this.setChanged(), 0);
+	}
+
+	setChanged() {
+		this.cdr.markForCheck();
+		this.cdr.detectChanges();
 	}
 
 	async ngOnInit() {
-		// set google maps defaults
-		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-		this.properties = propertiesResponse.properties;
+		const paramLatitude = this.route.snapshot.paramMap.get('latitude');
+		const paramLongitude = this.route.snapshot.paramMap.get('longitude');
+		const paramZoom = this.route.snapshot.paramMap.get('zoom');
 
-		// set current position
-		this.setCurrentPosition();
+		if (paramLatitude === undefined || paramLatitude === null || paramLongitude === undefined || paramLongitude == null) {
+			// set google maps defaults
+			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+			this.properties = propertiesResponse.properties;
 
-		// load Places Autocomplete
-		await this.loadPlacesAutocompleteSearch();
+			// set current position
+			this.setCurrentPosition();
+		} else {
+			this.latitude = +paramLatitude;
+			this.longitude = +paramLongitude;
+			this.zoom = paramZoom ? +paramZoom : this.zoom;
+			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+			this.properties = propertiesResponse.properties;
+		}
 	}
 
 	private setCurrentPosition() {
@@ -61,29 +61,13 @@ export class AngularGoogleMapsComponent implements OnInit {
 		});
 	}
 
-	async loadPlacesAutocompleteSearch() {
-		await this.mapsAPILoader.load();
-		this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-			types: ['(regions)']
-		});
-		this.autoComplete.addListener('place_changed', () => this.placeChangedHandler(this.autoComplete));
-	}
-
-	private placeChangedHandler(autoComplete: any) {
-		this.ngZone.run(async () => {
-			// get the place result
-			const place: google.maps.places.PlaceResult = this.autoComplete.getPlace();
-			// verify result
-			if (place.geometry === undefined || place.geometry === null) {
-				return;
-			}
-
-			// set latitude, longitude and zoom
-			this.latitude = place.geometry.location.lat();
-			this.longitude = place.geometry.location.lng();
-			this.formattedAddress = place.formatted_address;
-			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
-			this.properties = propertiesResponse.properties;
-		});
+	async onLocationFoundHandler(latitude: number, longitude: number, zoom = this.zoom) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.zoom = zoom;
+		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(this.latitude, this.longitude);
+		this.properties = propertiesResponse.properties;
+		// workaround to activate change detection manually
+		setTimeout(() => this.setChanged(), 0);
 	}
 }

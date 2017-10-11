@@ -1,13 +1,10 @@
 <div class="container">
 	<h1>Propy's Google Map</h1>
-	<h2>{{ 'home-page.label.new-life-label' | translate }}</h2>
-
+	<h2>{{ 'common.label.authentication-error' | translate }}</h2>
 	<!-- this creates a google map on the page with the given lat/lng from -->
 	<!-- the component as the initial center of the map: -->
-	<form [formGroup]="googleSearchForm">
-		<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
-			   class="form-control" #search formControlName="searchControl" size="100">
-	</form>
+	<app-location-search
+		(onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
 
 	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
 		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
