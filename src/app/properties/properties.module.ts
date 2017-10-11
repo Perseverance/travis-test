@@ -7,12 +7,16 @@ import {PropertyDetailsComponent} from './property-details/property-details.comp
 import {ListPropertyComponent} from './list-property/list-property.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {SharedModule} from '../shared/shared.module';
+import {FileUploadModule} from 'primeng/primeng';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
+		SharedModule,
+		FileUploadModule,
 		PropertiesRoutingModule,
 		TranslateModule
 	],

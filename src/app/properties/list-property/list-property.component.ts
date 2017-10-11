@@ -4,6 +4,7 @@ import {ErrorsService} from '../../shared/errors/errors.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {Message} from 'primeng/primeng';
 
 @Component({
 	selector: 'app-list-property',
@@ -15,24 +16,37 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public hasLoaded: boolean;
 	public listPropertyForm: FormGroup;
 
+	msgs: Message[];
+
+	uploadedFiles: any[] = [];
+
 	constructor(private formBuilder: FormBuilder,
 				private authService: AuthenticationService,
 				errorsService: ErrorsService,
 				translateService: TranslateService) {
 		super(errorsService, translateService);
 
-		this.listPropertyForm = this.formBuilder.group({
-			email: ['',
-				[Validators.required, Validators.email]
-			],
-			firstName: ['', [Validators.required]],
-			lastName: ['', [Validators.required]]
-		});
+		this.listPropertyForm = this.formBuilder.group({});
 	}
 
 	async ngOnInit() {
 		const result = await this.authService.isUserAnyonymous();
 		this.isUserAnonymous = result;
 		this.hasLoaded = true;
+	}
+
+	myUploader(event) {
+		console.log(event);
+
+		const blob = event.files[0]; // .objectURL.changingThisBreaksApplicationSecurity;
+		console.log(blob);
+
+		const reader = new FileReader();
+
+		reader.readAsDataURL(blob);
+		reader.onloadend = function () {
+			const base64data = reader.result;
+			console.log(base64data);
+		};
 	}
 }
