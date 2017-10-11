@@ -20,6 +20,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public propertyTypes: SelectItem[];
 	public currencies: SelectItem[];
 	public areaUnits: SelectItem[];
+	public languages: SelectItem[];
 	public propertyLat: number = null;
 	public propertyLon: number = null;
 
@@ -67,6 +68,17 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.areaUnits.push({ label: 'sqm', value: 1 });
 		this.areaUnits.push({ label: 'sqft', value: 2 });
 
+		this.languages = [];
+		this.languages.push({ label: 'Select Description Language', value: null });
+		this.languages.push({ label: 'English', value: 0 });
+		this.languages.push({ label: 'Spanish', value: 1 });
+		this.languages.push({ label: 'German', value: 2 });
+		this.languages.push({ label: 'French', value: 3 });
+		this.languages.push({ label: 'Russian', value: 4 });
+		this.languages.push({ label: 'Arabic', value: 5 });
+		this.languages.push({ label: 'Chinese', value: 6 });
+		this.languages.push({ label: 'Bulgarian', value: 7 });
+
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
 			furnished: [''],
@@ -77,6 +89,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			floor: [''],
 			area: [''],
 			areaUnit: ['1'],
+			description: [''],
+			language: [null]
 		});
 	}
 
@@ -114,6 +128,14 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public get areaUnit() {
 		return this.listPropertyForm.get('areaUnit');
+	}
+
+	public get description() {
+		return this.listPropertyForm.get('description');
+	}
+
+	public get language() {
+		return this.listPropertyForm.get('language');
 	}
 
 
