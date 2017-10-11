@@ -1,10 +1,12 @@
 @import "../../../variables";
-
 .list-property {
-	.propy-custom-heading {
-		color: $white;
-	}
-	.propy-form {
-		margin-top: 40px;
-	}
+    .propy-custom-heading {
+        color: $white;
+    }
+    .propy-form {
+        margin-top: 40px;
+    }
+    .propy-validation {
+        margin: 0px;
+    }
 }

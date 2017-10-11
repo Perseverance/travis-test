@@ -12,7 +12,14 @@
         <form [formGroup]="listPropertyForm" class="propy-form">
             <div class="form-group">
                 <p-dropdown [options]="propertyTypes" formControlName="propertyType" [filter]="true" filterBy="label"></p-dropdown>
+                <div *ngIf="propertyType.touched">
+                    <div class="propy-validation" *ngIf="propertyType.invalid && propertyType.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
+                </div>
             </div>
+            <div class="form-group">
+                <p-checkbox formControlName="furnished" label="Property is furnished"></p-checkbox>
+            </div>
+
             <div class="form-group location-form-group">
                 <app-location-search id="location" inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}"></app-location-search>
             </div>
@@ -27,7 +34,7 @@
                 </p-fileUpload>
             </div>
 
-            <button type="button" class="btn btn-block propy-control button-big" (click)="onSubmit()">
+            <button type="button" class="btn btn-block propy-control button-big" [disabled]="propertyType.invalid" (click)="onSubmit()">
 				{{ 'list-property.submit-button' | translate }}
 			</button>
         </form>

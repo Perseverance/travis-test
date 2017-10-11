@@ -49,12 +49,17 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.propertyTypes.push({ label: 'StudentRoom', value: 15 });
 
 		this.listPropertyForm = this.formBuilder.group({
-			propertyType: ['', Validators.required]
+			propertyType: ['', Validators.required],
+			furnished: ['']
 		});
 	}
 
 	public get propertyType() {
 		return this.listPropertyForm.get('propertyType');
+	}
+
+	public get furnished() {
+		return this.listPropertyForm.get('furnished');
 	}
 
 	async ngOnInit() {
