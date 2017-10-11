@@ -20,6 +20,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public isUserAnonymous: boolean;
 	public hasLoaded: boolean;
 	public listPropertyForm: FormGroup;
+	public selectedImages = [];
 	public propertyImages: object[] = new Array<PropertyImage>();
 
 	constructor(private formBuilder: FormBuilder,
@@ -50,20 +51,29 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 	}
 
-	public async selectFile(event) {
+	public selectFile(event) {
 		if (event.files[0]) {
-			const imageName = event.files[0].name;
-			let base64data;
+			this.selectedImages.push(event.files[0]);
+		}
+	}
 
-			const base64 = await (new Promise<string>((resolve, reject) => {
-				const reader = new FileReader();
-				reader.onloadend = function () {
-					base64data = reader.result;
-					resolve(base64data);
-				};
+	public removeFile(event) {
+		const idx = this.selectedImages.indexOf(event.file);
+		this.selectedImages.splice(idx, 1);
+		console.log(this.selectedImages);
+	}
 
-				reader.readAsDataURL(event.files[0]);
-			}));
+	public async submitProperty() {
+		await this.prepareImages();
+		// ToDO: submit logic
+		this.propertyImages = [];
+	}
+
+	public async prepareImages() {
+		for (const img of this.selectedImages) {
+			const imageName = img.name;
+
+			const base64 = await this.convertToBase64(img);
 
 			const currentImageObj: PropertyImage = {
 				name: imageName,
@@ -71,11 +81,21 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			};
 
 			this.propertyImages.push(currentImageObj);
-			console.log(this.propertyImages);
 		}
 	}
 
-	removeFile(event) {
-		console.log(event);
+	public async convertToBase64(img): Promise<string> {
+		let base64data;
+
+		const base64 = await(new Promise<string>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = function () {
+				base64data = reader.result;
+				resolve(base64data);
+			};
+
+			reader.readAsDataURL(img);
+		}));
+		return base64;
 	}
 }
