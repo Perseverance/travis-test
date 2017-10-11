@@ -1,10 +1,10 @@
-<div class="row" *ngIf="hasLoaded && !isUserAnonymous">
+<div class="row" *ngIf="hasLoaded && isUserAnonymous">
 	<div class="col-xs-12">
 		<h1>You are not authenticated!</h1>
 		<h2>Please either signup or login</h2>
 	</div>
 </div>
-<div class="row list-property" *ngIf="hasLoaded && isUserAnonymous">
+<div class="row list-property" *ngIf="hasLoaded && !isUserAnonymous">
 	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-offset-2">
 		<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.heading' | translate }}</h2>
 	</div>
