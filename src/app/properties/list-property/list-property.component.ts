@@ -1,3 +1,5 @@
+import { CreatePropertyResponse } from './../properties-responses';
+import { PropertiesService } from './../properties.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,7 +34,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		private authService: AuthenticationService,
 		errorsService: ErrorsService,
 		translateService: TranslateService,
-		private notificationService: NotificationsService) {
+		private notificationService: NotificationsService,
+		private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
@@ -172,11 +175,9 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		};
 	}
 
-	public onSubmit() {
-		console.log(this.propertyType);
-		console.log(this.furnished);
-		console.log(this.price);
-		console.log(this.currency);
+	public async onSubmit() {
+		const result: CreatePropertyResponse = await this.propertiesService.createProperty({ field: 'any' });
+		console.log(result);
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {

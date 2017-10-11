@@ -40,3 +40,12 @@ export interface GetFavouriteLocationResponse {
 	zoomLevel: number;
 	imageUrls: string[];
 }
+
+
+export interface CreatePropertyRequest {
+	field: any;
+}
+
+export interface CreatePropertyResponse {
+	field: any;
+}
