@@ -48,7 +48,8 @@
 	"list-property": {
 		"heading": "List property",
 		"form-fields": {
-			"address": "Address"
+			"address": "Address",
+			"description": "Description"
 		},
 		"submit-button": "Submit",
 		"error-listing-property": "Listing property failed",

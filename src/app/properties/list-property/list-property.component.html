@@ -57,7 +57,8 @@
 			</div>
 			<div class="form-group">
 				<textarea [rows]="5" [cols]="60" pInputTextarea autoResize="autoResize"
-						  formControlName="description"></textarea>
+						  formControlName="description"
+						  placeholder="{{ 'list-property.form-fields.description' | translate }}"></textarea>
 			</div>
 			<div class="form-group location-form-group">
 				<p-fileUpload #uploadRef name="propertyImages" url="./upload.php"
