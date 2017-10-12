@@ -244,23 +244,23 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: this.address,
 			status: 1
 		};
-		// const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
-		// const propertyId = result.data;
-		// this.notificationService.pushInfo({
-		// 	title: 'Uploading images...',
-		// 	message: '',
-		// 	time: (new Date().getTime()),
-		// 	timeout: 15000
-		// });
-		// await this.prepareImages();
-		// const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages);
-		//
-		// this.notificationService.pushSuccess({
-		// 	title: 'Property Upload success',
-		// 	message: '',
-		// 	time: (new Date().getTime()),
-		// 	timeout: 2000
-		// });
+		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
+		const propertyId = result.data;
+		this.notificationService.pushInfo({
+			title: 'Uploading images...',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 15000
+		});
+		await this.prepareImages();
+		const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages);
+
+		this.notificationService.pushSuccess({
+			title: 'Property Upload success',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 2000
+		});
 
 		this.resetListingForm();
 	}
