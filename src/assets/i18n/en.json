@@ -55,6 +55,9 @@
 		"not-authenticated": {
 			"warning-message": "You are not authenticated!",
 			"login-or-signup": "Please either sign up or login from header links."
+		},
+		"upload-image": {
+			"choose-button-label": "Choose Image"
 		}
 	}
 }
