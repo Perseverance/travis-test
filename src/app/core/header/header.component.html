@@ -29,12 +29,12 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 					   ngClass="{{translate.currentLang}}"
-					   aria-expanded="false"><span class="caret"></span></a>
+					   aria-expanded="false">{{translate.currentLang}}<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li *ngFor="let lang of translate.getLangs()">
 							<a #langSelect (click)="selectLanguage(langSelect.rel)" [rel]="lang" ngClass="{{lang}}"
 							   [class.active]="lang === translate.currentLang"
-							   *ngIf="lang != translate.currentLang"></a>
+							   *ngIf="lang != translate.currentLang">{{ lang }}</a>
 						</li>
 					</ul>
 				</li>

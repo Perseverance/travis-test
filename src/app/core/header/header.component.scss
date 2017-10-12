@@ -1,144 +1,154 @@
 @import "../../../variables";
 @import "../../../mixins";
+
 $links-to-languages-distance: 120px;
 $header-margin: 60px;
 $header-margin-sm: 15px;
 .propy-header {
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: 2000;
-    &.navbar {
-        margin: 0px;
-        margin-bottom: $header-margin;
-        @media #{$sm} {
-            margin-bottom: $header-margin-sm;
-        }
-        @include border-radius(0px);
-        @include transition(background-color 500ms linear);
-        .navbar-brand {
-            img {
-                margin-left: 20px;
-                height: 100%;
-            }
-        }
-    }
-    .nav {
-        &.propy-links {
-            li {
-                &.separator {
-                    padding-right: $links-to-languages-distance;
-                    @media #{$xs} {
-                        padding-right: 0px;
-                    }
-                }
-                a {
-                    font-size: 18px;
-                }
-            }
-        }
-        .dropdown {
-            .dropdown-menu {
-                min-width: 80px;
-            }
-            a.dropdown-toggle {
-                height: 40px;
-                margin-top: 10px;
-                span {
-                    margin-left: 15px;
-                }
-            }
-            a {
-                cursor: pointer;
-                background-size: 30px !important;
-                background-repeat: no-repeat !important;
-                height: 30px;
-                margin-left: 25px;
-                &.ar {
-                    background: url('/assets/images/country-flags/flag_of_united_arab_emirates.png');
-                }
-                &.bg {
-                    background: url('/assets/images/country-flags/flag_of_bulgaria.png');
-                }
-                &.en {
-                    background: url('/assets/images/country-flags/flag_united_states.png');
-                }
-                &.es {
-                    background: url('/assets/images/country-flags/flag_of_spain.png');
-                }
-                &.fr {
-                    background: url('/assets/images/country-flags/flag_of_france.png');
-                }
-                &.ru {
-                    background: url('/assets/images/country-flags/flag_of_russia.png');
-                }
-                &.zh {
-                    background: url('/assets/images/country-flags/flag_of_china.png');
-                }
-            }
-        }
-    }
-    &.propy-header-top {
-        &.navbar {
-            &.navbar-default {
-                background-color: transparent;
-                border: none;
-            }
-        }
-        .nav {
-            &.propy-links {
-                li {
-                    a {
-                        color: $white;
-                        &:hover {
-                            color: darken($white, 15%);
-                        }
-                    }
-                }
-            }
-            .dropdown {
-                .dropdown-menu {
-                    background-color: transparent;
-                }
-                a.dropdown-toggle {
-                    span {
-                        color: $white;
-                    }
-                    &:hover {
-                        span {
-                            color: darken($white, 15%);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    &.propy-header-scrolled {
-        &.navbar {
-            &.navbar-default {
-                background-color: rgba($color: $white, $alpha: 0.95);
-                @media #{$sm} {
-                    background-color: $white;
-                }
-                border: none;
-            }
-        }
-        .nav {
-            &.propy-links {
-                li {
-                    a {
-                        color: $gray-light;
-                        &:hover {
-                            color: darken($gray-light, 10%);
-                        }
-                    }
-                }
-            }
-            .dropdown {
-                .dropdown-menu {
-                    background-color: transparent;
-                }
-            }
-        }
-    }
+	position: fixed;
+	left: 0;
+	right: 0;
+	z-index: 2000;
+	&.navbar {
+		margin: 0px;
+		margin-bottom: $header-margin;
+		@media #{$sm} {
+			margin-bottom: $header-margin-sm;
+		}
+		@include border-radius(0px);
+		@include transition(background-color 500ms linear);
+		.navbar-brand {
+			img {
+				margin-left: 20px;
+				height: 100%;
+			}
+		}
+	}
+	.nav {
+		&.propy-links {
+			li {
+				&.separator {
+					padding-right: $links-to-languages-distance;
+					@media #{$xs} {
+						padding-right: 0px;
+					}
+				}
+				a {
+					font-size: 18px;
+				}
+			}
+		}
+		.dropdown {
+			.dropdown-menu {
+				min-width: 80px;
+			}
+			a.dropdown-toggle {
+				height: 40px;
+				background-color: transparent;
+				span {
+					margin-left: 15px;
+				}
+			}
+			a {
+				text-transform: uppercase;
+				cursor: pointer;
+				background-size: 30px !important;
+				background-repeat: no-repeat !important;
+				height: 30px;
+				background-color: transparent;
+			}
+		}
+	}
+	&.propy-header-top {
+		&.navbar {
+			&.navbar-default {
+				background-color: transparent;
+				border: none;
+			}
+		}
+		.nav {
+			&.propy-links {
+				li {
+					a {
+						color: $white;
+						&:hover {
+							color: darken($white, 15%);
+						}
+					}
+				}
+			}
+			.dropdown {
+				.dropdown-menu {
+					background-color: transparent;
+				}
+				a.dropdown-toggle {
+					span {
+						color: $white;
+					}
+					&:hover {
+						span {
+							color: darken($white, 15%);
+						}
+					}
+				}
+			}
+
+			@media #{$xs} {
+				background-color: $white;
+				&.propy-links {
+					li {
+						a {
+							color: $gray-darker;
+							&:hover {
+								color: darken($gray-darker, 15%);
+							}
+						}
+					}
+				}
+				.dropdown {
+					.dropdown-menu {
+						background-color: transparent;
+					}
+					a.dropdown-toggle {
+						span {
+							color: $gray-darker;
+						}
+						&:hover {
+							span {
+								color: darken($gray-darker, 15%);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	&.propy-header-scrolled {
+		&.navbar {
+			&.navbar-default {
+				background-color: rgba($color: $white, $alpha: 0.95);
+				@media #{$sm} {
+					background-color: $white;
+				}
+				border: none;
+			}
+		}
+		.nav {
+			&.propy-links {
+				li {
+					a {
+						color: $gray-light;
+						&:hover {
+							color: darken($gray-light, 10%);
+						}
+					}
+				}
+			}
+			.dropdown {
+				.dropdown-menu {
+					background-color: transparent;
+				}
+			}
+		}
+	}
 }
