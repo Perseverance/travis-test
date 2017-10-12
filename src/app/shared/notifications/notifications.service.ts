@@ -26,7 +26,6 @@ export class NotificationsService {
 
 	public pushSuccess(error: DisplayableInfo) {
 		this.successSubject.next(error);
-		this.successSubject.complete();
 	}
 
 	public subscribeToInfo(observer: NextObserver<DisplayableInfo>) {
@@ -35,7 +34,6 @@ export class NotificationsService {
 
 	public pushInfo(error: DisplayableInfo) {
 		this.infoSubject.next(error);
-		this.infoSubject.complete();
 	}
 
 }

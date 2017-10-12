@@ -60,9 +60,10 @@
 						  formControlName="description"></textarea>
 			</div>
 			<div class="form-group location-form-group">
-				<p-fileUpload name="demo[]" url="./upload.php" (onSelect)="selectFile($event)" auto="false"
-							  showUploadButton="false" showCancelButton="false"
-							  (onRemove)="removeFile($event)" multiple="multiple" customUpload="true" accept="image/*"
+				<p-fileUpload name="propertyImages" url="./upload.php" (onSelect)="selectFile($event)" auto="false"
+							  showUploadButton="false"
+							  showCancelButton="false" (onRemove)="removeFile($event)" multiple="multiple"
+							  customUpload="true" accept="image/*"
 							  maxFileSize="1000000">
 				</p-fileUpload>
 			</div>
@@ -75,7 +76,7 @@
             address === null ||
             propertyLat === null ||
             propertyLon === null ||
-            propertyImages.length === 0"> {{ 'list-property.submit-button'
+			selectedImages.length === 0"> {{ 'list-property.submit-button'
 				| translate }}
 			</button>
 		</form>
