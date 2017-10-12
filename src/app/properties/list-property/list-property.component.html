@@ -1,4 +1,4 @@
-<div class="row" *ngIf="hasLoaded && isUserAnonymous">
+<div class="row list-property" *ngIf="hasLoaded && isUserAnonymous">
 	<div class="col-xs-12 text-center">
 		<h1>{{ 'list-property.not-authenticated.warning-message' | translate }}</h1>
 		<h2>{{ 'list-property.not-authenticated.login-or-signup' | translate }}.</h2>
@@ -60,7 +60,8 @@
 						  formControlName="description"></textarea>
 			</div>
 			<div class="form-group location-form-group">
-				<p-fileUpload name="propertyImages" url="./upload.php" (onSelect)="selectFile($event)" auto="false"
+				<p-fileUpload #uploadRef name="propertyImages" url="./upload.php"
+							  (onSelect)="selectFile($event, uploadRef)" auto="false"
 							  showUploadButton="false"
 							  showCancelButton="false" (onRemove)="removeFile($event)" multiple="multiple"
 							  customUpload="true" accept="image/*"

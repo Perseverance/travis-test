@@ -5,11 +5,12 @@ import {AuthenticationService} from './../../authentication/authentication.servi
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorsService} from './../../shared/errors/errors.service';
 import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Message} from 'primeng/primeng';
 import {SelectItem} from 'primeng/components/common/selectitem';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {LocationSearchComponent} from '../../location-search/location-search.component';
 
 @Component({
 	selector: 'app-list-property',
@@ -26,12 +27,13 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public propertyLat: number = null;
 	public propertyLon: number = null;
 	public address: string = null;
+	public uploadControl: any;
 
-	msgs: Message[];
-
-	uploadedFiles: any[] = [];
 	public selectedImages = [];
 	public propertyImages: PropertyImage[] = new Array<PropertyImage>();
+
+	@ViewChild(LocationSearchComponent)
+	private locationSearchComponent: LocationSearchComponent;
 
 	constructor(private formBuilder: FormBuilder,
 				private authService: AuthenticationService,
@@ -150,10 +152,12 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('language');
 	}
 
-	public selectFile(event) {
+	public selectFile(event, uploadControl) {
 		for (const file of event.files) {
 			this.selectedImages.push(file);
 		}
+
+		this.uploadControl = uploadControl;
 	}
 
 	public removeFile(event) {
@@ -240,30 +244,43 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: this.address,
 			status: 1
 		};
-		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
-		const propertyId = result.data;
-		this.notificationService.pushInfo({
-			title: 'Uploading images...',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 15000
-		});
-		await this.prepareImages();
-		const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages);
+		// const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
+		// const propertyId = result.data;
+		// this.notificationService.pushInfo({
+		// 	title: 'Uploading images...',
+		// 	message: '',
+		// 	time: (new Date().getTime()),
+		// 	timeout: 15000
+		// });
+		// await this.prepareImages();
+		// const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages);
+		//
+		// this.notificationService.pushSuccess({
+		// 	title: 'Property Upload success',
+		// 	message: '',
+		// 	time: (new Date().getTime()),
+		// 	timeout: 2000
+		// });
 
-		this.notificationService.pushSuccess({
-			title: 'Property Upload success',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 2000
-		});
-		this.propertyImages = new Array<PropertyImage>();
-		// TODO: Reset form
+		this.resetListingForm();
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
 		this.propertyLat = latitude;
 		this.propertyLon = longitude;
 		this.address = locationAddress;
+	}
+
+	private resetListingForm() {
+		this.propertyImages = new Array<PropertyImage>();
+		this.selectedImages = new Array<any>();
+		this.uploadControl.clear();
+		this.listPropertyForm.reset();
+		this.currency.setValue('1'); // USD default
+		this.areaUnit.setValue('1'); // sqm default
+		this.locationSearchComponent.resetInput();
+		this.propertyLat = null;
+		this.propertyLon = null;
+		this.address = null;
 	}
 }
