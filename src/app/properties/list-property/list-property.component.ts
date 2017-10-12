@@ -151,40 +151,49 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public selectFile(event) {
-		if (event.files[0]) {
-			this.selectedImages.push(event.files[0]);
+		for (const file of event.files) {
+			this.selectedImages.push(file);
 		}
 	}
 
 	public removeFile(event) {
 		const idx = this.selectedImages.indexOf(event.file);
 		this.selectedImages.splice(idx, 1);
-		console.log(this.selectedImages);
 	}
 
 	public async prepareImages() {
 		for (const img of this.selectedImages) {
 			const imageName = img.name;
 
-			const base64 = await this.convertToBase64(img);
+			try {
+				const base64 = await this.convertToBase64(img);
+				const currentImageObj: PropertyImage = {
+					name: imageName,
+					file: base64
+				};
+				this.propertyImages.push(currentImageObj);
+			} catch (error) {
+				// Should not stop on one unsuccessfull convertion
+				continue;
+			}
+		}
 
-			const currentImageObj: PropertyImage = {
-				name: imageName,
-				file: base64
-			};
-
-			this.propertyImages.push(currentImageObj);
+		if (this.propertyImages.length === 0) {
+			throw new Error('No usable property image was uploaded');
 		}
 	}
 
 	public async convertToBase64(img): Promise<string> {
-		let base64data;
-
+		const self = this;
 		const base64 = await (new Promise<string>((resolve, reject) => {
 			const reader = new FileReader();
 			reader.onloadend = function () {
-				base64data = reader.result;
-				resolve(base64data);
+				const base64dataWithHeaders = reader.result;
+
+				// The reader normally adds something like this before the base64 - 'data:image/jpeg;base64,'
+				// it needs to be removed
+				const base64dataWithoutHeaders = self.removeBase64Headers(base64dataWithHeaders);
+				resolve(base64dataWithoutHeaders);
 			};
 
 			reader.readAsDataURL(img);
@@ -192,17 +201,29 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return base64;
 	}
 
+	private removeBase64Headers(base64dataWithHeaders: string) {
+		const base64Headers = 'base64,';
+		const headerIndex = base64dataWithHeaders.indexOf(base64Headers);
+		if (headerIndex === -1) {
+			// Headers were not found, probably good to go
+			return base64dataWithHeaders;
+		}
+
+		const base64DataStartsAt = headerIndex + base64Headers.length;
+		return base64dataWithHeaders.substring(base64DataStartsAt);
+	}
+
 	@DefaultAsyncAPIErrorHandling('list-property.error-listing-property')
 	public async onSubmit() {
 		this.notificationService.pushInfo({
-			title: 'Loading...',
+			title: 'Sending data...',
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 15000
 		});
 		const request = {
 			bedrooms: this.bedrooms.value,
-			furnished: this.furnished.value,
+			furnished: (!!this.furnished.value),
 			floor: this.floor.value,
 			price: {
 				value: this.price.value,
@@ -221,9 +242,22 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		};
 		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
 		const propertyId = result.data;
+		this.notificationService.pushInfo({
+			title: 'Uploading images...',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 15000
+		});
 		await this.prepareImages();
-		const imagesResult = await this.propertiesService.uploadImages(propertyId, this.propertyImages);
+		const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages);
+		this.notificationService.pushSuccess({
+			title: 'Property Upload success',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 2000
+		});
 		this.propertyImages = new Array<PropertyImage>();
+		// TODO: Reset form
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
