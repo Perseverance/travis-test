@@ -75,7 +75,7 @@ export class AuthenticationService {
 			firstName,
 			lastName
 		};
-		const result = await this.restClient.post(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
 		if (rememberMe) {
 			return this.refreshStoredAccessToken(true);
 		}
