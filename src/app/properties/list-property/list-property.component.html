@@ -1,60 +1,72 @@
 <div class="row" *ngIf="hasLoaded && isUserAnonymous">
-    <div class="col-xs-12">
-        <h1>You are not authenticated!</h1>
-        <h2>Please either signup or login</h2>
-    </div>
+	<div class="col-xs-12 text-center">
+		<h1>{{ 'list-property.not-authenticated.warning-message' | translate }}</h1>
+		<h2>{{ 'list-property.not-authenticated.login-or-signup' | translate }}.</h2>
+	</div>
 </div>
 <div class="row list-property" *ngIf="hasLoaded && !isUserAnonymous">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-        <h2 class="propy-custom-heading text-capitalize">{{ 'list-property.heading' | translate }}</h2>
-    </div>
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-        <form [formGroup]="listPropertyForm" class="propy-form">
-            <div class="form-group">
-                <p-dropdown [options]="propertyTypes" formControlName="propertyType" [filter]="true" filterBy="label"></p-dropdown>
-                <div *ngIf="propertyType.touched">
-                    <div class="propy-validation" *ngIf="propertyType.invalid && propertyType.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <p-checkbox formControlName="furnished" label="Property is furnished"></p-checkbox>
-            </div>
-            <div class="form-group">
-                <div class="ui-inputgroup">
-                    <input type="number" formControlName="price" pInputText placeholder="Price">
-                    <span class="ui-inputgroup-addon"><p-dropdown [options]="currencies" formControlName="currency"></p-dropdown></span>
-                </div>
-                <div *ngIf="price.touched">
-                    <div class="propy-validation" *ngIf="price.invalid && price.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="number" pInputText placeholder="Year built" formControlName="year">
-            </div>
-            <div class="form-group">
-                <input type="number" pInputText placeholder="Bedrooms" formControlName="bedrooms">
-            </div>
-            <div class="form-group">
-                <input type="number" pInputText placeholder="Floor" formControlName="floor">
-            </div>
-            <div class="form-group">
-                <div class="ui-inputgroup">
-                    <input type="number" formControlName="area" pInputText placeholder="Area">
-                    <span class="ui-inputgroup-addon"><p-dropdown [options]="areaUnits" formControlName="areaUnit"></p-dropdown></span>
-                </div>
-            </div>
-            <div class="form-group location-form-group">
-                <app-location-search id="location" inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}" (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"></app-location-search>
-            </div>
-            <div class="form-group">
-                <textarea [rows]="5" [cols]="60" pInputTextarea autoResize="autoResize" formControlName="description"></textarea>
-            </div>
-            <div class="form-group location-form-group">
-                <p-fileUpload name="demo[]" url="./upload.php" (onSelect)="selectFile($event)" auto="false" showUploadButton="false" showCancelButton="false"
-                    (onRemove)="removeFile($event)" multiple="multiple" customUpload="true" accept="image/*" maxFileSize="1000000">
-                </p-fileUpload>
-            </div>
-            <button type="button" class="btn btn-block propy-control button-big" (click)="onSubmit()" [disabled]="
+	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+		<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.heading' | translate }}</h2>
+	</div>
+	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+		<form [formGroup]="listPropertyForm" class="propy-form">
+			<div class="form-group">
+				<p-dropdown [options]="propertyTypes" formControlName="propertyType" [filter]="true"
+							filterBy="label"></p-dropdown>
+				<div *ngIf="propertyType.touched">
+					<div class="propy-validation" *ngIf="propertyType.invalid && propertyType.errors['required']">{{
+						'common.validation-errors.required' | translate }}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<p-checkbox formControlName="furnished" label="Property is furnished"></p-checkbox>
+			</div>
+			<div class="form-group">
+				<div class="ui-inputgroup">
+					<input type="number" formControlName="price" pInputText placeholder="Price">
+					<span class="ui-inputgroup-addon"><p-dropdown [options]="currencies"
+																  formControlName="currency"></p-dropdown></span>
+				</div>
+				<div *ngIf="price.touched">
+					<div class="propy-validation" *ngIf="price.invalid && price.errors['required']">{{
+						'common.validation-errors.required' | translate }}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="number" pInputText placeholder="Year built" formControlName="year">
+			</div>
+			<div class="form-group">
+				<input type="number" pInputText placeholder="Bedrooms" formControlName="bedrooms">
+			</div>
+			<div class="form-group">
+				<input type="number" pInputText placeholder="Floor" formControlName="floor">
+			</div>
+			<div class="form-group">
+				<div class="ui-inputgroup">
+					<input type="number" formControlName="area" pInputText placeholder="Area">
+					<span class="ui-inputgroup-addon"><p-dropdown [options]="areaUnits"
+																  formControlName="areaUnit"></p-dropdown></span>
+				</div>
+			</div>
+			<div class="form-group location-form-group">
+				<app-location-search id="location"
+									 inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}"
+									 (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"></app-location-search>
+			</div>
+			<div class="form-group">
+				<textarea [rows]="5" [cols]="60" pInputTextarea autoResize="autoResize"
+						  formControlName="description"></textarea>
+			</div>
+			<div class="form-group location-form-group">
+				<p-fileUpload name="demo[]" url="./upload.php" (onSelect)="selectFile($event)" auto="false"
+							  showUploadButton="false" showCancelButton="false"
+							  (onRemove)="removeFile($event)" multiple="multiple" customUpload="true" accept="image/*"
+							  maxFileSize="1000000">
+				</p-fileUpload>
+			</div>
+			<button type="button" class="btn btn-block propy-control button-big" (click)="onSubmit()" [disabled]="
             propertyType.invalid ||
             furnished.invalid ||
             price.invalid ||
@@ -64,8 +76,8 @@
             propertyLat === null ||
             propertyLon === null ||
             propertyImages.length === 0"> {{ 'list-property.submit-button'
-            | translate }}
-            </button>
-        </form>
-    </div>
+				| translate }}
+			</button>
+		</form>
+	</div>
 </div>
