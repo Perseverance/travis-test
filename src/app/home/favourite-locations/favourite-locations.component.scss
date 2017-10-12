@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 .top-locations {
 	margin-top: 40px;
 	.location-holder {
@@ -21,6 +23,7 @@
 			}
 			span {
 				float: right;
+				color: $white;
 			}
 		}
 	}
