@@ -1,18 +1,16 @@
 @import "../../../variables";
+
 .list-property {
-    .propy-custom-heading {
-        color: $white;
-    }
-    .propy-form {
-        margin-top: 40px;
-        .ui-widget-header .ui-button,
-        .ui-widget-content .ui-button,
-        .ui-widget.ui-button,
-        .ui-button {
-            background-color: red !important;
-        }
-    }
-    .propy-validation {
-        margin: 0px;
-    }
+	h1, h2 {
+		color: $white;
+	}
+	.propy-form {
+		margin-top: 40px;
+		textarea {
+			width: 100%;
+		}
+	}
+	.propy-validation {
+		margin: 0px;
+	}
 }
