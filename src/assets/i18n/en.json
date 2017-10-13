@@ -11,7 +11,8 @@
 			"signup": "Sign up",
 			"register": "Register",
 			"rememberMe": "Remember me",
-			"locationSearch": "Search for location"
+			"locationSearch": "Search for location",
+			"logout": "Logout"
 		},
 		"placeholder": {
 			"yourEmail": "Your Email",
