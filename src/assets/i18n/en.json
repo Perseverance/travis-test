@@ -23,7 +23,8 @@
 			"expertise": "Expertise",
 			"agency": "Agency",
 			"agencyPassword": "Agency Password",
-			"location": "Location of Operation"
+			"location": "Location of Operation",
+			"search": "Search"
 		},
 		"social": {
 			"connect-linkedin": "Continue with LinkedIn",
