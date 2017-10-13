@@ -49,7 +49,7 @@
                 <div class="propy-validation" *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">{{ 'common.validation-errors.passwords-differ' | translate }}</div>
             </div>
 
-            <div class="form-group checkbox">
+            <div class="form-group checkbox" *ngIf="false">
                 <div class="form-group checkbox form-check abc-checkbox">
                     <input type="checkbox" class="form-check-input" formControlName="iAmAnAgent" id="agentCheckbox">
                     <label class="center-block form-check-label" for="agentCheckbox">
