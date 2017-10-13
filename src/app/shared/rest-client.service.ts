@@ -250,5 +250,9 @@ export class RestClientService {
 		this.unsetRememberUser();
 		this.propySessionStorage.removeStoredAccessData();
 		this.propyLocalStorage.removeStoredAccessData();
+		this._accessToken = null;
+		this._refreshToken = null;
+		this._accessToken = null;
+		this._tokenExpireTimestamp = 0;
 	}
 }

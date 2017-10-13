@@ -68,9 +68,9 @@ export class LocalStorageService {
 	}
 
 	public removeStoredAccessData() {
-		sessionStorage.removeItem(this.KEY_ACCESS_TOKEN);
-		sessionStorage.removeItem(this.KEY_REFRESH_TOKEN);
-		sessionStorage.removeItem(this.KEY_EXPIRY_TIMESTAMP);
+		localStorage.removeItem(this.KEY_ACCESS_TOKEN);
+		localStorage.removeItem(this.KEY_REFRESH_TOKEN);
+		localStorage.removeItem(this.KEY_EXPIRY_TIMESTAMP);
 	}
 
 }
