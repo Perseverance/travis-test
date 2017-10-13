@@ -1,16 +1,16 @@
-import {CreatePropertyResponse, PropertyImage} from './../properties-responses';
-import {PropertiesService} from './../properties.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {AuthenticationService} from './../../authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Message} from 'primeng/primeng';
-import {SelectItem} from 'primeng/components/common/selectitem';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {LocationSearchComponent} from '../../location-search/location-search.component';
+import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
+import { PropertiesService } from './../properties.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { AuthenticationService } from './../../authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Message } from 'primeng/primeng';
+import { SelectItem } from 'primeng/components/common/selectitem';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { LocationSearchComponent } from '../../location-search/location-search.component';
 
 @Component({
 	selector: 'app-list-property',
@@ -24,57 +24,55 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public propertyTypes: SelectItem[];
 	public currencies: SelectItem[];
 	public areaUnits: SelectItem[];
-	public propertyLat: number = null;
-	public propertyLon: number = null;
-	public address: string = null;
 	public uploadControl: any;
 
 	public selectedImages = [];
-	public propertyImages: PropertyImage[] = new Array<PropertyImage>();
+
+	public isSubmitClicked = false;
 
 	@ViewChild(LocationSearchComponent)
 	private locationSearchComponent: LocationSearchComponent;
 
 	constructor(private formBuilder: FormBuilder,
-				private authService: AuthenticationService,
-				errorsService: ErrorsService,
-				translateService: TranslateService,
-				private notificationService: NotificationsService,
-				private propertiesService: PropertiesService) {
+		private authService: AuthenticationService,
+		errorsService: ErrorsService,
+		translateService: TranslateService,
+		private notificationService: NotificationsService,
+		private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
-		this.propertyTypes.push({label: 'Select Type', value: null});
-		this.propertyTypes.push({label: 'SingleFamilyHome', value: 1});
-		this.propertyTypes.push({label: 'Apartment', value: 2});
-		this.propertyTypes.push({label: 'Townhouse', value: 3});
-		this.propertyTypes.push({label: 'Condo', value: 4});
-		this.propertyTypes.push({label: 'Coop', value: 5});
-		this.propertyTypes.push({label: 'Loft', value: 6});
-		this.propertyTypes.push({label: 'TIC', value: 7});
-		this.propertyTypes.push({label: 'Villa', value: 8});
-		this.propertyTypes.push({label: 'SummerVilla', value: 9});
-		this.propertyTypes.push({label: 'DevelopmentOnly', value: 10});
-		this.propertyTypes.push({label: 'Studio', value: 11});
-		this.propertyTypes.push({label: 'Maisonette', value: 12});
-		this.propertyTypes.push({label: 'Penthouse', value: 13});
-		this.propertyTypes.push({label: 'Bungalow', value: 14});
-		this.propertyTypes.push({label: 'StudentRoom', value: 15});
+		this.propertyTypes.push({ label: 'Select Type', value: null });
+		this.propertyTypes.push({ label: 'SingleFamilyHome', value: 1 });
+		this.propertyTypes.push({ label: 'Apartment', value: 2 });
+		this.propertyTypes.push({ label: 'Townhouse', value: 3 });
+		this.propertyTypes.push({ label: 'Condo', value: 4 });
+		this.propertyTypes.push({ label: 'Coop', value: 5 });
+		this.propertyTypes.push({ label: 'Loft', value: 6 });
+		this.propertyTypes.push({ label: 'TIC', value: 7 });
+		this.propertyTypes.push({ label: 'Villa', value: 8 });
+		this.propertyTypes.push({ label: 'SummerVilla', value: 9 });
+		this.propertyTypes.push({ label: 'DevelopmentOnly', value: 10 });
+		this.propertyTypes.push({ label: 'Studio', value: 11 });
+		this.propertyTypes.push({ label: 'Maisonette', value: 12 });
+		this.propertyTypes.push({ label: 'Penthouse', value: 13 });
+		this.propertyTypes.push({ label: 'Bungalow', value: 14 });
+		this.propertyTypes.push({ label: 'StudentRoom', value: 15 });
 
 		this.currencies = [];
-		this.currencies.push({label: 'USD', value: 1});
-		this.currencies.push({label: 'EUR', value: 2});
-		this.currencies.push({label: 'RUB', value: 3});
-		this.currencies.push({label: 'AED', value: 4});
-		this.currencies.push({label: 'HKD', value: 5});
-		this.currencies.push({label: 'SGD', value: 6});
-		this.currencies.push({label: 'GBP', value: 7});
-		this.currencies.push({label: 'BGN', value: 8});
-		this.currencies.push({label: 'CNY', value: 9});
+		this.currencies.push({ label: 'USD', value: 1 });
+		this.currencies.push({ label: 'EUR', value: 2 });
+		this.currencies.push({ label: 'RUB', value: 3 });
+		this.currencies.push({ label: 'AED', value: 4 });
+		this.currencies.push({ label: 'HKD', value: 5 });
+		this.currencies.push({ label: 'SGD', value: 6 });
+		this.currencies.push({ label: 'GBP', value: 7 });
+		this.currencies.push({ label: 'BGN', value: 8 });
+		this.currencies.push({ label: 'CNY', value: 9 });
 
 		this.areaUnits = [];
-		this.areaUnits.push({label: 'sqm', value: 1});
-		this.areaUnits.push({label: 'sqft', value: 2});
+		this.areaUnits.push({ label: 'sqm', value: 1 });
+		this.areaUnits.push({ label: 'sqft', value: 2 });
 
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
@@ -86,7 +84,11 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			floor: [''],
 			area: [''],
 			areaUnit: ['1'],
-			description: ['']
+			description: [''],
+			address: ['', Validators.required],
+			propertyLat: ['', Validators.required],
+			propertyLon: ['', Validators.required],
+			propertyImages: ['', [Validators.required, Validators.minLength(1)]]
 		});
 	}
 
@@ -152,6 +154,22 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('language');
 	}
 
+	public get address() {
+		return this.listPropertyForm.get('address');
+	}
+
+	public get propertyLat() {
+		return this.listPropertyForm.get('propertyLat');
+	}
+
+	public get propertyLon() {
+		return this.listPropertyForm.get('propertyLon');
+	}
+
+	public get propertyImages() {
+		return this.listPropertyForm.get('propertyImages');
+	}
+
 	public selectFile(event, uploadControl) {
 		for (const file of event.files) {
 			this.selectedImages.push(file);
@@ -166,6 +184,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public async prepareImages() {
+		const preparedImages = new Array<PropertyImage>();
 		for (const img of this.selectedImages) {
 			const imageName = img.name;
 
@@ -175,16 +194,18 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 					name: imageName,
 					file: base64
 				};
-				this.propertyImages.push(currentImageObj);
+				preparedImages.push(currentImageObj);
 			} catch (error) {
 				// Should not stop on one unsuccessfull convertion
 				continue;
 			}
 		}
 
-		if (this.propertyImages.length === 0) {
+		if (preparedImages.length === 0) {
 			throw new Error('No usable property image was uploaded');
 		}
+
+		this.propertyImages.setValue(preparedImages);
 	}
 
 	public async convertToBase64(img): Promise<string> {
@@ -219,6 +240,25 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('list-property.error-listing-property')
 	public async onSubmit() {
+		this.isSubmitClicked = true;
+		if (this.selectedImages.length === 0) {
+			// Cannot continue without selected images
+			return;
+		}
+		try {
+			await this.prepareImages();
+		} catch (error) {
+			// Cant continue without images
+			this.errorsService.pushError({
+				errorTitle: 'Error uploading images',
+				errorMessage: 'No usable image found',
+				errorTime: (new Date()).getTime()
+			});
+			return;
+		}
+		if (this.listPropertyForm.invalid) {
+			return;
+		}
 		this.notificationService.pushInfo({
 			title: 'Sending data...',
 			message: '',
@@ -233,15 +273,15 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				value: this.price.value,
 				type: this.currency.value
 			},
-			latitude: this.propertyLat,
-			longitude: this.propertyLon,
+			latitude: this.propertyLat.value,
+			longitude: this.propertyLon.value,
 			size: {
 				value: this.area.value,
 				type: this.areaUnit.value
 			},
 			type: this.propertyType.value,
 			description: this.description.value,
-			address: this.address,
+			address: this.address.value,
 			status: 1
 		};
 		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
@@ -252,8 +292,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 15000
 		});
-		await this.prepareImages();
-		const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages);
+		const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages.value);
 
 		this.notificationService.pushSuccess({
 			title: 'Property Upload success',
@@ -266,21 +305,18 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
-		this.propertyLat = latitude;
-		this.propertyLon = longitude;
-		this.address = locationAddress;
+		this.propertyLat.setValue(latitude);
+		this.propertyLon.setValue(longitude);
+		this.address.setValue(locationAddress);
 	}
 
 	private resetListingForm() {
-		this.propertyImages = new Array<PropertyImage>();
+		this.isSubmitClicked = false;
 		this.selectedImages = new Array<any>();
 		this.uploadControl.clear();
 		this.listPropertyForm.reset();
 		this.currency.setValue('1'); // USD default
 		this.areaUnit.setValue('1'); // sqm default
 		this.locationSearchComponent.resetInput();
-		this.propertyLat = null;
-		this.propertyLon = null;
-		this.address = null;
 	}
 }

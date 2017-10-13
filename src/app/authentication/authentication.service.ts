@@ -113,8 +113,15 @@ export class AuthenticationService {
 
 		const result: LoginResponse = await this.fbService.login();
 
-		await this.externalLogin(ExternalAuthenticationProviders.FACEBOOK, result.authResponse.userID, result.authResponse.accessToken);
+		const isFirstLogin = await this.externalLogin(
+			ExternalAuthenticationProviders.FACEBOOK,
+			result.authResponse.userID,
+			result.authResponse.accessToken);
 
+		if (!isFirstLogin) {
+			// TODO this is to be refactored soon in the API and here
+			return this.performLogin('facebook', result.authResponse.userID);
+		}
 		return this.refreshStoredAccessToken(true);
 	}
 
@@ -124,9 +131,17 @@ export class AuthenticationService {
 
 		const linkedInAuthParams = await this.signInAtLinkedIn();
 
-		await this.externalLogin(ExternalAuthenticationProviders.LINKEDIN, linkedInAuthParams.userId, linkedInAuthParams.accessToken);
+		const isFirstLogin = await this.externalLogin(
+			ExternalAuthenticationProviders.LINKEDIN,
+			linkedInAuthParams.userId,
+			linkedInAuthParams.accessToken);
 
+		if (!isFirstLogin) {
+			// TODO this is to be refactored soon in the API and here
+			return this.performLogin('linkedin', linkedInAuthParams.userId);
+		}
 		return this.refreshStoredAccessToken(true);
+
 
 	}
 
@@ -182,7 +197,7 @@ export class AuthenticationService {
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.EXTERNAL_LOGIN, data);
 
-		return true;
+		return result.data.data.value;
 	}
 
 	/**
