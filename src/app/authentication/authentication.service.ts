@@ -187,8 +187,11 @@ export class AuthenticationService {
 			result.authResponse.accessToken);
 
 		if (!isFirstLogin) {
+			if (fetchUser) {
+				this.getCurrentUser();
+			}
 			// TODO this is to be refactored soon in the API and here
-			return this.performLogin('facebook', result.authResponse.userID);
+			return this.performLogin('facebook', result.authResponse.userID, true);
 		}
 		if (fetchUser) {
 			this.getCurrentUser();
@@ -208,8 +211,11 @@ export class AuthenticationService {
 			linkedInAuthParams.accessToken);
 
 		if (!isFirstLogin) {
+			if (fetchUser) {
+				this.getCurrentUser();
+			}
 			// TODO this is to be refactored soon in the API and here
-			return this.performLogin('linkedin', linkedInAuthParams.userId);
+			return this.performLogin('linkedin', linkedInAuthParams.userId, true);
 		}
 		if (fetchUser) {
 			this.getCurrentUser();
@@ -276,7 +282,7 @@ export class AuthenticationService {
 	 * @param forceRefresh forces refresh even if the token has not expired yet
 	 * @returns the return data on success or null if refresh was not needed
 	 */
-	public async refreshStoredAccessToken(forceRefresh = false): Promise<boolean> {
+	public async refreshStoredAccessToken(forceRefresh = false, fetchUser = true): Promise<boolean> {
 		if (!this.hasUserLoggedIn) {
 			throw new Error('Incorrect state: trying to refresh without user ever logged in');
 		}
