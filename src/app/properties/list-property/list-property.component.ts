@@ -101,12 +101,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	}
 
 	async ngOnInit() {
-		this.notificationService.pushSuccess({
-			title: 'Account Loaded...',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 1500
-		});
 	}
 
 	public get propertyType() {

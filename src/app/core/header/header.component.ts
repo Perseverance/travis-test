@@ -22,6 +22,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
+	public userInfo: any;
 
 	constructor(
 		router: Router,
@@ -33,6 +34,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				this.isUserAnonymous = userInfo.isAnonymous;
+				this.userInfo = userInfo.user;
 				this.hasUserLoaded = true;
 			}
 		});
