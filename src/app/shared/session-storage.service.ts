@@ -50,4 +50,10 @@ export class SessionStorageService {
 		return Number.parseInt(expiryTimestampString);
 	}
 
+	public removeStoredAccessData() {
+		sessionStorage.removeItem(this.KEY_SESSION_ACCESS_TOKEN);
+		sessionStorage.removeItem(this.KEY_SESSION_REFRESH_TOKEN);
+		sessionStorage.removeItem(this.KEY_SESSION_EXPIRY_TIMESTAMP);
+	}
+
 }

@@ -242,5 +242,13 @@ export class RestClientService {
 		return this.delete(endpoint, configWithToken);
 	}
 
+	private unsetRememberUser() {
+		this._rememberUser = RestClientService.UNINITIALIZED;
+	}
 
+	public removeSavedTokens() {
+		this.unsetRememberUser();
+		this.propySessionStorage.removeStoredAccessData();
+		this.propyLocalStorage.removeStoredAccessData();
+	}
 }

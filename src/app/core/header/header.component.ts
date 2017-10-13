@@ -1,3 +1,4 @@
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { DefaultLanguage } from './../i18nSetup';
 import { environment } from './../../../environments/environment';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
@@ -19,15 +20,25 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 	private HEADER_CHANGE_THRESHOLD_PX = 100;
 
+	public hasUserLoaded = false;
+	public isUserAnonymous: boolean;
+
 	constructor(
 		router: Router,
+		public authService: AuthenticationService,
 		public translate: TranslateService,
 		private storage: LocalStorageService,
 		@Inject(DOCUMENT) private document: Document) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.isUserAnonymous = userInfo.isAnonymous;
+				this.hasUserLoaded = true;
+			}
+		});
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
 		this.setIsHeaderScrolledPastThreshold();
 	}
 
@@ -62,8 +73,14 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	}
 
 
-	selectLanguage(lang: string) {
+	public selectLanguage(lang: string) {
 		this.translate.use(lang);
 		this.storage.selectedLanguage = lang;
+	}
+
+	public logout(event: Event) {
+		event.preventDefault();
+		event.stopPropagation();
+		this.authService.performLogout();
 	}
 }

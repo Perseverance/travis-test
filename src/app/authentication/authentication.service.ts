@@ -1,3 +1,5 @@
+import { NextObserver } from 'rxjs/Observer';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { environment } from './../../environments/environment';
 import { OAuth2TokenTypes } from './oauth2-token-types';
 import { OAuth2GrantTypes } from './oauth2-grant-types';
@@ -39,8 +41,15 @@ export interface LinkedInAuthParams {
 	accessToken: string;
 }
 
+export interface UserData {
+	isAnonymous: boolean;
+	user: any | null;
+}
+
 @Injectable()
 export class AuthenticationService {
+
+	private userDataSubject: ReplaySubject<UserData>;
 
 	constructor(public restClient: RestClientService,
 		public apiEndpoints: APIEndpointsService,
@@ -54,6 +63,43 @@ export class AuthenticationService {
 		};
 
 		fbService.init(initParams);
+
+		this.userDataSubject = new ReplaySubject(1);
+
+		if (!this.hasAuthCredentials) {
+			this.pushUserData({ isAnonymous: true, user: null });
+			return;
+		}
+		this.getCurrentUser(true);
+	}
+
+	private _user: any;
+
+	public set user(inUser: any) {
+		this._user = inUser;
+	}
+
+	public get user(): any {
+		return this._user;
+	}
+
+	public get isUserAnonymous(): boolean {
+		if (!this.hasUserLoaded) {
+			return true;
+		}
+		const anonymousFirstName = (this._user.firstName === AnonymousUserCredentials.firstName);
+		const anonymousLastName = (this._user.lastName === AnonymousUserCredentials.lastName);
+		return (anonymousFirstName && anonymousLastName);
+	}
+
+	public hasUserLoaded(): boolean {
+		if (this._user === undefined) {
+			return false;
+		}
+		if (this._user === null) {
+			return false;
+		}
+		return true;
 	}
 
 	public get hasUserLoggedIn(): boolean {
@@ -64,11 +110,24 @@ export class AuthenticationService {
 		return this.restClient.accessToken != null;
 	}
 
+	public subscribeToUserData(observer: NextObserver<UserData>) {
+		this.userDataSubject.subscribe(observer);
+	}
+
+	private pushUserData(data: UserData) {
+		this.userDataSubject.next(data);
+	}
+
+	public async performLogout(): Promise<boolean> {
+		this.restClient.removeSavedTokens();
+		return this.performAnonymousLogin();
+	}
+
 	public async performSignUp(email: string,
 		password: string,
 		firstName: string,
 		lastName: string,
-		rememberMe = false): Promise<boolean> {
+		rememberMe = false, fetchUser = true): Promise<boolean> {
 		const data = {
 			email,
 			password,
@@ -76,13 +135,16 @@ export class AuthenticationService {
 			lastName
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
+		if (fetchUser) {
+			this.getCurrentUser();
+		}
 		if (rememberMe) {
 			return this.refreshStoredAccessToken(true);
 		}
 		return true;
 	}
 
-	public async performLogin(email: string, password: string, rememberMe = false): Promise<boolean> {
+	public async performLogin(email: string, password: string, rememberMe = false, fetchUser = true): Promise<boolean> {
 		const data = OAuth2GrantTypes.getGrantTypePasswordDataURLParams(email, password);
 		const config = {
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -97,15 +159,21 @@ export class AuthenticationService {
 			result.data.expires_in,
 			rememberMe);
 
+		if (fetchUser) {
+			this.getCurrentUser();
+		}
+
 		return true;
 	}
 
 	public async performAnonymousLogin(): Promise<boolean> {
 		const doNotRememberUser = false;
-		return this.performLogin('', '', doNotRememberUser);
+		const result = this.performLogin('', '', doNotRememberUser);
+		this.pushUserData({ isAnonymous: true, user: null });
+		return result;
 	}
 
-	public async performFacebookLogin(): Promise<boolean> {
+	public async performFacebookLogin(fetchUser = true): Promise<boolean> {
 
 		const options: LoginOptions = {
 			scope: 'public_profile,email'
@@ -122,10 +190,13 @@ export class AuthenticationService {
 			// TODO this is to be refactored soon in the API and here
 			return this.performLogin('facebook', result.authResponse.userID);
 		}
+		if (fetchUser) {
+			this.getCurrentUser();
+		}
 		return this.refreshStoredAccessToken(true);
 	}
 
-	public async performLinkedInLogin(): Promise<boolean> {
+	public async performLinkedInLogin(fetchUser = true): Promise<boolean> {
 
 		await this.waitForLinkedInToInitialize();
 
@@ -140,9 +211,10 @@ export class AuthenticationService {
 			// TODO this is to be refactored soon in the API and here
 			return this.performLogin('linkedin', linkedInAuthParams.userId);
 		}
+		if (fetchUser) {
+			this.getCurrentUser();
+		}
 		return this.refreshStoredAccessToken(true);
-
-
 	}
 
 	private waitForLinkedInToInitialize() {
@@ -263,8 +335,13 @@ export class AuthenticationService {
 		return true;
 	}
 
-	public async getCurrentUser(): Promise<any> {
-		return this.getUser('');
+	public async getCurrentUser(saveUser = true): Promise<any> {
+		const result = await this.getUser('');
+		if (saveUser) {
+			this.user = result.data.data;
+			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
+		}
+		return result;
 	}
 
 	public async getUser(id: string): Promise<any> {
@@ -275,10 +352,4 @@ export class AuthenticationService {
 		return result;
 	}
 
-	public async isUserAnyonymous(): Promise<boolean> {
-		const result = await this.getCurrentUser();
-		const anonymousFirstName = (result.data.data.firstName === AnonymousUserCredentials.firstName);
-		const anonymousLastName = (result.data.data.lastName === AnonymousUserCredentials.lastName);
-		return (anonymousFirstName && anonymousLastName);
-	}
 }

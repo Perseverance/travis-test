@@ -1,7 +1,7 @@
 import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
 import { PropertiesService } from './../properties.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { AuthenticationService } from './../../authentication/authentication.service';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
@@ -18,8 +18,6 @@ import { LocationSearchComponent } from '../../location-search/location-search.c
 	styleUrls: ['./list-property.component.scss']
 })
 export class ListPropertyComponent extends ErrorsDecoratableComponent implements OnInit {
-	public isUserAnonymous: boolean;
-	public hasLoaded: boolean;
 	public listPropertyForm: FormGroup;
 	public propertyTypes: SelectItem[];
 	public currencies: SelectItem[];
@@ -29,6 +27,9 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public selectedImages = [];
 
 	public isSubmitClicked = false;
+
+	public hasUserLoaded = false;
+	public isUserAnonymous: boolean;
 
 	@ViewChild(LocationSearchComponent)
 	private locationSearchComponent: LocationSearchComponent;
@@ -90,18 +91,16 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			propertyLon: ['', Validators.required],
 			propertyImages: ['', [Validators.required, Validators.minLength(1)]]
 		});
+
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.isUserAnonymous = userInfo.isAnonymous;
+				this.hasUserLoaded = true;
+			}
+		});
 	}
 
 	async ngOnInit() {
-		this.notificationService.pushInfo({
-			title: 'Loading...',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 15000
-		});
-		const result = await this.authService.isUserAnyonymous();
-		this.isUserAnonymous = result;
-		this.hasLoaded = true;
 		this.notificationService.pushSuccess({
 			title: 'Account Loaded...',
 			message: '',

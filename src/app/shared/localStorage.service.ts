@@ -67,4 +67,10 @@ export class LocalStorageService {
 		return storedLanguage;
 	}
 
+	public removeStoredAccessData() {
+		sessionStorage.removeItem(this.KEY_ACCESS_TOKEN);
+		sessionStorage.removeItem(this.KEY_REFRESH_TOKEN);
+		sessionStorage.removeItem(this.KEY_EXPIRY_TIMESTAMP);
+	}
+
 }
