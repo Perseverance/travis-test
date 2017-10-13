@@ -7,7 +7,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   call npm install npm@latest -g
   call npm install --no-optional
   call npm cache clean --force
-  IF %IsProdEnvironment% == TRUE (
+  IF %IsProdEnvironment% == true (
   	call .\node_modules\.bin\ng build --prod --aot
   )
   ELSE (
