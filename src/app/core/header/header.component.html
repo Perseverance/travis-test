@@ -24,6 +24,9 @@
 						'common.label.signup' | translate }}</a>
                 </li>
                 <li *ngIf="!isUserAnonymous">
+                    <p class="account-name"><strong>{{userInfo.firstName}}&nbsp;{{userInfo.lastName}}</strong></p>
+                </li>
+                <li *ngIf="!isUserAnonymous">
                     <a href="" routerLinkActive="active" (click)="logout($event)">{{
                             'common.label.logout' | translate }}</a>
                 </li>
