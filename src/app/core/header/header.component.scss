@@ -26,6 +26,10 @@ $header-margin-sm: 15px;
     .nav {
         &.propy-links {
             li {
+                p.account-name {
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                }
                 &.separator {
                     padding-right: $links-to-languages-distance;
                     @media #{$xs} {
@@ -68,10 +72,6 @@ $header-margin-sm: 15px;
         .nav {
             &.propy-links {
                 li {
-                    p.account-name {
-                        padding-top: 15px;
-                        padding-bottom: 15px;
-                    }
                     a {
                         color: $white;
                         &:hover {
