@@ -5,6 +5,7 @@ import {AngularGoogleMapsComponent} from './angular-google-maps.component';
 import {CommonModule} from '@angular/common';
 import {AngularGoogleMapsRoutingModule} from './angular-google-maps-routing.module';
 import {SharedModule} from '../shared/shared.module';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [
@@ -16,7 +17,8 @@ import {SharedModule} from '../shared/shared.module';
 		ReactiveFormsModule,
 		SharedModule,
 		AngularGoogleMapsRoutingModule,
-		AgmCoreModule
+		AgmCoreModule,
+		TranslateModule
 	],
 	providers: [],
 	bootstrap: []
