@@ -70,6 +70,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.currencies.push({ label: 'GBP', value: 7 });
 		this.currencies.push({ label: 'BGN', value: 8 });
 		this.currencies.push({ label: 'CNY', value: 9 });
+		this.currencies.push({ label: 'ETH', value: 10 });
 
 		this.areaUnits = [];
 		this.areaUnits.push({ label: 'sqm', value: 1 });
