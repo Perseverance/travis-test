@@ -1,3 +1,4 @@
+import { AgencyService } from './../../shared/agency.service';
 import { CompleterService, RemoteData, CompleterItem } from 'ng2-completer';
 import { Agency } from './../../models/agency.model';
 import { AgencySuggestionsService } from './../agency-suggestions.service';
@@ -42,6 +43,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		private route: ActivatedRoute,
 		private agencySuggestionsService: AgencySuggestionsService,
 		private completerService: CompleterService,
+		private agencyService: AgencyService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 
@@ -69,7 +71,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				phoneNumber: ['', [Validators.required, SignUpFormValidators.phoneNumberValidator]],
 				expertise: ['', [Validators.required]],
 				agency: ['', [Validators.required]],
-				agencyPassword: ['', [Validators.required]]
+				agencyPassword: ['']
 			}),
 			rememberMe: [true]
 		});
@@ -176,6 +178,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			this.rememberMe.value
 			);
 		if (this.iAmAnAgent.value) {
+			if (this.agencyId == null) {
+				if (this.agency.value.length === 0) {
+					return;
+				}
+				this.agencyId = await this.createAgency(this.agency.value);
+			}
 			const agentResult = await this.authService.performAgentSignup({
 				firstName: this.firstName.value,
 				lastName: this.lastName.value,
@@ -190,6 +198,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	private async createAgency(agencyName: string): Promise<string> {
+		return await this.agencyService.createAgency(agencyName);
+	}
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
