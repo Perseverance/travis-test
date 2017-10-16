@@ -285,7 +285,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				value: this.price.value,
 				type: this.currency.value
 			},
-			AcceptedCurrencies: this.acceptedCurrencies,
+			AcceptedCurrencies: this.acceptedCurrencies.value,
 			latitude: this.propertyLat.value,
 			longitude: this.propertyLon.value,
 			size: {
