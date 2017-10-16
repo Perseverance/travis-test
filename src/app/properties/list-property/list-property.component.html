@@ -19,11 +19,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <p-checkbox formControlName="furnished" label="Property is furnished"></p-checkbox>
+                    <p-checkbox formControlName="furnished" label="{{'list-property.form-fields.property-furnished' | translate}}"></p-checkbox>
                 </div>
                 <div class="form-group">
                     <div class="ui-inputgroup">
-                        <input type="number" formControlName="price" pInputText placeholder="Price">
+                        <input type="number" formControlName="price" pInputText placeholder="{{'list-property.form-fields.price' | translate}}">
                         <span class="ui-inputgroup-addon"><p-dropdown [options]="currencies"
 																	  formControlName="currency"></p-dropdown></span>
                     </div>
@@ -43,17 +43,17 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="number" pInputText placeholder="Year built" formControlName="year">
+                    <input type="number" pInputText placeholder="{{'list-property.form-fields.year-built' | translate}}" formControlName="year">
                 </div>
                 <div class="form-group">
-                    <input type="number" pInputText placeholder="Bedrooms" formControlName="bedrooms">
+                    <input type="number" pInputText placeholder="{{'list-property.form-fields.bedrooms' | translate}}" formControlName="bedrooms">
                 </div>
                 <div class="form-group">
-                    <input type="number" pInputText placeholder="Floor" formControlName="floor">
+                    <input type="number" pInputText placeholder="{{'list-property.form-fields.floor' | translate}}" formControlName="floor">
                 </div>
                 <div class="form-group">
                     <div class="ui-inputgroup">
-                        <input type="number" formControlName="area" pInputText placeholder="Area">
+                        <input type="number" formControlName="area" pInputText placeholder="{{'list-property.form-fields.area' | translate}}">
                         <span class="ui-inputgroup-addon"><p-dropdown [options]="areaUnits"
 																	  formControlName="areaUnit"></p-dropdown></span>
                     </div>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <p-checkbox formControlName="TOC" label="I accept"></p-checkbox><a class="toc" [routerLink]="['/terms']">Terms & Conditions</a>
+                    <p-checkbox formControlName="TOC" label="{{'list-property.form-fields.accept-toc' | translate}}"></p-checkbox><a class="toc" [routerLink]="['/terms']">{{'common.terms' | translate}}</a>
                     <div *ngIf="isSubmitClicked">
                         <div class="propy-validation" *ngIf="address.invalid && address.errors['required']">{{ 'common.validation-errors.required' | translate }}
                         </div>

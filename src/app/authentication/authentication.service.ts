@@ -70,7 +70,9 @@ export class AuthenticationService {
 			this.pushUserData({ isAnonymous: true, user: null });
 			return;
 		}
-		this.getCurrentUser(true);
+		if (!this.restClient.isTokenExpired) {
+			this.getCurrentUser(true);
+		}
 	}
 
 	private _user: any;
@@ -306,6 +308,10 @@ export class AuthenticationService {
 			result.data.refresh_token,
 			result.data.expires_in,
 			rememberUser);
+
+		if (fetchUser) {
+			await this.getCurrentUser(true);
+		}
 
 		return true;
 	}
