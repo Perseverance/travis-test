@@ -51,7 +51,9 @@
 		"heading": "List property",
 		"form-fields": {
 			"address": "Address",
-			"description": "Description"
+			"description": "Description",
+			"property-images": "Property Images:",
+			"accepted-currencies": "Accepted currencies:"
 		},
 		"submit-button": "Submit",
 		"error-listing-property": "Listing property failed",
