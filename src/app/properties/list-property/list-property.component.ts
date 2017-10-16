@@ -241,7 +241,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('list-property.error-listing-property')
 	public async onSubmit() {
-		console.log(this.acceptedCurrencies.value, this.price.value);
 		this.isSubmitClicked = true;
 		if (this.selectedImages.length === 0) {
 			// Cannot continue without selected images
