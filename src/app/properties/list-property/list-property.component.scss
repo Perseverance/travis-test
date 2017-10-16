@@ -1,4 +1,5 @@
 @import "../../../variables";
+@import "../../../mixins";
 
 .list-property {
 	h1, h2 {
@@ -8,9 +9,22 @@
 		margin-top: 40px;
 		textarea {
 			width: 100%;
+			@include border-radius(4px);
+			border-color: $border-default;
 		}
 		.acceptedCurrencies {
 			width: 100%;
+		}
+		.ui-fileupload {
+			.ui-fileupload-buttonbar {
+				.ui-fileupload-choose {
+					background-color: $blue-main;
+					border: none;
+					&:hover {
+						background-color: $blue-light;
+					}
+				}
+			}
 		}
 	}
 	.propy-validation {
