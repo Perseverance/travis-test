@@ -40,7 +40,8 @@
 						translate }}</label>
 					<p-multiSelect id="acceptedCurrenciesMultiselect" formControlName="acceptedCurrencies"
 								   [options]="currencies"
-								   styleClass="acceptedCurrencies" maxSelectedLabels=11></p-multiSelect>
+								   styleClass="acceptedCurrencies" maxSelectedLabels=11
+								   defaultLabel="{{ 'list-property.choose' | translate }}"></p-multiSelect>
 					<div *ngIf="acceptedCurrencies.touched || isSubmitClicked">
 						<div class="propy-validation"
 							 *ngIf="acceptedCurrencies.invalid && acceptedCurrencies.errors['required']">{{

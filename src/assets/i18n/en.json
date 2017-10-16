@@ -64,6 +64,7 @@
 		},
 		"upload-image": {
 			"choose-button-label": "Choose Image"
-		}
+		},
+		"choose": "Choose"
 	}
 }
