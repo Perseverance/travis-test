@@ -61,7 +61,8 @@
             "year-built": "Year Built",
             "bedrooms": "Bedrooms",
             "floor": "Floor",
-            "area": "Area"
+            "area": "Area",
+            "select-type": "Select Type"
         },
         "submit-button": "Submit",
         "error-listing-property": "Listing property failed",

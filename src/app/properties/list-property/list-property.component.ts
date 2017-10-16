@@ -32,6 +32,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
 
+	private SELECT_TYPE_KEY = 'list-property.form-fields.select-type';
+
 	@ViewChild(LocationSearchComponent)
 	private locationSearchComponent: LocationSearchComponent;
 
@@ -43,8 +45,13 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
+		this.translateService.stream(this.SELECT_TYPE_KEY).subscribe((keyTranslation: string) => {
+			this.propertyTypes[0].label = keyTranslation;
+			console.log(keyTranslation);
+		});
+
 		this.propertyTypes = [];
-		this.propertyTypes.push({ label: 'Select Type', value: null });
+		this.propertyTypes.push({ label: '', value: null });
 		this.propertyTypes.push({ label: 'SingleFamilyHome', value: 1 });
 		this.propertyTypes.push({ label: 'Apartment', value: 2 });
 		this.propertyTypes.push({ label: 'Townhouse', value: 3 });
