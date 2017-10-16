@@ -1,4 +1,4 @@
-import { TermsComponent } from './terms/terms.component';
+import { TermsComponent } from './core/terms/terms.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
