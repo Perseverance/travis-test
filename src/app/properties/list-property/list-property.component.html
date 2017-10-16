@@ -86,7 +86,8 @@
 								  (onSelect)="selectFile($event, uploadRef)"
 								  auto="false" showUploadButton="false" showCancelButton="false"
 								  (onRemove)="removeFile($event)" multiple="multiple"
-								  customUpload="true" accept="image/*" maxFileSize="1000000">
+								  customUpload="true" accept="image/*" maxFileSize="1000000"
+								  chooseLabel="{{ 'list-property.upload-image.choose-button-label' | translate }}">
 					</p-fileUpload>
 					<div *ngIf="isSubmitClicked">
 						<div class="propy-validation"
