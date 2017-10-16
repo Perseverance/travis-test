@@ -45,11 +45,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
-		this.translateService.stream(this.SELECT_TYPE_KEY).subscribe((keyTranslation: string) => {
-			this.propertyTypes[0].label = keyTranslation;
-			console.log(keyTranslation);
-		});
-
 		this.propertyTypes = [];
 		this.propertyTypes.push({label: '', value: null});
 		this.propertyTypes.push({label: 'SingleFamilyHome', value: 1});
@@ -102,6 +97,10 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			propertyLon: ['', Validators.required],
 			propertyImages: ['', [Validators.required, Validators.minLength(1)]],
 			TOC: [false, [Validators.requiredTrue]]
+		});
+
+		this.translateService.stream(this.SELECT_TYPE_KEY).subscribe((keyTranslation: string) => {
+			this.propertyTypes[0].label = keyTranslation;
 		});
 
 		this.authService.subscribeToUserData({
