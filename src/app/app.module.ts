@@ -12,10 +12,12 @@ import {FacebookModule} from 'ngx-facebook';
 import {HomeModule} from './home/home.module';
 import {LinkedInSdkModule} from 'angular-linkedin-sdk';
 import {AgmCoreModule} from '@agm/core';
+import { TermsComponent } from './terms/terms.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		TermsComponent
 	],
 	imports: [
 		BrowserModule,
