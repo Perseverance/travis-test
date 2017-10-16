@@ -297,23 +297,29 @@ export class AuthenticationService {
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		};
 
-		const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.REFRESH_TOKEN, data, config);
+		try {
+			const result = await this.restClient.post(this.apiEndpoints.EXTERNAL_ENDPOINTS.REFRESH_TOKEN, data, config);
 
-		const rememberUser = true;
-		// Neither anonymous nor not-remembered users would need to come here as they would be going through the auth flow
+			const rememberUser = true;
+			// Neither anonymous nor not-remembered users would need to come here as they would be going through the auth flow
 
-		this.setOAuthTokensInRestService(
-			result.data.token_type,
-			result.data.access_token,
-			result.data.refresh_token,
-			result.data.expires_in,
-			rememberUser);
+			this.setOAuthTokensInRestService(
+				result.data.token_type,
+				result.data.access_token,
+				result.data.refresh_token,
+				result.data.expires_in,
+				rememberUser);
 
-		if (fetchUser) {
-			await this.getCurrentUser(true);
+			if (fetchUser) {
+				await this.getCurrentUser(true);
+			}
+
+			return true;
+		} catch (error) {
+			console.error('Problem with refresh, probably the tokens');
 		}
 
-		return true;
+		return this.performLogout();
 	}
 
 	public async refreshTokenOrLoginAnonym(): Promise<boolean> {
