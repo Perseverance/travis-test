@@ -45,7 +45,8 @@
 		"all-rights": "Propy. All rights reserved."
 	},
 	"signup": {
-		"agent-checkbox": "I am an agent"
+		"agent-checkbox": "I am an agent",
+		"agency-not-found": "No such agency found. Submitting this will create it."
 	},
 	"list-property": {
 		"heading": "List property",
