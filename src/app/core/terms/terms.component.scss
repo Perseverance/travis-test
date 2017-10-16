@@ -1,0 +1,19 @@
+.toc {
+    .toc-holder {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span,
+        a {
+            color: black;
+        }
+        text-align: center;
+        background-color: white;
+        max-height: 600px;
+        overflow-y: scroll;
+    }
+}
