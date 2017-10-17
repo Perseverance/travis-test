@@ -25,11 +25,13 @@
             "../node_modules/primeng/resources/themes/omega/theme.css",
             "../node_modules/bootstrap-social/bootstrap-social.css",
             "../node_modules/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css",
+            "../node_modules/smart-app-banner/dist/smart-app-banner.css",
             "styles.scss"
         ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.min.js",
-            "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+            "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+            "../node_modules/smart-app-banner/dist/smart-app-banner.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {
