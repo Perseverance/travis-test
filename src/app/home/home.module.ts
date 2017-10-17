@@ -6,6 +6,7 @@ import {SharedModule} from '../shared/shared.module';
 import {FavouriteLocationsComponent} from './favourite-locations/favourite-locations.component';
 import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
 import {TranslateModule} from '@ngx-translate/core';
+import {NgxCarouselModule} from 'ngx-carousel';
 
 @NgModule({
 	declarations: [
@@ -18,7 +19,8 @@ import {TranslateModule} from '@ngx-translate/core';
 		FormsModule,
 		SharedModule,
 		ReactiveFormsModule,
-		TranslateModule
+		TranslateModule,
+		NgxCarouselModule
 	],
 	providers: [],
 	bootstrap: [],

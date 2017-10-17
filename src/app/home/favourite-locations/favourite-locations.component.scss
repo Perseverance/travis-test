@@ -1,30 +1,28 @@
 @import "../../../variables";
+@import "../../../mixins";
 
 .top-locations {
 	margin-top: 40px;
-	.location-holder {
-		margin-bottom: 10px;
-		cursor: pointer;
-		.image-holder {
-			width: 100%;
-			padding-bottom: 50%;
-			background-size: cover;
-			background-position: center;
-			margin: 0;
-			img {
-				width: auto;
-				height: 120px;
+	.top-cities-holder {
+		.tile {
+			box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.06);
+			@include border-radius(9px);
+			.location-holder {
+				@include border-radius(9px);
+				margin-bottom: 10px;
+				cursor: pointer;
+				.city-details {
+					@include border-radius(9px);
+					width: 100%;
+					padding-bottom: 80%;
+					background-size: cover;
+					background-position: center;
+					margin: 0;
+				}
 			}
 		}
-		.info-holder {
-			margin: 0;
-			p {
-				display: inline-block;
-			}
-			span {
-				float: right;
-				color: $white;
-			}
+		.left-arrow, .right-arrow {
+			display: none !important;
 		}
 	}
 }
