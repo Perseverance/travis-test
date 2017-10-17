@@ -53,9 +53,10 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="acceptedCurrenciesMultiselect">{{ 'list-property.form-fields.commission-fee' |
+					<label for="commissionFee">{{ 'list-property.form-fields.commission-fee' |
 						translate }} {{this.feeDecimal}}%</label>
-					<p-slider formControlName="feeSlider" [min]="2" [step]="1" [max]="150"></p-slider>
+					<p-slider formControlName="feeSlider" id="commissionFee" [min]="2" [step]="1"
+							  [max]="150"></p-slider>
 				</div>
 				<div class="form-group">
 					<input type="number" pInputText placeholder="{{'list-property.form-fields.year-built' | translate}}"
