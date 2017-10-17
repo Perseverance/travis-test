@@ -8,7 +8,7 @@ import {ListPropertyComponent} from './list-property/list-property.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
-import {FileUploadModule, DropdownModule, CheckboxModule, MultiSelectModule} from 'primeng/primeng';
+import {FileUploadModule, DropdownModule, CheckboxModule, MultiSelectModule, SliderModule} from 'primeng/primeng';
 
 @NgModule({
 	imports: [
@@ -22,7 +22,8 @@ import {FileUploadModule, DropdownModule, CheckboxModule, MultiSelectModule} fro
 		DropdownModule,
 		BrowserAnimationsModule,
 		CheckboxModule,
-		MultiSelectModule
+		MultiSelectModule,
+		SliderModule
 	],
 	declarations: [PropertyDetailsComponent, ListPropertyComponent],
 	providers: [

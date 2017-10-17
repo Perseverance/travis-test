@@ -26,6 +26,16 @@
 				}
 			}
 		}
+		.ui-slider {
+			background-color: $gray-lighter;
+			height: 16px;
+			cursor: pointer;
+			.ui-slider-handle {
+				cursor: pointer;
+				background: $blue-main;
+				@include border-radius(4px);
+			}
+		}
 		a.toc {
 			color: black;
 			text-decoration: underline;

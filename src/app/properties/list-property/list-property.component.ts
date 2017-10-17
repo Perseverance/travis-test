@@ -25,7 +25,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public uploadControl: any;
 
 	public selectedImages = [];
-	// public acceptedCurrencies = [];
 
 	public isSubmitClicked = false;
 
@@ -85,6 +84,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			furnished: [''],
 			price: ['', Validators.required],
 			acceptedCurrencies: [[], Validators.required],
+			feeSlider: [75],
 			currency: ['1', Validators.required],
 			year: [''],
 			bedrooms: [''],
@@ -132,6 +132,14 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public get acceptedCurrencies() {
 		return this.listPropertyForm.get('acceptedCurrencies');
+	}
+
+	public get feeSlider() {
+		return this.listPropertyForm.get('feeSlider');
+	}
+
+	public get feeDecimal() {
+		return this.feeSlider.value / 10;
 	}
 
 	public get year() {
@@ -286,6 +294,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				type: this.currency.value
 			},
 			AcceptedCurrencies: this.acceptedCurrencies.value,
+			CommissionFee: this.feeDecimal,
 			latitude: this.propertyLat.value,
 			longitude: this.propertyLon.value,
 			size: {

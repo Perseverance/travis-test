@@ -57,6 +57,7 @@
 			"description": "Description",
 			"property-images": "Property Images:",
 			"accepted-currencies": "Accepted currencies:",
+			"commission-fee": "Commission Fee:",
 			"property-furnished": "Property is furnished",
 			"price": "Price",
 			"year-built": "Year Built",
