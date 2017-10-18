@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class LocalStorageService {
@@ -7,6 +7,7 @@ export class LocalStorageService {
 	private KEY_REFRESH_TOKEN = 'propyRefreshToken';
 	private KEY_EXPIRY_TIMESTAMP = 'propyExpiryTimestamp';
 	private KEY_SELECTED_LANGUAGE = 'selectedLanguage';
+	private KEY_CURRENCY_TYPE = 'currencyType';
 
 	constructor() {
 	}
@@ -67,10 +68,60 @@ export class LocalStorageService {
 		return storedLanguage;
 	}
 
+	public set selectedCurrencyType(selectedCurrencyType: number) {
+		if (selectedCurrencyType === undefined || selectedCurrencyType === null) {
+			throw new Error('Trying to set invalid currency type!');
+		}
+		// Initial currency
+		if (selectedCurrencyType === 0) {
+			const storedCurrencyType = localStorage.getItem(this.KEY_CURRENCY_TYPE);
+			if (storedCurrencyType == null) {
+				const initialCurrencyType = this.initialCurrencyType();
+				localStorage.setItem(this.KEY_CURRENCY_TYPE, initialCurrencyType.toString());
+			}
+		} else {
+			localStorage.setItem(this.KEY_CURRENCY_TYPE, selectedCurrencyType.toString());
+		}
+	}
+
+	public get selectedCurrencyType(): number {
+		const storedCurrencyType = localStorage.getItem(this.KEY_CURRENCY_TYPE);
+		if (storedCurrencyType == null) {
+			const initialCurrencyType = this.initialCurrencyType();
+			return initialCurrencyType;
+		}
+		return +storedCurrencyType;
+	}
+
 	public removeStoredAccessData() {
 		localStorage.removeItem(this.KEY_ACCESS_TOKEN);
 		localStorage.removeItem(this.KEY_REFRESH_TOKEN);
 		localStorage.removeItem(this.KEY_EXPIRY_TIMESTAMP);
 	}
 
+	private initialCurrencyType() {
+		let lang: string;
+		if (localStorage.selectedLanguage === undefined || localStorage.selectedLanguage === null || localStorage.selectedLanguage === '') {
+			lang = navigator.language.substring(0, 2);
+		} else {
+			lang = localStorage.selectedLanguage;
+		}
+		switch (lang) {
+			case 'en': {
+				return 1;
+			}
+			case 'ru': {
+				return 3;
+			}
+			case 'ar': {
+				return 4;
+			}
+			case 'zh': {
+				return 9;
+			}
+			default: {
+				return 1;
+			}
+		}
+	}
 }

@@ -77,5 +77,10 @@
 		},
 		"choose": "Choose",
 		"accept-toc": "I accept"
+	},
+	"landing": {
+		"explore-cities": "Explore the cities",
+		"real-estates": " real estates",
+		"from": "from"
 	}
 }

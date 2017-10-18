@@ -74,9 +74,9 @@ $header-margin-sm: 15px;
 			&.propy-links {
 				li {
 					a {
-						color: $white;
+						color: $black;
 						&:hover {
-							color: darken($white, 15%);
+							color: darken($black, 15%);
 						}
 					}
 				}
@@ -87,11 +87,11 @@ $header-margin-sm: 15px;
 				}
 				a.dropdown-toggle {
 					span {
-						color: $white;
+						color: $black;
 					}
 					&:hover {
 						span {
-							color: darken($white, 15%);
+							color: darken($black, 15%);
 						}
 					}
 				}
@@ -101,9 +101,9 @@ $header-margin-sm: 15px;
 				&.propy-links {
 					li {
 						a {
-							color: $gray-darker;
+							color: $black;
 							&:hover {
-								color: darken($gray-darker, 15%);
+								color: darken($black, 15%);
 							}
 						}
 					}
@@ -114,11 +114,11 @@ $header-margin-sm: 15px;
 					}
 					a.dropdown-toggle {
 						span {
-							color: $gray-darker;
+							color: $black;
 						}
 						&:hover {
 							span {
-								color: darken($gray-darker, 15%);
+								color: darken($black, 15%);
 							}
 						}
 					}
@@ -139,13 +139,13 @@ $header-margin-sm: 15px;
 		.nav {
 			&.propy-links {
 				p.account-name {
-					color: $gray-light;
+					color: $black;
 				}
 				li {
 					a {
-						color: $gray-light;
+						color: $black;
 						&:hover {
-							color: darken($gray-light, 10%);
+							color: darken($black, 10%);
 						}
 					}
 				}

@@ -39,6 +39,7 @@ export interface GetFavouriteLocationResponse {
 	latitude: number;
 	zoomLevel: number;
 	imageUrls: string[];
+	initialPrice: number;
 }
 
 interface CreatePropertyRequestTypedValue {
