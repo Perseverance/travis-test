@@ -1,2 +1,2 @@
-export const AllSupportedLanguage = ['bg', 'en', 'ru'];
+export const AllSupportedLanguage = ['bg', 'en'];
 export const DefaultLanguage = 'en';
