@@ -7,12 +7,14 @@ import {FavouriteLocationsComponent} from './favourite-locations/favourite-locat
 import {TranslateModule} from '@ngx-translate/core';
 import {NgxCarouselModule} from 'ngx-carousel';
 import {CustomNumberFormattingPipe} from '../shared/pipes/custom-number-formatting.pipe';
+import {TestimonialsComponent} from './testimonials/testimonials.component';
 
 @NgModule({
 	declarations: [
 		HomeComponent,
 		FavouriteLocationsComponent,
-		CustomNumberFormattingPipe
+		CustomNumberFormattingPipe,
+		TestimonialsComponent
 	],
 	imports: [
 		CommonModule,

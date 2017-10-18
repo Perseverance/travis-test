@@ -1,0 +1,17 @@
+<div class="row testimonials">
+	<h3 class="text-center">{{ 'landing.testimonials' | translate }}</h3>
+	<div class="testimonials-carousel">
+		<ngx-carousel
+			[inputs]="carouselTile">
+
+			<ngx-tile NgxCarouselItem *ngFor='let description of testemonialsDescriptions'>
+				<div class="description-holder">
+					{{ description.value }}
+				</div>
+			</ngx-tile>
+
+			<button NgxCarouselPrev class='left-arrow'>&lt;</button>
+			<button NgxCarouselNext class='right-arrow'>&gt;</button>
+		</ngx-carousel>
+	</div>
+</div>
