@@ -1,7 +1,7 @@
-import { environment } from './../../environments/environment';
-import { APIEndpointsService } from './../shared/apiendpoints.service';
-import { RestClientService } from './../shared/rest-client.service';
-import { Injectable } from '@angular/core';
+import {environment} from './../../environments/environment';
+import {APIEndpointsService} from './../shared/apiendpoints.service';
+import {RestClientService} from './../shared/rest-client.service';
+import {Injectable} from '@angular/core';
 import {
 	GetPropertiesResponse,
 	GetPropertyResponse,
@@ -11,6 +11,7 @@ import {
 	CreatePropertyResponse,
 	PropertyImage
 } from './properties-responses';
+import {LocalStorageService} from '../shared/localStorage.service';
 
 interface Bounds {
 	east: number;
@@ -22,14 +23,14 @@ interface Bounds {
 @Injectable()
 export class PropertiesService {
 
-	constructor(private restService: RestClientService, private apiEndpoint: APIEndpointsService) {
+	constructor(private restService: RestClientService, private apiEndpoint: APIEndpointsService, private localStorage: LocalStorageService) {
 	}
 
 	public async getProperty(propertyId: string): Promise<GetPropertyResponse> {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params});
 		const imageUrls = new Array<string>();
 		for (const path of result.data.data.imageUrls) {
 			imageUrls.push(`${environment.apiUrl}${path}`);
@@ -74,8 +75,8 @@ export class PropertiesService {
 			search: query
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
-		return { properties: result.data.data.properties };
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
+		return {properties: result.data.data.properties};
 	}
 
 	private createRectangleBounds(latitude: number, longitude: number, degreesOfIncreaseArea = 1) {
@@ -95,7 +96,10 @@ export class PropertiesService {
 	}
 
 	public async getFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS);
+		const queryParams = {
+			currency: this.localStorage.selectedCurrencyType
+		};
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS, {params: queryParams});
 		return result.data.data;
 	}
 
@@ -111,7 +115,7 @@ export class PropertiesService {
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
 			propertyImages,
-			{ params: queryParams });
+			{params: queryParams});
 
 		return true;
 	}

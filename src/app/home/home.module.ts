@@ -4,15 +4,15 @@ import {CommonModule} from '@angular/common';
 import {HomeComponent} from './home.component';
 import {SharedModule} from '../shared/shared.module';
 import {FavouriteLocationsComponent} from './favourite-locations/favourite-locations.component';
-import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgxCarouselModule} from 'ngx-carousel';
+import {CustomNumberFormattingPipe} from '../shared/pipes/custom-number-formatting.pipe';
 
 @NgModule({
 	declarations: [
 		HomeComponent,
 		FavouriteLocationsComponent,
-		BigNumberFormatPipe
+		CustomNumberFormattingPipe
 	],
 	imports: [
 		CommonModule,
@@ -24,7 +24,9 @@ import {NgxCarouselModule} from 'ngx-carousel';
 	],
 	providers: [],
 	bootstrap: [],
-	exports: [BigNumberFormatPipe]
+	exports: [
+		CustomNumberFormattingPipe
+	]
 })
 export class HomeModule {
 }

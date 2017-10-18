@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
 
 		// the lang to use, if the lang isn't available, it will use the default language
 		translate.use(localStorage.selectedLanguage);
+		localStorage.selectedCurrencyType = 0;
 	}
 
 	ngOnInit() {
