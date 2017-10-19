@@ -75,14 +75,14 @@ export class LocalStorageService {
 			throw new Error('Trying to set invalid currency type!');
 		}
 		// Initial currency
-		if (selectedCurrencyType === CurrencyTypeEnum.NONE) {
-			const storedCurrencyType = localStorage.getItem(this.KEY_CURRENCY_TYPE);
-			if (storedCurrencyType == null) {
-				const initialCurrencyType = this.initialCurrencyType();
-				localStorage.setItem(this.KEY_CURRENCY_TYPE, initialCurrencyType.toString());
-			}
-		} else {
+		if (selectedCurrencyType !== CurrencyTypeEnum.NONE) {
 			localStorage.setItem(this.KEY_CURRENCY_TYPE, selectedCurrencyType.toString());
+			return;
+		}
+		const storedCurrencyType = localStorage.getItem(this.KEY_CURRENCY_TYPE);
+		if (storedCurrencyType == null) {
+			const initialCurrencyType = this.initialCurrencyType();
+			localStorage.setItem(this.KEY_CURRENCY_TYPE, initialCurrencyType.toString());
 		}
 	}
 
