@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {CurrencyTypeEnum} from './enums/currency-type.enum';
+import {LanguagesEnum} from './enums/supported-languages.enum';
 
 @Injectable()
 export class LocalStorageService {
@@ -73,7 +75,7 @@ export class LocalStorageService {
 			throw new Error('Trying to set invalid currency type!');
 		}
 		// Initial currency
-		if (selectedCurrencyType === 0) {
+		if (selectedCurrencyType === CurrencyTypeEnum.NONE) {
 			const storedCurrencyType = localStorage.getItem(this.KEY_CURRENCY_TYPE);
 			if (storedCurrencyType == null) {
 				const initialCurrencyType = this.initialCurrencyType();
@@ -107,20 +109,17 @@ export class LocalStorageService {
 			lang = localStorage.selectedLanguage;
 		}
 		switch (lang) {
-			case 'en': {
-				return 1;
+			case LanguagesEnum.RUSSIAN: {
+				return CurrencyTypeEnum.RUB;
 			}
-			case 'ru': {
-				return 3;
+			case LanguagesEnum.ARABIC: {
+				return CurrencyTypeEnum.AED;
 			}
-			case 'ar': {
-				return 4;
-			}
-			case 'zh': {
-				return 9;
+			case LanguagesEnum.CHINESE: {
+				return CurrencyTypeEnum.CNY;
 			}
 			default: {
-				return 1;
+				return CurrencyTypeEnum.USD;
 			}
 		}
 	}

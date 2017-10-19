@@ -17,7 +17,6 @@
 				.city-details {
 					@include border-radius(9px);
 					width: 100%;
-					//padding-bottom: 80%;
 					background-size: cover;
 					background-position: center;
 					margin: 0;
@@ -61,6 +60,34 @@
 		}
 		.left-arrow, .right-arrow {
 			display: none !important;
+		}
+		.ngxcarouselPointDefault {
+			.ngxcarouselPoint {
+				list-style-type: none;
+				text-align: center;
+				padding: 12px;
+				margin: 0;
+				white-space: nowrap;
+				overflow: auto;
+				position: absolute;
+				width: 100%;
+				left: 0;
+				box-sizing: border-box;
+				li {
+					display: inline-block;
+					cursor: pointer;
+					border-radius: 999px;
+					background: #DCF6FF !important;
+					padding: 7px !important;
+					margin: 0 3px;
+					transition: .4s ease all;
+					&.active {
+						background: #4CCAF7 !important;
+						width: 10px;
+						transform: scale(1) !important;
+					}
+				}
+			}
 		}
 	}
 }
