@@ -1,6 +1,18 @@
 .testimonials {
 	padding-top: 40px;
 	.testimonials-carousel {
+		.item {
+			padding: 0 25%;
+			.tile {
+				box-shadow: none !important;
+				//position: absolute;
+				//top: 10%;
+				//left: 15%;
+				//right: 15%;
+				.description-holder {
+				}
+			}
+		}
 		.left-arrow {
 			position: absolute;
 			margin: auto;
