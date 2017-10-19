@@ -6,14 +6,16 @@ import {SharedModule} from '../shared/shared.module';
 import {FavouriteLocationsComponent} from './favourite-locations/favourite-locations.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgxCarouselModule} from 'ngx-carousel';
-import {CustomNumberFormattingPipe} from '../shared/pipes/custom-number-formatting.pipe';
+import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
+import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 import {TestimonialsComponent} from './testimonials/testimonials.component';
 
 @NgModule({
 	declarations: [
 		HomeComponent,
 		FavouriteLocationsComponent,
-		CustomNumberFormattingPipe,
+		ThousandSeparatorPipe,
+		CurrencySymbolPipe,
 		TestimonialsComponent
 	],
 	imports: [
@@ -27,7 +29,8 @@ import {TestimonialsComponent} from './testimonials/testimonials.component';
 	providers: [],
 	bootstrap: [],
 	exports: [
-		CustomNumberFormattingPipe
+		ThousandSeparatorPipe,
+		CurrencySymbolPipe
 	]
 })
 export class HomeModule {
