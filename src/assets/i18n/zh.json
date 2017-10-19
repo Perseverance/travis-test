@@ -1,0 +1,81 @@
+{
+    "common": {
+        "misc": {
+            "or": "\u6216",
+            "checking": "\u6b63\u5728\u68c0\u67e5"
+        },
+        "label": {
+            "authentication-error": "\u8eab\u4efd\u9a8c\u8bc1\u9519\u8bef",
+            "login": "\u767b\u5f55",
+            "signin": "\u767b\u5f55",
+            "signup": "\u6ce8\u518c",
+            "register": "\u6ce8\u518c",
+            "rememberMe": "\u8bb0\u4f4f\u6211",
+            "locationSearch": "\u641c\u7d22\u4f4d\u7f6e",
+            "logout": "\u9000\u51fa"
+        },
+        "placeholder": {
+            "yourEmail": "\u60a8\u7684\u90ae\u7bb1",
+            "password": "\u5bc6\u7801",
+            "repeatPassword": "\u91cd\u590d\u8f93\u5165\u5bc6\u7801",
+            "firstName": "\u540d\u5b57",
+            "lastName": "\u59d3\u6c0f",
+            "phoneNumber": "\u7535\u8bdd\u53f7\u7801",
+            "expertise": "\u4e13\u4e1a\u7279\u957f",
+            "agency": "\u4e2d\u4ecb\u516c\u53f8",
+            "agencyPassword": "\u4e2d\u4ecb\u516c\u53f8\u5bc6\u7801",
+            "location": "\u8fd0\u8425\u5730\u70b9",
+            "search": "\u641c\u7d22"
+        },
+        "social": {
+            "connect-linkedin": "\u4ee5LinkedIn\u5e10\u6237\u7ee7\u7eed",
+            "connect-facebook": "\u4ee5Facebook\u5e10\u6237\u7ee7\u7eed"
+        },
+        "validation-errors": {
+            "required": "\u6b64\u5b57\u6bb5\u5fc5\u586b",
+            "invalid-email": "\u8fd9\u4e0d\u662f\u6709\u6548\u7684\u90ae\u7bb1",
+            "email-registered": "\u6b64\u90ae\u7bb1\u5df2\u6ce8\u518c",
+            "invalid-password": "\u5bc6\u7801\u9700\u8981\u81f3\u5c11\u67098\u4e2a\u7b26\u53f7\uff0c\u4e14\u5fc5\u987b\u5305\u542b\u5c0f\u5199\u5b57\u7b26\u3001\u5927\u5199\u5b57\u7b26\u548c\u4e00\u4e2a\u6570\u5b57",
+            "passwords-differ": "\u4e24\u4e2a\u5bc6\u7801\u4e0d\u4e00\u81f4",
+            "invalid-phone-number": "\u624b\u673a\u53f7\u7801\u4f3c\u4e4e\u662f\u65e0\u6548\u7684",
+            "toc-required": "\u60a8\u9700\u8981\u63a5\u53d7\u7f51\u7ad9\u7684\u6761\u6b3e\u548c\u6761\u4ef6"
+        },
+        "terms": "\u6761\u6b3e\u548c\u6761\u4ef6"
+    },
+    "footer": {
+        "copyright": "\u7248\u6743\u6240\u6709",
+        "all-rights": "Propy. \u4fdd\u7559\u6240\u6709\u6743\u5229\u3002"
+    },
+    "signup": {
+        "agent-checkbox": "\u6211\u662f\u4e00\u540d\u4e2d\u4ecb",
+        "agency-not-found": "\u672a\u627e\u5230\u8be5\u4e2d\u4ecb\u516c\u53f8\u3002\u63d0\u4ea4\u6b64\u5185\u5bb9\u5c06\u4f1a\u521b\u5efa\u3002"
+    },
+    "list-property": {
+        "heading": "\u5217\u51fa\u623f\u4ea7",
+        "form-fields": {
+            "address": "\u5730\u5740",
+            "description": "\u63cf\u8ff0",
+            "property-images": "\u623f\u4ea7\u56fe\u7247\uff1a",
+            "accepted-currencies": "\u63a5\u53d7\u7684\u5e01\u79cd\uff1a",
+            "commission-fee": "\u4f63\u91d1\uff1a",
+            "property-furnished": "\u8be5\u623f\u4ea7\u914d\u6709\u5bb6\u5177",
+            "price": "\u4ef7\u683c",
+            "year-built": "\u5efa\u9020\u5e74\u4efd",
+            "bedrooms": "\u5367\u5ba4",
+            "floor": "\u697c\u5c42",
+            "area": "\u9762\u79ef",
+            "select-type": "\u9009\u62e9\u7c7b\u578b"
+        },
+        "submit-button": "\u63d0\u4ea4",
+        "error-listing-property": "\u5217\u51fa\u623f\u4ea7\u5931\u8d25",
+        "not-authenticated": {
+            "warning-message": "\u60a8\u6ca1\u6709\u901a\u8fc7\u8eab\u4efd\u9a8c\u8bc1\uff01",
+            "login-or-signup": "\u8bf7\u6ce8\u518c\u6216\u4ece\u9876\u90e8\u94fe\u63a5\u767b\u5f55"
+        },
+        "upload-image": {
+            "choose-button-label": "\u9009\u62e9\u56fe\u7247"
+        },
+        "choose": "\u9009\u62e9",
+        "accept-toc": "\u6211\u63a5\u53d7"
+    }
+}
