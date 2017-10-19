@@ -23,7 +23,7 @@ interface Bounds {
 @Injectable()
 export class PropertiesService {
 
-	constructor(private restService: RestClientService, private apiEndpoint: APIEndpointsService, private localStorage: LocalStorageService) {
+	constructor(private restService: RestClientService, private apiEndpoint: APIEndpointsService, private localStorageService: LocalStorageService) {
 	}
 
 	public async getProperty(propertyId: string): Promise<GetPropertyResponse> {
@@ -97,7 +97,7 @@ export class PropertiesService {
 
 	public async getFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
 		const queryParams = {
-			currency: this.localStorage.selectedCurrencyType
+			currency: this.localStorageService.selectedCurrencyType
 		};
 		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS, {params: queryParams});
 		return result.data.data;

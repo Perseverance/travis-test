@@ -10,9 +10,9 @@
 						<div class="info-holder">
 							<h4>{{ city.cityName }}</h4>
 							<div class="real-estates">
-								<span>{{ city.propertiesCount | customNumberFormatting}} {{ 'landing.real-estates' | translate }}</span>
+								<span>{{ city.propertiesCount | thousandSeparator}} {{ 'landing.real-estates' | translate }}</span>
 								<br>
-								<span>{{ 'landing.from' | translate }} {{ city.initialPrice | customNumberFormatting : true}}</span>
+								<span>{{ 'landing.from' | translate }} {{ city.initialPrice | thousandSeparator | currencySymbol}}</span>
 							</div>
 							<div class="right-arrow-holder">
 							</div>

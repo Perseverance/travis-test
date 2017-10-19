@@ -25,34 +25,7 @@ export class FavouriteLocationsComponent implements OnInit {
 			slide: 4,
 			speed: 400,
 			point: {
-				visible: true,
-				pointStyles: `
-							  .ngxcarouselPoint {
-								list-style-type: none;
-								text-align: center;
-								padding: 12px;
-								margin: 0;
-								white-space: nowrap;
-								overflow: auto;
-								position: absolute;
-								width: 100%;
-								left: 0;
-								box-sizing: border-box;
-							  }
-							  .ngxcarouselPoint li {
-								display: inline-block;
-								cursor: pointer;
-								border-radius: 999px;
-								background: #DCF6FF;
-								padding: 7px;
-								margin: 0 3px;
-								transition: .4s ease all;
-							  }
-							  .ngxcarouselPoint li.active {
-								  background: #4CCAF7;
-								  width: 10px;
-							  }
-							`
+				visible: true
 			},
 			easing: 'ease'
 		};
