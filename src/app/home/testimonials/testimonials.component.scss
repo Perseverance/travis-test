@@ -1,15 +1,18 @@
 .testimonials {
 	padding-top: 40px;
 	.testimonials-carousel {
-		.item {
-			padding: 0 25%;
-			.tile {
-				box-shadow: none !important;
-				//position: absolute;
-				//top: 10%;
-				//left: 15%;
-				//right: 15%;
-				.description-holder {
+		.ngxcarousel-items {
+			margin-top: -10%;
+			margin-bottom: 10%;
+			.item {
+				padding: 0 25%;
+				margin-top: 20% !important;
+				margin-bottom: -10%;
+				.tile {
+					box-shadow: none !important;
+					.description-holder {
+						white-space: pre-line;
+					}
 				}
 			}
 		}
