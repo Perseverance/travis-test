@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgxCarousel} from 'ngx-carousel';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-testimonials',
@@ -10,26 +11,28 @@ import {NgxCarousel} from 'ngx-carousel';
 export class TestimonialsComponent implements OnInit {
 	public testemonialsDescriptions = [];
 	public carouselTile: NgxCarousel;
+	private PINEL_WORDS_KEY = 'landing.testimonials.pinel-words';
+	private ARRINGTON_WORDS_KEY = 'landing.testimonials.arrington-words';
+	private BAUM_WORDS_KEY = 'landing.testimonials.baum-words';
+	private GARDNER_WORDS_KEY = 'landing.testimonials.gardner-words';
 
-	constructor() {
-	}
+	constructor(public translateService: TranslateService) {
 
-	ngOnInit() {
 		this.testemonialsDescriptions.push({
-			dummyValue: `The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.`,
-			value: `The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.`
+			dummyValue: '',
+			value: ''
 		});
 		this.testemonialsDescriptions.push({
-			dummyValue: `The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.`,
-			value: `The leadership of the company is impressive, shows all the signs of persistence and execution. Andrey Zamovski is very intelligent and innovative at usage of his deep knowledge of cryptography and Ethereum Smart Contracts. The team is also international - founders and early employees from Russia, Ukraine, US and Singapore are sharing the knowledge of their markets.`
+			dummyValue: '',
+			value: ''
 		});
 		this.testemonialsDescriptions.push({
-			dummyValue: `The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.`,
-			value: `It would be an enormous step forward if global real estate transactions were to be facilitated by a reliable, automated land registration and transfer system. Propy\'s proposed use of blockchain might just offer the key that opens this door.`
+			dummyValue: '',
+			value: ''
 		});
 		this.testemonialsDescriptions.push({
-			dummyValue: `The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.`,
-			value: `Beyond finance, real estate is perhaps the most obvious industry prime for being upended by blockchain technology. With its superb team and strong vision Propy is likely to be a leader as real estate is dirsupted by this revolutionary innovation.`
+			dummyValue: '',
+			value: ''
 		});
 
 		this.carouselTile = {
@@ -42,5 +45,28 @@ export class TestimonialsComponent implements OnInit {
 			},
 			easing: 'ease'
 		};
+
+		this.translateService.stream(this.PINEL_WORDS_KEY).subscribe((keyTranslation: string) => {
+			this.testemonialsDescriptions[0].value = keyTranslation;
+			this.testemonialsDescriptions[0].dummyValue = keyTranslation;
+			this.testemonialsDescriptions[1].dummyValue = keyTranslation;
+			this.testemonialsDescriptions[2].dummyValue = keyTranslation;
+			this.testemonialsDescriptions[3].dummyValue = keyTranslation;
+		});
+
+		this.translateService.stream(this.ARRINGTON_WORDS_KEY).subscribe((keyTranslation: string) => {
+			this.testemonialsDescriptions[1].value = keyTranslation;
+		});
+
+		this.translateService.stream(this.BAUM_WORDS_KEY).subscribe((keyTranslation: string) => {
+			this.testemonialsDescriptions[2].value = keyTranslation;
+		});
+
+		this.translateService.stream(this.GARDNER_WORDS_KEY).subscribe((keyTranslation: string) => {
+			this.testemonialsDescriptions[3].value = keyTranslation;
+		});
+	}
+
+	ngOnInit() {
 	}
 }
