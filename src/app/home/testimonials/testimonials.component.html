@@ -5,13 +5,16 @@
 			[inputs]="carouselTile">
 
 			<ngx-tile NgxCarouselItem *ngFor='let description of testemonialsDescriptions'>
-				<div class="description-holder">
+				<div class="dummy-value">
 					{{ description.value }}
+				</div>
+				<div class="real-value">
+					{{ description.value}}
 				</div>
 			</ngx-tile>
 
-			<button NgxCarouselPrev class='left-arrow'>&lt;</button>
-			<button NgxCarouselNext class='right-arrow'>&gt;</button>
+			<button NgxCarouselPrev class='left-arrow'></button>
+			<button NgxCarouselNext class='right-arrow'></button>
 		</ngx-carousel>
 	</div>
 </div>

@@ -4,6 +4,9 @@
 .top-locations {
 	margin-top: 40px;
 	margin-bottom: 100px;
+	h3 {
+		color: $gray-darkest;
+	}
 	.top-cities-holder {
 		.tile {
 			box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.06);
@@ -78,12 +81,12 @@
 					display: inline-block;
 					cursor: pointer;
 					border-radius: 999px;
-					background: #DCF6FF !important;
+					background: lighten($blue-light, 15%) !important;
 					padding: 7px !important;
 					margin: 0 3px;
 					transition: .4s ease all;
 					&.active {
-						background: #4CCAF7 !important;
+						background: $blue-main !important;
 						width: 10px;
 						transform: scale(1) !important;
 					}
