@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {PropertyTypeEnum} from '../enums/property-type.enum';
 
-@Pipe({name: 'propertyTypeLocalize'})
+@Pipe({name: 'propertyTypeLocalizeKey'})
 export class PopertyTypeLocalizeKeyPipe implements PipeTransform {
 
 	transform(value: number): string {
