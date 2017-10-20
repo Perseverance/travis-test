@@ -8,13 +8,15 @@ import {TranslateModule} from '@ngx-translate/core';
 import {NgxCarouselModule} from 'ngx-carousel';
 import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
 import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
+import {TestimonialsComponent} from './testimonials/testimonials.component';
 
 @NgModule({
 	declarations: [
 		HomeComponent,
 		FavouriteLocationsComponent,
 		ThousandSeparatorPipe,
-		CurrencySymbolPipe
+		CurrencySymbolPipe,
+		TestimonialsComponent
 	],
 	imports: [
 		CommonModule,

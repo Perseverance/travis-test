@@ -1,0 +1,115 @@
+@import "../../../variables";
+@import "../../../mixins";
+
+.testimonials {
+	padding-top: 40px;
+	padding-bottom: 20px;
+	h3 {
+		color: $gray-darkest;
+	}
+	.testimonials-carousel {
+		.item {
+			padding: 0 10%;
+			.tile {
+				box-shadow: none !important;
+				.dummy-value {
+					color: transparent;
+					margin-top: 40px;
+				}
+				.real-value {
+					position: absolute;
+					top: 40px;
+					width: 80%;
+					color: $gray-darkest;
+					font-weight: lighter;
+					padding-left: 30px;
+					border-left: 2px solid $blue-main;
+				}
+			}
+		}
+		.left-arrow {
+			position: absolute;
+			border: none;
+			outline: none;
+			margin: auto;
+			top: 0;
+			bottom: 0;
+			width: 40px;
+			height: 40px;
+			left: 0;
+			color: white;
+			background-color: $button-arrow;
+			background-image: url('../../../assets/images/left-arrow.svg');
+			background-size: 10px;
+			background-repeat: no-repeat;
+			background-position: center;
+			&:hover {
+				background-color: darken($button-arrow, 10%);
+			}
+		}
+
+		.right-arrow {
+			position: absolute;
+			border: none;
+			outline: none;
+			margin: auto;
+			top: 0;
+			bottom: 0;
+			width: 40px;
+			height: 40px;
+			right: 0;
+			color: white;
+			background-color: $button-arrow;
+			background-image: url('../../../assets/images/right-arrow.svg');
+			background-size: 10px;
+			background-repeat: no-repeat;
+			background-position: center;
+			&:hover {
+				background-color: darken($button-arrow, 10%);
+			}
+		}
+		.ngxcarouselPointDefault {
+			ul.ngxcarouselPoint {
+				height: 200px;
+				margin-top: 30px;
+				overflow: hidden;
+				li {
+					width: 24%;
+					height: 200px;
+					background-color: transparent !important;
+					border-radius: 0 !important;
+					background-size: 100% !important;
+					background-repeat: no-repeat !important;
+					background-position: center;
+					&:first-child {
+						background-image: url('../../../assets/images/testimonials/alain-pinel-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/alain-pinel-active.png');
+						}
+					}
+					&:nth-child(2) {
+						background-image: url('../../../assets/images/testimonials/michael-arrington-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/michael-arrington-active.png');
+						}
+					}
+					&:nth-child(3) {
+						background-image: url('../../../assets/images/testimonials/andrew-baum-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/andrew-baum-active.png');
+						}
+					}
+					&:last-child {
+						background-image: url('../../../assets/images/testimonials/jeremy-gardner-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/jeremy-gardner-active.png');
+						}
+					}
+					&.active {
+						transform: scale(1) !important;
+					}
+				}
+			}
+		}
+	}
+}
