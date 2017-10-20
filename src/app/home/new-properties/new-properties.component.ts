@@ -25,13 +25,10 @@ export class NewPropertiesComponent implements OnInit {
 			this.citiesOptions.push({value: index, label: item.locationName});
 		});
 		this.properties = this.newProperties[this.selectedCity].properties;
-		console.log(this.newProperties);
-		console.log(this.citiesOptions);
 	}
 
 	public cityChanged(event) {
 		this.properties = new Array<NewPropertyHome>();
 		this.properties = this.newProperties[event.value].properties;
-		console.log(event);
 	}
 }

@@ -11,6 +11,7 @@ import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 import {TestimonialsComponent} from './testimonials/testimonials.component';
 import {NewPropertiesComponent} from './new-properties/new-properties.component';
 import {DropdownModule} from 'primeng/primeng';
+import {PopertyTypeLocalizeKeyPipe} from '../shared/pipes/poperty-type-localize-key.pipe';
 
 @NgModule({
 	declarations: [
@@ -18,6 +19,7 @@ import {DropdownModule} from 'primeng/primeng';
 		FavouriteLocationsComponent,
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,
+		PopertyTypeLocalizeKeyPipe,
 		TestimonialsComponent,
 		NewPropertiesComponent
 	],
@@ -34,7 +36,8 @@ import {DropdownModule} from 'primeng/primeng';
 	bootstrap: [],
 	exports: [
 		ThousandSeparatorPipe,
-		CurrencySymbolPipe
+		CurrencySymbolPipe,
+		PopertyTypeLocalizeKeyPipe
 	]
 })
 export class HomeModule {

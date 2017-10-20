@@ -1,15 +1,22 @@
 <div class="row new-properties">
-	<h3 class="text-center">{{ 'landing.new-properties' | translate }}</h3>
+	<h3 class="text-center">{{ 'landing.new-properties.heading' | translate }}</h3>
 	<div class="dropdown-holder text-center">
-		<span>in</span>
+		<span>{{ 'landing.new-properties.in' | translate }}</span>
 		<p-dropdown [options]="citiesOptions" [(ngModel)]="selectedCity"
-					(onChange)="cityChanged($event)"
+					(onChange)="cityChanged($event)" autoWidth="false"
 					styleClass="city-dropdown"></p-dropdown>
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-4 property" *ngFor="let property of this.properties">
 		<div class="image-holder">
+			<div class="text-uppercase new-label">{{ 'landing.new-properties.new-label' | translate }}</div>
 			<img src="{{property.imageUrls[0]}}"/>
+			<div class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
+				currencySymbol}}
+			</div>
 		</div>
-		{{property.address}}
+		<div class="property-info">
+			<span class="address">{{property.address}}</span> / {{ citiesOptions[selectedCity].label }}
+		</div>
+		<div>{{property.type | propertyTypeLocalize | translate}}</div>
 	</div>
 </div>

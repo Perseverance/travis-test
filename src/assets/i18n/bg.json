@@ -42,6 +42,25 @@
 		},
 		"terms": "\u0423\u0441\u043b\u043e\u0432\u0438\u044f\u0442\u0430 \u0437\u0430 \u043f\u043e\u043b\u0437\u0432\u0430\u043d\u0435"
 	},
+	"enums": {
+		"property-types": {
+			"single-family-house": "Single family house",
+			"apartment": "Апартамент",
+			"townhouse": "Townhouse",
+			"condo": "Condo",
+			"coop": "Coop",
+			"loft": "Loft",
+			"tic": "TIC",
+			"villa": "Вила",
+			"summer-villa": "Summer villa",
+			"development-only": "Development only",
+			"studio": "Studio",
+			"maisonette": "Maisonette",
+			"penthouse": "Penthouse",
+			"bungalow": "Bungalow",
+			"student-room": "Student room"
+		}
+	},
 	"footer": {
 		"copyright": "\u0410\u0432\u0442\u043e\u0440\u0441\u043a\u043e \u043f\u0440\u0430\u0432\u043e",
 		"all-rights": "Propy. \u0412\u0441\u0438\u0447\u043a\u0438 \u043f\u0440\u0430\u0432\u0430 \u0437\u0430\u043f\u0430\u0437\u0435\u043d\u0438."
