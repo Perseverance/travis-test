@@ -49,6 +49,7 @@ export interface NewPropertyHome {
 	bedrooms: number;
 	size: CreatePropertyRequestTypedValue;
 	price: CreatePropertyRequestTypedValue;
+	imageUrls: string[];
 }
 
 export interface GetNewProperties {

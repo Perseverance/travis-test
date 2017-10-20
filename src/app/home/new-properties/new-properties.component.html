@@ -1,9 +1,15 @@
 <div class="row new-properties">
 	<h3 class="text-center">{{ 'landing.new-properties' | translate }}</h3>
 	<div class="dropdown-holder text-center">
-		<p-dropdown [options]="citiesOptions" [(ngModel)]="selectedCity" (onChange)="cityChanged($event)"></p-dropdown>
+		<span>in</span>
+		<p-dropdown [options]="citiesOptions" [(ngModel)]="selectedCity"
+					(onChange)="cityChanged($event)"
+					styleClass="city-dropdown"></p-dropdown>
 	</div>
-	<div class="col-md-3" *ngFor="let property of this.properties">
+	<div class="col-xs-12 col-sm-6 col-md-4 property" *ngFor="let property of this.properties">
+		<div class="image-holder">
+			<img src="{{property.imageUrls[0]}}"/>
+		</div>
 		{{property.address}}
 	</div>
 </div>
