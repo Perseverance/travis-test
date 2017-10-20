@@ -9,6 +9,8 @@ import {NgxCarouselModule} from 'ngx-carousel';
 import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
 import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 import {TestimonialsComponent} from './testimonials/testimonials.component';
+import {NewPropertiesComponent} from './new-properties/new-properties.component';
+import {DropdownModule} from 'primeng/primeng';
 
 @NgModule({
 	declarations: [
@@ -16,7 +18,8 @@ import {TestimonialsComponent} from './testimonials/testimonials.component';
 		FavouriteLocationsComponent,
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,
-		TestimonialsComponent
+		TestimonialsComponent,
+		NewPropertiesComponent
 	],
 	imports: [
 		CommonModule,
@@ -24,7 +27,8 @@ import {TestimonialsComponent} from './testimonials/testimonials.component';
 		SharedModule,
 		ReactiveFormsModule,
 		TranslateModule,
-		NgxCarouselModule
+		NgxCarouselModule,
+		DropdownModule
 	],
 	providers: [],
 	bootstrap: [],
