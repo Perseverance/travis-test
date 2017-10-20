@@ -68,44 +68,46 @@
 				background-color: darken($button-arrow, 10%);
 			}
 		}
-		.ngxcarouselPoint {
-			height: 200px;
-			margin-top: 30px !important;
-			overflow: hidden !important;
-			li {
-				width: 24%;
+		.ngxcarouselPointDefault {
+			ul.ngxcarouselPoint {
 				height: 200px;
-				background-color: transparent !important;
-				border-radius: 0 !important;
-				background-size: 100% !important;
-				background-repeat: no-repeat !important;
-				background-position: center;
-				&:first-child {
-					background-image: url('../../../assets/images/testimonials/alain-pinel-inactive.png') !important;
-					&.active {
-						background-image: url('../../../assets/images/testimonials/alain-pinel-active.png') !important;
+				margin-top: 30px;
+				overflow: hidden;
+				li {
+					width: 24%;
+					height: 200px;
+					background-color: transparent !important;
+					border-radius: 0 !important;
+					background-size: 100% !important;
+					background-repeat: no-repeat !important;
+					background-position: center;
+					&:first-child {
+						background-image: url('../../../assets/images/testimonials/alain-pinel-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/alain-pinel-active.png');
+						}
 					}
-				}
-				&:nth-child(2) {
-					background-image: url('../../../assets/images/testimonials/michael-arrington-inactive.png') !important;
-					&.active {
-						background-image: url('../../../assets/images/testimonials/michael-arrington-active.png') !important;
+					&:nth-child(2) {
+						background-image: url('../../../assets/images/testimonials/michael-arrington-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/michael-arrington-active.png');
+						}
 					}
-				}
-				&:nth-child(3) {
-					background-image: url('../../../assets/images/testimonials/andrew-baum-inactive.png') !important;
-					&.active {
-						background-image: url('../../../assets/images/testimonials/andrew-baum-active.png') !important;
+					&:nth-child(3) {
+						background-image: url('../../../assets/images/testimonials/andrew-baum-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/andrew-baum-active.png');
+						}
 					}
-				}
-				&:last-child {
-					background-image: url('../../../assets/images/testimonials/jeremy-gardner-inactive.png') !important;
-					&.active {
-						background-image: url('../../../assets/images/testimonials/jeremy-gardner-active.png') !important;
+					&:last-child {
+						background-image: url('../../../assets/images/testimonials/jeremy-gardner-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/jeremy-gardner-active.png');
+						}
 					}
-				}
-				&.active {
-					transform: scale(1) !important;
+					&.active {
+						transform: scale(1) !important;
+					}
 				}
 			}
 		}
