@@ -1,15 +1,15 @@
-import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
-import { PropertiesService } from './../properties.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SelectItem } from 'primeng/components/common/selectitem';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { LocationSearchComponent } from '../../location-search/location-search.component';
+import {CreatePropertyResponse, PropertyImage} from './../properties-responses';
+import {PropertiesService} from './../properties.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SelectItem} from 'primeng/components/common/selectitem';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {LocationSearchComponent} from '../../location-search/location-search.component';
 
 @Component({
 	selector: 'app-list-property',
@@ -39,47 +39,47 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	private locationSearchComponent: LocationSearchComponent;
 
 	constructor(private formBuilder: FormBuilder,
-		private authService: AuthenticationService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		private notificationService: NotificationsService,
-		private propertiesService: PropertiesService) {
+				private authService: AuthenticationService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				private notificationService: NotificationsService,
+				private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
-		this.propertyTypes.push({ label: '', value: null });
-		this.propertyTypes.push({ label: 'SingleFamilyHome', value: 1 });
-		this.propertyTypes.push({ label: 'Apartment', value: 2 });
-		this.propertyTypes.push({ label: 'Townhouse', value: 3 });
-		this.propertyTypes.push({ label: 'Condo', value: 4 });
-		this.propertyTypes.push({ label: 'Coop', value: 5 });
-		this.propertyTypes.push({ label: 'Loft', value: 6 });
-		this.propertyTypes.push({ label: 'TIC', value: 7 });
-		this.propertyTypes.push({ label: 'Villa', value: 8 });
-		this.propertyTypes.push({ label: 'SummerVilla', value: 9 });
-		this.propertyTypes.push({ label: 'DevelopmentOnly', value: 10 });
-		this.propertyTypes.push({ label: 'Studio', value: 11 });
-		this.propertyTypes.push({ label: 'Maisonette', value: 12 });
-		this.propertyTypes.push({ label: 'Penthouse', value: 13 });
-		this.propertyTypes.push({ label: 'Bungalow', value: 14 });
-		this.propertyTypes.push({ label: 'StudentRoom', value: 15 });
+		this.propertyTypes.push({label: '', value: null});
+		this.propertyTypes.push({label: 'Single Family Home', value: 1});
+		this.propertyTypes.push({label: 'Apartment', value: 2});
+		this.propertyTypes.push({label: 'Townhouse', value: 3});
+		this.propertyTypes.push({label: 'Condo', value: 4});
+		this.propertyTypes.push({label: 'Coop', value: 5});
+		this.propertyTypes.push({label: 'Loft', value: 6});
+		this.propertyTypes.push({label: 'TIC', value: 7});
+		this.propertyTypes.push({label: 'Villa', value: 8});
+		this.propertyTypes.push({label: 'Summer Villa', value: 9});
+		this.propertyTypes.push({label: 'Development Only', value: 10});
+		this.propertyTypes.push({label: 'Studio', value: 11});
+		this.propertyTypes.push({label: 'Maisonette', value: 12});
+		this.propertyTypes.push({label: 'Penthouse', value: 13});
+		this.propertyTypes.push({label: 'Bungalow', value: 14});
+		this.propertyTypes.push({label: 'Student Room', value: 15});
 
 		this.currencies = [];
-		this.currencies.push({ label: 'USD', value: 1 });
-		this.currencies.push({ label: 'EUR', value: 2 });
-		this.currencies.push({ label: 'RUB', value: 3 });
-		this.currencies.push({ label: 'AED', value: 4 });
-		this.currencies.push({ label: 'HKD', value: 5 });
-		this.currencies.push({ label: 'SGD', value: 6 });
-		this.currencies.push({ label: 'GBP', value: 7 });
-		this.currencies.push({ label: 'BGN', value: 8 });
-		this.currencies.push({ label: 'CNY', value: 9 });
-		this.currencies.push({ label: 'ETH', value: 10 });
-		this.currencies.push({ label: 'BTC', value: 11 });
+		this.currencies.push({label: 'USD', value: 1});
+		this.currencies.push({label: 'EUR', value: 2});
+		this.currencies.push({label: 'RUB', value: 3});
+		this.currencies.push({label: 'AED', value: 4});
+		this.currencies.push({label: 'HKD', value: 5});
+		this.currencies.push({label: 'SGD', value: 6});
+		this.currencies.push({label: 'GBP', value: 7});
+		this.currencies.push({label: 'BGN', value: 8});
+		this.currencies.push({label: 'CNY', value: 9});
+		this.currencies.push({label: 'ETH', value: 10});
+		this.currencies.push({label: 'BTC', value: 11});
 
 		this.areaUnits = [];
-		this.areaUnits.push({ label: 'sqm', value: 1 });
-		this.areaUnits.push({ label: 'sqft', value: 2 });
+		this.areaUnits.push({label: 'sqm', value: 1});
+		this.areaUnits.push({label: 'sqft', value: 2});
 
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
