@@ -7,11 +7,13 @@
 					styleClass="city-dropdown"></p-dropdown>
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-4 property" *ngFor="let property of this.properties">
-		<div class="image-holder">
+		<div class="image-holder" (click)="propertySelected(property.id)">
 			<div class="text-uppercase new-label">{{ 'landing.new-properties.new-label' | translate }}</div>
 			<img src="{{property.imageUrls[0]}}"/>
 			<div class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
 				currencySymbol}}
+			</div>
+			<div class="right-arrow-holder">
 			</div>
 		</div>
 		<div class="property-info">

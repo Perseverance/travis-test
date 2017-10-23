@@ -39,6 +39,7 @@
 	.property {
 		margin-bottom: 20px;
 		.image-holder {
+			cursor: pointer;
 			.new-label {
 				position: absolute;
 				padding: 2px 10px;
@@ -57,6 +58,23 @@
 				height: 200px;
 				width: 100%;
 				@include border-radius-separate(0, 5px, 5px, 5px);
+			}
+			.right-arrow-holder {
+				position: absolute;
+				top: 140px;
+				right: 25px;
+				height: 50px;
+				width: 50px;
+				background: url('../../../assets/images/right-arrow-hover.svg') 100% no-repeat;
+				visibility: hidden;
+				@media #{$sm} {
+					visibility: visible;
+				}
+			}
+			&:hover {
+				.right-arrow-holder {
+					visibility: visible;
+				}
 			}
 		}
 		.property-info {

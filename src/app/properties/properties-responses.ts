@@ -43,6 +43,7 @@ export interface GetFavouriteLocationResponse {
 }
 
 export interface NewPropertyHome {
+	id: string;
 	type: number;
 	address: string;
 	description: string;
