@@ -12,6 +12,7 @@ import {TestimonialsComponent} from './testimonials/testimonials.component';
 import {NewPropertiesComponent} from './new-properties/new-properties.component';
 import {DropdownModule} from 'primeng/primeng';
 import {PopertyTypeLocalizeKeyPipe} from '../shared/pipes/poperty-type-localize-key.pipe';
+import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
 
 @NgModule({
 	declarations: [
@@ -20,6 +21,7 @@ import {PopertyTypeLocalizeKeyPipe} from '../shared/pipes/poperty-type-localize-
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,
 		PopertyTypeLocalizeKeyPipe,
+		PropertySizeUnitOfMeasurePipe,
 		TestimonialsComponent,
 		NewPropertiesComponent
 	],
@@ -37,7 +39,8 @@ import {PopertyTypeLocalizeKeyPipe} from '../shared/pipes/poperty-type-localize-
 	exports: [
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,
-		PopertyTypeLocalizeKeyPipe
+		PopertyTypeLocalizeKeyPipe,
+		PropertySizeUnitOfMeasurePipe
 	]
 })
 export class HomeModule {

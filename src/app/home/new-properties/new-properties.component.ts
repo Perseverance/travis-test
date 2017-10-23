@@ -20,6 +20,7 @@ export class NewPropertiesComponent implements OnInit {
 
 	async ngOnInit() {
 		this.newProperties = await this.propertiesService.getNewProperties();
+		console.log(this.newProperties);
 		this.citiesOptions = [];
 		this.newProperties.forEach((item, index) => {
 			this.citiesOptions.push({value: index, label: item.locationName});

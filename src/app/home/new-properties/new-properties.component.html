@@ -17,6 +17,11 @@
 		<div class="property-info">
 			<span class="address">{{property.address}}</span> / {{ citiesOptions[selectedCity].label }}
 		</div>
-		<div>{{property.type | propertyTypeLocalizeKey | translate}}</div>
+		<div class="additional-property-info">
+			<span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
+			<span
+				*ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
+			<span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure:property.size.type}}</span>
+		</div>
 	</div>
 </div>

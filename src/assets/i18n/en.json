@@ -111,7 +111,8 @@
 		"new-properties": {
 			"heading": "New properties",
 			"in": "in",
-			"new-label": "NEW"
+			"new-label": "NEW",
+			"bedrooms": "Bedrooms"
 		}
 	}
 }

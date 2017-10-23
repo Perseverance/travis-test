@@ -38,7 +38,6 @@
 	}
 	.property {
 		margin-bottom: 20px;
-		height: 240px;
 		.image-holder {
 			.new-label {
 				position: absolute;
@@ -61,14 +60,29 @@
 			}
 		}
 		.property-info {
+			padding: 4px 10px 0 10px;
 			font-size: 12px;
-			padding: 4px 10px;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			.address {
 				font-size: 14px;
 				font-weight: normal;
+			}
+		}
+		.additional-property-info {
+			padding: 0 10px 4px 10px;
+			font-size: 12px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			span {
+				font-weight: normal;
+				padding-right: 5px;
+			}
+			span:nth-child(2), span:nth-child(3) {
+				border-left: solid 1px $gray-light;
+				padding-left: 10px;
 			}
 		}
 	}
