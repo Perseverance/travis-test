@@ -36,7 +36,6 @@ export class NewPropertiesComponent implements OnInit {
 	}
 
 	public propertySelected(id: string) {
-		console.log(id);
 		this.router.navigate(['property', id]);
 	}
 }
