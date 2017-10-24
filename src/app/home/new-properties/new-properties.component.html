@@ -6,24 +6,12 @@
 					(onChange)="cityChanged($event)" autoWidth="false"
 					styleClass="city-dropdown"></p-dropdown>
 	</div>
-	<div class="col-xs-12 col-sm-6 col-md-4 property" *ngFor="let property of this.properties">
-		<div class="image-holder" (click)="propertySelected(property.id)">
-			<div class="text-uppercase new-label">{{ 'landing.new-properties.new-label' | translate }}</div>
-			<img src="{{property.imageUrls[0]}}"/>
-			<div class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
-				currencySymbol}}
-			</div>
-			<div class="right-arrow-holder">
-			</div>
-		</div>
-		<div class="property-info">
-			<span class="address">{{property.address}}</span> / {{ citiesOptions[selectedCity].label }}
-		</div>
-		<div class="additional-property-info">
-			<span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
-			<span
-				*ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
-			<span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure:property.size.type}}</span>
+	<div *ngIf="properties">
+		<div class="col-xs-12 col-sm-6 col-md-4 property" *ngFor="let property of properties">
+			<app-new-property-component [property]="property"
+										[cityName]="citiesOptions[selectedCity].label">
+
+			</app-new-property-component>
 		</div>
 	</div>
 </div>

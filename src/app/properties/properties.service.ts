@@ -9,7 +9,7 @@ import {
 	GetFavouriteLocationResponse,
 	CreatePropertyRequest,
 	CreatePropertyResponse,
-	PropertyImage, GetNewProperties, NewPropertyHome
+	PropertyImage, GetNewPropertiesResponse, NewPropertyHome
 } from './properties-responses';
 import {LocalStorageService} from '../shared/localStorage.service';
 
@@ -103,29 +103,12 @@ export class PropertiesService {
 		return result.data.data;
 	}
 
-	public async getNewProperties(): Promise<GetNewProperties[]> {
+	public async getNewProperties(): Promise<GetNewPropertiesResponse[]> {
 		const queryParams = {
 			currency: this.localStorageService.selectedCurrencyType
 		};
 		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES, {params: queryParams});
-		const returnValue = new Array<GetNewProperties>();
-		for (const location of result.data.data) {
-			const city = {locationName: '', properties: []};
-			city.locationName = location.locationName;
-			const propertiesProcessed = new Array<NewPropertyHome>();
-			for (const property of location.properties) {
-				const imageUrls = new Array<string>();
-				for (const path of property.imageUrls) {
-					imageUrls.push(`${environment.apiUrl}${path}`);
-				}
-				property.imageUrls = [];
-				property.imageUrls = imageUrls;
-				propertiesProcessed.push(property);
-			}
-			city.properties = propertiesProcessed;
-			returnValue.push(city);
-		}
-		return returnValue;
+		return result.data.data;
 	}
 
 	public async createProperty(data: CreatePropertyRequest): Promise<CreatePropertyResponse> {

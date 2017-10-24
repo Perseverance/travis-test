@@ -18,10 +18,6 @@ import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-
 	declarations: [
 		HomeComponent,
 		FavouriteLocationsComponent,
-		ThousandSeparatorPipe,
-		CurrencySymbolPipe,
-		PopertyTypeLocalizeKeyPipe,
-		PropertySizeUnitOfMeasurePipe,
 		TestimonialsComponent,
 		NewPropertiesComponent
 	],
@@ -36,12 +32,7 @@ import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-
 	],
 	providers: [],
 	bootstrap: [],
-	exports: [
-		ThousandSeparatorPipe,
-		CurrencySymbolPipe,
-		PopertyTypeLocalizeKeyPipe,
-		PropertySizeUnitOfMeasurePipe
-	]
+	exports: []
 })
 export class HomeModule {
 }

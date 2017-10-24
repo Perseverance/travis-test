@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PropertiesService} from '../../properties/properties.service';
-import {GetNewProperties, NewPropertyHome} from '../../properties/properties-responses';
+import {GetNewPropertiesResponse, NewPropertyHome} from '../../properties/properties-responses';
 import {SelectItem} from 'primeng/primeng';
 import {Router} from '@angular/router';
 
@@ -11,13 +11,12 @@ import {Router} from '@angular/router';
 	encapsulation: ViewEncapsulation.None
 })
 export class NewPropertiesComponent implements OnInit {
-	public newProperties: GetNewProperties[];
+	public newProperties: GetNewPropertiesResponse[];
 	public citiesOptions: SelectItem[];
 	public selectedCity = 0;
 	public properties: NewPropertyHome[];
 
-	constructor(private propertiesService: PropertiesService,
-				private router: Router) {
+	constructor(private propertiesService: PropertiesService) {
 	}
 
 	async ngOnInit() {
@@ -30,11 +29,6 @@ export class NewPropertiesComponent implements OnInit {
 	}
 
 	public cityChanged(event) {
-		this.properties = new Array<NewPropertyHome>();
 		this.properties = this.newProperties[event.value].properties;
-	}
-
-	public propertySelected(id: string) {
-		this.router.navigate(['property', id]);
 	}
 }

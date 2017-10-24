@@ -6,6 +6,11 @@ export class PopertyTypeLocalizeKeyPipe implements PipeTransform {
 
 	transform(value: number): string {
 		const mainKeyPart = 'enums.property-types';
+		const propertyTypeKey = this.getPropertyTypeKey(value);
+		return `${mainKeyPart}.${propertyTypeKey}`;
+	}
+
+	private getPropertyTypeKey(value: number): string {
 		const apartmentKey = 'apartment';
 		const singleFamilyHouseKey = 'single-family-house';
 		const townhouseKey = 'townhouse';
@@ -24,52 +29,52 @@ export class PopertyTypeLocalizeKeyPipe implements PipeTransform {
 
 		switch (value) {
 			case PropertyTypeEnum.BrokenValue: {
-				return `${mainKeyPart}.${apartmentKey}`;
+				return `${apartmentKey}`;
 			}
 			case PropertyTypeEnum.SingleFamilyHome: {
-				return `${mainKeyPart}.${singleFamilyHouseKey}`;
+				return `${singleFamilyHouseKey}`;
 			}
 			case PropertyTypeEnum.Apartment: {
-				return `${mainKeyPart}.${apartmentKey}`;
+				return `${apartmentKey}`;
 			}
 			case PropertyTypeEnum.Townhouse: {
-				return `${mainKeyPart}.${townhouseKey}`;
+				return `${townhouseKey}`;
 			}
 			case PropertyTypeEnum.Condo: {
-				return `${mainKeyPart}.${condoKey}`;
+				return `${condoKey}`;
 			}
 			case PropertyTypeEnum.Coop: {
-				return `${mainKeyPart}.${coopKey}`;
+				return `${coopKey}`;
 			}
 			case PropertyTypeEnum.Loft: {
-				return `${mainKeyPart}.${loftKey}`;
+				return `${loftKey}`;
 			}
 			case PropertyTypeEnum.TIC: {
-				return `${mainKeyPart}.${ticKey}`;
+				return `${ticKey}`;
 			}
 			case PropertyTypeEnum.Villa: {
-				return `${mainKeyPart}.${villaKey}`;
+				return `${villaKey}`;
 			}
 			case PropertyTypeEnum.SummerVilla: {
-				return `${mainKeyPart}.${summerVillaKey}`;
+				return `${summerVillaKey}`;
 			}
 			case PropertyTypeEnum.DevelopmentOnly: {
-				return `${mainKeyPart}.${developmentOnlyKey}`;
+				return `${developmentOnlyKey}`;
 			}
 			case PropertyTypeEnum.Studio: {
-				return `${mainKeyPart}.${studioKey}`;
+				return `${studioKey}`;
 			}
 			case PropertyTypeEnum.Maisonette: {
-				return `${mainKeyPart}.${maisonetteKey}`;
+				return `${maisonetteKey}`;
 			}
 			case PropertyTypeEnum.Penthouse: {
-				return `${mainKeyPart}.${penthouseKey}`;
+				return `${penthouseKey}`;
 			}
 			case PropertyTypeEnum.Bungalow: {
-				return `${mainKeyPart}.${bungalawKey}`;
+				return `${bungalawKey}`;
 			}
 			case PropertyTypeEnum.StudentRoom: {
-				return `${mainKeyPart}.${studentRoomKey}`;
+				return `${studentRoomKey}`;
 			}
 		}
 	}

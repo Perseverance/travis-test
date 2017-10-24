@@ -53,7 +53,7 @@ export interface NewPropertyHome {
 	imageUrls: string[];
 }
 
-export interface GetNewProperties {
+export interface GetNewPropertiesResponse {
 	locationName: string;
 	properties: NewPropertyHome[];
 }
