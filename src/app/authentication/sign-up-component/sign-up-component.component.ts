@@ -27,17 +27,17 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private AGENCY_MAX_SUGGESTIONS = 5;
 
 	public signupForm: FormGroup;
-	private queryParamsSubscription: Subscription;
+	private paramsSubscriptions = new Array<Subscription>();
 
 	public agencyId: string = null;
 
 	public agentLocations: string[] = new Array<string>();
 	private redirectToUrl = environment.defaultRedirectRoute;
+	private referralId: string;
 
 	protected agencyAutoCompleteDataService: RemoteData;
 
-	constructor(
-		private authService: AuthenticationService,
+	constructor(private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
@@ -79,20 +79,40 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	ngOnInit() {
 		const self = this;
-		this.queryParamsSubscription = this.setupQueryParamsWatcher();
+		this.paramsSubscriptions.push(this.setupParamsWatcher());
+		this.paramsSubscriptions.push(this.setupQueryParamsWatcher());
 	}
 
 	ngOnDestroy() {
-		this.queryParamsSubscription.unsubscribe();
+		for (const subscription of this.paramsSubscriptions) {
+
+			subscription.unsubscribe();
+		}
 	}
 
 	private setupQueryParamsWatcher() {
 		return this.route.queryParams
 			.subscribe(params => {
-				if (!params.redirect) {
-					return;
+				if (params.redirect) {
+					this.redirectToUrl = params.redirect;
 				}
-				this.redirectToUrl = params.redirect;
+				if (params.referral) {
+					this.referralId = params.referral;
+				}
+
+			});
+	}
+
+	private setupParamsWatcher() {
+		return this.route.params
+			.subscribe(params => {
+				if (params.redirect) {
+					this.redirectToUrl = params.redirect;
+				}
+				if (params.referral) {
+					this.referralId = params.referral;
+				}
+
 			});
 	}
 
@@ -196,6 +216,10 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			});
 		}
 		this.router.navigate([this.redirectToUrl]);
+		if (result && this.referralId) {
+			const email = this.email.value;
+			this.referralPost(email, this.referralId);
+		}
 	}
 
 	private async createAgency(agencyName: string): Promise<string> {
@@ -205,13 +229,25 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
+		if (result && this.referralId) {
+			const email = this.authService.user.email;
+			this.referralPost(email, this.referralId);
+		}
 		this.router.navigate([this.redirectToUrl]);
 	}
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
+		if (result && this.referralId) {
+			const email = this.authService.user.email;
+			this.referralPost(email, this.referralId);
+		}
 		this.router.navigate([this.redirectToUrl]);
+	}
+
+	private async referralPost(email: string, referralId: string): Promise<any> {
+		const result = await this.authService.assignRefferer(email, referralId);
 	}
 
 }

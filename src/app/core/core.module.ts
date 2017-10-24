@@ -19,6 +19,7 @@ import { TokenGuardLazyLoading } from '../authentication/token-guard-lazy-loadin
 import { TranslateStore } from '@ngx-translate/core/src/translate.store';
 import { environment } from '../../environments/environment';
 import { TermsComponent } from './terms/terms.component';
+import { ReferralComponent } from '../referral/referral.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,7 +44,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		HeaderComponent,
 		NotificationMessageComponent,
 		FooterComponent,
-		TermsComponent
+		TermsComponent,
+		ReferralComponent
 	],
 	providers: [
 		HttpClient,
