@@ -42,6 +42,22 @@ export interface GetFavouriteLocationResponse {
 	initialPrice: number;
 }
 
+export interface NewPropertyHome {
+	id: string;
+	type: number;
+	address: string;
+	description: string;
+	bedrooms: number;
+	size: CreatePropertyRequestTypedValue;
+	price: CreatePropertyRequestTypedValue;
+	imageUrls: string[];
+}
+
+export interface GetNewPropertiesResponse {
+	locationName: string;
+	properties: NewPropertyHome[];
+}
+
 interface CreatePropertyRequestTypedValue {
 	value: number;
 	type: number;

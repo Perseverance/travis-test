@@ -30,7 +30,6 @@ export class FavouriteLocationsComponent implements OnInit {
 			easing: 'ease'
 		};
 		this.favouriteLocations = await this.propertiesService.getFavouriteLocations();
-		console.log(this.favouriteLocations);
 		this.topCities = this.favouriteLocations;
 
 	}

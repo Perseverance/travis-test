@@ -9,14 +9,17 @@ import {NgxCarouselModule} from 'ngx-carousel';
 import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
 import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 import {TestimonialsComponent} from './testimonials/testimonials.component';
+import {NewPropertiesComponent} from './new-properties/new-properties.component';
+import {DropdownModule} from 'primeng/primeng';
+import {PopertyTypeLocalizeKeyPipe} from '../shared/pipes/poperty-type-localize-key.pipe';
+import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
 
 @NgModule({
 	declarations: [
 		HomeComponent,
 		FavouriteLocationsComponent,
-		ThousandSeparatorPipe,
-		CurrencySymbolPipe,
-		TestimonialsComponent
+		TestimonialsComponent,
+		NewPropertiesComponent
 	],
 	imports: [
 		CommonModule,
@@ -24,14 +27,12 @@ import {TestimonialsComponent} from './testimonials/testimonials.component';
 		SharedModule,
 		ReactiveFormsModule,
 		TranslateModule,
-		NgxCarouselModule
+		NgxCarouselModule,
+		DropdownModule
 	],
 	providers: [],
 	bootstrap: [],
-	exports: [
-		ThousandSeparatorPipe,
-		CurrencySymbolPipe
-	]
+	exports: []
 })
 export class HomeModule {
 }

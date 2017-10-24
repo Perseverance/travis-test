@@ -42,6 +42,25 @@
 		},
 		"terms": "Terms & Conditions"
 	},
+	"enums": {
+		"property-types": {
+			"single-family-house": "Single family house",
+			"apartment": "Apartment",
+			"townhouse": "Townhouse",
+			"condo": "Condo",
+			"coop": "Coop",
+			"loft": "Loft",
+			"tic": "TIC",
+			"villa": "Villa",
+			"summer-villa": "Summer villa",
+			"development-only": "Development only",
+			"studio": "Studio",
+			"maisonette": "Maisonette",
+			"penthouse": "Penthouse",
+			"bungalow": "Bungalow",
+			"student-room": "Student room"
+		}
+	},
 	"footer": {
 		"copyright": "Copyright",
 		"all-rights": "Propy. All rights reserved."
@@ -88,6 +107,12 @@
 			"arrington-words": "The leadership of the company is impressive, shows all the signs of persistence and execution. Andrey Zamovski is very intelligent and innovative at usage of his deep knowledge of cryptography and Ethereum Smart Contracts. The team is also international - founders and early employees from Russia, Ukraine, US and Singapore are sharing the knowledge of their markets.",
 			"baum-words": "It would be an enormous step forward if global real estate transactions were to be facilitated by a reliable, automated land registration and transfer system. Propy's proposed use of blockchain might just offer the key that opens this door.",
 			"gardner-words": "Beyond finance, real estate is perhaps the most obvious industry prime for being upended by blockchain technology. With its superb team and strong vision Propy is likely to be a leader as real estate is dirsupted by this revolutionary innovation."
+		},
+		"new-properties": {
+			"heading": "New properties",
+			"in": "in",
+			"new-label": "NEW",
+			"bedrooms": "Bedrooms"
 		}
 	}
 }
