@@ -370,4 +370,14 @@ export class AuthenticationService {
 		return result;
 	}
 
+	public async assignRefferer(email: string, referrer: string): Promise<boolean> {
+		const params = {
+			email,
+			referrer
+		};
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REFERRAL, params);
+
+		return result.data.data.value;
+	}
+
 }
