@@ -70,6 +70,7 @@
 		"agency-not-found": "No such agency found. Submitting this will create it."
 	},
 	"list-property": {
+		"invite-link": "Your invite link:",
 		"heading": "List property",
 		"form-fields": {
 			"address": "Address",

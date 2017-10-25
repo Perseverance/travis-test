@@ -1,8 +1,9 @@
-import { TermsComponent } from './core/terms/terms.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { TokenGuardLazyLoading } from './authentication/token-guard-lazy-loading.service';
+import {TermsComponent} from './core/terms/terms.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
+import {HomeComponent} from './home/home.component';
+import {TokenGuardLazyLoading} from './authentication/token-guard-lazy-loading.service';
+import {ReferralComponent} from './referral/referral.component';
 
 const routes: Routes = [
 	{
@@ -13,6 +14,11 @@ const routes: Routes = [
 	{
 		path: 'terms',
 		component: TermsComponent,
+		pathMatch: 'full'
+	},
+	{
+		path: 'Users/RequestInvite',
+		component: ReferralComponent,
 		pathMatch: 'full'
 	},
 	{
@@ -30,7 +36,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+	imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {
