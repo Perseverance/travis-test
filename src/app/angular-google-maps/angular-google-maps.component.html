@@ -6,7 +6,8 @@
 		inputPlaceholder="{{ 'common.placeholder.search' | translate }}"
 		(onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
 
-	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+	<agm-map (boundsChange)="boundsChange($event)" [latitude]="latitude"
+			 [longitude]="longitude" [zoom]="zoom">
 		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
 		<agm-marker *ngFor="let marker of properties" [latitude]="marker.latitude"
 					[longitude]="marker.longitude"></agm-marker>
