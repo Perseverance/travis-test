@@ -14,16 +14,18 @@ import {
 import {LocalStorageService} from '../shared/localStorage.service';
 
 interface Bounds {
-	east: number;
-	west: number;
-	north: number;
-	south: number;
+	southWestLatitude: number,
+	northEastLatitude: number,
+	southWestLongitude: number,
+	northEastLongitude: number
 }
 
 @Injectable()
 export class PropertiesService {
 
-	constructor(private restService: RestClientService, private apiEndpoint: APIEndpointsService, private localStorageService: LocalStorageService) {
+	constructor(private restService: RestClientService,
+				private apiEndpoint: APIEndpointsService,
+				private localStorageService: LocalStorageService) {
 	}
 
 	public async getProperty(propertyId: string): Promise<GetPropertyResponse> {
@@ -68,8 +70,14 @@ export class PropertiesService {
 		};
 	}
 
-	public async getPropertiesInRectangle(latitude: number, longitude: number, degreesOfIncreaseArea = 1): Promise<GetPropertiesResponse> {
-		const bounds: Bounds = this.createRectangleBounds(latitude, longitude, degreesOfIncreaseArea);
+	public async getPropertiesInRectangle(southWestLatitude: number,
+										  northEastLatitude: number,
+										  southWestLongitude: number,
+										  northEastLongitude: number): Promise<GetPropertiesResponse> {
+		const bounds: Bounds = this.createRectangleBounds(southWestLatitude,
+			northEastLatitude,
+			southWestLongitude,
+			northEastLongitude);
 		const query = this.propertiesInRectangleQueryFormat(bounds);
 		const params = {
 			search: query
@@ -79,19 +87,22 @@ export class PropertiesService {
 		return {properties: result.data.data.properties};
 	}
 
-	private createRectangleBounds(latitude: number, longitude: number, degreesOfIncreaseArea = 1) {
+	private createRectangleBounds(southWestLatitude: number,
+								  northEastLatitude: number,
+								  southWestLongitude: number,
+								  northEastLongitude: number) {
 		const bounds: Bounds = {
-			north: latitude + degreesOfIncreaseArea,
-			south: latitude - degreesOfIncreaseArea,
-			east: longitude + degreesOfIncreaseArea,
-			west: longitude - degreesOfIncreaseArea
+			southWestLatitude: southWestLatitude,
+			northEastLatitude: northEastLatitude,
+			southWestLongitude: southWestLongitude,
+			northEastLongitude: northEastLongitude
 		};
 		return bounds;
 	}
 
 	private propertiesInRectangleQueryFormat(bounds: Bounds) {
 		const querySuffix = '_coords/1,25_page/';
-		const query = `/${bounds.south},${bounds.north},${bounds.west},${bounds.east}${querySuffix}`;
+		const query = `/${bounds.southWestLatitude},${bounds.northEastLatitude},${bounds.southWestLongitude},${bounds.northEastLongitude}${querySuffix}`;
 		return query;
 	}
 
