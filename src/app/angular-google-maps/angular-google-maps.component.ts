@@ -1,9 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {PropertiesService} from '../properties/properties.service';
 import {ActivatedRoute} from '@angular/router';
-import {NextObserver} from 'rxjs/Observer';
 import {Subject} from 'rxjs/Subject';
-import {async} from 'q';
 import {LatLngBounds} from '@agm/core';
 
 @Component({
