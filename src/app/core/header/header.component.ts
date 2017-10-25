@@ -5,7 +5,7 @@ import { RedirectableComponent } from './../../shared/redirectable/redirectable.
 import { Component, OnInit, HostListener, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../shared/localStorage.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
@@ -24,8 +24,11 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public isUserAnonymous: boolean;
 	public userInfo: any;
 
+	public isLanding = false;
+
 	constructor(
 		router: Router,
+		private route: ActivatedRoute,
 		public authService: AuthenticationService,
 		public translate: TranslateService,
 		private storage: LocalStorageService,
@@ -42,6 +45,11 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 	async ngOnInit() {
 		this.setIsHeaderScrolledPastThreshold();
+		this.router.events
+			.filter(event => event instanceof NavigationEnd)
+			.subscribe((event: NavigationEnd) => {
+				this.isLanding = (event.url === '/');
+			});
 	}
 
 
@@ -84,5 +92,9 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		event.preventDefault();
 		event.stopPropagation();
 		this.authService.performLogout();
+	}
+
+	onLocationFoundHandler(latitude: number, longitude: number) {
+		this.router.navigate(['map', { latitude: latitude, longitude: longitude }]);
 	}
 }

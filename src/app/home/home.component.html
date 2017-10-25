@@ -1,23 +1,24 @@
-<div class="row">
-	<div class="col-xs-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3">
-		<app-location-search
-			inputPlaceholder="{{ 'common.placeholder.search' | translate }}"
-			[searchButtonVisible]="true"
-			(onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
-	</div>
+<div class="row find-property">
+    <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 text-center">
+        <h3>Find the best investments property.</h3>
+        <h6>Make it easy to build wealth through real estate investment.</h6>
+        <div class="col-md-12 col-lg-10 col-lg-offset-1">
+            <app-location-search inputTheme="big" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
+        </div>
+    </div>
 </div>
 <div class="row">
-	<div class="col-xs-12 col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2">
-		<app-favourite-locations></app-favourite-locations>
-	</div>
+    <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <app-favourite-locations></app-favourite-locations>
+    </div>
 </div>
 <div class="row testimonials-holder">
-	<div class="col-xs-12 col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2">
-		<app-testimonials></app-testimonials>
-	</div>
+    <div class="col-xs-12 col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2">
+        <app-testimonials></app-testimonials>
+    </div>
 </div>
 <div class="row">
-	<div class="col-xs-12 col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2">
-		<app-new-properties></app-new-properties>
-	</div>
+    <div class="col-xs-12 col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2">
+        <app-new-properties></app-new-properties>
+    </div>
 </div>

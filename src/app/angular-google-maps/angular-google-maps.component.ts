@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {PropertiesService} from '../properties/properties.service';
-import {ActivatedRoute} from '@angular/router';
-import {Subject} from 'rxjs/Subject';
-import {LatLngBounds} from '@agm/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { PropertiesService } from '../properties/properties.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
+import { LatLngBounds } from '@agm/core';
 
 @Component({
 	selector: 'app-google-maps',
@@ -16,11 +16,11 @@ export class AngularGoogleMapsComponent implements OnInit {
 	public zoom = 12;
 	public properties: any;
 	private timer: any;
-	private UPDATE_PROPERTIES_TIMEOUT = 400;
+	private UPDATE_PROPERTIES_TIMEOUT = 200;
 
 	constructor(private route: ActivatedRoute,
-				public propertiesService: PropertiesService,
-				private cdr: ChangeDetectorRef) {
+		public propertiesService: PropertiesService,
+		private cdr: ChangeDetectorRef) {
 		// workaround to activate change detection manually(bug in angular > 4.1.3), remove delay between constructor and ngOnInit hook
 		setTimeout(() => this.setChanged(), 0);
 
@@ -41,18 +41,29 @@ export class AngularGoogleMapsComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		const paramLatitude = this.route.snapshot.paramMap.get('latitude');
-		const paramLongitude = this.route.snapshot.paramMap.get('longitude');
-		const paramZoom = this.route.snapshot.paramMap.get('zoom');
 
-		if (paramLatitude === undefined || paramLatitude === null || paramLongitude === undefined || paramLongitude == null) {
-			// set current position
-			this.setCurrentPosition();
-		} else {
-			this.latitude = +paramLatitude;
-			this.longitude = +paramLongitude;
-			this.zoom = paramZoom ? +paramZoom : this.zoom;
-		}
+		this.setupParamsWatcher();
+	}
+
+	private setupParamsWatcher() {
+		return this.route.params
+			.subscribe(async params => {
+				if (!params.latitude || !params.longitude) {
+					await this.moveToDefaultLocation();
+					return;
+				}
+				this.moveToParamsLocation(+params.latitude, +params.longitude, params.zoom);
+			});
+	}
+
+	private async moveToDefaultLocation() {
+		this.setCurrentPosition();
+	}
+
+	private async moveToParamsLocation(lat: number, lon: number, zoom?: number) {
+		this.latitude = lat;
+		this.longitude = lon;
+		this.zoom = zoom ? zoom : this.zoom;
 	}
 
 	private setCurrentPosition() {

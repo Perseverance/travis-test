@@ -1,0 +1,66 @@
+@import "../../variables";
+@import "../../mixins";
+.location-search {
+    // Using this : https://stackoverflow.com/a/18839305/1374825
+    .inner-addon {
+        position: relative;
+    }
+    /* style icon */
+    .inner-addon .fa {
+        position: absolute;
+        padding: 10px;
+        pointer-events: none;
+        color: black;
+        font-size: 20px;
+    }
+    /* add padding  */
+    .left-addon input {
+        padding-left: 50px;
+    }
+    .right-addon input {
+        padding-right: 50px;
+    }
+    &.theme {
+        &.big {
+            /* align icon */
+            .left-addon .fa {
+                left: 8px;
+                top: 6px;
+            }
+            .right-addon .fa {
+                right: 8px;
+                top: 6px;
+            }
+            input.propy-control {
+                height: 54px;
+                font-size: $font-size-base;
+                @include border-radius(9px);
+                border: 0px;
+                @include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
+            }
+        }
+        &.small {
+            /* align icon */
+            .input-addon .fa {
+                font-size: 22px;
+            }
+            .left-addon .fa {
+                left: 2px;
+                top: 2px;
+                padding: 5px 10px;
+            }
+            .right-addon .fa {
+                right: 2px;
+                top: 2px;
+                padding: 5px 10px;
+            }
+            input.propy-control {
+                height: 36px;
+                font-size: $font-size-base;
+                @include border-radius(5px);
+                border-color: rgba(0, 0, 0, 0.1);
+                @include box-shadow(0px, 1px, 3px, #ddd);
+            }
+        }
+    }
+}
