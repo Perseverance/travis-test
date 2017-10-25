@@ -11,12 +11,12 @@
 			</button>
             <a class="navbar-brand" routerLink="/"><img alt="Propy" [src]="logoImage" class="hidden-xs"></a>
             <div class="nav navbar-nav col-xs-9 hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl loc-search-nav" *ngIf="!isLanding">
-                <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
+                <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
             </div>
         </div>
 
         <div class="nav navbar-nav hidden-xs col-sm-3 col-md-5 col-lg-6 loc-search-nav" *ngIf="!isLanding">
-            <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
+            <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

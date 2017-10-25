@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
 		});
 	}
 
-	onLocationFoundHandler(latitude: number, longitude: number) {
-		this.router.navigate(['map', { latitude: latitude, longitude: longitude }]);
+	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
+		this.router.navigate(['map', { latitude, longitude, locationName }]);
 	}
 }

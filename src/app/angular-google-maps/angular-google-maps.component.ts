@@ -13,6 +13,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 	private boundsChangedSubject: Subject<LatLngBounds>;
 	public latitude = 37.452961;
 	public longitude = -122.181725;
+	public locationName = 'Menlo Park, CA, United States';
 	public zoom = 12;
 	public properties: any;
 	private timer: any;
@@ -52,7 +53,7 @@ export class AngularGoogleMapsComponent implements OnInit {
 					await this.moveToDefaultLocation();
 					return;
 				}
-				this.moveToParamsLocation(+params.latitude, +params.longitude, params.zoom);
+				this.moveToParamsLocation(+params.latitude, +params.longitude, params.locationName, params.zoom);
 			});
 	}
 
@@ -60,9 +61,11 @@ export class AngularGoogleMapsComponent implements OnInit {
 		this.setCurrentPosition();
 	}
 
-	private async moveToParamsLocation(lat: number, lon: number, zoom?: number) {
+	private async moveToParamsLocation(lat: number, lon: number, locationName?: string, zoom?: number) {
 		this.latitude = lat;
 		this.longitude = lon;
+		console.log(locationName);
+		this.locationName = locationName !== 'undefined' ? locationName : '';
 		this.zoom = zoom ? zoom : this.zoom;
 	}
 

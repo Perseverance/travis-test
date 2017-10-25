@@ -3,7 +3,7 @@
         <h3>Find the best investments property.</h3>
         <h6>Make it easy to build wealth through real estate investment.</h6>
         <div class="col-md-12 col-lg-10 col-lg-offset-1">
-            <app-location-search inputTheme="big" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
+            <app-location-search inputTheme="big" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
         </div>
     </div>
 </div>

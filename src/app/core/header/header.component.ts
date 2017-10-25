@@ -94,7 +94,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		this.authService.performLogout();
 	}
 
-	onLocationFoundHandler(latitude: number, longitude: number) {
-		this.router.navigate(['map', { latitude: latitude, longitude: longitude }]);
+	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
+		this.router.navigate(['map', { latitude, longitude, locationName }]);
 	}
 }

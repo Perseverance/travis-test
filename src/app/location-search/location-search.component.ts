@@ -9,6 +9,7 @@ interface SearchLocation {
 	latitude: number;
 	longitude: number;
 	locationAddress: string;
+	locationName?: string;
 	zoom?: number;
 }
 
@@ -68,7 +69,8 @@ export class LocationSearchComponent implements OnInit {
 			const latitude = place.geometry.location.lat();
 			const longitude = place.geometry.location.lng();
 			const locationAddress = place.formatted_address;
-			this.emitLocationFound({ latitude, longitude, locationAddress });
+			const locationName = place.name;
+			this.emitLocationFound({ latitude, longitude, locationAddress, locationName });
 		});
 	}
 
