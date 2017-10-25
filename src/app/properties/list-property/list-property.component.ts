@@ -30,10 +30,13 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
+	public inviteLInk: string;
+	public userId: string;
 
 	private DEFAULT_COMMISION_FEE = 75;
 
 	private SELECT_TYPE_KEY = 'list-property.form-fields.select-type';
+	private REFERRAL_PATH = 'Users/RequestInvite?referrerId=';
 
 	@ViewChild(LocationSearchComponent)
 	private locationSearchComponent: LocationSearchComponent;
@@ -52,7 +55,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.propertyTypes.push({label: 'Apartment', value: 2});
 		this.propertyTypes.push({label: 'Townhouse', value: 3});
 		this.propertyTypes.push({label: 'Condo', value: 4});
-		this.propertyTypes.push({label: 'Coop', value: 5});
+		this.propertyTypes.push({label: 'Co-op', value: 5});
 		this.propertyTypes.push({label: 'Loft', value: 6});
 		this.propertyTypes.push({label: 'TIC', value: 7});
 		this.propertyTypes.push({label: 'Villa', value: 8});
@@ -63,6 +66,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.propertyTypes.push({label: 'Penthouse', value: 13});
 		this.propertyTypes.push({label: 'Bungalow', value: 14});
 		this.propertyTypes.push({label: 'Student Room', value: 15});
+		this.propertyTypes.push({label: 'Commercial', value: 20});
 
 		this.currencies = [];
 		this.currencies.push({label: 'USD', value: 1});
@@ -109,11 +113,13 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			next: (userInfo: UserData) => {
 				this.isUserAnonymous = userInfo.isAnonymous;
 				this.hasUserLoaded = true;
+				this.userId = userInfo.user.id;
+				this.inviteLInk = `${window.location.protocol}//${window.location.host}/${this.REFERRAL_PATH}${this.userId}`;
 			}
 		});
 	}
 
-	async ngOnInit() {
+	ngOnInit() {
 	}
 
 	public get propertyType() {
