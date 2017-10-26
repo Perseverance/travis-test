@@ -20,7 +20,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public property: GetPropertyResponse;
 	private idSubscription: Subscription;
 	public propertyImagesCarouselConfig: NgxCarousel;
-	public IMAGE_HEIGHT_PX = 480;
+	public IMAGE_HEIGHT_PX: number;
 	public IMAGE_WIDTH_PX: number;
 
 	constructor(
@@ -30,6 +30,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private authService: AuthenticationService) {
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width;
+		this.IMAGE_HEIGHT_PX = 480;
 	}
 
 	async ngOnInit() {
@@ -47,6 +48,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
 			self.property = await self.propertiesService.getProperty(propertyId);
+			console.log(self.property);
 		});
 
 	}

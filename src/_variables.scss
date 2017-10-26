@@ -2,6 +2,7 @@
 $black: #2A2A2A;
 $gray-darkest: #5F6467;
 $gray-darker: #646464;
+$gray-medium: #9BA1A4;
 $gray-dark: #B9B9B9;
 $gray-light: #C8C8C8;
 $gray-lighter: #EBEBEB;
@@ -10,6 +11,7 @@ $blue-light: #7FD4FE;
 $white: #FFFFFF;
 $red-main: #C50000;
 $green-main: #53E505;
+$green-sec: #44D32A;
 //Background colors
 $background-blue: $blue-main;
 $background-gray: #FAFAFA;
@@ -31,7 +33,9 @@ $button-arrow: #D2D2D2;
 // Typography	
 $font-family-open-sans: 'Open Sans',
 sans-serif;
-$font-family-helvetica: 'Helvetica', 'Arial', sans-serif;
+$font-family-helvetica: 'Helvetica',
+'Arial',
+sans-serif;
 $font-size-base: 16px;
 $font-size-small: 14px;
 // Footer 

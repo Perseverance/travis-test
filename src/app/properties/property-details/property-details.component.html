@@ -6,29 +6,24 @@
                 <ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">
                     <img class="property-img" [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true">
                 </ngx-tile>
-
-                <button NgxCarouselPrev class='left-arrow'></button>
-                <button NgxCarouselNext class='right-arrow'></button>
+                <button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                <button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i></button>
             </ngx-carousel>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <div class="row">
-                    <div class="col-xs-12">
-                        {{property.address}}
+            <div class="col-xs-12 col-md-6 col-md-offset-1">
+                <div class="row" class="basic-property-info">
+                    <div class="col-xs-8 text-left">
+                        <h3>{{property.address}}</h3>
+                    </div>
+                    <div class="col-xs-4 text-right">
+                        <h3>{{ property.price.value | thousandSeparator | currencySymbol: property.price.type}}
+                        </h3>
                     </div>
                     <div class="col-xs-12">
-                        {{property.desc}}
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="row" *ngFor="let agent of property.agents">
-                            <div class="col-xs-12" ng-if="agent.firstName && agent.lastName">
-                                {{agent.firstName}} {{agent.lastName}}
-                            </div>
-                            <div class="col-xs-12" ng-if="agent.phoneNumber">
-                                {{agent.phoneNumber}}
-                            </div>
-                        </div>
+                        <span><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Menlo Park&nbsp;&#124;</span>&nbsp;
+                        <span><i class="fa fa-circle fa-active" aria-hidden="true"></i>&nbsp;Active&nbsp;&#124;</span>&nbsp;
+                        <span>Published -1 days ago</span>&nbsp;
                     </div>
                 </div>
             </div>

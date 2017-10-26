@@ -18,35 +18,49 @@
                 margin: auto;
                 top: 0;
                 bottom: 0;
-                width: 40px;
-                height: 40px;
+                width: 44px;
+                height: 44px;
                 color: white;
                 background-color: rgba($color: $button-arrow, $alpha: 0.2);
-                background-size: 10px;
-                background-repeat: no-repeat;
-                background-position: center;
                 @include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
                 &:hover {
                     background-color: rgba($color: $button-arrow, $alpha: 0.4)
                 }
+                i {
+                    text-align: center;
+                    font-size: 40px;
+                }
             }
             .left-arrow {
                 left: 10px;
-                background-image: url('../../../assets/images/left-arrow.svg');
+                i {
+                    margin-left: -2px;
+                }
             }
             .right-arrow {
                 right: 10px;
-                background-image: url('../../../assets/images/right-arrow.svg');
+                i {
+                    margin-right: -2px;
+                }
             }
             .property-carousel-item {
                 .item {
                     padding: 0px;
                 }
-                .property-img {
-                    height: 100%;
-                    width: 100%;
-                }
             }
+        }
+    }
+    .basic-property-info {
+        padding-top: 15px;
+        h3 {
+            font-weight: 400;
+            font-size: 30px;
+        }
+        color: $gray-medium;
+        font-size: $font-size-small;
+        i.fa-active {
+            color: $green-sec;
+            font-size: 10px;
         }
     }
 }

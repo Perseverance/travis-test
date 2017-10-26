@@ -22,7 +22,7 @@ export interface GetPropertyResponse {
 	verified: boolean;
 	owner: string | null;
 	address: string;
-	price: number;
+	price: any;
 	desc: string;
 	furnished: false;
 	bedrooms: number;

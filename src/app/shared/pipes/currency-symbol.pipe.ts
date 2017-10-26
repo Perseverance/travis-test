@@ -1,9 +1,9 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {LocalStorageService} from '../localStorage.service';
-import {CurrencyTypeEnum} from '../enums/currency-type.enum';
-import {CurrencySymbolEnum} from '../enums/currency-symbol.enum';
+import { Pipe, PipeTransform } from '@angular/core';
+import { LocalStorageService } from '../localStorage.service';
+import { CurrencyTypeEnum } from '../enums/currency-type.enum';
+import { CurrencySymbolEnum } from '../enums/currency-symbol.enum';
 
-@Pipe({name: 'currencySymbol'})
+@Pipe({ name: 'currencySymbol' })
 export class CurrencySymbolPipe implements PipeTransform {
 
 	private DECIMAL_SEPARATOR: string;
@@ -14,12 +14,15 @@ export class CurrencySymbolPipe implements PipeTransform {
 		this.THOUSANDS_SEPARATOR = ',';
 	}
 
-	transform(value: number | string): string {
+	transform(value: number | string, currencyType?: number): string {
 		const [integer] = (value || '').toString()
 			.split(this.DECIMAL_SEPARATOR);
 
+		if (!currencyType) {
+			currencyType = localStorage.selectedCurrencyType;
+		}
 		let currencySign: string;
-		switch (localStorage.selectedCurrencyType) {
+		switch (currencyType) {
 			case CurrencyTypeEnum.RUB: {
 				currencySign = CurrencySymbolEnum.RUB;
 				break;
