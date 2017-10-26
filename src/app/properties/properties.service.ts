@@ -1,7 +1,7 @@
-import {environment} from './../../environments/environment';
-import {APIEndpointsService} from './../shared/apiendpoints.service';
-import {RestClientService} from './../shared/rest-client.service';
-import {Injectable} from '@angular/core';
+import { environment } from './../../environments/environment';
+import { APIEndpointsService } from './../shared/apiendpoints.service';
+import { RestClientService } from './../shared/rest-client.service';
+import { Injectable } from '@angular/core';
 import {
 	GetPropertiesResponse,
 	GetPropertyResponse,
@@ -11,7 +11,7 @@ import {
 	CreatePropertyResponse,
 	PropertyImage, GetNewPropertiesResponse, NewPropertyHome
 } from './properties-responses';
-import {LocalStorageService} from '../shared/localStorage.service';
+import { LocalStorageService } from '../shared/localStorage.service';
 
 interface Bounds {
 	southWestLatitude: number,
@@ -24,19 +24,15 @@ interface Bounds {
 export class PropertiesService {
 
 	constructor(private restService: RestClientService,
-				private apiEndpoint: APIEndpointsService,
-				private localStorageService: LocalStorageService) {
+		private apiEndpoint: APIEndpointsService,
+		private localStorageService: LocalStorageService) {
 	}
 
 	public async getProperty(propertyId: string): Promise<GetPropertyResponse> {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params});
-		const imageUrls = new Array<string>();
-		for (const path of result.data.data.imageUrls) {
-			imageUrls.push(`${environment.apiUrl}${path}`);
-		}
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
 		const agents = new Array<PropertyAgentResponse>();
 		for (const agent of result.data.data.agents) {
 			agents.push({
@@ -65,15 +61,15 @@ export class PropertiesService {
 			bedrooms: result.data.data.bedrooms,
 			longitude: result.data.data.longitude,
 			latitude: result.data.data.latitude,
-			agents,
-			imageUrls
+			imageUrls: result.data.data.imageUrls,
+			agents
 		};
 	}
 
 	public async getPropertiesInRectangle(southWestLatitude: number,
-										  northEastLatitude: number,
-										  southWestLongitude: number,
-										  northEastLongitude: number): Promise<GetPropertiesResponse> {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number): Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createRectangleBounds(southWestLatitude,
 			northEastLatitude,
 			southWestLongitude,
@@ -83,14 +79,14 @@ export class PropertiesService {
 			search: query
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
-		return {properties: result.data.data.properties};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
 	}
 
 	private createRectangleBounds(southWestLatitude: number,
-								  northEastLatitude: number,
-								  southWestLongitude: number,
-								  northEastLongitude: number) {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number) {
 		const bounds: Bounds = {
 			southWestLatitude: southWestLatitude,
 			northEastLatitude: northEastLatitude,
@@ -110,7 +106,7 @@ export class PropertiesService {
 		const queryParams = {
 			currency: this.localStorageService.selectedCurrencyType
 		};
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS, {params: queryParams});
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS, { params: queryParams });
 		return result.data.data;
 	}
 
@@ -118,7 +114,7 @@ export class PropertiesService {
 		const queryParams = {
 			currency: this.localStorageService.selectedCurrencyType
 		};
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES, {params: queryParams});
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES, { params: queryParams });
 		return result.data.data;
 	}
 
@@ -134,7 +130,7 @@ export class PropertiesService {
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
 			propertyImages,
-			{params: queryParams});
+			{ params: queryParams });
 
 		return true;
 	}

@@ -1,0 +1,52 @@
+@import "../../../variables";
+@import "../../../mixins";
+.property {
+    >div {
+        padding: 0px;
+    }
+    .property-carousel-holder {
+        width: 100%;
+        min-height: 480px;
+        margin: 0px;
+        .property-carousel {
+            .left-arrow,
+            .right-arrow {
+                @include transition(background-color 500ms linear);
+                position: absolute;
+                border: none;
+                outline: none;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                width: 40px;
+                height: 40px;
+                color: white;
+                background-color: rgba($color: $button-arrow, $alpha: 0.2);
+                background-size: 10px;
+                background-repeat: no-repeat;
+                background-position: center;
+                @include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
+                &:hover {
+                    background-color: rgba($color: $button-arrow, $alpha: 0.4)
+                }
+            }
+            .left-arrow {
+                left: 10px;
+                background-image: url('../../../assets/images/left-arrow.svg');
+            }
+            .right-arrow {
+                right: 10px;
+                background-image: url('../../../assets/images/right-arrow.svg');
+            }
+            .property-carousel-item {
+                .item {
+                    padding: 0px;
+                }
+                .property-img {
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

@@ -1,27 +1,37 @@
-<div class="row" *ngIf="property">
-	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-		<div class="row">
-			<div class="col-xs-12" *ngFor="let url of property.imageUrls">
-				<img [src]="url">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				{{property.address}}
-			</div>
-			<div class="col-xs-12">
-				{{property.desc}}
-			</div>
-			<div class="col-xs-12">
-				<div class="row" *ngFor="let agent of property.agents">
-					<div class="col-xs-12" ng-if="agent.firstName && agent.lastName">
-						{{agent.firstName}} {{agent.lastName}}
-					</div>
-					<div class="col-xs-12" ng-if="agent.phoneNumber">
-						{{agent.phoneNumber}}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="row property" *ngIf="property">
+    <div class="col-xs-12">
+        <div class="row property-carousel-holder">
+            <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
+
+                <ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">
+                    <img class="property-img" [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true">
+                </ngx-tile>
+
+                <button NgxCarouselPrev class='left-arrow'></button>
+                <button NgxCarouselNext class='right-arrow'></button>
+            </ngx-carousel>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{property.address}}
+                    </div>
+                    <div class="col-xs-12">
+                        {{property.desc}}
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row" *ngFor="let agent of property.agents">
+                            <div class="col-xs-12" ng-if="agent.firstName && agent.lastName">
+                                {{agent.firstName}} {{agent.lastName}}
+                            </div>
+                            <div class="col-xs-12" ng-if="agent.phoneNumber">
+                                {{agent.phoneNumber}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

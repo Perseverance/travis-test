@@ -10,10 +10,6 @@ $header-margin-sm: 15px;
     z-index: 2000;
     &.navbar {
         margin: 0px;
-        margin-bottom: $header-margin;
-        @media #{$sm} {
-            margin-bottom: $header-margin-sm;
-        }
         @include border-radius(0px);
         @include transition(background-color 500ms linear);
         .navbar-brand {

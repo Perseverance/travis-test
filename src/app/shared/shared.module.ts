@@ -11,6 +11,7 @@ import { CurrencySymbolPipe } from './pipes/currency-symbol.pipe';
 import { PropertySizeUnitOfMeasurePipe } from './pipes/property-size-unit-of-measure.pipe';
 import { ImageEnvironmentPrefixPipe } from './pipes/image-environment-prefix.pipe';
 import { EllipsisPipe } from './ellipsis.pipe';
+import { ImageSizePipe } from './image-size.pipe';
 
 @NgModule({
 	imports: [
@@ -26,7 +27,8 @@ import { EllipsisPipe } from './ellipsis.pipe';
 		CurrencySymbolPipe,
 		PropertySizeUnitOfMeasurePipe,
 		ImageEnvironmentPrefixPipe,
-		EllipsisPipe
+		EllipsisPipe,
+		ImageSizePipe
 	],
 	exports: [
 		LocationSearchComponent,
@@ -36,7 +38,8 @@ import { EllipsisPipe } from './ellipsis.pipe';
 		CurrencySymbolPipe,
 		PropertySizeUnitOfMeasurePipe,
 		ImageEnvironmentPrefixPipe,
-		EllipsisPipe
+		EllipsisPipe,
+		ImageSizePipe
 	],
 	providers: [
 		AgencyService
