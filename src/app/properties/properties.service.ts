@@ -33,7 +33,6 @@ export class PropertiesService {
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
 		// TODO : Remove this once Vankata adds addedOnTimestamp in the backend
-		result.data.data.addedOnTimestamp = 1456263980;
 		return result.data.data;
 	}
 
