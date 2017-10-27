@@ -1,0 +1,14 @@
+<svg width="32px" height="26px" viewBox="0 0 32 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Realty-page" transform="translate(-464.000000, -733.000000)" fill="#ADB5B9">
+            <g id="Overview" transform="translate(80.000000, 723.000000)">
+                <g id="Bedrooms" transform="translate(384.000000, 0.000000)">
+                    <g id="Group-5" transform="translate(0.000000, 10.000000)">
+                        <path d="M32,14.5 L32,26 L30,26 L30,22 L2,22 L2,26 L0,26 L0,14.5 L0,13 C1.33333333,12.6666667 2.66666667,12.375 4,12.125 L4,0 L5,0 L28,0 L28,1 L28,12.125 C29.3333333,12.375 30.6666667,12.6666667 32,13 L32,14.5 Z M30,14.53125 C25.3333333,13.5104167 20.6666667,13 16,13 C11.3333333,13 6.66666667,13.5104167 2,14.53125 L2,20 L30,20 L30,14.53125 Z M26,11.78125 L26,2 L17,2 L17,11.0078125 C20,11.0546875 23,11.3125 26,11.78125 Z M15,11.0078125 L15,2 L6,2 L6,11.78125 C9,11.3125 12,11.0546875 15,11.0078125 Z" id="Combined-Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

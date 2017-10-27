@@ -18,7 +18,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	private _lastHeaderScrollTop: number;
 	public isHeaderScrolledPastThreshold = false;
 
-	private HEADER_CHANGE_THRESHOLD_PX = 20;
+	private HEADER_CHANGE_THRESHOLD_PX = 1;
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;

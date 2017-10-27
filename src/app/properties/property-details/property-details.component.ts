@@ -1,6 +1,5 @@
 import { NgxCarousel } from 'ngx-carousel';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
-import { GetPropertyResponse } from './../properties-responses';
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { PropertiesService } from './../properties.service';
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
@@ -17,7 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class PropertyDetailsComponent extends RedirectableComponent implements OnInit, OnDestroy {
 
-	public property: GetPropertyResponse;
+	public property: any;
 	private idSubscription: Subscription;
 	public propertyImagesCarouselConfig: NgxCarousel;
 	public IMAGE_HEIGHT_PX: number;

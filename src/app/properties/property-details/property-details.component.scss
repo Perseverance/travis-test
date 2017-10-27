@@ -61,6 +61,63 @@
         i.fa-active {
             color: $green-sec;
             font-size: 10px;
+            position: relative;
+            bottom: 1px;
+        }
+    }
+    .info-tabs {
+        margin-top: 25px;
+        padding: 0px 45px;
+        .info-tabs-content {
+            .info-tabs-top-holder {
+                padding-bottom: 11px;
+                padding: 0px;
+                .nav-tabs {
+                    li {
+                        text-align: left;
+                        a {
+                            background-color: transparent;
+                            border: none;
+                            padding: 10px 0px;
+                            display: inline;
+                        }
+                        &.active {
+                            a {
+                                color: $blue-main;
+                                border-bottom: 2px solid $blue-main;
+                            }
+                        }
+                    }
+                }
+            }
+            .bottom-border {
+                height: 35px;
+                border-bottom: 1px solid $gray-lighter;
+            }
+            .tab-content {
+                margin-top: 25px;
+                font-size: $font-size-medium;
+                color: $black;
+                #overview {
+                    .property-desc {
+                        margin-top: 20px;
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
+    }
+    .basic-property-info {
+        padding-top: 15px;
+        h3 {
+            font-weight: 400;
+            font-size: 30px;
+        }
+        color: $gray-medium;
+        font-size: $font-size-small;
+        i.fa-active {
+            color: $green-sec;
+            font-size: 10px;
         }
     }
 }
