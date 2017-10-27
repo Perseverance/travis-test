@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../authentication/authentication.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 declare function SmartBanner(param1: any): void;
 
@@ -12,7 +12,7 @@ declare function SmartBanner(param1: any): void;
 export class HomeComponent implements OnInit {
 
 	constructor(private router: Router,
-		private authService: AuthenticationService) {
+				private authService: AuthenticationService) {
 	}
 
 	ngOnInit() {
@@ -36,6 +36,6 @@ export class HomeComponent implements OnInit {
 	}
 
 	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
-		this.router.navigate(['map', { latitude, longitude, locationName }]);
+		this.router.navigate(['map', {latitude, longitude, locationName}]);
 	}
 }

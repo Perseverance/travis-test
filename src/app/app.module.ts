@@ -1,4 +1,3 @@
-import {environment} from './../environments/environment';
 import {PropertiesModule} from './properties/properties.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
@@ -11,7 +10,7 @@ import {CoreModule} from './core/core.module';
 import {FacebookModule} from 'ngx-facebook';
 import {HomeModule} from './home/home.module';
 import {LinkedInSdkModule} from 'angular-linkedin-sdk';
-import {AgmCoreModule} from '@agm/core';
+import {GoogleMapModule} from './google-map/google-map.module';
 
 
 @NgModule({
@@ -25,15 +24,11 @@ import {AgmCoreModule} from '@agm/core';
 		CoreModule,
 		HomeModule,
 		AuthenticationModule,
-		AgmCoreModule.forRoot({
-			apiKey: environment.googleMaps.apiKey,
-			libraries: ['places'],
-			language: environment.googleMaps.defaultLanguage
-		}),
 		PropertiesModule,
 		AppRoutingModule,
 		FacebookModule.forRoot(),
-		LinkedInSdkModule
+		LinkedInSdkModule,
+		GoogleMapModule
 	],
 	bootstrap: [AppComponent]
 })

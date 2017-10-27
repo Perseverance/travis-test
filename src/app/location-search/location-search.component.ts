@@ -1,9 +1,8 @@
 import {
 	Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild, Input
 } from '@angular/core';
-import { MapsAPILoader } from '@agm/core';
-import { } from '@types/googlemaps';
-import { FormBuilder } from '@angular/forms';
+import {} from '@types/googlemaps';
+import {FormBuilder} from '@angular/forms';
 
 interface SearchLocation {
 	latitude: number;
@@ -33,9 +32,8 @@ export class LocationSearchComponent implements OnInit {
 	@ViewChild('search')
 	public searchElementRef: ElementRef;
 
-	constructor(private mapsAPILoader: MapsAPILoader,
-		private ngZone: NgZone,
-		private formBuilder: FormBuilder) {
+	constructor(private ngZone: NgZone,
+				private formBuilder: FormBuilder) {
 	}
 
 	async ngOnInit() {
@@ -43,7 +41,6 @@ export class LocationSearchComponent implements OnInit {
 	}
 
 	async loadPlacesAutoCompleteSearch() {
-		await this.mapsAPILoader.load();
 		this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {});
 		this.autoCompleteService = new google.maps.places.AutocompleteService();
 
@@ -56,13 +53,13 @@ export class LocationSearchComponent implements OnInit {
 			const place: google.maps.places.PlaceResult = this.autoComplete.getPlace();
 			// search by button
 			if (place === undefined) {
-				this.autoCompleteService.getQueryPredictions({ input: this.searchElementRef.nativeElement.value },
+				this.autoCompleteService.getQueryPredictions({input: this.searchElementRef.nativeElement.value},
 					(predictions, status) => this.displaySuggestions(predictions, status));
 				return;
 			}
 			// verify result
 			if (place.geometry === undefined || place.geometry === null) {
-				this.autoCompleteService.getQueryPredictions({ input: place.name },
+				this.autoCompleteService.getQueryPredictions({input: place.name},
 					(predictions, status) => this.displaySuggestions(predictions, status));
 				return;
 			}
@@ -70,7 +67,7 @@ export class LocationSearchComponent implements OnInit {
 			const longitude = place.geometry.location.lng();
 			const locationAddress = place.formatted_address;
 			const locationName = place.name;
-			this.emitLocationFound({ latitude, longitude, locationAddress, locationName });
+			this.emitLocationFound({latitude, longitude, locationAddress, locationName});
 		});
 	}
 
@@ -80,13 +77,13 @@ export class LocationSearchComponent implements OnInit {
 		}
 		const self = this;
 		const geocoder = new google.maps.Geocoder;
-		geocoder.geocode({ placeId: predictions[0].place_id }, function (results, status) {
+		geocoder.geocode({placeId: predictions[0].place_id}, function (results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
 				if (results[0]) {
 					const latitude = results[0].geometry.location.lat();
 					const longitude = results[0].geometry.location.lng();
 					const locationAddress = results[0].formatted_address;
-					self.emitLocationFound({ latitude, longitude, locationAddress });
+					self.emitLocationFound({latitude, longitude, locationAddress});
 				}
 			}
 		});
