@@ -1,7 +1,9 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PropertiesService} from '../properties/properties.service';
 import {GetPropertiesResponse} from '../properties/properties-responses';
+import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
+import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 
 @Component({
 	selector: 'app-google-map',
@@ -14,12 +16,25 @@ export class GoogleMapComponent implements OnInit {
 	public map: google.maps.Map;
 	public options: any;
 	public overlays: any;
-	public DEFAULT_LATITUDE = 37.452961;
-	public DEFAULT_LONGITUDE = -122.181725;
-	public DEFAULT_ZOOM = 12;
+	private DEFAULT_LATITUDE = 37.452961;
+	private DEFAULT_LONGITUDE = -122.181725;
+	private DEFAULT_ZOOM = 12;
+	private DEFAULT_MARKER_ICON = '../../assets/images/marker-shape.png';
+	private DEFAULT_MARKER_ICON_HOVERED = '../../assets/images/marker-shape-point.png';
+	private DEFAULT_MARKER_LABEL_COLOR = '#18ADE2';
+	private DEFAULT_MARKER_LABEL_FONT_SIZE = '12px';
+	private MARKER_ICON_SETTINGS = {
+		url: this.DEFAULT_MARKER_ICON,
+		size: new google.maps.Size(50, 30),
+		scaledSize: new google.maps.Size(50, 30),
+		labelOrigin: new google.maps.Point(25, 12)
+	};
 
 	constructor(private route: ActivatedRoute,
+				private router: Router,
 				private propertiesService: PropertiesService,
+				private bigNumberPipe: BigNumberFormatPipe,
+				private currencySymbolPipe: CurrencySymbolPipe,
 				private cdr: ChangeDetectorRef) {
 	}
 
@@ -49,8 +64,47 @@ export class GoogleMapComponent implements OnInit {
 	private createMarkers(propertiesResponse: GetPropertiesResponse) {
 		this.overlays = [];
 		for (const property of propertiesResponse.properties) {
-			this.overlays.push(new google.maps.Marker({position: {lat: property.latitude, lng: property.longitude}}));
+			const marker = new google.maps.Marker(
+				{
+					position: {lat: property.latitude, lng: property.longitude},
+					icon: this.MARKER_ICON_SETTINGS,
+					label: {
+						text: this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true),
+						color: this.DEFAULT_MARKER_LABEL_COLOR,
+						fontSize: this.DEFAULT_MARKER_LABEL_FONT_SIZE
+					}
+				});
+			google.maps.event.addListener(marker, 'click', () => {
+				this.goToProperty(property.id);
+			});
+			google.maps.event.addListener(marker, 'mouseover', () => {
+				const label = marker.getLabel();
+				label.color = 'transparent';
+				marker.setLabel(label);
+				let icon = marker.getIcon();
+				this.MARKER_ICON_SETTINGS.url = this.DEFAULT_MARKER_ICON_HOVERED;
+				this.MARKER_ICON_SETTINGS.size = new google.maps.Size(18, 18);
+				this.MARKER_ICON_SETTINGS.scaledSize = new google.maps.Size(18, 18);
+				icon = this.MARKER_ICON_SETTINGS;
+				marker.setIcon(icon);
+			});
+			google.maps.event.addListener(marker, 'mouseout', () => {
+				const label = marker.getLabel();
+				label.color = this.DEFAULT_MARKER_LABEL_COLOR;
+				marker.setLabel(label);
+				let icon = marker.getIcon();
+				this.MARKER_ICON_SETTINGS.url = this.DEFAULT_MARKER_ICON;
+				this.MARKER_ICON_SETTINGS.size = new google.maps.Size(50, 30);
+				this.MARKER_ICON_SETTINGS.scaledSize = new google.maps.Size(50, 30);
+				icon = this.MARKER_ICON_SETTINGS;
+				marker.setIcon(icon);
+			});
+			this.overlays.push(marker);
 		}
+	}
+
+	private goToProperty(id: string) {
+		this.router.navigate(['property', id]);
 	}
 
 	private setupParamsWatcher() {
@@ -78,8 +132,11 @@ export class GoogleMapComponent implements OnInit {
 		});
 	}
 
+	// Triggering Angular change detection manually, because markers update
 	private setChanged() {
 		this.cdr.markForCheck();
-		this.cdr.detectChanges();
+		if (!this.cdr['destroyed']) {
+			this.cdr.detectChanges();
+		}
 	}
 }

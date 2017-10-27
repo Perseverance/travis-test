@@ -19,6 +19,8 @@ import {TokenGuardLazyLoading} from '../authentication/token-guard-lazy-loading.
 import {TranslateStore} from '@ngx-translate/core/src/translate.store';
 import {environment} from '../../environments/environment';
 import {TermsComponent} from './terms/terms.component';
+import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
+import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -57,7 +59,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TokenGuardLazyLoading,
 		TranslateStore,
 		{provide: 'apiKey', useValue: environment.linkedInApiKey},
-		{provide: 'authorize', useValue: true}
+		{provide: 'authorize', useValue: true},
+		BigNumberFormatPipe,
+		CurrencySymbolPipe
 	],
 	exports: [
 		TranslateModule,
