@@ -19,7 +19,6 @@ import {TokenGuardLazyLoading} from '../authentication/token-guard-lazy-loading.
 import {TranslateStore} from '@ngx-translate/core/src/translate.store';
 import {environment} from '../../environments/environment';
 import {TermsComponent} from './terms/terms.component';
-import {MapsAPILoader} from '@agm/core';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -58,7 +57,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TokenGuardLazyLoading,
 		TranslateStore,
 		{provide: 'apiKey', useValue: environment.linkedInApiKey},
-		{provide: 'authorize', useValue: true},
+		{provide: 'authorize', useValue: true}
 	],
 	exports: [
 		TranslateModule,

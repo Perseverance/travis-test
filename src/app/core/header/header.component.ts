@@ -7,7 +7,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {LocalStorageService} from '../../shared/localStorage.service';
 import {Router, ActivatedRoute, NavigationEnd, UrlSegment} from '@angular/router';
 import {DOCUMENT} from '@angular/platform-browser';
-import {MapsAPILoader} from '@agm/core';
 
 @Component({
 	selector: 'app-header',
