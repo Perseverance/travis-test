@@ -1,6 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PropertiesService} from '../properties/properties.service';
+import {GetPropertiesResponse} from '../properties/properties-responses';
 
 @Component({
 	selector: 'app-google-map',
@@ -18,7 +19,8 @@ export class GoogleMapComponent implements OnInit {
 	public DEFAULT_ZOOM = 12;
 
 	constructor(private route: ActivatedRoute,
-				private propertiesService: PropertiesService) {
+				private propertiesService: PropertiesService,
+				private cdr: ChangeDetectorRef) {
 	}
 
 	ngOnInit() {
@@ -26,11 +28,6 @@ export class GoogleMapComponent implements OnInit {
 			center: {lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE},
 			zoom: this.DEFAULT_ZOOM
 		};
-		this.overlays = [
-			new google.maps.Marker({position: {lat: 36.879466, lng: 30.667648}, title: 'Konyaalti'}),
-			new google.maps.Marker({position: {lat: 36.883707, lng: 30.689216}, title: 'Ataturk Park'}),
-			new google.maps.Marker({position: {lat: 36.885233, lng: 30.702323}, title: 'Oldtown'}),
-		];
 	}
 
 	private setMap(event) {
@@ -45,8 +42,15 @@ export class GoogleMapComponent implements OnInit {
 			map.getBounds().getNorthEast().lat(),
 			map.getBounds().getSouthWest().lng(),
 			map.getBounds().getNorthEast().lng());
-		// ToDo: Show the markers
-		console.log(propertiesResponse);
+		this.createMarkers(propertiesResponse);
+		setTimeout(() => this.setChanged(), 0);
+	}
+
+	private createMarkers(propertiesResponse: GetPropertiesResponse) {
+		this.overlays = [];
+		for (const property of propertiesResponse.properties) {
+			this.overlays.push(new google.maps.Marker({position: {lat: property.latitude, lng: property.longitude}}));
+		}
 	}
 
 	private setupParamsWatcher() {
@@ -72,5 +76,10 @@ export class GoogleMapComponent implements OnInit {
 		navigator.geolocation.getCurrentPosition(async (position) => {
 			this.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 		});
+	}
+
+	private setChanged() {
+		this.cdr.markForCheck();
+		this.cdr.detectChanges();
 	}
 }
