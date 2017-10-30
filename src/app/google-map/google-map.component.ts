@@ -18,6 +18,7 @@ export class GoogleMapComponent implements OnInit {
 	public map: google.maps.Map;
 	public options: any;
 	public overlays: any;
+	public properties: any[];
 	private DEFAULT_LATITUDE = 37.452961;
 	private DEFAULT_LONGITUDE = -122.181725;
 	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
@@ -50,6 +51,7 @@ export class GoogleMapComponent implements OnInit {
 			map.getBounds().getNorthEast().lat(),
 			map.getBounds().getSouthWest().lng(),
 			map.getBounds().getNorthEast().lng());
+		this.properties = propertiesResponse.properties;
 		this.createMarkers(propertiesResponse);
 		setTimeout(() => this.setChanged(), 0);
 	}

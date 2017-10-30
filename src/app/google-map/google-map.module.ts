@@ -5,10 +5,12 @@ import {SharedModule} from '../shared/shared.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {GoogleMapComponent} from './google-map.component';
 import {GMapModule} from 'primeng/primeng';
+import { PropertiesListComponent } from './properties-list/properties-list.component';
 
 @NgModule({
 	declarations: [
-		GoogleMapComponent
+		GoogleMapComponent,
+		PropertiesListComponent
 	],
 	imports: [
 		CommonModule,
