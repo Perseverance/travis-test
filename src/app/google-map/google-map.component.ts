@@ -20,7 +20,7 @@ export class GoogleMapComponent implements OnInit {
 	private DEFAULT_LONGITUDE = -122.181725;
 	private DEFAULT_ZOOM = 12;
 	private DEFAULT_MARKER_ICON = '../../assets/images/marker-shape.png';
-	private DEFAULT_MARKER_ICON_HOVERED = '../../assets/images/marker-shape-point.png';
+	private DEFAULT_MARKER_ICON_HOVERED = '../../assets/images/marker-shape-hovered.png';
 	private DEFAULT_MARKER_LABEL_COLOR = '#18ADE2';
 	private DEFAULT_MARKER_LABEL_FONT_SIZE = '12px';
 	private MARKER_ICON_SETTINGS = {
@@ -78,13 +78,10 @@ export class GoogleMapComponent implements OnInit {
 				this.goToProperty(property.id);
 			});
 			google.maps.event.addListener(marker, 'mouseover', () => {
-				const label = marker.getLabel();
-				label.color = 'transparent';
-				marker.setLabel(label);
 				let icon = marker.getIcon();
 				this.MARKER_ICON_SETTINGS.url = this.DEFAULT_MARKER_ICON_HOVERED;
-				this.MARKER_ICON_SETTINGS.size = new google.maps.Size(18, 18);
-				this.MARKER_ICON_SETTINGS.scaledSize = new google.maps.Size(18, 18);
+				this.MARKER_ICON_SETTINGS.size = new google.maps.Size(50, 30);
+				this.MARKER_ICON_SETTINGS.scaledSize = new google.maps.Size(50, 30);
 				icon = this.MARKER_ICON_SETTINGS;
 				marker.setIcon(icon);
 			});
