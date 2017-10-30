@@ -1,18 +1,18 @@
-<div class="image-holder" (click)="goToProperty(property.id)">
-	<div class="text-uppercase new-label">{{ 'landing.new-properties.new-label' | translate }}</div>
-	<img src="{{property.imageUrls[0] | imageEnvPrefix}}"/>
-	<div class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
-		currencySymbol}}
-	</div>
-	<div class="right-arrow-holder">
-	</div>
-</div>
-<div class="property-info">
-	<span class="address">{{property.address}}</span> / {{ cityName }}
-</div>
-<div class="additional-property-info">
-	<span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
-	<span
-		*ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
-	<span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure:property.size.type}}</span>
+<div class="property-card">
+    <div class="image-holder" (click)="goToProperty(property.id)">
+        <div class="text-uppercase new-label" *ngIf="property.isNew || true">{{ 'landing.new-properties.new-label' | translate }}</div>
+        <img src="{{property.imageUrls[0] | imageEnvPrefix}}" />
+        <div class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
+        </div>
+        <div class="right-arrow-holder">
+        </div>
+    </div>
+    <div class="property-info">
+        <span class="address">{{property.address}}</span> / {{ cityName }}
+    </div>
+    <div class="additional-property-info">
+        <span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
+        <span *ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
+        <span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure:property.size.type}}</span>
+    </div>
 </div>

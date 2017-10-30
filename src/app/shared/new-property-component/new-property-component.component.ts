@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NewPropertyHome} from '../../properties/properties-responses';
-import {Router} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { NewPropertyHome } from '../../properties/properties-responses';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-new-property-component',
@@ -8,13 +8,14 @@ import {Router} from '@angular/router';
 	styleUrls: ['./new-property-component.component.scss']
 })
 export class NewPropertyComponentComponent implements OnInit {
-	@Input() property: NewPropertyHome;
+	@Input() property: any;
 	@Input() cityName: string;
 
 	constructor(private router: Router) {
 	}
 
 	ngOnInit() {
+		console.log(this.property);
 	}
 
 	public goToProperty(id: string) {
