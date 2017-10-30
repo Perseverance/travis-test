@@ -1,3 +1,4 @@
+import { GoogleMapsMarkersService } from './google-maps-markers.service';
 import { AgencyService } from './agency.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -42,7 +43,8 @@ import { ImageSizePipe } from './image-size.pipe';
 		ImageSizePipe
 	],
 	providers: [
-		AgencyService
+		AgencyService,
+		GoogleMapsMarkersService
 	]
 })
 export class SharedModule {

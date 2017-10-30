@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FileUploadModule, DropdownModule, CheckboxModule, MultiSelectModule, SliderModule } from 'primeng/primeng';
 import { PropertyDescriptionOverviewComponent } from './property-description-overview/property-description-overview.component';
 import { MomentModule } from 'angular2-moment';
+import { GMapModule } from 'primeng/primeng';
 
 @NgModule({
 	imports: [
@@ -30,7 +31,8 @@ import { MomentModule } from 'angular2-moment';
 		NgxCarouselModule,
 		SliderModule,
 		InlineSVGModule,
-		MomentModule
+		MomentModule,
+		GMapModule
 	],
 	declarations: [
 		PropertyDetailsComponent,
