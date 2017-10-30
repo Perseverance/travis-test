@@ -74,6 +74,23 @@ export class GoogleMapComponent implements OnInit {
 						fontSize: this.DEFAULT_MARKER_LABEL_FONT_SIZE
 					}
 				});
+
+			const contentString = '<div id="content">' +
+				'<div id="siteNotice">' +
+				'</div>' +
+				'<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
+				'<div id="bodyContent">' +
+				'<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+				'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
+				'(last visited June 22, 2009).</p>' +
+				'</div>' +
+				'</div>';
+
+			const infoWindow = new google.maps.InfoWindow({
+				content: contentString,
+				maxWidth: 200
+			});
+
 			google.maps.event.addListener(marker, 'click', () => {
 				this.goToProperty(property.id);
 			});
@@ -84,6 +101,7 @@ export class GoogleMapComponent implements OnInit {
 				this.MARKER_ICON_SETTINGS.scaledSize = new google.maps.Size(50, 30);
 				icon = this.MARKER_ICON_SETTINGS;
 				marker.setIcon(icon);
+				infoWindow.open(this.map, marker);
 			});
 			google.maps.event.addListener(marker, 'mouseout', () => {
 				const label = marker.getLabel();
@@ -95,6 +113,8 @@ export class GoogleMapComponent implements OnInit {
 				this.MARKER_ICON_SETTINGS.scaledSize = new google.maps.Size(50, 30);
 				icon = this.MARKER_ICON_SETTINGS;
 				marker.setIcon(icon);
+				// infoWindow.close();
+
 			});
 			this.overlays.push(marker);
 		}
