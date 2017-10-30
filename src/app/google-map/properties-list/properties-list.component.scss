@@ -1,0 +1,11 @@
+.properties-list {
+    height: 100%;
+    .cards-list {
+        overflow-y: scroll;
+        height: 100%;
+        >div {
+            padding-top: 20px;
+        }
+        padding-bottom: 20px;
+    }
+}
