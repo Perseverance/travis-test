@@ -1,4 +1,25 @@
-.google-map-holder {
-	width: 100%;
-	height: 600px;
+@import "../../variables";
+@import "../../mixins";
+$map-width: 60%;
+$list-width: 40%;
+.properties-map {
+    .list-container {
+        position: absolute;
+        width: $list-width;
+        top: $site-top-padding;
+        left: 0px;
+        bottom: $footer-height;
+        background-color: red;
+    }
+    .map-container {
+        position: absolute;
+        width: $map-width;
+        top: $site-top-padding;
+        right: 0px;
+        bottom: $footer-height;
+        .google-map-holder {
+            width: 100%;
+            height: 100%;
+        }
+    }
 }
