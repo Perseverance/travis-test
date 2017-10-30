@@ -15,7 +15,6 @@ export class NewPropertyComponentComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log(this.property);
 	}
 
 	public goToProperty(id: string) {
