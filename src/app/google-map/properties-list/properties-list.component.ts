@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { PROPERTY_THEMES } from '../../shared/new-property-component/new-property-component.component';
 
@@ -6,9 +5,6 @@ enum LIST_TYPES {
 	GRID = 'grid',
 	LIST = 'list'
 }
-=======
-import { Component, OnInit, Input } from '@angular/core';
->>>>>>> sprint-denis
 
 @Component({
 	selector: 'app-properties-list',
