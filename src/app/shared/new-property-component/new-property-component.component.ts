@@ -11,6 +11,7 @@ export class NewPropertyComponentComponent implements OnInit {
 	@Input() property: any;
 	@Input() showArrow = true;
 	@Input() cityName: string;
+	@Input() theme = 'small';
 
 	constructor(private router: Router) {
 	}
