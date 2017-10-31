@@ -1,6 +1,9 @@
+import { GoogleMapsMarkersService } from './../../shared/google-maps-markers.service';
+import { CurrencySymbolPipe } from './../../shared/pipes/currency-symbol.pipe';
+import { BigNumberFormatPipe } from './../../shared/pipes/big-number-format.pipe';
+import { environment } from './../../../environments/environment';
 import { NgxCarousel } from 'ngx-carousel';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
-import { GetPropertyResponse } from './../properties-responses';
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { PropertiesService } from './../properties.service';
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
@@ -17,17 +20,23 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class PropertyDetailsComponent extends RedirectableComponent implements OnInit, OnDestroy {
 
-	public property: GetPropertyResponse;
+	public property: any;
+	public options: any;
+	public overlays: any[];
 	private idSubscription: Subscription;
 	public propertyImagesCarouselConfig: NgxCarousel;
 	public IMAGE_HEIGHT_PX: number;
 	public IMAGE_WIDTH_PX: number;
+	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
 
 	constructor(
 		router: Router,
 		private route: ActivatedRoute,
 		private propertiesService: PropertiesService,
-		private authService: AuthenticationService) {
+		private authService: AuthenticationService,
+		private googleMarkersService: GoogleMapsMarkersService,
+		private bigNumberPipe: BigNumberFormatPipe,
+		private currencySymbolPipe: CurrencySymbolPipe) {
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width;
 		this.IMAGE_HEIGHT_PX = 480;
@@ -47,10 +56,31 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		const self = this;
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
-			self.property = await self.propertiesService.getProperty(propertyId);
+			const property = await self.propertiesService.getProperty(propertyId);
+			self.createAndSetMapOptions(property);
+			self.createAndSetPropertyMarker(property);
+			self.property = property;
 			console.log(self.property);
 		});
 
+	}
+
+	private createAndSetMapOptions(property: any) {
+		this.options = {
+			center: { lat: property.latitude, lng: property.longitude },
+			zoom: this.DEFAULT_ZOOM
+		};
+	}
+
+	private createAndSetPropertyMarker(property: any) {
+		const marker = new google.maps.Marker(
+			{
+				position: { lat: property.latitude, lng: property.longitude },
+				icon: this.googleMarkersService.defaultMarkerSettings,
+				label: this.googleMarkersService.getMarkerLabel
+					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
+			});
+		this.overlays = [marker];
 	}
 
 	ngOnDestroy() {

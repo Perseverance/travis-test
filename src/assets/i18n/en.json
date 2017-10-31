@@ -12,7 +12,8 @@
             "register": "Register",
             "rememberMe": "Remember me",
             "locationSearch": "Search for location",
-            "logout": "Logout"
+            "logout": "Logout",
+            "active": "Active"
         },
         "placeholder": {
             "yourEmail": "Your Email",
@@ -114,6 +115,17 @@
             "heading": "New properties",
             "in": "in",
             "new-label": "NEW",
+            "bedrooms": "Bedrooms"
+        }
+    },
+    "property-details": {
+        "overview": "Overview",
+        "features": "Features",
+        "location": "Location",
+        "reviews": "Reviews",
+        "overview-labels": {
+            "property-type": "Property Type",
+            "area": "Property Area",
             "bedrooms": "Bedrooms"
         }
     }

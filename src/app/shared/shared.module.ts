@@ -1,3 +1,4 @@
+import { GoogleMapsMarkersService } from './google-maps-markers.service';
 import { AgencyService } from './agency.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +12,7 @@ import { CurrencySymbolPipe } from './pipes/currency-symbol.pipe';
 import { PropertySizeUnitOfMeasurePipe } from './pipes/property-size-unit-of-measure.pipe';
 import { ImageEnvironmentPrefixPipe } from './pipes/image-environment-prefix.pipe';
 import { EllipsisPipe } from './ellipsis.pipe';
-import { ImageSizePipe } from './image-size.pipe';
+import { ImageSizePipe } from './pipes/image-size.pipe';
 
 @NgModule({
 	imports: [
@@ -42,7 +43,8 @@ import { ImageSizePipe } from './image-size.pipe';
 		ImageSizePipe
 	],
 	providers: [
-		AgencyService
+		AgencyService,
+		GoogleMapsMarkersService
 	]
 })
 export class SharedModule {

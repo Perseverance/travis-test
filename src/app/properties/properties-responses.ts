@@ -15,23 +15,6 @@ export interface PropertyAgentResponse {
 	isPro: boolean;
 }
 
-export interface GetPropertyResponse {
-	id: string;
-	status: number;
-	type: number;
-	verified: boolean;
-	owner: string | null;
-	address: string;
-	price: any;
-	desc: string;
-	furnished: false;
-	bedrooms: number;
-	imageUrls: string[];
-	longitude: number;
-	latitude: number;
-	agents: PropertyAgentResponse[];
-}
-
 export interface GetFavouriteLocationResponse {
 	cityName: string;
 	propertiesCount: number;

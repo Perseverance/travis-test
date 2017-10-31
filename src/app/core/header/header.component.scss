@@ -9,9 +9,10 @@ $header-margin-sm: 15px;
     right: 0;
     z-index: 2000;
     &.navbar {
+        height: 52px;
         margin: 0px;
         @include border-radius(0px);
-        @include transition(background-color 500ms linear);
+        @include transition(background-color 300ms linear);
         .navbar-brand {
             img {
                 margin-left: 20px;
