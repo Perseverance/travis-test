@@ -23,6 +23,8 @@ export class GoogleMapComponent implements OnInit {
 	public options: any;
 	public overlays = new Array<any>();
 	public properties: any[];
+	public propertiesLoading = false;
+
 	private DEFAULT_LATITUDE = 37.452961;
 	private DEFAULT_LONGITUDE = -122.181725;
 	private INITIAL_ZINDEX_HOVERED_MARKER = 999;
@@ -55,15 +57,21 @@ export class GoogleMapComponent implements OnInit {
 	}
 
 	private async getProperties(map: google.maps.Map) {
-		const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(
-			map.getBounds().getSouthWest().lat(),
-			map.getBounds().getNorthEast().lat(),
-			map.getBounds().getSouthWest().lng(),
-			map.getBounds().getNorthEast().lng());
-		this.properties = propertiesResponse.properties;
-		this.createMarkers(propertiesResponse);
-		// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
-		this.zone.run(() => { });
+		try {
+			this.propertiesLoading = true;
+			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(
+				map.getBounds().getSouthWest().lat(),
+				map.getBounds().getNorthEast().lat(),
+				map.getBounds().getSouthWest().lng(),
+				map.getBounds().getNorthEast().lng());
+			this.properties = propertiesResponse.properties;
+			this.createMarkers(propertiesResponse);
+			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
+			this.zone.run(() => { });
+			this.propertiesLoading = false;
+		} catch (error) {
+			this.propertiesLoading = false;
+		}
 	}
 
 	private createMarkers(propertiesResponse: GetPropertiesResponse) {
