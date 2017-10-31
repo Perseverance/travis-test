@@ -21,6 +21,10 @@ import {environment} from '../../environments/environment';
 import {TermsComponent} from './terms/terms.component';
 import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
 import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
+import {ImageEnvironmentPrefixPipe} from '../shared/pipes/image-environment-prefix.pipe';
+import {ImageSizePipe} from '../shared/pipes/image-size.pipe';
+import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
+import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -61,7 +65,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 		{provide: 'apiKey', useValue: environment.linkedInApiKey},
 		{provide: 'authorize', useValue: true},
 		BigNumberFormatPipe,
-		CurrencySymbolPipe
+		CurrencySymbolPipe,
+		ImageEnvironmentPrefixPipe,
+		ImageSizePipe,
+		PropertySizeUnitOfMeasurePipe,
+		ThousandSeparatorPipe
 	],
 	exports: [
 		TranslateModule,
