@@ -106,7 +106,7 @@ export class GoogleMapComponent implements OnInit {
 			google.maps.event.addListener(marker, 'click', () => {
 				this.goToProperty(property.id);
 			});
-			google.maps.event.addListener(marker, 'mouseover', (event) => {
+			google.maps.event.addListener(marker, 'mouseover', () => {
 				marker.setIcon(this.googleMarkersService.hoverMarkerSettings);
 				marker.setZIndex(this.INITIAL_ZINDEX_HOVERED_MARKER++);
 				infoWindow.open(this.map, marker);
