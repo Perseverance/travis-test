@@ -1,5 +1,8 @@
-<div class="container">
-	<h1>Primeng map</h1>
-	<p-gmap #gmap (onMapReady)="setMap($event)" [options]="options" [overlays]="overlays"
-			styleClass="google-map-holder"></p-gmap>
+<div class="row properties-map">
+    <div class="list-container">
+        <app-properties-list [properties]="properties"></app-properties-list>
+    </div>
+    <div class="map-container">
+        <p-gmap #gmap (onMapReady)="setMap($event)" [options]="options" [overlays]="overlays" styleClass="google-map-holder"></p-gmap>
+    </div>
 </div>

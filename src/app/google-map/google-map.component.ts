@@ -1,15 +1,15 @@
-import {GoogleMapsMarkersService} from './../shared/google-maps-markers.service';
-import {environment} from './../../environments/environment';
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {PropertiesService} from '../properties/properties.service';
-import {GetPropertiesResponse} from '../properties/properties-responses';
-import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
-import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
-import {ImageEnvironmentPrefixPipe} from '../shared/pipes/image-environment-prefix.pipe';
-import {ImageSizePipe} from '../shared/pipes/image-size.pipe';
-import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
-import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
+import { GoogleMapsMarkersService } from './../shared/google-maps-markers.service';
+import { environment } from './../../environments/environment';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, NgZone } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PropertiesService } from '../properties/properties.service';
+import { GetPropertiesResponse } from '../properties/properties-responses';
+import { BigNumberFormatPipe } from '../shared/pipes/big-number-format.pipe';
+import { CurrencySymbolPipe } from '../shared/pipes/currency-symbol.pipe';
+import { ImageEnvironmentPrefixPipe } from '../shared/pipes/image-environment-prefix.pipe';
+import { ImageSizePipe } from '../shared/pipes/image-size.pipe';
+import { PropertySizeUnitOfMeasurePipe } from '../shared/pipes/property-size-unit-of-measure.pipe';
+import { ThousandSeparatorPipe } from '../shared/pipes/thousand-separator.pipe';
 
 @Component({
 	selector: 'app-google-map',
@@ -21,28 +21,29 @@ export class GoogleMapComponent implements OnInit {
 	@ViewChild('gmap') gmap: ElementRef;
 	public map: google.maps.Map;
 	public options: any;
-	public overlays: any;
+	public overlays = new Array<any>();
+	public properties: any[];
 	private DEFAULT_LATITUDE = 37.452961;
 	private DEFAULT_LONGITUDE = -122.181725;
 	private INITIAL_ZINDEX_HOVERED_MARKER = 999;
 	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
 
 	constructor(private route: ActivatedRoute,
-				private router: Router,
-				private propertiesService: PropertiesService,
-				private googleMarkersService: GoogleMapsMarkersService,
-				private bigNumberPipe: BigNumberFormatPipe,
-				private currencySymbolPipe: CurrencySymbolPipe,
-				private imageEnvPrefixPipe: ImageEnvironmentPrefixPipe,
-				private imageSizePipe: ImageSizePipe,
-				private propertyUnitOfMeasurePipe: PropertySizeUnitOfMeasurePipe,
-				private thousandSeparatorPipe: ThousandSeparatorPipe,
-				private cdr: ChangeDetectorRef) {
+		private router: Router,
+		private propertiesService: PropertiesService,
+		private googleMarkersService: GoogleMapsMarkersService,
+		private bigNumberPipe: BigNumberFormatPipe,
+		private currencySymbolPipe: CurrencySymbolPipe,
+		private imageEnvPrefixPipe: ImageEnvironmentPrefixPipe,
+		private imageSizePipe: ImageSizePipe,
+		private propertyUnitOfMeasurePipe: PropertySizeUnitOfMeasurePipe,
+		private thousandSeparatorPipe: ThousandSeparatorPipe,
+		private zone: NgZone) {
 	}
 
 	ngOnInit() {
 		this.options = {
-			center: {lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE},
+			center: { lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE },
 			zoom: this.DEFAULT_ZOOM
 		};
 	}
@@ -59,26 +60,28 @@ export class GoogleMapComponent implements OnInit {
 			map.getBounds().getNorthEast().lat(),
 			map.getBounds().getSouthWest().lng(),
 			map.getBounds().getNorthEast().lng());
+		this.properties = propertiesResponse.properties;
 		this.createMarkers(propertiesResponse);
-		setTimeout(() => this.setChanged(), 0);
+		// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
+		this.zone.run(() => { });
 	}
 
 	private createMarkers(propertiesResponse: GetPropertiesResponse) {
-		this.overlays = [];
+		this.overlays = new Array<any>();
 		for (const property of propertiesResponse.properties) {
 			const marker = new google.maps.Marker(
 				{
-					position: {lat: property.latitude, lng: property.longitude},
+					position: { lat: property.latitude, lng: property.longitude },
 					// optimized: false,
 					icon: this.googleMarkersService.defaultMarkerSettings,
 					label: this.googleMarkersService.getMarkerLabel
-					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
+						(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
 				});
 
 			const contentString = `<div id="div-main-infoWindow">
 					<div id="property-image-holder"
 					style="background: url(${this.imageSizePipe.transform(
-				this.imageEnvPrefixPipe.transform(property.imageUrls[0]), 254, 155, true)}) no-repeat center center !important;"></div>
+					this.imageEnvPrefixPipe.transform(property.imageUrls[0]), 254, 155, true)}) no-repeat center center !important;"></div>
 					<div class="property-iw-footer">
 						<div class="property-info">
 							<span class="address">${property.address}</span>
@@ -151,11 +154,4 @@ export class GoogleMapComponent implements OnInit {
 		});
 	}
 
-	// Triggering Angular change detection manually, because markers update
-	private setChanged() {
-		this.cdr.markForCheck();
-		if (!this.cdr['destroyed']) {
-			this.cdr.detectChanges();
-		}
-	}
 }

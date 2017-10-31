@@ -2,7 +2,7 @@
     <div class="image-holder" (click)="goToProperty(property.id)">
         <div class="text-uppercase new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}</div>
         <img src="{{property.imageUrls[0] | imageEnvPrefix}}" />
-        <div class="right-arrow-holder">
+        <div class="right-arrow-holder" *ngIf="showArrow">
         </div>
     </div>
     <div class="property-info">
