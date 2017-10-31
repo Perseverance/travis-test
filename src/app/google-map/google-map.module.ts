@@ -1,10 +1,11 @@
-import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {SharedModule} from '../shared/shared.module';
-import {TranslateModule} from '@ngx-translate/core';
-import {GoogleMapComponent} from './google-map.component';
-import {GMapModule} from 'primeng/primeng';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { GoogleMapComponent } from './google-map.component';
+import { GMapModule } from 'primeng/primeng';
+import { SelectButtonModule } from 'primeng/primeng';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { PropertiesListComponent } from './properties-list/properties-list.compo
 		ReactiveFormsModule,
 		SharedModule,
 		TranslateModule,
-		GMapModule
+		GMapModule,
+		SelectButtonModule
 	],
 	providers: [],
 	bootstrap: []

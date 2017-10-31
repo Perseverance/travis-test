@@ -1,4 +1,9 @@
 <div class="col-xs-12 properties-list">
+    <div class="row filters-and-switches">
+        <div class="col-xs-2">
+            <p-selectButton [options]="modes" [(ngModel)]="listMode" (onOptionClick)="onModeSwitched($event.option.value)"></p-selectButton>
+        </div>
+    </div>
     <div class="row cards-list">
         <div class="col-xs-12" *ngFor="let property of properties" [ngClass]="{'col-sm-6': theme === 'grid'}">
             <app-new-property-component [property]="property" [showArrow]=false [theme]="cardsTheme"></app-new-property-component>
