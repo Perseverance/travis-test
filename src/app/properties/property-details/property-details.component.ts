@@ -6,7 +6,7 @@ import { NgxCarousel } from 'ngx-carousel';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { PropertiesService } from './../properties.service';
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -36,7 +36,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private authService: AuthenticationService,
 		private googleMarkersService: GoogleMapsMarkersService,
 		private bigNumberPipe: BigNumberFormatPipe,
-		private currencySymbolPipe: CurrencySymbolPipe) {
+		private currencySymbolPipe: CurrencySymbolPipe,
+		private cdr: ChangeDetectorRef) {
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width;
 		this.IMAGE_HEIGHT_PX = 480;
@@ -87,4 +88,16 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.idSubscription.unsubscribe();
 	}
 
+	// Triggering Angular change detection manually, because markers update
+	private setChanged() {
+		this.cdr.markForCheck();
+		if (!this.cdr['destroyed']) {
+			this.cdr.detectChanges();
+		}
+	}
+
+	public draw() {
+
+		setTimeout(() => this.setChanged(), 0);
+	}
 }
