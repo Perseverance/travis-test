@@ -23,7 +23,6 @@ $card-half-padding: $card-padding/2;
         }
         img {
             @include border-radius-separate(7px, 7px, 0px, 0px);
-            height: 215px;
             width: 100%;
         }
         .right-arrow-holder {
@@ -41,6 +40,20 @@ $card-half-padding: $card-padding/2;
         &:hover {
             .right-arrow-holder {
                 visibility: visible;
+            }
+        }
+    }
+    &.theme-small {
+        .image-holder {
+            img {
+                height: 215px;
+            }
+        }
+    }
+    &.theme-big {
+        .image-holder {
+            img {
+                height: 310px;
             }
         }
     }

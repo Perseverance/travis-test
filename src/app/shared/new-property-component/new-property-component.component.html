@@ -1,4 +1,4 @@
-<div class="property-card">
+<div class="property-card" [ngClass]="{'theme-small': theme==='small', 'theme-big': theme==='big'}">
     <div class="image-holder" (click)="goToProperty(property.id)">
         <div class="text-uppercase new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}</div>
         <img src="{{property.imageUrls[0] | imageEnvPrefix}}" />
