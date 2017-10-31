@@ -102,7 +102,16 @@
             .tab-content {
                 margin-top: 25px;
                 font-size: $font-size-medium;
-                color: $black;
+                color: $black; // This fixes the map not appearing after refresh
+                >#location.tab-pane {
+                    display: block;
+                    visibility: hidden;
+                    height: 0px;
+                    &.active {
+                        height: auto;
+                        visibility: visible;
+                    }
+                }
                 .tab-header {
                     padding: 0px;
                     margin-bottom: 20px;

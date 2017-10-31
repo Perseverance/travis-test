@@ -1,6 +1,6 @@
 import { GoogleMapsMarkersService } from './../shared/google-maps-markers.service';
 import { environment } from './../../environments/environment';
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PropertiesService } from '../properties/properties.service';
 import { GetPropertiesResponse } from '../properties/properties-responses';
@@ -17,7 +17,7 @@ export class GoogleMapComponent implements OnInit {
 	@ViewChild('gmap') gmap: ElementRef;
 	public map: google.maps.Map;
 	public options: any;
-	public overlays: any;
+	public overlays = new Array<any>();
 	public properties: any[];
 	private DEFAULT_LATITUDE = 37.452961;
 	private DEFAULT_LONGITUDE = -122.181725;
@@ -29,7 +29,7 @@ export class GoogleMapComponent implements OnInit {
 		private googleMarkersService: GoogleMapsMarkersService,
 		private bigNumberPipe: BigNumberFormatPipe,
 		private currencySymbolPipe: CurrencySymbolPipe,
-		private cdr: ChangeDetectorRef) {
+		private zone: NgZone) {
 	}
 
 	ngOnInit() {
@@ -53,11 +53,12 @@ export class GoogleMapComponent implements OnInit {
 			map.getBounds().getNorthEast().lng());
 		this.properties = propertiesResponse.properties;
 		this.createMarkers(propertiesResponse);
-		setTimeout(() => this.setChanged(), 0);
+		// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
+		this.zone.run(() => { });
 	}
 
 	private createMarkers(propertiesResponse: GetPropertiesResponse) {
-		this.overlays = [];
+		this.overlays = new Array<any>();
 		for (const property of propertiesResponse.properties) {
 			const marker = new google.maps.Marker(
 				{
@@ -108,11 +109,4 @@ export class GoogleMapComponent implements OnInit {
 		});
 	}
 
-	// Triggering Angular change detection manually, because markers update
-	private setChanged() {
-		this.cdr.markForCheck();
-		if (!this.cdr['destroyed']) {
-			this.cdr.detectChanges();
-		}
-	}
 }

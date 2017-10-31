@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NewPropertyComponentComponent implements OnInit {
 	@Input() property: any;
+	@Input() showArrow = true;
 	@Input() cityName: string;
 
 	constructor(private router: Router) {

@@ -6,7 +6,7 @@ import { NgxCarousel } from 'ngx-carousel';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { PropertiesService } from './../properties.service';
-import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ApplicationRef, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -28,6 +28,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public IMAGE_HEIGHT_PX: number;
 	public IMAGE_WIDTH_PX: number;
 	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
+	@ViewChild('gmap') map: any;
 
 	constructor(
 		router: Router,
@@ -37,7 +38,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private googleMarkersService: GoogleMapsMarkersService,
 		private bigNumberPipe: BigNumberFormatPipe,
 		private currencySymbolPipe: CurrencySymbolPipe,
-		private cdr: ChangeDetectorRef) {
+		private appRef: ApplicationRef,
+		private zone: NgZone) {
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width;
 		this.IMAGE_HEIGHT_PX = 480;
@@ -62,6 +64,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
 			console.log(self.property);
+			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
+			self.zone.run(() => { });
 		});
 
 	}
@@ -88,16 +92,9 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.idSubscription.unsubscribe();
 	}
 
-	// Triggering Angular change detection manually, because markers update
-	private setChanged() {
-		this.cdr.markForCheck();
-		if (!this.cdr['destroyed']) {
-			this.cdr.detectChanges();
-		}
-	}
-
 	public draw() {
-
-		setTimeout(() => this.setChanged(), 0);
+		console.log(this.map);
+		google.maps.event.trigger(this.map.el.nativeElement, 'resize');
+		this.zone.run(() => { });
 	}
 }
