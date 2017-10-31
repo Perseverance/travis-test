@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { PROPERTY_THEMES } from '../../shared/new-property-component/new-property-component.component';
 
 enum LIST_TYPES {
@@ -9,7 +9,8 @@ enum LIST_TYPES {
 @Component({
 	selector: 'app-properties-list',
 	templateUrl: './properties-list.component.html',
-	styleUrls: ['./properties-list.component.scss']
+	styleUrls: ['./properties-list.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class PropertiesListComponent implements OnInit {
 
@@ -22,8 +23,8 @@ export class PropertiesListComponent implements OnInit {
 
 	constructor() {
 		this.modes = [
-			{ label: 'grid', value: LIST_TYPES.GRID },
-			{ label: 'list', value: LIST_TYPES.LIST }
+			{ label: '', value: LIST_TYPES.GRID },
+			{ label: '', value: LIST_TYPES.LIST }
 		];
 	}
 
