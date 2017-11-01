@@ -30,6 +30,8 @@ export class GoogleMapComponent implements OnInit {
 	private INITIAL_ZINDEX_HOVERED_MARKER = 999;
 	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
 
+	private XS_SIZE_PX = 768;
+
 	constructor(private route: ActivatedRoute,
 		private router: Router,
 		private propertiesService: PropertiesService,
@@ -48,15 +50,66 @@ export class GoogleMapComponent implements OnInit {
 			center: { lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE },
 			zoom: this.DEFAULT_ZOOM
 		};
+		if (this.isSizeXs) {
+			this.setupParamsWatcher();
+		}
+	}
+
+	private get isSizeXs(): boolean {
+		return window.innerWidth < this.XS_SIZE_PX;
+	}
+
+	private setupParamsWatcher() {
+		return this.route.params
+			.subscribe(async params => {
+				if (!params.latitude || !params.longitude) {
+					await this.moveToDefaultLocation();
+					return;
+				}
+				this.moveToLocation(+params.latitude, +params.longitude);
+			});
+	}
+
+	private moveToLocation(latitude: number, longitude: number) {
+		if (this.isSizeXs) {
+			this.getCenterProperties(latitude, longitude);
+			return;
+		}
+		if (!this.map) {
+			return;
+		}
+		this.map.setCenter(new google.maps.LatLng(latitude, longitude));
+	}
+
+	private async moveToDefaultLocation() {
+		this.setCurrentPosition();
+	}
+
+	private setCurrentPosition() {
+		if (!('geolocation' in navigator)) {
+			return;
+		}
+
+		navigator.geolocation.getCurrentPosition(async (position) => {
+			this.moveToLocation(position.coords.latitude, position.coords.longitude);
+		});
 	}
 
 	private setMap(event) {
 		this.map = event.map;
-		this.setupParamsWatcher();
-		this.map.addListener('idle', () => this.getProperties(this.map));
+		if (!this.isSizeXs) {
+			this.setupParamsWatcher();
+		}
+		this.map.addListener('idle', () => {
+			if (this.isSizeXs) {
+				// This stops the map removing the list contents
+				return;
+			}
+			this.getBoundsProperties(this.map);
+		});
 	}
 
-	private async getProperties(map: google.maps.Map) {
+	private async getBoundsProperties(map: google.maps.Map) {
 		try {
 			this.propertiesLoading = true;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(
@@ -65,7 +118,25 @@ export class GoogleMapComponent implements OnInit {
 				map.getBounds().getSouthWest().lng(),
 				map.getBounds().getNorthEast().lng());
 			this.properties = propertiesResponse.properties;
-			this.createMarkers(propertiesResponse);
+			if (!this.isSizeXs) {
+				this.createMarkers(propertiesResponse);
+			}
+			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
+			this.zone.run(() => { });
+			this.propertiesLoading = false;
+		} catch (error) {
+			this.propertiesLoading = false;
+		}
+	}
+
+	private async getCenterProperties(centerLatitude: number, centerLongitude: number) {
+		try {
+			this.propertiesLoading = true;
+			const propertiesResponse = await this.propertiesService.getPropertiesByCenter(centerLatitude, centerLongitude);
+			this.properties = propertiesResponse.properties;
+			if (!this.isSizeXs) {
+				this.createMarkers(propertiesResponse);
+			}
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			this.zone.run(() => { });
 			this.propertiesLoading = false;
@@ -135,31 +206,6 @@ export class GoogleMapComponent implements OnInit {
 
 	private goToProperty(id: string) {
 		this.router.navigate(['property', id]);
-	}
-
-	private setupParamsWatcher() {
-		return this.route.params
-			.subscribe(async params => {
-				if (!params.latitude || !params.longitude) {
-					await this.moveToDefaultLocation();
-					return;
-				}
-				this.map.setCenter(new google.maps.LatLng(+params.latitude, +params.longitude));
-			});
-	}
-
-	private async moveToDefaultLocation() {
-		this.setCurrentPosition();
-	}
-
-	private setCurrentPosition() {
-		if (!('geolocation' in navigator)) {
-			return;
-		}
-
-		navigator.geolocation.getCurrentPosition(async (position) => {
-			this.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-		});
 	}
 
 }

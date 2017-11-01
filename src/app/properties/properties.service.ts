@@ -36,6 +36,17 @@ export class PropertiesService {
 		return result.data.data;
 	}
 
+	public async getPropertiesByCenter(centerLatitude: number, centerLongitude: number): Promise<GetPropertiesResponse> {
+		const bounds: Bounds = this.createBoundsFromCenter(centerLatitude, centerLongitude);
+		const query = this.propertiesInRectangleQueryFormat(bounds);
+		const params = {
+			search: query
+		};
+
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
+	}
+
 	public async getPropertiesInRectangle(southWestLatitude: number,
 		northEastLatitude: number,
 		southWestLongitude: number,
@@ -51,6 +62,16 @@ export class PropertiesService {
 
 		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
 		return { properties: result.data.data.properties };
+	}
+
+	private createBoundsFromCenter(centerLatitude: number, centerLongitude: number, degreesOfIncreaseArea = 1) {
+		const bounds: Bounds = {
+			northEastLatitude: centerLatitude + degreesOfIncreaseArea,
+			southWestLatitude: centerLatitude - degreesOfIncreaseArea,
+			northEastLongitude: centerLongitude + degreesOfIncreaseArea,
+			southWestLongitude: centerLongitude - degreesOfIncreaseArea
+		};
+		return bounds;
 	}
 
 	private createRectangleBounds(southWestLatitude: number,

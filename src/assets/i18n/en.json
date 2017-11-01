@@ -41,7 +41,8 @@
             "invalid-phone-number": "Your phone number appears to be invalid",
             "toc-required": "You need to accept the terms and conditions of the site"
         },
-        "terms": "Terms & Conditions"
+        "terms": "Terms & Conditions",
+        "no-properties": "No properties found in this area!"
     },
     "enums": {
         "property-types": {

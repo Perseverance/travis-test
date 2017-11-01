@@ -5,15 +5,21 @@ $list-width: 40%;
 .properties-map {
     .list-container {
         position: absolute;
-        width: $list-width;
         top: $site-top-padding;
         left: 0px;
         bottom: $footer-height;
         background-color: $gray-lightest;
     }
+    .width-40 {
+        width: $list-width;
+    }
+    .xs-width-100 {
+        @media #{$xs} {
+            width: 100%;
+        }
+    }
     .list-loading-indicator-container {
         position: absolute;
-        width: $list-width;
         top: $site-top-padding;
         left: 0px;
         bottom: $footer-height;
