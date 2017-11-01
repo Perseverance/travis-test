@@ -4,8 +4,7 @@ import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {GoogleMapComponent} from './google-map.component';
-import {GMapModule, OverlayPanelModule, SliderModule} from 'primeng/primeng';
-import {SelectButtonModule} from 'primeng/primeng';
+import {GMapModule, ProgressSpinnerModule, OverlayPanelModule, SelectButtonModule, SliderModule} from 'primeng/primeng';
 import {PropertiesListComponent} from './properties-list/properties-list.component';
 
 @NgModule({
@@ -22,7 +21,8 @@ import {PropertiesListComponent} from './properties-list/properties-list.compone
 		GMapModule,
 		SelectButtonModule,
 		OverlayPanelModule,
-		SliderModule
+		SliderModule,
+		ProgressSpinnerModule
 	],
 	providers: [],
 	bootstrap: []

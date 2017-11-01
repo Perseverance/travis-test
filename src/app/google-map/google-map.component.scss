@@ -11,6 +11,34 @@ $list-width: 40%;
         bottom: $footer-height;
         background-color: $gray-lightest;
     }
+    .list-loading-indicator-container {
+        position: absolute;
+        width: $list-width;
+        top: $site-top-padding;
+        left: 0px;
+        bottom: $footer-height;
+        background-color: rgba(255, 255, 255, 0.8);
+        @keyframes ui-progress-spinner-color {
+            100%,
+            0% {
+                stroke: $blue-dark;
+            }
+            40% {
+                stroke: $gray-darkest;
+            }
+            66% {
+                stroke: $green-darkest;
+            }
+            80%,
+            90% {
+                stroke: $red-main;
+            }
+        }
+        .ui-progress-spinner {
+            width: 100%;
+            margin-top: 5%;
+        }
+    }
     .map-container {
         position: absolute;
         width: $map-width;
