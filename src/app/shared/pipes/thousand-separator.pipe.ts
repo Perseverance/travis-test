@@ -17,6 +17,10 @@ export class ThousandSeparatorPipe implements PipeTransform {
 
 		integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
 
+		if (integer === '') {
+			integer = '0';
+		}
+
 		return integer;
 	}
 }
