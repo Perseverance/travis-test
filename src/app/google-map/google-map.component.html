@@ -1,11 +1,11 @@
 <div class="row properties-map">
-    <div class="list-container">
+    <div class="list-container sm-40-width xs-100-width">
         <app-properties-list [properties]="properties"></app-properties-list>
     </div>
-    <div class="list-loading-indicator-container" *ngIf="propertiesLoading">
+    <div class="list-loading-indicator-container sm-40-width xs-100-width" *ngIf="propertiesLoading">
         <p-progressSpinner></p-progressSpinner>
     </div>
-    <div class="map-container">
+    <div class="map-container hidden-xs">
         <p-gmap #gmap (onMapReady)="setMap($event)" [options]="options" [overlays]="overlays" styleClass="google-map-holder"></p-gmap>
     </div>
 </div>
