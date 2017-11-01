@@ -50,7 +50,9 @@ export class GoogleMapComponent implements OnInit {
 			center: { lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE },
 			zoom: this.DEFAULT_ZOOM
 		};
-		this.setupParamsWatcher();
+		if (this.isSizeXs) {
+			this.setupParamsWatcher();
+		}
 	}
 
 	private get isSizeXs(): boolean {
@@ -70,7 +72,10 @@ export class GoogleMapComponent implements OnInit {
 
 	private moveToLocation(latitude: number, longitude: number) {
 		if (this.isSizeXs) {
-			console.log("call properties with center");
+			this.getCenterProperties(latitude, longitude);
+			return;
+		}
+		if (!this.map) {
 			return;
 		}
 		this.map.setCenter(new google.maps.LatLng(latitude, longitude));
@@ -92,16 +97,19 @@ export class GoogleMapComponent implements OnInit {
 
 	private setMap(event) {
 		this.map = event.map;
+		if (!this.isSizeXs) {
+			this.setupParamsWatcher();
+		}
 		this.map.addListener('idle', () => {
 			if (this.isSizeXs) {
 				// This stops the map removing the list contents
 				return;
 			}
-			this.getProperties(this.map);
+			this.getBoundsProperties(this.map);
 		});
 	}
 
-	private async getProperties(map: google.maps.Map) {
+	private async getBoundsProperties(map: google.maps.Map) {
 		try {
 			this.propertiesLoading = true;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(
@@ -110,7 +118,25 @@ export class GoogleMapComponent implements OnInit {
 				map.getBounds().getSouthWest().lng(),
 				map.getBounds().getNorthEast().lng());
 			this.properties = propertiesResponse.properties;
-			this.createMarkers(propertiesResponse);
+			if (!this.isSizeXs) {
+				this.createMarkers(propertiesResponse);
+			}
+			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
+			this.zone.run(() => { });
+			this.propertiesLoading = false;
+		} catch (error) {
+			this.propertiesLoading = false;
+		}
+	}
+
+	private async getCenterProperties(centerLatitude: number, centerLongitude: number) {
+		try {
+			this.propertiesLoading = true;
+			const propertiesResponse = await this.propertiesService.getPropertiesByCenter(centerLatitude, centerLongitude);
+			this.properties = propertiesResponse.properties;
+			if (!this.isSizeXs) {
+				this.createMarkers(propertiesResponse);
+			}
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			this.zone.run(() => { });
 			this.propertiesLoading = false;

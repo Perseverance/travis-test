@@ -10,19 +10,16 @@ $list-width: 40%;
         bottom: $footer-height;
         background-color: $gray-lightest;
     }
-    .sm-40-width {
-        @media #{$sm} {
-            width: $list-width;
-        }
+    .width-40 {
+        width: $list-width;
     }
-    .xs-100-width {
+    .xs-width-100 {
         @media #{$xs} {
             width: 100%;
         }
     }
     .list-loading-indicator-container {
         position: absolute;
-        width: $list-width;
         top: $site-top-padding;
         left: 0px;
         bottom: $footer-height;
