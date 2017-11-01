@@ -1,13 +1,42 @@
 <div class="col-xs-12 properties-list">
-    <div class="row filters-and-switches">
-        <div class="col-lg-3 hidden-xs hidden-sm hidden-md">
-            <p-selectButton [options]="modes" [(ngModel)]="listMode" (onOptionClick)="onModeSwitched($event.option.value)" styleClass="list-mode-switcher"></p-selectButton>
-        </div>
-    </div>
-    <div class="row cards-list">
-        <div class="col-xs-12" *ngFor="let property of properties" [ngClass]="{'col-lg-6': theme === 'grid'}">
-            <app-new-property-component [property]="property" [showArrow]=false [theme]="cardsTheme"></app-new-property-component>
-        </div>
-    </div>
+	<div class="row filters-and-switches">
+		<div class="col-xs-12 col-lg-9 filters">
+			<button type="text" pButton (click)="priceFilter.toggle($event)"
+					class="filter-button"
+					[ngClass]="{'active': filterSelectionActivated}">
+				Price
+				<span class="glyphicon"
+					  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>
+			</button>
+
+			<p-overlayPanel #priceFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()"
+							(onBeforeHide)="toggleFilterSelectionClass()">
+				<div class="arrow-up arrow-price-filter"></div>
+				<input type="text" pInputText [ngModel]="priceMinRange | thousandSeparator"
+					   (ngModelChange)="changePriceMinRangeInput($event)"
+					   style="width:190px"/>
+				<input type="text" pInputText [ngModel]="priceMaxRange | thousandSeparator"
+					   (ngModelChange)="changePriceMaxRangeInput($event)"
+					   style="width:190px"/>
+				<button (click)="applyPriceFilter(priceFilter)">Apply</button>
+				<button (click)="priceFilter.hide()">Cancel</button>
+				<p-slider [(ngModel)]="priceRangeValue" (onChange)="handlePriceChange($event)"
+						  [max]="defaultPriceMaxRange" [step]="priceStep"
+						  [range]="true"
+						  [style]="{'width':'100%'}"></p-slider>
+			</p-overlayPanel>
+		</div>
+		<div class="col-lg-3 hidden-xs hidden-sm hidden-md">
+			<p-selectButton [options]="modes" [(ngModel)]="listMode"
+							(onOptionClick)="onModeSwitched($event.option.value)"
+							styleClass="list-mode-switcher"></p-selectButton>
+		</div>
+	</div>
+	<div class="row cards-list" [ngClass]="{'apply-opacity': filterSelectionActivated}">
+		<div class="col-xs-12" *ngFor="let property of properties" [ngClass]="{'col-lg-6': theme === 'grid'}">
+			<app-new-property-component [property]="property" [showArrow]=false
+										[theme]="cardsTheme"></app-new-property-component>
+		</div>
+	</div>
 
 </div>
