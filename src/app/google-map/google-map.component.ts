@@ -118,12 +118,13 @@ export class GoogleMapComponent implements OnInit {
 				map.getBounds().getSouthWest().lng(),
 				map.getBounds().getNorthEast().lng());
 			this.properties = propertiesResponse.properties;
+			this.propertiesLoading = false;
 			if (!this.isSizeXs) {
 				this.createMarkers(propertiesResponse);
 			}
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			this.zone.run(() => { });
-			this.propertiesLoading = false;
+
 		} catch (error) {
 			this.propertiesLoading = false;
 		}
@@ -134,12 +135,12 @@ export class GoogleMapComponent implements OnInit {
 			this.propertiesLoading = true;
 			const propertiesResponse = await this.propertiesService.getPropertiesByCenter(centerLatitude, centerLongitude);
 			this.properties = propertiesResponse.properties;
+			this.propertiesLoading = false;
 			if (!this.isSizeXs) {
 				this.createMarkers(propertiesResponse);
 			}
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			this.zone.run(() => { });
-			this.propertiesLoading = false;
 		} catch (error) {
 			this.propertiesLoading = false;
 		}

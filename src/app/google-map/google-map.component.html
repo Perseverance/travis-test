@@ -3,6 +3,7 @@
         <app-properties-list [properties]="properties"></app-properties-list>
     </div>
     <div class="list-loading-indicator-container width-40 xs-width-100" *ngIf="propertiesLoading">
+        {{propertiesLoading}}
         <p-progressSpinner></p-progressSpinner>
     </div>
     <div class="map-container hidden-xs">
