@@ -51,6 +51,9 @@
 				@media #{$lg} {
 					width: 128%;
 				}
+				@media #{$sm} {
+					height: 180px;
+				}
 				.arrow-up {
 					width: 0;
 					height: 0;
@@ -73,6 +76,93 @@
 				}
 				.arrow-price-filter {
 					left: 10px;
+				}
+				.input-button-holder {
+					padding: 0 15px;
+					input {
+						width: 25%;
+						height: 36px;
+						outline: none;
+						padding-left: 10px;
+						@include border-radius(5px);
+						border: solid 1px rgba(255, 255, 255, 1);
+						@include box-shadow(0px, 0px, 1px, rgba(0, 0, 0, 0.6));
+						@media #{$sm} {
+							width: 45%;
+						}
+						&:focus {
+							border: solid 1px rgba(76, 202, 247, 0.5);
+							@include box-shadow(0px, 0px, 1px, rgba(76, 202, 247, 0.5));
+						}
+					}
+					input.slider-dragging {
+						color: $blue-dark;
+						border: solid 1px rgba(76, 202, 247, 0.5);
+						@include box-shadow(0px, 0px, 1px, rgba(76, 202, 247, 0.5));
+					}
+					span {
+						margin: 0 5px;
+						color: $gray-medium;
+						@media #{$sm} {
+							width: 10%;
+						}
+					}
+					.button-holder {
+						display: inline-block;
+						float: right;
+						width: 35%;
+						@media #{$sm} {
+							width: 50%;
+						}
+						button {
+							height: 36px;
+							font-size: 14px;
+							font-family: $font-family-helvetica;
+							outline: none;
+							width: 45%;
+							@include border-radius(5px);
+							&.apply-filter {
+								background-color: $button-filter-apply;
+								border: none;
+								color: white;
+								&:hover {
+									background-color: $button-filter-apply-hovered;
+								}
+							}
+							&.cancel-filter {
+								background-color: white;
+								color: #4CCAF7;
+								border: 1px solid #4CCAF7;
+								margin-left: 5px;
+								&:hover {
+									color: $blue-dark;
+									border: 1px solid $blue-dark;
+								}
+							}
+						}
+					}
+				}
+				.ui-slider {
+					height: 4px;
+					margin-top: 30px;
+					margin-left: 5%;
+					width: 86%;
+					background: #EDEDED;
+					box-shadow: none;
+					.ui-slider-range {
+						background: #4CCAF7;
+						box-shadow: none;
+					}
+					.ui-slider-handle {
+						background: white;
+						height: 28px !important;
+						width: 28px !important;
+						top: -12px !important;
+						@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
+						@include border-radius(50%);
+						border: solid 1px $gray-lighter;
+						cursor: pointer;
+					}
 				}
 			}
 		}

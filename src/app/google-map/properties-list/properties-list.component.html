@@ -4,7 +4,7 @@
 			<button type="text" pButton (click)="priceFilter.toggle($event)"
 					class="filter-button"
 					[ngClass]="{'active': filterSelectionActivated}">
-				Price
+				{{ 'filters.price' | translate }}
 				<span class="glyphicon"
 					  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>
 			</button>
@@ -12,18 +12,31 @@
 			<p-overlayPanel #priceFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()"
 							(onBeforeHide)="toggleFilterSelectionClass()">
 				<div class="arrow-up arrow-price-filter"></div>
-				<input type="text" pInputText [ngModel]="priceMinRange | thousandSeparator"
-					   (ngModelChange)="changePriceMinRangeInput($event)"
-					   style="width:190px"/>
-				<input type="text" pInputText [ngModel]="priceMaxRange | thousandSeparator"
-					   (ngModelChange)="changePriceMaxRangeInput($event)"
-					   style="width:190px"/>
-				<button (click)="applyPriceFilter(priceFilter)">Apply</button>
-				<button (click)="priceFilter.hide()">Cancel</button>
-				<p-slider [(ngModel)]="priceRangeValue" (onChange)="handlePriceChange($event)"
-						  [max]="defaultPriceMaxRange" [step]="priceStep"
-						  [range]="true"
-						  [style]="{'width':'100%'}"></p-slider>
+				<div class="row input-button-holder">
+					<input #minLimit type="text"
+						   (ngModelChange)="changePriceMinRangeInput(minLimit)"
+						   [ngModel]="priceMinRange | thousandSeparator"
+						   [ngClass]="{'slider-dragging': sliderDraggingMin}"/>
+					<span>
+						{{ 'filters.to' | translate }}
+					</span>
+					<input #maxLimit type="text"
+						   [ngModel]="priceMaxRange | thousandSeparator"
+						   (ngModelChange)="changePriceMaxRangeInput(maxLimit)"
+						   [ngClass]="{'slider-dragging': sliderDraggingMax}"/>
+					<div class="button-holder">
+						<button class="apply-filter" (click)="applyPriceFilter(priceFilter)"> {{ 'filters.apply' |
+							translate }}
+						</button>
+						<button class="cancel-filter" (click)="priceFilter.hide()"> {{ 'filters.cancel' | translate }}
+						</button>
+					</div>
+				</div>
+				<p-slider [(ngModel)]="priceRangeValue"
+						  (onChange)="handlePriceChange($event)"
+						  (onSlideEnd)="handleSlideEnd($event)"
+						  [max]="DEFAULT_PRICE_MAX_RANGE" [step]="DEFAULT_PRICE_STEP"
+						  [range]="true"></p-slider>
 			</p-overlayPanel>
 		</div>
 		<div class="col-lg-3 hidden-xs hidden-sm hidden-md">

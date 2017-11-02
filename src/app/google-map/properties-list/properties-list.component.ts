@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
 import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
+import {ThousandSeparatorPipe} from '../../shared/pipes/thousand-separator.pipe';
 
 enum LIST_TYPES {
 	GRID = 'grid',
@@ -20,13 +21,16 @@ export class PropertiesListComponent implements OnInit {
 	public modes: any[];
 	public listMode = LIST_TYPES.GRID;
 	public filterSelectionActivated = false;
-	public defaultPriceMaxRange = 5000000;
-	public priceMinRange = 0;
-	public priceMaxRange = 5000000;
-	public priceStep = 100000;
-	public priceRangeValue: number[] = [this.priceMinRange, this.priceMaxRange];
+	public DEFAULT_PRICE_MIN_RANGE = 0;
+	public DEFAULT_PRICE_MAX_RANGE = 5000000;
+	public DEFAULT_PRICE_STEP = 100000;
+	public priceMinRange = this.DEFAULT_PRICE_MIN_RANGE;
+	public priceMaxRange = this.DEFAULT_PRICE_MAX_RANGE;
+	public sliderDraggingMin = false;
+	public sliderDraggingMax = false;
+	public priceRangeValue: number[] = [this.DEFAULT_PRICE_MIN_RANGE, this.DEFAULT_PRICE_MAX_RANGE];
 
-	constructor() {
+	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe) {
 		this.modes = [
 			{label: '', value: LIST_TYPES.GRID},
 			{label: '', value: LIST_TYPES.LIST}
@@ -61,27 +65,52 @@ export class PropertiesListComponent implements OnInit {
 		this.filterSelectionActivated = !this.filterSelectionActivated;
 	}
 
-	public changePriceMinRangeInput(event) {
-		let inputMinValue = parseInt(event, 10);
+	public changePriceMinRangeInput(input) {
+		let inputMinValue = input.value.replace(/[^0-9.]/g, '');
+		inputMinValue = parseInt(inputMinValue, 10);
 		this.priceRangeValue = [];
 		if (inputMinValue > this.priceMaxRange) {
 			inputMinValue = this.priceMaxRange;
 		}
+		if (inputMinValue > this.DEFAULT_PRICE_MAX_RANGE) {
+			inputMinValue = this.DEFAULT_PRICE_MAX_RANGE;
+		}
 		this.priceRangeValue = [inputMinValue, this.priceMaxRange];
+		input.value = this.thousandSeparatorPipe.transform(inputMinValue);
+		this.priceMinRange = input.value;
 	}
 
-	public changePriceMaxRangeInput(event) {
-		let inputMaxValue = parseInt(event, 10);
+	public changePriceMaxRangeInput(input) {
+		let inputMaxValue = input.value.replace(/[^0-9.]/g, '');
+		inputMaxValue = parseInt(inputMaxValue, 10);
 		this.priceRangeValue = [];
 		if (inputMaxValue < this.priceMinRange) {
 			inputMaxValue = this.priceMinRange;
 		}
+		if (inputMaxValue < this.DEFAULT_PRICE_MIN_RANGE) {
+			inputMaxValue = this.DEFAULT_PRICE_MIN_RANGE;
+		}
 		this.priceRangeValue = [this.priceMinRange, inputMaxValue];
+		input.value = this.thousandSeparatorPipe.transform(inputMaxValue);
+		this.priceMaxRange = input.value;
 	}
 
 	public handlePriceChange(event) {
+		if (this.priceMinRange !== event.values[0]) {
+			this.sliderDraggingMin = true;
+		}
+
+		if (this.priceMaxRange !== event.values[1]) {
+			this.sliderDraggingMax = true;
+		}
+
 		this.priceMinRange = event.values[0];
 		this.priceMaxRange = event.values[1];
+	}
+
+	public handleSlideEnd(event) {
+		this.sliderDraggingMin = false;
+		this.sliderDraggingMax = false;
 	}
 
 	public applyPriceFilter(overlay) {
