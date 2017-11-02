@@ -1,5 +1,10 @@
 @import "../../variables";
 $sub-header-color: #929292;
+.thank-you {
+    background-color: $gray-lighter;
+    padding-top: 10px;
+}
+
 .testimonials-holder {
     background-color: $gray-lighter;
 }

@@ -41,7 +41,8 @@
 			"invalid-phone-number": "Your phone number appears to be invalid",
 			"toc-required": "You need to accept the terms and conditions of the site"
 		},
-		"terms": "Terms & Conditions"
+		"terms": "Terms & Conditions",
+		"no-properties": "No properties found in this area!"
 	},
 	"enums": {
 		"property-types": {
@@ -104,6 +105,11 @@
 		"explore-cities": "Explore the cities",
 		"real-estates": " real estates",
 		"from": "from",
+		"thank-you": "Thank you for using propy beta!",
+		"find-properties": {
+			"heading": "Find the best investments property",
+			"sub-heading": "Make it easy to build wealth through real estate investment"
+		},
 		"testimonials": {
 			"heading": "Testimonials",
 			"pinel-words": "The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.",

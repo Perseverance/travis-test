@@ -10,7 +10,6 @@ $header-margin: 60px;
         }
     }
     h2.propy-custom-heading {
-        color: white;
         margin-bottom: $header-margin;
         @media #{$sm} {
             margin-bottom: 10px;
@@ -26,10 +25,11 @@ $header-margin: 60px;
         }
         .login {
             h3 {
-                color: white;
                 a {
-                    color: white;
                     text-decoration: underline;
+                    &:hover {
+                        color: lighten($black, 15%);
+                    }
                 }
             }
             margin-bottom: 25px;

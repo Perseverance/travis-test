@@ -14,7 +14,7 @@ export const environment = {
 	},
 	linkedInApiKey: '758vh4r0yqsbn9', // Otherwise known as ClientID
 	skippedRedirectRoutes: ['/login', '/signup'],
-	defaultRedirectRoute: '/map',
+	defaultRedirectRoute: '/',
 	mapConfig: {
 		DEFAULT_MARKER_ICON: '/assets/images/marker-shape.png',
 		DEFAULT_MARKER_ICON_HOVERED: '/assets/images/marker-shape-hovered.png',

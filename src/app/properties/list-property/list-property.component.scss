@@ -1,52 +1,48 @@
 @import "../../../variables";
 @import "../../../mixins";
-
 .list-property {
-	h1, h2 {
-		color: $white;
-	}
-	.invite-link {
-		padding-left: 30px;
-		margin-bottom: 40px;
-		font-size: 20px;
-	}
-	.propy-form {
-		margin-top: 40px;
-		textarea {
-			width: 100%;
-			@include border-radius(4px);
-			border-color: $border-default;
-		}
-		.acceptedCurrencies {
-			width: 100%;
-		}
-		.ui-fileupload {
-			.ui-fileupload-buttonbar {
-				.ui-fileupload-choose {
-					background-color: $blue-main;
-					border: none;
-					&:hover {
-						background-color: $blue-light;
-					}
-				}
-			}
-		}
-		.ui-slider {
-			background-color: $gray-lighter;
-			height: 16px;
-			cursor: pointer;
-			.ui-slider-handle {
-				cursor: pointer;
-				background: $blue-main;
-				@include border-radius(4px);
-			}
-		}
-		a.toc {
-			color: black;
-			text-decoration: underline;
-		}
-	}
-	.propy-validation {
-		margin: 0px;
-	}
+    .invite-link {
+        padding-left: 30px;
+        text-decoration: underline;
+    }
+    .propy-form {
+        margin-top: 20px;
+        @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
+        textarea {
+            width: 100%;
+            @include border-radius(4px);
+            border-color: $border-default;
+        }
+        .acceptedCurrencies {
+            width: 100%;
+        }
+        .ui-fileupload {
+            .ui-fileupload-buttonbar {
+                .ui-fileupload-choose {
+                    background-color: $blue-main;
+                    border: none;
+                    &:hover {
+                        background-color: $blue-light;
+                    }
+                }
+            }
+        }
+        .ui-slider {
+            background-color: $gray-lighter;
+            height: 16px;
+            cursor: pointer;
+            .ui-slider-handle {
+                cursor: pointer;
+                background: $blue-main;
+                @include border-radius(4px);
+            }
+        }
+        a.toc {
+            color: black;
+            text-decoration: underline;
+        }
+    }
+    .propy-validation {
+        margin: 0px;
+    }
 }

@@ -8,7 +8,6 @@
 				<span class="glyphicon"
 					  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>
 			</button>
-
 			<p-overlayPanel #priceFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()"
 							(onBeforeHide)="toggleFilterSelectionClass()">
 				<div class="arrow-up arrow-price-filter"></div>
@@ -58,5 +57,4 @@
 										[theme]="cardsTheme"></app-new-property-component>
 		</div>
 	</div>
-
 </div>

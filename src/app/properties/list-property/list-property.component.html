@@ -1,132 +1,102 @@
 <div *ngIf="hasUserLoaded">
-	<div class="row list-property" *ngIf="isUserAnonymous">
-		<div class="col-xs-12 text-center">
-			<h1>{{ 'list-property.not-authenticated.warning-message' | translate }}</h1>
-			<h2>{{ 'list-property.not-authenticated.login-or-signup' | translate }}.</h2>
-		</div>
-	</div>
-	<div class="row list-property" *ngIf="!isUserAnonymous">
-		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-			<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.invite-link' | translate }}</h2>
-			<p class="invite-link" routerLink="/list-property">{{ inviteLInk }}</p>
-		</div>
-		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-			<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.heading' | translate }}</h2>
-		</div>
-		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-			<form [formGroup]="listPropertyForm" class="propy-form">
-				<div class="form-group">
-					<p-dropdown [options]="propertyTypes" formControlName="propertyType" [filter]="true"
-								filterBy="label"></p-dropdown>
-					<div *ngIf="propertyType.touched || isSubmitClicked">
-						<div class="propy-validation" *ngIf="propertyType.invalid && propertyType.errors['required']">{{
-							'common.validation-errors.required' | translate }}
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<p-checkbox formControlName="furnished"
-								label="{{'list-property.form-fields.property-furnished' | translate}}"
-								binary="true"></p-checkbox>
-				</div>
-				<div class="form-group">
-					<div class="ui-inputgroup">
-						<input type="number" formControlName="price" pInputText
-							   placeholder="{{'list-property.form-fields.price' | translate}}">
-						<span class="ui-inputgroup-addon"><p-dropdown [options]="currencies"
+    <div class="row list-property" *ngIf="isUserAnonymous">
+        <div class="col-xs-12 text-center">
+            <h1>{{ 'list-property.not-authenticated.warning-message' | translate }}</h1>
+            <h2>{{ 'list-property.not-authenticated.login-or-signup' | translate }}.</h2>
+        </div>
+    </div>
+    <div class="row list-property" *ngIf="!isUserAnonymous">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+            <h3 class="propy-custom-heading text-capitalize">{{ 'list-property.invite-link' | translate }}</h3>
+            <p class="invite-link" routerLink="/list-property">{{ inviteLInk }}</p>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+            <form [formGroup]="listPropertyForm" class="propy-form">
+                <div class="form-group">
+                    <p-dropdown [options]="propertyTypes" formControlName="propertyType" [filter]="true" filterBy="label"></p-dropdown>
+                    <div *ngIf="propertyType.touched || isSubmitClicked">
+                        <div class="propy-validation" *ngIf="propertyType.invalid && propertyType.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p-checkbox formControlName="furnished" label="{{'list-property.form-fields.property-furnished' | translate}}" binary="true"></p-checkbox>
+                </div>
+                <div class="form-group">
+                    <div class="ui-inputgroup">
+                        <input type="number" formControlName="price" pInputText placeholder="{{'list-property.form-fields.price' | translate}}">
+                        <span class="ui-inputgroup-addon"><p-dropdown [options]="currencies"
 																	  formControlName="currency"></p-dropdown></span>
-					</div>
-					<div *ngIf="price.touched || isSubmitClicked">
-						<div class="propy-validation" *ngIf="price.invalid && price.errors['required']">{{
-							'common.validation-errors.required' | translate }}
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="acceptedCurrenciesMultiselect">{{ 'list-property.form-fields.accepted-currencies' |
+                    </div>
+                    <div *ngIf="price.touched || isSubmitClicked">
+                        <div class="propy-validation" *ngIf="price.invalid && price.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="acceptedCurrenciesMultiselect">{{ 'list-property.form-fields.accepted-currencies' |
 						translate }}</label>
-					<p-multiSelect id="acceptedCurrenciesMultiselect" formControlName="acceptedCurrencies"
-								   [options]="currencies" styleClass="acceptedCurrencies"
-								   maxSelectedLabels=11 defaultLabel="..."></p-multiSelect>
-					<div *ngIf="acceptedCurrencies.touched || isSubmitClicked">
-						<div class="propy-validation"
-							 *ngIf="acceptedCurrencies.invalid && acceptedCurrencies.errors['required']">{{
-							'common.validation-errors.required' | translate }}
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="commissionFee">{{ 'list-property.form-fields.commission-fee' |
-						translate }} {{this.feeDecimal}}%</label>
-					<p-slider formControlName="commisionFee" id="commissionFee" [min]="2" [step]="1"
-							  [max]="150"></p-slider>
-				</div>
-				<div class="form-group">
-					<input type="number" pInputText placeholder="{{'list-property.form-fields.year-built' | translate}}"
-						   formControlName="year">
-				</div>
-				<div class="form-group">
-					<input type="number" pInputText placeholder="{{'list-property.form-fields.bedrooms' | translate}}"
-						   formControlName="bedrooms">
-				</div>
-				<div class="form-group">
-					<input type="number" pInputText placeholder="{{'list-property.form-fields.floor' | translate}}"
-						   formControlName="floor">
-				</div>
-				<div class="form-group">
-					<div class="ui-inputgroup">
-						<input type="number" formControlName="area" pInputText
-							   placeholder="{{'list-property.form-fields.area' | translate}}">
-						<span class="ui-inputgroup-addon"><p-dropdown [options]="areaUnits"
+                    <p-multiSelect id="acceptedCurrenciesMultiselect" formControlName="acceptedCurrencies" [options]="currencies" styleClass="acceptedCurrencies"
+                        maxSelectedLabels=11 defaultLabel="..."></p-multiSelect>
+                    <div *ngIf="acceptedCurrencies.touched || isSubmitClicked">
+                        <div class="propy-validation" *ngIf="acceptedCurrencies.invalid && acceptedCurrencies.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="commissionFee">{{ 'list-property.form-fields.commission-fee' | translate }} {{this.feeDecimal}}%</label>
+                    <p-slider formControlName="commisionFee" id="commissionFee" [min]="2" [step]="1" [max]="150"></p-slider>
+                </div>
+                <div class="form-group">
+                    <input type="number" pInputText placeholder="{{'list-property.form-fields.year-built' | translate}}" formControlName="year">
+                </div>
+                <div class="form-group">
+                    <input type="number" pInputText placeholder="{{'list-property.form-fields.bedrooms' | translate}}" formControlName="bedrooms">
+                </div>
+                <div class="form-group">
+                    <input type="number" pInputText placeholder="{{'list-property.form-fields.floor' | translate}}" formControlName="floor">
+                </div>
+                <div class="form-group">
+                    <div class="ui-inputgroup">
+                        <input type="number" formControlName="area" pInputText placeholder="{{'list-property.form-fields.area' | translate}}">
+                        <span class="ui-inputgroup-addon"><p-dropdown [options]="areaUnits"
 																	  formControlName="areaUnit"></p-dropdown></span>
-					</div>
-				</div>
-				<div class="form-group location-form-group">
-					<app-location-search id="location"
-										 inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}"
-										 (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"></app-location-search>
-					<div *ngIf="isSubmitClicked">
-						<div class="propy-validation" *ngIf="address.invalid && address.errors['required']">{{
-							'common.validation-errors.required' | translate }}
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<textarea [rows]="5" [cols]="60" pInputTextarea autoResize="autoResize"
-							  formControlName="description"
-							  placeholder="{{ 'list-property.form-fields.description' | translate }}"></textarea>
-				</div>
-				<div class="form-group location-form-group">
-					<label for="imageUpload">{{ 'list-property.form-fields.property-images' | translate }}</label>
-					<p-fileUpload id="imageUpload" #uploadRef name="propertyImages" url="./upload.php"
-								  (onSelect)="selectFile($event, uploadRef)"
-								  auto="false" showUploadButton="false" showCancelButton="false"
-								  (onRemove)="removeFile($event)" multiple="multiple"
-								  customUpload="true" accept="image/*" maxFileSize="1000000"
-								  chooseLabel="{{ 'list-property.upload-image.choose-button-label' | translate }}">
-					</p-fileUpload>
-					<div *ngIf="isSubmitClicked">
-						<div class="propy-validation"
-							 *ngIf="propertyImages.invalid && propertyImages.errors['required']">{{
-							'common.validation-errors.required' | translate }}
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<p-checkbox binary="true" formControlName="TOC"
-								label="{{'list-property.accept-toc' | translate}}"></p-checkbox>
-					<a class="toc" [routerLink]="['/terms']">{{'common.terms' | translate}}</a>
-					<div *ngIf="isSubmitClicked">
-						<div class="propy-validation" *ngIf="TOC.invalid && TOC.errors['required']">{{
-							'common.validation-errors.toc-required' | translate }}
-						</div>
-					</div>
-				</div>
-				<button type="button" class="btn btn-block propy-control button-big" (click)="onSubmit()"> {{
+                    </div>
+                </div>
+                <div class="form-group location-form-group">
+                    <app-location-search id="location" inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}" (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"></app-location-search>
+                    <div *ngIf="isSubmitClicked">
+                        <div class="propy-validation" *ngIf="address.invalid && address.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea [rows]="5" [cols]="60" pInputTextarea autoResize="autoResize" formControlName="description" placeholder="{{ 'list-property.form-fields.description' | translate }}"></textarea>
+                </div>
+                <div class="form-group location-form-group">
+                    <label for="imageUpload">{{ 'list-property.form-fields.property-images' | translate }}</label>
+                    <p-fileUpload id="imageUpload" #uploadRef name="propertyImages" url="./upload.php" (onSelect)="selectFile($event, uploadRef)"
+                        auto="false" showUploadButton="false" showCancelButton="false" (onRemove)="removeFile($event)" multiple="multiple"
+                        customUpload="true" accept="image/*" chooseLabel="{{ 'list-property.upload-image.choose-button-label' | translate }}">
+                    </p-fileUpload>
+                    <div *ngIf="isSubmitClicked">
+                        <div class="propy-validation" *ngIf="propertyImages.invalid && propertyImages.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p-checkbox binary="true" formControlName="TOC" label="{{'list-property.accept-toc' | translate}}"></p-checkbox>
+                    <a class="toc" [routerLink]="['/terms']">{{'common.terms' | translate}}</a>
+                    <div *ngIf="isSubmitClicked">
+                        <div class="propy-validation" *ngIf="TOC.invalid && TOC.errors['required']">{{ 'common.validation-errors.toc-required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-block propy-control button-big" (click)="onSubmit()"> {{
 					'list-property.submit-button'
 					| translate }}
 				</button>
-			</form>
-		</div>
-	</div>
+            </form>
+        </div>
+    </div>
 </div>
