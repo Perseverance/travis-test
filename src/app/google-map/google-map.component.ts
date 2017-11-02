@@ -95,7 +95,7 @@ export class GoogleMapComponent implements OnInit {
 		});
 	}
 
-	private setMap(event) {
+	public setMap(event) {
 		this.map = event.map;
 		if (!this.isSizeXs) {
 			this.setupParamsWatcher();
