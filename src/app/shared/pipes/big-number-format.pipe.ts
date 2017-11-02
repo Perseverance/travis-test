@@ -2,9 +2,17 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'bigNumberFormat'})
 export class BigNumberFormatPipe implements PipeTransform {
-	transform(value: string): string {
+	transform(value: string, hasCurrencySymbol?: boolean): string {
 		let returnValue: string;
+		let currencySymbol: string;
+		let isFormatted = true;
 		if (value !== undefined) {
+			if (hasCurrencySymbol) {
+				// Get value without currency symbol
+				currencySymbol = value.substr(0, value.indexOf(' '));
+				value = value.substr(value.indexOf(' ') + 1);
+			}
+
 			const abs = Math.abs(+value);
 			if (abs >= Math.pow(10, 12)) {
 				// trillion
@@ -19,7 +27,17 @@ export class BigNumberFormatPipe implements PipeTransform {
 				// thousand
 				returnValue = (+value / Math.pow(10, 3)).toFixed(1) + 'K';
 			}
-			return returnValue ? returnValue : value;
+
+			if (returnValue === undefined) {
+				isFormatted = false;
+			}
+
+			if (currencySymbol) {
+				value = `${currencySymbol} ${value}`;
+				returnValue = `${currencySymbol} ${returnValue}`;
+			}
+
+			return isFormatted ? returnValue : value;
 		}
 	}
 }

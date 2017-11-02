@@ -1,9 +1,10 @@
-import {TermsComponent} from './core/terms/terms.component';
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {TokenGuardLazyLoading} from './authentication/token-guard-lazy-loading.service';
-import {ReferralComponent} from './referral/referral.component';
+import { TokenGuard } from './authentication/token-guard.service';
+import { TermsComponent } from './core/terms/terms.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { TokenGuardLazyLoading } from './authentication/token-guard-lazy-loading.service';
+import { GoogleMapComponent } from './google-map/google-map.component';
 
 const routes: Routes = [
 	{
@@ -17,15 +18,16 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	{
-		path: 'Users/RequestInvite',
-		component: ReferralComponent,
-		pathMatch: 'full'
-	},
-	{
-		path: 'map',
+		path: 'old-map',
 		loadChildren: './angular-google-maps/angular-google-maps.module#AngularGoogleMapsModule',
 		pathMatch: 'full',
 		canLoad: [TokenGuardLazyLoading]
+	},
+	{
+		path: 'map',
+		component: GoogleMapComponent,
+		pathMatch: 'full',
+		canActivate: [TokenGuard]
 	},
 	{
 		path: '**',

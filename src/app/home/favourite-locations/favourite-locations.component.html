@@ -1,12 +1,28 @@
 <div class="row top-locations">
-	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let location of favouriteLocations">
-		<div class="location-holder" (click)="cityItemClicked(location)">
-			<div class="row image-holder" [ngStyle]="{'background-image': 'url(' + location.imageUrls[0] + ')'}">
-			</div>
-			<div class="row info-holder">
-				<p>{{ location.cityName }}</p>
-				<span>{{ location.propertiesCount | bigNumberFormat}}</span>
-			</div>
-		</div>
+	<h3 class="text-center">{{ 'landing.explore-cities' | translate }}</h3>
+	<div class="top-cities-holder">
+		<ngx-carousel
+			[inputs]="carouselTile">
+
+			<ngx-tile NgxCarouselItem *ngFor="let city of topCities">
+				<div class="location-holder" (click)="cityItemClicked(city)">
+					<div class="city-details" [ngStyle]="{'background-image': 'url(' + city.imageUrls[0] + ')'}">
+						<div class="info-holder">
+							<h4>{{ city.cityName }}</h4>
+							<div class="real-estates">
+								<span>{{ city.propertiesCount | thousandSeparator}} {{ 'landing.real-estates' | translate }}</span>
+								<br>
+								<span>{{ 'landing.from' | translate }} {{ city.initialPrice | thousandSeparator | currencySymbol}}</span>
+							</div>
+							<div class="right-arrow-holder">
+							</div>
+						</div>
+					</div>
+				</div>
+			</ngx-tile>
+
+			<button NgxCarouselPrev class='left-arrow'>&lt;</button>
+			<button NgxCarouselNext class='right-arrow'>&gt;</button>
+		</ngx-carousel>
 	</div>
 </div>

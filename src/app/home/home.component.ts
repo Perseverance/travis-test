@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';
 
@@ -12,7 +12,8 @@ declare function SmartBanner(param1: any): void;
 export class HomeComponent implements OnInit {
 
 	constructor(private router: Router,
-		private authService: AuthenticationService) {
+		private authService: AuthenticationService,
+		private zone: NgZone) {
 	}
 
 	ngOnInit() {
@@ -35,7 +36,9 @@ export class HomeComponent implements OnInit {
 		});
 	}
 
-	onLocationFoundHandler(latitude: number, longitude: number) {
-		this.router.navigate(['map', { latitude: latitude, longitude: longitude }]);
+	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
+		this.router.navigate(['map', { latitude, longitude, locationName }]);
+		// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
+		this.zone.run(() => { });
 	}
 }

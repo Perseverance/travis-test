@@ -1,0 +1,19 @@
+<div class="property-card" [ngClass]="{'theme-small': theme==='small', 'theme-big': theme==='big'}">
+    <div class="image-holder" (click)="goToProperty(property.id)">
+        <div class="text-uppercase new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}</div>
+        <img src="{{property.imageUrls[0] | imageEnvPrefix}}" />
+        <div class="right-arrow-holder" *ngIf="showArrow">
+        </div>
+    </div>
+    <div class="property-info">
+        <span [title]="property.address">{{property.address}}</span>
+        <!-- &nbsp;/&nbsp;{{ cityName }} -->
+    </div>
+    <div class="additional-property-info">
+        <span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
+        <span class="text-uppercase" *ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
+        <span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure:property.size.type}}</span>
+    </div>
+    <h4 class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
+    </h4>
+</div>

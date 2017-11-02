@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {CurrencyTypeEnum} from './enums/currency-type.enum';
+import {LanguagesEnum} from './enums/supported-languages.enum';
 
 @Injectable()
 export class LocalStorageService {
@@ -7,6 +9,7 @@ export class LocalStorageService {
 	private KEY_REFRESH_TOKEN = 'propyRefreshToken';
 	private KEY_EXPIRY_TIMESTAMP = 'propyExpiryTimestamp';
 	private KEY_SELECTED_LANGUAGE = 'selectedLanguage';
+	private KEY_CURRENCY_TYPE = 'currencyType';
 
 	constructor() {
 	}
@@ -67,10 +70,57 @@ export class LocalStorageService {
 		return storedLanguage;
 	}
 
+	public set selectedCurrencyType(selectedCurrencyType: number) {
+		if (selectedCurrencyType === undefined || selectedCurrencyType === null) {
+			throw new Error('Trying to set invalid currency type!');
+		}
+		// Initial currency
+		if (selectedCurrencyType !== CurrencyTypeEnum.NONE) {
+			localStorage.setItem(this.KEY_CURRENCY_TYPE, selectedCurrencyType.toString());
+			return;
+		}
+		const storedCurrencyType = localStorage.getItem(this.KEY_CURRENCY_TYPE);
+		if (storedCurrencyType == null) {
+			const initialCurrencyType = this.initialCurrencyType();
+			localStorage.setItem(this.KEY_CURRENCY_TYPE, initialCurrencyType.toString());
+		}
+	}
+
+	public get selectedCurrencyType(): number {
+		const storedCurrencyType = localStorage.getItem(this.KEY_CURRENCY_TYPE);
+		if (storedCurrencyType == null) {
+			const initialCurrencyType = this.initialCurrencyType();
+			return initialCurrencyType;
+		}
+		return +storedCurrencyType;
+	}
+
 	public removeStoredAccessData() {
 		localStorage.removeItem(this.KEY_ACCESS_TOKEN);
 		localStorage.removeItem(this.KEY_REFRESH_TOKEN);
 		localStorage.removeItem(this.KEY_EXPIRY_TIMESTAMP);
 	}
 
+	private initialCurrencyType() {
+		let lang: string;
+		if (localStorage.selectedLanguage === undefined || localStorage.selectedLanguage === null || localStorage.selectedLanguage === '') {
+			lang = navigator.language.substring(0, 2);
+		} else {
+			lang = localStorage.selectedLanguage;
+		}
+		switch (lang) {
+			case LanguagesEnum.RUSSIAN: {
+				return CurrencyTypeEnum.RUB;
+			}
+			case LanguagesEnum.ARABIC: {
+				return CurrencyTypeEnum.AED;
+			}
+			case LanguagesEnum.CHINESE: {
+				return CurrencyTypeEnum.CNY;
+			}
+			default: {
+				return CurrencyTypeEnum.USD;
+			}
+		}
+	}
 }

@@ -1,0 +1,17 @@
+<div class="row new-properties">
+	<h3 class="text-center">{{ 'landing.new-properties.heading' | translate }}</h3>
+	<div class="dropdown-holder text-center">
+		<span>{{ 'landing.new-properties.in' | translate }}</span>
+		<p-dropdown [options]="citiesOptions" [(ngModel)]="selectedCity"
+					(onChange)="cityChanged($event)" autoWidth="false"
+					styleClass="city-dropdown"></p-dropdown>
+	</div>
+	<div *ngIf="properties">
+		<div class="col-xs-12 col-sm-6 col-md-4 property" *ngFor="let property of properties">
+			<app-new-property-component [property]="property"
+										[cityName]="citiesOptions[selectedCity].label">
+
+			</app-new-property-component>
+		</div>
+	</div>
+</div>

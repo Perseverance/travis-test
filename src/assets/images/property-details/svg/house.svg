@@ -1,0 +1,18 @@
+<svg width="34px" height="31px" viewBox="0 0 34 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs></defs>
+	<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		<g id="Realty-page" transform="translate(-80.000000, -730.000000)">
+			<g id="Overview" transform="translate(80.000000, 723.000000)">
+				<g id="Property-type" transform="translate(1.000000, 0.000000)">
+					<g id="Group-6" transform="translate(0.000000, 9.000000)">
+						<polyline id="Path-551-Copy-13" stroke="#ADB5B9" stroke-width="2" transform="translate(16.000000, 7.000000) scale(1, -1) translate(-16.000000, -7.000000) " points="0 -1.42108547e-14 16 14 32 -1.42108547e-14"></polyline>
+						<rect id="Rectangle-8" fill="#ADB5B9" x="3" y="10" width="2" height="18"></rect>
+						<path d="M12,20 L14,20 L14,27 L12,27 L12,20 Z M18,20 L20,20 L20,27 L18,27 L18,20 Z M12,18 L20,18 L20,20 L12,20 L12,18 Z" id="Combined-Shape" fill="#ADB5B9"></path>
+						<rect id="Rectangle-8" fill="#ADB5B9" x="27" y="10" width="2" height="18"></rect>
+						<rect id="Rectangle-9" fill="#ADB5B9" x="3" y="27" width="26" height="2"></rect>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

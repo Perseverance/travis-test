@@ -1,14 +1,10 @@
 <div class="container">
-	<h1>Propy's Google Map</h1>
-	<!-- this creates a google map on the page with the given lat/lng from -->
-	<!-- the component as the initial center of the map: -->
-	<app-location-search
-		inputPlaceholder="{{ 'common.placeholder.search' | translate }}"
-		(onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude)"></app-location-search>
-
-	<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-		<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-		<agm-marker *ngFor="let marker of properties" [latitude]="marker.latitude"
-					[longitude]="marker.longitude"></agm-marker>
-	</agm-map>
+    <h1>Propy's Google Map</h1>
+    <!-- this creates a google map on the page with the given lat/lng from -->
+    <!-- the component as the initial center of the map: -->
+    {{locationName}}
+    <agm-map (boundsChange)="boundsChange($event)" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+        <agm-marker *ngFor="let marker of properties" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+    </agm-map>
 </div>

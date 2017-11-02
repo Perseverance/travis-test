@@ -1,39 +1,31 @@
 <div *ngIf="hasUserLoaded">
-	<div class="row list-property" *ngIf="isUserAnonymous">
-		<div class="col-xs-12 text-center">
-			<h1>{{ 'list-property.not-authenticated.warning-message' | translate }}</h1>
-			<h2>{{ 'list-property.not-authenticated.login-or-signup' | translate }}.</h2>
-		</div>
-	</div>
-	<div class="row list-property" *ngIf="!isUserAnonymous">
-		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-			<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.invite-link' | translate }}</h2>
-			<p class="invite-link" routerLink="/list-property">{{ inviteLInk }}</p>
-		</div>
-		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-			<h2 class="propy-custom-heading text-capitalize">{{ 'list-property.heading' | translate }}</h2>
-		</div>
-		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-			<form [formGroup]="listPropertyForm" class="propy-form">
-				<div class="form-group">
-					<p-dropdown [options]="propertyTypes" formControlName="propertyType" [filter]="true"
-								filterBy="label"></p-dropdown>
-					<div *ngIf="propertyType.touched || isSubmitClicked">
-						<div class="propy-validation" *ngIf="propertyType.invalid && propertyType.errors['required']">{{
-							'common.validation-errors.required' | translate }}
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<p-checkbox formControlName="furnished"
-								label="{{'list-property.form-fields.property-furnished' | translate}}"
-								binary="true"></p-checkbox>
-				</div>
-				<div class="form-group">
-					<div class="ui-inputgroup">
-						<input type="number" formControlName="price" pInputText
-							   placeholder="{{'list-property.form-fields.price' | translate}}">
-						<span class="ui-inputgroup-addon"><p-dropdown [options]="currencies"
+    <div class="row list-property" *ngIf="isUserAnonymous">
+        <div class="col-xs-12 text-center">
+            <h1>{{ 'list-property.not-authenticated.warning-message' | translate }}</h1>
+            <h2>{{ 'list-property.not-authenticated.login-or-signup' | translate }}.</h2>
+        </div>
+    </div>
+    <div class="row list-property" *ngIf="!isUserAnonymous">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+            <h3 class="propy-custom-heading text-capitalize">{{ 'list-property.invite-link' | translate }}</h3>
+            <p class="invite-link" routerLink="/list-property">{{ inviteLInk }}</p>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+            <form [formGroup]="listPropertyForm" class="propy-form">
+                <div class="form-group">
+                    <p-dropdown [options]="propertyTypes" formControlName="propertyType" [filter]="true" filterBy="label"></p-dropdown>
+                    <div *ngIf="propertyType.touched || isSubmitClicked">
+                        <div class="propy-validation" *ngIf="propertyType.invalid && propertyType.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p-checkbox formControlName="furnished" label="{{'list-property.form-fields.property-furnished' | translate}}" binary="true"></p-checkbox>
+                </div>
+                <div class="form-group">
+                    <div class="ui-inputgroup">
+                        <input type="number" formControlName="price" pInputText placeholder="{{'list-property.form-fields.price' | translate}}">
+                        <span class="ui-inputgroup-addon"><p-dropdown [options]="currencies"
 																	  formControlName="currency"></p-dropdown></span>
 					</div>
 					<div *ngIf="price.touched || isSubmitClicked">

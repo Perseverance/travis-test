@@ -1,26 +1,111 @@
-<a routerLink="/login" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">Login</a>
-<a routerLink="/signup" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">Signup</a>
-<div class="row" *ngIf="property">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-        <div class="row">
-            <div class="col-xs-12" *ngFor="let url of property.imageUrls">
-                <img [src]="url">
-            </div>
+<div class="row property" *ngIf="property">
+    <div class="col-xs-12">
+        <div class="row property-carousel-holder">
+            <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
+
+                <ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">
+                    <img class="property-img" [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true">
+                </ngx-tile>
+
+                <button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true" *ngIf="property.imageUrls.length > 1"></i></button>
+                <button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true" *ngIf="property.imageUrls.length > 1"></i></button>
+            </ngx-carousel>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                {{property.address}}
-            </div>
-            <div class="col-xs-12">
-                {{property.desc}}
-            </div>
-            <div class="col-xs-12">
-                <div class="row" *ngFor="let agent of property.agents">
-                    <div class="col-xs-12" ng-if="agent.firstName && agent.lastName">
-                        {{agent.firstName}} {{agent.lastName}}
+        <div class="row property-info">
+            <div class="col-xs-12 col-md-6 col-md-offset-1">
+                <div class="row" class="basic-property-info">
+                    <div class="col-xs-8 text-left">
+                        <h3>{{property.address}}</h3>
                     </div>
-                    <div class="col-xs-12" ng-if="agent.phoneNumber">
-                        {{agent.phoneNumber}}
+                    <div class="col-xs-4 text-right">
+                        <h3>{{ property.price.value | thousandSeparator | currencySymbol: property.price.type}}
+                        </h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <span><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{property.city}}&nbsp;&#124;</span>&nbsp;
+                        <span><i class="fa fa-circle fa-active" aria-hidden="true"></i>&nbsp;{{ 'common.label.active' | translate }}&nbsp;&#124;</span>&nbsp;
+                        <span>Published {{ (property.addedOnTimeStamp | amFromUnix) | amTimeAgo }}</span>&nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 info-tabs">
+                        <div class="info-tabs-content row">
+                            <div class="col-xs-7 info-tabs-top-holder bottom-border">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li role="presentation" class="active"><a data-toggle="tab" href="#overview">{{ 'property-details.overview' | translate }}</a></li>
+                                    <li role="presentation"><a data-toggle="tab" href="#features">{{ 'property-details.features' | translate }}</a></li>
+                                    <li role="presentation"><a data-toggle="tab" href="#location" (click)="draw()">{{ 'property-details.location' | translate }}</a></li>
+                                    <li role="presentation"><a data-toggle="tab" href="#reviews">{{ 'property-details.reviews' | translate }}</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-5 bottom-border"></div>
+                            <div class="tab-content col-xs-12">
+                                <div id="overview" class="tab-pane fade in active">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-md-3">
+                                            <app-property-description-overview>
+                                                <div overview-icon>
+                                                    <div [inlineSVG]="'/assets/images/property-details/svg/house.svg'"></div>
+                                                </div>
+                                                <div overview-label>
+                                                    <span>{{'property-details.overview-labels.property-type' | translate}}</span>
+                                                </div>
+                                                <div overview-text>
+                                                    <span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
+                                                </div>
+                                            </app-property-description-overview>
+                                        </div>
+                                        <div class="col-xs-4 col-md-3">
+                                            <app-property-description-overview>
+                                                <div overview-icon>
+                                                    <div [inlineSVG]="'/assets/images/property-details/svg/area.svg'"></div>
+                                                </div>
+                                                <div overview-label>
+                                                    <span>{{'property-details.overview-labels.area' | translate}}</span>
+                                                </div>
+                                                <div overview-text>
+                                                    <span>{{property.size.value | sizeUnitOfMeasure:property.size.type}}</span>
+                                                </div>
+                                            </app-property-description-overview>
+                                        </div>
+                                        <div class="col-xs-4 col-md-3">
+                                            <app-property-description-overview>
+                                                <div overview-icon>
+                                                    <div [inlineSVG]="'/assets/images/property-details/svg/bedrooms.svg'"></div>
+                                                </div>
+                                                <div overview-label>
+                                                    <span>{{'property-details.overview-labels.bedrooms' | translate}}</span>
+                                                </div>
+                                                <div overview-text>
+                                                    <span>{{property.bedrooms}}</span>
+                                                </div>
+                                            </app-property-description-overview>
+                                        </div>
+                                    </div>
+                                    <div class="row property-desc">
+                                        {{ property.desc }}
+                                    </div>
+                                </div>
+                                <div id="features" class="tab-pane fade ">
+                                    <h3>Features</h3>
+                                    <p>Some content in features.</p>
+                                </div>
+                                <div id="reviews" class="tab-pane fade ">
+                                    <h3>Reviews</h3>
+                                    <p>Some content in reviews.</p>
+                                </div>
+                                <div id="location" class="tab-pane fade">
+                                    <div class="row">
+                                        <div class="col-xs-12 tab-header">
+                                            <h4>Neighbourhood Map</h4>
+                                        </div>
+                                        <div class="col-xs-12 location-map">
+                                            <p-gmap #gmap [options]="options" [overlays]="overlays" styleClass="google-map-holder"></p-gmap>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

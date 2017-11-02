@@ -1,12 +1,12 @@
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { DefaultLanguage } from './../i18nSetup';
-import { environment } from './../../../environments/environment';
-import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
-import { Component, OnInit, HostListener, Inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from '../../shared/localStorage.service';
-import { Router } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {DefaultLanguage} from './../i18nSetup';
+import {environment} from './../../../environments/environment';
+import {RedirectableComponent} from './../../shared/redirectable/redirectable.component';
+import {Component, OnInit, HostListener, Inject} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {LocalStorageService} from '../../shared/localStorage.service';
+import {Router, ActivatedRoute, NavigationEnd, UrlSegment} from '@angular/router';
+import {DOCUMENT} from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-header',
@@ -18,18 +18,20 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	private _lastHeaderScrollTop: number;
 	public isHeaderScrolledPastThreshold = false;
 
-	private HEADER_CHANGE_THRESHOLD_PX = 100;
+	private HEADER_CHANGE_THRESHOLD_PX = 1;
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
 	public userInfo: any;
 
-	constructor(
-		router: Router,
-		public authService: AuthenticationService,
-		public translate: TranslateService,
-		private storage: LocalStorageService,
-		@Inject(DOCUMENT) private document: Document) {
+	public isLanding = false;
+
+	constructor(router: Router,
+				private route: ActivatedRoute,
+				public authService: AuthenticationService,
+				public translate: TranslateService,
+				private storage: LocalStorageService,
+				@Inject(DOCUMENT) private document: Document) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -42,6 +44,11 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 	async ngOnInit() {
 		this.setIsHeaderScrolledPastThreshold();
+		this.router.events
+			.filter(event => event instanceof NavigationEnd)
+			.subscribe((event: NavigationEnd) => {
+				this.isLanding = (event.url === '/');
+			});
 	}
 
 
@@ -84,5 +91,9 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		event.preventDefault();
 		event.stopPropagation();
 		this.authService.performLogout();
+	}
+
+	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
+		this.router.navigate(['map', {latitude, longitude, locationName}]);
 	}
 }

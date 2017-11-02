@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class APIEndpointsService {
@@ -23,7 +23,8 @@ export class APIEndpointsService {
 		CREATE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/create`,
 		UPLOAD_IMAGES: `${this.INTERNAL_API_PREFIX}/Properties/uploadImages`,
 		PROPERTIES_BY_RECTANGLE: `${this.INTERNAL_API_PREFIX}/Properties/rect`,
-		FAVOURITE_LOCATIONS: `${this.INTERNAL_API_PREFIX}/Properties/favouritelocations`
+		FAVOURITE_LOCATIONS: `${this.INTERNAL_API_PREFIX}/Properties/favouritelocations`,
+		NEW_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/newproperties`
 	};
 
 	constructor() {

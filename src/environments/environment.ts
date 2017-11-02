@@ -20,4 +20,12 @@ export const environment = {
 	linkedInApiKey: '758vh4r0yqsbn9', // Otherwise known as ClientID
 	skippedRedirectRoutes: ['/login', '/signup'],
 	defaultRedirectRoute: '/map',
+	mapConfig: {
+		DEFAULT_MARKER_ICON: '/assets/images/marker-shape.png',
+		DEFAULT_MARKER_ICON_HOVERED: '/assets/images/marker-shape-hovered.png',
+		DEFAULT_MARKER_LABEL_COLOR: '#18ADE2',
+		DEFAULT_MARKER_LABEL_FONT_SIZE: '12px',
+		MAP_DEFAULT_ZOOM: 12
+	}
+
 };

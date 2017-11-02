@@ -1,0 +1,21 @@
+@import "../../variables";
+$sub-header-color: #929292;
+.thank-you {
+    background-color: $gray-lighter;
+    padding-top: 10px;
+}
+
+.testimonials-holder {
+    background-color: $gray-lighter;
+}
+
+.find-property {
+    h3 {
+        font-weight: 500;
+    }
+    h6 {
+        margin: 20px 0px 30px 0px;
+        font-size: 17px;
+        color: $sub-header-color;
+    }
+}
