@@ -107,6 +107,9 @@ export class PropertiesListComponent implements OnInit {
 		if (inputMaxValue < this.DEFAULT_PRICE_MIN_RANGE) {
 			inputMaxValue = this.DEFAULT_PRICE_MIN_RANGE;
 		}
+		if (inputMaxValue > this.DEFAULT_PRICE_MAX_RANGE) {
+			inputMaxValue = this.DEFAULT_PRICE_MAX_RANGE;
+		}
 		this.priceRangeValue = [this.priceMinRange, inputMaxValue];
 		input.value = this.thousandSeparatorPipe.transform(inputMaxValue);
 		this.priceMaxRange = input.value;
