@@ -1,7 +1,6 @@
 @import "../../../variables";
 .login-holder {
     h2.propy-custom-heading {
-        color: $white;
         margin-bottom: 60px;
     }
     form {
@@ -24,13 +23,11 @@
         }
         .signup {
             h3 {
-                color: white;
                 margin-top: 15px;
                 a {
-                    color: white;
                     text-decoration: underline;
                     &:hover {
-                        color: darken($white, 15%);
+                        color: lighten($black, 15%);
                     }
                 }
             }
