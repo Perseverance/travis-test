@@ -1,3 +1,4 @@
+import { BigNumberFormatPipe } from './pipes/big-number-format.pipe';
 import { GoogleMapsMarkersService } from './google-maps-markers.service';
 import { AgencyService } from './agency.service';
 import { NgModule } from '@angular/core';
@@ -26,6 +27,7 @@ import { ImageSizePipe } from './pipes/image-size.pipe';
 		PopertyTypeLocalizeKeyPipe,
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,
+		BigNumberFormatPipe,
 		PropertySizeUnitOfMeasurePipe,
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
@@ -37,6 +39,7 @@ import { ImageSizePipe } from './pipes/image-size.pipe';
 		PopertyTypeLocalizeKeyPipe,
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,
+		BigNumberFormatPipe,
 		PropertySizeUnitOfMeasurePipe,
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
