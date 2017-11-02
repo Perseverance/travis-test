@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
 import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
 import {ThousandSeparatorPipe} from '../../shared/pipes/thousand-separator.pipe';
+import {SelectItem} from 'primeng/primeng';
 
 enum LIST_TYPES {
 	GRID = 'grid',
@@ -29,15 +30,31 @@ export class PropertiesListComponent implements OnInit {
 	public sliderDraggingMin = false;
 	public sliderDraggingMax = false;
 	public priceRangeValue: number[] = [this.DEFAULT_PRICE_MIN_RANGE, this.DEFAULT_PRICE_MAX_RANGE];
+	public currencies: SelectItem[];
+	public selectedCurrency;
 
 	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe) {
 		this.modes = [
 			{label: '', value: LIST_TYPES.GRID},
 			{label: '', value: LIST_TYPES.LIST}
 		];
+
+		this.currencies = [];
+		this.currencies.push({label: 'USD', value: 1});
+		this.currencies.push({label: 'EUR', value: 2});
+		this.currencies.push({label: 'RUB', value: 3});
+		this.currencies.push({label: 'AED', value: 4});
+		this.currencies.push({label: 'HKD', value: 5});
+		this.currencies.push({label: 'SGD', value: 6});
+		this.currencies.push({label: 'GBP', value: 7});
+		this.currencies.push({label: 'BGN', value: 8});
+		this.currencies.push({label: 'CNY', value: 9});
+		this.currencies.push({label: 'ETH', value: 10});
+		this.currencies.push({label: 'BTC', value: 11});
 	}
 
 	ngOnInit() {
+		this.selectedCurrency = 1;
 	}
 
 	private setThemeGrid() {
@@ -117,6 +134,7 @@ export class PropertiesListComponent implements OnInit {
 		// ToDo: Apply filter call
 		console.log(this.priceMinRange);
 		console.log(this.priceMaxRange);
+		console.log(this.selectedCurrency);
 		overlay.hide();
 	}
 }

@@ -13,17 +13,24 @@
 							(onBeforeHide)="toggleFilterSelectionClass()">
 				<div class="arrow-up arrow-price-filter"></div>
 				<div class="row input-button-holder">
-					<input #minLimit type="text"
-						   (ngModelChange)="changePriceMinRangeInput(minLimit)"
-						   [ngModel]="priceMinRange | thousandSeparator"
-						   [ngClass]="{'slider-dragging': sliderDraggingMin}"/>
-					<span>
+					<div class="input-dropdown-holder">
+						<input #minLimit type="text"
+							   (ngModelChange)="changePriceMinRangeInput(minLimit)"
+							   [ngModel]="priceMinRange | thousandSeparator"
+							   [ngClass]="{'slider-dragging': sliderDraggingMin}"/>
+						<span>
 						{{ 'filters.to' | translate }}
 					</span>
-					<input #maxLimit type="text"
-						   [ngModel]="priceMaxRange | thousandSeparator"
-						   (ngModelChange)="changePriceMaxRangeInput(maxLimit)"
-						   [ngClass]="{'slider-dragging': sliderDraggingMax}"/>
+						<input #maxLimit type="text"
+							   [ngModel]="priceMaxRange | thousandSeparator"
+							   (ngModelChange)="changePriceMaxRangeInput(maxLimit)"
+							   [ngClass]="{'slider-dragging': sliderDraggingMax}"/>
+						<div class="dropdown-holder">
+							<p-dropdown [(ngModel)]="selectedCurrency" styleClass="currency-dropdown-panel"
+										[options]="currencies"
+										[style]="{'width': '100%'}"></p-dropdown>
+						</div>
+					</div>
 					<div class="button-holder">
 						<button class="apply-filter" (click)="applyPriceFilter(priceFilter)"> {{ 'filters.apply' |
 							translate }}
