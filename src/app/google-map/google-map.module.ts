@@ -14,12 +14,14 @@ import {
 } from 'primeng/primeng';
 import {PropertiesListComponent} from './properties-list/properties-list.component';
 import {PriceFilterComponent} from './properties-list/price-filter/price-filter.component';
+import { AreaFilterComponent } from './properties-list/area-filter/area-filter.component';
 
 @NgModule({
 	declarations: [
 		GoogleMapComponent,
 		PropertiesListComponent,
-		PriceFilterComponent
+		PriceFilterComponent,
+		AreaFilterComponent
 	],
 	imports: [
 		CommonModule,

@@ -24,6 +24,7 @@ export class PriceFilterComponent implements OnInit {
 	public filterSelectionActivated = false;
 	@Output() onFilterActivated = new EventEmitter<boolean>();
 	@Output() onPriceFilterApplied = new EventEmitter<PropertiesFilter>();
+	@Output() onAreaFilterApplied = new EventEmitter<PropertiesFilter>();
 
 	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe) {
 		this.currencies = [];
@@ -41,7 +42,7 @@ export class PriceFilterComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.selectedCurrency = 1;
+		this.selectedCurrency = CurrencyTypeEnum.USD;
 	}
 
 	public toggleFilterSelectionClass() {
