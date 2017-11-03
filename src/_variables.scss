@@ -35,6 +35,8 @@ $button-gray-hover: $gray-light;
 $button-arrow: #D2D2D2;
 $button-filter-text: #4A585E;
 $button-filter-arrow: #B5BDC1;
+$button-filter-apply: #2CDAFF;
+$button-filter-apply-hovered: #34DCFF;
 // Typography	
 $font-family-open-sans: 'Open Sans',
 sans-serif;
@@ -54,3 +56,4 @@ $xs: "(max-width: 768px)";
 $sm: "(max-width: 995px)";
 $md: "(max-width: 1200px)";
 $lg: "(min-width: 1200px)";
+$filter-overlay: "(max-width: 1330px)";

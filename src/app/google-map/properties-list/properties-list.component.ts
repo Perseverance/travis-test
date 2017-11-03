@@ -1,7 +1,7 @@
-import { PropertiesFilter } from './../../properties/properties.service';
-import { SelectItem } from 'primeng/primeng';
-import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { PROPERTY_THEMES } from '../../shared/new-property-component/new-property-component.component';
+import {PropertiesFilter} from './../../properties/properties.service';
+import {SelectItem} from 'primeng/primeng';
+import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
+import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
 
 enum LIST_TYPES {
 	GRID = 'grid',
@@ -22,34 +22,30 @@ export enum SORTING_TYPES {
 	encapsulation: ViewEncapsulation.None
 })
 export class PropertiesListComponent implements OnInit {
-
 	@Input() properties: any[];
 	public theme = LIST_TYPES.GRID;
 	public cardsTheme = PROPERTY_THEMES.SMALL;
 	public modes: any[];
 	public listMode = LIST_TYPES.GRID;
-	public filterSelectionActivated = false;
-	public defaultPriceMaxRange = 5000000;
-	public priceMinRange = 0;
-	public priceMaxRange = 5000000;
-	public priceStep = 100000;
-	public priceRangeValue: number[] = [this.priceMinRange, this.priceMaxRange];
 	public sortingTypes: SelectItem[];
-
 	public sortingType = SORTING_TYPES.DEFAULT;
+	public priceFilterMinValue = undefined;
+	public priceFilterMaxValue = undefined;
+	public priceFilterCurrency = undefined;
+	public filterSelectionActivated = false;
 
 	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
 
 	constructor() {
 		this.modes = [
-			{ label: '', value: LIST_TYPES.GRID },
-			{ label: '', value: LIST_TYPES.LIST }
+			{label: '', value: LIST_TYPES.GRID},
+			{label: '', value: LIST_TYPES.LIST}
 		];
 		this.sortingTypes = [
-			{ label: 'Default Sorting', value: SORTING_TYPES.DEFAULT },
-			{ label: 'Most Recent', value: SORTING_TYPES.RECENT },
-			{ label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST },
-			{ label: 'By Area', value: SORTING_TYPES.BY_AREA }
+			{label: 'Default Sorting', value: SORTING_TYPES.DEFAULT},
+			{label: 'Most Recent', value: SORTING_TYPES.RECENT},
+			{label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST},
+			{label: 'By Area', value: SORTING_TYPES.BY_AREA}
 		];
 	}
 
@@ -57,7 +53,14 @@ export class PropertiesListComponent implements OnInit {
 	}
 
 	public onChange() {
-		this.onFilterChanged.emit({ sorting: this.sortingType });
+		this.onFilterChanged.emit({
+			sorting: this.sortingType,
+			priceFilter: {
+				minValue: this.priceFilterMinValue,
+				maxValue: this.priceFilterMaxValue,
+				currency: this.priceFilterCurrency
+			}
+		});
 	}
 
 	private setThemeGrid() {
@@ -81,37 +84,21 @@ export class PropertiesListComponent implements OnInit {
 		}
 	}
 
-	public toggleFilterSelectionClass() {
-		this.filterSelectionActivated = !this.filterSelectionActivated;
+	public onFilterActivated(event: boolean) {
+		this.filterSelectionActivated = event;
 	}
 
-	public changePriceMinRangeInput(event) {
-		let inputMinValue = parseInt(event, 10);
-		this.priceRangeValue = [];
-		if (inputMinValue > this.priceMaxRange) {
-			inputMinValue = this.priceMaxRange;
-		}
-		this.priceRangeValue = [inputMinValue, this.priceMaxRange];
-	}
-
-	public changePriceMaxRangeInput(event) {
-		let inputMaxValue = parseInt(event, 10);
-		this.priceRangeValue = [];
-		if (inputMaxValue < this.priceMinRange) {
-			inputMaxValue = this.priceMinRange;
-		}
-		this.priceRangeValue = [this.priceMinRange, inputMaxValue];
-	}
-
-	public handlePriceChange(event) {
-		this.priceMinRange = event.values[0];
-		this.priceMaxRange = event.values[1];
-	}
-
-	public applyPriceFilter(overlay) {
-		// ToDo: Apply filter call
-		console.log(this.priceMinRange);
-		console.log(this.priceMaxRange);
-		overlay.hide();
+	public onPriceFilterApplied(event: PropertiesFilter) {
+		this.priceFilterCurrency = event.priceFilter.currency;
+		this.priceFilterMinValue = event.priceFilter.minValue;
+		this.priceFilterMaxValue = event.priceFilter.maxValue;
+		this.onFilterChanged.emit({
+			sorting: this.sortingType,
+			priceFilter: {
+				minValue: this.priceFilterMinValue,
+				maxValue: this.priceFilterMaxValue,
+				currency: this.priceFilterCurrency
+			}
+		});
 	}
 }
