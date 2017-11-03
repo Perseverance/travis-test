@@ -1,8 +1,8 @@
-import {PropertiesFilter} from './properties.service';
-import {environment} from './../../environments/environment';
-import {APIEndpointsService} from './../shared/apiendpoints.service';
-import {RestClientService} from './../shared/rest-client.service';
-import {Injectable} from '@angular/core';
+import { PropertiesFilter } from './properties.service';
+import { environment } from './../../environments/environment';
+import { APIEndpointsService } from './../shared/apiendpoints.service';
+import { RestClientService } from './../shared/rest-client.service';
+import { Injectable } from '@angular/core';
 import {
 	GetPropertiesResponse,
 	PropertyAgentResponse,
@@ -11,13 +11,13 @@ import {
 	CreatePropertyResponse,
 	PropertyImage, GetNewPropertiesResponse, NewPropertyHome
 } from './properties-responses';
-import {LocalStorageService} from '../shared/localStorage.service';
+import { LocalStorageService } from '../shared/localStorage.service';
 
 interface Bounds {
-	southWestLatitude: number,
-	northEastLatitude: number,
-	southWestLongitude: number,
-	northEastLongitude: number
+	southWestLatitude: number;
+	northEastLatitude: number;
+	southWestLongitude: number;
+	northEastLongitude: number;
 }
 
 export interface PropertiesFilter {
@@ -38,20 +38,21 @@ export interface PropertiesFilter {
 export class PropertiesService {
 
 	constructor(private restService: RestClientService,
-				private apiEndpoint: APIEndpointsService,
-				private localStorageService: LocalStorageService) {
+		private apiEndpoint: APIEndpointsService,
+		private localStorageService: LocalStorageService) {
 	}
 
 	public async getProperty(propertyId: string): Promise<any> {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params});
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
 		// TODO : Remove this once Vankata adds addedOnTimestamp in the backend
 		return result.data.data;
 	}
 
-	public async getPropertiesByCenter(centerLatitude: number, centerLongitude: number, filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
+	public async getPropertiesByCenter(centerLatitude: number, centerLongitude: number, filterObject?: PropertiesFilter)
+		: Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createBoundsFromCenter(centerLatitude, centerLongitude);
 		const boundsQuery = this.propertiesInRectangleQueryFormat(bounds);
 		const filterQuery = this.getPropertiesFilterFormat(filterObject);
@@ -59,15 +60,15 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
-		return {properties: result.data.data.properties};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
 	}
 
 	public async getPropertiesInRectangle(southWestLatitude: number,
-										  northEastLatitude: number,
-										  southWestLongitude: number,
-										  northEastLongitude: number,
-										  filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number,
+		filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createRectangleBounds(southWestLatitude,
 			northEastLatitude,
 			southWestLongitude,
@@ -78,8 +79,8 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
-		return {properties: result.data.data.properties};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
 	}
 
 	private createBoundsFromCenter(centerLatitude: number, centerLongitude: number, degreesOfIncreaseArea = 1) {
@@ -93,9 +94,9 @@ export class PropertiesService {
 	}
 
 	private createRectangleBounds(southWestLatitude: number,
-								  northEastLatitude: number,
-								  southWestLongitude: number,
-								  northEastLongitude: number) {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number) {
 		const bounds: Bounds = {
 			southWestLatitude: southWestLatitude,
 			northEastLatitude: northEastLatitude,
@@ -107,6 +108,7 @@ export class PropertiesService {
 
 	private propertiesInRectangleQueryFormat(bounds: Bounds) {
 		const querySuffix = '_coords/1,25_page/';
+		// tslint:disable-next-line:max-line-length
 		const query = `/${bounds.southWestLatitude},${bounds.northEastLatitude},${bounds.southWestLongitude},${bounds.northEastLongitude}${querySuffix}`;
 		return query;
 	}
@@ -119,6 +121,7 @@ export class PropertiesService {
 		if (filter.priceFilter.maxValue && filter.priceFilter.currency) {
 			const priceFilterSuffix = '_price';
 			const secondParameter = 0;
+			// tslint:disable-next-line:max-line-length
 			result = `${result}/${filter.priceFilter.minValue}-${filter.priceFilter.maxValue},${filter.priceFilter.currency},${secondParameter}${priceFilterSuffix}`;
 		}
 		if (filter.areaFilter.minValue && filter.areaFilter.maxValue && filter.areaFilter.areaUnit) {
@@ -137,7 +140,7 @@ export class PropertiesService {
 		const queryParams = {
 			currency: this.localStorageService.selectedCurrencyType
 		};
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS, {params: queryParams});
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS, { params: queryParams });
 		return result.data.data;
 	}
 
@@ -145,7 +148,7 @@ export class PropertiesService {
 		const queryParams = {
 			currency: this.localStorageService.selectedCurrencyType
 		};
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES, {params: queryParams});
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES, { params: queryParams });
 		return result.data.data;
 	}
 
@@ -161,7 +164,7 @@ export class PropertiesService {
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
 			propertyImages,
-			{params: queryParams});
+			{ params: queryParams });
 
 		return true;
 	}

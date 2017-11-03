@@ -1,55 +1,54 @@
 @import "../../../variables";
 @import "../../../mixins";
 @import "../../../variables";
-
 .properties-list {
-	height: 100%;
-	.filters-and-switches {
-		.list-mode-switcher {
-			.ui-button.ui-widget.ui-state-default.ui-button-text-only {
-				color: $green-darkest;
-				@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
-				border: none;
-				span.ui-button-text.ui-clickable {
-					position: relative;
-					padding: 10px;
-					display: inline-block;
-					font-family: 'Glyphicons Halflings';
-					font-style: normal;
-					font-weight: 400;
-					line-height: 1;
-					-webkit-font-smoothing: antialiased;
-					font-size: $font-size-xs;
-				}
-				&.ui-state-active {
-					background-color: $gray-lighter;
-					color: $gray-light;
-					@include box-shadow(0px, 0px, 0px, rgba(0, 0, 0, 0.1));
-				}
-				&:first-child {
-					@include border-radius-separate(5px, 0px, 5px, 0px);
-					span.ui-button-text.ui-clickable:before {
-						content: "\E010";
-					}
-				}
-				&:last-child {
-					@include border-radius-separate(0px, 5px, 0px, 5px);
-					span.ui-button-text.ui-clickable:before {
-						content: "\E012";
-					}
-				}
-			}
-		}
-	}
-	.cards-list {
-		overflow-y: scroll;
-		height: 100%;
-		> div {
-			padding-top: 20px;
-		}
-		padding-bottom: 20px;
-		&.apply-opacity {
-			opacity: 0.2;
-		}
-	}
+    height: 100%;
+    .filters-and-switches {
+        .list-mode-switcher {
+            .ui-button.ui-widget.ui-state-default.ui-button-text-only {
+                color: $green-darkest;
+                @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
+                border: none;
+                span.ui-button-text.ui-clickable {
+                    position: relative;
+                    padding: 10px;
+                    display: inline-block;
+                    font-family: 'Glyphicons Halflings';
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1;
+                    -webkit-font-smoothing: antialiased;
+                    font-size: $font-size-xs;
+                }
+                &.ui-state-active {
+                    background-color: $gray-lighter;
+                    color: $gray-light;
+                    @include box-shadow(0px, 0px, 0px, rgba(0, 0, 0, 0.1));
+                }
+                &:first-child {
+                    @include border-radius-separate(5px, 0px, 5px, 0px);
+                    span.ui-button-text.ui-clickable:before {
+                        content: "\E010";
+                    }
+                }
+                &:last-child {
+                    @include border-radius-separate(0px, 5px, 0px, 5px);
+                    span.ui-button-text.ui-clickable:before {
+                        content: "\E012";
+                    }
+                }
+            }
+        }
+    }
+    .cards-list {
+        overflow-y: scroll;
+        height: 100%;
+        >div {
+            padding-top: 20px;
+        }
+        padding-bottom: 20px;
+        &.apply-opacity {
+            opacity: 0.2;
+        }
+    }
 }

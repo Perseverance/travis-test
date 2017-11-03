@@ -14,6 +14,7 @@ import { PropertySizeUnitOfMeasurePipe } from './pipes/property-size-unit-of-mea
 import { ImageEnvironmentPrefixPipe } from './pipes/image-environment-prefix.pipe';
 import { EllipsisPipe } from './ellipsis.pipe';
 import { ImageSizePipe } from './pipes/image-size.pipe';
+import { Image404Directive } from './image404.directive';
 
 @NgModule({
 	imports: [
@@ -31,7 +32,8 @@ import { ImageSizePipe } from './pipes/image-size.pipe';
 		PropertySizeUnitOfMeasurePipe,
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
-		ImageSizePipe
+		ImageSizePipe,
+		Image404Directive
 	],
 	exports: [
 		LocationSearchComponent,
