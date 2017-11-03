@@ -137,6 +137,7 @@
 	},
 	"filters": {
 		"price": "Price",
+		"area": "Area",
 		"to": "to",
 		"apply": "Apply",
 		"cancel": "Cancel"

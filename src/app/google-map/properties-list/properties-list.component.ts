@@ -32,6 +32,9 @@ export class PropertiesListComponent implements OnInit {
 	public priceFilterMinValue = undefined;
 	public priceFilterMaxValue = undefined;
 	public priceFilterCurrency = undefined;
+	public areaFilterMinValue = undefined;
+	public areaFilterMaxValue = undefined;
+	public areaFilterUnit = undefined;
 	public filterSelectionActivated = false;
 
 	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
@@ -59,6 +62,11 @@ export class PropertiesListComponent implements OnInit {
 				minValue: this.priceFilterMinValue,
 				maxValue: this.priceFilterMaxValue,
 				currency: this.priceFilterCurrency
+			},
+			areaFilter: {
+				minValue: this.areaFilterMinValue,
+				maxValue: this.areaFilterMaxValue,
+				areaUnit: this.areaFilterUnit
 			}
 		});
 	}
@@ -98,6 +106,30 @@ export class PropertiesListComponent implements OnInit {
 				minValue: this.priceFilterMinValue,
 				maxValue: this.priceFilterMaxValue,
 				currency: this.priceFilterCurrency
+			},
+			areaFilter: {
+				minValue: this.areaFilterMinValue,
+				maxValue: this.areaFilterMaxValue,
+				areaUnit: this.areaFilterUnit
+			}
+		});
+	}
+
+	public onAreaFilterApplied(event: PropertiesFilter) {
+		this.areaFilterUnit = event.areaFilter.areaUnit;
+		this.areaFilterMinValue = event.areaFilter.minValue;
+		this.areaFilterMaxValue = event.areaFilter.maxValue;
+		this.onFilterChanged.emit({
+			sorting: this.sortingType,
+			priceFilter: {
+				minValue: this.priceFilterMinValue,
+				maxValue: this.priceFilterMaxValue,
+				currency: this.priceFilterCurrency
+			},
+			areaFilter: {
+				minValue: this.areaFilterMinValue,
+				maxValue: this.areaFilterMaxValue,
+				areaUnit: this.areaFilterUnit
 			}
 		});
 	}

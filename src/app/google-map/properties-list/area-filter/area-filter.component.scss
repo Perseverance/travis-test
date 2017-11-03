@@ -2,14 +2,12 @@
 @import "../../../../mixins";
 @import "../../../../variables";
 
-.filter-price {
+.filter-area {
 	display: inline-block;
 	.filter-button {
 		height: 32px;
 		width: 73px;
 		padding-left: 10px;
-		margin-left: 15px;
-		margin-right: 20px;
 		font-weight: normal;
 		font-size: 14px;
 		color: $button-filter-text;
@@ -19,6 +17,9 @@
 		@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
 		@include border-radius(5px);
 		outline: none;
+		&.area-filter-button {
+			margin: 0 20px;
+		}
 		span {
 			color: $button-filter-arrow;
 			font-size: 10px;
@@ -78,7 +79,7 @@
 			left: -10px;
 		}
 		.arrow-price-filter {
-			left: 10px;
+			left: 184px;
 		}
 		.input-button-holder {
 			padding: 0 15px;
@@ -128,7 +129,7 @@
 					.ui-corner-all {
 						@include border-radius(5px);
 					}
-					.currency-dropdown-panel {
+					.area-dropdown-panel {
 						width: 100%;
 						height: 35px;
 						border: solid 1px rgba(255, 255, 255, 1);

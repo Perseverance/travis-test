@@ -27,6 +27,11 @@ export interface PropertiesFilter {
 		maxValue: number,
 		currency: number
 	};
+	areaFilter?: {
+		minValue: number,
+		maxValue: number,
+		areaUnit: number
+	};
 }
 
 @Injectable()
@@ -115,6 +120,10 @@ export class PropertiesService {
 			const priceFilterSuffix = '_price';
 			const secondParameter = 0;
 			result = `${result}/${filter.priceFilter.minValue}-${filter.priceFilter.maxValue},${filter.priceFilter.currency},${secondParameter}${priceFilterSuffix}`;
+		}
+		if (filter.areaFilter.minValue && filter.areaFilter.maxValue && filter.areaFilter.areaUnit) {
+			const areaFilterSuffix = '_size';
+			result = `${result}/${filter.areaFilter.minValue}-${filter.areaFilter.maxValue},${filter.areaFilter.areaUnit}${areaFilterSuffix}`;
 		}
 		if (filter.sorting) {
 			const sortSuffix = '_sort';
