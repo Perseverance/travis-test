@@ -1,11 +1,18 @@
-import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
-import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
-import {ThousandSeparatorPipe} from '../../shared/pipes/thousand-separator.pipe';
+import {PropertiesFilter} from './../../properties/properties.service';
 import {SelectItem} from 'primeng/primeng';
+import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
+import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
 
 enum LIST_TYPES {
 	GRID = 'grid',
 	LIST = 'list'
+}
+
+export enum SORTING_TYPES {
+	DEFAULT = undefined,
+	RECENT = 0,
+	LOWEST = 1,
+	BY_AREA = 2
 }
 
 @Component({
@@ -15,46 +22,35 @@ enum LIST_TYPES {
 	encapsulation: ViewEncapsulation.None
 })
 export class PropertiesListComponent implements OnInit {
-
 	@Input() properties: any[];
 	public theme = LIST_TYPES.GRID;
 	public cardsTheme = PROPERTY_THEMES.SMALL;
 	public modes: any[];
 	public listMode = LIST_TYPES.GRID;
+	public sortingTypes: SelectItem[];
+	public sortingType = SORTING_TYPES.DEFAULT;
 	public filterSelectionActivated = false;
-	public DEFAULT_PRICE_MIN_RANGE = 0;
-	public DEFAULT_PRICE_MAX_RANGE = 5000000;
-	public DEFAULT_PRICE_STEP = 100000;
-	public priceMinRange = this.DEFAULT_PRICE_MIN_RANGE;
-	public priceMaxRange = this.DEFAULT_PRICE_MAX_RANGE;
-	public sliderDraggingMin = false;
-	public sliderDraggingMax = false;
-	public priceRangeValue: number[] = [this.DEFAULT_PRICE_MIN_RANGE, this.DEFAULT_PRICE_MAX_RANGE];
-	public currencies: SelectItem[];
-	public selectedCurrency;
 
-	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe) {
+	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
+
+	constructor() {
 		this.modes = [
 			{label: '', value: LIST_TYPES.GRID},
 			{label: '', value: LIST_TYPES.LIST}
 		];
-
-		this.currencies = [];
-		this.currencies.push({label: 'USD', value: 1});
-		this.currencies.push({label: 'EUR', value: 2});
-		this.currencies.push({label: 'RUB', value: 3});
-		this.currencies.push({label: 'AED', value: 4});
-		this.currencies.push({label: 'HKD', value: 5});
-		this.currencies.push({label: 'SGD', value: 6});
-		this.currencies.push({label: 'GBP', value: 7});
-		this.currencies.push({label: 'BGN', value: 8});
-		this.currencies.push({label: 'CNY', value: 9});
-		this.currencies.push({label: 'ETH', value: 10});
-		this.currencies.push({label: 'BTC', value: 11});
+		this.sortingTypes = [
+			{label: 'Default Sorting', value: SORTING_TYPES.DEFAULT},
+			{label: 'Most Recent', value: SORTING_TYPES.RECENT},
+			{label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST},
+			{label: 'By Area', value: SORTING_TYPES.BY_AREA}
+		];
 	}
 
 	ngOnInit() {
-		this.selectedCurrency = 1;
+	}
+
+	public onChange() {
+		this.onFilterChanged.emit({sorting: this.sortingType});
 	}
 
 	private setThemeGrid() {
@@ -77,67 +73,8 @@ export class PropertiesListComponent implements OnInit {
 				break;
 		}
 	}
-
-	public toggleFilterSelectionClass() {
-		this.filterSelectionActivated = !this.filterSelectionActivated;
-	}
-
-	public changePriceMinRangeInput(input) {
-		let inputMinValue = input.value.replace(/[^0-9.]/g, '');
-		inputMinValue = parseInt(inputMinValue, 10);
-		this.priceRangeValue = [];
-		if (inputMinValue > this.priceMaxRange) {
-			inputMinValue = this.priceMaxRange;
-		}
-		if (inputMinValue > this.DEFAULT_PRICE_MAX_RANGE) {
-			inputMinValue = this.DEFAULT_PRICE_MAX_RANGE;
-		}
-		this.priceRangeValue = [inputMinValue, this.priceMaxRange];
-		input.value = this.thousandSeparatorPipe.transform(inputMinValue);
-		this.priceMinRange = input.value;
-	}
-
-	public changePriceMaxRangeInput(input) {
-		let inputMaxValue = input.value.replace(/[^0-9.]/g, '');
-		inputMaxValue = parseInt(inputMaxValue, 10);
-		this.priceRangeValue = [];
-		if (inputMaxValue < this.priceMinRange) {
-			inputMaxValue = this.priceMinRange;
-		}
-		if (inputMaxValue < this.DEFAULT_PRICE_MIN_RANGE) {
-			inputMaxValue = this.DEFAULT_PRICE_MIN_RANGE;
-		}
-		if (inputMaxValue > this.DEFAULT_PRICE_MAX_RANGE) {
-			inputMaxValue = this.DEFAULT_PRICE_MAX_RANGE;
-		}
-		this.priceRangeValue = [this.priceMinRange, inputMaxValue];
-		input.value = this.thousandSeparatorPipe.transform(inputMaxValue);
-		this.priceMaxRange = input.value;
-	}
-
-	public handlePriceChange(event) {
-		if (this.priceMinRange !== event.values[0]) {
-			this.sliderDraggingMin = true;
-		}
-
-		if (this.priceMaxRange !== event.values[1]) {
-			this.sliderDraggingMax = true;
-		}
-
-		this.priceMinRange = event.values[0];
-		this.priceMaxRange = event.values[1];
-	}
-
-	public handleSlideEnd(event) {
-		this.sliderDraggingMin = false;
-		this.sliderDraggingMax = false;
-	}
-
-	public applyPriceFilter(overlay) {
-		// ToDo: Apply filter call
-		console.log(this.priceMinRange);
-		console.log(this.priceMaxRange);
-		console.log(this.selectedCurrency);
-		overlay.hide();
+	
+	public onFilterActivated(event: boolean) {
+		this.filterSelectionActivated = event;
 	}
 }

@@ -1,54 +1,17 @@
 <div class="col-xs-12 properties-list">
 	<div class="row filters-and-switches">
-		<div class="col-xs-12 col-lg-9 filters">
-			<button type="text" pButton (click)="priceFilter.toggle($event)"
-					class="filter-button"
-					[ngClass]="{'active': filterSelectionActivated}">
-				{{ 'filters.price' | translate }}
-				<span class="glyphicon"
-					  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>
-			</button>
-			<p-overlayPanel #priceFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()"
-							(onBeforeHide)="toggleFilterSelectionClass()">
-				<div class="arrow-up arrow-price-filter"></div>
-				<div class="row input-button-holder">
-					<div class="input-dropdown-holder">
-						<input #minLimit type="text"
-							   (ngModelChange)="changePriceMinRangeInput(minLimit)"
-							   [ngModel]="priceMinRange | thousandSeparator"
-							   [ngClass]="{'slider-dragging': sliderDraggingMin}"/>
-						<span>
-						{{ 'filters.to' | translate }}
-					</span>
-						<input #maxLimit type="text"
-							   [ngModel]="priceMaxRange | thousandSeparator"
-							   (ngModelChange)="changePriceMaxRangeInput(maxLimit)"
-							   [ngClass]="{'slider-dragging': sliderDraggingMax}"/>
-						<div class="dropdown-holder">
-							<p-dropdown [(ngModel)]="selectedCurrency" styleClass="currency-dropdown-panel"
-										[options]="currencies"
-										[style]="{'width': '100%'}"></p-dropdown>
-						</div>
-					</div>
-					<div class="button-holder">
-						<button class="apply-filter" (click)="applyPriceFilter(priceFilter)"> {{ 'filters.apply' |
-							translate }}
-						</button>
-						<button class="cancel-filter" (click)="priceFilter.hide()"> {{ 'filters.cancel' | translate }}
-						</button>
-					</div>
-				</div>
-				<p-slider [(ngModel)]="priceRangeValue"
-						  (onChange)="handlePriceChange($event)"
-						  (onSlideEnd)="handleSlideEnd($event)"
-						  [max]="DEFAULT_PRICE_MAX_RANGE" [step]="DEFAULT_PRICE_STEP"
-						  [range]="true"></p-slider>
-			</p-overlayPanel>
-		</div>
-		<div class="col-lg-3 hidden-xs hidden-sm hidden-md">
+		<app-price-filter (onFilterActivated)="onFilterActivated($event)"></app-price-filter>
+		<div class="col-xs-5 text-right rows-toggle">
+			<p-dropdown [options]="sortingTypes" [(ngModel)]="sortingType" [autoWidth]="false"
+						(onChange)="onChange($event)"></p-dropdown>
 			<p-selectButton [options]="modes" [(ngModel)]="listMode"
 							(onOptionClick)="onModeSwitched($event.option.value)"
-							styleClass="list-mode-switcher"></p-selectButton>
+							styleClass="list-mode-switcher hidden-xs hidden-sm hidden-md"></p-selectButton>
+		</div>
+	</div>
+	<div class="row" *ngIf="properties && properties.length == 0">
+		<div class="col-xs-12 text-center">
+			<h4>{{ 'common.no-properties' | translate }}</h4>
 		</div>
 	</div>
 	<div class="row cards-list" [ngClass]="{'apply-opacity': filterSelectionActivated}">
