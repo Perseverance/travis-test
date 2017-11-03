@@ -29,6 +29,9 @@ export class PropertiesListComponent implements OnInit {
 	public listMode = LIST_TYPES.GRID;
 	public sortingTypes: SelectItem[];
 	public sortingType = SORTING_TYPES.DEFAULT;
+	public priceFilterMinValue = undefined;
+	public priceFilterMaxValue = undefined;
+	public priceFilterCurrency = undefined;
 	public filterSelectionActivated = false;
 
 	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
@@ -50,7 +53,14 @@ export class PropertiesListComponent implements OnInit {
 	}
 
 	public onChange() {
-		this.onFilterChanged.emit({sorting: this.sortingType});
+		this.onFilterChanged.emit({
+			sorting: this.sortingType,
+			priceFilter: {
+				minValue: this.priceFilterMinValue,
+				maxValue: this.priceFilterMaxValue,
+				currency: this.priceFilterCurrency
+			}
+		});
 	}
 
 	private setThemeGrid() {
@@ -73,8 +83,22 @@ export class PropertiesListComponent implements OnInit {
 				break;
 		}
 	}
-	
+
 	public onFilterActivated(event: boolean) {
 		this.filterSelectionActivated = event;
+	}
+
+	public onPriceFilterApplied(event: PropertiesFilter) {
+		this.priceFilterCurrency = event.priceFilter.currency;
+		this.priceFilterMinValue = event.priceFilter.minValue;
+		this.priceFilterMaxValue = event.priceFilter.maxValue;
+		this.onFilterChanged.emit({
+			sorting: this.sortingType,
+			priceFilter: {
+				minValue: this.priceFilterMinValue,
+				maxValue: this.priceFilterMaxValue,
+				currency: this.priceFilterCurrency
+			}
+		});
 	}
 }

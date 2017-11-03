@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {SelectItem} from 'primeng/primeng';
 import {ThousandSeparatorPipe} from '../../../shared/pipes/thousand-separator.pipe';
+import {PropertiesFilter} from '../../../properties/properties.service';
+import {CurrencyTypeEnum} from '../../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-price-filter',
@@ -21,20 +23,21 @@ export class PriceFilterComponent implements OnInit {
 	public selectedCurrency;
 	public filterSelectionActivated = false;
 	@Output() onFilterActivated = new EventEmitter<boolean>();
+	@Output() onPriceFilterApplied = new EventEmitter<PropertiesFilter>();
 
 	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe) {
 		this.currencies = [];
-		this.currencies.push({label: 'USD', value: 1});
-		this.currencies.push({label: 'EUR', value: 2});
-		this.currencies.push({label: 'RUB', value: 3});
-		this.currencies.push({label: 'AED', value: 4});
-		this.currencies.push({label: 'HKD', value: 5});
-		this.currencies.push({label: 'SGD', value: 6});
-		this.currencies.push({label: 'GBP', value: 7});
-		this.currencies.push({label: 'BGN', value: 8});
-		this.currencies.push({label: 'CNY', value: 9});
-		this.currencies.push({label: 'ETH', value: 10});
-		this.currencies.push({label: 'BTC', value: 11});
+		this.currencies.push({label: 'USD', value: CurrencyTypeEnum.USD});
+		this.currencies.push({label: 'EUR', value: CurrencyTypeEnum.EUR});
+		this.currencies.push({label: 'RUB', value: CurrencyTypeEnum.RUB});
+		this.currencies.push({label: 'AED', value: CurrencyTypeEnum.AED});
+		this.currencies.push({label: 'HKD', value: CurrencyTypeEnum.HKD});
+		this.currencies.push({label: 'SGD', value: CurrencyTypeEnum.SGD});
+		this.currencies.push({label: 'GBP', value: CurrencyTypeEnum.GBP});
+		this.currencies.push({label: 'BGN', value: CurrencyTypeEnum.BGN});
+		this.currencies.push({label: 'CNY', value: CurrencyTypeEnum.CNY});
+		this.currencies.push({label: 'ETH', value: CurrencyTypeEnum.ETH});
+		this.currencies.push({label: 'BTC', value: CurrencyTypeEnum.BTC});
 	}
 
 	ngOnInit() {
@@ -49,14 +52,15 @@ export class PriceFilterComponent implements OnInit {
 	public changePriceMinRangeInput(input) {
 		let inputMinValue = input.value.replace(/[^0-9.]/g, '');
 		inputMinValue = parseInt(inputMinValue, 10);
+		const currentMaxRange = this.stringRangeValueToNumber(this.priceMaxRange.toString())
 		this.priceRangeValue = [];
-		if (inputMinValue > this.priceMaxRange) {
-			inputMinValue = this.priceMaxRange;
+		if (inputMinValue > currentMaxRange) {
+			inputMinValue = currentMaxRange;
 		}
 		if (inputMinValue > this.DEFAULT_PRICE_MAX_RANGE) {
 			inputMinValue = this.DEFAULT_PRICE_MAX_RANGE;
 		}
-		this.priceRangeValue = [inputMinValue, this.priceMaxRange];
+		this.priceRangeValue = [inputMinValue, currentMaxRange];
 		input.value = this.thousandSeparatorPipe.transform(inputMinValue);
 		this.priceMinRange = input.value;
 	}
@@ -64,9 +68,10 @@ export class PriceFilterComponent implements OnInit {
 	public changePriceMaxRangeInput(input) {
 		let inputMaxValue = input.value.replace(/[^0-9.]/g, '');
 		inputMaxValue = parseInt(inputMaxValue, 10);
+		const currentMinRange = this.stringRangeValueToNumber(this.priceMinRange.toString());
 		this.priceRangeValue = [];
-		if (inputMaxValue < this.priceMinRange) {
-			inputMaxValue = this.priceMinRange;
+		if (inputMaxValue < currentMinRange) {
+			inputMaxValue = currentMinRange;
 		}
 		if (inputMaxValue < this.DEFAULT_PRICE_MIN_RANGE) {
 			inputMaxValue = this.DEFAULT_PRICE_MIN_RANGE;
@@ -74,7 +79,7 @@ export class PriceFilterComponent implements OnInit {
 		if (inputMaxValue > this.DEFAULT_PRICE_MAX_RANGE) {
 			inputMaxValue = this.DEFAULT_PRICE_MAX_RANGE;
 		}
-		this.priceRangeValue = [this.priceMinRange, inputMaxValue];
+		this.priceRangeValue = [currentMinRange, inputMaxValue];
 		input.value = this.thousandSeparatorPipe.transform(inputMaxValue);
 		this.priceMaxRange = input.value;
 	}
@@ -98,10 +103,18 @@ export class PriceFilterComponent implements OnInit {
 	}
 
 	public applyPriceFilter(overlay) {
-		// ToDo: Apply filter call
-		console.log(this.priceMinRange);
-		console.log(this.priceMaxRange);
-		console.log(this.selectedCurrency);
+		this.onPriceFilterApplied.emit({
+			priceFilter: {
+				minValue: this.stringRangeValueToNumber(this.priceMinRange.toString()),
+				maxValue: this.stringRangeValueToNumber(this.priceMaxRange.toString()),
+				currency: this.selectedCurrency
+			}
+		});
 		overlay.hide();
+	}
+
+	private stringRangeValueToNumber(value: string): number {
+		const rangeStr = value.replace(/[^0-9.]/g, '');
+		return parseInt(rangeStr, 10);
 	}
 }

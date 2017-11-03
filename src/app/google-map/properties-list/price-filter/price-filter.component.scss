@@ -81,6 +81,9 @@
 			padding: 0 15px;
 			.input-dropdown-holder {
 				display: inline-block;
+				@media #{$xs} {
+					display: block;
+				}
 				input {
 					width: 86px;
 					height: 36px;
@@ -114,6 +117,10 @@
 						display: block;
 						margin-left: 0px;
 						margin-top: 15px;
+					}
+					@media #{$xs} {
+						display: inline-block;
+						margin-left: 15px;
 					}
 					.ui-corner-all {
 						@include border-radius(5px);
