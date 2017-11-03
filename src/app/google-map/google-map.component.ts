@@ -1,3 +1,4 @@
+import { PropertiesFilter } from './../properties/properties.service';
 import { GoogleMapsMarkersService } from './../shared/google-maps-markers.service';
 import { environment } from './../../environments/environment';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, NgZone } from '@angular/core';
@@ -31,6 +32,10 @@ export class GoogleMapComponent implements OnInit {
 	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
 
 	private XS_SIZE_PX = 768;
+	private filterObject: PropertiesFilter;
+	private currentCenter: google.maps.LatLng;
+	private currentSouthWestRect: google.maps.LatLng;
+	private currentNorthEastRect: google.maps.LatLng;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -72,7 +77,7 @@ export class GoogleMapComponent implements OnInit {
 
 	private moveToLocation(latitude: number, longitude: number) {
 		if (this.isSizeXs) {
-			this.getCenterProperties(latitude, longitude);
+			this.getCenterProperties(new google.maps.LatLng(latitude, longitude), this.filterObject);
 			return;
 		}
 		if (!this.map) {
@@ -95,6 +100,22 @@ export class GoogleMapComponent implements OnInit {
 		});
 	}
 
+	public onFilterChanged(event: PropertiesFilter) {
+		this.filterObject = event;
+		if (this.isSizeXs) {
+			if (!this.currentCenter) {
+				return;
+			}
+			this.getCenterProperties(this.currentCenter, event);
+			return;
+		}
+
+		if (!this.currentSouthWestRect || !this.currentNorthEastRect) {
+			return;
+		}
+		this.getBoundsProperties(this.currentSouthWestRect, this.currentNorthEastRect, event);
+	}
+
 	public setMap(event) {
 		this.map = event.map;
 		if (!this.isSizeXs) {
@@ -105,18 +126,20 @@ export class GoogleMapComponent implements OnInit {
 				// This stops the map removing the list contents
 				return;
 			}
-			this.getBoundsProperties(this.map);
+			this.getBoundsProperties(this.map.getBounds().getSouthWest(), this.map.getBounds().getNorthEast(), this.filterObject);
 		});
 	}
 
-	private async getBoundsProperties(map: google.maps.Map) {
+	private async getBoundsProperties(southWest: google.maps.LatLng, northEast: google.maps.LatLng, filter: PropertiesFilter) {
 		try {
 			this.propertiesLoading = true;
+			this.currentSouthWestRect = southWest;
+			this.currentNorthEastRect = northEast;
 			const propertiesResponse = await this.propertiesService.getPropertiesInRectangle(
-				map.getBounds().getSouthWest().lat(),
-				map.getBounds().getNorthEast().lat(),
-				map.getBounds().getSouthWest().lng(),
-				map.getBounds().getNorthEast().lng());
+				southWest.lat(),
+				northEast.lat(),
+				southWest.lng(),
+				northEast.lng(), filter);
 			this.properties = propertiesResponse.properties;
 			this.propertiesLoading = false;
 			if (!this.isSizeXs) {
@@ -130,10 +153,11 @@ export class GoogleMapComponent implements OnInit {
 		}
 	}
 
-	private async getCenterProperties(centerLatitude: number, centerLongitude: number) {
+	private async getCenterProperties(center: google.maps.LatLng, filter: PropertiesFilter) {
 		try {
 			this.propertiesLoading = true;
-			const propertiesResponse = await this.propertiesService.getPropertiesByCenter(centerLatitude, centerLongitude);
+			this.currentCenter = center;
+			const propertiesResponse = await this.propertiesService.getPropertiesByCenter(center.lat(), center.lng(), filter);
 			this.properties = propertiesResponse.properties;
 			this.propertiesLoading = false;
 			if (!this.isSizeXs) {

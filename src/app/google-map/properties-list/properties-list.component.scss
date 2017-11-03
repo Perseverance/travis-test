@@ -1,126 +1,125 @@
 @import "../../../variables";
 @import "../../../mixins";
 @import "../../../variables";
-
 .properties-list {
-	height: 100%;
-	.filters-and-switches {
-		.filters {
-			.filter-button {
-				height: 32px;
-				width: 73px;
-				padding-left: 10px;
-				font-weight: normal;
-				font-size: 14px;
-				color: $button-filter-text;
-				text-align: left;
-				background-color: white;
-				border: solid 1px rgba(255, 255, 255, 0.8);
-				@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
-				@include border-radius(5px);
-				outline: none;
-				span {
-					color: $button-filter-arrow;
-					font-size: 10px;
-					display: block;
-					float: right;
-					margin-top: 4px;
-				}
-				&:hover {
-					border: solid 1px rgba(255, 255, 255, 1);
-					@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.6));
-					span {
-						color: #384348;
-					}
-				}
-				&.active {
-					color: $blue-dark;
-					border: solid 1px rgba(76, 202, 247, 0.5);
-					@include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
-					background-color: #F6FDFF;
-					span {
-						color: $blue-dark;
-					}
-				}
-			}
-			.range-filter {
-				height: 140px;
-				width: 95%;
-				top: 50px !important;
-				left: 15px !important;
-				@media #{$lg} {
-					width: 128%;
-				}
-				.arrow-up {
-					width: 0;
-					height: 0;
-					border-left: 11px solid transparent;
-					border-right: 11px solid transparent;
-					border-bottom: 12px solid $gray-light;
-					position: relative;
-					top: -20px;
-				}
-				.arrow-up:after {
-					content: '';
-					width: 0;
-					height: 0;
-					border-right: 10px solid transparent;
-					border-left: 10px solid transparent;
-					border-bottom: 12px solid white;
-					position: absolute;
-					top: 1px;
-					left: -10px;
-				}
-				.arrow-price-filter {
-					left: 10px;
-				}
-			}
-		}
-		.list-mode-switcher {
-			.ui-button.ui-widget.ui-state-default.ui-button-text-only {
-				color: $green-darkest;
-				@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
-				border: none;
-				span.ui-button-text.ui-clickable {
-					position: relative;
-					padding: 10px;
-					display: inline-block;
-					font-family: 'Glyphicons Halflings';
-					font-style: normal;
-					font-weight: 400;
-					line-height: 1;
-					-webkit-font-smoothing: antialiased;
-					font-size: $font-size-xs;
-				}
-				&.ui-state-active {
-					background-color: $gray-lighter;
-					color: $gray-light;
-					@include box-shadow(0px, 0px, 0px, rgba(0, 0, 0, 0.1));
-				}
-				&:first-child {
-					@include border-radius-separate(5px, 0px, 5px, 0px);
-					span.ui-button-text.ui-clickable:before {
-						content: "\E010";
-					}
-				}
-				&:last-child {
-					@include border-radius-separate(0px, 5px, 0px, 5px);
-					span.ui-button-text.ui-clickable:before {
-						content: "\E012";
-					}
-				}
-			}
-		}
-	}
-	.cards-list {
-		overflow-y: scroll;
-		height: 100%;
-		> div {
-			padding-top: 20px;
-		}
-		padding-bottom: 20px;
-		&.apply-opacity {
-			opacity: 0.2;
-		}
-	}
+    height: 100%;
+    .filters-and-switches {
+        .filters {
+            .filter-button {
+                height: 32px;
+                width: 73px;
+                padding-left: 10px;
+                font-weight: normal;
+                font-size: 14px;
+                color: $button-filter-text;
+                text-align: left;
+                background-color: white;
+                border: solid 1px rgba(255, 255, 255, 0.8);
+                @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
+                @include border-radius(5px);
+                outline: none;
+                span {
+                    color: $button-filter-arrow;
+                    font-size: 10px;
+                    display: block;
+                    float: right;
+                    margin-top: 4px;
+                }
+                &:hover {
+                    border: solid 1px rgba(255, 255, 255, 1);
+                    @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.6));
+                    span {
+                        color: #384348;
+                    }
+                }
+                &.active {
+                    color: $blue-dark;
+                    border: solid 1px rgba(76, 202, 247, 0.5);
+                    @include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
+                    background-color: #F6FDFF;
+                    span {
+                        color: $blue-dark;
+                    }
+                }
+            }
+            .range-filter {
+                height: 140px;
+                width: 95%;
+                top: 50px !important;
+                left: 15px !important;
+                @media #{$lg} {
+                    width: 128%;
+                }
+                .arrow-up {
+                    width: 0;
+                    height: 0;
+                    border-left: 11px solid transparent;
+                    border-right: 11px solid transparent;
+                    border-bottom: 12px solid $gray-light;
+                    position: relative;
+                    top: -20px;
+                }
+                .arrow-up:after {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border-right: 10px solid transparent;
+                    border-left: 10px solid transparent;
+                    border-bottom: 12px solid white;
+                    position: absolute;
+                    top: 1px;
+                    left: -10px;
+                }
+                .arrow-price-filter {
+                    left: 10px;
+                }
+            }
+        }
+        .list-mode-switcher {
+            .ui-button.ui-widget.ui-state-default.ui-button-text-only {
+                color: $green-darkest;
+                @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
+                border: none;
+                span.ui-button-text.ui-clickable {
+                    position: relative;
+                    padding: 10px;
+                    display: inline-block;
+                    font-family: 'Glyphicons Halflings';
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1;
+                    -webkit-font-smoothing: antialiased;
+                    font-size: $font-size-xs;
+                }
+                &.ui-state-active {
+                    background-color: $gray-lighter;
+                    color: $gray-light;
+                    @include box-shadow(0px, 0px, 0px, rgba(0, 0, 0, 0.1));
+                }
+                &:first-child {
+                    @include border-radius-separate(5px, 0px, 5px, 0px);
+                    span.ui-button-text.ui-clickable:before {
+                        content: "\E010";
+                    }
+                }
+                &:last-child {
+                    @include border-radius-separate(0px, 5px, 0px, 5px);
+                    span.ui-button-text.ui-clickable:before {
+                        content: "\E012";
+                    }
+                }
+            }
+        }
+    }
+    .cards-list {
+        overflow-y: scroll;
+        height: 100%;
+        >div {
+            padding-top: 20px;
+        }
+        padding-bottom: 20px;
+        &.apply-opacity {
+            opacity: 0.2;
+        }
+    }
 }
