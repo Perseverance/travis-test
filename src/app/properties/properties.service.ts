@@ -107,7 +107,7 @@ export class PropertiesService {
 	}
 
 	private propertiesInRectangleQueryFormat(bounds: Bounds) {
-		const querySuffix = '_coords/1,25_page/';
+		const querySuffix = '_coords/1,100_page/';
 		// tslint:disable-next-line:max-line-length
 		const query = `/${bounds.southWestLatitude},${bounds.northEastLatitude},${bounds.southWestLongitude},${bounds.northEastLongitude}${querySuffix}`;
 		return query;

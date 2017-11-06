@@ -1,8 +1,8 @@
 <div class="row properties-map">
-    <div class="list-container width-40 xs-width-100">
+    <div class="list-container width-50 xs-width-100">
         <app-properties-list [properties]="properties" (onFilterChanged)="onFilterChanged($event)"></app-properties-list>
     </div>
-    <div class="list-loading-indicator-container width-40 xs-width-100" *ngIf="propertiesLoading">
+    <div class="list-loading-indicator-container width-50 xs-width-100" *ngIf="propertiesLoading">
         <p-progressSpinner></p-progressSpinner>
     </div>
     <div class="map-container hidden-xs">

@@ -1,3 +1,4 @@
+import {TranslateService} from '@ngx-translate/core';
 import {PropertiesFilter} from './../../properties/properties.service';
 import {SelectItem} from 'primeng/primeng';
 import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
@@ -40,23 +41,22 @@ export class PropertiesListComponent implements OnInit {
 
 	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
 
-	constructor() {
+	constructor(private translateService: TranslateService) {
 		this.modes = [
 			{label: '', value: LIST_TYPES.GRID},
 			{label: '', value: LIST_TYPES.LIST}
 		];
-		this.sortingTypes = [
-			{label: 'Default Sorting', value: SORTING_TYPES.DEFAULT},
-			{label: 'Most Recent', value: SORTING_TYPES.RECENT},
-			{label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST},
-			{label: 'By Area', value: SORTING_TYPES.BY_AREA}
-		];
-		this.sortingTypes = [
-			{label: 'Default Sorting', value: SORTING_TYPES.DEFAULT},
-			{label: 'Most Recent', value: SORTING_TYPES.RECENT},
-			{label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST},
-			{label: 'By Area', value: SORTING_TYPES.BY_AREA}
-		];
+
+		const self = this;
+		this.translateService.get(['sorting.default', 'sorting.recent', 'sorting.price', 'sorting.area'])
+			.subscribe((data) => {
+				self.sortingTypes = [
+					{label: data['sorting.default'], value: SORTING_TYPES.DEFAULT},
+					{label: data['sorting.recent'], value: SORTING_TYPES.RECENT},
+					{label: data['sorting.price'], value: SORTING_TYPES.LOWEST},
+					{label: data['sorting.area'], value: SORTING_TYPES.BY_AREA}
+				];
+			});
 	}
 
 	ngOnInit() {

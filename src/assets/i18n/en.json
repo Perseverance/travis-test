@@ -149,5 +149,11 @@
 		"to": "to",
 		"apply": "Apply",
 		"cancel": "Cancel"
+	},
+	"sorting": {
+		"default": "Default Sort",
+		"recent": "Most Recent",
+		"price": "Price (Low to High)",
+		"area": "By Area"
 	}
 }
