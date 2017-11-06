@@ -20,44 +20,24 @@ export class BedFilterComponent implements OnInit {
 	private BED_OPTION_2_BEDS = '2';
 	private BED_OPTION_3_BEDS = '3';
 	private BED_OPTION_4_PLUS_BEDS = '4p';
-	public bedOptions: SelectItem[];
+	public bedOptions: SelectItem[] = [];
 	public selectedBedTypes: string[];
-	public label_studio: string;
-	public label_1_bed: string;
-	public label_2_beds: string;
-	public label_3_beds: string;
-	public label_4_beds: string;
 	public filterSelectionActivated = false;
 	@Output() onFilterActivated = new EventEmitter<boolean>();
 	@Output() onBedFilterApplied = new EventEmitter<PropertiesFilter>();
 
 	constructor(private translateService: TranslateService) {
-		this.bedOptions = [];
-
-		this.translateService.stream(this.STUDIO_KEY).subscribe((keyTranslation: string) => {
-			this.label_studio = keyTranslation;
-			this.bedOptions.push({label: this.label_studio, value: this.BED_OPTION_STUDIO});
-		});
-
-		this.translateService.stream(this.BED_1_KEY).subscribe((keyTranslation: string) => {
-			this.label_1_bed = keyTranslation;
-			this.bedOptions.push({label: this.label_1_bed, value: this.BED_OPTION_1_BED});
-		});
-
-		this.translateService.stream(this.BEDS_2_KEY).subscribe((keyTranslation: string) => {
-			this.label_2_beds = keyTranslation;
-			this.bedOptions.push({label: this.label_2_beds, value: this.BED_OPTION_2_BEDS});
-		});
-
-		this.translateService.stream(this.BEDS_3_KEY).subscribe((keyTranslation: string) => {
-			this.label_3_beds = keyTranslation;
-			this.bedOptions.push({label: this.label_3_beds, value: this.BED_OPTION_3_BEDS});
-		});
-
-		this.translateService.stream(this.BEDS_4_KEY).subscribe((keyTranslation: string) => {
-			this.label_4_beds = keyTranslation;
-			this.bedOptions.push({label: this.label_4_beds, value: this.BED_OPTION_4_PLUS_BEDS});
-		});
+		const self = this;
+		this.translateService.get([this.STUDIO_KEY, this.BED_1_KEY, this.BEDS_2_KEY, this.BEDS_3_KEY, this.BEDS_4_KEY])
+			.subscribe((data) => {
+				self.bedOptions = [
+					{label: data[this.STUDIO_KEY], value: self.BED_OPTION_STUDIO},
+					{label: data[this.BED_1_KEY], value: self.BED_OPTION_1_BED},
+					{label: data[this.BEDS_2_KEY], value: self.BED_OPTION_2_BEDS},
+					{label: data[this.BEDS_3_KEY], value: self.BED_OPTION_3_BEDS},
+					{label: data[this.BEDS_4_KEY], value: self.BED_OPTION_4_PLUS_BEDS}
+				];
+			});
 	}
 
 	ngOnInit() {
