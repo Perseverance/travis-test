@@ -1,7 +1,7 @@
 @import "../../variables";
 @import "../../mixins";
-$map-width: 60%;
-$list-width: 40%;
+$map-width: 50%;
+$list-width: 50%;
 .properties-map {
     .list-container {
         position: absolute;
@@ -10,7 +10,7 @@ $list-width: 40%;
         bottom: $footer-height;
         background-color: $gray-lightest;
     }
-    .width-40 {
+    .width-50 {
         width: $list-width;
     }
     .xs-width-100 {

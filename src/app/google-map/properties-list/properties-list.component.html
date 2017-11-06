@@ -6,7 +6,8 @@
             <app-area-filter (onAreaFilterApplied)="onAreaFilterApplied($event)" (onFilterActivated)="onFilterActivated($event)"></app-area-filter>
         </div>
         <div class="col-xs-5 text-right rows-toggle">
-            <p-dropdown [options]="sortingTypes" [(ngModel)]="sortingType" [autoWidth]="false" (onChange)="onChange($event)"></p-dropdown>
+            <p-dropdown [options]="sortingTypes" [(ngModel)]="sortingType" [autoWidth]="false" (onChange)="onChange($event)" dropdownIcon="glyphicon glyphicon-menu-down"
+                styleClass="sorting-dropdown"></p-dropdown>
             <p-selectButton [options]="modes" [(ngModel)]="listMode" (onOptionClick)="onModeSwitched($event.option.value)" styleClass="list-mode-switcher hidden-xs hidden-sm hidden-md"></p-selectButton>
         </div>
     </div>
