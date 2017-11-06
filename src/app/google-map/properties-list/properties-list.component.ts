@@ -37,7 +37,9 @@ export class PropertiesListComponent implements OnInit {
 	public areaFilterMaxValue = undefined;
 	public areaFilterUnit = undefined;
 	public selectedBedTypes = undefined;
-	public filterSelectionActivated = false;
+	public filterPriceSelectionActivated = false;
+	public filterAreaSelectionActivated = false;
+	public filterBedSelectionActivated = false;
 
 	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
 
@@ -100,8 +102,16 @@ export class PropertiesListComponent implements OnInit {
 		}
 	}
 
-	public onFilterActivated(event: boolean) {
-		this.filterSelectionActivated = event;
+	public onFilterPriceActivated(event: boolean) {
+		this.filterPriceSelectionActivated = event;
+	}
+
+	public onFilterAreaActivated(event: boolean) {
+		this.filterAreaSelectionActivated = event;
+	}
+
+	public onFilterBedActivated(event: boolean) {
+		this.filterBedSelectionActivated = event;
 	}
 
 	public onPriceFilterApplied(event: PropertiesFilter) {

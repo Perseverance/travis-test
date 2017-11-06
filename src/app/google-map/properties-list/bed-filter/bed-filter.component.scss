@@ -46,13 +46,10 @@
 		}
 	}
 	.range-filter {
-		width: 95%;
+		width: 166%;
 		min-height: 100px;
 		top: 50px !important;
 		left: 15px !important;
-		@media #{$lg} {
-			width: 164%;
-		}
 		.arrow-up {
 			width: 0;
 			height: 0;
@@ -131,10 +128,6 @@
 			.button-holder {
 				display: inline-block;
 				float: right;
-				@media #{$filter-overlay} {
-					float: left;
-					margin-top: 15px;
-				}
 				button {
 					height: 36px;
 					font-size: 14px;

@@ -44,18 +44,12 @@
 		}
 	}
 	.range-filter {
-		height: 140px;
-		width: 95%;
+		height: 160px;
+		width: 166%;
 		top: 50px !important;
 		left: 15px !important;
-		@media #{$lg} {
-			width: 164%;
-		}
-		@media #{$filter-overlay} {
-			height: 180px;
-		}
 		@media #{$sm} {
-			height: 240px;
+			height: 200px;
 		}
 		.arrow-up {
 			width: 0;
@@ -84,9 +78,7 @@
 			padding: 0 15px;
 			.input-dropdown-holder {
 				display: inline-block;
-				@media #{$xs} {
-					display: block;
-				}
+				margin-top: 20px;
 				input {
 					width: 86px;
 					height: 36px;
@@ -116,15 +108,6 @@
 					width: 86px;
 					display: inline-block;
 					margin-left: 10px;
-					@media #{$sm} {
-						display: block;
-						margin-left: 0px;
-						margin-top: 15px;
-					}
-					@media #{$xs} {
-						display: inline-block;
-						margin-left: 15px;
-					}
 					.ui-corner-all {
 						@include border-radius(5px);
 					}
@@ -160,10 +143,7 @@
 			.button-holder {
 				display: inline-block;
 				float: right;
-				@media #{$filter-overlay} {
-					float: left;
-					margin-top: 15px;
-				}
+				margin-top: 20px;
 				button {
 					height: 36px;
 					font-size: 14px;

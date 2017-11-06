@@ -2,11 +2,11 @@
 	<div class="row filters-and-switches">
 		<div class="col-xs-7 filter-col">
 			<app-price-filter (onPriceFilterApplied)="onPriceFilterApplied($event)"
-							  (onFilterActivated)="onFilterActivated($event)"></app-price-filter>
+							  (onFilterActivated)="onFilterPriceActivated($event)"></app-price-filter>
 			<app-bed-filter (onBedFilterApplied)="onBedFilterApplied($event)"
-							(onFilterActivated)="onFilterActivated($event)"></app-bed-filter>
+							(onFilterActivated)="onFilterBedActivated($event)"></app-bed-filter>
 			<app-area-filter (onAreaFilterApplied)="onAreaFilterApplied($event)"
-							 (onFilterActivated)="onFilterActivated($event)"></app-area-filter>
+							 (onFilterActivated)="onFilterAreaActivated($event)"></app-area-filter>
 		</div>
 		<div class="col-xs-5 text-right rows-toggle">
 			<p-dropdown [options]="sortingTypes" [(ngModel)]="sortingType" [autoWidth]="false"
@@ -22,7 +22,8 @@
 			<h4>{{ 'common.no-properties' | translate }}</h4>
 		</div>
 	</div>
-	<div class="row cards-list" [ngClass]="{'apply-opacity': filterSelectionActivated}">
+	<div class="row cards-list"
+		 [ngClass]="{'apply-opacity': filterPriceSelectionActivated || filterAreaSelectionActivated || filterBedSelectionActivated}">
 		<div class="col-xs-12" *ngFor="let property of properties" [ngClass]="{'col-lg-6': theme === 'grid'}">
 			<app-new-property-component [property]="property" [showArrow]=false
 										[theme]="cardsTheme"></app-new-property-component>
