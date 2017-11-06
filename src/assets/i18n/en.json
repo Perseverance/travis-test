@@ -163,13 +163,21 @@
             "walkability": "Walkability",
             "disaster": "Distaster Likeliness",
             "waste": "Waste Management",
-            "furnished": "Is furnished",
+            "furnished": "Is Furnished",
             "air-quality-index": "Air Quality Index"
         }
     },
     "filters": {
         "price": "Price",
         "area": "Area",
+        "beds": {
+            "beds-button": "Beds",
+            "studio": "Studio",
+            "1-bed": "1 bed",
+            "2-beds": "2 beds",
+            "3-beds": "3 beds",
+            "4-beds": "4+ beds"
+        },
         "to": "to",
         "apply": "Apply",
         "cancel": "Cancel"

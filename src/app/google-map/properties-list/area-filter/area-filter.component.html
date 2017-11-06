@@ -1,6 +1,6 @@
 <div class="filter-area row">
 	<button type="text" pButton (click)="areaFilter.toggle($event)"
-			class="filter-button area-filter-button"
+			class="filter-button area-filter-button hidden-sm"
 			[ngClass]="{'active': filterSelectionActivated}">
 		{{ 'filters.area' | translate }}
 		<span class="glyphicon"

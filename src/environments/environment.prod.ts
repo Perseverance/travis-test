@@ -19,7 +19,8 @@ export const environment = {
 		DEFAULT_MARKER_ICON: '/assets/images/marker-shape.png',
 		DEFAULT_MARKER_ICON_HOVERED: '/assets/images/marker-shape-hovered.png',
 		DEFAULT_MARKER_LABEL_COLOR: '#18ADE2',
-		DEFAULT_MARKER_LABEL_FONT_SIZE: '12px',
+		DEFAULT_MARKER_LABEL_COLOR_HOVERED: '#FFFFFF',
+		DEFAULT_MARKER_LABEL_FONT_SIZE: '11px',
 		MAP_DEFAULT_ZOOM: 12
 	}
 };
