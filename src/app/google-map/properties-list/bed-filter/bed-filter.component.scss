@@ -47,6 +47,7 @@
 	}
 	.range-filter {
 		width: 95%;
+		min-height: 100px;
 		top: 50px !important;
 		left: 15px !important;
 		@media #{$lg} {
@@ -74,6 +75,7 @@
 		}
 		.arrow-bed-filter {
 			left: 95px;
+			margin-bottom: 10px;
 		}
 		.multiple-beds-holder {
 			display: inline-block;
