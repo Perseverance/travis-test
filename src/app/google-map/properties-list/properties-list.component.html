@@ -1,24 +1,32 @@
 <div class="col-xs-12 properties-list">
-    <div class="row filters-and-switches">
-        <div class="col-xs-7 filter-col">
-            <app-price-filter (onPriceFilterApplied)="onPriceFilterApplied($event)" (onFilterActivated)="onFilterActivated($event)"></app-price-filter>
-            <app-area-filter (onPriceFilterApplied)="onPriceFilterApplied($event)" (onFilterActivated)="onFilterActivated($event)"></app-area-filter>
-            <app-area-filter (onAreaFilterApplied)="onAreaFilterApplied($event)" (onFilterActivated)="onFilterActivated($event)"></app-area-filter>
-        </div>
-        <div class="col-xs-5 text-right rows-toggle">
-            <p-dropdown [options]="sortingTypes" [(ngModel)]="sortingType" [autoWidth]="false" (onChange)="onChange($event)" dropdownIcon="glyphicon glyphicon-menu-down"
-                styleClass="sorting-dropdown"></p-dropdown>
-            <p-selectButton [options]="modes" [(ngModel)]="listMode" (onOptionClick)="onModeSwitched($event.option.value)" styleClass="list-mode-switcher hidden-xs hidden-sm hidden-md"></p-selectButton>
-        </div>
-    </div>
-    <div class="row" *ngIf="properties && properties.length == 0">
-        <div class="col-xs-12 text-center">
-            <h4>{{ 'common.no-properties' | translate }}</h4>
-        </div>
-    </div>
-    <div class="row cards-list" [ngClass]="{'apply-opacity': filterSelectionActivated}">
-        <div class="col-xs-12" *ngFor="let property of properties" [ngClass]="{'col-lg-6': theme === 'grid'}">
-            <app-new-property-component [property]="property" [showArrow]=false [theme]="cardsTheme"></app-new-property-component>
-        </div>
-    </div>
+	<div class="row filters-and-switches">
+		<div class="col-xs-7 filter-col">
+			<app-price-filter (onPriceFilterApplied)="onPriceFilterApplied($event)"
+							  (onFilterActivated)="onFilterPriceActivated($event)"></app-price-filter>
+			<app-bed-filter (onBedFilterApplied)="onBedFilterApplied($event)"
+							(onFilterActivated)="onFilterBedActivated($event)"></app-bed-filter>
+			<app-area-filter (onAreaFilterApplied)="onAreaFilterApplied($event)"
+							 (onFilterActivated)="onFilterAreaActivated($event)"></app-area-filter>
+		</div>
+		<div class="col-xs-5 text-right rows-toggle">
+			<p-dropdown [options]="sortingTypes" [(ngModel)]="sortingType" [autoWidth]="false"
+						(onChange)="onChange($event)" dropdownIcon="glyphicon glyphicon-menu-down"
+						styleClass="sorting-dropdown"></p-dropdown>
+			<p-selectButton [options]="modes" [(ngModel)]="listMode"
+							(onOptionClick)="onModeSwitched($event.option.value)"
+							styleClass="list-mode-switcher hidden-xs hidden-sm hidden-md"></p-selectButton>
+		</div>
+	</div>
+	<div class="row" *ngIf="properties && properties.length == 0">
+		<div class="col-xs-12 text-center">
+			<h4>{{ 'common.no-properties' | translate }}</h4>
+		</div>
+	</div>
+	<div class="row cards-list"
+		 [ngClass]="{'apply-opacity': filterPriceSelectionActivated || filterAreaSelectionActivated || filterBedSelectionActivated}">
+		<div class="col-xs-12" *ngFor="let property of properties" [ngClass]="{'col-lg-6': theme === 'grid'}">
+			<app-new-property-component [property]="property" [showArrow]=false
+										[theme]="cardsTheme"></app-new-property-component>
+		</div>
+	</div>
 </div>

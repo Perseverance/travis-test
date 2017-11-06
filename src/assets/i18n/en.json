@@ -1,151 +1,159 @@
 {
-    "common": {
-        "misc": {
-            "or": "or",
-            "checking": "Checking"
-        },
-        "label": {
-            "authentication-error": "Authentication еrror",
-            "login": "Login",
-            "signin": "Sign in",
-            "signup": "Sign up",
-            "register": "Register",
-            "rememberMe": "Remember me",
-            "locationSearch": "Search for location",
-            "logout": "Logout",
-            "active": "Active"
-        },
-        "placeholder": {
-            "yourEmail": "Your Email",
-            "password": "Password",
-            "repeatPassword": "Repeat Password",
-            "firstName": "First Name",
-            "lastName": "Last Name",
-            "phoneNumber": "Phone Number",
-            "expertise": "Expertise",
-            "agency": "Agency",
-            "agencyPassword": "Agency Password",
-            "location": "Location of Operation",
-            "search": "Search"
-        },
-        "social": {
-            "connect-linkedin": "Continue with LinkedIn",
-            "connect-facebook": "Continue with Facebook"
-        },
-        "validation-errors": {
-            "required": "This field is required",
-            "invalid-email": "This is not a valid email",
-            "email-registered": "This email is already registered",
-            "invalid-password": "Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and a number",
-            "passwords-differ": "The two passwords differ",
-            "invalid-phone-number": "Your phone number appears to be invalid",
-            "toc-required": "You need to accept the terms and conditions of the site"
-        },
-        "terms": "Terms & Conditions",
-        "no-properties": "No properties found in this area!"
-    },
-    "enums": {
-        "property-types": {
-            "single-family-house": "Single family house",
-            "apartment": "Apartment",
-            "townhouse": "Townhouse",
-            "condo": "Condo",
-            "coop": "Coop",
-            "loft": "Loft",
-            "tic": "TIC",
-            "villa": "Villa",
-            "summer-villa": "Summer villa",
-            "development-only": "Development only",
-            "studio": "Studio",
-            "maisonette": "Maisonette",
-            "penthouse": "Penthouse",
-            "bungalow": "Bungalow",
-            "student-room": "Student room"
-        }
-    },
-    "footer": {
-        "copyright": "Copyright",
-        "all-rights": "Propy. All rights reserved."
-    },
-    "signup": {
-        "agent-checkbox": "I am an agent",
-        "agency-not-found": "No such agency found. Submitting this will create it."
-    },
-    "list-property": {
-        "invite-link": "Your invite link:",
-        "heading": "List property",
-        "form-fields": {
-            "address": "Address",
-            "description": "Description",
-            "property-images": "Property Images:",
-            "accepted-currencies": "Accepted currencies:",
-            "commission-fee": "Commission Fee:",
-            "property-furnished": "Property is furnished",
-            "price": "Price",
-            "year-built": "Year Built",
-            "bedrooms": "Bedrooms",
-            "floor": "Floor",
-            "area": "Area",
-            "select-type": "Select Type"
-        },
-        "submit-button": "Submit",
-        "error-listing-property": "Listing property failed",
-        "not-authenticated": {
-            "warning-message": "You are not authenticated!",
-            "login-or-signup": "Please either sign up or login from header links"
-        },
-        "upload-image": {
-            "choose-button-label": "Choose Image"
-        },
-        "choose": "Choose",
-        "accept-toc": "I accept"
-    },
-    "landing": {
-        "location-search": "Enter a city, address or ZIP code",
-        "explore-cities": "Explore the cities",
-        "real-estates": " real estates",
-        "from": "from",
-        "thank-you": "Thank you for using propy beta!",
-        "find-properties": {
-            "heading": "Find the best investments property",
-            "sub-heading": "Make it easy to build wealth through real estate investment"
-        },
-        "testimonials": {
-            "heading": "Testimonials",
-            "pinel-words": "The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.",
-            "arrington-words": "The leadership of the company is impressive, shows all the signs of persistence and execution. Andrey Zamovski is very intelligent and innovative at usage of his deep knowledge of cryptography and Ethereum Smart Contracts. The team is also international - founders and early employees from Russia, Ukraine, US and Singapore are sharing the knowledge of their markets.",
-            "baum-words": "It would be an enormous step forward if global real estate transactions were to be facilitated by a reliable, automated land registration and transfer system. Propy's proposed use of blockchain might just offer the key that opens this door.",
-            "gardner-words": "Beyond finance, real estate is perhaps the most obvious industry prime for being upended by blockchain technology. With its superb team and strong vision Propy is likely to be a leader as real estate is dirsupted by this revolutionary innovation."
-        },
-        "new-properties": {
-            "heading": "New properties",
-            "in": "in",
-            "new-label": "NEW",
-            "bedrooms": "Bedrooms"
-        }
-    },
-    "property-details": {
-        "overview": "Overview",
-        "features": "Features",
-        "location": "Location",
-        "reviews": "Reviews",
-        "overview-labels": {
-            "property-type": "Property Type",
-            "area": "Property Area",
-            "bedrooms": "Bedrooms"
-        }
-    },
-    "filters": {
-        "price": "Price",
-        "area": "Area",
-        "to": "to",
-        "apply": "Apply",
-        "cancel": "Cancel"
-    },
-    "sorting": {
-        "default": "Default Sort",
-        "recent": "Most Recent",
-        "price": "Price (Low to High)",
-        "area": "By Area"
-    }
+	"common": {
+		"misc": {
+			"or": "or",
+			"checking": "Checking"
+		},
+		"label": {
+			"authentication-error": "Authentication еrror",
+			"login": "Login",
+			"signin": "Sign in",
+			"signup": "Sign up",
+			"register": "Register",
+			"rememberMe": "Remember me",
+			"locationSearch": "Search for location",
+			"logout": "Logout",
+			"active": "Active"
+		},
+		"placeholder": {
+			"yourEmail": "Your Email",
+			"password": "Password",
+			"repeatPassword": "Repeat Password",
+			"firstName": "First Name",
+			"lastName": "Last Name",
+			"phoneNumber": "Phone Number",
+			"expertise": "Expertise",
+			"agency": "Agency",
+			"agencyPassword": "Agency Password",
+			"location": "Location of Operation",
+			"search": "Search"
+		},
+		"social": {
+			"connect-linkedin": "Continue with LinkedIn",
+			"connect-facebook": "Continue with Facebook"
+		},
+		"validation-errors": {
+			"required": "This field is required",
+			"invalid-email": "This is not a valid email",
+			"email-registered": "This email is already registered",
+			"invalid-password": "Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and a number",
+			"passwords-differ": "The two passwords differ",
+			"invalid-phone-number": "Your phone number appears to be invalid",
+			"toc-required": "You need to accept the terms and conditions of the site"
+		},
+		"terms": "Terms & Conditions",
+		"no-properties": "No properties found in this area!"
+	},
+	"enums": {
+		"property-types": {
+			"single-family-house": "Single family house",
+			"apartment": "Apartment",
+			"townhouse": "Townhouse",
+			"condo": "Condo",
+			"coop": "Coop",
+			"loft": "Loft",
+			"tic": "TIC",
+			"villa": "Villa",
+			"summer-villa": "Summer villa",
+			"development-only": "Development only",
+			"studio": "Studio",
+			"maisonette": "Maisonette",
+			"penthouse": "Penthouse",
+			"bungalow": "Bungalow",
+			"student-room": "Student room"
+		}
+	},
+	"footer": {
+		"copyright": "Copyright",
+		"all-rights": "Propy. All rights reserved."
+	},
+	"signup": {
+		"agent-checkbox": "I am an agent",
+		"agency-not-found": "No such agency found. Submitting this will create it."
+	},
+	"list-property": {
+		"invite-link": "Your invite link:",
+		"heading": "List property",
+		"form-fields": {
+			"address": "Address",
+			"description": "Description",
+			"property-images": "Property Images:",
+			"accepted-currencies": "Accepted currencies:",
+			"commission-fee": "Commission Fee:",
+			"property-furnished": "Property is furnished",
+			"price": "Price",
+			"year-built": "Year Built",
+			"bedrooms": "Bedrooms",
+			"floor": "Floor",
+			"area": "Area",
+			"select-type": "Select Type"
+		},
+		"submit-button": "Submit",
+		"error-listing-property": "Listing property failed",
+		"not-authenticated": {
+			"warning-message": "You are not authenticated!",
+			"login-or-signup": "Please either sign up or login from header links"
+		},
+		"upload-image": {
+			"choose-button-label": "Choose Image"
+		},
+		"choose": "Choose",
+		"accept-toc": "I accept"
+	},
+	"landing": {
+		"location-search": "Enter a city, address or ZIP code",
+		"explore-cities": "Explore the cities",
+		"real-estates": " real estates",
+		"from": "from",
+		"thank-you": "Thank you for using propy beta!",
+		"find-properties": {
+			"heading": "Find the best investments property",
+			"sub-heading": "Make it easy to build wealth through real estate investment"
+		},
+		"testimonials": {
+			"heading": "Testimonials",
+			"pinel-words": "The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.",
+			"arrington-words": "The leadership of the company is impressive, shows all the signs of persistence and execution. Andrey Zamovski is very intelligent and innovative at usage of his deep knowledge of cryptography and Ethereum Smart Contracts. The team is also international - founders and early employees from Russia, Ukraine, US and Singapore are sharing the knowledge of their markets.",
+			"baum-words": "It would be an enormous step forward if global real estate transactions were to be facilitated by a reliable, automated land registration and transfer system. Propy's proposed use of blockchain might just offer the key that opens this door.",
+			"gardner-words": "Beyond finance, real estate is perhaps the most obvious industry prime for being upended by blockchain technology. With its superb team and strong vision Propy is likely to be a leader as real estate is dirsupted by this revolutionary innovation."
+		},
+		"new-properties": {
+			"heading": "New properties",
+			"in": "in",
+			"new-label": "NEW",
+			"bedrooms": "Bedrooms"
+		}
+	},
+	"property-details": {
+		"overview": "Overview",
+		"features": "Features",
+		"location": "Location",
+		"reviews": "Reviews",
+		"overview-labels": {
+			"property-type": "Property Type",
+			"area": "Property Area",
+			"bedrooms": "Bedrooms"
+		}
+	},
+	"filters": {
+		"price": "Price",
+		"area": "Area",
+		"beds": {
+			"beds-button": "Beds",
+			"studio": "Studio",
+			"1-bed": "1 bed",
+			"2-beds": "2 beds",
+			"3-beds": "3 beds",
+			"4-beds": "4+ beds"
+		},
+		"to": "to",
+		"apply": "Apply",
+		"cancel": "Cancel"
+	},
+	"sorting": {
+		"default": "Default Sort",
+		"recent": "Most Recent",
+		"price": "Price (Low to High)",
+		"area": "By Area"
+	}
 }
