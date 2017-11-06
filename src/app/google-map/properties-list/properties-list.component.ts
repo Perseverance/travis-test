@@ -1,7 +1,7 @@
-import { PropertiesFilter } from './../../properties/properties.service';
-import { SelectItem } from 'primeng/primeng';
-import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { PROPERTY_THEMES } from '../../shared/new-property-component/new-property-component.component';
+import {PropertiesFilter} from './../../properties/properties.service';
+import {SelectItem} from 'primeng/primeng';
+import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
+import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
 
 enum LIST_TYPES {
 	GRID = 'grid',
@@ -35,26 +35,27 @@ export class PropertiesListComponent implements OnInit {
 	public areaFilterMinValue = undefined;
 	public areaFilterMaxValue = undefined;
 	public areaFilterUnit = undefined;
+	public selectedBedTypes = undefined;
 	public filterSelectionActivated = false;
 
 	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
 
 	constructor() {
 		this.modes = [
-			{ label: '', value: LIST_TYPES.GRID },
-			{ label: '', value: LIST_TYPES.LIST }
+			{label: '', value: LIST_TYPES.GRID},
+			{label: '', value: LIST_TYPES.LIST}
 		];
 		this.sortingTypes = [
-			{ label: 'Default Sorting', value: SORTING_TYPES.DEFAULT },
-			{ label: 'Most Recent', value: SORTING_TYPES.RECENT },
-			{ label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST },
-			{ label: 'By Area', value: SORTING_TYPES.BY_AREA }
+			{label: 'Default Sorting', value: SORTING_TYPES.DEFAULT},
+			{label: 'Most Recent', value: SORTING_TYPES.RECENT},
+			{label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST},
+			{label: 'By Area', value: SORTING_TYPES.BY_AREA}
 		];
 		this.sortingTypes = [
-			{ label: 'Default Sorting', value: SORTING_TYPES.DEFAULT },
-			{ label: 'Most Recent', value: SORTING_TYPES.RECENT },
-			{ label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST },
-			{ label: 'By Area', value: SORTING_TYPES.BY_AREA }
+			{label: 'Default Sorting', value: SORTING_TYPES.DEFAULT},
+			{label: 'Most Recent', value: SORTING_TYPES.RECENT},
+			{label: 'Price (Low to High)', value: SORTING_TYPES.LOWEST},
+			{label: 'By Area', value: SORTING_TYPES.BY_AREA}
 		];
 	}
 
@@ -73,7 +74,8 @@ export class PropertiesListComponent implements OnInit {
 				minValue: this.areaFilterMinValue,
 				maxValue: this.areaFilterMaxValue,
 				areaUnit: this.areaFilterUnit
-			}
+			},
+			bedFilter: this.selectedBedTypes
 		});
 	}
 
@@ -117,7 +119,8 @@ export class PropertiesListComponent implements OnInit {
 				minValue: this.areaFilterMinValue,
 				maxValue: this.areaFilterMaxValue,
 				areaUnit: this.areaFilterUnit
-			}
+			},
+			bedFilter: this.selectedBedTypes
 		});
 	}
 
@@ -136,7 +139,26 @@ export class PropertiesListComponent implements OnInit {
 				minValue: this.areaFilterMinValue,
 				maxValue: this.areaFilterMaxValue,
 				areaUnit: this.areaFilterUnit
-			}
+			},
+			bedFilter: this.selectedBedTypes
+		});
+	}
+
+	public onBedFilterApplied(event: PropertiesFilter) {
+		this.selectedBedTypes = event.bedFilter;
+		this.onFilterChanged.emit({
+			sorting: this.sortingType,
+			priceFilter: {
+				minValue: this.priceFilterMinValue,
+				maxValue: this.priceFilterMaxValue,
+				currency: this.priceFilterCurrency
+			},
+			areaFilter: {
+				minValue: this.areaFilterMinValue,
+				maxValue: this.areaFilterMaxValue,
+				areaUnit: this.areaFilterUnit
+			},
+			bedFilter: this.selectedBedTypes
 		});
 	}
 }

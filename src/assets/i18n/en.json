@@ -138,6 +138,14 @@
 	"filters": {
 		"price": "Price",
 		"area": "Area",
+		"beds": {
+			"beds-button": "Beds",
+			"studio": "Studio",
+			"1-bed": "1 bed",
+			"2-beds": "2 beds",
+			"3-beds": "3 beds",
+			"4-beds": "4+ beds"
+		},
 		"to": "to",
 		"apply": "Apply",
 		"cancel": "Cancel"
