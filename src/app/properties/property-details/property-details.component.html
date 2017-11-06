@@ -32,15 +32,15 @@
                         <div class="info-tabs-content row">
                             <div class="col-xs-7 info-tabs-top-holder bottom-border">
                                 <ul class="nav nav-tabs nav-justified">
-                                    <li role="presentation"><a data-toggle="tab" href="#overview">{{ 'property-details.overview' | translate }}</a></li>
-                                    <li role="presentation" class="active"><a data-toggle="tab" href="#features">{{ 'property-details.features' | translate }}</a></li>
+                                    <li role="presentation" class="active"><a data-toggle="tab" href="#overview">{{ 'property-details.overview' | translate }}</a></li>
+                                    <li role="presentation"><a data-toggle="tab" href="#features">{{ 'property-details.features' | translate }}</a></li>
                                     <li role="presentation"><a data-toggle="tab" href="#location" (click)="draw()">{{ 'property-details.location' | translate }}</a></li>
                                     <li role="presentation"><a data-toggle="tab" href="#reviews">{{ 'property-details.reviews' | translate }}</a></li>
                                 </ul>
                             </div>
                             <div class="col-xs-5 bottom-border"></div>
                             <div class="tab-content col-xs-12">
-                                <div id="overview" class="tab-pane fade">
+                                <div id="overview" class="tab-pane fade in active">
                                     <div class="row">
                                         <div class="col-xs-4 col-md-3">
                                             <app-property-description-overview>
@@ -86,7 +86,7 @@
                                         {{ property.desc }}
                                     </div>
                                 </div>
-                                <div id="features" class="tab-pane fade in active">
+                                <div id="features" class="tab-pane fade">
                                     <div class="row">
                                         <div class="col-xs-12 tab-header">
                                             <h4>{{ 'property-details.features' | translate }}</h4>
