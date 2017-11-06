@@ -1,19 +1,21 @@
-import { environment } from './../../environments/environment';
-import { Injectable } from '@angular/core';
+import {environment} from './../../environments/environment';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class GoogleMapsMarkersService {
 
-	constructor() { }
+	constructor() {
+	}
 
 	private DEFAULT_MARKER_ICON = environment.mapConfig.DEFAULT_MARKER_ICON;
 	private DEFAULT_MARKER_ICON_HOVERED = environment.mapConfig.DEFAULT_MARKER_ICON_HOVERED;
 	private DEFAULT_MARKER_LABEL_COLOR = environment.mapConfig.DEFAULT_MARKER_LABEL_COLOR;
+	private DEFAULT_MARKER_LABEL_COLOR_HOVERED = environment.mapConfig.DEFAULT_MARKER_LABEL_COLOR_HOVERED;
 	private DEFAULT_MARKER_LABEL_FONT_SIZE = environment.mapConfig.DEFAULT_MARKER_LABEL_FONT_SIZE;
 
 	public get defaultMarkerSettings(): object {
-		const markerSize = new google.maps.Size(50, 30);
-		const labelOrigin = new google.maps.Point(25, 12);
+		const markerSize = new google.maps.Size(60, 36);
+		const labelOrigin = new google.maps.Point(30, 15);
 		return {
 			url: this.DEFAULT_MARKER_ICON,
 			size: markerSize,
@@ -23,8 +25,8 @@ export class GoogleMapsMarkersService {
 	}
 
 	public get hoverMarkerSettings(): object {
-		const markerSize = new google.maps.Size(50, 30);
-		const labelOrigin = new google.maps.Point(25, 12);
+		const markerSize = new google.maps.Size(60, 36);
+		const labelOrigin = new google.maps.Point(30, 15);
 		return {
 			url: this.DEFAULT_MARKER_ICON_HOVERED,
 			size: markerSize,
@@ -41,4 +43,11 @@ export class GoogleMapsMarkersService {
 		};
 	}
 
+	public getMarkerLabelColor(): string {
+		return this.DEFAULT_MARKER_LABEL_COLOR;
+	}
+
+	public getMarkerLabelColorOnHover(): string {
+		return this.DEFAULT_MARKER_LABEL_COLOR_HOVERED;
+	}
 }
