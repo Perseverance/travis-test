@@ -37,7 +37,8 @@ import { GMapModule } from 'primeng/primeng';
 	declarations: [
 		PropertyDetailsComponent,
 		ListPropertyComponent,
-		PropertyDescriptionOverviewComponent],
+		PropertyDescriptionOverviewComponent
+	],
 	providers: [
 		PropertiesService
 	]

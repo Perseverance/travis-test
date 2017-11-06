@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { GoogleMapsMarkersService } from './../../shared/google-maps-markers.service';
 import { CurrencySymbolPipe } from './../../shared/pipes/currency-symbol.pipe';
 import { BigNumberFormatPipe } from './../../shared/pipes/big-number-format.pipe';
@@ -30,6 +31,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
 	@ViewChild('gmap') map: any;
 
+	public featureScale: object;
+	public publicTransportScale: object;
+	public binaryScale: object;
+
 	constructor(
 		router: Router,
 		private route: ActivatedRoute,
@@ -39,10 +44,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private bigNumberPipe: BigNumberFormatPipe,
 		private currencySymbolPipe: CurrencySymbolPipe,
 		private appRef: ApplicationRef,
-		private zone: NgZone) {
+		private zone: NgZone,
+		private translateService: TranslateService) {
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width;
 		this.IMAGE_HEIGHT_PX = 480;
+
 	}
 
 	async ngOnInit() {
@@ -56,6 +63,45 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			},
 			easing: 'ease'
 		};
+		this.translateService.stream([
+			'common.scales.undefined',
+			'common.scales.feature-scale.no',
+			'common.scales.feature-scale.low',
+			'common.scales.feature-scale.moderate',
+			'common.scales.feature-scale.high',
+			'common.scales.public-transport-scale.low',
+			'common.scales.public-transport-scale.medium',
+			'common.scales.public-transport-scale.good',
+			'common.scales.public-transport-scale.excellent',
+			'common.scales.binary-scale.yes',
+			'common.scales.binary-scale.no'
+		]).subscribe((translations) => {
+			this.featureScale = {
+				undefined: translations['common.scales.undefined'],
+				0: translations['common.scales.undefined'],
+				1: translations['common.scales.feature-scale.no'],
+				2: translations['common.scales.feature-scale.low'],
+				3: translations['common.scales.feature-scale.moderate'],
+				4: translations['common.scales.feature-scale.high']
+			};
+
+			this.publicTransportScale = {
+				undefined: translations['common.scales.undefined'],
+				0: translations['common.scales.undefined'],
+				2: translations['common.scales.public-transport-scale.low'],
+				1: translations['common.scales.public-transport-scale.medium'],
+				3: translations['common.scales.public-transport-scale.good'],
+				4: translations['common.scales.public-transport-scale.excellent']
+			};
+
+			this.binaryScale = {
+				undefined: translations['common.scales.undefined'],
+				0: translations['common.scales.undefined'],
+				1: translations['common.scales.binary-scale.yes'],
+				2: translations['common.scales.binary-scale.no']
+			};
+
+		});
 		const self = this;
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
@@ -67,6 +113,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			self.zone.run(() => { });
 		});
+
 
 	}
 

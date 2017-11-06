@@ -42,7 +42,26 @@
             "toc-required": "You need to accept the terms and conditions of the site"
         },
         "terms": "Terms & Conditions",
-        "no-properties": "No properties found in this area!"
+        "no-properties": "No properties found in this area!",
+        "scales": {
+            "undefined": "No data available",
+            "feature-scale": {
+                "no": "None",
+                "low": "Low",
+                "moderate": "Moderate",
+                "high": "High"
+            },
+            "public-transport-scale": {
+                "low": "Low",
+                "medium": "Medium",
+                "good": "Good",
+                "excellent": "Excellent"
+            },
+            "binary-scale": {
+                "yes": "Yes",
+                "no": "No"
+            }
+        }
     },
     "enums": {
         "property-types": {
@@ -129,6 +148,7 @@
         "features": "Features",
         "location": "Location",
         "reviews": "Reviews",
+        "published": "Published",
         "overview-labels": {
             "property-type": "Property Type",
             "area": "Property Area",
