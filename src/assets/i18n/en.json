@@ -153,6 +153,18 @@
             "property-type": "Property Type",
             "area": "Property Area",
             "bedrooms": "Bedrooms"
+        },
+        "features-labels": {
+            "crime-rate": "Crime Rate",
+            "CO2": "CO₂",
+            "noise-pollution": "Noise Pollution",
+            "public-transportation": "Public Transportation",
+            "education": "Education",
+            "walkability": "Walkability",
+            "disaster": "Distaster Likeliness",
+            "waste": "Waste Management",
+            "furnished": "Is furnished",
+            "air-quality-index": "Air Quality Index"
         }
     },
     "filters": {
