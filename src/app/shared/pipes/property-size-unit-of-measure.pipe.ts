@@ -18,19 +18,20 @@ export class PropertySizeUnitOfMeasurePipe implements PipeTransform {
 	transform(value: string): string {
 		const sqmSymbol = 'm²';
 		const sqftSymbol = 'ft²';
+		const oneSqmEqualToSqft = 10.7639104;
 		if (value === undefined) {
 			return;
 		}
 		const responseSizeValue = Math.abs(+value);
 		const sizeType = this.getSizeTypeByLanguage();
-		// ToDo: implement logic with stored property size unit of measure in local storage
 		switch (sizeType) {
 			case PropertySizeUnitEnum.SQM: {
 				const upRoundedValue = Math.ceil(responseSizeValue);
 				return `${upRoundedValue} ${sqmSymbol}`;
 			}
 			case PropertySizeUnitEnum.SQFT: {
-				const upRoundedValue = Math.ceil(responseSizeValue);
+				const sqmMultipliedSqftFactor = Math.ceil(responseSizeValue) * oneSqmEqualToSqft;
+				const upRoundedValue = Math.ceil(sqmMultipliedSqftFactor);
 				return `${upRoundedValue} ${sqftSymbol}`;
 			}
 			default: {
