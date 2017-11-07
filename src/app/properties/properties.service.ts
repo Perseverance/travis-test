@@ -141,18 +141,12 @@ export class PropertiesService {
 	}
 
 	public async getFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
-		const queryParams = {
-			currency: this.localStorageService.selectedCurrencyType
-		};
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS, {params: queryParams});
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS);
 		return result.data.data;
 	}
 
 	public async getNewProperties(): Promise<GetNewPropertiesResponse[]> {
-		const queryParams = {
-			currency: this.localStorageService.selectedCurrencyType
-		};
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES, {params: queryParams});
+		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES);
 		return result.data.data;
 	}
 

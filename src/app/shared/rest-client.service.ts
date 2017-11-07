@@ -1,7 +1,7 @@
-import { SessionStorageService } from './session-storage.service';
-import { LocalStorageService } from './localStorage.service';
-import { environment } from './../../environments/environment';
-import { Injectable } from '@angular/core';
+import {SessionStorageService} from './session-storage.service';
+import {LocalStorageService} from './localStorage.service';
+import {environment} from './../../environments/environment';
+import {Injectable} from '@angular/core';
 import axios from 'axios';
 
 @Injectable()
@@ -57,6 +57,12 @@ export class RestClientService {
 	private get bearerHeaderObject(): object {
 		return {
 			'Authorization': this.bearerHeaderString
+		};
+	}
+
+	private get currencyTypeHeaderObject(): object {
+		return {
+			'CurrencyType': this.propyLocalStorage.selectedCurrencyType
 		};
 	}
 
@@ -136,8 +142,14 @@ export class RestClientService {
 	 * get makes a get request without token
 	 */
 	public get(endpoint: string, config: object = {}) {
+		const configWithoutToken = {
+			headers: {
+				...this.currencyTypeHeaderObject
+			},
+			...config
+		};
 		const url = this.forgeUrl(endpoint);
-		return axios.get(url, config);
+		return axios.get(url, configWithoutToken);
 	}
 
 	/**
@@ -178,7 +190,8 @@ export class RestClientService {
 	public getWithAccessToken(endpoint: string, config: object = {}) {
 		const configWithToken = {
 			headers: {
-				...this.bearerHeaderObject
+				...this.bearerHeaderObject,
+				...this.currencyTypeHeaderObject
 			},
 			...config
 		};
