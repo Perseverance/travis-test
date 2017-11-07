@@ -23,8 +23,11 @@
 					   (ngModelChange)="changePriceMaxRangeInput(maxLimit)"
 					   [ngClass]="{'slider-dragging': sliderDraggingMax}"/>
 				<div class="dropdown-holder">
-					<p-dropdown [(ngModel)]="selectedCurrency" styleClass="currency-dropdown-panel"
+					<p-dropdown [(ngModel)]="selectedCurrency"
+								dropdownIcon="glyphicon glyphicon-menu-down"
+								styleClass="currency-type-dropdown"
 								[options]="currencies"
+								(onChange)="currencyTypeChanged($event.value)"
 								[style]="{'width': '100%'}"></p-dropdown>
 				</div>
 			</div>
