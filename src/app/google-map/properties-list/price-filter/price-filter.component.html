@@ -25,6 +25,7 @@
 				<div class="dropdown-holder">
 					<p-dropdown [(ngModel)]="selectedCurrency" styleClass="currency-dropdown-panel"
 								[options]="currencies"
+								(onChange)="currencyTypeChanged($event.value)"
 								[style]="{'width': '100%'}"></p-dropdown>
 				</div>
 			</div>

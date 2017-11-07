@@ -3,6 +3,7 @@ import {SelectItem} from 'primeng/primeng';
 import {ThousandSeparatorPipe} from '../../../shared/pipes/thousand-separator.pipe';
 import {PropertiesFilter} from '../../../properties/properties.service';
 import {CurrencyTypeEnum} from '../../../shared/enums/currency-type.enum';
+import {LocalStorageService} from '../../../shared/localStorage.service';
 
 @Component({
 	selector: 'app-price-filter',
@@ -26,7 +27,8 @@ export class PriceFilterComponent implements OnInit {
 	@Output() onPriceFilterApplied = new EventEmitter<PropertiesFilter>();
 	@Output() onAreaFilterApplied = new EventEmitter<PropertiesFilter>();
 
-	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe) {
+	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe,
+				private localStorageService: LocalStorageService) {
 		this.currencies = [];
 		this.currencies.push({label: 'USD', value: CurrencyTypeEnum.USD});
 		this.currencies.push({label: 'EUR', value: CurrencyTypeEnum.EUR});
@@ -117,5 +119,9 @@ export class PriceFilterComponent implements OnInit {
 	private stringRangeValueToNumber(value: string): number {
 		const rangeStr = value.replace(/[^0-9.]/g, '');
 		return parseInt(rangeStr, 10);
+	}
+
+	public currencyTypeChanged(currencyType: number) {
+		this.localStorageService.selectedCurrencyType = currencyType;
 	}
 }
