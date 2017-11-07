@@ -23,7 +23,9 @@
 					   (ngModelChange)="changeAreaMaxRangeInput(maxLimit)"
 					   [ngClass]="{'slider-dragging': sliderDraggingMax}"/>
 				<div class="dropdown-holder">
-					<p-dropdown [(ngModel)]="selectedAreaUnit" styleClass="area-dropdown-panel"
+					<p-dropdown [(ngModel)]="selectedAreaUnit"
+								dropdownIcon="glyphicon glyphicon-menu-down"
+								styleClass="size-type-dropdown"
 								[options]="areaUnits"
 								[style]="{'width': '100%'}"></p-dropdown>
 				</div>
