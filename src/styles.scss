@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-$input-height: 44px;
 // Variables
 @import "variables";
 // Mixins
@@ -96,7 +95,6 @@ body {
         3px,
         rgba(0, 0, 0, 0.14));
         &.button-big {
-            @include border-radius(5px);
             background-color: $blue-regular;
             height: 44px;
             font-size: $font-size-medium;
@@ -129,6 +127,15 @@ body {
         }
         @media #{$sm} {
             margin-bottom: 0px;
+        }
+        hr.separator {
+            margin: 25px -35px;
+        }
+    }
+    .social {
+        p.title {
+            color: $gray-medium;
+            margin-bottom: 10px;
         }
     }
 }

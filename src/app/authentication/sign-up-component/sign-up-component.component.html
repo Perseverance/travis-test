@@ -111,6 +111,11 @@
                                                 (iAmAnAgent.value && agentFields.invalid) ||
                                                 (iAmAnAgent.value && agentLocations.length === 0)" (click)="registerUser()">
                                                 {{ 'common.label.signup' | translate }}</button>
+            <hr class="separator">
+            <div class="social">
+                <p class="title text-center">Or connect with</p>
+                <app-facebook-button (click)="facebookLogin()"></app-facebook-button>
+            </div>
         </form>
     </div>
     <!-- <div class="col-xs-12  col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-4 social-signup">

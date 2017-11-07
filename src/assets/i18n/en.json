@@ -30,7 +30,9 @@
         },
         "social": {
             "connect-linkedin": "Continue with LinkedIn",
-            "connect-facebook": "Continue with Facebook"
+            "connect-facebook": "Continue with Facebook",
+            "linkedin": "LinkedIn",
+            "facebook": "Facebook"
         },
         "validation-errors": {
             "required": "This field is required",
