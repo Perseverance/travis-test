@@ -1,7 +1,21 @@
+@import '../../../mixins';
+@import '../../../variables';
 .btn-facebook {
-	height: 50px;
+    background-color: #3762C3;
+    @include border-radius(11px);
+    &:hover {
+        background-color: darken(#3762C3, 5%);
+    }
+    >span:first-child {
+        border: 0px;
+    }
+    height: $input-height;
+    span.fa {
+        font-size: 25px;
+    }
     span.text {
+        position: relative;
+        top: -2px;
         font-size: 20px;
-        font-weight: 300;
     }
 }
