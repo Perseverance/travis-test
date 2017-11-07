@@ -25,6 +25,12 @@
                 <div class="propy-validation" *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">{{ 'common.validation-errors.invalid-password' | translate }}
                 </div>
             </div>
+            <hr class="separator">
+            <div class="social">
+                <p class="title text-center"><span class="text-capitalize">{{ 'common.misc.or' | translate }}</span>{{ 'common.social.connect-with' |
+                    translate }}</p>
+                <app-facebook-button (click)="facebookLogin()"></app-facebook-button>
+            </div>
         </form>
     </div>
 </div>
