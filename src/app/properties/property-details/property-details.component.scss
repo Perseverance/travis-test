@@ -129,6 +129,28 @@
                         line-height: 24px;
                     }
                 }
+                #features {
+                    .single-feature-wrapper {
+                        padding: 15px 0px;
+                        border-bottom: 1px solid $gray-lighter;
+                        font-size: 14px;
+                        &.left {
+                            width: 48%;
+                            float: left;
+                        }
+                        &.right {
+                            width: 48%;
+                            margin-left: 4%;
+                            float: left;
+                        }
+                        .single-feature-label {
+                            color: $gray-medium;
+                        }
+                        .single-feature-value {
+                            color: $black;
+                        }
+                    }
+                }
                 #location {
                     .location-map {
                         padding: 0px;

@@ -24,7 +24,7 @@
                     <div class="col-xs-12">
                         <span><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{property.city}}&nbsp;&#124;</span>&nbsp;
                         <span><i class="fa fa-circle fa-active" aria-hidden="true"></i>&nbsp;{{ 'common.label.active' | translate }}&nbsp;&#124;</span>&nbsp;
-                        <span>Published {{ (property.addedOnTimeStamp | amFromUnix) | amTimeAgo }}</span>&nbsp;
+                        <span>{{ 'property-details.published' | translate }} {{ (property.addedOnTimeStamp | amFromUnix) | amTimeAgo }}</span>&nbsp;
                     </div>
                 </div>
                 <div class="row">
@@ -86,12 +86,77 @@
                                         {{ property.desc }}
                                     </div>
                                 </div>
-                                <div id="features" class="tab-pane fade ">
-                                    <h3>Features</h3>
-                                    <p>Some content in features.</p>
+                                <div id="features" class="tab-pane fade">
+                                    <div class="row">
+                                        <div class="col-xs-12 tab-header">
+                                            <h4>{{ 'property-details.features' | translate }}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="featureScale && publicTransportScale && binaryScale">
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.crime-rate' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{featureScale[property.crimeRate]}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.CO2' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{featureScale[property.carbonFootprint]}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.noise-pollution' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{featureScale[property.noisePollutionScore]}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.public-transportation' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{publicTransportScale[property.publicTransportAccess]}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.education' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{featureScale[property.educationScore]}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.walkability' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{property.walkabilityScore}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.disaster' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{featureScale[property.disastersScore]}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.waste' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{binaryScale[property.wasteManagement]}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.furnished' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{property.furnished}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">{{'property-details.features-labels.air-quality-index' | translate}}</div>
+                                                <div class="col-xs-5 single-feature-value">{{property.aqi}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="reviews" class="tab-pane fade ">
-                                    <h3>Reviews</h3>
+                                    <h3>{{ 'property-details.reviews' | translate }}</h3>
                                     <p>Some content in reviews.</p>
                                 </div>
                                 <div id="location" class="tab-pane fade">
