@@ -44,7 +44,7 @@ export class PriceFilterComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.selectedCurrency = CurrencyTypeEnum.USD;
+		this.selectedCurrency = this.localStorageService.selectedCurrencyType;
 	}
 
 	public toggleFilterSelectionClass() {
