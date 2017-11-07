@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+$input-height: 44px;
 // Variables
 @import "variables";
 // Mixins
@@ -62,14 +63,22 @@ body {
         font-weight: 100;
     }
     input.propy-control {
-        @include border-radius(5px);
+        background-color: white;
         border: 1px solid $border-default;
+        color: $black;
+        height: $input-height;
+        font-size: $font-size-medium;
+        font-weight: 400;
         outline: none;
-        box-shadow: none;
-        height: 50px;
-        font-size: 25px;
-        margin-bottom: 25px;
-        font-weight: 300;
+        @include border-radius(11px);
+        @include box-shadow(0px,
+        1px,
+        3px,
+        rgba(0, 0, 0, 0.14));
+        margin-bottom: 10px;
+        &:active {
+            border-color: $blue-regular;
+        }
         &.ng-no-margin {
             margin-bottom: 0px;
         }
@@ -77,41 +86,46 @@ body {
             border-color: $red-main;
         }
     }
+    a.propt-control,
     button.propy-control {
-        border: none;
         outline: none;
-        font-weight: 300;
+        font-weight: 400;
+        @include border-radius(11px);
+        @include box-shadow(0px,
+        1px,
+        3px,
+        rgba(0, 0, 0, 0.14));
         &.button-big {
             @include border-radius(5px);
-            background-color: $blue-main;
-            height: 50px;
-            font-size: 25px;
+            background-color: $blue-regular;
+            height: 44px;
+            font-size: $font-size-medium;
             color: $white;
             &:hover {
                 background-color: $blue-light;
             }
         }
-        &.button-small {
-            @include border-radius(5px);
-            background-color: $gray-dark;
-            height: 35px;
-            font-size: 20px;
-            color: $white;
-            &:hover {
-                background-color: $gray-light;
-            }
-        }
     }
     .propy-form {
-        padding: 25px;
-        background-color: white;
+        padding: 35px;
+        background-color: lighten($white, 1%);
         @include box-shadow(0px,
-        1px,
         6px,
-        rgba(0, 0, 0, 0.07));
+        20px,
+        rgba(0, 0, 0, 0.1));
+        @include border-radius(16px);
         margin-bottom: 30px;
+        .checkbox.form-check {
+            margin-top: 0px;
+            margin-bottom: 5px;
+        }
         label {
             font-weight: 100;
+        }
+        h3 {
+            margin-top: 0px;
+            margin-bottom: 35px;
+            font-weight: 400;
         }
         @media #{$sm} {
             margin-bottom: 0px;

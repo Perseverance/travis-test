@@ -2,21 +2,12 @@
 @import "../../../mixins";
 $header-margin: 60px;
 .signup {
+    margin-top: 100px;
     .form-group {
-        margin: 0px;
         &.agency-form-group,
         &.location-form-group {
             margin-bottom: 25px;
         }
-    }
-    h2.propy-custom-heading {
-        margin-bottom: $header-margin;
-        @media #{$sm} {
-            margin-bottom: 10px;
-        }
-    }
-    .checkbox.form-check {
-        margin-bottom: 20px;
     }
     .social-signup {
         padding-top: 50px;

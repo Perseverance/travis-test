@@ -7,17 +7,18 @@ $gray-dark: #B9B9B9;
 $gray-light: #C8C8C8;
 $gray-lighter: #E8E8E8;
 $gray-lightest: #F8F8F8;
+$white: #FBFBFB;
 $blue-dark: #18ADE2;
 $blue-main: #44BDE8;
+$blue-regular: #4CCAF7;
 $blue-light: #7FD4FE;
-$white: #FFFFFF;
-$red-main: #C50000;
+$red-main: #FF3636;
 $green-main: #53E505;
 $green-sec: #44D32A;
 $green-darkest: #4A585E;
 //Background colors
 $background-blue: $blue-main;
-$background-gray: #FAFAFA;
+$background-gray: $gray-lightest;
 $background-white: $white;
 //Text color 
 $text-color-main: $gray-darker;
@@ -25,7 +26,7 @@ $text-color-action: $blue-main;
 $text-color-action-light: $blue-light;
 $text-color-secondary: $white;
 //Borders 
-$border-default: $gray-dark;
+$border-default: rgba(0, 0, 0, 0.1);
 $border-error: $red-main;
 $multi-select-filter: #C9EFFC;
 $multi-select-filter-hovered: #94DFFA;
