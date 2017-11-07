@@ -52,7 +52,6 @@ export class BedFilterComponent implements OnInit {
 		this.onBedFilterApplied.emit({
 			bedFilter: this.selectedBedTypes.join()
 		});
-		console.log(this.selectedBedTypes.join());
 		overlay.hide();
 	}
 }
