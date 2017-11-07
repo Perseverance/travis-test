@@ -195,7 +195,7 @@ export class GoogleMapComponent implements OnInit {
 							<span
 								*ngIf="property.bedrooms" class="property-bedrooms">${property.bedrooms} bedrooms</span>
 							<span *ngIf="property.size.value" class="property-size">
-								${this.propertyUnitOfMeasurePipe.transform(property.size.value, property.size.type)}
+								${this.propertyUnitOfMeasurePipe.transform(property.size.value)}
 							</span>
 						</div>
 						<div class="property-price">
