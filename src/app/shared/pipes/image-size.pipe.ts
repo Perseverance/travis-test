@@ -12,6 +12,10 @@ export class ImageSizePipe implements PipeTransform {
 			mode = '&mode=crop';
 		}
 
+		if (!width || !height) {
+			return value;
+		}
+
 		return `${value}?width=${width}&height=${height}&scale=${scale}${mode}`;
 	}
 

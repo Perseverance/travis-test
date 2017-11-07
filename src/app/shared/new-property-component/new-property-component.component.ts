@@ -17,6 +17,8 @@ export class NewPropertyComponentComponent implements OnInit {
 	@Input() showArrow = true;
 	@Input() cityName: string;
 	@Input() theme = PROPERTY_THEMES.SMALL;
+	@Input() imageWidth: number;
+	@Input() imageHeight: number;
 
 	constructor(private router: Router) {
 	}
