@@ -47,7 +47,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private zone: NgZone,
 		private translateService: TranslateService) {
 		super(router);
-		this.IMAGE_WIDTH_PX = window.screen.width;
+		this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
 		this.IMAGE_HEIGHT_PX = 480;
 
 	}

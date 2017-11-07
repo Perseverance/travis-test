@@ -1,8 +1,8 @@
-import {TranslateService} from '@ngx-translate/core';
-import {PropertiesFilter} from './../../properties/properties.service';
-import {SelectItem} from 'primeng/primeng';
-import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
-import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
+import { TranslateService } from '@ngx-translate/core';
+import { PropertiesFilter } from './../../properties/properties.service';
+import { SelectItem } from 'primeng/primeng';
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { PROPERTY_THEMES } from '../../shared/new-property-component/new-property-component.component';
 
 enum LIST_TYPES {
 	GRID = 'grid',
@@ -41,24 +41,43 @@ export class PropertiesListComponent implements OnInit {
 	public filterAreaSelectionActivated = false;
 	public filterBedSelectionActivated = false;
 
+	public IMAGE_WIDTH: number;
+	public IMAGE_HEIGHT: number;
+
+	private SMALL_IMAGE_WIDTH = 360;
+	private SMALL_IMAGE_HEIGHT = 215;
+	private BIG_IMAGE_WIDTH = 600;
+	private BIG_IMAGE_HEIGHT = 360;
+
 	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
 
 	constructor(private translateService: TranslateService) {
 		this.modes = [
-			{label: '', value: LIST_TYPES.GRID},
-			{label: '', value: LIST_TYPES.LIST}
+			{ label: '', value: LIST_TYPES.GRID },
+			{ label: '', value: LIST_TYPES.LIST }
 		];
 
 		const self = this;
 		this.translateService.get(['sorting.default', 'sorting.recent', 'sorting.price', 'sorting.area'])
 			.subscribe((data) => {
 				self.sortingTypes = [
-					{label: data['sorting.default'], value: SORTING_TYPES.DEFAULT},
-					{label: data['sorting.recent'], value: SORTING_TYPES.RECENT},
-					{label: data['sorting.price'], value: SORTING_TYPES.LOWEST},
-					{label: data['sorting.area'], value: SORTING_TYPES.BY_AREA}
+					{ label: data['sorting.default'], value: SORTING_TYPES.DEFAULT },
+					{ label: data['sorting.recent'], value: SORTING_TYPES.RECENT },
+					{ label: data['sorting.price'], value: SORTING_TYPES.LOWEST },
+					{ label: data['sorting.area'], value: SORTING_TYPES.BY_AREA }
 				];
 			});
+
+		if (this.cardsTheme === PROPERTY_THEMES.SMALL) {
+			this.IMAGE_HEIGHT = this.SMALL_IMAGE_HEIGHT;
+			this.IMAGE_WIDTH = this.SMALL_IMAGE_WIDTH;
+		}
+
+		if (this.cardsTheme === PROPERTY_THEMES.BIG) {
+			this.IMAGE_HEIGHT = this.BIG_IMAGE_HEIGHT;
+			this.IMAGE_WIDTH = this.BIG_IMAGE_WIDTH;
+		}
+
 	}
 
 	ngOnInit() {
@@ -84,11 +103,15 @@ export class PropertiesListComponent implements OnInit {
 	private setThemeGrid() {
 		this.theme = LIST_TYPES.GRID;
 		this.cardsTheme = PROPERTY_THEMES.SMALL;
+		this.IMAGE_HEIGHT = this.SMALL_IMAGE_HEIGHT;
+		this.IMAGE_WIDTH = this.SMALL_IMAGE_WIDTH;
 	}
 
 	private setThemeList() {
 		this.theme = LIST_TYPES.LIST;
 		this.cardsTheme = PROPERTY_THEMES.BIG;
+		this.IMAGE_HEIGHT = this.BIG_IMAGE_HEIGHT;
+		this.IMAGE_WIDTH = this.BIG_IMAGE_WIDTH;
 	}
 
 	public onModeSwitched(selectedMode) {

@@ -1,5 +1,5 @@
 <div class="row property" *ngIf="property">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-7">
         <div class="row property-carousel-holder">
             <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
 
@@ -12,7 +12,7 @@
             </ngx-carousel>
         </div>
         <div class="row property-info">
-            <div class="col-xs-12 col-md-6 col-md-offset-1">
+            <div class="col-xs-12 col-md-11 col-md-offset-1">
                 <div class="row" class="basic-property-info">
                     <div class="col-xs-8 text-left">
                         <h3>{{property.address}}</h3>
@@ -175,5 +175,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-xs-12 col-sm-5">
+
     </div>
 </div>
