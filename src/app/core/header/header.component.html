@@ -9,7 +9,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-            <a class="navbar-brand" routerLink="/"><img alt="Propy" [src]="logoImage" class="hidden-xs"></a>
+            <a class="navbar-brand text-uppercase" routerLink="/">Propy</a>
             <div class="nav navbar-nav col-xs-9 hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl loc-search-nav" *ngIf="!isLanding">
                 <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
             </div>
@@ -22,9 +22,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right propy-links" *ngIf="hasUserLoaded">
-                <li>
+                <!-- <li>
                     <a routerLink="/list-property" routerLinkActive="active" class="text-capitalize">{{'list-property.heading' | translate }}</a>
-                </li>
+                </li> -->
                 <li *ngIf="isUserAnonymous">
                     <a routerLink="/login" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">{{
 						'common.label.login' | translate }}</a>
@@ -42,12 +42,12 @@
                 </li>
                 <li class="separator">&nbsp;</li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" ngClass="{{translate.currentLang}}"
-                        aria-expanded="false">{{translate.currentLang}}<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle language-selector text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        ngClass="{{translate.currentLang}}" aria-expanded="false">{{translate.currentLang}}<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-menu">
                         <li *ngFor="let lang of translate.getLangs()">
-                            <a #langSelect (click)="selectLanguage(langSelect.rel)" [rel]="lang" ngClass="{{lang}}" [class.active]="lang === translate.currentLang"
-                                *ngIf="lang != translate.currentLang">{{ lang }}</a>
+                            <a #langSelect class="text-uppercase language-selector" (click)="selectLanguage(langSelect.rel)" [rel]="lang" ngClass="{{lang}}"
+                                [class.active]="lang === translate.currentLang" *ngIf="lang != translate.currentLang">{{ lang }}</a>
                         </li>
                     </ul>
                 </li>

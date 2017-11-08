@@ -15,6 +15,8 @@ export class ImageSizePipe implements PipeTransform {
 		if (!width || !height) {
 			return value;
 		}
+		width = Math.round(width);
+		height = Math.round(height);
 
 		return `${value}?width=${width}&height=${height}&scale=${scale}${mode}`;
 	}

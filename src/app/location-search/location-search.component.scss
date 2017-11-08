@@ -12,6 +12,7 @@
         pointer-events: none;
         color: black;
         font-size: 20px;
+        @include text-stroke(2px, white);
     }
     /* add padding  */
     .left-addon input {
