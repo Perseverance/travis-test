@@ -8,15 +8,31 @@ footer {
 	padding-top: 20px;
 	background-color: $white;
 	
-	.footer-details {
-		padding-left: 50px;
+	.footer-container{
+		display: flex;
+
+		.footer-details {
+		margin-top: 15px;
 		p {
 			color: $gray-darker;
-			font-size: 14px;
+			font-size: 15px;
 			span {
 				color: $text-color-main;
 			}
 		}
+	}
+	.footer-suggestion{
+		&:hover {
+			color: $blue-light;
+			cursor: pointer;
+		}
+	}
+	.footer-title{
+		font-size: 22px;
+	}
+	.footer-section{
+		margin-top: 40px;
+	}
 	}
 }
 

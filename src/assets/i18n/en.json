@@ -87,7 +87,20 @@
     },
     "footer": {
         "copyright": "Copyright",
-        "all-rights": "Propy. All rights reserved."
+        "all-rights": "Propy. All rights reserved.",
+        "search-by-city": "Search by city",
+        "search-by-country": "Search by country",
+        "social": "Social",
+        "city1": "San Francisco",
+        "city2": "Los Angeles",
+        "city3": "Dubai",
+        "city4": "Beijing",
+        "city5": "Moscow",
+        "country1": "United States",
+        "country2": "China",
+        "country3": "UAE",
+        "country4": "Canada",
+        "country5": "Russia"
     },
     "signup": {
         "agent-checkbox": "I am an agent",

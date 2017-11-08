@@ -1,23 +1,47 @@
 <footer>
-    <div class="col-xs-12 col-md-4 col-lg-4">
-       <h6 (click)="goToCity(1)">San Francisco realty</h6>
-       <h6>San Francisco realty</h6>
-       <h6>San Francisco realty</h6>
-       <h6>San Francisco realty</h6>
-       <h6>San Francisco realty</h6>
-       <h6>San Francisco realty</h6>
-       <h6>San Francisco realty</h6>
-    </div>
-    <div class="col-xs-12 col-md-4 col-lg-4">
-
-    </div>
-    <div class="col-xs-12 col-md-4 col-lg-4">
-        <div class="col-xs-12 footer-details text-xs-center">
-            <p>
-                <span>{{'footer.copyright' | translate}}</span> &copy;
-                <span>{{ currentYear }}</span>
-                <span>{{'footer.all-rights' | translate}}</span>
-            </p>
+    <div class="footer-container row col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10">
+        <div class="hidden-xs col-md-6 col-lg-4">
+            <div class="footer-title">
+                {{'footer.search-by-city' | translate}}
+            </div>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(1)">{{'footer.city1' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(2)">{{'footer.city2' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(3)">{{'footer.city3' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(4)">{{'footer.city4' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(5)">{{'footer.city5' | translate}}</h6>
+        </div>
+        <div class="hidden-xs hidden-md col-lg-4">
+            <div class="footer-title">
+                {{'footer.search-by-country' | translate}}
+            </div>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(6)">{{'footer.country1' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(7)">{{'footer.country2' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(8)">{{'footer.country3' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(9)">{{'footer.country4' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(10)">{{'footer.country5' | translate}}</h6>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="hidden-xs">
+                <div class="footer-title">
+                    {{'footer.social' | translate}}
+                </div>
+                <a href="https://www.facebook.com/propyinc/?fref=ts">
+                    <h6 class="footer-suggestion">Facebook</h6>
+                </a>
+                <a href="https://twitter.com/propyinc">
+                    <h6 class="footer-suggestion">Twitter</h6>
+                </a>
+                <a href="https://t.me/propy">
+                    <h6 class="footer-suggestion">Telegram</h6>
+                </a>
+            </div>
+            <div class="pull-right col-xs-12 footer-details text-xs-center">
+                <p>
+                    <span>{{'footer.copyright' | translate}}</span> &copy;
+                    <span>{{ currentYear }}</span>
+                    <span>{{'footer.all-rights' | translate}}</span>
+                </p>
+            </div>
         </div>
     </div>
 </footer>
