@@ -64,7 +64,8 @@
                 "yes": "Yes",
                 "no": "No"
             }
-        }
+        },
+        "no-new-notifications": "No new notifications"
     },
     "enums": {
         "property-types": {

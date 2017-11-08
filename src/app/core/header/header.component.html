@@ -9,13 +9,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-            <a class="navbar-brand text-uppercase" routerLink="/">Propy</a>
-            <div class="nav navbar-nav col-xs-9 hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl loc-search-nav" *ngIf="!isLanding">
+            <a class="navbar-brand text-uppercase" [routerLink]="['/']">Propy</a>
+            <div class="nav navbar-nav col-xs-7 hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl loc-search-nav" *ngIf="!isLanding">
                 <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
             </div>
         </div>
 
-        <div class="nav navbar-nav hidden-xs col-sm-3 col-md-5 col-lg-6 loc-search-nav" *ngIf="!isLanding">
+        <div class="nav hidden-xs col-sm-4 col-md-6 col-lg-6 col-lg-offset-1 loc-search-nav" *ngIf="!isLanding">
             <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
         </div>
 
@@ -25,23 +25,7 @@
                 <!-- <li>
                     <a routerLink="/list-property" routerLinkActive="active" class="text-capitalize">{{'list-property.heading' | translate }}</a>
                 </li> -->
-                <li *ngIf="isUserAnonymous">
-                    <a routerLink="/login" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">{{
-						'common.label.login' | translate }}</a>
-                </li>
-                <li *ngIf="isUserAnonymous">
-                    <a routerLink="/signup" [queryParams]="{redirect: componentUrl}" routerLinkActive="active">{{
-						'common.label.signup' | translate }}</a>
-                </li>
-                <li *ngIf="!isUserAnonymous">
-                    <p class="account-name">&nbsp;&#124;&nbsp;<strong>{{userInfo.firstName}}&nbsp;{{userInfo.lastName}}</strong></p>
-                </li>
-                <li *ngIf="!isUserAnonymous">
-                    <a href="" routerLinkActive="active" (click)="logout($event)">{{
-						'common.label.logout' | translate }}</a>
-                </li>
-                <li class="separator">&nbsp;</li>
-                <li class="dropdown">
+                <li class="dropdown languages-dropdown">
                     <a href="#" class="dropdown-toggle language-selector text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true"
                         ngClass="{{translate.currentLang}}" aria-expanded="false">{{translate.currentLang}}<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-menu">
@@ -50,6 +34,31 @@
                                 [class.active]="lang === translate.currentLang" *ngIf="lang != translate.currentLang">{{ lang }}</a>
                         </li>
                     </ul>
+                </li>
+                <li><span class="user-separator hidden-xs" *ngIf="!isUserAnonymous">&nbsp;&#124;&nbsp;</span></li>
+                <li *ngIf="!isUserAnonymous" class="hidden-xs">
+                    <p class="account-name">{{userInfo.firstName}}&nbsp;{{userInfo.lastName}}</p>
+                </li>
+                <li *ngIf="!isUserAnonymous" class="dropdown notifications-dropdown hidden-xs">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <p class="no-new-notifications text-center">{{'common.no-new-notifications'| translate}}.</p>
+                    </div>
+                </li>
+                <li *ngIf="!isUserAnonymous">
+                    <a class="btn propy-control button-small" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" href="" routerLinkActive="active"
+                        (click)="logout($event)">{{
+                            'common.label.logout' | translate }}</a>
+                </li>
+                <li *ngIf="isUserAnonymous">
+                    <a class="btn propy-control button-small btn-white" [routerLink]="['/login']" [queryParams]="{redirect: componentUrl}">{{
+                            'common.label.signin' | translate }}</a>
+                </li>
+                <li *ngIf="isUserAnonymous">
+                    <a class="btn propy-control button-small" [routerLink]="['/signup']" [queryParams]="{redirect: componentUrl}">{{
+                            'common.label.signup' | translate }}</a>
                 </li>
             </ul>
         </div>
