@@ -1,68 +1,96 @@
 <div class="row how-propy-works-holder">
-	<h3 class="text-center">{{ 'landing.how-propy-works.heading' | translate }}.</h3>
-	<h6 class="text-center">{{ 'landing.how-propy-works.sub-heading' | translate }}.</h6>
-	<p class="propy-play-icon" [ngClass]="{'hidden': videoThumbnailClicked}"></p>
+	<h3 class="text-center">{{ 'landing.how-propy-works.heading' | translate }}</h3>
+	<h6 class="text-center">{{ 'landing.how-propy-works.sub-heading' | translate }}</h6>
 	<div class="carousel-holder">
 		<ngx-carousel
 			[inputs]="carouselBanner"
 			(onMove)="onVideoChanged($event)"
 			[moveToSlide]="1">
 			<ngx-item NgxCarouselItem>
-				<div
-					[ngStyle]="{'background-image': 'url(' + propysOfficeBulgariaThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
-				></div>
+				<div class="dummy-preview-box"></div>
 				<div class="active"
-					 [ngStyle]="{'background-image': 'url(' + interviewCNBCAfricaThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+					 [ngStyle]="inverviewHolderStyleObject"
 					 (click)="thumbnailInterviewClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe width="100%" height="300px"
-							allowfullscreen
+					<iframe allowfullscreen
 							[src]="interviewCNBCAfricaUrl | safeURL"
 							frameborder="0"></iframe>
 				</div>
+				<p class="propy-play-icon inverview-play-icon" [ngClass]="{'hidden': videoThumbnailClicked}"
+				   (click)="thumbnailInterviewClicked()"></p>
 				<div
-					[ngStyle]="{'background-image': 'url(' + bloombergTvThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+					[ngStyle]="bloombergHolderStyleObject"
 				></div>
-				<h5 class="text-center">Natalia Karayaneva CEO of Propy Interview on CNBC Africa</h5>
+				<h5 class="text-center">{{ 'landing.how-propy-works.interview-video-title' | translate }}</h5>
 			</ngx-item>
 			<ngx-item NgxCarouselItem>
 				<div
-					[ngStyle]="{'background-image': 'url(' + interviewCNBCAfricaThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+					[ngStyle]="inverviewHolderStyleObject"
 				></div>
 				<div class="active"
-					 [ngStyle]="{'background-image': 'url(' + bloombergTvThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+					 [ngStyle]="bloombergHolderStyleObject"
 					 (click)="thumbnailBloombergClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe id="video_bloomberg" width="100%" height="300px"
-							frameborder="0"
+					<iframe frameborder="0"
 							allowfullscreen
 							[src]="bloombergTvUrl | safeURL"></iframe>
 				</div>
+				<p class="propy-play-icon bloomberg-play-icon" [ngClass]="{'hidden': videoThumbnailClicked}"
+				   (click)="thumbnailBloombergClicked()"></p>
 				<div
 					[ngStyle]="{'background-image': 'url(' + propysOfficeBulgariaThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
 				></div>
-				<h5 class="text-center">Propy on Bloomberg TV</h5>
+				<h5 class="text-center">{{ 'landing.how-propy-works.bloomberg-video-title' | translate }}</h5>
 			</ngx-item>
 			<ngx-item NgxCarouselItem>
 				<div
-					[ngStyle]="{'background-image': 'url(' + bloombergTvThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+					[ngStyle]="bloombergHolderStyleObject"
 				></div>
 				<div class="active"
-					 [ngStyle]="{'background-image': 'url(' + propysOfficeBulgariaThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+					 [ngStyle]="bgOfficeHolderStyleObject"
 					 (click)="thumbnailBGOfficeClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe width="100%" height="300px"
-							frameborder="0"
+					<iframe frameborder="0"
 							allowfullscreen
 							[src]="propysOfficeBulgariaUrl | safeURL"></iframe>
 				</div>
-				<div
-					[ngStyle]="{'background-image': 'url(' + interviewCNBCAfricaThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
-				></div>
-				<h5 class="text-center">Sneak peak of Propy's office in Bulgaria</h5>
+				<p class="propy-play-icon bg-office-play-icon" [ngClass]="{'hidden': videoThumbnailClicked}"
+				   (click)="thumbnailBGOfficeClicked()"></p>
+				<div class="dummy-preview-box"></div>
+				<h5 class="text-center">{{ 'landing.how-propy-works.bg-office-video-title' | translate }}</h5>
 			</ngx-item>
-			<button NgxCarouselPrev class='leftRs'>&lt;</button>
-			<button NgxCarouselNext class='rightRs'>&gt;</button>
+			<button NgxCarouselPrev class='leftRs'><span class="glyphicon glyphicon-menu-left"></span></button>
+			<button NgxCarouselNext class='rightRs'><span class="glyphicon glyphicon-menu-right"></span></button>
 		</ngx-carousel>
+	</div>
+	<div class="how-works-details-holder">
+		<div class="row">
+			<div class="col-xs-4">
+				<span [inlineSVG]="'/assets/images/cross-border-payment-icon.svg'"></span>
+				<span class="heading">{{ 'landing.how-propy-works.details.cross-border-title' | translate }}</span>
+			</div>
+			<div class="col-xs-8">
+				<p>{{ 'landing.how-propy-works.details.cross-border-content' | translate }}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<span [inlineSVG]="'/assets/images/property-search-icon.svg'"></span>
+				<span class="heading">{{ 'landing.how-propy-works.details.property-search-title' | translate }}</span>
+			</div>
+			<div class="col-xs-8">
+				<p>{{ 'landing.how-propy-works.details.property-search-content' | translate }}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<span [inlineSVG]="'/assets/images/blockchain-integration-icon.svg'"></span>
+				<span
+					class="heading">{{ 'landing.how-propy-works.details.blockchain-integration-title' | translate }}</span>
+			</div>
+			<div class="col-xs-8">
+				<p>{{ 'landing.how-propy-works.details.blockchain-integration-content' | translate }}</p>
+			</div>
+		</div>
 	</div>
 </div>

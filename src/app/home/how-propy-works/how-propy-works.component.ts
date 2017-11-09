@@ -11,7 +11,7 @@ export class HowPropyWorksComponent implements OnInit {
 	public INTERVIEW_VIDEO = 'https://www.youtube.com/embed/ztS1f4sVU0A';
 	public BLOOMBERG_VIDEO = 'https://www.youtube.com/embed/MEiOCQBZwes';
 	public BG_OFFICE_VIDEO = 'https://www.youtube.com/embed/C2XMYrlVBiI';
-	public AUTOPLAY_COMMAND = '?autoplay=1';
+	public AUTOPLAY_COMMAND = '?autoplay=1;rel=0';
 	public interviewCNBCAfricaUrl = this.INTERVIEW_VIDEO;
 	public interviewCNBCAfricaThumb = 'https://img.youtube.com/vi/ztS1f4sVU0A/0.jpg';
 	public bloombergTvUrl = this.BLOOMBERG_VIDEO;
@@ -20,6 +20,9 @@ export class HowPropyWorksComponent implements OnInit {
 	public propysOfficeBulgariaThumb = 'https://img.youtube.com/vi/C2XMYrlVBiI/0.jpg';
 	public carouselBanner: NgxCarousel;
 	public videoThumbnailClicked = false;
+	public inverviewHolderStyleObject: object;
+	public bloombergHolderStyleObject: object;
+	public bgOfficeHolderStyleObject: object;
 
 	constructor() {
 	}
@@ -32,7 +35,18 @@ export class HowPropyWorksComponent implements OnInit {
 				visible: false,
 				pointStyles: ``
 			},
-			loop: true
+			loop: false
+		};
+
+		this.inverviewHolderStyleObject = {
+			'background-image': `url('${this.interviewCNBCAfricaThumb}')`
+		};
+
+		this.bloombergHolderStyleObject = {
+			'background-image': `url('${this.bloombergTvThumb}')`
+		};
+		this.bgOfficeHolderStyleObject = {
+			'background-image': `url('${this.propysOfficeBulgariaThumb}')`
 		};
 	}
 

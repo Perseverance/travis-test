@@ -12,6 +12,7 @@ import {DropdownModule} from 'primeng/primeng';
 import {ProposalIosComponent} from './proposal-ios/proposal-ios.component';
 import {HowPropyWorksComponent} from './how-propy-works/how-propy-works.component';
 import {SafeURLPipe} from '../shared/pipes/safe-url.pipe';
+import {InlineSVGModule} from 'ng-inline-svg';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import {SafeURLPipe} from '../shared/pipes/safe-url.pipe';
 		ReactiveFormsModule,
 		TranslateModule,
 		NgxCarouselModule,
-		DropdownModule
+		DropdownModule,
+		InlineSVGModule
 	],
 	providers: [],
 	bootstrap: [],

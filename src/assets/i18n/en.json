@@ -134,7 +134,18 @@
 		},
 		"how-propy-works": {
 			"heading": "How Propy Works",
-			"sub-heading": "Propy.com is dedicated to solving the problems of purchasing property across borders."
+			"sub-heading": "Propy.com is dedicated to solving the problems of purchasing property across borders.",
+			"interview-video-title": "Natalia Karayaneva CEO of Propy Interview on CNBC Africa",
+			"bloomberg-video-title": "Propy on Bloomberg TV",
+			"bg-office-video-title": "Sneak peak of Propy's office in Bulgaria",
+			"details": {
+				"cross-border-title": "Cross-Border Payment",
+				"cross-border-content": "Propy will facilitate the cross-border payment for you and assist with the paperwork.",
+				"property-search-title": "Property Search",
+				"property-search-content": "You can search for properties and brokers in global cities in your native language. Propy provides broad information about the neighborhoods as walkability, air- and noise-pollution and green building certifications.",
+				"blockchain-integration-title": "Blockchain Integration",
+				"blockchain-integration-content": "Propy integrates blockchain ledger for the governments to make title deeds issuance for your property instantly online, secure and cost-effective."
+			}
 		},
 		"testimonials": {
 			"heading": "Testimonials",
