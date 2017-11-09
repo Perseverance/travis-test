@@ -6,14 +6,13 @@ import {SharedModule} from '../shared/shared.module';
 import {FavouriteLocationsComponent} from './favourite-locations/favourite-locations.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgxCarouselModule} from 'ngx-carousel';
-import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
-import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 import {TestimonialsComponent} from './testimonials/testimonials.component';
 import {NewPropertiesComponent} from './new-properties/new-properties.component';
 import {DropdownModule} from 'primeng/primeng';
-import {PopertyTypeLocalizeKeyPipe} from '../shared/pipes/poperty-type-localize-key.pipe';
-import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
-import { ProposalIosComponent } from './proposal-ios/proposal-ios.component';
+import {ProposalIosComponent} from './proposal-ios/proposal-ios.component';
+import {HowPropyWorksComponent} from './how-propy-works/how-propy-works.component';
+import {SafeURLPipe} from '../shared/pipes/safe-url.pipe';
+import {InlineSVGModule} from 'ng-inline-svg';
 
 @NgModule({
 	declarations: [
@@ -21,7 +20,9 @@ import { ProposalIosComponent } from './proposal-ios/proposal-ios.component';
 		FavouriteLocationsComponent,
 		TestimonialsComponent,
 		NewPropertiesComponent,
-		ProposalIosComponent
+		ProposalIosComponent,
+		HowPropyWorksComponent,
+		SafeURLPipe
 	],
 	imports: [
 		CommonModule,
@@ -30,7 +31,8 @@ import { ProposalIosComponent } from './proposal-ios/proposal-ios.component';
 		ReactiveFormsModule,
 		TranslateModule,
 		NgxCarouselModule,
-		DropdownModule
+		DropdownModule,
+		InlineSVGModule
 	],
 	providers: [],
 	bootstrap: [],
