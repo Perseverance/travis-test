@@ -1,21 +1,42 @@
 @import "../../../variables";
 
 footer {
+	@media #{$xs} {
+		height: $footer-height-small;
+		margin-top: -$footer-height-small; /* negative value of footer height */
+	}
 	position: relative;
 	margin-top: -$footer-height; /* negative value of footer height */
 	height: $footer-height;
 	clear: both;
 	padding-top: 20px;
 	background-color: $white;
-	.footer-details {
-		padding-left: 50px;
+	
+	.footer-container{
+		display: flex;
+
+		.footer-details {
+		margin-top: 25px;
 		p {
 			color: $gray-darker;
-			font-size: 14px;
+			font-size: 12px;
 			span {
 				color: $text-color-main;
 			}
 		}
+	}
+	.footer-suggestion{
+		&:hover {
+			color: $blue-light;
+			cursor: pointer;
+		}
+	}
+	.footer-title{
+		font-size: 22px;
+	}
+	.footer-section{
+		margin-top: 40px;
+	}
 	}
 }
 
