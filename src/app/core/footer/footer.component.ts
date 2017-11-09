@@ -8,45 +8,55 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class FooterComponent implements OnInit {
 	public currentYear: number;
-	public locations: Array<MapLocation>;
-	public isShowFooter: boolean;
+	public locations: MapLocation[];
+	public shouldShowFooter: boolean;
 
 	constructor(private router: Router) {
-		this.locations = new Array();
+		this.locations = new Array<MapLocation>(10);
 		// San Francisco
-		this.locations[0] = new MapLocation(-122.419416, 37.774929, 12);
+		const sanFrancisco = new MapLocation(-122.419416, 37.774929, 12);
+		this.locations[0] = sanFrancisco;
 		// Los Angeles
-		this.locations[1] = new MapLocation(-118.6926056, 34.0201598, 10);
+		const losAngeles = new MapLocation(-118.6926056, 34.0201598, 10);
+		this.locations[1] = losAngeles;
 		// Dubai
-		this.locations[2] = new MapLocation(54.94687, 25.075084, 10);
+		const dubai = new MapLocation(54.94687, 25.075084, 10);
+		this.locations[2] = dubai;
 		// Beijing
-		this.locations[3] = new MapLocation(116.1165888, 39.9385449, 10);
+		const beijing = new MapLocation(116.1165888, 39.9385449, 10);
+		this.locations[3] = beijing;
 		// Moscow
-		this.locations[4] = new MapLocation(37.3516344, 55.7494718, 10);
+		const moscow = new MapLocation(37.3516344, 55.7494718, 10);
+		this.locations[4] = moscow;
 		// USA
-		this.locations[5] = new MapLocation(-113.7509046, 36.2061606, 4);
+		const usa = new MapLocation(-113.7509046, 36.2061606, 4);
+		this.locations[5] = usa;
 		// China
-		this.locations[6] = new MapLocation(86.0191483, 34.4099823, 4);
+		const china = new MapLocation(86.0191483, 34.4099823, 4);
+		this.locations[6] = china;
 		// UAE
-		this.locations[7] = new MapLocation(52.8318969, 24.349865, 8);
+		const uae = new MapLocation(52.8318969, 24.349865, 8);
+		this.locations[7] = uae;
 		// Canada
-		this.locations[8] = new MapLocation(-113.7676258, 54.6903375, 4);
+		const canada = new MapLocation(-113.7676258, 54.6903375, 4);
+		this.locations[8] = canada;
 		// Russia
-		this.locations[9] = new MapLocation(68.7254341, 49.7236757, 3);
+		const russia = new MapLocation(68.7254341, 49.7236757, 3);
+		this.locations[9] = russia;
 	}
 
 	ngOnInit() {
 		this.currentYear = (new Date()).getFullYear();
 		this.router.events.subscribe((val) => {
-			this.isShowFooter = val.toString().indexOf('/map') < 0;
+			this.shouldShowFooter = !val.toString().includes('/map');
 		});
 	}
 
 	public goToMapLocation(id: number) {
 		this.router.navigate(['map', {
-			latitude: this.locations[id - 1].latitude,
-			longitude: this.locations[id - 1].longitude,
-			zoom: this.locations[id - 1].zoomLevel
+			latitude: this.locations[id].latitude,
+			longitude: this.locations[id].longitude,
+			zoom: this.locations[id].zoomLevel
 		}]);
 	}
 }
