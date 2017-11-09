@@ -62,15 +62,15 @@ body {
     span {
         font-weight: 100;
     }
-    input.propy-control {
+    input.propy-control,
+    textarea.propy-control {
         background-color: white;
         border: 1px solid $border-default;
         color: $black;
-        height: $input-height;
         font-size: $font-size-medium;
         font-weight: 400;
         outline: none;
-        @include border-radius(11px);
+        @include border-radius(5px);
         @include box-shadow(0px,
         1px,
         3px,
@@ -86,6 +86,9 @@ body {
             border-color: $red-main;
         }
     }
+    input.propy-control {
+        height: $input-height;
+    }
     a.propy-control,
     button.propy-control {
         outline: none;
@@ -97,8 +100,14 @@ body {
         rgba(0, 0, 0, 0.14));
         background-color: $blue-regular;
         color: $white;
-        &:hover {
+        &:focus {
+            background-color: $blue-regular;
+            color: $white;
+        }
+        &:hover,
+        &:active {
             background-color: $blue-light;
+            color: $white;
         }
         &.button-big {
             height: 44px;
@@ -142,5 +151,11 @@ body {
             color: $gray-medium;
             margin-bottom: 10px;
         }
+    }
+    .abc-radio-info input[type="radio"]:checked+label::before {
+        border-color: $blue-main;
+    }
+    .abc-radio-info input[type="radio"]:checked+label::after {
+        background-color: $blue-main;
     }
 }

@@ -109,7 +109,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
-			console.log(self.property);
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			self.zone.run(() => { });
 		});

@@ -66,7 +66,7 @@
                 <div class="form-group location-form-group">
                     <app-location-search id="location" inputPlaceholder="{{ 'list-property.form-fields.address' | translate }}" (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"></app-location-search>
                     <div *ngIf="isSubmitClicked">
-                        <div class="propy-validation" *ngIf="address.invalid && address.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                        <div class="propy-validation" *ngIf="address.invalid && address.errors['required']">{{ 'list-property.address-required' | translate }}
                         </div>
                     </div>
                 </div>

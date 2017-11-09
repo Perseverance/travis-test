@@ -121,7 +121,8 @@
             "choose-button-label": "Choose Image"
         },
         "choose": "Choose",
-        "accept-toc": "I accept"
+        "accept-toc": "I accept",
+        "address-required": "Please enter a valid address"
     },
     "landing": {
         "location-search": "Enter a city, address or ZIP code",
@@ -174,6 +175,12 @@
             "waste": "Waste Management",
             "furnished": "Is Furnished",
             "air-quality-index": "Air Quality Index"
+        },
+        "contact-agent": {
+            "contact-agent-title": "Contact agent",
+            "name": "Your name",
+            "message": "Your message",
+            "contact-success": "Your request was sent succesfully!"
         }
     },
     "filters": {
