@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 
 @Component({
 	selector: 'app-footer',
@@ -47,8 +47,10 @@ export class FooterComponent implements OnInit {
 
 	ngOnInit() {
 		this.currentYear = (new Date()).getFullYear();
-		this.router.events.subscribe((val) => {
-			this.shouldShowFooter = !val.toString().includes('/map');
+		this.router.events
+		.filter(event => event instanceof NavigationEnd)
+		.subscribe((event: NavigationEnd) => {
+			this.shouldShowFooter = !event.url.startsWith('/map');
 		});
 	}
 

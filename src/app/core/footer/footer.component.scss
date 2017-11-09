@@ -1,6 +1,10 @@
 @import "../../../variables";
 
 footer {
+	@media #{$xs} {
+		height: $footer-height-small;
+		margin-top: -$footer-height-small; /* negative value of footer height */
+	}
 	position: relative;
 	margin-top: -$footer-height; /* negative value of footer height */
 	height: $footer-height;
@@ -38,7 +42,6 @@ footer {
 
 @media #{$sm} {
 	footer {
-		height: 100px;
 		.text-xs-center {
 			text-align: center;
 			padding-left: 0;
