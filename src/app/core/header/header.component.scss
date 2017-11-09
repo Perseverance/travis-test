@@ -14,15 +14,22 @@ $header-margin-sm: 15px;
         @include border-radius(0px);
         @include transition(background-color 300ms linear);
         .navbar-brand {
-            img {
-                margin-left: 20px;
-                height: 100%;
-            }
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: 22px;
+            letter-spacing: .1em;
+            color: $black;
         }
     }
     .nav {
         &.propy-links {
             li {
+                .user-separator {
+                    color: $gray-lighter;
+                    margin: 0px 15px;
+                    position: relative;
+                    top: 14px;
+                }
                 p.account-name {
                     padding-top: 15px;
                     padding-bottom: 15px;
@@ -34,28 +41,119 @@ $header-margin-sm: 15px;
                     }
                 }
                 a {
-                    font-size: 18px;
+                    font-size: $font-size-small;
+                    color: $black;
+                    &.propy-control {
+                        margin-top: 8px;
+                        margin-left: 8px;
+                        @media #{$xs} {
+                            margin-right: 8px;
+                        }
+                        min-width: 86px;
+                        padding: 6px 10px;
+                        background-color: $blue-regular;
+                        color: $white;
+                        font-weight: 400;
+                        &:hover {
+                            background-color: $blue-light;
+                        }
+                        &.btn-white {
+                            background-color: $white;
+                            color: $black;
+                            &:hover {
+                                background-color: darken($white, 5%);
+                            }
+                            @media #{$xs} {
+                                border: 1px solid $blue-light;
+                            }
+                        }
+                    }
                 }
             }
         }
-        .dropdown {
-            .dropdown-menu {
-                min-width: 80px;
-            }
+        .languages-dropdown.dropdown {
             a.dropdown-toggle {
+                @media #{$xs} {
+                    text-align: center;
+                    border: 1px solid $blue-light;
+                    margin: 0px 10px;
+                    padding-left: 45px;
+                    @include border-radius(10px);
+                }
                 height: 40px;
                 background-color: transparent;
-                span {
-                    margin-left: 15px;
+                .fa {
+                    position: relative;
+                    margin-left: 5px;
+                    @media #{$sm} {
+                        margin-right: 5px;
+                    }
+                    font-size: 10px;
+                    top: -2px;
+                    color: $button-filter-arrow;
                 }
             }
-            a {
-                text-transform: uppercase;
+            a.language-selector {
+                font-size: $font-size-medium;
+                letter-spacing: 1px;
                 cursor: pointer;
-                background-size: 30px !important;
-                background-repeat: no-repeat !important;
-                height: 30px;
                 background-color: transparent;
+            }
+            .dropdown-menu {
+                min-width: 80px;
+                padding: 0px;
+                border: 0px;
+                margin-top: 5px;
+                @include border-radius(5px);
+                @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
+                a.language-selector {
+                    text-align: center;
+                    font-weight: 100;
+                    &:hover {
+                        background-color: rgba(76, 202, 247, 0.1);
+                    }
+                }
+            }
+        }
+    }
+    .notifications-dropdown.dropdown {
+        margin-left: 5px;
+        @media #{$xs} {
+            margin-right: 5px;
+        }
+        a.dropdown-toggle {
+            height: 40px;
+            width: 40px;
+            background-color: transparent;
+            @include border-radius(20px);
+            position: relative;
+            margin: 5px;
+            &:hover {
+                background-color: $gray-lighter;
+            }
+            .fa {
+                position: relative;
+                font-size: 16px;
+                top: -3px;
+                left: -3px;
+            }
+        }
+        &.open {
+            a.dropdown-toggle {
+                background-color: $gray-lighter;
+            }
+        }
+        .dropdown-menu {
+            padding: 0px;
+            border: 0px;
+            margin-top: 5px;
+            @include border-radius(5px);
+            @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
+            .no-new-notifications {
+                font-size: $font-size-small;
+                color: $gray-dark;
+                padding: 10px;
+                margin: 0px;
             }
         }
     }
@@ -64,60 +162,8 @@ $header-margin-sm: 15px;
             &.navbar-default {
                 background-color: transparent;
                 border: none;
-            }
-        }
-        .nav {
-            &.propy-links {
-                li {
-                    a {
-                        color: $black;
-                        &:hover {
-                            color: darken($black, 15%);
-                        }
-                    }
-                }
-            }
-            .dropdown {
-                .dropdown-menu {
-                    background-color: transparent;
-                }
-                a.dropdown-toggle {
-                    span {
-                        color: $black;
-                    }
-                    &:hover {
-                        span {
-                            color: darken($black, 15%);
-                        }
-                    }
-                }
-            }
-            @media #{$xs} {
-                background-color: $white;
-                &.propy-links {
-                    li {
-                        a {
-                            color: $black;
-                            &:hover {
-                                color: darken($black, 15%);
-                            }
-                        }
-                    }
-                }
-                .dropdown {
-                    .dropdown-menu {
-                        background-color: transparent;
-                    }
-                    a.dropdown-toggle {
-                        span {
-                            color: $black;
-                        }
-                        &:hover {
-                            span {
-                                color: darken($black, 15%);
-                            }
-                        }
-                    }
+                @media #{$xs} {
+                    background-color: $white;
                 }
             }
         }
@@ -132,29 +178,25 @@ $header-margin-sm: 15px;
                 border: none;
             }
         }
-        .nav {
-            &.propy-links {
-                p.account-name {
-                    color: $black;
-                }
-                li {
-                    a {
-                        color: $black;
-                        &:hover {
-                            color: darken($black, 10%);
-                        }
-                    }
-                }
-            }
-            .dropdown {
-                .dropdown-menu {
-                    background-color: rgba($color: $white, $alpha: 0.95);
-                    ;
-                }
-            }
-        }
     }
     .loc-search-nav {
         margin-top: 8px;
+        @media #{$md} {
+            margin-left: 2px;
+        }
+    }
+}
+
+@media #{$xs} {
+    .propy-header.propy-header-top,
+    .propy-header.propy-header-scrolled {
+        &.navbar {
+            &.navbar-default {
+                >div.container-fluid {
+                    background-color: $white;
+                    @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
+                }
+            }
+        }
     }
 }

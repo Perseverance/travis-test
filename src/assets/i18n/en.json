@@ -64,7 +64,8 @@
                 "yes": "Yes",
                 "no": "No"
             }
-        }
+        },
+        "no-new-notifications": "No new notifications"
     },
     "enums": {
         "property-types": {
@@ -157,6 +158,11 @@
             "in": "in",
             "new-label": "NEW",
             "bedrooms": "Bedrooms"
+        },
+        "proposal-ios": {
+            "header": "Introducing Propy mobile app for iOS",
+            "description": "Download the iOS mobile application and register to recieve PRO tokens. Brokers recieve additional PRO tokens to use for Premium listings. You can also list your property and make it available for all home buyers in our platform",
+            "download": "Download for iPhone"
         }
     },
     "property-details": {

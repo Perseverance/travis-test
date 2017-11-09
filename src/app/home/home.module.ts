@@ -13,13 +13,15 @@ import {NewPropertiesComponent} from './new-properties/new-properties.component'
 import {DropdownModule} from 'primeng/primeng';
 import {PopertyTypeLocalizeKeyPipe} from '../shared/pipes/poperty-type-localize-key.pipe';
 import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
+import { ProposalIosComponent } from './proposal-ios/proposal-ios.component';
 
 @NgModule({
 	declarations: [
 		HomeComponent,
 		FavouriteLocationsComponent,
 		TestimonialsComponent,
-		NewPropertiesComponent
+		NewPropertiesComponent,
+		ProposalIosComponent
 	],
 	imports: [
 		CommonModule,

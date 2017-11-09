@@ -71,11 +71,15 @@ export class GoogleMapComponent implements OnInit {
 					await this.moveToDefaultLocation();
 					return;
 				}
-				this.moveToLocation(+params.latitude, +params.longitude);
+				let zoomLevel = this.DEFAULT_ZOOM;
+				if (params.zoom) {
+					zoomLevel = +params.zoom;
+				}
+				this.moveToLocation(+params.latitude, +params.longitude, zoomLevel);
 			});
 	}
 
-	private moveToLocation(latitude: number, longitude: number) {
+	private moveToLocation(latitude: number, longitude: number, zoomLevel?: number) {
 		if (this.isSizeXs) {
 			this.getCenterProperties(new google.maps.LatLng(latitude, longitude), this.filterObject);
 			return;
@@ -83,6 +87,10 @@ export class GoogleMapComponent implements OnInit {
 		if (!this.map) {
 			return;
 		}
+		if (zoomLevel) {
+			this.map.setZoom(zoomLevel);
+		}
+
 		this.map.setCenter(new google.maps.LatLng(latitude, longitude));
 	}
 
@@ -195,7 +203,7 @@ export class GoogleMapComponent implements OnInit {
 							<span
 								*ngIf="property.bedrooms" class="property-bedrooms">${property.bedrooms} bedrooms</span>
 							<span *ngIf="property.size.value" class="property-size">
-								${this.propertyUnitOfMeasurePipe.transform(property.size.value, property.size.type)}
+								${this.propertyUnitOfMeasurePipe.transform(property.size.value)}
 							</span>
 						</div>
 						<div class="property-price">

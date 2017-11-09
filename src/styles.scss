@@ -90,19 +90,23 @@ body {
     button.propy-control {
         outline: none;
         font-weight: 400;
-        @include border-radius(11px);
+        @include border-radius(9px);
         @include box-shadow(0px,
         1px,
         3px,
         rgba(0, 0, 0, 0.14));
+        background-color: $blue-regular;
+        color: $white;
+        &:hover {
+            background-color: $blue-light;
+        }
         &.button-big {
-            background-color: $blue-regular;
             height: 44px;
             font-size: $font-size-medium;
-            color: $white;
-            &:hover {
-                background-color: $blue-light;
-            }
+        }
+        &.button-small {
+            height: 36px;
+            font-size: $font-size-medium;
         }
     }
     .propy-form {
@@ -112,7 +116,7 @@ body {
         6px,
         20px,
         rgba(0, 0, 0, 0.1));
-        @include border-radius(16px);
+        @include border-radius(12px);
         margin-bottom: 30px;
         .checkbox.form-check {
             margin-top: 0px;
