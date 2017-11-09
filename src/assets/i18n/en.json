@@ -64,7 +64,8 @@
 				"yes": "Yes",
 				"no": "No"
 			}
-		}
+		},
+		"no-new-notifications": "No new notifications"
 	},
 	"enums": {
 		"property-types": {
@@ -87,7 +88,20 @@
 	},
 	"footer": {
 		"copyright": "Copyright",
-		"all-rights": "Propy. All rights reserved."
+		"all-rights": "Propy. All rights reserved.",
+		"search-by-city": "Search by city",
+		"search-by-country": "Search by country",
+		"social": "Social",
+		"city1": "San Francisco",
+		"city2": "Los Angeles",
+		"city3": "Dubai",
+		"city4": "Beijing",
+		"city5": "Moscow",
+		"country1": "United States",
+		"country2": "China",
+		"country3": "UAE",
+		"country4": "Canada",
+		"country5": "Russia"
 	},
 	"signup": {
 		"agent-checkbox": "I am an agent",
@@ -120,7 +134,8 @@
 			"choose-button-label": "Choose Image"
 		},
 		"choose": "Choose",
-		"accept-toc": "I accept"
+		"accept-toc": "I accept",
+		"address-required": "Please enter a valid address"
 	},
 	"landing": {
 		"location-search": "Enter a city, address or ZIP code",
@@ -171,6 +186,8 @@
 		"features": "Features",
 		"location": "Location",
 		"reviews": "Reviews",
+		"no-reviews-yet": "No Reviews yet",
+		"neigbourhood-map": "Neighbourhood Map",
 		"published": "Published",
 		"overview-labels": {
 			"property-type": "Property Type",
@@ -188,6 +205,12 @@
 			"waste": "Waste Management",
 			"furnished": "Is Furnished",
 			"air-quality-index": "Air Quality Index"
+		},
+		"contact-agent": {
+			"contact-agent-title": "Contact agent",
+			"name": "Your name",
+			"message": "Your message",
+			"contact-success": "Your request was sent succesfully!"
 		}
 	},
 	"filters": {

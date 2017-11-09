@@ -1,3 +1,4 @@
+import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
 import { AgencyService } from './../../shared/agency.service';
 import { CompleterService, RemoteData, CompleterItem } from 'ng2-completer';
 import { Agency } from './../../models/agency.model';
@@ -68,7 +69,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			lastName: ['', [Validators.required]],
 			iAmAnAgent: [false],
 			agentFields: this.formBuilder.group({
-				phoneNumber: ['', [Validators.required, SignUpFormValidators.phoneNumberValidator]],
+				phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
 				expertise: ['', [Validators.required]],
 				agency: ['', [Validators.required]],
 				agencyPassword: ['']

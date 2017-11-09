@@ -14,6 +14,8 @@ import { FileUploadModule, DropdownModule, CheckboxModule, MultiSelectModule, Sl
 import { PropertyDescriptionOverviewComponent } from './property-description-overview/property-description-overview.component';
 import { MomentModule } from 'angular2-moment';
 import { GMapModule } from 'primeng/primeng';
+import { ContactAgentComponent } from './contact-agent/contact-agent.component';
+import { RatingModule } from 'primeng/primeng';
 
 @NgModule({
 	imports: [
@@ -32,12 +34,14 @@ import { GMapModule } from 'primeng/primeng';
 		SliderModule,
 		InlineSVGModule,
 		MomentModule,
-		GMapModule
+		GMapModule,
+		RatingModule
 	],
 	declarations: [
 		PropertyDetailsComponent,
 		ListPropertyComponent,
-		PropertyDescriptionOverviewComponent
+		PropertyDescriptionOverviewComponent,
+		ContactAgentComponent
 	],
 	providers: [
 		PropertiesService

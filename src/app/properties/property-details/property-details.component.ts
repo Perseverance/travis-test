@@ -47,7 +47,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private zone: NgZone,
 		private translateService: TranslateService) {
 		super(router);
-		this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
+		this.IMAGE_WIDTH_PX = window.screen.width * 0.583;
 		this.IMAGE_HEIGHT_PX = 480;
 
 	}
@@ -109,7 +109,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
-			console.log(self.property);
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			self.zone.run(() => { });
 		});

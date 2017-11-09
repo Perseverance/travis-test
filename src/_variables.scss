@@ -13,6 +13,7 @@ $blue-main: #44BDE8;
 $blue-regular: #4CCAF7;
 $blue-light: #7FD4FE;
 $red-main: #FF3636;
+$yellow-main: #F5D50E;
 $green-main: #53E505;
 $green-sec: #44D32A;
 $green-darkest: #4A585E;
@@ -54,7 +55,8 @@ $font-size-small: 14px;
 $font-size-xs: 12px;
 // Footer 
 $site-top-padding: 52px;
-$footer-height: 60px;
+$footer-height: 200px;
+$footer-height-small: 100px;
 $input-height: 44px;
 // Media queries
 $xxs: "(max-width: 500px)";
