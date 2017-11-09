@@ -200,12 +200,12 @@
                                 </div>
                                 <div id="reviews" class="tab-pane fade ">
                                     <h3>{{ 'property-details.reviews' | translate }}</h3>
-                                    <p>Some content in reviews.</p>
+                                    <p>{{ 'property-details.no-reviews-yet' | translate }}</p>
                                 </div>
                                 <div id="location" class="tab-pane fade">
                                     <div class="row">
                                         <div class="col-xs-12 tab-header">
-                                            <h4>Neighbourhood Map</h4>
+                                            <h4>{{ 'property-details.neigbourhood-map' | translate }}</h4>
                                         </div>
                                         <div class="col-xs-12 location-map">
                                             <p-gmap #gmap [options]="options" [overlays]="overlays" styleClass="google-map-holder"></p-gmap>

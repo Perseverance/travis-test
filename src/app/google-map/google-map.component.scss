@@ -7,7 +7,7 @@ $list-width: 50%;
         position: absolute;
         top: $site-top-padding;
         left: 0px;
-        bottom: $footer-height;
+        bottom: 60px;
         background-color: $gray-lightest;
     }
     .width-50 {
@@ -50,7 +50,7 @@ $list-width: 50%;
         width: $map-width;
         top: $site-top-padding;
         right: 0px;
-        bottom: $footer-height;
+        bottom: 0px;
         .google-map-holder {
             width: 100%;
             height: 100%;
