@@ -1,0 +1,57 @@
+@import "../../../variables";
+@import "../../../mixins";
+$selected-tab-color: #EDF1F3;
+.settings {
+    h3 {
+        font-weight: 400;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .ui-widget {
+        font-family: $font-family-open-sans;
+    }
+    .ui-tabview {
+        background-color: $white;
+        padding: 35px;
+        .ui-tabview-panels {
+            padding-left: 100px;
+        }
+        .ui-tabview-nav {
+            border: 0;
+            >li.settings-panel-header {
+                height: 44px;
+                line-height: 23px;
+                font-size: $font-size-medium;
+                font-weight: 400;
+                background-color: $white;
+                border: 0px;
+                border-bottom: 1px solid $gray-lighter;
+                color: #93A4AB;
+                padding: 0px 5px;
+                position: relative;
+                @include border-radius-separate(5px, 5px, 5px, 5px);
+                width: 250px;
+                span {
+                    font-weight: 400;
+                }
+                &:hover {
+                    background-color: lighten($selected-tab-color, 2%);
+                    width: 270px;
+                    left: 20px;
+                    border: 0px;
+                    @include border-radius-separate(5px, 50px, 5px, 50px);
+                    cursor: pointer;
+                }
+                &.ui-tabview-selected {
+                    color: $black;
+                    background-color: $selected-tab-color;
+                    border-bottom: 0;
+                    margin-right: 0px;
+                    width: 270px;
+                    left: 20px;
+                    @include border-radius-separate(5px, 50px, 5px, 50px);
+                }
+            }
+        }
+    }
+}

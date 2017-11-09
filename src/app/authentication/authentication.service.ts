@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { NextObserver } from 'rxjs/Observer';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { environment } from './../../environments/environment';
@@ -112,8 +113,8 @@ export class AuthenticationService {
 		return this.restClient.accessToken != null;
 	}
 
-	public subscribeToUserData(observer: NextObserver<UserData>) {
-		this.userDataSubject.subscribe(observer);
+	public subscribeToUserData(observer: NextObserver<UserData>): Subscription {
+		return this.userDataSubject.subscribe(observer);
 	}
 
 	private pushUserData(data: UserData) {

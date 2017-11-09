@@ -1,3 +1,4 @@
+import { AuthenticatedGuard } from './../authentication/authenticated-guard.service';
 import { ReferralComponent } from './../referral/referral.component';
 import { NotificationMessageComponent } from './notification-message/notification-message.component';
 import { RouterModule } from '@angular/router';
@@ -62,7 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ErrorsService,
 		NotificationsService,
 		TokenGuard,
-		TokenGuardLazyLoading,
+		AuthenticatedGuard,
 		TranslateStore,
 		{ provide: 'apiKey', useValue: environment.linkedInApiKey },
 		{ provide: 'authorize', useValue: true },

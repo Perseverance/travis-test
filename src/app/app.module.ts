@@ -1,3 +1,4 @@
+import { SettingsModule } from './settings/settings.module';
 import { PropertiesModule } from './properties/properties.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -26,11 +27,13 @@ import { InlineSVGModule } from 'ng-inline-svg';
 		HomeModule,
 		AuthenticationModule,
 		PropertiesModule,
+		SettingsModule,
+		GoogleMapModule,
 		AppRoutingModule,
 		FacebookModule.forRoot(),
 		LinkedInSdkModule,
-		InlineSVGModule.forRoot({ baseUrl: '' }),
-		GoogleMapModule
+		InlineSVGModule.forRoot({ baseUrl: '' })
+
 	],
 	bootstrap: [AppComponent]
 })
