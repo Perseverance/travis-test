@@ -158,6 +158,8 @@
         "features": "Features",
         "location": "Location",
         "reviews": "Reviews",
+        "no-reviews-yet": "No Reviews yet",
+        "neigbourhood-map": "Neighbourhood Map",
         "published": "Published",
         "overview-labels": {
             "property-type": "Property Type",
