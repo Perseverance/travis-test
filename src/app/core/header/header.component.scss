@@ -30,9 +30,10 @@ $header-margin-sm: 15px;
                     position: relative;
                     top: 14px;
                 }
-                p.account-name {
+                a.account-name {
                     padding-top: 15px;
                     padding-bottom: 15px;
+                    font-size: $font-size-medium;
                 }
                 &.separator {
                     padding-right: $links-to-languages-distance;
