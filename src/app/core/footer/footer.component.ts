@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class FooterComponent implements OnInit {
 	public currentYear: number;
 	public locations: Array<MapLocation>;
+	public isShowFooter: boolean;
 
 	constructor(private router: Router) {
 		this.locations = new Array();
@@ -36,6 +37,9 @@ export class FooterComponent implements OnInit {
 
 	ngOnInit() {
 		this.currentYear = (new Date()).getFullYear();
+		this.router.events.subscribe((val) => {
+			this.isShowFooter = val.toString().indexOf('/map') < 0;
+		});
 	}
 
 	public goToMapLocation(id: number) {

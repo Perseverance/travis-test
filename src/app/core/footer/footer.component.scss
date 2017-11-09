@@ -12,10 +12,10 @@ footer {
 		display: flex;
 
 		.footer-details {
-		margin-top: 15px;
+		margin-top: 25px;
 		p {
 			color: $gray-darker;
-			font-size: 15px;
+			font-size: 12px;
 			span {
 				color: $text-color-main;
 			}
@@ -38,6 +38,7 @@ footer {
 
 @media #{$sm} {
 	footer {
+		height: 100px;
 		.text-xs-center {
 			text-align: center;
 			padding-left: 0;
