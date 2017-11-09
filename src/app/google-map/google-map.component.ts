@@ -71,11 +71,15 @@ export class GoogleMapComponent implements OnInit {
 					await this.moveToDefaultLocation();
 					return;
 				}
-				this.moveToLocation(+params.latitude, +params.longitude);
+				let zoomLevel = this.DEFAULT_ZOOM;
+				if (params.zoom) {
+					zoomLevel = +params.zoom;
+				}
+				this.moveToLocation(+params.latitude, +params.longitude, zoomLevel);
 			});
 	}
 
-	private moveToLocation(latitude: number, longitude: number) {
+	private moveToLocation(latitude: number, longitude: number, zoomLevel?: number) {
 		if (this.isSizeXs) {
 			this.getCenterProperties(new google.maps.LatLng(latitude, longitude), this.filterObject);
 			return;
@@ -83,6 +87,10 @@ export class GoogleMapComponent implements OnInit {
 		if (!this.map) {
 			return;
 		}
+		if (zoomLevel) {
+			this.map.setZoom(zoomLevel);
+		}
+
 		this.map.setCenter(new google.maps.LatLng(latitude, longitude));
 	}
 
