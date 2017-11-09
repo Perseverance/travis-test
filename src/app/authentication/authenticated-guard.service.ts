@@ -8,7 +8,7 @@ export class AuthenticatedGuard implements CanActivate {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		return !this.authService.isUserAnonymous;
+		return !this.authService.hasUserLoggedIn;
 	}
 
 }
