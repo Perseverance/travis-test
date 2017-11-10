@@ -218,5 +218,12 @@
         "recent": "Most Recent",
         "price": "Price (Low to High)",
         "area": "By Area"
+    },
+    "settings": {
+        "headers": {
+            "general-settings": "General settings",
+            "email-notifications-settings": "Email notifications",
+            "password-settings": "Password"
+        }
     }
 }
