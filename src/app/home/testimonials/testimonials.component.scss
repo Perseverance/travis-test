@@ -1,11 +1,13 @@
 @import "../../../variables";
 @import "../../../mixins";
 
+$arrow-background-color: #DCF6FF;
+
 .testimonials {
 	padding-top: 40px;
 	padding-bottom: 20px;
 	h3 {
-		color: $gray-darkest;
+		font-weight: 500;
 	}
 	.testimonials-carousel {
 		.item {
@@ -23,7 +25,7 @@
 					color: $gray-darkest;
 					font-weight: lighter;
 					padding-left: 30px;
-					border-left: 2px solid $blue-main;
+					text-align: center;
 				}
 			}
 		}
@@ -35,17 +37,22 @@
 			margin: auto;
 			top: 0;
 			bottom: 200px;
-			width: 44px;
-			height: 44px;
+			width: 40px;
+			height: 40px;
 			color: white;
-			background-color: $button-arrow;
+			background-color: $arrow-background-color;
+			@include border-radius(50%);
 			@include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
 			&:hover {
-				background-color: darken($button-arrow, 10%);
+				background-color: $blue-main;
+				i {
+					color: white;
+				}
 			}
 			i {
 				text-align: center;
-				font-size: 40px;
+				color: $blue-main;
+				font-size: 20px;
 			}
 		}
 		.left-arrow {
