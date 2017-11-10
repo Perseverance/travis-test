@@ -95,11 +95,16 @@
                 .nav-tabs {
                     li {
                         text-align: left;
+                        @media #{$sm} {
+                            float: left;
+                            width: 25%;
+                        }
                         a {
                             background-color: transparent;
                             border: none;
                             padding: 10px 0px;
                             display: inline;
+                            @include border-radius(0px);
                         }
                         &.active {
                             a {
@@ -149,11 +154,18 @@
                         &.left {
                             width: 48%;
                             float: left;
+                            @media (max-width: 1300px) {
+                                width: 100%;
+                            }
                         }
                         &.right {
                             width: 48%;
                             margin-left: 4%;
                             float: left;
+                            @media (max-width: 1300px) {
+                                width: 100%;
+                                margin: 0px;
+                            }
                         }
                         .single-feature-label {
                             color: $gray-medium;
