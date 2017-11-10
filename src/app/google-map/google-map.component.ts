@@ -1,7 +1,9 @@
 import {PropertiesFilter} from './../properties/properties.service';
 import {GoogleMapsMarkersService} from './../shared/google-maps-markers.service';
 import {environment} from './../../environments/environment';
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, NgZone} from '@angular/core';
+import {
+	Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, NgZone
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropertiesService} from '../properties/properties.service';
 import {GetPropertiesResponse} from '../properties/properties-responses';
