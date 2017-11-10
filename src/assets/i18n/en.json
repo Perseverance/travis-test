@@ -244,6 +244,7 @@
             "password-settings": "Password"
         },
         "general-settings": {
+            "update-success": "Your profile was updated succesfully!",
             "update-error": "Could not update your profile"
         }
     }

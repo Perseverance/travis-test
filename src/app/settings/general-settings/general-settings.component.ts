@@ -1,3 +1,4 @@
+import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
 import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
@@ -17,17 +18,23 @@ import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorat
 export class GeneralSettingsComponent extends ErrorsDecoratableComponent implements OnInit {
 
 	public editProfileForm: FormGroup;
+	public successMessage: string;
 
 	private userInfo: any;
 
 	constructor(private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
+		private notificationService: NotificationsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
 	ngOnInit() {
+
+		this.translateService.stream('settings.general-settings.update-success').subscribe(value => {
+			this.successMessage = value;
+		});
 
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
@@ -64,7 +71,12 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
 		await this.authService.updateUser(this.firstName.value, this.lastName.value, this.phoneNumber.value);
-
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public cancelEdit() {
