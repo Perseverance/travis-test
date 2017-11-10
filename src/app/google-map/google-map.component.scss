@@ -7,7 +7,7 @@ $list-width: 50%;
         position: absolute;
         top: $site-top-padding;
         left: 0px;
-        bottom: 60px;
+        bottom: 0;
         background-color: $gray-lightest;
     }
     .width-50 {
@@ -22,7 +22,7 @@ $list-width: 50%;
         position: absolute;
         top: $site-top-padding;
         left: 0px;
-        bottom: $footer-height;
+        bottom: 0;
         background-color: rgba(255, 255, 255, 0.8);
         @keyframes ui-progress-spinner-color {
             100%,

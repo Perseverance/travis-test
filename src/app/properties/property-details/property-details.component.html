@@ -7,9 +7,9 @@
                     <img class="property-img" [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true" onError="this.src='/assets/images/image-404-small.png';">
                 </ngx-tile>
 
-                <button NgxCarouselPrev class="left-arrow" [ngClass]="{'invisible': property.imageUrls.length <= 1}"><i
+                <button NgxCarouselPrev class="left-arrow"><i
 							class="fa fa-angle-left" aria-hidden="true"></i></button>
-                <button NgxCarouselNext class="right-arrow" [ngClass]="{'invisible': property.imageUrls.length <= 1}"><i
+                <button NgxCarouselNext class="right-arrow"><i
 							class="fa fa-angle-right" aria-hidden="true"></i></button>
             </ngx-carousel>
         </div>
@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-xs-12 info-tabs">
                         <div class="info-tabs-content row">
-                            <div class="col-xs-7 info-tabs-top-holder bottom-border">
+                            <div class="col-xs-12 col-md-7 info-tabs-top-holder bottom-border">
                                 <ul class="nav nav-tabs nav-justified">
                                     <li role="presentation" class="active"><a data-toggle="tab" href="#overview">{{
 										'property-details.overview' | translate }}</a></li>
@@ -47,7 +47,7 @@
 										'property-details.reviews' | translate }}</a></li>
                                 </ul>
                             </div>
-                            <div class="col-xs-5 bottom-border"></div>
+                            <div class="hidden-xs hidden-sm col-md-5 bottom-border"></div>
                             <div class="tab-content col-xs-12">
                                 <div id="overview" class="tab-pane fade in active">
                                     <div class="row">
