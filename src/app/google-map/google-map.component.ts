@@ -1,7 +1,10 @@
 import {PropertiesFilter} from './../properties/properties.service';
 import {GoogleMapsMarkersService} from './../shared/google-maps-markers.service';
 import {environment} from './../../environments/environment';
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, NgZone} from '@angular/core';
+import {
+	Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, NgZone, ChangeDetectorRef,
+	ChangeDetectionStrategy
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropertiesService} from '../properties/properties.service';
 import {GetPropertiesResponse} from '../properties/properties-responses';
@@ -47,10 +50,14 @@ export class GoogleMapComponent implements OnInit {
 				private imageSizePipe: ImageSizePipe,
 				private propertyUnitOfMeasurePipe: PropertySizeUnitOfMeasurePipe,
 				private thousandSeparatorPipe: ThousandSeparatorPipe,
-				private zone: NgZone) {
+				private zone: NgZone,
+				private changeDetector: ChangeDetectorRef) {
+		console.log('constructor');
+		this.changeDetector.markForCheck();
 	}
 
 	ngOnInit() {
+		console.log('init');
 		this.options = {
 			center: {lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE},
 			zoom: this.DEFAULT_ZOOM
