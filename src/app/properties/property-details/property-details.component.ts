@@ -47,14 +47,14 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private zone: NgZone,
 		private translateService: TranslateService) {
 		super(router);
-		this.IMAGE_WIDTH_PX = window.screen.width * 0.583;
+		this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
 		this.IMAGE_HEIGHT_PX = 480;
 
 	}
 
 	async ngOnInit() {
 		this.propertyImagesCarouselConfig = {
-			grid: { xs: 1, sm: 1, md: 1, lg: 1, all: 0 },
+			grid: { xs: 1, sm: 1, md: 2, lg: 2, all: 0 },
 			slide: 1,
 			speed: 600,
 			point: {

@@ -22,7 +22,6 @@ export class FavouriteLocationsComponent implements OnInit {
 	async ngOnInit() {
 		this.carouselTile = {
 			grid: {xs: 1, sm: 1, md: 4, lg: 4, all: 0},
-			slide: 4,
 			speed: 400,
 			point: {
 				visible: true
