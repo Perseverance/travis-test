@@ -28,6 +28,12 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
+
+		this.editProfileForm = this.formBuilder.group({
+			firstName: ['', [Validators.required]],
+			lastName: ['', [Validators.required]],
+			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
+		});
 	}
 
 	ngOnInit() {
@@ -36,11 +42,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			this.successMessage = value;
 		});
 
-		this.editProfileForm = this.formBuilder.group({
-			firstName: ['', [Validators.required]],
-			lastName: ['', [Validators.required]],
-			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
-		});
 
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {

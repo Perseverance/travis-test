@@ -1,13 +1,13 @@
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {environment} from './../../../environments/environment';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {DefaultAsyncAPIErrorHandling} from './../../shared/errors/errors.decorators';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService} from './../authentication.service';
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {FormBuilder, Validators, FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { environment } from './../../../environments/environment';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decorators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from './../authentication.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -24,20 +24,21 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 
 
 	constructor(private authService: AuthenticationService,
-				private formBuilder: FormBuilder,
-				private router: Router,
-				private route: ActivatedRoute,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private route: ActivatedRoute,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
-	}
 
-	ngOnInit() {
 		this.loginForm = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
 			password: ['', [Validators.required]],
 			rememberMe: [true]
 		});
+	}
+
+	ngOnInit() {
 
 		this.queryParamsSubscription = this.setupQueryParamsWatcher();
 	}
