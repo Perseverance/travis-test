@@ -20,6 +20,7 @@ export class APIEndpointsService {
 		EMAIL_AVAILABLE: `${this.INTERNAL_API_PREFIX}/Users/userexists`,
 		GET_USER: `${this.INTERNAL_API_PREFIX}/Users/single`,
 		UPDATE_USER: `${this.INTERNAL_API_PREFIX}/Users/update`,
+		CHANGE_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/changepassword`,
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
 		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,
 		CREATE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/create`,

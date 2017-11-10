@@ -7,6 +7,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings/settings.component';
 import { TabViewModule } from 'primeng/components/tabview/tabview';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
 	imports: [
@@ -17,6 +18,6 @@ import { GeneralSettingsComponent } from './general-settings/general-settings.co
 		TabViewModule,
 		TranslateModule
 	],
-	declarations: [SettingsComponent, GeneralSettingsComponent]
+	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent]
 })
 export class SettingsModule { }
