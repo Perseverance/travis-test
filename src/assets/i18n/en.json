@@ -13,7 +13,9 @@
             "rememberMe": "Remember me",
             "locationSearch": "Search for location",
             "logout": "Logout",
-            "active": "Active"
+            "active": "Active",
+            "save-changes": "Save changes",
+            "cancel": "Cancel"
         },
         "placeholder": {
             "yourEmail": "Your Email",
@@ -186,7 +188,7 @@
         "features": "Features",
         "location": "Location",
         "reviews": "Reviews",
-        "no-reviews-yet": "No Reviews yet",
+        "no-reviews-yet": "No reviews yet",
         "neigbourhood-map": "Neighbourhood Map",
         "published": "Published",
         "overview-labels": {
@@ -210,7 +212,8 @@
             "contact-agent-title": "Contact agent",
             "name": "Your name",
             "message": "Your message",
-            "contact-success": "Your request was sent succesfully!"
+            "contact-success": "Your request was sent succesfully!",
+            "contact-error": "Could not contact this agent"
         }
     },
     "filters": {
@@ -239,6 +242,10 @@
             "general-settings": "General settings",
             "email-notifications-settings": "Email notifications",
             "password-settings": "Password"
+        },
+        "general-settings": {
+            "update-success": "Your profile was updated succesfully!",
+            "update-error": "Could not update your profile"
         }
     }
 }

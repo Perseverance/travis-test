@@ -27,12 +27,6 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
-	}
-
-	ngOnInit() {
-		this.translateService.stream('property-details.contact-agent.contact-success').subscribe(value => {
-			this.successMessage = value;
-		});
 
 		this.contactAgentForm = this.formBuilder.group({
 			name: ['', [Validators.required]],
@@ -41,6 +35,13 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			message: ['', [Validators.required]],
 			agentId: [undefined, [Validators.required]]
 		});
+	}
+
+	ngOnInit() {
+		this.translateService.stream('property-details.contact-agent.contact-success').subscribe(value => {
+			this.successMessage = value;
+		});
+
 	}
 
 	public get name() {
@@ -63,7 +64,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		return this.contactAgentForm.get('agentId');
 	}
 
-	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onSubmit() {
 		await this.propertiesService.requestInfo(
 			this.agentId.value,

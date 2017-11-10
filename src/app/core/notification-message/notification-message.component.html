@@ -1,7 +1,7 @@
-<div class="alert alert-notification" *ngIf="isNotificationShown" [ngClass]="{
+<div class="alert alert-notification fade in" *ngIf="isNotificationShown" [ngClass]="{
     'propy-alert-error': notificationType == 'error',
-    'alert-info': notificationType == 'info',
-    'alert-success': notificationType == 'success'
+    'alert-info propy-alert-info': notificationType == 'info',
+    'alert-success propy-alert-success': notificationType == 'success'
 }">
     <strong>{{title}}</strong> {{message}}
 </div>

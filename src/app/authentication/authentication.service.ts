@@ -381,4 +381,19 @@ export class AuthenticationService {
 		return result.data.data.value;
 	}
 
+	public async updateUser(firstName: string, lastName: string, phoneNumber: string, saveUser = true): Promise<any> {
+		const params = {
+			firstName,
+			lastName,
+			phoneNumber,
+			isBasicInfoUpdate: true // required by the API
+		};
+		const result = await this.restClient.putWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.UPDATE_USER, params);
+		if (saveUser) {
+			this.user = result.data.data;
+			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
+		}
+		return result.data.data;
+	}
+
 }
