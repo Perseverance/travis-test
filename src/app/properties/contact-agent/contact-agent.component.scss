@@ -1,49 +1,53 @@
 @import "../../../variables";
 @import "../../../mixins";
+
 .contact-agent {
-    @media #{$xs} {
-        margin-top: 0%;
-    }
-    margin-top: 40%;
-    min-height: 522px;
-    h3 {
-        font-size: 18px;
-    }
-    .agent-radio {
-        padding-bottom: 20px;
-        label {
-            margin-top: 4px;
-            margin-bottom: 10px;
-            .agent-wrapper {
-                padding-left: 5px;
-                position: relative;
-                top: -2px;
-                font-size: $font-size-medium;
-                display: inline-block;
-                margin-top: -20px;
-                img.agent-img {
-                    @include border-radius(20px);
-                }
-                span.name {
-                    padding-left: 5px;
-                    position: relative;
-                    top: -5px;
-                    @include ellipsis(200px);
-                }
-                span.rating {
-                    position: absolute;
-                    left: 54px;
-                    top: 22px;
-                    min-width: 120px;
-                    font-size: 10px;
-                    .agent-rating-off {
-                        color: $gray-medium;
-                    }
-                    .agent-rating-on {
-                        color: $yellow-main;
-                    }
-                }
-            }
-        }
-    }
+	@media #{$xs} {
+		margin-top: 0%;
+	}
+	margin-top: 40%;
+	min-height: 522px;
+	h3 {
+		font-size: 18px;
+	}
+	.agent-radio {
+		padding-bottom: 20px;
+		label {
+			margin-top: 4px;
+			margin-bottom: 10px;
+			.agent-wrapper {
+				padding-left: 5px;
+				position: relative;
+				top: -2px;
+				font-size: $font-size-medium;
+				display: inline-block;
+				margin-top: -20px;
+				img.agent-img {
+					@include border-radius(20px);
+				}
+				span.name {
+					padding-left: 5px;
+					position: relative;
+					top: -5px;
+					@include ellipsis(200px);
+				}
+				span.rating {
+					position: absolute;
+					left: 54px;
+					top: 22px;
+					min-width: 120px;
+					font-size: 10px;
+					.agent-rating-off {
+						color: $gray-medium;
+					}
+					.agent-rating-on {
+						color: $yellow-main;
+					}
+				}
+			}
+		}
+	}
+	textarea.propy-control {
+		resize: none;
+	}
 }
