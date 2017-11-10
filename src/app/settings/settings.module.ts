@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,6 +11,8 @@ import { GeneralSettingsComponent } from './general-settings/general-settings.co
 @NgModule({
 	imports: [
 		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
 		SettingsRoutingModule,
 		TabViewModule,
 		TranslateModule

@@ -1,3 +1,28 @@
 <div class="col-xs-12 general-settings">
-
+    <form [formGroup]="editProfileForm" class="propy-form">
+        <div class="form-group">
+            <label for="firstName" class="propy-label">{{ 'common.placeholder.firstName' | translate }}</label>
+            <input formControlName="firstName" type="text" class="form-control propy-control" id="firstName" placeholder="{{ 'common.placeholder.firstName' | translate }}">
+            <div *ngIf="firstName.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName" class="propy-label">{{ 'common.placeholder.lastName' | translate }}</label>
+            <input formControlName="lastName" type="text" class="form-control propy-control" id="lastName" placeholder="{{ 'common.placeholder.lastName' | translate }}">
+            <div *ngIf="lastName.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="propy-label">{{ 'common.placeholder.phoneNumber' | translate }}</label>
+            <input formControlName="phoneNumber" type="tel" class="form-control propy-control" id="phoneNumber" placeholder="{{ 'common.placeholder.phoneNumber' | translate }}">
+            <div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
+                <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">{{ 'common.validation-errors.invalid-phone-number' | translate }}</div>
+            </div>
+        </div>
+        <button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()">{{ 'common.label.save-changes' | translate }}</button>
+        <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{ 'common.label.cancel' | translate }}</button>
+    </form>
 </div>
