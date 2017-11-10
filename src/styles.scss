@@ -70,7 +70,7 @@ body {
         font-size: $font-size-medium;
         font-weight: 400;
         outline: none;
-        @include border-radius(5px);
+        @include border-radius(9px);
         @include box-shadow(0px,
         1px,
         3px,
@@ -86,26 +86,35 @@ body {
             border-color: $red-main;
         }
     }
+    label.propy-label {
+        color: $input-label-color;
+        font-size: $font-size-xs;
+        font-weight: 400;
+    }
     input.propy-control {
         height: $input-height;
     }
     a.propy-control,
     button.propy-control {
-        outline: none;
+        outline: none !important;
+        ;
         font-weight: 400;
         @include border-radius(9px);
         @include box-shadow(0px,
         1px,
         3px,
-        rgba(0, 0, 0, 0.14));
+        rgba(35, 197, 255, 0.4));
         background-color: $blue-regular;
         color: $white;
         &:focus {
+            outline: none !important;
+            ;
             background-color: $blue-regular;
             color: $white;
         }
         &:hover,
         &:active {
+            outline: none !important;
             background-color: $blue-light;
             color: $white;
         }
@@ -116,6 +125,20 @@ body {
         &.button-small {
             height: 36px;
             font-size: $font-size-medium;
+        }
+        &.btn-white {
+            background-color: $white;
+            color: $black;
+            @include box-shadow(0px,
+            1px,
+            3px,
+            rgba(0, 0, 0, 0.14));
+            &:hover {
+                background-color: darken($white, 5%);
+            }
+            @media #{$xs} {
+                border: 1px solid $blue-light;
+            }
         }
     }
     .propy-form {
@@ -133,6 +156,9 @@ body {
         }
         label {
             font-weight: 100;
+            &.propy-label {
+                font-weight: 400;
+            }
         }
         h3 {
             margin-top: 0px;

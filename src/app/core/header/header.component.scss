@@ -58,16 +58,6 @@ $header-margin-sm: 15px;
                         &:hover {
                             background-color: $blue-light;
                         }
-                        &.btn-white {
-                            background-color: $white;
-                            color: $black;
-                            &:hover {
-                                background-color: darken($white, 5%);
-                            }
-                            @media #{$xs} {
-                                border: 1px solid $blue-light;
-                            }
-                        }
                     }
                 }
             }
