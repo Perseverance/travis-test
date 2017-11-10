@@ -22,7 +22,7 @@
                 <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">{{ 'common.validation-errors.invalid-phone-number' | translate }}</div>
             </div>
         </div>
-        <button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()">Save changes</button>
-        <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">Cancel</button>
+        <button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()">{{ 'common.label.save-changes' | translate }}</button>
+        <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{ 'common.label.cancel' | translate }}</button>
     </form>
 </div>

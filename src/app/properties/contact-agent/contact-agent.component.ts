@@ -63,7 +63,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		return this.contactAgentForm.get('agentId');
 	}
 
-	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onSubmit() {
 		await this.propertiesService.requestInfo(
 			this.agentId.value,

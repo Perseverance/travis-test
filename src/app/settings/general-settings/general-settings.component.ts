@@ -37,7 +37,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
-				console.log(userInfo);
 				this.userInfo = userInfo.user;
 				this.setUserInfo(this.userInfo);
 			}
@@ -62,9 +61,9 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		return this.editProfileForm.get('phoneNumber');
 	}
 
-	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
+	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
-		console.log('SEnding new user');
+		await this.authService.updateUser(this.firstName.value, this.lastName.value, this.phoneNumber.value);
 
 	}
 
