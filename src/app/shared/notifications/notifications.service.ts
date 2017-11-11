@@ -24,16 +24,16 @@ export class NotificationsService {
 		this.successSubject.subscribe(observer);
 	}
 
-	public pushSuccess(error: DisplayableInfo) {
-		this.successSubject.next(error);
+	public pushSuccess(event: DisplayableInfo) {
+		this.successSubject.next(event);
 	}
 
 	public subscribeToInfo(observer: NextObserver<DisplayableInfo>) {
 		this.infoSubject.subscribe(observer);
 	}
 
-	public pushInfo(error: DisplayableInfo) {
-		this.infoSubject.next(error);
+	public pushInfo(event: DisplayableInfo) {
+		this.infoSubject.next(event);
 	}
 
 }
