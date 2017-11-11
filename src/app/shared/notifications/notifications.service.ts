@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { NextObserver } from 'rxjs/Observer';
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
@@ -20,20 +21,20 @@ export class NotificationsService {
 		this.infoSubject = new Subject();
 	}
 
-	public subscribeToSuccess(observer: NextObserver<DisplayableInfo>) {
-		this.successSubject.subscribe(observer);
+	public subscribeToSuccess(observer: NextObserver<DisplayableInfo>): Subscription {
+		return this.successSubject.subscribe(observer);
 	}
 
-	public pushSuccess(error: DisplayableInfo) {
-		this.successSubject.next(error);
+	public pushSuccess(event: DisplayableInfo) {
+		return this.successSubject.next(event);
 	}
 
-	public subscribeToInfo(observer: NextObserver<DisplayableInfo>) {
-		this.infoSubject.subscribe(observer);
+	public subscribeToInfo(observer: NextObserver<DisplayableInfo>): Subscription {
+		return this.infoSubject.subscribe(observer);
 	}
 
-	public pushInfo(error: DisplayableInfo) {
-		this.infoSubject.next(error);
+	public pushInfo(event: DisplayableInfo) {
+		return this.infoSubject.next(event);
 	}
 
 }

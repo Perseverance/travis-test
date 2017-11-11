@@ -18,7 +18,8 @@
     </div>
     <div class="row cards-list" [ngClass]="{'apply-opacity': filterPriceSelectionActivated || filterAreaSelectionActivated || filterBedSelectionActivated}">
         <div class="col-xs-12" *ngFor="let property of properties" [ngClass]="{'col-lg-6': theme === 'grid'}">
-            <app-new-property-component [property]="property" [showArrow]=false [theme]="cardsTheme" [imageWidth]="IMAGE_WIDTH" [imageHeight]="IMAGE_HEIGHT"></app-new-property-component>
+            <app-new-property-component [property]="property" [showArrow]=false [theme]="cardsTheme" [imageWidth]="IMAGE_WIDTH" [imageHeight]="IMAGE_HEIGHT"
+                [listenForMapHoverEvents]="true" [sendHoverEvents]="true"></app-new-property-component>
         </div>
     </div>
 </div>

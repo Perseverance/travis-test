@@ -5,6 +5,7 @@
             "checking": "Checking"
         },
         "label": {
+            "not-selected": "Not selected",
             "authentication-error": "Authentication еrror",
             "login": "Login",
             "signin": "Sign in",
@@ -40,8 +41,8 @@
         "validation-errors": {
             "required": "This field is required",
             "invalid-email": "This is not a valid email",
-            "email-registered": "This email is already registered",
-            "invalid-password": "Your pass needs to at least 8 symbols and must contain lowercase character, uppercase character and a number",
+            "email-registered": "This email address is already registered",
+            "invalid-password": "Your password needs to at least 8 symbols and must contain lowercase character, uppercase character and a number",
             "passwords-differ": "The two passwords differ",
             "invalid-phone-number": "Your phone number appears to be invalid",
             "toc-required": "You need to accept the terms and conditions of the site"
@@ -71,7 +72,7 @@
     },
     "enums": {
         "property-types": {
-            "single-family-house": "Single family house",
+            "single-family-house": "Single family home",
             "apartment": "Apartment",
             "townhouse": "Townhouse",
             "condo": "Condo",
@@ -109,9 +110,20 @@
         "agent-checkbox": "I am an agent",
         "agency-not-found": "No such agency found. Submitting this will create it."
     },
+    "forgot-password": {
+        "forgot-your-password": "Forgot your password?",
+        "reset-password": "Reset password",
+        "agency-not-found": "No such agency found. Submitting this will create it.",
+        "go-back": "Go back",
+        "reset-password-success": "An email was sent to the email address provided.  Follow the link in the email in order to change password.",
+        "reset-password-fail": "There is no such user",
+        "reset-password-desc": "Enter your email and we will send you a link to reset your password"
+    },
     "list-property": {
         "invite-link": "Your invite link:",
         "heading": "List property",
+        "address-placeholder": "Where is your property located?",
+        "success": "Your property has been uploaded successfuly",
         "form-fields": {
             "address": "Address",
             "description": "Description",
@@ -124,13 +136,15 @@
             "bedrooms": "Bedrooms",
             "floor": "Floor",
             "area": "Area",
-            "select-type": "Select Type"
+            "select-type": "Select Type",
+            "photos": "Photos",
+            "photos-title": "Drop photo here or browse to upload"
         },
         "submit-button": "Submit",
-        "error-listing-property": "Listing property failed",
+        "error-listing-property": "Listing of property failed",
         "not-authenticated": {
             "warning-message": "You are not authenticated!",
-            "login-or-signup": "Please either sign up or login from header links"
+            "login-or-signup": "Please either sign up or login using the header links"
         },
         "upload-image": {
             "choose-button-label": "Choose Image"
@@ -142,12 +156,12 @@
     "landing": {
         "location-search": "Enter a city, address or ZIP code",
         "explore-cities": "Explore the cities",
-        "real-estates": " real estates",
+        "real-estates": " properties",
         "from": "from",
         "thank-you": "Thank you for using propy beta!",
         "find-properties": {
-            "heading": "Find the best investments property",
-            "sub-heading": "Make it easy to build wealth through real estate investment"
+            "heading": "Find the best investment properties",
+            "sub-heading": "Make it easy to build wealth through real estate investments"
         },
         "how-propy-works": {
             "heading": "How Propy Works",
@@ -209,11 +223,12 @@
             "air-quality-index": "Air Quality Index"
         },
         "contact-agent": {
-            "contact-agent-title": "Contact agent",
+            "contact-agent-title": "Contact seller",
+            "request-info": "Request Info",
             "name": "Your name",
             "message": "Your message",
             "contact-success": "Your request was sent succesfully!",
-            "contact-error": "Could not contact this agent"
+            "contact-error": "Could not contact this seller"
         }
     },
     "filters": {
@@ -238,6 +253,7 @@
         "area": "By Area"
     },
     "settings": {
+        "title": "Account settings",
         "headers": {
             "general-settings": "General settings",
             "email-notifications-settings": "Email notifications",
@@ -245,7 +261,18 @@
         },
         "general-settings": {
             "update-success": "Your profile was updated succesfully!",
-            "update-error": "Could not update your profile"
+            "update-error": "Could not update your profile",
+            "delete-account": "Delete account",
+            "upload-new-photo": "Upload new photo",
+            "upload-new-photo-success": "Your photo has been updated successfuly",
+            "upload-new-photo-fail": "Your photo failed to upload"
+        },
+        "password-settings":{
+            "current-password": "Current password",
+            "new-password": "New password",
+            "confirm-new-password": "Confirm new password",
+            "new-password-success": "Your password has been updated successfuly",
+            "new-password-fail": "You have entered incorrect password" 
         }
     }
 }
