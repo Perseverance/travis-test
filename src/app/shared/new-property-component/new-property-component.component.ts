@@ -31,13 +31,13 @@ export class NewPropertyComponentComponent implements OnInit, OnDestroy {
 		private mapEventsService: MapEventsService) {
 	}
 
-	onMouseEnter($event) {
+	onMouseEnter() {
 		if (this.sendHoverEvents) {
 			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: true });
 		}
 	}
 
-	onMouseLeave($event) {
+	onMouseLeave() {
 		if (this.sendHoverEvents) {
 			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: false });
 		}
