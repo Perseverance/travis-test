@@ -5,7 +5,6 @@ import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decor
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { SignUpFormValidators } from './../../authentication/sign-up-component/sign-up-components.validators';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 
@@ -16,15 +15,12 @@ import { NotificationsService } from './../../shared/notifications/notifications
 })
 export class ChangePasswordComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
-  public changePasswordForm: FormGroup;
-  public successMessage: string;
-  public failMessage: string;
+	public changePasswordForm: FormGroup;
+	public successMessage: string;
 
 	constructor(private authService: AuthenticationService,
-    private formBuilder: FormBuilder,
-    private notificationService: NotificationsService,
-		private router: Router,
-		private route: ActivatedRoute,
+		private formBuilder: FormBuilder,
+		private notificationService: NotificationsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 
@@ -32,7 +28,7 @@ export class ChangePasswordComponent extends ErrorsDecoratableComponent implemen
 
 		this.changePasswordForm = this.formBuilder.group({
 			passwords: this.formBuilder.group({
-        currentPassword: ['', [Validators.required]],
+				currentPassword: ['', [Validators.required]],
 				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
 				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
 			}, { validator: SignUpFormValidators.differentPasswordsValidator })
@@ -40,11 +36,8 @@ export class ChangePasswordComponent extends ErrorsDecoratableComponent implemen
 	}
 
 	ngOnInit() {
-    this.translateService.stream('settings.password-settings.new-password-success').subscribe(value => {
+		this.translateService.stream('settings.password-settings.new-password-success').subscribe(value => {
 			this.successMessage = value;
-    });
-    this.translateService.stream('settings.password-settings.new-password-fail').subscribe(value => {
-			this.failMessage = value;
 		});
 	}
 
@@ -53,9 +46,9 @@ export class ChangePasswordComponent extends ErrorsDecoratableComponent implemen
 
 	public get passwords() {
 		return this.changePasswordForm.get('passwords');
-  }
-  
-  public get currentPassword() {
+	}
+
+	public get currentPassword() {
 		return this.passwords.get('currentPassword');
 	}
 
@@ -65,25 +58,19 @@ export class ChangePasswordComponent extends ErrorsDecoratableComponent implemen
 
 	public get repeatPassword() {
 		return this.passwords.get('repeatPassword');
-  }
-  
-  @DefaultAsyncAPIErrorHandling('settings.change-password')
+	}
+
+	@DefaultAsyncAPIErrorHandling('settings.headers.password-settings', 'settings.password-settings.new-password-fail')
 	public async changePassword() {
-    const result = await this.authService.changePassword(this.currentPassword.value, this.password.value);
-    if (result === '0') {
-      this.notificationService.pushSuccess({
-        title: 'Success',
-        message: this.successMessage,
-        time: (new Date().getTime()),
-        timeout: 4000
-      });
-    }else {
-      this.notificationService.pushSuccess({
-        title: 'Error',
-        message: this.failMessage,
-        time: (new Date().getTime()),
-        timeout: 4000
-      });
-    }
+		const currentPassword = this.currentPassword.value;
+		const newPassword = this.password.value;
+		this.changePasswordForm.reset();
+		await this.authService.changePassword(currentPassword, newPassword);
+		this.notificationService.pushSuccess({
+			title: 'Success',
+			message: this.successMessage,
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 }

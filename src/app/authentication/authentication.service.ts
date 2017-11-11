@@ -44,6 +44,7 @@ export interface LinkedInAuthParams {
 
 export interface UserData {
 	isAnonymous: boolean;
+	isExternalLogin: boolean;
 	user: any | null;
 }
 
@@ -68,7 +69,7 @@ export class AuthenticationService {
 		this.userDataSubject = new ReplaySubject(1);
 
 		if (!this.hasAuthCredentials) {
-			this.pushUserData({ isAnonymous: true, user: null });
+			this.pushUserData({ isAnonymous: true, user: null, isExternalLogin: false });
 			return;
 		}
 		if (!this.restClient.isTokenExpired) {
@@ -84,6 +85,13 @@ export class AuthenticationService {
 
 	public get user(): any {
 		return this._user;
+	}
+
+	public get isExternalLogin(): boolean {
+		if (!this.hasUserLoaded || this._user == null || this._user.externalLoginProviders == null) {
+			return false;
+		}
+		return this._user.externalLoginProviders.length > 0;
 	}
 
 	public get isUserAnonymous(): boolean {
@@ -172,7 +180,7 @@ export class AuthenticationService {
 	public async performAnonymousLogin(): Promise<boolean> {
 		const doNotRememberUser = false;
 		const result = this.performLogin('', '', doNotRememberUser);
-		this.pushUserData({ isAnonymous: true, user: null });
+		this.pushUserData({ isAnonymous: true, user: null , isExternalLogin: this.isExternalLogin});
 		return result;
 	}
 
@@ -358,7 +366,7 @@ export class AuthenticationService {
 		const result = await this.getUser('');
 		if (saveUser) {
 			this.user = result.data.data;
-			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
+			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user, isExternalLogin: this.isExternalLogin });
 		}
 		return result;
 	}
@@ -391,7 +399,7 @@ export class AuthenticationService {
 		const result = await this.restClient.putWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.UPDATE_USER, params);
 		if (saveUser) {
 			this.user = result.data.data;
-			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
+			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user, isExternalLogin: this.isExternalLogin });
 		}
 		return result.data.data;
 	}
@@ -402,6 +410,9 @@ export class AuthenticationService {
 			password,
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CHANGE_PASSWORD, params);
+		if (!result.data.data) {
+			throw new Error('new-password-fail');
+		}
 		return result.data.data;
 	}
 
