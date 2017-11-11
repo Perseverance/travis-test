@@ -64,7 +64,7 @@
                                                 </div>
                                             </app-property-description-overview>
                                         </div>
-                                        <div class="col-xs-4 col-md-3">
+                                        <div class="col-xs-4 col-md-3" *ngIf="property.size.value > 0">
                                             <app-property-description-overview>
                                                 <div overview-icon>
                                                     <div [inlineSVG]="'/assets/images/property-details/svg/area.svg'"></div>
@@ -77,7 +77,7 @@
                                                 </div>
                                             </app-property-description-overview>
                                         </div>
-                                        <div class="col-xs-4 col-md-3">
+                                        <div class="col-xs-4 col-md-3" *ngIf="property.bedrooms > 0">
                                             <app-property-description-overview>
                                                 <div overview-icon>
                                                     <div [inlineSVG]="'/assets/images/property-details/svg/bedrooms.svg'"></div>
