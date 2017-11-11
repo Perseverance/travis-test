@@ -13,6 +13,7 @@ import { ImageEnvironmentPrefixPipe } from '../shared/pipes/image-environment-pr
 import { ImageSizePipe } from '../shared/pipes/image-size.pipe';
 import { PropertySizeUnitOfMeasurePipe } from '../shared/pipes/property-size-unit-of-measure.pipe';
 import { ThousandSeparatorPipe } from '../shared/pipes/thousand-separator.pipe';
+import { MapEventsService, PropertyHoveredEvent } from './map-events.service';
 declare function InfoBubble(ob: object): void;
 
 @Component({
@@ -50,6 +51,7 @@ export class GoogleMapComponent implements OnInit {
 		private imageSizePipe: ImageSizePipe,
 		private propertyUnitOfMeasurePipe: PropertySizeUnitOfMeasurePipe,
 		private thousandSeparatorPipe: ThousandSeparatorPipe,
+		private mapEventsService: MapEventsService,
 		private zone: NgZone) {
 	}
 
@@ -239,22 +241,53 @@ export class GoogleMapComponent implements OnInit {
 				if (infoBubble.isOpen()) {
 					return;
 				}
-				marker.setIcon(this.googleMarkersService.hoverMarkerSettings);
-				marker.setZIndex(this.INITIAL_ZINDEX_HOVERED_MARKER++);
-				const label = marker.getLabel();
-				label.color = this.googleMarkersService.getMarkerLabelColorOnHover();
-				marker.setLabel(label);
-				infoBubble.open(this.map, marker);
+				this.mapEventsService.pushMapHoverEvent({ propertyId: property.id, isHovered: true });
 			});
 			google.maps.event.addListener(marker, 'mouseout', () => {
-				marker.setIcon(this.googleMarkersService.defaultMarkerSettings);
-				const label = marker.getLabel();
-				label.color = this.googleMarkersService.getMarkerLabelColor();
-				marker.setLabel(label);
-				infoBubble.close();
+				this.mapEventsService.pushMapHoverEvent({ propertyId: property.id, isHovered: false });
+			});
+			google.maps.event.addListener(this.map, 'click', () => {
+				this.hideBubble(marker, infoBubble);
+			});
+			this.mapEventsService.subscribeToMapHoverEvents({
+				next: (event: PropertyHoveredEvent) => {
+					if (event.isHovered) {
+						this.showBubble(marker, infoBubble);
+					} else {
+						this.hideBubble(marker, infoBubble);
+					}
+				}
+			}, property.id);
+			// Fixes bug of mouseout not firing always
+			this.mapEventsService.subscribeToMapHoverEvents({
+				next: (event: PropertyHoveredEvent) => {
+					if (event.propertyId !== property.id && infoBubble.isOpen()) {
+						this.hideBubble(marker, infoBubble);
+					}
+				}
 			});
 			this.overlays.push(marker);
 		}
+	}
+
+	private showBubble(marker: google.maps.Marker, infoBubble) {
+		if (infoBubble.isOpen()) {
+			return;
+		}
+		marker.setIcon(this.googleMarkersService.hoverMarkerSettings);
+		marker.setZIndex(this.INITIAL_ZINDEX_HOVERED_MARKER++);
+		const label = marker.getLabel();
+		label.color = this.googleMarkersService.getMarkerLabelColorOnHover();
+		marker.setLabel(label);
+		infoBubble.open(this.map, marker);
+	}
+
+	private hideBubble(marker: google.maps.Marker, infoBubble) {
+		marker.setIcon(this.googleMarkersService.defaultMarkerSettings);
+		const label = marker.getLabel();
+		label.color = this.googleMarkersService.getMarkerLabelColor();
+		marker.setLabel(label);
+		infoBubble.close();
 	}
 
 	private goToProperty(id: string) {

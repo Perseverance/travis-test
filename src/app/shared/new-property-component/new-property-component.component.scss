@@ -74,6 +74,14 @@ $card-half-padding: $card-padding/2;
             }
         }
     }
+    &.outside-hover {
+        background-color: lighten($multi-select-filter, 10%);
+        @include box-shadow(0px,
+        2px,
+        10px,
+        $multi-select-filter);
+        cursor: poiner;
+    }
     .property-info {
         padding: $card-half-padding $card-padding $card-half-padding $card-padding;
         font-size: $font-size-medium;

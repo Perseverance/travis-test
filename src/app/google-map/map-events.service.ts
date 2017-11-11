@@ -1,3 +1,5 @@
+import { PropertyHoveredEvent } from './map-events.service';
+import { NextObserver } from 'rxjs/Observer';
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
 
@@ -9,16 +11,23 @@ export interface PropertyHoveredEvent {
 @Injectable()
 export class MapEventsService {
 
-	private infoSubject: Subject<PropertyHoveredEvent>;
+	private hoverSubject: Subject<PropertyHoveredEvent>;
 
-	constructor() { }
+	constructor() {
+		this.hoverSubject = new Subject();
+	}
 
-	public subscribeToMapHoverEvents(observer: NextObserver<PropertyHoveredEvent>) {
-		this.infoSubject.subscribe(observer);
+	public subscribeToMapHoverEvents(observer: NextObserver<PropertyHoveredEvent>, listenForProperty?: string) {
+		if (listenForProperty) {
+			return this.hoverSubject.filter((value: PropertyHoveredEvent) => {
+				return value.propertyId === listenForProperty;
+			}).subscribe(observer);
+		}
+		return this.hoverSubject.subscribe(observer);
 	}
 
 	public pushMapHoverEvent(event: PropertyHoveredEvent) {
-		this.infoSubject.next(event);
+		return this.hoverSubject.next(event);
 	}
 
 }
