@@ -121,7 +121,7 @@ export class AuthenticationService {
 		this.userDataSubject.next(data);
 	}
 
-	public async performLogout(): Promise<boolean> {
+	public performLogout(): Promise<boolean> {
 		this.restClient.removeSavedTokens();
 		return this.performAnonymousLogin();
 	}
