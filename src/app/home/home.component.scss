@@ -6,6 +6,13 @@ $sub-header-color: #929292;
 }
 
 .find-property {
+    margin-top: 120px;
+    @media #{$md} {
+        margin-top: 100px;
+    }
+    @media #{$xs} {
+        margin-top: 50px;
+    }
     h3 {
         font-weight: 500;
     }
