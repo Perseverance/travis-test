@@ -33,13 +33,23 @@
                     position: absolute;
                     left: 54px;
                     top: 22px;
-                    min-width: 120px;
                     font-size: 10px;
+                    min-width: 120px;
                     .agent-rating-off {
                         color: $gray-medium;
                     }
                     .agent-rating-on {
                         color: $yellow-main;
+                    }
+                    .ui-rating {
+                        float: left;
+                    }
+                    .flag {
+                        float: left;
+                        margin-left: 10px;
+                        img {
+                            height: 12px;
+                        }
                     }
                 }
             }

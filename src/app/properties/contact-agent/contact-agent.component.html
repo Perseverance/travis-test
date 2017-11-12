@@ -9,7 +9,9 @@
                     <span class="name">{{agent.firstName}} {{agent.lastName}}</span>
                     <span class="rating">
                         <p-rating [readonly]="true" [cancel]="false" [ngModel]="agent.rating" [ngModelOptions]="{standalone: true}" iconOffClass="fa fa-star agent-rating-off" iconOnClass="fa fa-star agent-rating-on"></p-rating>
+                        <span class="flag" *ngIf="agent.languages && agent.languages.length > 0"><img src="assets/images/flags/flag_{{agent.languages[0]}}.png" alt=""></span>
                     </span>
+                    
                 </span>
             </label>
         </div>
