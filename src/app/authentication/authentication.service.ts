@@ -86,13 +86,6 @@ export class AuthenticationService {
 		return this._user;
 	}
 
-	public get isExternalLogin(): boolean {
-		if (!this.hasUserLoaded || this._user == null || this._user.externalLoginProviders == null) {
-			return false;
-		}
-		return this._user.externalLoginProviders.length > 0;
-	}
-
 	public get isUserAnonymous(): boolean {
 		if (!this.hasUserLoaded) {
 			return true;
