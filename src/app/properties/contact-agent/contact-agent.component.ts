@@ -1,3 +1,4 @@
+import { UserData } from './../../authentication/authentication.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { PropertiesService } from './../properties.service';
 import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
@@ -7,6 +8,7 @@ import { ErrorsService } from './../../shared/errors/errors.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -22,6 +24,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	@Input() agents: any[];
 
 	constructor(private propertiesService: PropertiesService,
+		private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
 		private notificationService: NotificationsService,
 		errorsService: ErrorsService,
@@ -35,13 +38,24 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			message: ['', [Validators.required]],
 			agentId: [undefined, [Validators.required]]
 		});
+
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				if (userInfo.isAnonymous) {
+					return;
+				}
+				this.name.setValue(`${userInfo.user.firstName} ${userInfo.user.lastName}`);
+				this.phoneNumber.setValue(userInfo.user.phoneNumber);
+				this.email.setValue(userInfo.user.email);
+			}
+		});
+
 	}
 
 	ngOnInit() {
 		this.translateService.stream('property-details.contact-agent.contact-success').subscribe(value => {
 			this.successMessage = value;
 		});
-
 	}
 
 	public get name() {
