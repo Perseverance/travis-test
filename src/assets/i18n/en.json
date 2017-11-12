@@ -16,7 +16,8 @@
             "logout": "Logout",
             "active": "Active",
             "save-changes": "Save changes",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "email": "Email"
         },
         "placeholder": {
             "yourEmail": "Your Email",

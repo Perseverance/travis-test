@@ -15,6 +15,10 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
+            <input disabled formControlName="email" type="text" class="form-control propy-control" id="email" >
+        </div>
+        <div class="form-group">
             <label for="phoneNumber" class="propy-label">{{ 'common.placeholder.phoneNumber' | translate }}</label>
             <input formControlName="phoneNumber" type="tel" class="form-control propy-control" id="phoneNumber" placeholder="{{ 'common.placeholder.phoneNumber' | translate }}">
             <div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
