@@ -14,7 +14,13 @@ export class SettingsComponent implements OnInit {
 	ngOnInit() {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
-				this.shouldShowPassword = !userInfo.isExternalLogin;
+				if (userInfo.user === null) {
+					this.shouldShowPassword = true;
+				} else if (userInfo.user.externalLoginProviders === null) {
+					this.shouldShowPassword = true;
+				} else {
+					this.shouldShowPassword = userInfo.user.externalLoginProviders.length === 0;
+				}
 			}
 		});
 	}
