@@ -1,3 +1,4 @@
+import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { NgxCarouselModule } from 'ngx-carousel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,7 +45,8 @@ import { RatingModule } from 'primeng/primeng';
 		ContactAgentComponent
 	],
 	providers: [
-		PropertiesService
+		PropertiesService,
+		MockedFavouriteLocationsService
 	]
 })
 export class PropertiesModule {
