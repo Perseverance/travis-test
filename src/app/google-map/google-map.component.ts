@@ -199,6 +199,10 @@ export class GoogleMapComponent implements OnInit {
 			const imageURL = this.imageSizePipe.transform(this.imageEnvPrefixPipe.transform(property.imageUrls[0]), 255, 155, true);
 			const propertySize = this.propertyUnitOfMeasurePipe.transform(property.size.value);
 			const propertyPrice = this.currencySymbolPipe.transform(this.thousandSeparatorPipe.transform(property.price.value));
+			const bedrooms = (property.bedrooms === 0) ? '' :
+				`<span *ngIf="property.bedrooms > 0" class="property-bedrooms">${property.bedrooms} bedrooms</span>`;
+			const size = (property.size.value === 0) ? '' :
+				`<span *ngIf="property.size.value > 0" class="property-size">${propertySize}</span>`;
 			const contentString = `
 				<div class="main-info-window">
 					<div class="property-image-holder" style="background: url(${imageURL}) no-repeat center center !important;">
@@ -208,11 +212,8 @@ export class GoogleMapComponent implements OnInit {
 							<span class="address">${property.address}</span>
 						</div>
 						<div class="additional-property-info">
-							<span
-								*ngIf="property.bedrooms" class="property-bedrooms">${property.bedrooms} bedrooms</span>
-							<span *ngIf="property.size.value" class="property-size">
-								${propertySize}
-							</span>
+							${bedrooms}
+							${size}
 						</div>
 						<div class="property-price">
 							<span>${propertyPrice}</span>
