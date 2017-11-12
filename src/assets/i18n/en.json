@@ -189,6 +189,7 @@
             "heading": "New properties",
             "in": "in",
             "new-label": "NEW",
+            "verified": "VERIFIED",
             "bedrooms": "Bedrooms"
         },
         "proposal-ios": {
@@ -267,12 +268,12 @@
             "upload-new-photo-success": "Your photo has been updated successfuly",
             "upload-new-photo-fail": "Your photo failed to upload"
         },
-        "password-settings":{
+        "password-settings": {
             "current-password": "Current password",
             "new-password": "New password",
             "confirm-new-password": "Confirm new password",
             "new-password-success": "Your password has been updated successfuly",
-            "new-password-fail": "You have entered incorrect password" 
+            "new-password-fail": "You have entered incorrect password"
         }
     }
 }
