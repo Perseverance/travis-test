@@ -9,17 +9,26 @@ $card-half-padding: $card-padding/2;
     @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
     .image-holder {
         cursor: pointer;
-        .new-label {
+        .labels-container {
             position: absolute;
-            top: 25px;
+            top: 20px;
             left: $card-padding-with-container;
-            @include border-radius(3px);
-            padding: 4px 9px;
-            font-size: 10px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            background: $blue-dark;
-            color: white;
+            .label {
+                @include border-radius(3px);
+                padding: 4px 9px;
+                font-size: 10px;
+                font-weight: 300;
+                letter-spacing: 1px;
+                @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.14));
+                &.new-label {
+                    background: $blue-dark;
+                    color: white;
+                }
+                &.verified-label {
+                    background: $green-sec;
+                    color: white;
+                }
+            }
         }
         img {
             @include border-radius-separate(7px, 7px, 0px, 0px);

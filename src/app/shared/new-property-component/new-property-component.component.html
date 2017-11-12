@@ -1,6 +1,9 @@
 <div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" [ngClass]="{ 'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
     <div class="image-holder" (click)="goToProperty(property.id)">
-        <div class="text-uppercase new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}</div>
+        <div class="labels-container">
+            <div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}</div>
+            <div class="text-uppercase label verified-label" *ngIf="property.verified">{{ 'landing.new-properties.verified' | translate }}</div>
+        </div>
         <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}" />
         <div class="right-arrow-holder" *ngIf="showArrow">
         </div>
