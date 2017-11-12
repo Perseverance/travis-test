@@ -1,18 +1,20 @@
-import {PropertiesFilter} from './../properties/properties.service';
-import {GoogleMapsMarkersService} from './../shared/google-maps-markers.service';
-import {environment} from './../../environments/environment';
+import { PropertiesFilter } from './../properties/properties.service';
+import { GoogleMapsMarkersService } from './../shared/google-maps-markers.service';
+import { environment } from './../../environments/environment';
 import {
 	Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, NgZone
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {PropertiesService} from '../properties/properties.service';
-import {GetPropertiesResponse} from '../properties/properties-responses';
-import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
-import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
-import {ImageEnvironmentPrefixPipe} from '../shared/pipes/image-environment-prefix.pipe';
-import {ImageSizePipe} from '../shared/pipes/image-size.pipe';
-import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
-import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PropertiesService } from '../properties/properties.service';
+import { GetPropertiesResponse } from '../properties/properties-responses';
+import { BigNumberFormatPipe } from '../shared/pipes/big-number-format.pipe';
+import { CurrencySymbolPipe } from '../shared/pipes/currency-symbol.pipe';
+import { ImageEnvironmentPrefixPipe } from '../shared/pipes/image-environment-prefix.pipe';
+import { ImageSizePipe } from '../shared/pipes/image-size.pipe';
+import { PropertySizeUnitOfMeasurePipe } from '../shared/pipes/property-size-unit-of-measure.pipe';
+import { ThousandSeparatorPipe } from '../shared/pipes/thousand-separator.pipe';
+import { MapEventsService, PropertyHoveredEvent } from './map-events.service';
+declare function InfoBubble(ob: object): void;
 
 @Component({
 	selector: 'app-google-map',
@@ -40,21 +42,22 @@ export class GoogleMapComponent implements OnInit {
 	private currentNorthEastRect: google.maps.LatLng;
 
 	constructor(private route: ActivatedRoute,
-				private router: Router,
-				private propertiesService: PropertiesService,
-				private googleMarkersService: GoogleMapsMarkersService,
-				private bigNumberPipe: BigNumberFormatPipe,
-				private currencySymbolPipe: CurrencySymbolPipe,
-				private imageEnvPrefixPipe: ImageEnvironmentPrefixPipe,
-				private imageSizePipe: ImageSizePipe,
-				private propertyUnitOfMeasurePipe: PropertySizeUnitOfMeasurePipe,
-				private thousandSeparatorPipe: ThousandSeparatorPipe,
-				private zone: NgZone) {
+		private router: Router,
+		private propertiesService: PropertiesService,
+		private googleMarkersService: GoogleMapsMarkersService,
+		private bigNumberPipe: BigNumberFormatPipe,
+		private currencySymbolPipe: CurrencySymbolPipe,
+		private imageEnvPrefixPipe: ImageEnvironmentPrefixPipe,
+		private imageSizePipe: ImageSizePipe,
+		private propertyUnitOfMeasurePipe: PropertySizeUnitOfMeasurePipe,
+		private thousandSeparatorPipe: ThousandSeparatorPipe,
+		private mapEventsService: MapEventsService,
+		private zone: NgZone) {
 	}
 
 	ngOnInit() {
 		this.options = {
-			center: {lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE},
+			center: { lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE },
 			zoom: this.DEFAULT_ZOOM
 		};
 		if (this.isSizeXs) {
@@ -187,16 +190,19 @@ export class GoogleMapComponent implements OnInit {
 		for (const property of propertiesResponse.properties) {
 			const marker = new google.maps.Marker(
 				{
-					position: {lat: property.latitude, lng: property.longitude},
+					position: { lat: property.latitude, lng: property.longitude },
 					icon: this.googleMarkersService.defaultMarkerSettings,
 					label: this.googleMarkersService.getMarkerLabel
-					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
+						(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
 				});
 
-			const contentString = `<div id="div-main-infoWindow">
-					<div id="property-image-holder"
-					style="background: url(${this.imageSizePipe.transform(
-				this.imageEnvPrefixPipe.transform(property.imageUrls[0]), 254, 155, true)}) no-repeat center center !important;"></div>
+			const imageURL = this.imageSizePipe.transform(this.imageEnvPrefixPipe.transform(property.imageUrls[0]), 255, 155, true);
+			const propertySize = this.propertyUnitOfMeasurePipe.transform(property.size.value);
+			const propertyPrice = this.currencySymbolPipe.transform(this.thousandSeparatorPipe.transform(property.price.value));
+			const contentString = `
+				<div class="main-info-window">
+					<div class="property-image-holder" style="background: url(${imageURL}) no-repeat center center !important;">
+					</div>
 					<div class="property-iw-footer">
 						<div class="property-info">
 							<span class="address">${property.address}</span>
@@ -205,45 +211,83 @@ export class GoogleMapComponent implements OnInit {
 							<span
 								*ngIf="property.bedrooms" class="property-bedrooms">${property.bedrooms} bedrooms</span>
 							<span *ngIf="property.size.value" class="property-size">
-								${this.propertyUnitOfMeasurePipe.transform(property.size.value)}
+								${propertySize}
 							</span>
 						</div>
 						<div class="property-price">
-							<span>${this.currencySymbolPipe.transform(this.thousandSeparatorPipe.transform(property.price.value))}</span>
+							<span>${propertyPrice}</span>
 						</div>
 					</div>
 				</div>`;
 
-			const infoWindow = new google.maps.InfoWindow({
+			const infoBubble = new InfoBubble({
+				map: this.map,
 				content: contentString,
-				maxWidth: 203,
-				pixelOffset: new google.maps.Size(0, 0),
-				disableAutoPan: true
+				shadowStyle: 1,
+				padding: 0,
+				backgroundColor: 'white',
+				borderRadius: 7,
+				borderWidth: 0,
+				disableAutoPan: true,
+				hideCloseButton: true,
+				arrowPosition: 50,
+				disableAnimation: true
 			});
 
 			google.maps.event.addListener(marker, 'click', () => {
 				this.goToProperty(property.id);
 			});
 			google.maps.event.addListener(marker, 'mouseover', () => {
-				marker.setIcon(this.googleMarkersService.hoverMarkerSettings);
-				marker.setZIndex(this.INITIAL_ZINDEX_HOVERED_MARKER++);
-				const label = marker.getLabel();
-				label.color = this.googleMarkersService.getMarkerLabelColorOnHover();
-				marker.setLabel(label);
-				infoWindow.open(this.map, marker);
+				if (infoBubble.isOpen()) {
+					return;
+				}
+				this.mapEventsService.pushMapHoverEvent({ propertyId: property.id, isHovered: true });
 			});
 			google.maps.event.addListener(marker, 'mouseout', () => {
-				marker.setIcon(this.googleMarkersService.defaultMarkerSettings);
-				const label = marker.getLabel();
-				label.color = this.googleMarkersService.getMarkerLabelColor();
-				marker.setLabel(label);
-				infoWindow.close();
+				this.mapEventsService.pushMapHoverEvent({ propertyId: property.id, isHovered: false });
 			});
-			google.maps.event.addListener(infoWindow, 'domready', () => {
-				document.getElementById('div-main-infoWindow').closest('.gm-style-iw').parentElement.classList.add('custom-iw');
+			google.maps.event.addListener(this.map, 'click', () => {
+				this.hideBubble(marker, infoBubble);
+			});
+			this.mapEventsService.subscribeToMapHoverEvents({
+				next: (event: PropertyHoveredEvent) => {
+					if (event.isHovered) {
+						this.showBubble(marker, infoBubble);
+					} else {
+						this.hideBubble(marker, infoBubble);
+					}
+				}
+			}, property.id);
+			// Fixes bug of mouseout not firing always
+			this.mapEventsService.subscribeToMapHoverEvents({
+				next: (event: PropertyHoveredEvent) => {
+					if (event.propertyId !== property.id && infoBubble.isOpen()) {
+						this.hideBubble(marker, infoBubble);
+					}
+				}
 			});
 			this.overlays.push(marker);
 		}
+	}
+
+	private showBubble(marker: google.maps.Marker, infoBubble) {
+		if (infoBubble.isOpen()) {
+			return;
+		}
+		marker.setIcon(this.googleMarkersService.hoverMarkerSettings);
+		marker.setZIndex(this.INITIAL_ZINDEX_HOVERED_MARKER++);
+		const label = marker.getLabel();
+		label.color = this.googleMarkersService.getMarkerLabelColorOnHover();
+		marker.setLabel(label);
+		infoBubble.open(this.map, marker);
+	}
+
+	private hideBubble(marker: google.maps.Marker, infoBubble) {
+		marker.setIcon(this.googleMarkersService.defaultMarkerSettings);
+		const label = marker.getLabel();
+		label.color = this.googleMarkersService.getMarkerLabelColor();
+		marker.setLabel(label);
+		infoBubble.close();
 	}
 
 	private goToProperty(id: string) {

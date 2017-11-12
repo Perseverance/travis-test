@@ -23,6 +23,7 @@ $selected-tab-color: #EDF1F3;
         .ui-tabview-nav {
             border: 0;
             >li.settings-panel-header {
+                float: left;
                 height: 44px;
                 line-height: 23px;
                 font-size: $font-size-medium;
@@ -33,26 +34,29 @@ $selected-tab-color: #EDF1F3;
                 color: #93A4AB;
                 padding: 0px 5px;
                 position: relative;
-                @include border-radius-separate(5px, 5px, 5px, 5px);
-                width: 250px;
-                span {
-                    font-weight: 400;
+                @include border-radius(0px);
+                width: 100%;
+                max-width: 90%;
+                a {
+                    width: 100%;
+                    span {
+                        font-weight: 400;
+                        @include ellipsis(100%);
+                    }
                 }
                 &:hover {
                     background-color: lighten($selected-tab-color, 2%);
-                    width: 270px;
-                    left: 20px;
                     border: 0px;
                     @include border-radius-separate(5px, 50px, 5px, 50px);
                     cursor: pointer;
+                    max-width: 100%;
                 }
                 &.ui-tabview-selected {
                     color: $black;
                     background-color: $selected-tab-color;
                     border-bottom: 0;
                     margin-right: 0px;
-                    width: 270px;
-                    left: 20px;
+                    max-width: 100%;
                     @include border-radius-separate(5px, 50px, 5px, 50px);
                 }
             }

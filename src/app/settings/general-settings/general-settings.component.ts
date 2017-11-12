@@ -34,6 +34,15 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			lastName: ['', [Validators.required]],
 			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
 		});
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				if (userInfo.isAnonymous) {
+					return;
+				}
+				this.userInfo = userInfo.user;
+				this.setUserInfo(this.userInfo);
+			}
+		});
 	}
 
 	ngOnInit() {
@@ -43,12 +52,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		});
 
 
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				this.userInfo = userInfo.user;
-				this.setUserInfo(this.userInfo);
-			}
-		});
 	}
 
 	private setUserInfo(userInfo: any) {
