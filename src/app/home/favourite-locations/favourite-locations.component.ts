@@ -38,7 +38,7 @@ export class FavouriteLocationsComponent implements OnInit {
 			},
 			easing: 'ease'
 		};
-		this.favouriteLocations = await this.propertiesService.getFavouriteLocations();
+		this.favouriteLocations = await this.propertiesService.getMockedFavouriteLocations();
 		this.topCities = this.favouriteLocations;
 
 	}
