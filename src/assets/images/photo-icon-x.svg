@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>close</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Propy-Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New-property-2" transform="translate(-805.000000, -1824.000000)" fill="#FFFFFF">
+            <g id="Uploaded-photos" transform="translate(464.000000, 1816.000000)">
+                <g id="delete" transform="translate(333.000000, 0.000000)">
+                    <path d="M13.9090909,13 L18,8.90909091 L17.0909091,8 L13,12.0909091 L8.90909091,8 L8,8.90909091 L12.0909091,13 L8,17.0909091 L8.90909091,18 L13,13.9090909 L17.0909091,18 L18,17.0909091 L13.9090909,13 Z" id="close"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

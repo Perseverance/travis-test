@@ -25,17 +25,16 @@
                     background-size: cover;
                     background-position: center;
                     margin: 0;
+                    h4 {
+                        color: white;
+                        padding: 25px 20px;
+                    }
                     .info-holder {
-                        padding-bottom: 15px;
-                        padding-right: 15px;
-                        padding-left: 15px;
+                        position: absolute;
+                        bottom: 0px;
+                        padding: 20px;
                         display: inline-block;
                         width: 100%;
-                        h4 {
-                            color: white;
-                            padding-top: 15px;
-                            padding-bottom: 85%;
-                        }
                         .real-estates {
                             float: left;
                             width: 65%;
@@ -45,20 +44,23 @@
                                 color: white;
                             }
                         }
-                        .right-arrow-holder {
-                            height: 50px;
-                            width: 50px;
-                            float: right;
-                            background: url('../../../assets/images/right-arrow-hover.svg') 100% no-repeat;
-                            visibility: hidden;
-                            @media #{$sm} {
-                                visibility: visible;
-                            }
+                    }
+                    .right-arrow-holder {
+                        position: relative;
+                        top: 165px;
+                        right: 15px;
+                        height: 50px;
+                        width: 50px;
+                        float: right;
+                        background: url('../../../assets/images/right-arrow-hover.svg') 100% no-repeat;
+                        visibility: hidden;
+                        @media #{$sm} {
+                            visibility: visible;
                         }
-                        &:hover {
-                            .right-arrow-holder {
-                                visibility: visible;
-                            }
+                    }
+                    &:hover {
+                        .right-arrow-holder {
+                            visibility: visible;
                         }
                     }
                 }
