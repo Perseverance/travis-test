@@ -26,7 +26,7 @@ $details-border-color: #E5EDEF;
 		background-size: 100%;
 		background-repeat: no-repeat;
 		position: absolute;
-		top: 270px;
+		bottom: 60px;
 		z-index: 1;
 		&.inverview-play-icon {
 			left: 62%;
@@ -37,17 +37,31 @@ $details-border-color: #E5EDEF;
 		&.bg-office-play-icon {
 			left: 262%;
 		}
-		@media #{$xs} {
-			top: 150px;
-		}
 	}
 	.carousel-holder {
+		.wrapper {
+			display: inline-block;
+			position: relative;
+			&:after {
+				padding-top: 75%;
+				/* 4:3 ratio */
+				display: block;
+				content: '';
+			}
+			.main {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				height: 100%;
+			}
+		}
 		.item {
 			div {
 				display: inline-block;
 				width: 24%;
 				background-color: #ccc;
-				min-height: 220px;
 				text-align: center;
 				line-height: 200px;
 				vertical-align: middle;
@@ -61,10 +75,6 @@ $details-border-color: #E5EDEF;
 				iframe {
 					visibility: hidden;
 					width: 100%;
-					height: 400px;
-					@media #{$xs} {
-						height: 250px;
-					}
 				}
 				&.active {
 					min-height: 10px;
