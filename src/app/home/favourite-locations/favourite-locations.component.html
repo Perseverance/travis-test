@@ -6,8 +6,8 @@
             <ngx-tile NgxCarouselItem *ngFor="let city of topCities">
                 <div class="location-holder" (click)="cityItemClicked(city)">
                     <div class="city-details" [ngStyle]="{'background-image': 'url(' + imageForCity(city) + ')'}">
+                        <h4>{{ city.cityName }}</h4>
                         <div class="info-holder">
-                            <h4>{{ city.cityName }}</h4>
                             <div class="real-estates">
                                 <span>{{ city.propertiesCount | thousandSeparator}} {{ 'landing.real-estates' | translate }}</span>
                                 <br>

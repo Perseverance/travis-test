@@ -25,17 +25,16 @@
                     background-size: cover;
                     background-position: center;
                     margin: 0;
+                    h4 {
+                        color: white;
+                        padding: 25px 20px;
+                    }
                     .info-holder {
-                        padding-bottom: 15px;
-                        padding-right: 15px;
-                        padding-left: 15px;
+                        position: absolute;
+                        bottom: 0px;
+                        padding: 20px;
                         display: inline-block;
                         width: 100%;
-                        h4 {
-                            color: white;
-                            padding-top: 15px;
-                            padding-bottom: 85%;
-                        }
                         .real-estates {
                             float: left;
                             width: 65%;
