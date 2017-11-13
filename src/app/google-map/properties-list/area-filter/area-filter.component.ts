@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {SelectItem} from 'primeng/primeng';
 import {PropertiesFilter} from '../../../properties/properties.service';
 import {ThousandSeparatorPipe} from '../../../shared/pipes/thousand-separator.pipe';
@@ -21,6 +21,7 @@ export class AreaFilterComponent implements OnInit {
 	public areaUnits: SelectItem[];
 	public selectedAreaUnit;
 	public filterSelectionActivated = false;
+	@Input() areaFilterApplied: boolean;
 	@Output() onFilterActivated = new EventEmitter<boolean>();
 	@Output() onAreaFilterApplied = new EventEmitter<PropertiesFilter>();
 

@@ -25,21 +25,13 @@ $header-margin-sm: 15px;
         &.propy-links {
             li {
                 .user-separator {
+                    @media (min-width: 768px) and (max-width: 880px) {
+                        display: none;
+                    }
                     color: $gray-lighter;
-                    margin: 0px 15px;
+                    margin: 0px 7px;
                     position: relative;
                     top: 14px;
-                }
-                a.account-name {
-                    padding-top: 15px;
-                    padding-bottom: 15px;
-                    font-size: $font-size-medium;
-                }
-                &.separator {
-                    padding-right: $links-to-languages-distance;
-                    @media #{$xs} {
-                        padding-right: 0px;
-                    }
                 }
                 a {
                     font-size: $font-size-small;
@@ -59,11 +51,33 @@ $header-margin-sm: 15px;
                             background-color: $blue-light;
                         }
                     }
+                    &.account-name {
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+                        padding: 15px 5px;
+                        @include ellipsis(120px);
+                        @media (min-width: 768px) and (max-width: 880px) {
+                            @include ellipsis(90px);
+                        }
+                        font-size: $font-size-medium;
+                    }
+                    &.list-property {
+                        @media (min-width: 768px) and (max-width: 880px) {
+                            margin-left: 0px;
+                        }
+                    }
+                }
+                &.separator {
+                    padding-right: $links-to-languages-distance;
+                    @media #{$xs} {
+                        padding-right: 0px;
+                    }
                 }
             }
         }
         .languages-dropdown.dropdown {
             a.dropdown-toggle {
+                padding-right: 5px;
                 @media #{$xs} {
                     text-align: center;
                     border: 1px solid $blue-light;
@@ -109,6 +123,9 @@ $header-margin-sm: 15px;
     }
     .notifications-dropdown.dropdown {
         margin-left: 5px;
+        @media (min-width: 768px) and (max-width: 880px) {
+            margin: 0px;
+        }
         @media #{$xs} {
             margin-right: 5px;
         }
@@ -119,6 +136,9 @@ $header-margin-sm: 15px;
             @include border-radius(20px);
             position: relative;
             margin: 5px;
+            @media (min-width: 768px) and (max-width: 880px) {
+                margin: 0px;
+            }
             &:hover {
                 background-color: $gray-lighter;
             }

@@ -109,7 +109,8 @@
                                                 firstName.invalid || 
                                                 lastName.invalid ||
                                                 (iAmAnAgent.value && agentFields.invalid) ||
-                                                (iAmAnAgent.value && agentLocations.length === 0)" (click)="registerUser()">
+                                                (iAmAnAgent.value && agentLocations.length === 0) ||
+                                                (passwords.errors != null && passwords.errors['passwordsDiffer'])" (click)="registerUser()">
                                                 {{ 'common.label.signup' | translate }}</button>
             <hr class="separator">
             <div class="social">

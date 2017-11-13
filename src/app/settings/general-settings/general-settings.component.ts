@@ -32,6 +32,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
+			email: ['', []],
 			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
 		});
 		this.authService.subscribeToUserData({
@@ -46,7 +47,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	ngOnInit() {
-
 		this.translateService.stream('settings.general-settings.update-success').subscribe(value => {
 			this.successMessage = value;
 		});
@@ -58,6 +58,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.firstName.setValue(userInfo.firstName);
 		this.lastName.setValue(userInfo.lastName);
 		this.phoneNumber.setValue(userInfo.phoneNumber);
+		this.email.setValue(userInfo.email);
 	}
 
 	public get firstName() {
@@ -66,6 +67,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	public get lastName() {
 		return this.editProfileForm.get('lastName');
+	}
+
+	public get email() {
+		return this.editProfileForm.get('email');
 	}
 
 	public get phoneNumber() {

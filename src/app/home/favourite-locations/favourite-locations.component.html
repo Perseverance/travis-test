@@ -1,28 +1,27 @@
 <div class="row top-locations">
-	<h3 class="text-center">{{ 'landing.explore-cities' | translate }}</h3>
-	<div class="top-cities-holder">
-		<ngx-carousel
-			[inputs]="carouselTile">
+    <h3 class="text-center">{{ 'landing.explore-cities' | translate }}</h3>
+    <div class="top-cities-holder">
+        <ngx-carousel [inputs]="carouselTile">
 
-			<ngx-tile NgxCarouselItem *ngFor="let city of topCities">
-				<div class="location-holder" (click)="cityItemClicked(city)">
-					<div class="city-details" [ngStyle]="{'background-image': 'url(' + city.imageUrls[0] + ')'}">
-						<div class="info-holder">
-							<h4>{{ city.cityName }}</h4>
-							<div class="real-estates">
-								<span>{{ city.propertiesCount | thousandSeparator}} {{ 'landing.real-estates' | translate }}</span>
-								<br>
-								<span>{{ 'landing.from' | translate }} {{ city.initialPrice | thousandSeparator | currencySymbol}}</span>
-							</div>
-							<div class="right-arrow-holder">
-							</div>
-						</div>
-					</div>
-				</div>
-			</ngx-tile>
+            <ngx-tile NgxCarouselItem *ngFor="let city of topCities">
+                <div class="location-holder" (click)="cityItemClicked(city)">
+                    <div class="city-details" [ngStyle]="{'background-image': 'url(' + imageForCity(city) + ')'}">
+                        <h4>{{ city.cityName }}</h4>
+                        <div class="info-holder">
+                            <div class="real-estates">
+                                <span>{{ city.propertiesCount | thousandSeparator}} {{ 'landing.real-estates' | translate }}</span>
+                                <br>
+                                <span>{{ 'landing.from' | translate }} {{ city.initialPrice | thousandSeparator | currencySymbol}}</span>
+                            </div>
+                        </div>
+                        <div class="right-arrow-holder">
+                        </div>
+                    </div>
+                </div>
+            </ngx-tile>
 
-			<button NgxCarouselPrev class='left-arrow'>&lt;</button>
-			<button NgxCarouselNext class='right-arrow'>&gt;</button>
-		</ngx-carousel>
-	</div>
+            <button NgxCarouselPrev class='left-arrow'>&lt;</button>
+            <button NgxCarouselNext class='right-arrow'>&gt;</button>
+        </ngx-carousel>
+    </div>
 </div>

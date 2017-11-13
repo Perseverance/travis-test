@@ -1,7 +1,7 @@
 <div class="filter-price row">
 	<button type="text" pButton (click)="priceFilter.toggle($event)"
 			class="filter-button"
-			[ngClass]="{'active': filterSelectionActivated}">
+			[ngClass]="{'active': filterSelectionActivated || priceFilterApplied}">
 		{{ 'filters.price' | translate }}
 		<span class="glyphicon"
 			  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>

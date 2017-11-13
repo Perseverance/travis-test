@@ -396,4 +396,16 @@ export class AuthenticationService {
 		return result.data.data;
 	}
 
+	public async changePassword(oldPassword: string, password): Promise<any> {
+		const params = {
+			oldPassword,
+			password,
+		};
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CHANGE_PASSWORD, params);
+		if (!result.data.data) {
+			throw new Error('new-password-fail');
+		}
+		return result.data.data;
+	}
+
 }

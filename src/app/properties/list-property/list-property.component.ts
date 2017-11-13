@@ -1,15 +1,19 @@
-import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
-import { PropertiesService } from './../properties.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SelectItem } from 'primeng/components/common/selectitem';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { LocationSearchComponent } from '../../location-search/location-search.component';
+import {CreatePropertyResponse, PropertyImage} from './../properties-responses';
+import {PropertiesService} from './../properties.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SelectItem} from 'primeng/components/common/selectitem';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {LocationSearchComponent} from '../../location-search/location-search.component';
+import {environment} from '../../../environments/environment';
+import {GoogleMapsMarkersService} from '../../shared/google-maps-markers.service';
+import {BigNumberFormatPipe} from '../../shared/pipes/big-number-format.pipe';
+import {CurrencySymbolPipe} from '../../shared/pipes/currency-symbol.pipe';
 
 @Component({
 	selector: 'app-list-property',
@@ -32,65 +36,75 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public isUserAnonymous: boolean;
 	public inviteLInk: string;
 	public userId: string;
+	public options: any;
+	public overlays: any[];
+	public map: google.maps.Map;
 
+	private DEFAULT_LATITUDE = 37.452961;
+	private DEFAULT_LONGITUDE = -122.181725;
+	private DEFAULT_ZOOM = environment.mapConfig.MAP_DEFAULT_ZOOM;
 	private DEFAULT_COMMISION_FEE = 75;
+	public priceRangeValue: number[] = [0, this.DEFAULT_COMMISION_FEE];
 
-	private SELECT_TYPE_KEY = 'list-property.form-fields.select-type';
+	private SELECT_TYPE_KEY = 'common.label.not-selected';
 	private REFERRAL_PATH = 'Users/RequestInvite?referrerId=';
 
 	@ViewChild(LocationSearchComponent)
 	private locationSearchComponent: LocationSearchComponent;
 
 	constructor(private formBuilder: FormBuilder,
-		private authService: AuthenticationService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		private notificationService: NotificationsService,
-		private propertiesService: PropertiesService) {
+				private authService: AuthenticationService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				private notificationService: NotificationsService,
+				private googleMarkersService: GoogleMapsMarkersService,
+				private bigNumberPipe: BigNumberFormatPipe,
+				private currencySymbolPipe: CurrencySymbolPipe,
+				private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
-		this.propertyTypes.push({ label: '', value: null });
-		this.propertyTypes.push({ label: 'Single Family Home', value: 1 });
-		this.propertyTypes.push({ label: 'Apartment', value: 2 });
-		this.propertyTypes.push({ label: 'Townhouse', value: 3 });
-		this.propertyTypes.push({ label: 'Condo', value: 4 });
-		this.propertyTypes.push({ label: 'Co-op', value: 5 });
-		this.propertyTypes.push({ label: 'Loft', value: 6 });
-		this.propertyTypes.push({ label: 'TIC', value: 7 });
-		this.propertyTypes.push({ label: 'Villa', value: 8 });
-		this.propertyTypes.push({ label: 'Summer Villa', value: 9 });
-		this.propertyTypes.push({ label: 'Development Only', value: 10 });
-		this.propertyTypes.push({ label: 'Studio', value: 11 });
-		this.propertyTypes.push({ label: 'Maisonette', value: 12 });
-		this.propertyTypes.push({ label: 'Penthouse', value: 13 });
-		this.propertyTypes.push({ label: 'Bungalow', value: 14 });
-		this.propertyTypes.push({ label: 'Student Room', value: 15 });
-		this.propertyTypes.push({ label: 'Commercial', value: 20 });
+		this.propertyTypes.push({label: '', value: null});
+		this.propertyTypes.push({label: 'Single Family Home', value: 1});
+		this.propertyTypes.push({label: 'Apartment', value: 2});
+		this.propertyTypes.push({label: 'Townhouse', value: 3});
+		this.propertyTypes.push({label: 'Condo', value: 4});
+		this.propertyTypes.push({label: 'Co-op', value: 5});
+		this.propertyTypes.push({label: 'Loft', value: 6});
+		this.propertyTypes.push({label: 'TIC', value: 7});
+		this.propertyTypes.push({label: 'Villa', value: 8});
+		this.propertyTypes.push({label: 'Summer Villa', value: 9});
+		this.propertyTypes.push({label: 'Development Only', value: 10});
+		this.propertyTypes.push({label: 'Studio', value: 11});
+		this.propertyTypes.push({label: 'Maisonette', value: 12});
+		this.propertyTypes.push({label: 'Penthouse', value: 13});
+		this.propertyTypes.push({label: 'Bungalow', value: 14});
+		this.propertyTypes.push({label: 'Student Room', value: 15});
+		this.propertyTypes.push({label: 'Commercial', value: 20});
 
 		this.currencies = [];
-		this.currencies.push({ label: 'USD', value: 1 });
-		this.currencies.push({ label: 'EUR', value: 2 });
-		this.currencies.push({ label: 'RUB', value: 3 });
-		this.currencies.push({ label: 'AED', value: 4 });
-		this.currencies.push({ label: 'HKD', value: 5 });
-		this.currencies.push({ label: 'SGD', value: 6 });
-		this.currencies.push({ label: 'GBP', value: 7 });
-		this.currencies.push({ label: 'BGN', value: 8 });
-		this.currencies.push({ label: 'CNY', value: 9 });
-		this.currencies.push({ label: 'ETH', value: 10 });
-		this.currencies.push({ label: 'BTC', value: 11 });
+		this.currencies.push({label: 'USD', value: 1});
+		this.currencies.push({label: 'EUR', value: 2});
+		this.currencies.push({label: 'RUB', value: 3});
+		this.currencies.push({label: 'AED', value: 4});
+		this.currencies.push({label: 'HKD', value: 5});
+		this.currencies.push({label: 'SGD', value: 6});
+		this.currencies.push({label: 'GBP', value: 7});
+		this.currencies.push({label: 'BGN', value: 8});
+		this.currencies.push({label: 'CNY', value: 9});
+		this.currencies.push({label: 'ETH', value: 10});
+		this.currencies.push({label: 'BTC', value: 11});
 
 		this.areaUnits = [];
-		this.areaUnits.push({ label: 'sqm', value: 1 });
-		this.areaUnits.push({ label: 'sqft', value: 2 });
+		this.areaUnits.push({label: 'sqm', value: 1});
+		this.areaUnits.push({label: 'sqft', value: 2});
 
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
 			furnished: [''],
 			price: ['', Validators.required],
 			acceptedCurrencies: [[], Validators.required],
-			commisionFee: [this.DEFAULT_COMMISION_FEE],
+			commisionFee: [this.priceRangeValue[1]],
 			currency: ['1', Validators.required],
 			year: [''],
 			bedrooms: [''],
@@ -120,6 +134,11 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				this.inviteLInk = `${window.location.protocol}//${window.location.host}/${this.REFERRAL_PATH}${this.userId}`;
 			}
 		});
+
+		this.options = {
+			center: {lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE},
+			zoom: this.DEFAULT_ZOOM
+		};
 	}
 
 	ngOnInit() {
@@ -150,7 +169,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public get feeDecimal() {
-		return this.commisionFee.value / 10;
+		return this.commisionFee.value[1] / 10;
 	}
 
 	public get year() {
@@ -217,6 +236,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public removeFile(event) {
 		const idx = this.selectedImages.indexOf(event.file);
 		this.selectedImages.splice(idx, 1);
+		this.uploadedFilesSectionManipulation();
 	}
 
 	public async prepareImages() {
@@ -347,6 +367,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.propertyLat.setValue(latitude);
 		this.propertyLon.setValue(longitude);
 		this.address.setValue(locationAddress);
+		this.createAndSetMapOptions(latitude, longitude);
 	}
 
 	private resetListingForm() {
@@ -358,5 +379,58 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.areaUnit.setValue('1'); // sqm default
 		this.commisionFee.setValue(this.DEFAULT_COMMISION_FEE)
 		this.locationSearchComponent.resetInput();
+	}
+
+	public decreaseBedroomsCount() {
+		if (this.bedrooms.value === '' || this.bedrooms.value <= 0) {
+			this.bedrooms.setValue(0);
+			return;
+		}
+		this.bedrooms.setValue(+(this.bedrooms.value - 1));
+	}
+
+	public increaseBedroomsCount() {
+		this.bedrooms.setValue(+(this.bedrooms.value + 1));
+	}
+
+	public setMap(event) {
+		this.map = event.map;
+	}
+
+	private createAndSetMapOptions(lat: number, lng: number) {
+		this.map.setCenter(new google.maps.LatLng(lat, lng));
+		this.map.setZoom(this.DEFAULT_ZOOM);
+		this.createAndSetPropertyMarker(lat, lng);
+	}
+
+	private createAndSetPropertyMarker(lat: number, lng: number) {
+		const marker = new google.maps.Marker(
+			{
+				position: {lat: lat, lng: lng},
+				icon: this.googleMarkersService.defaultMarkerSettings,
+				label: this.googleMarkersService.getMarkerLabel
+				(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(this.price.value), true))
+			});
+		this.overlays = [marker];
+	}
+
+	public myUploader() {
+		this.uploadedFilesSectionManipulation();
+	}
+
+	private uploadedFilesSectionManipulation() {
+		setTimeout(() => {
+				const uploadedFilesClassName = 'ui-fileupload-files';
+				const photoSectionId = 'photo_section';
+				const additionBottomPaddingPx = 20;
+				const filesHolderElements = document.getElementsByClassName(uploadedFilesClassName) as HTMLCollectionOf<HTMLElement>;
+				let i;
+				for (i = 0; i < filesHolderElements.length; i++) {
+					const filesHolderElementHeight = filesHolderElements[i].clientHeight + additionBottomPaddingPx;
+					const photoSection = document.getElementById(photoSectionId);
+					photoSection.style.paddingBottom = `${filesHolderElementHeight}px`;
+				}
+			},
+			100);
 	}
 }

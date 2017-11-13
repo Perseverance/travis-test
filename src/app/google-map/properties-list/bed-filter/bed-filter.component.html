@@ -1,7 +1,7 @@
 <div class="filter-bed row">
 	<button type="text" pButton (click)="bedFilter.toggle($event)"
 			class="filter-button"
-			[ngClass]="{'active': filterSelectionActivated}">
+			[ngClass]="{'active': filterSelectionActivated || bedsFilterApplied}">
 		{{ 'filters.beds.beds-button' | translate }}
 		<span class="glyphicon"
 			  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>

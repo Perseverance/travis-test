@@ -1,8 +1,8 @@
-import { TranslateService } from '@ngx-translate/core';
-import { PropertiesFilter } from './../../properties/properties.service';
-import { SelectItem } from 'primeng/primeng';
-import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { PROPERTY_THEMES } from '../../shared/new-property-component/new-property-component.component';
+import {TranslateService} from '@ngx-translate/core';
+import {PropertiesFilter} from './../../properties/properties.service';
+import {SelectItem} from 'primeng/primeng';
+import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
+import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
 
 enum LIST_TYPES {
 	GRID = 'grid',
@@ -53,18 +53,18 @@ export class PropertiesListComponent implements OnInit {
 
 	constructor(private translateService: TranslateService) {
 		this.modes = [
-			{ label: '', value: LIST_TYPES.GRID },
-			{ label: '', value: LIST_TYPES.LIST }
+			{label: '', value: LIST_TYPES.GRID},
+			{label: '', value: LIST_TYPES.LIST}
 		];
 
 		const self = this;
 		this.translateService.get(['sorting.default', 'sorting.recent', 'sorting.price', 'sorting.area'])
 			.subscribe((data) => {
 				self.sortingTypes = [
-					{ label: data['sorting.default'], value: SORTING_TYPES.DEFAULT },
-					{ label: data['sorting.recent'], value: SORTING_TYPES.RECENT },
-					{ label: data['sorting.price'], value: SORTING_TYPES.LOWEST },
-					{ label: data['sorting.area'], value: SORTING_TYPES.BY_AREA }
+					{label: data['sorting.default'], value: SORTING_TYPES.DEFAULT},
+					{label: data['sorting.recent'], value: SORTING_TYPES.RECENT},
+					{label: data['sorting.price'], value: SORTING_TYPES.LOWEST},
+					{label: data['sorting.area'], value: SORTING_TYPES.BY_AREA}
 				];
 			});
 
@@ -193,5 +193,26 @@ export class PropertiesListComponent implements OnInit {
 			},
 			bedFilter: this.selectedBedTypes
 		});
+	}
+
+	public isAppliedPriceFilter(): boolean {
+		if (this.priceFilterMinValue === undefined || this.priceFilterMaxValue === undefined || this.priceFilterCurrency === undefined) {
+			return false;
+		}
+		return true;
+	}
+
+	public isAppliedBedsFilter(): boolean {
+		if (this.selectedBedTypes === undefined || this.selectedBedTypes === '') {
+			return false;
+		}
+		return true;
+	}
+
+	public isAppliedAreaFilter(): boolean {
+		if (this.areaFilterUnit === undefined || this.areaFilterMinValue === undefined || this.areaFilterMaxValue === undefined) {
+			return false;
+		}
+		return true;
 	}
 }

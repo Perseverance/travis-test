@@ -1,3 +1,4 @@
+import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { PropertiesFilter } from './properties.service';
 import { environment } from './../../environments/environment';
 import { APIEndpointsService } from './../shared/apiendpoints.service';
@@ -40,7 +41,8 @@ export class PropertiesService {
 
 	constructor(private restService: RestClientService,
 		private apiEndpoint: APIEndpointsService,
-		private localStorageService: LocalStorageService) {
+		private localStorageService: LocalStorageService,
+		private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
 	}
 
 	public async getProperty(propertyId: string): Promise<any> {
@@ -142,6 +144,11 @@ export class PropertiesService {
 	public async getFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
 		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FAVOURITE_LOCATIONS);
 		return result.data.data;
+	}
+
+	public async getMockedFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
+		const result = await this.mockedFavouriteLocationsService.getMockedFavouriteLocations();
+		return result.data;
 	}
 
 	public async getNewProperties(): Promise<GetNewPropertiesResponse[]> {
