@@ -44,20 +44,23 @@
                                 color: white;
                             }
                         }
-                        .right-arrow-holder {
-                            height: 50px;
-                            width: 50px;
-                            float: right;
-                            background: url('../../../assets/images/right-arrow-hover.svg') 100% no-repeat;
-                            visibility: hidden;
-                            @media #{$sm} {
-                                visibility: visible;
-                            }
+                    }
+                    .right-arrow-holder {
+                        position: relative;
+                        top: 165px;
+                        right: 15px;
+                        height: 50px;
+                        width: 50px;
+                        float: right;
+                        background: url('../../../assets/images/right-arrow-hover.svg') 100% no-repeat;
+                        visibility: hidden;
+                        @media #{$sm} {
+                            visibility: visible;
                         }
-                        &:hover {
-                            .right-arrow-holder {
-                                visibility: visible;
-                            }
+                    }
+                    &:hover {
+                        .right-arrow-holder {
+                            visibility: visible;
                         }
                     }
                 }
