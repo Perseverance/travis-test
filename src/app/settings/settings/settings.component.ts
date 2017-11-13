@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 
 @Component({
 	selector: 'app-settings',
@@ -8,8 +8,10 @@ import { AuthenticationService, UserData } from './../../authentication/authenti
 	encapsulation: ViewEncapsulation.None
 })
 export class SettingsComponent implements OnInit {
-	private shouldShowPassword: any;
-	constructor(private authService: AuthenticationService) { }
+	public shouldShowPassword: any;
+
+	constructor(private authService: AuthenticationService) {
+	}
 
 	ngOnInit() {
 		this.authService.subscribeToUserData({
