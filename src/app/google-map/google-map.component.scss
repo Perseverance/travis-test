@@ -7,7 +7,7 @@ $list-width: 50%;
         position: absolute;
         top: $site-top-padding;
         left: 0px;
-        bottom: 0;
+        bottom: 0px;
         background-color: $gray-lightest;
     }
     .width-50 {
@@ -42,7 +42,10 @@ $list-width: 50%;
         }
         .ui-progress-spinner {
             width: 100%;
-            margin-top: 5%;
+            padding-top: 5%;
+            &:before {
+                padding-top: 0px;
+            }
         }
     }
     .map-container {
@@ -60,7 +63,7 @@ $list-width: 50%;
 
 .main-info-window {
     width: 255px;
-    height: 245px;
+    max-height: 245px;
     .property-image-holder {
         height: 155px;
         width: 100%;
@@ -68,6 +71,7 @@ $list-width: 50%;
     .property-iw-footer {
         width: 100%;
         padding: 12px;
+        max-height: 90px;
         .property-info {
             .address {
                 font-size: 15px;

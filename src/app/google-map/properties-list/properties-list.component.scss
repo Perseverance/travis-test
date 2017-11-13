@@ -4,6 +4,8 @@
 .properties-list {
     height: 100%;
     .filters-and-switches {
+        height: 40px;
+        padding-top: 5px;
         .sorting-dropdown {
             margin-bottom: 5px;
             &.ui-dropdown.ui-state-default {
@@ -119,11 +121,13 @@
     }
     .cards-list {
         overflow-y: scroll;
-        height: 100%;
+        position: absolute;
+        top: 40px;
+        bottom: 0px;
+        padding-bottom: 20px;
         >div {
             padding-top: 15px;
         }
-        padding-bottom: 40px;
         &.apply-opacity {
             opacity: 0.2;
         }
