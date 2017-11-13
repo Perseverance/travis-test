@@ -15,16 +15,16 @@
             </div>
         </div>
 
-        <div class="nav hidden-xs col-sm-4 col-md-6 col-lg-6 col-lg-offset-1 loc-search-nav" *ngIf="!isLanding">
+        <div class="nav hidden-xs col-sm-4 col-lg-5 loc-search-nav" *ngIf="!isLanding">
             <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right propy-links" *ngIf="hasUserLoaded">
-                <!-- <li>
-                    <a routerLink="/list-property" routerLinkActive="active" class="text-capitalize">{{'list-property.heading' | translate }}</a>
-                </li> -->
+                <li>
+                    <a routerLink="/list-property" class="list-property text-capitalize btn propy-control button-small">{{'list-property.heading' | translate }}</a>
+                </li>
                 <li class="dropdown languages-dropdown">
                     <a href="#" class="dropdown-toggle language-selector text-uppercase" data-toggle="dropdown" role="button" aria-haspopup="true"
                         ngClass="{{translate.currentLang}}" aria-expanded="false">{{translate.currentLang}}<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
