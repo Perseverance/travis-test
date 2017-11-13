@@ -4,7 +4,7 @@
             <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
 
                 <ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">
-                    <img class="property-img" [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true" onError="this.src='/assets/images/image-404-small.png';">
+                    <img class="property-img" [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true" onError="this.src='/assets/images/image-404.png';">
                 </ngx-tile>
 
                 <button NgxCarouselPrev class="left-arrow">

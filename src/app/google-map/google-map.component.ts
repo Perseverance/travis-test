@@ -205,7 +205,11 @@ export class GoogleMapComponent implements OnInit {
 				`<span *ngIf="property.size.value > 0" class="property-size">${propertySize}</span>`;
 			const contentString = `
 				<div class="main-info-window">
-					<div class="property-image-holder" style="background: url(${imageURL}) no-repeat center center !important;">
+					<div class="property-image-holder"
+						style="
+						background-image: url(${imageURL}), url('/assets/images/image-404.png') !important;
+						background-size: cover;
+						background-position: center;">
 					</div>
 					<div class="property-iw-footer">
 						<div class="property-info">
