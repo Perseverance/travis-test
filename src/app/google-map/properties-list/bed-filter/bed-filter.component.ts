@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {SelectItem} from 'primeng/primeng';
 import {TranslateService} from '@ngx-translate/core';
 import {PropertiesFilter} from '../../../properties/properties.service';
@@ -23,6 +23,7 @@ export class BedFilterComponent implements OnInit {
 	public bedOptions: SelectItem[] = [];
 	public selectedBedTypes: string[];
 	public filterSelectionActivated = false;
+	@Input() bedsFilterApplied: boolean;
 	@Output() onFilterActivated = new EventEmitter<boolean>();
 	@Output() onBedFilterApplied = new EventEmitter<PropertiesFilter>();
 

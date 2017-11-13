@@ -23,6 +23,7 @@ export class PriceFilterComponent implements OnInit {
 	public currencies: SelectItem[];
 	public selectedCurrency;
 	public filterSelectionActivated = false;
+	@Input() priceFilterApplied: boolean;
 	@Output() onFilterActivated = new EventEmitter<boolean>();
 	@Output() onPriceFilterApplied = new EventEmitter<PropertiesFilter>();
 	@Output() onAreaFilterApplied = new EventEmitter<PropertiesFilter>();
