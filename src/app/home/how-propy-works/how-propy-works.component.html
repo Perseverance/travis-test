@@ -8,11 +8,11 @@
 			[moveToSlide]="1">
 			<ngx-item NgxCarouselItem>
 				<div class="dummy-preview-box"></div>
-				<div class="active"
+				<div class="active wrapper"
 					 [ngStyle]="inverviewHolderStyleObject"
 					 (click)="thumbnailInterviewClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe allowfullscreen
+					<iframe allowfullscreen class="main"
 							[src]="interviewCNBCAfricaUrl | safeURL"
 							frameborder="0"></iframe>
 				</div>
@@ -24,14 +24,16 @@
 				<h5 class="text-center">{{ 'landing.how-propy-works.interview-video-title' | translate }}</h5>
 			</ngx-item>
 			<ngx-item NgxCarouselItem>
-				<div
-					[ngStyle]="inverviewHolderStyleObject"
-				></div>
-				<div class="active"
+				<div class="wrapper">
+					<div class="main"
+						 [ngStyle]="inverviewHolderStyleObject"
+					></div>
+				</div>
+				<div class="active wrapper"
 					 [ngStyle]="bloombergHolderStyleObject"
 					 (click)="thumbnailBloombergClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe frameborder="0"
+					<iframe frameborder="0" class="main"
 							allowfullscreen
 							[src]="bloombergTvUrl | safeURL"></iframe>
 				</div>
@@ -46,11 +48,11 @@
 				<div
 					[ngStyle]="bloombergHolderStyleObject"
 				></div>
-				<div class="active"
+				<div class="active wrapper"
 					 [ngStyle]="bgOfficeHolderStyleObject"
 					 (click)="thumbnailBGOfficeClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe frameborder="0"
+					<iframe frameborder="0" class="main"
 							allowfullscreen
 							[src]="propysOfficeBulgariaUrl | safeURL"></iframe>
 				</div>
