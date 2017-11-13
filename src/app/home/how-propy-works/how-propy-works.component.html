@@ -18,16 +18,13 @@
 				</div>
 				<p class="propy-play-icon inverview-play-icon" [ngClass]="{'hidden': videoThumbnailClicked}"
 				   (click)="thumbnailInterviewClicked()"></p>
-				<div
-					[ngStyle]="bloombergHolderStyleObject"
-				></div>
+				<div class="wrapper"
+					 [ngStyle]="bloombergHolderStyleObject"></div>
 				<h5 class="text-center">{{ 'landing.how-propy-works.interview-video-title' | translate }}</h5>
 			</ngx-item>
 			<ngx-item NgxCarouselItem>
-				<div class="wrapper">
-					<div class="main"
-						 [ngStyle]="inverviewHolderStyleObject"
-					></div>
+				<div class="wrapper"
+					 [ngStyle]="inverviewHolderStyleObject">
 				</div>
 				<div class="active wrapper"
 					 [ngStyle]="bloombergHolderStyleObject"
@@ -39,15 +36,13 @@
 				</div>
 				<p class="propy-play-icon bloomberg-play-icon" [ngClass]="{'hidden': videoThumbnailClicked}"
 				   (click)="thumbnailBloombergClicked()"></p>
-				<div
-					[ngStyle]="{'background-image': 'url(' + propysOfficeBulgariaThumb + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
-				></div>
+				<div class="wrapper"
+					 [ngStyle]="bgOfficeHolderStyleObject"></div>
 				<h5 class="text-center">{{ 'landing.how-propy-works.bloomberg-video-title' | translate }}</h5>
 			</ngx-item>
 			<ngx-item NgxCarouselItem>
-				<div
-					[ngStyle]="bloombergHolderStyleObject"
-				></div>
+				<div class="wrapper"
+					 [ngStyle]="bloombergHolderStyleObject"></div>
 				<div class="active wrapper"
 					 [ngStyle]="bgOfficeHolderStyleObject"
 					 (click)="thumbnailBGOfficeClicked()"
@@ -67,30 +62,30 @@
 	</div>
 	<div class="how-works-details-holder">
 		<div class="row">
-			<div class="col-xs-4">
+			<div class="col-xs-12 col-sm-4">
 				<span [inlineSVG]="'/assets/images/cross-border-payment-icon.svg'"></span>
 				<span class="heading">{{ 'landing.how-propy-works.details.cross-border-title' | translate }}</span>
 			</div>
-			<div class="col-xs-8">
+			<div class="col-xs-12 col-sm-8">
 				<p>{{ 'landing.how-propy-works.details.cross-border-content' | translate }}</p>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-4">
+			<div class="col-xs-12 col-sm-4">
 				<span [inlineSVG]="'/assets/images/property-search-icon.svg'"></span>
 				<span class="heading">{{ 'landing.how-propy-works.details.property-search-title' | translate }}</span>
 			</div>
-			<div class="col-xs-8">
+			<div class="col-xs-12 col-sm-8">
 				<p>{{ 'landing.how-propy-works.details.property-search-content' | translate }}</p>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-4">
+			<div class="col-xs-12 col-sm-4">
 				<span [inlineSVG]="'/assets/images/blockchain-integration-icon.svg'"></span>
 				<span
 					class="heading">{{ 'landing.how-propy-works.details.blockchain-integration-title' | translate }}</span>
 			</div>
-			<div class="col-xs-8">
+			<div class="col-xs-12 col-sm-8">
 				<p>{{ 'landing.how-propy-works.details.blockchain-integration-content' | translate }}</p>
 			</div>
 		</div>

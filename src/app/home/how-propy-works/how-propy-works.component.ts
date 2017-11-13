@@ -35,7 +35,9 @@ export class HowPropyWorksComponent implements OnInit {
 				visible: false,
 				pointStyles: ``
 			},
-			loop: false
+			loop: false,
+			speed: 1000,
+			easing: 'ease'
 		};
 
 		this.inverviewHolderStyleObject = {
