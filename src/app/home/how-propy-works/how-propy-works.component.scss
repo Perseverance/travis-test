@@ -62,7 +62,6 @@ $details-border-color: #E5EDEF;
 				display: inline-block;
 				width: 24%;
 				background-color: #ccc;
-				//min-height: 220px;
 				text-align: center;
 				line-height: 200px;
 				vertical-align: middle;
@@ -76,10 +75,6 @@ $details-border-color: #E5EDEF;
 				iframe {
 					visibility: hidden;
 					width: 100%;
-					//height: 400px;
-					//@media #{$xs} {
-					//	height: 250px;
-					//}
 				}
 				&.active {
 					min-height: 10px;
