@@ -377,7 +377,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.listPropertyForm.reset();
 		this.currency.setValue('1'); // USD default
 		this.areaUnit.setValue('1'); // sqm default
-		this.commisionFee.setValue(this.DEFAULT_COMMISION_FEE)
+		this.priceRangeValue = [0, this.DEFAULT_COMMISION_FEE];
+		this.commisionFee.setValue(this.priceRangeValue);
 		this.locationSearchComponent.resetInput();
 	}
 

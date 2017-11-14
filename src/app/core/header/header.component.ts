@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../shared/localStorage.service';
 import { Router, ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
+import { MomentService } from '../../shared/moment.service';
 
 @Component({
 	selector: 'app-header',
@@ -31,7 +32,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		public authService: AuthenticationService,
 		public translate: TranslateService,
 		private storage: LocalStorageService,
-		@Inject(DOCUMENT) private document: Document) {
+		@Inject(DOCUMENT) private document: Document,
+		private momentService: MomentService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -84,6 +86,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 	public selectLanguage(lang: string) {
 		this.translate.use(lang);
+		this.momentService.moment.locale(lang);
 		this.storage.selectedLanguage = lang;
 	}
 

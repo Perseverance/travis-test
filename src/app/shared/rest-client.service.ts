@@ -161,6 +161,15 @@ export class RestClientService {
 	}
 
 	/**
+	 * post - makes a post request without token with URL encoded data
+	 */
+	public postWithSerialization(endpoint: string, data: object, config: object = {}) {
+		const url = this.forgeUrl(endpoint);
+		const dataUrlEncoded = this.serialize(data);
+		return axios.post(url, dataUrlEncoded, config);
+	}
+
+	/**
 	 * put - makes a put requiest without token
 	 */
 	public put(endpoint: string, data: object, config: object = {}) {
@@ -267,5 +276,12 @@ export class RestClientService {
 		this._refreshToken = null;
 		this._accessToken = null;
 		this._tokenExpireTimestamp = 0;
+	}
+
+	private serialize(obj) {
+		return Object.keys(obj).reduce(function (a, k) {
+			a.push(k + '=' + encodeURIComponent(obj[k]));
+			return a;
+		}, []).join('&');
 	}
 }

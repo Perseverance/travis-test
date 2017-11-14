@@ -1,3 +1,4 @@
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import {LoginComponentComponent} from './login-component/login-component.component';
 import {SignUpComponentComponent} from './sign-up-component/sign-up-component.component';
 import {NgModule} from '@angular/core';
@@ -13,6 +14,11 @@ const routes: Routes = [
 	{
 		path: 'signup',
 		component: SignUpComponentComponent,
+		canActivate: [TokenGuard]
+	},
+	{
+		path: 'forgot',
+		component: ForgotPasswordComponent,
 		canActivate: [TokenGuard]
 	}
 ];

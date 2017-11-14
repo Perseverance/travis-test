@@ -1,0 +1,20 @@
+<svg width="39px" height="33px" viewBox="0 0 39 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="209" cy="109" r="5"></circle>
+    </defs>
+    <g id="Propy-Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Sign-up" transform="translate(-1177.000000, -1610.000000)">
+            <g id="Reset-password" transform="translate(548.000000, 1508.000000)">
+                <g id="2" transform="translate(452.000000, 0.000000)">
+                    <path d="M205.888889,135 L180.111111,135 C177,135 177,132.038724 177,132.038724 L190.306667,122.177676 C193,120.193621 193,120.193621 195.693333,122.177676 L209,132.038724 C209,132.038724 209,135 205.888889,135 Z M209,128.248293 L195.693333,118.387244 C194.013333,117.143508 191.986667,117.143508 190.306667,118.387244 L177,128.248293 L177,112.257403 C177,110.570559 177,109 180.111111,109 L205.888889,109 C209,109 209,110.693753 209,112.257403 L209,128.248293 Z" id="email_icon" fill="#C1C1C1" fill-rule="nonzero" transform="translate(193.000000, 122.000000) scale(-1, 1) rotate(-180.000000) translate(-193.000000, -122.000000) "></path>
+                    <g id="Oval-5">
+                        <use fill="#FF2E2E" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <circle stroke="#FFFFFF" stroke-width="2" cx="209" cy="109" r="6"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
