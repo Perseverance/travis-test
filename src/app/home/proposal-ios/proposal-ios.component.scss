@@ -35,6 +35,10 @@ $ios-description-color: #555;
         &:hover {
             background-color: $blue-light;
         }
+        @media #{$xs} {
+            margin-right: auto;
+            margin-left: auto;
+        }
     }
     @media #{$xs} {
         text-align: center;
