@@ -1,20 +1,11 @@
-import { environment } from './../../environments/environment';
+import {environment} from './../../environments/environment';
+
 export class OAuth2GrantTypes {
 
 	public static GRANT_TYPES = {
 		PASSWORD: 'password',
 		REFRESH_TOKEN: 'refresh_token'
 	};
-
-	static getGrantTypePasswordDataObject(username: string, password: string): object {
-		return {
-			grant_type: this.GRANT_TYPES.PASSWORD,
-			client_id: environment.clientId,
-			client_secret: environment.clientSecret,
-			username,
-			password
-		};
-	}
 
 	static getGrantTypePasswordDataURLParams(username: string, password: string): URLSearchParams {
 		const params = new URLSearchParams();
@@ -26,12 +17,13 @@ export class OAuth2GrantTypes {
 		return params;
 	}
 
-	static getGrantTypeRefreshTokenDataObject(refreshToken: string): object {
+	static getGrantTypePasswordDataObject(username: string, password: string): object {
 		return {
-			grant_type: this.GRANT_TYPES.REFRESH_TOKEN,
+			grant_type: this.GRANT_TYPES.PASSWORD,
+			username: username,
+			password: password,
 			client_id: environment.clientId,
-			client_secret: environment.clientSecret,
-			refresh_token: refreshToken
+			client_secret: environment.clientSecret
 		};
 	}
 
@@ -42,6 +34,15 @@ export class OAuth2GrantTypes {
 		params.append('client_id', 'PropyWebsite');
 		params.append('client_secret', 'PixelIsNotFat');
 		return params;
+	}
+
+	static getGrantTypeRefreshTokenDataObject(refreshToken: string): object {
+		return {
+			grant_type: this.GRANT_TYPES.REFRESH_TOKEN,
+			refresh_token: refreshToken,
+			client_id: environment.clientId,
+			client_secret: environment.clientSecret
+		};
 	}
 
 }
