@@ -1,0 +1,24 @@
+@import "../../../variables";
+
+.newsletter-holder{
+    margin-bottom: 50px;
+
+    h3 {
+        font-weight: 500;
+        padding-left: 20px;
+        padding-right:20px;
+	}
+	h6 {
+		margin: 20px 20% 30px 20%;
+		font-size: 17px;
+		color: $sub-header-color;
+    }
+    .subscribe-email {
+        width: calc(100% - 130px);
+    }
+    .subscribe-phone {
+        @media #{$xxs} {
+            width: 100%;
+        }
+    }
+}
