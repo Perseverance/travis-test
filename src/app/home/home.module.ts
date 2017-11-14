@@ -13,6 +13,7 @@ import {ProposalIosComponent} from './proposal-ios/proposal-ios.component';
 import {HowPropyWorksComponent} from './how-propy-works/how-propy-works.component';
 import {SafeURLPipe} from '../shared/pipes/safe-url.pipe';
 import {InlineSVGModule} from 'ng-inline-svg';
+import { NewsletterComponent } from './newsletter/newsletter.component';
 
 @NgModule({
 	declarations: [
@@ -22,7 +23,8 @@ import {InlineSVGModule} from 'ng-inline-svg';
 		NewPropertiesComponent,
 		ProposalIosComponent,
 		HowPropyWorksComponent,
-		SafeURLPipe
+		SafeURLPipe,
+		NewsletterComponent
 	],
 	imports: [
 		CommonModule,
