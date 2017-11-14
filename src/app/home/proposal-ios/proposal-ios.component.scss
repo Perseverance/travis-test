@@ -2,41 +2,41 @@
 @import '../../../mixins';
 //variables
 @import '../../../variables';
-
 $ios-description-color: #555;
-
 .proposal-container {
-	display: flex;
-	align-items: center;
-	h3 {
-		font-weight: 500;
-	}
-	.mobile-header-width {
-		max-width: 300px;
-	}
-	.mobile-description-width {
-		max-width: 600px;
-		margin: 30px 0;
-		color: $ios-description-color;
-		line-height: 28px;
-	}
-	.download-button {
-		padding: 10px;
-		max-width: 190px;
-		border: none;
-		outline: none;
-		font-weight: 100;
-		@include border-radius(5px);
-		background-color: $blue-main;
-		height: 44px;
-		font-size: 15px;
-		color: $white;
-		&:hover {
-			background-color: $blue-light;
-		}
-	}
+    display: flex;
+    align-items: center;
+    h3 {
+        font-weight: 500;
+    }
+    .mobile-header-width {
+        max-width: 300px;
+        @media #{$xs} {
+            max-width: none;
+        }
+    }
+    .mobile-description-width {
+        max-width: 600px;
+        margin: 30px 0;
+        color: $ios-description-color;
+        line-height: 28px;
+    }
+    .download-button {
+        padding: 10px;
+        max-width: 190px;
+        border: none;
+        outline: none;
+        font-weight: 100;
+        @include border-radius(5px);
+        background-color: $blue-main;
+        height: 44px;
+        font-size: 15px;
+        color: $white;
+        &:hover {
+            background-color: $blue-light;
+        }
+    }
+    @media #{$xs} {
+        text-align: center;
+    }
 }
-
-
-
-
