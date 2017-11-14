@@ -1,246 +1,246 @@
 @import "../../../../variables";
 @import "../../../../mixins";
 @import "../../../../variables";
-
 .filter-area {
-	display: inline-block;
-	.filter-button {
-		height: 32px;
-		width: 73px;
-		padding-left: 10px;
-		font-weight: normal;
-		font-size: 14px;
-		color: $button-filter-text;
-		text-align: left;
-		background-color: white;
-		border: solid 1px rgba(255, 255, 255, 0.8);
-		@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
-		@include border-radius(5px);
-		outline: none;
-		&.area-filter-button {
-			margin: 0 20px;
-		}
-		span {
-			color: $button-filter-arrow;
-			font-size: 10px;
-			display: block;
-			float: right;
-			margin-top: 4px;
-		}
-		&:hover {
-			border: solid 1px rgba(255, 255, 255, 1);
-			@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.6));
-			span {
-				color: #384348;
-			}
-		}
-		&.active {
-			color: $blue-dark;
-			border: solid 1px rgba(76, 202, 247, 0.5);
-			@include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
-			background-color: #F6FDFF;
-			span {
-				color: $blue-dark;
-			}
-		}
-	}
-	.range-filter {
-		height: 160px;
-		width: 166%;
-		top: 50px !important;
-		left: 15px !important;
-		@media #{$sm} {
-			height: 200px;
-		}
-		.arrow-up {
-			width: 0;
-			height: 0;
-			border-left: 11px solid transparent;
-			border-right: 11px solid transparent;
-			border-bottom: 12px solid $gray-light;
-			position: relative;
-			top: -20px;
-		}
-		.arrow-up:after {
-			content: '';
-			width: 0;
-			height: 0;
-			border-right: 10px solid transparent;
-			border-left: 10px solid transparent;
-			border-bottom: 12px solid white;
-			position: absolute;
-			top: 1px;
-			left: -10px;
-		}
-		.arrow-price-filter {
-			left: 184px;
-		}
-		.input-button-holder {
-			padding: 0 15px;
-			.input-dropdown-holder {
-				display: inline-block;
-				margin-top: 20px;
-				input {
-					width: 86px;
-					height: 36px;
-					outline: none;
-					padding-left: 8px;
-					@include border-radius(5px);
-					border: solid 1px rgba(255, 255, 255, 1);
-					@include box-shadow(0px, 0px, 1px, rgba(0, 0, 0, 0.6));
-					&:focus {
-						border: solid 1px rgba(76, 202, 247, 0.5);
-						@include box-shadow(0px, 0px, 1px, rgba(76, 202, 247, 0.5));
-					}
-				}
-				input.slider-dragging {
-					color: $blue-dark;
-					border: solid 1px rgba(76, 202, 247, 0.5);
-					@include box-shadow(0px, 0px, 1px, rgba(76, 202, 247, 0.5));
-				}
-				span {
-					margin: 0 8px;
-					color: $gray-medium;
-					@media #{$sm} {
-						width: 10%;
-					}
-				}
-				.dropdown-holder {
-					width: 86px;
-					display: inline-block;
-					margin-left: 10px;
-					.size-type-dropdown {
-						margin-bottom: 2px;
-						&.ui-dropdown.ui-state-default {
-							border: solid 1px rgba(255, 255, 255, 1);
-							height: 36px;
-							line-height: 36px;
-							@include box-shadow(0px, 0px, 1px, rgba(0, 0, 0, 0.6));
-							label {
-								font-size: 14px;
-								height: 100%;
-								line-height: 25px;
-								text-align: left;
-								width: 86px;
-								padding-left: 10px;
-								color: $button-filter-text;
-								@include border-radius(5px);
-							}
-							.ui-dropdown-trigger {
-								line-height: 36px;
-								font-size: 10px;
-								border: none;
-								padding-right: 4px;
-								@include border-radius(5px);
-								span {
-									color: $button-filter-arrow;
-									right: 15px;
-								}
-							}
-							&.ui-dropdown-open {
-								color: $blue-dark;
-								border: 1px solid rgba(76, 202, 247, 0.5);
-								@include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
-								background-color: #F6FDFF;
-								label {
-									color: $blue-dark;
-								}
-								.ui-dropdown-trigger {
-									span {
-										color: $blue-dark;
-									}
-								}
-							}
-						}
-						&.ui-corner-all {
-							@include border-radius(5px);
-						}
-						.ui-dropdown-panel {
-							margin-top: 5px;
-							font-size: 14px;
-							color: $button-filter-text;
-							@include border-radius(5px);
-							border: none;
-							.ui-dropdown-items.ui-dropdown-list {
-								padding: 0px;
-								.ui-dropdown-item {
-									@include border-radius(0px);
-									padding: 5px 10px;
-									span {
-										font-weight: 400;
-									}
-									&:hover {
-										background-color: rgba(76, 202, 247, 0.1);
-									}
-									&.ui-state-highlight {
-										background-color: rgba(76, 202, 247, 0.2);
-										color: $button-filter-text;
-									}
-									&:first-child {
-										@include border-radius-separate(5px, 5px, 0px, 0px);
-									}
-									&:last-child {
-										@include border-radius-separate(0px, 0px, 5px, 5px);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			.button-holder {
-				display: inline-block;
-				float: right;
-				margin-top: 20px;
-				button {
-					height: 36px;
-					font-size: 14px;
-					font-family: $font-family-helvetica;
-					outline: none;
-					width: 80px;
-					@include border-radius(5px);
-					&.apply-filter {
-						background-color: $button-filter-apply;
-						border: none;
-						color: white;
-						&:hover {
-							background-color: $button-filter-apply-hovered;
-						}
-					}
-					&.cancel-filter {
-						background-color: white;
-						color: #4CCAF7;
-						border: 1px solid #4CCAF7;
-						margin-left: 5px;
-						&:hover {
-							color: $blue-dark;
-							border: 1px solid $blue-dark;
-						}
-					}
-				}
-			}
-		}
-		.ui-slider {
-			height: 4px;
-			margin-top: 30px;
-			margin-left: 5%;
-			width: 86%;
-			background: #EDEDED;
-			box-shadow: none;
-			.ui-slider-range {
-				background: #4CCAF7;
-				box-shadow: none;
-			}
-			.ui-slider-handle {
-				background: white;
-				height: 28px !important;
-				width: 28px !important;
-				top: -12px !important;
-				@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
-				@include border-radius(50%);
-				border: solid 1px $gray-lighter;
-				cursor: pointer;
-			}
-		}
-	}
+    display: inline-block;
+    .filter-button {
+        height: 32px;
+        min-width: 75px;
+        max-width: 95px;
+        padding-left: 10px;
+        font-weight: normal;
+        font-size: 14px;
+        color: $button-filter-text;
+        text-align: left;
+        background-color: white;
+        border: solid 1px rgba(255, 255, 255, 0.8);
+        @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
+        @include border-radius(5px);
+        outline: none;
+        &.area-filter-button {
+            margin: 0 20px;
+        }
+        span {
+            color: $button-filter-arrow;
+            font-size: 10px;
+            display: block;
+            float: right;
+            margin-top: 4px;
+        }
+        &:hover {
+            border: solid 1px rgba(255, 255, 255, 1);
+            @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.6));
+            span {
+                color: #384348;
+            }
+        }
+        &.active {
+            color: $blue-dark;
+            border: solid 1px rgba(76, 202, 247, 0.5);
+            @include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
+            background-color: #F6FDFF;
+            span {
+                color: $blue-dark;
+            }
+        }
+    }
+    .range-filter {
+        height: 160px;
+        width: 166%;
+        top: 50px !important;
+        left: 15px !important;
+        @media #{$sm} {
+            height: 200px;
+        }
+        .arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            border-bottom: 12px solid $gray-light;
+            position: relative;
+            top: -20px;
+        }
+        .arrow-up:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-right: 10px solid transparent;
+            border-left: 10px solid transparent;
+            border-bottom: 12px solid white;
+            position: absolute;
+            top: 1px;
+            left: -10px;
+        }
+        .arrow-price-filter {
+            left: 184px;
+        }
+        .input-button-holder {
+            padding: 0 15px;
+            .input-dropdown-holder {
+                display: inline-block;
+                margin-top: 20px;
+                input {
+                    width: 86px;
+                    height: 36px;
+                    outline: none;
+                    padding-left: 8px;
+                    @include border-radius(5px);
+                    border: solid 1px rgba(255, 255, 255, 1);
+                    @include box-shadow(0px, 0px, 1px, rgba(0, 0, 0, 0.6));
+                    &:focus {
+                        border: solid 1px rgba(76, 202, 247, 0.5);
+                        @include box-shadow(0px, 0px, 1px, rgba(76, 202, 247, 0.5));
+                    }
+                }
+                input.slider-dragging {
+                    color: $blue-dark;
+                    border: solid 1px rgba(76, 202, 247, 0.5);
+                    @include box-shadow(0px, 0px, 1px, rgba(76, 202, 247, 0.5));
+                }
+                span {
+                    margin: 0 8px;
+                    color: $gray-medium;
+                    @media #{$sm} {
+                        width: 10%;
+                    }
+                }
+                .dropdown-holder {
+                    width: 86px;
+                    display: inline-block;
+                    margin-left: 10px;
+                    .size-type-dropdown {
+                        margin-bottom: 2px;
+                        &.ui-dropdown.ui-state-default {
+                            border: solid 1px rgba(255, 255, 255, 1);
+                            height: 36px;
+                            line-height: 36px;
+                            @include box-shadow(0px, 0px, 1px, rgba(0, 0, 0, 0.6));
+                            label {
+                                font-size: 14px;
+                                height: 100%;
+                                line-height: 25px;
+                                text-align: left;
+                                width: 86px;
+                                padding-left: 10px;
+                                color: $button-filter-text;
+                                @include border-radius(5px);
+                            }
+                            .ui-dropdown-trigger {
+                                line-height: 36px;
+                                font-size: 10px;
+                                border: none;
+                                padding-right: 4px;
+                                @include border-radius(5px);
+                                span {
+                                    color: $button-filter-arrow;
+                                    right: 15px;
+                                }
+                            }
+                            &.ui-dropdown-open {
+                                color: $blue-dark;
+                                border: 1px solid rgba(76, 202, 247, 0.5);
+                                @include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
+                                background-color: #F6FDFF;
+                                label {
+                                    color: $blue-dark;
+                                }
+                                .ui-dropdown-trigger {
+                                    span {
+                                        color: $blue-dark;
+                                    }
+                                }
+                            }
+                        }
+                        &.ui-corner-all {
+                            @include border-radius(5px);
+                        }
+                        .ui-dropdown-panel {
+                            margin-top: 5px;
+                            font-size: 14px;
+                            color: $button-filter-text;
+                            @include border-radius(5px);
+                            border: none;
+                            .ui-dropdown-items.ui-dropdown-list {
+                                padding: 0px;
+                                .ui-dropdown-item {
+                                    @include border-radius(0px);
+                                    padding: 5px 10px;
+                                    span {
+                                        font-weight: 400;
+                                    }
+                                    &:hover {
+                                        background-color: rgba(76, 202, 247, 0.1);
+                                    }
+                                    &.ui-state-highlight {
+                                        background-color: rgba(76, 202, 247, 0.2);
+                                        color: $button-filter-text;
+                                    }
+                                    &:first-child {
+                                        @include border-radius-separate(5px, 5px, 0px, 0px);
+                                    }
+                                    &:last-child {
+                                        @include border-radius-separate(0px, 0px, 5px, 5px);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .button-holder {
+                display: inline-block;
+                float: right;
+                margin-top: 20px;
+                button {
+                    height: 36px;
+                    font-size: 14px;
+                    font-family: $font-family-helvetica;
+                    outline: none;
+                    width: 80px;
+                    @include border-radius(5px);
+                    &.apply-filter {
+                        background-color: $button-filter-apply;
+                        border: none;
+                        color: white;
+                        &:hover {
+                            background-color: $button-filter-apply-hovered;
+                        }
+                    }
+                    &.cancel-filter {
+                        background-color: white;
+                        color: #4CCAF7;
+                        border: 1px solid #4CCAF7;
+                        margin-left: 5px;
+                        &:hover {
+                            color: $blue-dark;
+                            border: 1px solid $blue-dark;
+                        }
+                    }
+                }
+            }
+        }
+        .ui-slider {
+            height: 4px;
+            margin-top: 30px;
+            margin-left: 5%;
+            width: 86%;
+            background: #EDEDED;
+            box-shadow: none;
+            .ui-slider-range {
+                background: #4CCAF7;
+                box-shadow: none;
+            }
+            .ui-slider-handle {
+                background: white;
+                height: 28px !important;
+                width: 28px !important;
+                top: -12px !important;
+                @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
+                @include border-radius(50%);
+                border: solid 1px $gray-lighter;
+                cursor: pointer;
+            }
+        }
+    }
 }
