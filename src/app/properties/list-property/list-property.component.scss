@@ -1,682 +1,668 @@
 @import "../../../variables";
 @import "../../../mixins";
-
 $section-border-color: #F0F0F0;
 $section-label-color: #171C1E;
 $placeholder-color: #C1C1C1;
 $photos-drop-zone-color: #F4F4F4;
 $remove-photo-color: #F24A4A;
-
 .list-property {
-	.invite-link {
-		padding-left: 30px;
-		text-decoration: underline;
-	}
-	.propy-form {
-		padding: 50px 0;
-		margin-top: 20px;
-		background-color: $white;
-		@include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
-		.row-section-holder {
-			margin-bottom: 40px;
-			padding-bottom: 30px;
-			border-bottom: 1px solid $section-border-color;
-			.section-title {
-				@media #{$xs} {
-					margin-bottom: 15px;
-				}
-			}
-			.list-label {
-				color: $section-label-color;
-				font-size: 20px;
-			}
-			.property-type-dropdown {
-				width: 100%;
-				margin-bottom: 2px;
-				&.ui-dropdown.ui-state-default {
-					border: solid 1px rgba(255, 255, 255, 1);
-					height: 40px;
-					line-height: 40px;
-					border: 1px solid $border-default;
-					@include box-shadow(0px,
-						1px,
-						3px,
-						rgba(0, 0, 0, 0.14));
-					label {
-						font-size: 15px;
-						height: 100%;
-						line-height: 30px;
-						text-align: left;
-						padding-left: 10px;
-						color: $button-filter-text;
-						@include border-radius(9px);
-					}
-					.ui-dropdown-trigger {
-						line-height: 40px;
-						font-size: 10px;
-						border: none;
-						padding-right: 4px;
-						@include border-radius(9px);
-						span {
-							color: $button-filter-arrow;
-							right: 15px;
-						}
-					}
-					&.ui-dropdown-open {
-						color: $blue-dark;
-						border: none;
-						@include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
-						background-color: #F6FDFF;
-						label {
-							color: $blue-dark;
-						}
-						.ui-dropdown-trigger {
-							span {
-								color: $blue-dark;
-							}
-						}
-						.ui-dropdown-panel {
-							top: 0 !important;
-							font-size: 15px;
-							margin-top: 0;
-							.ui-dropdown-items {
-								li {
-									height: 40px;
-									line-height: 30px;
-								}
-							}
-						}
-						.ui-dropdown-panel {
-							top: 0 !important;
-							margin-top: 0;
-							font-size: 15px;
-							@include border-radius(9px);
-							border: none;
-							.ui-dropdown-items-wrapper {
-								max-height: 262px !important;
-								@include border-radius(9px);
-								.ui-dropdown-items.ui-dropdown-list {
-									padding: 0px;
-									.ui-dropdown-item {
-										@include border-radius(0px);
-										padding: 5px 10px;
-										span {
-											font-weight: normal;
-										}
-										&:hover {
-											background-color: rgba(76, 202, 247, 0.1);
-											color: $blue-main;
-										}
-										&.ui-state-highlight {
-											background-color: rgba(76, 202, 247, 0.2);
-											color: $button-filter-text;
-										}
-										&:first-child {
-											@include border-radius-separate(9px, 9px, 0px, 0px);
-											background-color: white;
-											color: $placeholder-color;
-										}
-										&:last-child {
-											@include border-radius-separate(0px, 0px, 9px, 9px);
-										}
-									}
-								}
-							}
-						}
-
-					}
-				}
-				&.ui-corner-all {
-					@include border-radius(9px);
-				}
-			}
-			.checkbox-holder {
-				.furnished-checkbox {
-					.ui-chkbox-box {
-						height: 16px;
-						width: 16px;
-						margin-bottom: 5px;
-					}
-					.ui-chkbox-box.ui-state-active {
-						border-color: $blue-dark;
-						background-color: $blue-main;
-					}
-				}
-				label {
-					color: $green-darkest;
-					font-weight: normal;
-				}
-			}
-			.features-holder {
-				label {
-					color: $input-label-color;
-					font-size: 15px;
-					font-weight: normal;
-				}
-				.price-currency-holder {
-					#list-prop-price {
-						width: 100%;
-						height: 40px;
-						padding-left: 10px;
-						@include border-radius-separate(9px, 0, 9px, 0);
-						border: 1px solid rgba(0, 0, 0, 0.1);
-					}
-					.ui-inputgroup-addon {
-						height: 40px;
-						border-left: 0;
-						background-color: white;
-						padding-right: 22px;
-						padding-top: 0;
-						padding-left: 0;
-						@include border-radius-separate(0, 9px, 0, 9px);
-						@include box-shadow(0px,
-							1px,
-							3px,
-							rgba(0, 0, 0, 0.14));
-						.currency-dropdown {
-							width: 100%;
-							margin-bottom: 2px;
-							&.ui-dropdown.ui-state-default {
-								height: 38px;
-								line-height: 38px;
-								border: none;
-								box-shadow: none;
-								label {
-									font-size: 15px;
-									height: 100%;
-									line-height: 30px;
-									text-align: left;
-									color: $button-filter-text;
-									@include border-radius(9px);
-								}
-								.ui-dropdown-trigger {
-									line-height: 40px;
-									font-size: 10px;
-									border: none;
-									padding-right: 4px;
-									@include border-radius(9px);
-									span {
-										color: $button-filter-arrow;
-										right: 15px;
-									}
-								}
-								&.ui-dropdown-open {
-									color: $blue-dark;
-									border: none;
-									@include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
-									background-color: #F6FDFF;
-									label {
-										color: $blue-dark;
-									}
-									.ui-dropdown-trigger {
-										span {
-											color: $blue-dark;
-										}
-									}
-									.ui-dropdown-panel {
-										top: 0 !important;
-										font-size: 15px;
-										margin-top: 0;
-										.ui-dropdown-items {
-											li {
-												height: 40px;
-												line-height: 30px;
-											}
-										}
-									}
-									.ui-dropdown-panel {
-										top: 0 !important;
-										margin-top: 0;
-										font-size: 15px;
-										@include border-radius(9px);
-										border: none;
-										.ui-dropdown-items-wrapper {
-											max-height: 450px !important;
-											@include border-radius(9px);
-											.ui-dropdown-items.ui-dropdown-list {
-												padding: 0px;
-												.ui-dropdown-item {
-													@include border-radius(0px);
-													padding: 5px 10px;
-													span {
-														font-weight: normal;
-													}
-													&:hover {
-														background-color: rgba(76, 202, 247, 0.1);
-														color: $blue-main;
-													}
-													&.ui-state-highlight {
-														background-color: rgba(76, 202, 247, 0.2);
-														color: $button-filter-text;
-													}
-													&:first-child {
-														@include border-radius-separate(9px, 9px, 0px, 0px);
-													}
-													&:last-child {
-														@include border-radius-separate(0px, 0px, 9px, 9px);
-													}
-												}
-											}
-										}
-									}
-
-								}
-							}
-							&.ui-corner-all {
-								@include border-radius(9px);
-							}
-						}
-
-					}
-				}
-				.commission-holder {
-					.ui-slider {
-						height: 4px;
-						margin-top: 15px;
-						width: 100%;
-						background: #EDEDED;
-						box-shadow: none;
-						.ui-slider-range {
-							background: #4CCAF7;
-							box-shadow: none;
-						}
-						.ui-slider-handle {
-							background: transparent;
-							height: 0 !important;
-							width: 0 !important;
-							&:last-child {
-								background: white;
-								height: 22px !important;
-								width: 22px !important;
-								top: -8px !important;
-								@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
-								@include border-radius(50%);
-								border: solid 1px $gray-lighter;
-								cursor: pointer;
-							}
-							&:hover {
-								height: 26px !important;
-								width: 26px !important;
-								top: -10px !important;
-							}
-						}
-					}
-					.commission-percent-holder {
-						margin-top: 22px;
-						padding-top: 8px;
-						height: 40px;
-						text-align: center;
-						background-color: white;
-						border: 1px solid $border-default;
-						@include box-shadow(0px,
-							1px,
-							3px,
-							rgba(0, 0, 0, 0.14));
-						@include border-radius(9px);
-					}
-				}
-				.two-inputs-holder {
-					margin-top: 20px;
-					input {
-						width: 100%;
-						padding-left: 10px;
-						height: 40px;
-					}
-					// remove number type input arrows
-					input[type=number]::-webkit-inner-spin-button,
-					input[type=number]::-webkit-outer-spin-button {
-						-webkit-appearance: none;
-						-moz-appearance: none;
-						appearance: none;
-						margin: 0;
-					}
-					.decrease-bedrooms {
-						position: absolute;
-						right: 50px;
-						top: 35px;
-						cursor: pointer;
-						&:hover {
-							circle {
-								stroke: $blue-main;
-								stroke-opacity: 1;
-							}
-						}
-					}
-					.increase-bedrooms {
-						position: absolute;
-						right: 24px;
-						top: 35px;
-						cursor: pointer;
-						&:hover {
-							circle {
-								stroke: $blue-main;
-								stroke-opacity: 1;
-							}
-						}
-					}
-					.propy-area-holder {
-						#area-control {
-							width: 100%;
-							height: 40px;
-							padding-left: 10px;
-							@include border-radius-separate(9px, 0, 9px, 0);
-							border: 1px solid rgba(0, 0, 0, 0.1);
-						}
-						.ui-inputgroup-addon {
-							height: 40px;
-							border-left: 0;
-							background-color: white;
-							padding-right: 32px;
-							padding-top: 0;
-							padding-left: 0;
-							@include border-radius-separate(0, 9px, 0, 9px);
-							@include box-shadow(0px,
-								1px,
-								3px,
-								rgba(0, 0, 0, 0.14));
-							.currency-dropdown {
-								width: 100%;
-								margin-bottom: 2px;
-								&.ui-dropdown.ui-state-default {
-									height: 38px;
-									line-height: 38px;
-									border: none;
-									box-shadow: none;
-									label {
-										font-size: 15px;
-										height: 100%;
-										line-height: 30px;
-										text-align: left;
-										color: $button-filter-text;
-										@include border-radius(9px);
-									}
-									.ui-dropdown-trigger {
-										line-height: 40px;
-										font-size: 10px;
-										border: none;
-										padding-right: 4px;
-										@include border-radius(9px);
-										span {
-											color: $button-filter-arrow;
-											right: 15px;
-										}
-									}
-									&.ui-dropdown-open {
-										color: $blue-dark;
-										border: none;
-										@include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
-										background-color: #F6FDFF;
-										label {
-											color: $blue-dark;
-										}
-										.ui-dropdown-trigger {
-											span {
-												color: $blue-dark;
-											}
-										}
-										.ui-dropdown-panel {
-											top: 0 !important;
-											font-size: 15px;
-											margin-top: 0;
-											.ui-dropdown-items {
-												li {
-													height: 40px;
-													line-height: 30px;
-												}
-											}
-										}
-										.ui-dropdown-panel {
-											top: 0 !important;
-											margin-top: 0;
-											font-size: 15px;
-											@include border-radius(9px);
-											border: none;
-											.ui-dropdown-items-wrapper {
-												max-height: 262px !important;
-												@include border-radius(9px);
-												.ui-dropdown-items.ui-dropdown-list {
-													padding: 0px;
-													.ui-dropdown-item {
-														@include border-radius(0px);
-														padding: 5px 10px;
-														span {
-															font-weight: normal;
-														}
-														&:hover {
-															background-color: rgba(76, 202, 247, 0.1);
-															color: $blue-main;
-														}
-														&.ui-state-highlight {
-															background-color: rgba(76, 202, 247, 0.2);
-															color: $button-filter-text;
-														}
-														&:first-child {
-															@include border-radius-separate(9px, 9px, 0px, 0px);
-														}
-														&:last-child {
-															@include border-radius-separate(0px, 0px, 9px, 9px);
-														}
-													}
-												}
-											}
-										}
-
-									}
-								}
-								&.ui-corner-all {
-									@include border-radius(9px);
-								}
-							}
-
-						}
-					}
-					textarea {
-						width: 100%;
-						@include border-radius(9px);
-						border-color: $border-default;
-						resize: none;
-					}
-				}
-			}
-			.location-form-group {
-				#location {
-					input.propy-control {
-						height: 40px !important;
-						@include border-radius(9px);
-					}
-				}
-				.location-map {
-					padding: 0;
-					margin-top: 10px;
-					.google-map-holder {
-						width: 100%;
-						height: 320px;
-						@include border-radius(9px);
-					}
-				}
-			}
-			.photos-uploader {
-				.ui-fileupload-content {
-					min-height: 322px;
-					background-color: $photos-drop-zone-color;
-					@include border-radius(9px);
-					border: 1px solid $border-default;
-					@include box-shadow(0px,
-						1px,
-						3px,
-						rgba(0, 0, 0, 0.14));
-
-					.ui-progressbar {
-						display: none;
-					}
-				}
-				.ui-fileupload-buttonbar {
-					position: absolute;
-					top: 180px;
-					z-index: 999;
-					background: transparent;
-					border: none;
-					left: calc(50% - 75px);
-					.ui-fileupload-choose {
-						background-color: transparent !important;
-						color: $blue-main;
-						&:hover {
-							background-color: transparent !important;
-							color: $blue-dark;
-						}
-					}
-				}
-				.ui-fileupload-files {
-					position: absolute;
-					top: 350px;
-					.ui-fileupload-row {
-						display: inline-block;
-						width: 190px;
-						div:nth-child(2) {
-							display: none;
-						}
-						div:nth-child(3) {
-							display: none;
-						}
-						.ui-button {
-							right: 43px;
-							top: -48px;
-							height: 26px;
-							width: 26px;
-							background-color: $remove-photo-color;
-							@include border-radius(50%);
-							border: none;
-							background-image: url("../../../assets/images/photo-icon-x.svg");
-							background-repeat: no-repeat;
-							background-position: center;
-							.ui-button-icon-left {
-								display: none;
-							}
-						}
-					}
-					img {
-						height: 96px;
-						@include border-radius(9px);
-					}
-				}
-				.ui-fileupload-highlight {
-					border: 2px dashed $gray-darkest;
-					background-color: darken($photos-drop-zone-color, 10%);
-				}
-				.drop-message {
-					position: absolute;
-					top: 70px;
-					text-align: center;
-					width: 95%;
-					p {
-						position: absolute;
-						width: 130px;
-						left: calc(50% - 65px);
-						font-family: $font-family-helvetica;
-						font-size: 16px;
-					}
-				}
-			}
-			.acceptedCurrencies {
-				width: 100%;
-				border-bottom: #d6d6d6;
-				@include box-shadow(0px,
-					1px,
-					3px,
-					rgba(0, 0, 0, 0.14));
-				@include border-radius(9px);
-				&:hover {
-					background: none;
-				}
-				.ui-multiselect-label-container {
-					@include border-radius(9px);
-				}
-				.ui-multiselect-trigger {
-					line-height: 40px;
-					font-size: 10px;
-					border: none;
-					padding-right: 4px;
-					@include border-radius(9px);
-					span {
-						color: $button-filter-arrow;
-						right: 5px;
-					}
-				}
-				.ui-multiselect-panel {
-					.ui-widget-header {
-						display: none;
-					}
-					.ui-multiselect-items-wrapper {
-						.ui-multiselect-item {
-							&:hover {
-								background-color: rgba(76, 202, 247, 0.1);
-							}
-							&.ui-state-highlight {
-								background-color: rgba(76, 202, 247, 0.2);
-								color: $button-filter-text;
-								label {
-									color: $blue-main;
-								}
-								.ui-chkbox-box {
-									height: 16px;
-									width: 16px;
-									margin-bottom: 5px;
-								}
-								.ui-chkbox-box.ui-state-active {
-									border-color: $blue-dark;
-									background-color: $blue-main;
-								}
-							}
-						}
-					}
-				}
-				label {
-					color: $text-color-main;
-					line-height: 30px;
-					padding: 4px 0 0 10px;
-				}
-			}
-			.ui-fileupload {
-				.ui-fileupload-buttonbar {
-					.ui-fileupload-choose {
-						background-color: $blue-main;
-						border: none;
-						&:hover {
-							background-color: $blue-light;
-						}
-					}
-				}
-			}
-			.propy-validation {
-				margin: 0px;
-			}
-		}
-		.toc-submit-holder {
-			.toc-holder {
-				margin-bottom: 0;
-				padding-top: 15px;
-				.toc-checkbox {
-					.ui-chkbox-box {
-						height: 16px;
-						width: 16px;
-						margin-bottom: 5px;
-					}
-					.ui-chkbox-box.ui-state-active {
-						border-color: $blue-dark;
-						background-color: $blue-main;
-					}
-				}
-				label {
-					font-weight: normal;
-				}
-				a.toc {
-					font-weight: normal;
-					color: $blue-main;
-					&:hover {
-						color: $blue-dark;
-					}
-				}
-			}
-		}
-	}
+    .invite-link {
+        padding-left: 30px;
+        text-decoration: underline;
+    }
+    .propy-form {
+        padding: 50px 0;
+        margin-top: 20px;
+        background-color: $white;
+        @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
+        .row-section-holder {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid $section-border-color;
+            .section-title {
+                @media #{$xs} {
+                    margin-bottom: 15px;
+                }
+            }
+            .list-label {
+                color: $section-label-color;
+                font-size: 20px;
+            }
+            .property-type-dropdown {
+                width: 100%;
+                margin-bottom: 2px;
+                &.ui-dropdown.ui-state-default {
+                    border: solid 1px rgba(255, 255, 255, 1);
+                    height: 40px;
+                    line-height: 40px;
+                    border: 1px solid $border-default;
+                    @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+                    label {
+                        font-size: 15px;
+                        height: 100%;
+                        line-height: 30px;
+                        text-align: left;
+                        padding-left: 10px;
+                        color: $button-filter-text;
+                        @include border-radius(9px);
+                    }
+                    .ui-dropdown-trigger {
+                        line-height: 40px;
+                        font-size: 10px;
+                        border: none;
+                        padding-right: 4px;
+                        @include border-radius(9px);
+                        span {
+                            color: $button-filter-arrow;
+                            right: 15px;
+                        }
+                    }
+                    &.ui-dropdown-open {
+                        color: $blue-dark;
+                        border: none;
+                        @include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
+                        background-color: #F6FDFF;
+                        label {
+                            color: $blue-dark;
+                        }
+                        .ui-dropdown-trigger {
+                            span {
+                                color: $blue-dark;
+                            }
+                        }
+                        .ui-dropdown-panel {
+                            top: 0 !important;
+                            font-size: 15px;
+                            margin-top: 0;
+                            .ui-dropdown-items {
+                                li {
+                                    height: 40px;
+                                    line-height: 30px;
+                                }
+                            }
+                        }
+                        .ui-dropdown-panel {
+                            top: 0 !important;
+                            margin-top: 0;
+                            font-size: 15px;
+                            @include border-radius(9px);
+                            border: none;
+                            .ui-dropdown-items-wrapper {
+                                max-height: 262px !important;
+                                @include border-radius(9px);
+                                .ui-dropdown-items.ui-dropdown-list {
+                                    padding: 0px;
+                                    .ui-dropdown-item {
+                                        @include border-radius(0px);
+                                        padding: 5px 10px;
+                                        span {
+                                            font-weight: normal;
+                                        }
+                                        &:hover {
+                                            background-color: rgba(76, 202, 247, 0.1);
+                                            color: $blue-main;
+                                        }
+                                        &.ui-state-highlight {
+                                            background-color: rgba(76, 202, 247, 0.2);
+                                            color: $button-filter-text;
+                                        }
+                                        &:first-child {
+                                            @include border-radius-separate(9px, 9px, 0px, 0px);
+                                            background-color: white;
+                                            color: $placeholder-color;
+                                        }
+                                        &:last-child {
+                                            @include border-radius-separate(0px, 0px, 9px, 9px);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.ui-corner-all {
+                    @include border-radius(9px);
+                }
+            }
+            .checkbox-holder {
+                .furnished-checkbox {
+                    .ui-chkbox-box {
+                        height: 16px;
+                        width: 16px;
+                        margin-bottom: 5px;
+                    }
+                    .ui-chkbox-box.ui-state-active {
+                        border-color: $blue-dark;
+                        background-color: $blue-main;
+                    }
+                }
+                label {
+                    color: $green-darkest;
+                    font-weight: normal;
+                }
+            }
+            .features-holder {
+                label {
+                    color: $input-label-color;
+                    font-size: 15px;
+                    font-weight: normal;
+                }
+                .price-currency-holder {
+                    #list-prop-price {
+                        width: 100%;
+                        height: 40px;
+                        padding-left: 10px;
+                        @include border-radius-separate(9px, 0, 9px, 0);
+                        border: 1px solid rgba(0, 0, 0, 0.1);
+                    }
+                    .ui-inputgroup-addon {
+                        height: 40px;
+                        border-left: 0;
+                        background-color: white;
+                        padding-right: 22px;
+                        padding-top: 0;
+                        padding-left: 0;
+                        @include border-radius-separate(0, 9px, 0, 9px);
+                        @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+                        .currency-dropdown {
+                            width: 100%;
+                            margin-bottom: 2px;
+                            &.ui-dropdown.ui-state-default {
+                                height: 38px;
+                                line-height: 38px;
+                                border: none;
+                                box-shadow: none;
+                                label {
+                                    font-size: 15px;
+                                    height: 100%;
+                                    line-height: 30px;
+                                    text-align: left;
+                                    color: $button-filter-text;
+                                    @include border-radius(9px);
+                                }
+                                .ui-dropdown-trigger {
+                                    line-height: 40px;
+                                    font-size: 10px;
+                                    border: none;
+                                    padding-right: 4px;
+                                    @include border-radius(9px);
+                                    span {
+                                        color: $button-filter-arrow;
+                                        right: 15px;
+                                    }
+                                }
+                                &.ui-dropdown-open {
+                                    color: $blue-dark;
+                                    border: none;
+                                    @include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
+                                    background-color: #F6FDFF;
+                                    label {
+                                        color: $blue-dark;
+                                    }
+                                    .ui-dropdown-trigger {
+                                        span {
+                                            color: $blue-dark;
+                                        }
+                                    }
+                                    .ui-dropdown-panel {
+                                        top: 0 !important;
+                                        font-size: 15px;
+                                        margin-top: 0;
+                                        .ui-dropdown-items {
+                                            li {
+                                                height: 40px;
+                                                line-height: 30px;
+                                            }
+                                        }
+                                    }
+                                    .ui-dropdown-panel {
+                                        top: 0 !important;
+                                        margin-top: 0;
+                                        font-size: 15px;
+                                        @include border-radius(9px);
+                                        border: none;
+                                        .ui-dropdown-items-wrapper {
+                                            max-height: 450px !important;
+                                            @include border-radius(9px);
+                                            .ui-dropdown-items.ui-dropdown-list {
+                                                padding: 0px;
+                                                .ui-dropdown-item {
+                                                    @include border-radius(0px);
+                                                    padding: 5px 10px;
+                                                    span {
+                                                        font-weight: normal;
+                                                    }
+                                                    &:hover {
+                                                        background-color: rgba(76, 202, 247, 0.1);
+                                                        color: $blue-main;
+                                                    }
+                                                    &.ui-state-highlight {
+                                                        background-color: rgba(76, 202, 247, 0.2);
+                                                        color: $button-filter-text;
+                                                    }
+                                                    &:first-child {
+                                                        @include border-radius-separate(9px, 9px, 0px, 0px);
+                                                    }
+                                                    &:last-child {
+                                                        @include border-radius-separate(0px, 0px, 9px, 9px);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            &.ui-corner-all {
+                                @include border-radius(9px);
+                            }
+                        }
+                    }
+                }
+                .commission-holder {
+                    .ui-slider {
+                        height: 4px;
+                        margin-top: 15px;
+                        width: 100%;
+                        background: #EDEDED;
+                        box-shadow: none;
+                        .ui-slider-range {
+                            background: #4CCAF7;
+                            box-shadow: none;
+                        }
+                        .ui-slider-handle {
+                            background: transparent;
+                            height: 0 !important;
+                            width: 0 !important;
+                            &:last-child {
+                                background: white;
+                                height: 22px !important;
+                                width: 22px !important;
+                                top: -8px !important;
+                                @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
+                                @include border-radius(50%);
+                                border: solid 1px $gray-lighter;
+                                cursor: pointer;
+                            }
+                            &:hover {
+                                height: 26px !important;
+                                width: 26px !important;
+                                top: -10px !important;
+                            }
+                        }
+                    }
+                    .commission-percent-holder {
+                        margin-top: 22px;
+                        padding-top: 8px;
+                        height: 40px;
+                        text-align: center;
+                        background-color: white;
+                        border: 1px solid $border-default;
+                        @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+                        @include border-radius(9px);
+                    }
+                }
+                .two-inputs-holder {
+                    margin-top: 20px;
+                    input {
+                        width: 100%;
+                        padding-left: 10px;
+                        height: 40px;
+                    } // remove number type input arrows
+                    input[type=number]::-webkit-inner-spin-button,
+                    input[type=number]::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        margin: 0;
+                    }
+                    .decrease-bedrooms {
+                        position: absolute;
+                        right: 50px;
+                        top: 35px;
+                        cursor: pointer;
+                        &:hover {
+                            circle {
+                                stroke: $blue-main;
+                                stroke-opacity: 1;
+                            }
+                        }
+                    }
+                    .increase-bedrooms {
+                        position: absolute;
+                        right: 24px;
+                        top: 35px;
+                        cursor: pointer;
+                        &:hover {
+                            circle {
+                                stroke: $blue-main;
+                                stroke-opacity: 1;
+                            }
+                        }
+                    }
+                    .propy-area-holder {
+                        #area-control {
+                            width: 100%;
+                            height: 40px;
+                            padding-left: 10px;
+                            @include border-radius-separate(9px, 0, 9px, 0);
+                            border: 1px solid rgba(0, 0, 0, 0.1);
+                        }
+                        .ui-inputgroup-addon {
+                            height: 40px;
+                            border-left: 0;
+                            background-color: white;
+                            padding-right: 32px;
+                            padding-top: 0;
+                            padding-left: 0;
+                            @include border-radius-separate(0, 9px, 0, 9px);
+                            @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+                            .currency-dropdown {
+                                width: 100%;
+                                margin-bottom: 2px;
+                                &.ui-dropdown.ui-state-default {
+                                    height: 38px;
+                                    line-height: 38px;
+                                    border: none;
+                                    box-shadow: none;
+                                    label {
+                                        font-size: 15px;
+                                        height: 100%;
+                                        line-height: 30px;
+                                        text-align: left;
+                                        color: $button-filter-text;
+                                        @include border-radius(9px);
+                                    }
+                                    .ui-dropdown-trigger {
+                                        line-height: 40px;
+                                        font-size: 10px;
+                                        border: none;
+                                        padding-right: 4px;
+                                        @include border-radius(9px);
+                                        span {
+                                            color: $button-filter-arrow;
+                                            right: 15px;
+                                        }
+                                    }
+                                    &.ui-dropdown-open {
+                                        color: $blue-dark;
+                                        border: none;
+                                        @include box-shadow(0px, 1px, 2px, rgba(76, 202, 247, 0.5));
+                                        background-color: #F6FDFF;
+                                        label {
+                                            color: $blue-dark;
+                                        }
+                                        .ui-dropdown-trigger {
+                                            span {
+                                                color: $blue-dark;
+                                            }
+                                        }
+                                        .ui-dropdown-panel {
+                                            top: 0 !important;
+                                            font-size: 15px;
+                                            margin-top: 0;
+                                            .ui-dropdown-items {
+                                                li {
+                                                    height: 40px;
+                                                    line-height: 30px;
+                                                }
+                                            }
+                                        }
+                                        .ui-dropdown-panel {
+                                            top: 0 !important;
+                                            margin-top: 0;
+                                            font-size: 15px;
+                                            @include border-radius(9px);
+                                            border: none;
+                                            .ui-dropdown-items-wrapper {
+                                                max-height: 262px !important;
+                                                @include border-radius(9px);
+                                                .ui-dropdown-items.ui-dropdown-list {
+                                                    padding: 0px;
+                                                    .ui-dropdown-item {
+                                                        @include border-radius(0px);
+                                                        padding: 5px 10px;
+                                                        span {
+                                                            font-weight: normal;
+                                                        }
+                                                        &:hover {
+                                                            background-color: rgba(76, 202, 247, 0.1);
+                                                            color: $blue-main;
+                                                        }
+                                                        &.ui-state-highlight {
+                                                            background-color: rgba(76, 202, 247, 0.2);
+                                                            color: $button-filter-text;
+                                                        }
+                                                        &:first-child {
+                                                            @include border-radius-separate(9px, 9px, 0px, 0px);
+                                                        }
+                                                        &:last-child {
+                                                            @include border-radius-separate(0px, 0px, 9px, 9px);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                &.ui-corner-all {
+                                    @include border-radius(9px);
+                                }
+                            }
+                        }
+                    }
+                    textarea {
+                        width: 100%;
+                        @include border-radius(9px);
+                        border-color: $border-default;
+                        resize: none;
+                    }
+                }
+            }
+            .location-form-group {
+                #location {
+                    input.propy-control {
+                        height: 40px !important;
+                        @include border-radius(9px);
+                    }
+                }
+                .location-map {
+                    padding: 0;
+                    margin-top: 10px;
+                    .google-map-holder {
+                        width: 100%;
+                        height: 320px;
+                        @include border-radius(9px);
+                    }
+                }
+            }
+            .photos-uploader {
+                .ui-fileupload-content {
+                    min-height: 322px;
+                    background-color: $photos-drop-zone-color;
+                    @include border-radius(9px);
+                    border: 1px solid $border-default;
+                    @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+                    .ui-progressbar {
+                        display: none;
+                    }
+                }
+                .ui-fileupload-buttonbar {
+                    position: absolute;
+                    top: 60%;
+                    z-index: 999;
+                    background: transparent;
+                    float: left;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    margin-top: 10px;
+                    border: none;
+                    @media #{$xs} {
+                        top: 65%;
+                        float: left;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                    .ui-fileupload-choose {
+                        background-color: transparent !important;
+                        color: $blue-main;
+                        &:hover {
+                            background-color: transparent !important;
+                            color: $blue-dark;
+                        }
+                    }
+                }
+                .ui-fileupload-files {
+                    position: absolute;
+                    top: 350px;
+                    .ui-fileupload-row {
+                        display: inline-block;
+                        width: 190px;
+                        div:nth-child(2) {
+                            display: none;
+                        }
+                        div:nth-child(3) {
+                            display: none;
+                        }
+                        .ui-button {
+                            right: 43px;
+                            top: -48px;
+                            height: 26px;
+                            width: 26px;
+                            background-color: $remove-photo-color;
+                            @include border-radius(50%);
+                            border: none;
+                            background-image: url("../../../assets/images/photo-icon-x.svg");
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            .ui-button-icon-left {
+                                display: none;
+                            }
+                        }
+                    }
+                    img {
+                        height: 96px;
+                        @include border-radius(9px);
+                    }
+                }
+                .ui-fileupload-highlight {
+                    border: 2px dashed $gray-darkest;
+                    background-color: darken($photos-drop-zone-color, 10%);
+                }
+                .drop-message {
+                    position: absolute;
+                    top: 70px;
+                    text-align: center;
+                    width: 95%;
+                    p {
+                        position: absolute;
+                        width: 130px;
+                        left: calc(50% - 65px);
+                        font-family: $font-family-helvetica;
+                        font-size: 16px;
+                        margin-bottom: 0px;
+                    }
+                }
+            }
+            .acceptedCurrencies {
+                width: 100%;
+                border-bottom: #d6d6d6;
+                @include box-shadow(0px,
+                1px,
+                3px,
+                rgba(0, 0, 0, 0.14));
+                @include border-radius(9px);
+                &:hover {
+                    background: none;
+                }
+                .ui-multiselect-label-container {
+                    @include border-radius(9px);
+                }
+                .ui-multiselect-trigger {
+                    line-height: 40px;
+                    font-size: 10px;
+                    border: none;
+                    padding-right: 4px;
+                    @include border-radius(9px);
+                    span {
+                        color: $button-filter-arrow;
+                        right: 5px;
+                    }
+                }
+                .ui-multiselect-panel {
+                    .ui-widget-header {
+                        display: none;
+                    }
+                    .ui-multiselect-items-wrapper {
+                        .ui-multiselect-item {
+                            &:hover {
+                                background-color: rgba(76, 202, 247, 0.1);
+                            }
+                            &.ui-state-highlight {
+                                background-color: rgba(76, 202, 247, 0.2);
+                                color: $button-filter-text;
+                                label {
+                                    color: $blue-main;
+                                }
+                                .ui-chkbox-box {
+                                    height: 16px;
+                                    width: 16px;
+                                    margin-bottom: 5px;
+                                }
+                                .ui-chkbox-box.ui-state-active {
+                                    border-color: $blue-dark;
+                                    background-color: $blue-main;
+                                }
+                            }
+                        }
+                    }
+                }
+                label {
+                    color: $text-color-main;
+                    line-height: 30px;
+                    padding: 4px 0 0 10px;
+                }
+            }
+            .ui-fileupload {
+                .ui-fileupload-buttonbar {
+                    .ui-fileupload-choose {
+                        background-color: $blue-main;
+                        border: none;
+                        &:hover {
+                            background-color: $blue-light;
+                        }
+                    }
+                }
+            }
+            .propy-validation {
+                margin: 0px;
+            }
+        }
+        .toc-submit-holder {
+            .toc-holder {
+                margin-bottom: 0;
+                padding-top: 15px;
+                .toc-checkbox {
+                    .ui-chkbox-box {
+                        height: 16px;
+                        width: 16px;
+                        margin-bottom: 5px;
+                    }
+                    .ui-chkbox-box.ui-state-active {
+                        border-color: $blue-dark;
+                        background-color: $blue-main;
+                    }
+                }
+                label {
+                    font-weight: normal;
+                }
+                a.toc {
+                    font-weight: normal;
+                    color: $blue-main;
+                    &:hover {
+                        color: $blue-dark;
+                    }
+                }
+            }
+        }
+    }
 }
