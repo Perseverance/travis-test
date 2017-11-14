@@ -11,6 +11,8 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { SignUpComponentComponent } from './sign-up-component/sign-up-component.component';
 import { LinkedinButtonComponent } from './linkedin-button/linkedin-button.component';
 import { FacebookButtonComponent } from './facebook-button/facebook-button.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import {InlineSVGModule} from 'ng-inline-svg';
 
 @NgModule({
 	imports: [
@@ -20,13 +22,15 @@ import { FacebookButtonComponent } from './facebook-button/facebook-button.compo
 		SharedModule,
 		AuthenticationRoutingModule,
 		Ng2CompleterModule,
-		TranslateModule
+		TranslateModule,
+		InlineSVGModule
 	],
 	declarations: [
 		LoginComponentComponent,
 		SignUpComponentComponent,
 		LinkedinButtonComponent,
-		FacebookButtonComponent
+		FacebookButtonComponent,
+		ForgotPasswordComponent
 	],
 	providers: [
 		AuthenticationService,

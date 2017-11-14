@@ -35,4 +35,14 @@
             }
         }
     }
+    #forgot-password {
+        margin-top: 15px;
+        @media #{$sm} {
+            margin-bottom: 10px;
+        }
+        a { 
+            color: $green-darkest;
+            cursor: pointer;
+        }
+    }
 }

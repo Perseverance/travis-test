@@ -408,4 +408,11 @@ export class AuthenticationService {
 		return result.data.data;
 	}
 
+	public async forgotPassword(email: string): Promise<any> {
+		const params = {
+			email
+		};
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.FORGOT_PASSWORD, {}, { params });
+	}
+
 }
