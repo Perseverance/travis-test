@@ -144,8 +144,8 @@
         "submit-button": "Submit",
         "error-listing-property": "Listing of property failed",
         "not-authenticated": {
-            "warning-message": "You are not authenticated!",
-            "login-or-signup": "Please either sign up or login using the header links"
+            "warning-message": "Oops, can't do that yet.",
+            "login-or-signup": "To list your property, just sign up or login through the header above."
         },
         "upload-image": {
             "choose-button-label": "Choose Image"
@@ -179,7 +179,7 @@
                 "blockchain-integration-content": "Propy integrates blockchain ledger for the governments to make title deeds issuance for your property instantly online, secure and cost-effective."
             }
         },
-        "newsletter":{
+        "newsletter": {
             "newsletter-header": "Do you want to receive updates?",
             "newsletter-description": "Get Propy newsletter",
             "email-address": "Your email address",
