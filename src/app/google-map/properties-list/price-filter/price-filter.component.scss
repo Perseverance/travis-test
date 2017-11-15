@@ -19,6 +19,9 @@
 		@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
 		@include border-radius(5px);
 		outline: none;
+		@media #{$xs} {
+			font-size: 12px;
+		}
 		span {
 			color: $button-filter-arrow;
 			font-size: 10px;
@@ -45,11 +48,15 @@
 	}
 	.range-filter {
 		height: 160px;
-		width: 166%;
+		width: 172%;
 		top: 50px !important;
-		left: 15px !important;
+		left: 0px !important;
 		@media #{$sm} {
 			height: 200px;
+		}
+		@media #{$xs} {
+			width: 175%;
+			height: 240px;
 		}
 		.arrow-up {
 			width: 0;
@@ -76,6 +83,9 @@
 		}
 		.input-button-holder {
 			padding: 0 15px;
+			@media #{$xs} {
+				text-align: center;
+			}
 			.input-dropdown-holder {
 				display: inline-block;
 				margin-top: 20px;
@@ -191,6 +201,9 @@
 				display: inline-block;
 				float: right;
 				margin-top: 20px;
+				@media #{$xs} {
+					float: none;
+				}
 				button {
 					height: 36px;
 					font-size: 14px;
@@ -198,6 +211,9 @@
 					outline: none;
 					width: 80px;
 					@include border-radius(5px);
+					@media #{$xs} {
+						width: 90px;
+					}
 					&.apply-filter {
 						background-color: $button-filter-apply;
 						border: none;
