@@ -18,6 +18,10 @@
 		@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.1));
 		@include border-radius(5px);
 		outline: none;
+		@media #{$xs} {
+			padding-left: 5px;
+			font-size: 12px;
+		}
 		&.area-filter-button {
 			margin: 0 20px;
 		}
@@ -125,9 +129,18 @@
 			float: right;
 			padding: 0 15px;
 			margin-bottom: 20px;
+			@media #{$xs} {
+				display: block;
+				float: none;
+				text-align: center;
+			}
 			.button-holder {
 				display: inline-block;
 				float: right;
+				@media #{$xs} {
+					display: block;
+					float: none;
+				}
 				button {
 					height: 36px;
 					font-size: 14px;
@@ -135,6 +148,9 @@
 					outline: none;
 					width: 80px;
 					@include border-radius(5px);
+					@media #{$xs} {
+						width: 90px;
+					}
 					&.apply-filter {
 						background-color: $button-filter-apply;
 						border: none;

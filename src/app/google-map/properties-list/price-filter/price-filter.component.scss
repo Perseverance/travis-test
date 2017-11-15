@@ -76,6 +76,9 @@
 		}
 		.input-button-holder {
 			padding: 0 15px;
+			@media #{$xs} {
+				text-align: center;
+			}
 			.input-dropdown-holder {
 				display: inline-block;
 				margin-top: 20px;
@@ -191,6 +194,9 @@
 				display: inline-block;
 				float: right;
 				margin-top: 20px;
+				@media #{$xs} {
+					float: none;
+				}
 				button {
 					height: 36px;
 					font-size: 14px;
@@ -198,6 +204,9 @@
 					outline: none;
 					width: 80px;
 					@include border-radius(5px);
+					@media #{$xs} {
+						width: 90px;
+					}
 					&.apply-filter {
 						background-color: $button-filter-apply;
 						border: none;
