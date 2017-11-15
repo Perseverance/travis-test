@@ -8,6 +8,13 @@
 		height: 40px;
 		padding-top: 5px;
 		width: 100%;
+		margin: 0;
+		.filter-col {
+			padding-left: 0;
+		}
+		.rows-toggle {
+			padding-right: 0;
+		}
 		.sorting-dropdown {
 			margin-bottom: 5px;
 			&.ui-dropdown.ui-state-default {
@@ -24,6 +31,10 @@
 					padding-left: 10px;
 					color: $button-filter-text;
 					@include border-radius(5px);
+					@media #{$xs} {
+						font-size: 12px;
+						min-width: 134px;
+					}
 				}
 				.ui-dropdown-trigger {
 					line-height: 35px;
