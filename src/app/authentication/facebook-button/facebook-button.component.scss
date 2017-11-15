@@ -3,6 +3,8 @@
 .btn-facebook {
     background-color: #3762C3;
     @include border-radius(11px);
+    padding-left: 0px;
+    text-align: center;
     &:hover {
         background-color: darken(#3762C3, 5%);
     }
