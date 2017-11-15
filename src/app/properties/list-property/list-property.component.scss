@@ -165,7 +165,7 @@ $remove-photo-color: #F24A4A;
                         @include border-radius-separate(0, 9px, 0, 9px);
                         @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
                         .currency-dropdown {
-                            width: 100%;
+                            width: calc(50% + 55px) !important;
                             margin-bottom: 2px;
                             &.ui-dropdown.ui-state-default {
                                 height: 38px;
