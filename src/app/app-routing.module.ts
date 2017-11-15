@@ -1,5 +1,6 @@
 import { TokenGuard } from './authentication/token-guard.service';
 import { TermsComponent } from './core/terms/terms.component';
+import { AboutUsComponent } from './core/about/about.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -28,6 +29,11 @@ const routes: Routes = [
 		component: GoogleMapComponent,
 		pathMatch: 'full',
 		canActivate: [TokenGuard]
+	},
+	{
+		path: 'about',
+		component: AboutUsComponent,
+		pathMatch: 'full'
 	},
 	{
 		path: '**',

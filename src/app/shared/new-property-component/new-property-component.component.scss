@@ -55,6 +55,7 @@ $card-half-padding: $card-padding/2;
     &.theme-small {
         .image-holder {
             img {
+                height: 215px;
                 @media #{$xl} {
                     height: 320px;
                 }
@@ -67,6 +68,7 @@ $card-half-padding: $card-padding/2;
     &.theme-big {
         .image-holder {
             img {
+                height: 215px;
                 @media #{$xl} {
                     height: 480px;
                 }

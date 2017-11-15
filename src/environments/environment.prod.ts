@@ -1,6 +1,6 @@
 export const environment = {
 	production: true,
-	apiUrl: 'http://servicepropy.azurewebsites.net',
+	apiUrl: 'https://servicepropy.azurewebsites.net',
 	googleMaps: {
 		apiKey: 'AIzaSyAcgGhw1a6q4Y0ZOIeHFw0NrBT3XtXUhQU', // ToDo: This apiKey is generated for dev. Change it.
 		defaultLanguage: 'en'
