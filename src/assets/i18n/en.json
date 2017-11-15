@@ -105,7 +105,10 @@
         "country2": "China",
         "country3": "UAE",
         "country4": "Canada",
-        "country5": "Russia"
+        "country5": "Russia",
+        "company": "Company",
+        "about-us": "About Us",
+        "blog": "Blog"
     },
     "signup": {
         "agent-checkbox": "I am an agent",

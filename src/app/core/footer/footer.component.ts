@@ -23,16 +23,6 @@ export class FooterComponent implements OnInit {
 		this.locations[3] = beijing;
 		const moscow = new MapLocation(37.3516344, 55.7494718, 10);
 		this.locations[4] = moscow;
-		const usa = new MapLocation(-113.7509046, 36.2061606, 4);
-		this.locations[5] = usa;
-		const china = new MapLocation(86.0191483, 34.4099823, 4);
-		this.locations[6] = china;
-		const uae = new MapLocation(52.8318969, 24.349865, 8);
-		this.locations[7] = uae;
-		const canada = new MapLocation(-113.7676258, 54.6903375, 4);
-		this.locations[8] = canada;
-		const russia = new MapLocation(37.3516344, 55.7494718, 5);
-		this.locations[9] = russia;
 	}
 
 	ngOnInit() {
@@ -50,6 +40,10 @@ export class FooterComponent implements OnInit {
 			longitude: this.locations[id].longitude,
 			zoom: this.locations[id].zoomLevel
 		}]);
+	}
+
+	public goToAbout() {
+		this.router.navigate(['about']);
 	}
 }
 
