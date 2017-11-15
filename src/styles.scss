@@ -8,179 +8,179 @@ $input-height: 44px;
 // Mixins
 @import 'errors';
 // Fonts
-@import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700");
 html,
 body {
-	height: 100%;
-	#wrap {
-		min-height: 100%;
-		#main {
-			overflow: auto;
-			padding-bottom: $footer-height + 1px;
-			/* this needs to be bigger than footer height*/
-		}
-	}
-	//@include background-image-cover('./assets/images/propy-bg-image.jpg');
-	background-color: $background-gray;
-	font-family: $font-family-helvetica;
-	font-size: $font-size-medium;
-	h1,
-	h2,
-	h3,
-	h4,
-	h6,
-	a,
-	p {
-		color: $black;
-		font-weight: 300;
-		&.propy-custom-heading {
-			padding-left: 30px;
-			border-left: 2px solid $blue-main;
-		}
-	}
-	h1 {
-		font-size: 60px;
-	}
-	h2 {
-		font-size: 45px;
-	}
-	h3 {
-		font-size: 34px;
-	}
-	h4 {
-		font-size: 24px;
-	}
-	h5 {
-		font-size: $font-size-base;
-		font-weight: bold;
-	}
-	h6 {
-		font-size: $font-size-small;
-	}
-	p {
-		font-size: $font-size-base;
-	}
-	span {
-		font-weight: 100;
-	}
-	input.propy-control,
-	textarea.propy-control {
-		background-color: white;
-		border: 1px solid $border-default;
-		color: $black;
-		font-size: $font-size-medium;
-		font-weight: 400;
-		outline: none;
-		@include border-radius(9px);
-		@include box-shadow(0px,
-			1px,
-			3px,
-			rgba(0, 0, 0, 0.14));
-		margin-bottom: 10px;
-		&:active {
-			border-color: $blue-regular;
-		}
-		&.ng-no-margin {
-			margin-bottom: 0px;
-		}
-		&.ng-touched.ng-invalid {
-			border-color: $red-main;
-		}
-	}
-	label.propy-label {
-		color: $input-label-color;
-		font-size: $font-size-xs;
-		font-weight: 400;
-	}
-	input.propy-control {
-		height: $input-height;
-	}
-	a.propy-control,
-	button.propy-control {
-		outline: none !important;
-		font-weight: 400;
-		@include border-radius(9px);
-		@include box-shadow(0px,
-			1px,
-			3px,
-			rgba(35, 197, 255, 0.4));
-		background-color: $blue-regular;
-		color: $white;
-		&:focus {
-			outline: none !important;;
-			background-color: $blue-regular;
-			color: $white;
-		}
-		&:hover,
-		&:active {
-			outline: none !important;
-			background-color: $blue-light;
-			color: $white;
-		}
-		&.button-big {
-			height: 44px;
-			font-size: $font-size-medium;
-		}
-		&.button-small {
-			height: 36px;
-			font-size: $font-size-medium;
-		}
-		&.btn-white {
-			background-color: $white;
-			color: $black;
-			@include box-shadow(0px,
-				1px,
-				3px,
-				rgba(0, 0, 0, 0.14));
-			&:hover {
-				background-color: darken($white, 5%);
-			}
-			@media #{$xs} {
-				border: 1px solid $blue-light;
-			}
-		}
-	}
-	.propy-form {
-		padding: 35px;
-		background-color: lighten($white, 1%);
-		@include box-shadow(0px,
-			6px,
-			20px,
-			rgba(0, 0, 0, 0.1));
-		@include border-radius(12px);
-		margin-bottom: 30px;
-		.checkbox.form-check {
-			margin-top: 0px;
-			margin-bottom: 5px;
-		}
-		label {
-			font-weight: 100;
-			&.propy-label {
-				font-weight: 400;
-			}
-		}
-		h3 {
-			margin-top: 0px;
-			margin-bottom: 35px;
-			font-weight: 400;
-		}
-		@media #{$sm} {
-			margin-bottom: 0px;
-		}
-		hr.separator {
-			margin: 25px -35px;
-		}
-	}
-	.social {
-		p.title {
-			color: $gray-medium;
-			margin-bottom: 10px;
-		}
-	}
-	.abc-radio-info input[type="radio"]:checked + label::before {
-		border-color: $blue-main;
-	}
-	.abc-radio-info input[type="radio"]:checked + label::after {
-		background-color: $blue-main;
-	}
+    height: 100%;
+    #wrap {
+        min-height: 100%;
+        #main {
+            overflow: auto;
+            padding-bottom: $footer-height + 1px;
+            /* this needs to be bigger than footer height*/
+        }
+    } //@include background-image-cover('./assets/images/propy-bg-image.jpg');
+    background-color: $background-gray;
+    font-family: $font-family-helvetica;
+    font-size: $font-size-medium;
+    h1,
+    h2,
+    h3,
+    h4,
+    h6,
+    a,
+    p {
+        color: $black;
+        font-weight: 300;
+        &.propy-custom-heading {
+            padding-left: 30px;
+            border-left: 2px solid $blue-main;
+        }
+    }
+    h1 {
+        font-size: 60px;
+    }
+    h2 {
+        font-size: 45px;
+    }
+    h3 {
+        font-size: 34px;
+    }
+    h4 {
+        font-size: 24px;
+    }
+    h5 {
+        font-size: $font-size-base;
+        font-weight: bold;
+    }
+    h6 {
+        font-size: $font-size-small;
+    }
+    p {
+        font-size: $font-size-base;
+    }
+    span {
+        font-weight: 100;
+    }
+    input.propy-control,
+    textarea.propy-control {
+        background-color: white;
+        border: 1px solid $border-default;
+        color: $black;
+        font-size: $font-size-medium;
+        font-weight: 400;
+        outline: none;
+        @include border-radius(9px);
+        @include box-shadow(0px,
+        1px,
+        3px,
+        rgba(0, 0, 0, 0.14));
+        margin-bottom: 10px;
+        &:active {
+            border-color: $blue-regular;
+        }
+        &.ng-no-margin {
+            margin-bottom: 0px;
+        }
+        &.ng-touched.ng-invalid {
+            border-color: $red-main;
+        }
+    }
+    label.propy-label {
+        color: $input-label-color;
+        font-size: $font-size-xs;
+        font-weight: 400;
+    }
+    input.propy-control {
+        height: $input-height;
+    }
+    a.propy-control,
+    button.propy-control {
+        outline: none !important;
+        font-weight: 400;
+        @include border-radius(9px);
+        @include box-shadow(0px,
+        1px,
+        3px,
+        rgba(35, 197, 255, 0.4));
+        background-color: $blue-regular;
+        color: $white;
+        &:focus {
+            outline: none !important;
+            ;
+            background-color: $blue-regular;
+            color: $white;
+        }
+        &:hover,
+        &:active {
+            outline: none !important;
+            background-color: $blue-light;
+            color: $white;
+        }
+        &.button-big {
+            height: 44px;
+            font-size: $font-size-medium;
+        }
+        &.button-small {
+            height: 36px;
+            font-size: $font-size-medium;
+        }
+        &.btn-white {
+            background-color: $white;
+            color: $black;
+            @include box-shadow(0px,
+            1px,
+            3px,
+            rgba(0, 0, 0, 0.14));
+            &:hover {
+                background-color: darken($white, 5%);
+            }
+            @media #{$xs} {
+                border: 1px solid $blue-light;
+            }
+        }
+    }
+    .propy-form {
+        padding: 35px;
+        background-color: lighten($white, 1%);
+        @include box-shadow(0px,
+        6px,
+        20px,
+        rgba(0, 0, 0, 0.1));
+        @include border-radius(12px);
+        margin-bottom: 30px;
+        .checkbox.form-check {
+            margin-top: 0px;
+            margin-bottom: 5px;
+        }
+        label {
+            font-weight: 100;
+            &.propy-label {
+                font-weight: 400;
+            }
+        }
+        h3 {
+            margin-top: 0px;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+        @media #{$sm} {
+            margin-bottom: 0px;
+        }
+        hr.separator {
+            margin: 25px -35px;
+        }
+    }
+    .social {
+        p.title {
+            color: $gray-medium;
+            margin-bottom: 10px;
+        }
+    }
+    .abc-radio-info input[type="radio"]:checked+label::before {
+        border-color: $blue-main;
+    }
+    .abc-radio-info input[type="radio"]:checked+label::after {
+        background-color: $blue-main;
+    }
 }
