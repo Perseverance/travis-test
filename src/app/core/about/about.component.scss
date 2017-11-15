@@ -1,5 +1,7 @@
-.toc {
-    .toc-holder {
+@import "../../../variables";
+@import "../../../mixins";
+.about {
+    .about-holder {
         h1,
         h2,
         h3,
@@ -9,11 +11,11 @@
         p,
         span,
         a {
-            color: black;
+            color: $black;
         }
         text-align: center;
-        background-color: white;
-        max-height: 600px;
-        overflow-y: scroll;
+        background-color: $white;
+        @include border-radius(7px);
+        @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
     }
 }
