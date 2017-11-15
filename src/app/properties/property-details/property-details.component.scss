@@ -88,11 +88,12 @@
                 padding-bottom: 11px;
                 padding: 0px;
                 .nav-tabs {
+                    border: 0;
                     li {
-                        text-align: left;
+                        padding: 0px 10px;
+                        text-align: center;
                         @media #{$sm} {
                             float: left;
-                            width: 25%;
                         }
                         a {
                             background-color: transparent;

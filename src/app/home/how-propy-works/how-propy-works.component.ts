@@ -36,7 +36,7 @@ export class HowPropyWorksComponent implements OnInit {
 				pointStyles: ``
 			},
 			loop: false,
-			speed: 1000,
+			speed: 400,
 			easing: 'ease'
 		};
 
