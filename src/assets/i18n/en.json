@@ -43,7 +43,7 @@
             "required": "This field is required",
             "invalid-email": "This is not a valid email",
             "email-registered": "This email address is already registered",
-            "invalid-password": "Your password needs to at least 8 symbols and must contain lowercase character, uppercase character and a number",
+            "invalid-password": "Your password needs to be at least 8 symbols and must contain lowercase character, uppercase character and a number",
             "passwords-differ": "The two passwords differ",
             "invalid-phone-number": "Your phone number appears to be invalid",
             "toc-required": "You need to accept the terms and conditions of the site"
@@ -282,5 +282,11 @@
             "new-password-success": "Your password has been updated successfuly",
             "new-password-fail": "You have entered incorrect password"
         }
+    },
+    "about": {
+        "title": "About Propy",
+        "text-body": "Propy is a global real estate marketplace with decentrilized title registry. We aim to solve the problems facing international real estate transactions by creating a novel unified property store and asset transfer platform for the global real estate industry. Propy allows buyers, sellers, brokers, and escrow/title agents/notaries to come together through the utilization of a suite of smart contracts on blockchain to facilitate transactions. We provide a network for these actors to connect with each other and conduct real estate purchases online. The culmination of the transaction is a digital transfer of ownership on the Propy Registry. For more information about these processes and smart contracts, please refer to our",
+        "white-paper": "white paper",
+        "inqueries": "For more inquiries, please contact us at: "
     }
 }

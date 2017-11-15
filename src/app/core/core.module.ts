@@ -20,6 +20,7 @@ import {TokenGuard} from '../authentication/token-guard.service';
 import {TranslateStore} from '@ngx-translate/core/src/translate.store';
 import {environment} from '../../environments/environment';
 import {TermsComponent} from './terms/terms.component';
+import {AboutUsComponent} from './about/about.component';
 import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
 import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
 import {ImageEnvironmentPrefixPipe} from '../shared/pipes/image-environment-prefix.pipe';
@@ -52,6 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		NotificationMessageComponent,
 		FooterComponent,
 		TermsComponent,
+		AboutUsComponent,
 		ReferralComponent
 	],
 	providers: [
@@ -80,7 +82,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		HeaderComponent,
 		FooterComponent,
 		NotificationMessageComponent,
-		TermsComponent
+		TermsComponent,
+		AboutUsComponent
 	]
 })
 export class CoreModule {
