@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-my-listed-properties',
-  templateUrl: './my-listed-properties.component.html',
-  styleUrls: ['./my-listed-properties.component.scss']
+	selector: 'app-my-listed-properties',
+	templateUrl: './my-listed-properties.component.html',
+	styleUrls: ['./my-listed-properties.component.scss']
 })
 export class MyListedPropertiesComponent implements OnInit {
 
-  constructor() { }
+	constructor() {
+	}
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+		
+	}
 
 }

@@ -268,7 +268,8 @@
 		"headers": {
 			"general-settings": "General settings",
 			"email-notifications-settings": "Email notifications",
-			"password-settings": "Password"
+			"password-settings": "Password",
+			"my-listed-properties": "My properties"
 		},
 		"general-settings": {
 			"update-success": "Your profile was updated succesfully!",
@@ -284,6 +285,10 @@
 			"confirm-new-password": "Confirm new password",
 			"new-password-success": "Your password has been updated successfuly",
 			"new-password-fail": "You have entered incorrect password"
+		},
+		"my-listed-properties-settings": {
+			"edit-button": "Edit",
+			"mark-as-sold": "Mark as sold"
 		}
 	},
 	"about": {

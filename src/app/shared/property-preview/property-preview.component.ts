@@ -1,8 +1,7 @@
-import { Subscription } from 'rxjs/Subscription';
-import { MapEventsService, PropertyHoveredEvent } from './../../google-map/map-events.service';
-import { Component, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { NewPropertyHome } from '../../properties/properties-responses';
-import { Router } from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {MapEventsService, PropertyHoveredEvent} from './../../google-map/map-events.service';
+import {Component, Input, OnInit, OnDestroy, HostListener} from '@angular/core';
+import {Router} from '@angular/router';
 
 export enum PROPERTY_THEMES {
 	BIG = 'big',
@@ -10,11 +9,11 @@ export enum PROPERTY_THEMES {
 }
 
 @Component({
-	selector: 'app-new-property-component',
-	templateUrl: './new-property-component.component.html',
-	styleUrls: ['./new-property-component.component.scss']
+	selector: 'app-property-preview',
+	templateUrl: './property-preview.component.html',
+	styleUrls: ['./property-preview.component.scss']
 })
-export class NewPropertyComponentComponent implements OnInit, OnDestroy {
+export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	@Input() property: any;
 	@Input() showArrow = true;
 	@Input() listenForMapHoverEvents = false;
@@ -28,18 +27,18 @@ export class NewPropertyComponentComponent implements OnInit, OnDestroy {
 	private mapEventsSubscription: Subscription;
 
 	constructor(private router: Router,
-		private mapEventsService: MapEventsService) {
+				private mapEventsService: MapEventsService) {
 	}
 
 	onMouseEnter() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: true });
+			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: true});
 		}
 	}
 
 	onMouseLeave() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: false });
+			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: false});
 		}
 	}
 

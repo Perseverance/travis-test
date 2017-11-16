@@ -2,7 +2,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {PropertiesFilter} from './../../properties/properties.service';
 import {SelectItem} from 'primeng/primeng';
 import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
-import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
+import {PROPERTY_THEMES} from '../../shared/property-preview/property-preview.component';
 
 enum LIST_TYPES {
 	GRID = 'grid',
