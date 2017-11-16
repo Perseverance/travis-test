@@ -6,15 +6,18 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { TokenGuardLazyLoading } from './authentication/token-guard-lazy-loading.service';
 import { GoogleMapComponent } from './google-map/google-map.component';
+import { MetaGuard } from '@ngx-meta/core';
 
 const routes: Routes = [
 	{
 		path: '',
+		canActivate: [MetaGuard],
 		component: HomeComponent,
 		pathMatch: 'full'
 	},
 	{
 		path: 'terms',
+		canActivate: [MetaGuard],
 		component: TermsComponent,
 		pathMatch: 'full'
 	},
@@ -28,15 +31,17 @@ const routes: Routes = [
 		path: 'map',
 		component: GoogleMapComponent,
 		pathMatch: 'full',
-		canActivate: [TokenGuard]
+		canActivate: [TokenGuard, MetaGuard]
 	},
 	{
 		path: 'about',
+		canActivate: [MetaGuard],
 		component: AboutUsComponent,
 		pathMatch: 'full'
 	},
 	{
 		path: '**',
+		canActivate: [MetaGuard],
 		redirectTo: '',
 		pathMatch: 'full'
 
@@ -44,7 +49,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+	imports: [
+		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+	],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {

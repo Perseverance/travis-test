@@ -1,3 +1,4 @@
+import { PropertyConversionService } from './property-conversion.service';
 import { MomentService } from './moment.service';
 import { BigNumberFormatPipe } from './pipes/big-number-format.pipe';
 import { GoogleMapsMarkersService } from './google-maps-markers.service';
@@ -51,7 +52,8 @@ import { Image404Directive } from './image404.directive';
 	providers: [
 		AgencyService,
 		GoogleMapsMarkersService,
-		MomentService
+		MomentService,
+		PropertyConversionService
 	]
 })
 export class SharedModule {
