@@ -1,9 +1,9 @@
+import { MetaModule } from '@ngx-meta/core';
 import { SettingsModule } from './settings/settings.module';
 import { PropertiesModule } from './properties/properties.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AuthenticationModule } from './authentication/authentication.module';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +13,27 @@ import { HomeModule } from './home/home.module';
 import { LinkedInSdkModule } from 'angular-linkedin-sdk';
 import { GoogleMapModule } from './google-map/google-map.module';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/core';
 
+export function metaFactory(): MetaLoader {
+	return new MetaStaticLoader({
+		pageTitlePositioning: PageTitlePositioning.AppendPageTitle,
+		pageTitleSeparator: ' - ',
+		applicationName: 'Propy',
+		defaults: {
+			title: 'Propy - Buy or sell investment properties',
+			description:
+				`Propy is a global real estate store, allowing buyers, sellers,
+				 and all other parties to come together through blockchain smart contracts`,
+			author: 'https://www.propy.com/',
+			'og:image': 'http://storagepropy.blob.core.windows.net/images/system/propy-social.jpg',
+			'og:url': 'https://www.propy.com/',
+			'og:type': 'website',
+			'og:locale': 'en',
+			'og:locale:alternate': 'ru,ar,zh'
+		}
+	});
+}
 
 @NgModule({
 	declarations: [
@@ -32,7 +52,11 @@ import { InlineSVGModule } from 'ng-inline-svg';
 		AppRoutingModule,
 		FacebookModule.forRoot(),
 		LinkedInSdkModule,
-		InlineSVGModule.forRoot({ baseUrl: '' })
+		InlineSVGModule.forRoot({ baseUrl: '' }),
+		MetaModule.forRoot({
+			provide: MetaLoader,
+			useFactory: (metaFactory)
+		})
 
 	],
 	bootstrap: [AppComponent]
