@@ -34,16 +34,17 @@
 						translate }}</a>
 				</li>
 				<li class="dropdown languages-dropdown">
-					<a href="#" class="dropdown-toggle language-selector text-uppercase" data-toggle="dropdown"
+					<a href="#" class="dropdown-toggle language-selector" data-toggle="dropdown"
 					   role="button" aria-haspopup="true"
-					   ngClass="{{translate.currentLang}}" aria-expanded="false">{{translate.currentLang}}<i
-						class="fa fa-chevron-down" aria-hidden="true"></i></a>
+					   ngClass="{{translate.currentLang}}" aria-expanded="false">{{translate.currentLang |
+						languageLabel }}<i
+							class="fa fa-chevron-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu">
 						<li *ngFor="let lang of translate.getLangs()">
-							<a #langSelect class="text-uppercase language-selector"
+							<a #langSelect class="language-selector"
 							   (click)="selectLanguage(langSelect.rel)" [rel]="lang" ngClass="{{lang}}"
 							   [class.active]="lang === translate.currentLang" *ngIf="lang != translate.currentLang">{{
-								lang }}</a>
+								lang | languageLabel }}</a>
 						</li>
 					</ul>
 				</li>

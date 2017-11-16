@@ -1,3 +1,6 @@
+import { PropertyConversionService } from './../../shared/property-conversion.service';
+import { ImageEnvironmentPrefixPipe } from './../../shared/pipes/image-environment-prefix.pipe';
+import { ImageSizePipe } from './../../shared/pipes/image-size.pipe';
 import { TranslateService } from '@ngx-translate/core';
 import { GoogleMapsMarkersService } from './../../shared/google-maps-markers.service';
 import { CurrencySymbolPipe } from './../../shared/pipes/currency-symbol.pipe';
@@ -12,6 +15,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { log } from 'util';
+import { MetaService } from '@ngx-meta/core';
 
 @Component({
 	selector: 'app-property-details',
@@ -42,10 +47,14 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private authService: AuthenticationService,
 		private googleMarkersService: GoogleMapsMarkersService,
 		private bigNumberPipe: BigNumberFormatPipe,
+		private imageSizePipe: ImageSizePipe,
+		private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
 		private currencySymbolPipe: CurrencySymbolPipe,
+		private propertyConversionService: PropertyConversionService,
 		private appRef: ApplicationRef,
 		private zone: NgZone,
-		private translateService: TranslateService) {
+		private translateService: TranslateService,
+		private metaService: MetaService) {
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
 		this.IMAGE_HEIGHT_PX = 480;
@@ -106,6 +115,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
 			const property = await self.propertiesService.getProperty(propertyId);
+			self.setupMetaTags(property);
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
@@ -114,6 +124,20 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		});
 
 
+	}
+
+	private setupMetaTags(property: any) {
+		const imgUrl = this.imageSizePipe.transform(this.imageEnvironmentPrefixPipe.transform(property.imageUrls[0]), 1200, 630);
+		const propertyType = this.propertyConversionService.getPropertyTypeName(property.type);
+		let title = `${propertyType} in `;
+		if (property.city) {
+			title += property.city;
+		} else {
+			title += property.address;
+		}
+		this.metaService.setTitle(title);
+		this.metaService.setTag('og:image', imgUrl);
+		this.metaService.setTag('og:url', window.location.href);
 	}
 
 	private createAndSetMapOptions(property: any) {

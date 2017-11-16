@@ -28,6 +28,7 @@ import {ImageSizePipe} from '../shared/pipes/image-size.pipe';
 import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
 import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
 import {BrowserDetectionService} from '../shared/browser-detection.service';
+import {LanguageLabelPipe} from '../shared/pipes/language-label.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,7 +55,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		FooterComponent,
 		TermsComponent,
 		AboutUsComponent,
-		ReferralComponent
+		ReferralComponent,
+		LanguageLabelPipe
 	],
 	providers: [
 		HttpClient,
