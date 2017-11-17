@@ -5,13 +5,15 @@
 			</app-property-preview>
 		</div>
 		<div class="col-xs-12 col-lg-4 listing-buttons">
+			<p-confirmDialog></p-confirmDialog>
 			<div class="row">
 				<button class="propy-control button button-small edit-listing">{{
 					'settings.my-listed-properties-settings.edit-button' | translate }}
 				</button>
 			</div>
 			<div class="row">
-				<button class="propy-control button button-small mark-sold-listing">{{
+				<button class="propy-control button button-small mark-sold-listing"
+						(click)="markPropertyAsSold()">{{
 					'settings.my-listed-properties-settings.mark-as-sold' | translate }}
 				</button>
 			</div>

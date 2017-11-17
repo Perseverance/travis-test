@@ -29,6 +29,7 @@ import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-
 import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
 import {BrowserDetectionService} from '../shared/browser-detection.service';
 import {LanguageLabelPipe} from '../shared/pipes/language-label.pipe';
+import {ConfirmationService} from 'primeng/primeng';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -77,7 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ImageSizePipe,
 		PropertySizeUnitOfMeasurePipe,
 		ThousandSeparatorPipe,
-		BrowserDetectionService
+		BrowserDetectionService,
+		ConfirmationService
 	],
 	exports: [
 		TranslateModule,
