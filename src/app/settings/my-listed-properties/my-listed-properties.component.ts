@@ -20,7 +20,7 @@ export class MyListedPropertiesComponent implements OnInit {
 		console.log(this.myListedProperties);
 	}
 
-	public markPropertyAsSold() {
+	public markPropertyAsSold(id: string) {
 		this.confirmationService.confirm({
 			message: 'Are you sure that you want to proceed?',
 			header: 'Confirmation',
