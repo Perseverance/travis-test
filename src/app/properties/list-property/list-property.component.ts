@@ -117,6 +117,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			propertyLat: ['', Validators.required],
 			propertyLon: ['', Validators.required],
 			propertyImages: [''],
+			propertyImagesValidation: ['', [Validators.required, Validators.minLength(1)]],
 			TOC: [false, [Validators.requiredTrue]]
 		});
 
@@ -222,6 +223,10 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('propertyImages');
 	}
 
+	public get propertyImagesValidation() {
+		return this.listPropertyForm.get('propertyImagesValidation');
+	}
+
 	public get TOC() {
 		return this.listPropertyForm.get('TOC');
 	}
@@ -232,12 +237,14 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		}
 
 		this.uploadControl = uploadControl;
+		this.propertyImagesValidation.setValue(this.selectedImages);
 	}
 
 	public removeFile(event) {
 		const idx = this.selectedImages.indexOf(event.file);
 		this.selectedImages.splice(idx, 1);
 		this.uploadedFilesSectionManipulation();
+		this.propertyImagesValidation.setValue(this.selectedImages);
 	}
 
 	public async prepareImages() {

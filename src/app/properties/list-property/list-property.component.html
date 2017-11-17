@@ -191,7 +191,8 @@
 							</div>
 							<div *ngIf="isSubmitClicked">
 								<div class="propy-validation"
-									 *ngIf="selectedImages.length < 1">{{
+									 *ngIf="propertyImagesValidation.invalid && propertyImagesValidation.errors['required']">
+									{{
 									'common.validation-errors.required' | translate }}
 								</div>
 							</div>
