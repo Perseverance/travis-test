@@ -31,6 +31,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public selectedImages = [];
 
 	public isSubmitClicked = false;
+	public processingSubmit = false;
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
@@ -115,7 +116,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: ['', Validators.required],
 			propertyLat: ['', Validators.required],
 			propertyLon: ['', Validators.required],
-			propertyImages: ['', [Validators.required, Validators.minLength(1)]],
+			propertyImages: [''],
 			TOC: [false, [Validators.requiredTrue]]
 		});
 
@@ -343,6 +344,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: this.address.value,
 			status: 1
 		};
+		this.processingSubmit = true;
 		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
 		const propertyId = result.data;
 		this.notificationService.pushInfo({
@@ -361,6 +363,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 
 		this.resetListingForm();
+		this.processingSubmit = false;
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
