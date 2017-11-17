@@ -17,7 +17,6 @@ import {ImageEnvironmentPrefixPipe} from './pipes/image-environment-prefix.pipe'
 import {EllipsisPipe} from './ellipsis.pipe';
 import {ImageSizePipe} from './pipes/image-size.pipe';
 import {Image404Directive} from './image404.directive';
-import {ReplaceSpecialSymbolsPipe} from './pipes/replace-special-symbols.pipe';
 
 @NgModule({
 	imports: [
@@ -36,7 +35,6 @@ import {ReplaceSpecialSymbolsPipe} from './pipes/replace-special-symbols.pipe';
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
 		ImageSizePipe,
-		ReplaceSpecialSymbolsPipe,
 		Image404Directive
 	],
 	exports: [
@@ -49,7 +47,6 @@ import {ReplaceSpecialSymbolsPipe} from './pipes/replace-special-symbols.pipe';
 		PropertySizeUnitOfMeasurePipe,
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
-		ReplaceSpecialSymbolsPipe,
 		ImageSizePipe
 	],
 	providers: [

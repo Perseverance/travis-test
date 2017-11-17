@@ -109,8 +109,7 @@
 											</app-property-description-overview>
 										</div>
 									</div>
-									<div class="row property-desc">
-										{{ property.desc | replaceSpecialSymbols}}
+									<div class="row property-desc" [innerHTML]="property.desc">
 									</div>
 								</div>
 								<div id="features" class="tab-pane fade">
