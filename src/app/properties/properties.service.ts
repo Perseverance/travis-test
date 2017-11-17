@@ -173,8 +173,9 @@ export class PropertiesService {
 		return true;
 	}
 
-	public async requestInfo(agentId: string, userName: string, userEmail: string, userPhone: string, userRequestDescription: string) {
+	public async requestInfo(propertyId: string, agentId: string, userName: string, userEmail: string, userPhone: string, userRequestDescription: string) {
 		const params = {
+			propertyId,
 			agentId,
 			userName,
 			userEmail,
