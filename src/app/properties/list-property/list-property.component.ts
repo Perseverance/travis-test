@@ -31,6 +31,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public selectedImages = [];
 
 	public isSubmitClicked = false;
+	public processingSubmit = false;
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
@@ -115,7 +116,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: ['', Validators.required],
 			propertyLat: ['', Validators.required],
 			propertyLon: ['', Validators.required],
-			propertyImages: ['', [Validators.required, Validators.minLength(1)]],
+			propertyImages: [''],
+			propertyImagesValidation: ['', [Validators.required, Validators.minLength(1)]],
 			TOC: [false, [Validators.requiredTrue]]
 		});
 
@@ -221,6 +223,10 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('propertyImages');
 	}
 
+	public get propertyImagesValidation() {
+		return this.listPropertyForm.get('propertyImagesValidation');
+	}
+
 	public get TOC() {
 		return this.listPropertyForm.get('TOC');
 	}
@@ -231,12 +237,14 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		}
 
 		this.uploadControl = uploadControl;
+		this.propertyImagesValidation.setValue(this.selectedImages);
 	}
 
 	public removeFile(event) {
 		const idx = this.selectedImages.indexOf(event.file);
 		this.selectedImages.splice(idx, 1);
 		this.uploadedFilesSectionManipulation();
+		this.propertyImagesValidation.setValue(this.selectedImages);
 	}
 
 	public async prepareImages() {
@@ -343,6 +351,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: this.address.value,
 			status: 1
 		};
+		this.processingSubmit = true;
 		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
 		const propertyId = result.data;
 		this.notificationService.pushInfo({
@@ -361,6 +370,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 
 		this.resetListingForm();
+		this.processingSubmit = false;
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
