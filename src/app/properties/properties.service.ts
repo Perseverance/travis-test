@@ -1,9 +1,9 @@
-import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
-import { PropertiesFilter } from './properties.service';
-import { environment } from './../../environments/environment';
-import { APIEndpointsService } from './../shared/apiendpoints.service';
-import { RestClientService } from './../shared/rest-client.service';
-import { Injectable } from '@angular/core';
+import {MockedFavouriteLocationsService} from './mocked-favourite-locations.service';
+import {PropertiesFilter} from './properties.service';
+import {environment} from './../../environments/environment';
+import {APIEndpointsService} from './../shared/apiendpoints.service';
+import {RestClientService} from './../shared/rest-client.service';
+import {Injectable} from '@angular/core';
 import {
 	GetPropertiesResponse,
 	PropertyAgentResponse,
@@ -12,7 +12,7 @@ import {
 	CreatePropertyResponse,
 	PropertyImage, GetNewPropertiesResponse, PropertyPreviewResponse
 } from './properties-responses';
-import { LocalStorageService } from '../shared/localStorage.service';
+import {LocalStorageService} from '../shared/localStorage.service';
 
 interface Bounds {
 	southWestLatitude: number;
@@ -40,16 +40,16 @@ export interface PropertiesFilter {
 export class PropertiesService {
 
 	constructor(private restService: RestClientService,
-		private apiEndpoint: APIEndpointsService,
-		private localStorageService: LocalStorageService,
-		private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
+				private apiEndpoint: APIEndpointsService,
+				private localStorageService: LocalStorageService,
+				private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
 	}
 
 	public async getProperty(propertyId: string): Promise<any> {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params});
 		return result.data.data;
 	}
 
@@ -61,15 +61,15 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
-		return { properties: result.data.data.properties };
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
+		return {properties: result.data.data.properties};
 	}
 
 	public async getPropertiesInRectangle(southWestLatitude: number,
-		northEastLatitude: number,
-		southWestLongitude: number,
-		northEastLongitude: number,
-		filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
+										  northEastLatitude: number,
+										  southWestLongitude: number,
+										  northEastLongitude: number,
+										  filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createRectangleBounds(southWestLatitude,
 			northEastLatitude,
 			southWestLongitude,
@@ -80,8 +80,8 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
-		return { properties: result.data.data.properties };
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
+		return {properties: result.data.data.properties};
 	}
 
 	private createBoundsFromCenter(centerLatitude: number, centerLongitude: number, degreesOfIncreaseArea = 1) {
@@ -95,9 +95,9 @@ export class PropertiesService {
 	}
 
 	private createRectangleBounds(southWestLatitude: number,
-		northEastLatitude: number,
-		southWestLongitude: number,
-		northEastLongitude: number) {
+								  northEastLatitude: number,
+								  southWestLongitude: number,
+								  northEastLongitude: number) {
 		const bounds: Bounds = {
 			southWestLatitude: southWestLatitude,
 			northEastLatitude: northEastLatitude,
@@ -108,7 +108,7 @@ export class PropertiesService {
 	}
 
 	private propertiesInRectangleQueryFormat(bounds: Bounds) {
-		const querySuffix = '_coords/1,50_page/';
+		const querySuffix = '_coords/1,48_page/';
 		// tslint:disable-next-line:max-line-length
 		const query = `/${bounds.southWestLatitude},${bounds.northEastLatitude},${bounds.southWestLongitude},${bounds.northEastLongitude}${querySuffix}`;
 		return query;
@@ -187,18 +187,17 @@ export class PropertiesService {
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
 			propertyImages,
-			{ params: queryParams });
+			{params: queryParams});
 
 		return true;
 	}
 
-	public async requestInfo(
-		propertyId: string,
-		agentId: string,
-		userName: string,
-		userEmail: string,
-		userPhone: string,
-		userRequestDescription: string): Promise<boolean> {
+	public async requestInfo(propertyId: string,
+							 agentId: string,
+							 userName: string,
+							 userEmail: string,
+							 userPhone: string,
+							 userRequestDescription: string): Promise<boolean> {
 		const params = {
 			propertyId,
 			agentId,
@@ -215,7 +214,7 @@ export class PropertiesService {
 		const params = {
 			propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, { params });
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, {params});
 		return result.data.data;
 	}
 }
