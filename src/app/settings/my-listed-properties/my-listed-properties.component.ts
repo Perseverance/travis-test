@@ -13,6 +13,7 @@ export class MyListedPropertiesComponent implements OnInit {
 	public myListedProperties;
 	public messages: Message[] = [];
 	public confirmationLabels: object;
+	public growlLabels: object;
 
 	constructor(private propertiesService: PropertiesService,
 				private confirmationService: ConfirmationService,
@@ -24,11 +25,17 @@ export class MyListedPropertiesComponent implements OnInit {
 
 		this.translateService.stream([
 			'settings.my-listed-properties-settings.confirmation-heading',
-			'settings.my-listed-properties-settings.confirmation-message'
+			'settings.my-listed-properties-settings.confirmation-message',
+			'settings.my-listed-properties-settings.growl-heading',
+			'settings.my-listed-properties-settings.growl-message'
 		]).subscribe((translations) => {
 			this.confirmationLabels = {
 				heading: translations['settings.my-listed-properties-settings.confirmation-heading'],
 				message: translations['settings.my-listed-properties-settings.confirmation-message']
+			};
+			this.growlLabels = {
+				heading: translations['settings.my-listed-properties-settings.growl-heading'],
+				message: translations['settings.my-listed-properties-settings.growl-message']
 			};
 		});
 	}
@@ -47,7 +54,11 @@ export class MyListedPropertiesComponent implements OnInit {
 							break;
 						}
 					}
-					this.messages = [{severity: 'info', summary: 'Confirmed', detail: 'You have accepted'}];
+					this.messages = [{
+						severity: 'success',
+						summary: this.growlLabels['heading'],
+						detail: this.growlLabels['message']
+					}];
 				}
 			},
 			reject: () => {

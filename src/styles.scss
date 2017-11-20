@@ -219,4 +219,16 @@ body {
 			}
 		}
 	}
+
+	.ui-growl {
+		top: 52px;
+		.ui-growl-item-container.ui-state-highlight.ui-growl-message-success {
+			background-color: $green-sec;
+			.ui-growl-message {
+				p {
+					color: white;
+				}
+			}
+		}
+	}
 }
