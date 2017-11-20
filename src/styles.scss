@@ -185,9 +185,38 @@ body {
 	}
 
 	.ui-confirmdialog {
+		font-family: $font-family-helvetica;
 		@include border-radius(9px);
 		.ui-dialog-titlebar {
 			@include border-radius-separate(9px, 9px, 0, 0);
+		}
+		.ui-dialog-footer {
+			@include border-radius-separate(0, 0, 9px, 9px);
+		}
+		.ui-button {
+			outline: none !important;
+			font-weight: 400;
+			@include border-radius(9px);
+			@include box-shadow(0px,
+				1px,
+				3px,
+				rgba(35, 197, 255, 0.4));
+			background: $blue-regular;
+			color: $white;
+			border: none;
+			&:focus {
+				outline: none !important;;
+				background: $blue-regular;
+				color: $white;
+				border: none !important;
+			}
+			&:hover,
+			&:active {
+				outline: none !important;
+				background: $blue-light !important;
+				color: $white;
+				border: none !important;
+			}
 		}
 	}
 }

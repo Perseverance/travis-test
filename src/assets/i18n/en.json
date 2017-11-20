@@ -288,7 +288,9 @@
 		},
 		"my-listed-properties-settings": {
 			"edit-button": "Edit",
-			"mark-as-sold": "Mark as Sold"
+			"mark-as-sold": "Mark as Sold",
+			"confirmation-heading": "Confirmation",
+			"confirmation-message": "Are you sure that you want to mark property as sold?"
 		}
 	},
 	"about": {

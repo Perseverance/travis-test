@@ -2,7 +2,7 @@
 	<p-growl [value]="messages"></p-growl>
 	<p-confirmDialog appendTo="body"></p-confirmDialog>
 	<div class="row listing-row" *ngFor="let property of myListedProperties">
-		<div class="my-property-holder" ngClass="{'property-sold': }">
+		<div class="my-property-holder" [ngClass]="{'property-sold': property.status == 3}">
 			<div class="col-xs-12 col-lg-8">
 				<app-property-preview [property]="property" [imageWidth]="350" [imageHeight]="215">
 				</app-property-preview>
