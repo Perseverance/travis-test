@@ -108,7 +108,7 @@ export class PropertiesService {
 	}
 
 	private propertiesInRectangleQueryFormat(bounds: Bounds) {
-		const querySuffix = '_coords/1,100_page/';
+		const querySuffix = '_coords/1,50_page/';
 		// tslint:disable-next-line:max-line-length
 		const query = `/${bounds.southWestLatitude},${bounds.northEastLatitude},${bounds.southWestLongitude},${bounds.northEastLongitude}${querySuffix}`;
 		return query;
@@ -178,8 +178,9 @@ export class PropertiesService {
 		return true;
 	}
 
-	public async requestInfo(agentId: string, userName: string, userEmail: string, userPhone: string, userRequestDescription: string) {
+	public async requestInfo(propertyId: string, agentId: string, userName: string, userEmail: string, userPhone: string, userRequestDescription: string) {
 		const params = {
+			propertyId,
 			agentId,
 			userName,
 			userEmail,
