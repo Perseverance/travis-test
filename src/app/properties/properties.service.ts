@@ -10,7 +10,7 @@ import {
 	GetFavouriteLocationResponse,
 	CreatePropertyRequest,
 	CreatePropertyResponse,
-	PropertyImage, GetNewPropertiesResponse, NewPropertyHome
+	PropertyImage, GetNewPropertiesResponse, PropertyPreviewResponse
 } from './properties-responses';
 import {LocalStorageService} from '../shared/localStorage.service';
 
@@ -153,6 +153,11 @@ export class PropertiesService {
 
 	public async getNewProperties(): Promise<GetNewPropertiesResponse[]> {
 		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES);
+		return result.data.data;
+	}
+
+	public async getMyListedProperties(): Promise<PropertyPreviewResponse[]> {
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.MY_LISTINGS);
 		return result.data.data;
 	}
 

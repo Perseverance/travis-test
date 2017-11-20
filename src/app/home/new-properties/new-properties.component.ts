@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PropertiesService} from '../../properties/properties.service';
-import {GetNewPropertiesResponse, NewPropertyHome} from '../../properties/properties-responses';
+import {GetNewPropertiesResponse, PropertyPreviewResponse} from '../../properties/properties-responses';
 import {SelectItem} from 'primeng/primeng';
 import {Router} from '@angular/router';
 
@@ -14,7 +14,7 @@ export class NewPropertiesComponent implements OnInit {
 	public newProperties: GetNewPropertiesResponse[];
 	public citiesOptions: SelectItem[];
 	public selectedCity = 0;
-	public properties: NewPropertyHome[];
+	public properties: PropertyPreviewResponse[];
 
 	constructor(private propertiesService: PropertiesService) {
 	}
