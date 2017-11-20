@@ -31,7 +31,8 @@ export class APIEndpointsService {
 		PROPERTIES_BY_RECTANGLE: `${this.INTERNAL_API_PREFIX}/Properties/rect`,
 		FAVOURITE_LOCATIONS: `${this.INTERNAL_API_PREFIX}/Properties/favouritelocations`,
 		NEW_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/newproperties`,
-		MY_LISTINGS: `${this.INTERNAL_API_PREFIX}/Properties/mylistings`
+		MY_LISTINGS: `${this.INTERNAL_API_PREFIX}/Properties/mylistings`,
+		MARK_PROPERTY_AS_SOLD: `${this.INTERNAL_API_PREFIX}/Properties/setsold/`
 	};
 
 	constructor() {

@@ -161,6 +161,15 @@ export class PropertiesService {
 		return result.data.data;
 	}
 
+	public async markPropertyAsSold(propertyId: string): Promise<boolean> {
+		const queryParams = {
+			propertyid: propertyId
+		};
+		const result = await this.restService.postWithAccessToken(
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_SOLD, {}, {params: queryParams});
+		return true;
+	}
+
 	public async createProperty(data: CreatePropertyRequest): Promise<CreatePropertyResponse> {
 		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.CREATE_PROPERTY, data);
 		return result.data;
