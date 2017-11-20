@@ -20,6 +20,7 @@ import { RatingModule } from 'primeng/primeng';
 import { PropertyListingComponent } from './property-listing/property-listing.component';
 import { EditListingComponent } from './edit-listing/edit-listing.component';
 
+
 @NgModule({
 	imports: [
 		CommonModule,

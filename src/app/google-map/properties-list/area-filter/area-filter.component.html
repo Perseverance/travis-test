@@ -1,48 +1,34 @@
 <div class="filter-area row">
-	<button type="text" pButton (click)="areaFilter.toggle($event)"
-			class="filter-button area-filter-button hidden-sm"
-			[ngClass]="{'active': filterSelectionActivated || areaFilterApplied}">
+    <button type="text" pButton (click)="areaFilter.toggle($event)" class="filter-button area-filter-button hidden-sm" [ngClass]="{'active': filterSelectionActivated || areaFilterApplied}">
 		{{ 'filters.area' | translate }}
 		<span class="glyphicon"
 			  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>
 	</button>
-	<p-overlayPanel #areaFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()"
-					(onBeforeHide)="toggleFilterSelectionClass()">
-		<div class="arrow-up arrow-price-filter"></div>
-		<div class="row input-button-holder">
-			<div class="input-dropdown-holder">
-				<input #minLimit type="text"
-					   (ngModelChange)="changeAreaMinRangeInput(minLimit)"
-					   [ngModel]="areaMinRange | thousandSeparator"
-					   [ngClass]="{'slider-dragging': sliderDraggingMin}"/>
-				<span>
+    <p-overlayPanel #areaFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()" (onBeforeHide)="toggleFilterSelectionClass()">
+        <div class="arrow-up arrow-price-filter"></div>
+        <div class="row input-button-holder">
+            <div class="input-dropdown-holder">
+                <input #minLimit type="text" (ngModelChange)="changeAreaMinRangeInput(minLimit)" [ngModel]="areaMinRange | thousandSeparator"
+                    [ngClass]="{'slider-dragging': sliderDraggingMin}" />
+                <span>
 						{{ 'filters.to' | translate }}
 					</span>
-				<input #maxLimit type="text"
-					   [ngModel]="areaMaxRange | thousandSeparator"
-					   (ngModelChange)="changeAreaMaxRangeInput(maxLimit)"
-					   [ngClass]="{'slider-dragging': sliderDraggingMax}"/>
-				<div class="dropdown-holder">
-					<p-dropdown [(ngModel)]="selectedAreaUnit"
-								dropdownIcon="glyphicon glyphicon-menu-down"
-								styleClass="size-type-dropdown"
-								[options]="areaUnits"
-								[style]="{'width': '100%'}"></p-dropdown>
-				</div>
-			</div>
-			<div class="button-holder">
-				<button class="apply-filter" (click)="applyAreaFilter(areaFilter)"> {{ 'filters.apply' |
+                <input #maxLimit type="text" [ngModel]="areaMaxRange | thousandSeparator" (ngModelChange)="changeAreaMaxRangeInput(maxLimit)"
+                    [ngClass]="{'slider-dragging': sliderDraggingMax}" />
+                <div class="dropdown-holder">
+                    <p-dropdown [(ngModel)]="selectedAreaUnit" dropdownIcon="glyphicon glyphicon-menu-down" styleClass="size-type-dropdown" [options]="areaUnits"
+                        [style]="{'width': '100%'}"></p-dropdown>
+                </div>
+            </div>
+            <div class="button-holder">
+                <button class="apply-filter" (click)="applyAreaFilter(areaFilter)"> {{ 'filters.apply' |
 					translate }}
 				</button>
-				<button class="cancel-filter" (click)="areaFilter.hide()"> {{ 'filters.cancel' | translate }}
+                <button class="cancel-filter" (click)="areaFilter.hide()"> {{ 'filters.cancel' | translate }}
 				</button>
-			</div>
-		</div>
-		<p-slider [(ngModel)]="areaRangeValue"
-				  (onChange)="handleAreaChange($event)"
-				  (onSlideEnd)="handleSlideEnd($event)"
-				  [min]="DEFAULT_AREA_MIN_RANGE"
-				  [max]="DEFAULT_AREA_MAX_RANGE" [step]="DEFAULT_AREA_STEP"
-				  [range]="true"></p-slider>
-	</p-overlayPanel>
+            </div>
+        </div>
+        <p-slider [(ngModel)]="areaRangeValue" (onChange)="handleAreaChange($event)" (onSlideEnd)="handleSlideEnd($event)" [min]="DEFAULT_AREA_MIN_RANGE"
+            [max]="DEFAULT_AREA_MAX_RANGE" [step]="DEFAULT_AREA_STEP" [range]="true"></p-slider>
+    </p-overlayPanel>
 </div>
