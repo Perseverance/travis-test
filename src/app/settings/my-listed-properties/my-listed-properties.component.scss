@@ -2,7 +2,6 @@
 @import "../../../mixins";
 
 $section-border-color: #F0F0F0;
-
 .my-listed-properties {
 	.listing-row {
 		padding: 20px 0;
@@ -18,16 +17,25 @@ $section-border-color: #F0F0F0;
 		}
 		.row {
 			margin: 0;
-			button {
-				width: 100%;
+			a {
+				display: block;
+				height: 36px;
+				line-height: 36px;
+				width: auto;
 				border: none;
+				text-align: center;
+				cursor: pointer;
 				&.edit-listing {
 					margin-bottom: 10px;
+					&:hover {
+						text-decoration: none;
+					}
 				}
 				&.mark-sold-listing {
 					background: $green-dark;
 					&:hover {
 						background: $green-sec;
+						text-decoration: none;
 					}
 				}
 			}

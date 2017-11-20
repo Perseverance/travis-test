@@ -46,7 +46,8 @@
 			"invalid-password": "Your password needs to be at least 8 symbols and must contain lowercase character, uppercase character and a number",
 			"passwords-differ": "The two passwords differ",
 			"invalid-phone-number": "Your phone number appears to be invalid",
-			"toc-required": "You need to accept the terms and conditions of the site"
+			"toc-required": "You need to accept the terms and conditions of the site",
+			"fill-in-required": "Please fill in required fields"
 		},
 		"terms": "Terms & Conditions",
 		"no-properties": "No properties found in this area!",
@@ -142,9 +143,11 @@
 			"area": "Area",
 			"select-type": "Select Type",
 			"photos": "Photos",
+			"existing-photos": "Existing Photos",
 			"photos-title": "Drop photo here or browse to upload"
 		},
 		"submit-button": "Submit",
+		"edit-button": "Edit",
 		"error-listing-property": "Listing of property failed",
 		"not-authenticated": {
 			"warning-message": "Oops, can't do that yet.",

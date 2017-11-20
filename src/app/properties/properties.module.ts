@@ -17,6 +17,9 @@ import { MomentModule } from 'angular2-moment';
 import { GMapModule } from 'primeng/primeng';
 import { ContactAgentComponent } from './contact-agent/contact-agent.component';
 import { RatingModule } from 'primeng/primeng';
+import { PropertyListingComponent } from './property-listing/property-listing.component';
+import { EditListingComponent } from './edit-listing/edit-listing.component';
+
 
 @NgModule({
 	imports: [
@@ -42,7 +45,9 @@ import { RatingModule } from 'primeng/primeng';
 		PropertyDetailsComponent,
 		ListPropertyComponent,
 		PropertyDescriptionOverviewComponent,
-		ContactAgentComponent
+		ContactAgentComponent,
+		PropertyListingComponent,
+		EditListingComponent
 	],
 	providers: [
 		PropertiesService,

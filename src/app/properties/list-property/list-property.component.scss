@@ -159,7 +159,7 @@ $remove-photo-color: #F24A4A;
                         height: 40px;
                         border-left: 0;
                         background-color: white;
-                        padding-right: 22px;
+                        padding-right: 35px;
                         padding-top: 0;
                         padding-left: 0;
                         @include border-radius-separate(0, 9px, 0, 9px);
@@ -563,13 +563,44 @@ $remove-photo-color: #F24A4A;
                     }
                 }
             }
+            .existing-photos {
+                .existing-photo {
+                    padding: 10px;
+                    float: left;
+                    img {
+                        @include border-radius(10px);
+                        width: 180px;
+                        height: 100px;
+                    }
+                    .remove {
+                        position: relative;
+                        display: block;
+                        left: 165px;
+                        top: 15px;
+                        height: 26px;
+                        width: 26px;
+                        background-color: $remove-photo-color;
+                        @include border-radius(50%);
+                        border: none;
+                        background-image: url("../../../assets/images/photo-icon-x.svg");
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
             .acceptedCurrencies {
                 width: 100%;
                 border-bottom: #d6d6d6;
                 @include box-shadow(0px,
                 1px,
                 3px,
-                rgba(0, 0, 0, 0.14));
+                rgba(0,
+                0,
+                0,
+                0.14));
                 @include border-radius(9px);
                 &:hover {
                     background: none;

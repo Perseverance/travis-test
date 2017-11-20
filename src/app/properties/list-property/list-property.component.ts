@@ -1,19 +1,25 @@
-import {CreatePropertyResponse, PropertyImage} from './../properties-responses';
-import {PropertiesService} from './../properties.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {SelectItem} from 'primeng/components/common/selectitem';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {LocationSearchComponent} from '../../location-search/location-search.component';
-import {environment} from '../../../environments/environment';
-import {GoogleMapsMarkersService} from '../../shared/google-maps-markers.service';
-import {BigNumberFormatPipe} from '../../shared/pipes/big-number-format.pipe';
-import {CurrencySymbolPipe} from '../../shared/pipes/currency-symbol.pipe';
+import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
+import { PropertiesService } from './../properties.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SelectItem } from 'primeng/components/common/selectitem';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { LocationSearchComponent } from '../../location-search/location-search.component';
+import { environment } from '../../../environments/environment';
+import { GoogleMapsMarkersService } from '../../shared/google-maps-markers.service';
+import { BigNumberFormatPipe } from '../../shared/pipes/big-number-format.pipe';
+import { CurrencySymbolPipe } from '../../shared/pipes/currency-symbol.pipe';
+import { log } from 'util';
+
+export enum LIST_PROPERTY_MODES {
+	NEW = 'new',
+	EDIT = 'edit'
+}
 
 @Component({
 	selector: 'app-list-property',
@@ -31,6 +37,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	public selectedImages = [];
 
 	public isSubmitClicked = false;
+	public processingSubmit = false;
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
@@ -49,55 +56,60 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	private SELECT_TYPE_KEY = 'common.label.not-selected';
 	private REFERRAL_PATH = 'Users/RequestInvite?referrerId=';
 
+	@Input() mode = LIST_PROPERTY_MODES.NEW;
+	@Input() property: any;
+
+	@Output() onPropertyUpdated = new EventEmitter<boolean>();
+
 	@ViewChild(LocationSearchComponent)
 	private locationSearchComponent: LocationSearchComponent;
 
 	constructor(private formBuilder: FormBuilder,
-				private authService: AuthenticationService,
-				errorsService: ErrorsService,
-				translateService: TranslateService,
-				private notificationService: NotificationsService,
-				private googleMarkersService: GoogleMapsMarkersService,
-				private bigNumberPipe: BigNumberFormatPipe,
-				private currencySymbolPipe: CurrencySymbolPipe,
-				private propertiesService: PropertiesService) {
+		private authService: AuthenticationService,
+		errorsService: ErrorsService,
+		translateService: TranslateService,
+		private notificationService: NotificationsService,
+		private googleMarkersService: GoogleMapsMarkersService,
+		private bigNumberPipe: BigNumberFormatPipe,
+		private currencySymbolPipe: CurrencySymbolPipe,
+		private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
-		this.propertyTypes.push({label: '', value: null});
-		this.propertyTypes.push({label: 'Single Family Home', value: 1});
-		this.propertyTypes.push({label: 'Apartment', value: 2});
-		this.propertyTypes.push({label: 'Townhouse', value: 3});
-		this.propertyTypes.push({label: 'Condo', value: 4});
-		this.propertyTypes.push({label: 'Co-op', value: 5});
-		this.propertyTypes.push({label: 'Loft', value: 6});
-		this.propertyTypes.push({label: 'TIC', value: 7});
-		this.propertyTypes.push({label: 'Villa', value: 8});
-		this.propertyTypes.push({label: 'Summer Villa', value: 9});
-		this.propertyTypes.push({label: 'Development Only', value: 10});
-		this.propertyTypes.push({label: 'Studio', value: 11});
-		this.propertyTypes.push({label: 'Maisonette', value: 12});
-		this.propertyTypes.push({label: 'Penthouse', value: 13});
-		this.propertyTypes.push({label: 'Bungalow', value: 14});
-		this.propertyTypes.push({label: 'Student Room', value: 15});
-		this.propertyTypes.push({label: 'Commercial', value: 20});
+		this.propertyTypes.push({ label: '', value: null });
+		this.propertyTypes.push({ label: 'Single Family Home', value: 1 });
+		this.propertyTypes.push({ label: 'Apartment', value: 2 });
+		this.propertyTypes.push({ label: 'Townhouse', value: 3 });
+		this.propertyTypes.push({ label: 'Condo', value: 4 });
+		this.propertyTypes.push({ label: 'Co-op', value: 5 });
+		this.propertyTypes.push({ label: 'Loft', value: 6 });
+		this.propertyTypes.push({ label: 'TIC', value: 7 });
+		this.propertyTypes.push({ label: 'Villa', value: 8 });
+		this.propertyTypes.push({ label: 'Summer Villa', value: 9 });
+		this.propertyTypes.push({ label: 'Development Only', value: 10 });
+		this.propertyTypes.push({ label: 'Studio', value: 11 });
+		this.propertyTypes.push({ label: 'Maisonette', value: 12 });
+		this.propertyTypes.push({ label: 'Penthouse', value: 13 });
+		this.propertyTypes.push({ label: 'Bungalow', value: 14 });
+		this.propertyTypes.push({ label: 'Student Room', value: 15 });
+		this.propertyTypes.push({ label: 'Commercial', value: 20 });
 
 		this.currencies = [];
-		this.currencies.push({label: 'USD', value: 1});
-		this.currencies.push({label: 'EUR', value: 2});
-		this.currencies.push({label: 'RUB', value: 3});
-		this.currencies.push({label: 'AED', value: 4});
-		this.currencies.push({label: 'HKD', value: 5});
-		this.currencies.push({label: 'SGD', value: 6});
-		this.currencies.push({label: 'GBP', value: 7});
-		this.currencies.push({label: 'BGN', value: 8});
-		this.currencies.push({label: 'CNY', value: 9});
-		this.currencies.push({label: 'ETH', value: 10});
-		this.currencies.push({label: 'BTC', value: 11});
+		this.currencies.push({ label: 'USD', value: 1 });
+		this.currencies.push({ label: 'EUR', value: 2 });
+		this.currencies.push({ label: 'RUB', value: 3 });
+		this.currencies.push({ label: 'AED', value: 4 });
+		this.currencies.push({ label: 'HKD', value: 5 });
+		this.currencies.push({ label: 'SGD', value: 6 });
+		this.currencies.push({ label: 'GBP', value: 7 });
+		this.currencies.push({ label: 'BGN', value: 8 });
+		this.currencies.push({ label: 'CNY', value: 9 });
+		this.currencies.push({ label: 'ETH', value: 10 });
+		this.currencies.push({ label: 'BTC', value: 11 });
 
 		this.areaUnits = [];
-		this.areaUnits.push({label: 'sqm', value: 1});
-		this.areaUnits.push({label: 'sqft', value: 2});
+		this.areaUnits.push({ label: 'sqm', value: 1 });
+		this.areaUnits.push({ label: 'sqft', value: 2 });
 
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
@@ -115,7 +127,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: ['', Validators.required],
 			propertyLat: ['', Validators.required],
 			propertyLon: ['', Validators.required],
-			propertyImages: ['', [Validators.required, Validators.minLength(1)]],
+			propertyImages: [''],
+			propertyImagesValidation: ['', [Validators.required, Validators.minLength(1)]],
 			TOC: [false, [Validators.requiredTrue]]
 		});
 
@@ -136,12 +149,64 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 
 		this.options = {
-			center: {lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE},
+			center: { lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE },
 			zoom: this.DEFAULT_ZOOM
 		};
 	}
 
 	ngOnInit() {
+		if (this.isEditMode) {
+			this.loadProperty();
+		}
+	}
+
+	public updatePropertyFields(property: any) {
+		this.property = property;
+		this.loadProperty();
+	}
+
+	private loadProperty() {
+		this.setupEditedProperty();
+		this.waitForViewLoadAndSetLocation();
+	}
+
+	public get isAddMode(): boolean {
+		return this.mode === LIST_PROPERTY_MODES.NEW;
+	}
+
+	public get isEditMode(): boolean {
+		return this.mode === LIST_PROPERTY_MODES.EDIT;
+	}
+
+	private setupEditedProperty() {
+		this.priceRangeValue = [0, this.property.commissionFee * 10];
+		this.listPropertyForm = this.formBuilder.group({
+			propertyType: [this.property.type, Validators.required],
+			furnished: [this.property.furnished],
+			price: [this.property.price.value, Validators.required],
+			acceptedCurrencies: [this.property.acceptedCurrencies, Validators.required],
+			commisionFee: [this.priceRangeValue[1]],
+			currency: [this.property.price.type, Validators.required],
+			year: [this.property.builtInYear],
+			bedrooms: [this.property.bedrooms],
+			floor: [this.property.floor],
+			area: [this.property.size.value],
+			areaUnit: [this.property.size.type],
+			description: [this.property.desc],
+			address: [this.property.address, Validators.required],
+			propertyLat: [this.property.latitude, Validators.required],
+			propertyLon: [this.property.longitude, Validators.required],
+			propertyImages: [[]],
+			propertyImagesValidation: [[]]
+		});
+
+	}
+
+	private waitForViewLoadAndSetLocation() {
+		// This is needed as the location component is not loaded. The afterInit hook does not always work either so I am leaving this.
+		setTimeout(() => {
+			this.locationSearchComponent.setAddress(this.property.address);
+		}, 200);
 	}
 
 	public get propertyType() {
@@ -178,7 +243,11 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public get yearInListingFormat() {
 		const yearBuilt = this.year.value;
-		return `01-01-${yearBuilt}`;
+		return this.convertToListingFormat(yearBuilt);
+	}
+
+	private convertToListingFormat(year) {
+		return `01-01-${year}`;
 	}
 
 	public get bedrooms() {
@@ -221,6 +290,10 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		return this.listPropertyForm.get('propertyImages');
 	}
 
+	public get propertyImagesValidation() {
+		return this.listPropertyForm.get('propertyImagesValidation');
+	}
+
 	public get TOC() {
 		return this.listPropertyForm.get('TOC');
 	}
@@ -231,15 +304,17 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		}
 
 		this.uploadControl = uploadControl;
+		this.propertyImagesValidation.setValue(this.selectedImages);
 	}
 
 	public removeFile(event) {
 		const idx = this.selectedImages.indexOf(event.file);
 		this.selectedImages.splice(idx, 1);
 		this.uploadedFilesSectionManipulation();
+		this.propertyImagesValidation.setValue(this.selectedImages);
 	}
 
-	public async prepareImages() {
+	public async encodeAndSavePropertyImages() {
 		const preparedImages = new Array<PropertyImage>();
 		for (const img of this.selectedImages) {
 			const imageName = img.name;
@@ -302,7 +377,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			return;
 		}
 		try {
-			await this.prepareImages();
+			await this.encodeAndSavePropertyImages();
 		} catch (error) {
 			// Cant continue without images
 			this.errorsService.pushError({
@@ -343,6 +418,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			address: this.address.value,
 			status: 1
 		};
+		this.processingSubmit = true;
 		const result: CreatePropertyResponse = await this.propertiesService.createProperty(request);
 		const propertyId = result.data;
 		this.notificationService.pushInfo({
@@ -361,6 +437,102 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 
 		this.resetListingForm();
+		this.processingSubmit = false;
+	}
+
+	private async prepareNewImages(throwOnNoImages = true) {
+		if (this.selectedImages.length === 0 && !throwOnNoImages) {
+			return [];
+		}
+		// encode and save will throw if 0 length
+		await this.encodeAndSavePropertyImages();
+		return this.propertyImages.value;
+	}
+
+	private prepareExistingImages() {
+		const result = new Array<any>();
+		for (const img of this.property.imageUrls) {
+			result.push({
+				name: img
+			});
+		}
+		return result;
+	}
+
+	@DefaultAsyncAPIErrorHandling('list-property.error-listing-property')
+	public async onEdit() {
+		this.isSubmitClicked = true;
+		if (this.listPropertyForm.invalid) {
+			return;
+		}
+
+		try {
+			this.processingSubmit = true;
+			const existingImages = this.prepareExistingImages();
+			const newImages = await this.prepareNewImages(false);
+			const allImages = [...existingImages, ...newImages];
+			this.notificationService.pushInfo({
+				title: 'Updating images...',
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 15000
+			});
+			if (allImages.length === 0) {
+				throw new Error('No usable image found');
+			}
+			const imagesResult = await this.propertiesService.uploadPropertyImages(this.property.id, allImages);
+		} catch (error) {
+			// Cant continue without images
+			this.errorsService.pushError({
+				errorTitle: 'Error uploading images',
+				errorMessage: 'No usable image found',
+				errorTime: (new Date()).getTime()
+			});
+			this.processingSubmit = false;
+			return;
+		}
+
+		this.notificationService.pushInfo({
+			title: 'Uploading data...',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 15000
+		});
+		const request = {
+			id: this.property.id,
+			bedrooms: this.bedrooms.value,
+			furnished: (!!this.furnished.value),
+			floor: this.floor.value,
+			price: {
+				value: this.price.value,
+				type: this.currency.value
+			},
+			acceptedCurrencies: this.acceptedCurrencies.value,
+			commissionFee: this.feeDecimal,
+			latitude: this.propertyLat.value,
+			longitude: this.propertyLon.value,
+			size: {
+				value: this.area.value,
+				type: this.areaUnit.value
+			},
+			builtIn: this.yearInListingFormat,
+			type: this.propertyType.value,
+			description: this.description.value,
+			address: this.address.value,
+			status: 1
+		};
+		await this.propertiesService.updateProperty(request);
+		this.resetUploadComponent();
+		this.onPropertyUpdated.emit(true);
+
+		this.notificationService.pushSuccess({
+			title: 'Property Upload success',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
+		this.processingSubmit = false;
 	}
 
 	public onLocationFound(latitude: number, longitude: number, locationAddress: string) {
@@ -370,10 +542,16 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.createAndSetMapOptions(latitude, longitude);
 	}
 
+	private resetUploadComponent() {
+		this.selectedImages = new Array<any>();
+		if (this.uploadControl) {
+			this.uploadControl.clear();
+		}
+	}
+
 	private resetListingForm() {
 		this.isSubmitClicked = false;
-		this.selectedImages = new Array<any>();
-		this.uploadControl.clear();
+		this.resetUploadComponent();
 		this.listPropertyForm.reset();
 		this.currency.setValue('1'); // USD default
 		this.areaUnit.setValue('1'); // sqm default
@@ -407,10 +585,10 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	private createAndSetPropertyMarker(lat: number, lng: number) {
 		const marker = new google.maps.Marker(
 			{
-				position: {lat: lat, lng: lng},
+				position: { lat: lat, lng: lng },
 				icon: this.googleMarkersService.defaultMarkerSettings,
 				label: this.googleMarkersService.getMarkerLabel
-				(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(this.price.value), true))
+					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(this.price.value), true))
 			});
 		this.overlays = [marker];
 	}
@@ -421,17 +599,21 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	private uploadedFilesSectionManipulation() {
 		setTimeout(() => {
-				const uploadedFilesClassName = 'ui-fileupload-files';
-				const photoSectionId = 'photo_section';
-				const additionBottomPaddingPx = 20;
-				const filesHolderElements = document.getElementsByClassName(uploadedFilesClassName) as HTMLCollectionOf<HTMLElement>;
-				let i;
-				for (i = 0; i < filesHolderElements.length; i++) {
-					const filesHolderElementHeight = filesHolderElements[i].clientHeight + additionBottomPaddingPx;
-					const photoSection = document.getElementById(photoSectionId);
-					photoSection.style.paddingBottom = `${filesHolderElementHeight}px`;
-				}
-			},
+			const uploadedFilesClassName = 'ui-fileupload-files';
+			const photoSectionId = 'photo_section';
+			const additionBottomPaddingPx = 20;
+			const filesHolderElements = document.getElementsByClassName(uploadedFilesClassName) as HTMLCollectionOf<HTMLElement>;
+			let i;
+			for (i = 0; i < filesHolderElements.length; i++) {
+				const filesHolderElementHeight = filesHolderElements[i].clientHeight + additionBottomPaddingPx;
+				const photoSection = document.getElementById(photoSectionId);
+				photoSection.style.paddingBottom = `${filesHolderElementHeight}px`;
+			}
+		},
 			100);
+	}
+
+	public removeExistingImage(url, index) {
+		this.property.imageUrls.splice(index, 1);
 	}
 }

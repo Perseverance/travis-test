@@ -163,13 +163,25 @@
                                 <p>{{ 'list-property.form-fields.photos-title' | translate }}</p>
                             </div>
                             <div *ngIf="isSubmitClicked">
-                                <div class="propy-validation" *ngIf="propertyImages.invalid && propertyImages.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                                <div class="propy-validation" *ngIf="propertyImagesValidation.invalid && propertyImagesValidation.errors['required']">
+                                    {{ 'common.validation-errors.required' | translate }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row toc-submit-holder">
+                <div class="row row-section-holder" id="photo_section">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-1 section-title">
+                        <div class="list-label">{{ 'list-property.form-fields.existing-photos' | translate }}</div>
+                    </div>
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-0 existing-photos" *ngIf="isEditMode">
+                        <div class="existing-photo" *ngFor="let url of property.imageUrls; let i = index">
+                            <span class="remove" (click)="removeExistingImage(url, i)">&nbsp;</span>
+                            <img src="{{ url | imageEnvPrefix | imageSize: 180: 100 }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row toc-submit-holder" *ngIf="isAddMode">
                     <div class="form-group col-xs-6 col-xs-offset-1 toc-holder">
                         <p-checkbox binary="true" formControlName="TOC" styleClass="toc-checkbox" label="{{'list-property.accept-toc' | translate}}"></p-checkbox>
                         <a class="toc" [routerLink]="['/terms']">{{'common.terms' | translate}}</a>
@@ -179,10 +191,23 @@
                         </div>
                     </div>
                     <div class="col-xs-3 col-xs-offset-1">
-                        <button type="button" [disabled]="isSubmitClicked" class="btn btn-block propy-control button-big button-mobile" (click)="onSubmit()"> {{
+                        <button type="button" [disabled]="processingSubmit" class="btn btn-block propy-control button-big button-mobile" (click)="onSubmit()"> {{
 							'list-property.submit-button'
 							| translate }}
 						</button>
+                        <div *ngIf="isSubmitClicked">
+                            <div class="propy-validation" *ngIf="listPropertyForm.invalid || selectedImages.length < 1">
+                                {{ 'common.validation-errors.fill-in-required' | translate }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row toc-submit-holder" *ngIf="isEditMode">
+                    <div class="form-group col-xs-6 col-xs-offset-1 toc-holder"></div>
+                    <div class="col-xs-3 col-xs-offset-1">
+                        <button type="button" [disabled]="processingSubmit" class="btn btn-block propy-control button-big button-mobile" (click)="onEdit()"> 
+                            {{'list-property.edit-button' | translate }}
+                        </button>
                     </div>
                 </div>
             </form>

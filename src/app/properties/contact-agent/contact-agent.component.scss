@@ -16,10 +16,12 @@
             .agent-wrapper {
                 padding-left: 17px;
                 position: relative;
-                top: -10px;
                 font-size: $font-size-medium;
                 display: inline-block;
                 margin-top: -20px;
+                @media (min-width: 768px) and (max-width: 810px) {
+                    top: -20px;
+                }
                 img.agent-img {
                     @include border-radius(20px);
                 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PropertiesService} from '../../properties/properties.service';
 import {ConfirmationService, Message} from 'primeng/primeng';
 import {PropertyStatusEnum} from '../../shared/enums/property-status.enum';

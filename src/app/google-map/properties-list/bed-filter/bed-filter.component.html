@@ -1,26 +1,22 @@
 <div class="filter-bed row">
-	<button type="text" pButton (click)="bedFilter.toggle($event)"
-			class="filter-button"
-			[ngClass]="{'active': filterSelectionActivated || bedsFilterApplied}">
+    <button type="text" pButton (click)="bedFilter.toggle($event)" class="filter-button" [ngClass]="{'active': filterSelectionActivated || bedsFilterApplied}">
 		{{ 'filters.beds.beds-button' | translate }}
 		<span class="glyphicon"
 			  [ngClass]="{'glyphicon-menu-up': filterSelectionActivated, 'glyphicon-menu-down': !filterSelectionActivated}"></span>
 	</button>
-	<p-overlayPanel #bedFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()"
-					(onBeforeHide)="toggleFilterSelectionClass()">
-		<div class="arrow-up arrow-bed-filter"></div>
-		<div class="multiple-beds-holder">
-			<p-selectButton [options]="bedOptions" [(ngModel)]="selectedBedTypes" styleClass="multiple-beds"
-							multiple="multiple"></p-selectButton>
-		</div>
-		<div class="row input-button-holder">
-			<div class="button-holder">
-				<button class="apply-filter" (click)="applyBedFilter(bedFilter)"> {{ 'filters.apply' |
+    <p-overlayPanel #bedFilter styleClass="range-filter" (onAfterShow)="toggleFilterSelectionClass()" (onBeforeHide)="toggleFilterSelectionClass()">
+        <div class="arrow-up arrow-bed-filter"></div>
+        <div class="multiple-beds-holder">
+            <p-selectButton [options]="bedOptions" [(ngModel)]="selectedBedTypes" styleClass="multiple-beds" multiple="multiple"></p-selectButton>
+        </div>
+        <div class="row input-button-holder">
+            <div class="button-holder">
+                <button class="apply-filter" (click)="applyBedFilter(bedFilter)"> {{ 'filters.apply' |
 					translate }}
 				</button>
-				<button class="cancel-filter" (click)="bedFilter.hide()"> {{ 'filters.cancel' | translate }}
+                <button class="cancel-filter" (click)="bedFilter.hide()"> {{ 'filters.cancel' | translate }}
 				</button>
-			</div>
-		</div>
-	</p-overlayPanel>
+            </div>
+        </div>
+    </p-overlayPanel>
 </div>

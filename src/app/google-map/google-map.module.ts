@@ -11,6 +11,8 @@ import {
 	SelectButtonModule,
 	SliderModule,
 	DropdownModule
+
+
 } from 'primeng/primeng';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PriceFilterComponent } from './properties-list/price-filter/price-filter.component';
@@ -38,6 +40,7 @@ import { MapEventsService } from './map-events.service';
 		SliderModule,
 		ProgressSpinnerModule,
 		DropdownModule
+
 	],
 	providers: [
 		MapEventsService

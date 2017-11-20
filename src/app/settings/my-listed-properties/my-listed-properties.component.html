@@ -9,15 +9,16 @@
 			</div>
 			<div class="col-xs-12 col-lg-4 listing-buttons">
 				<div class="row">
-					<button class="propy-control button button-small edit-listing">{{
+					<a [routerLink]="['/property', property.id, 'edit']"
+					   class="propy-control button button-small edit-listing">{{
 						'settings.my-listed-properties-settings.edit-button' | translate }}
-					</button>
+					</a>
 				</div>
 				<div class="row">
-					<button class="propy-control button button-small mark-sold-listing"
-							(click)="markPropertyAsSold(property.id)">{{
+					<a class="propy-control button button-small mark-sold-listing"
+					   (click)="markPropertyAsSold(property.id)">{{
 						'settings.my-listed-properties-settings.mark-as-sold' | translate }}
-					</button>
+					</a>
 				</div>
 			</div>
 		</div>
