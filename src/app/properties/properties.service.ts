@@ -183,7 +183,13 @@ export class PropertiesService {
 		return true;
 	}
 
-	public async requestInfo(propertyId: string, agentId: string, userName: string, userEmail: string, userPhone: string, userRequestDescription: string) {
+	public async requestInfo(
+		propertyId: string,
+		agentId: string,
+		userName: string,
+		userEmail: string,
+		userPhone: string,
+		userRequestDescription: string): Promise<boolean> {
 		const params = {
 			propertyId,
 			agentId,
@@ -194,5 +200,13 @@ export class PropertiesService {
 		};
 		await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.REQUEST_PROPERTY_INFO, params);
 		return true;
+	}
+
+	public async isCurrentUserPropertyOwner(propertyId: string): Promise<boolean> {
+		const params = {
+			propertyId
+		};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, { params });
+		return result.data.data;
 	}
 }
