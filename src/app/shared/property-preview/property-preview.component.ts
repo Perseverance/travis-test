@@ -22,6 +22,7 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	@Input() theme = PROPERTY_THEMES.SMALL;
 	@Input() imageWidth: number;
 	@Input() imageHeight: number;
+	@Input() inactiveComponent = false;
 	public isOutsideHovered = false;
 
 	private mapEventsSubscription: Subscription;
@@ -59,6 +60,9 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	}
 
 	public goToProperty(id: string) {
+		if (this.inactiveComponent) {
+			return;
+		}
 		this.router.navigate(['property', id]);
 	}
 }

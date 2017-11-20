@@ -10,6 +10,7 @@ import {GeneralSettingsComponent} from './general-settings/general-settings.comp
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {MyListedPropertiesComponent} from './my-listed-properties/my-listed-properties.component';
 import {SharedModule} from '../shared/shared.module';
+import {ConfirmDialogModule, GrowlModule} from 'primeng/primeng';
 
 @NgModule({
 	imports: [
@@ -19,7 +20,9 @@ import {SharedModule} from '../shared/shared.module';
 		SettingsRoutingModule,
 		TabViewModule,
 		TranslateModule,
-		SharedModule
+		SharedModule,
+		ConfirmDialogModule,
+		GrowlModule
 	],
 	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent]
 })
