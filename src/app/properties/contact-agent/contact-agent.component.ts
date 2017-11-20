@@ -57,6 +57,8 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		this.translateService.stream('property-details.contact-agent.contact-success').subscribe(value => {
 			this.successMessage = value;
 		});
+
+		this.agentId.setValue(this.agents[0].id);
 	}
 
 	public get name() {
