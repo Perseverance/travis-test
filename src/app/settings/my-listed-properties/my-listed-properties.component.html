@@ -2,21 +2,23 @@
 	<p-growl [value]="messages"></p-growl>
 	<p-confirmDialog appendTo="body"></p-confirmDialog>
 	<div class="row listing-row" *ngFor="let property of myListedProperties">
-		<div class="col-xs-12 col-lg-8">
-			<app-property-preview [property]="property" [imageWidth]="350" [imageHeight]="215">
-			</app-property-preview>
-		</div>
-		<div class="col-xs-12 col-lg-4 listing-buttons">
-			<div class="row">
-				<button class="propy-control button button-small edit-listing">{{
-					'settings.my-listed-properties-settings.edit-button' | translate }}
-				</button>
+		<div class="my-property-holder" ngClass="{'property-sold': }">
+			<div class="col-xs-12 col-lg-8">
+				<app-property-preview [property]="property" [imageWidth]="350" [imageHeight]="215">
+				</app-property-preview>
 			</div>
-			<div class="row">
-				<button class="propy-control button button-small mark-sold-listing"
-						(click)="markPropertyAsSold(property.id)">{{
-					'settings.my-listed-properties-settings.mark-as-sold' | translate }}
-				</button>
+			<div class="col-xs-12 col-lg-4 listing-buttons">
+				<div class="row">
+					<button class="propy-control button button-small edit-listing">{{
+						'settings.my-listed-properties-settings.edit-button' | translate }}
+					</button>
+				</div>
+				<div class="row">
+					<button class="propy-control button button-small mark-sold-listing"
+							(click)="markPropertyAsSold(property.id)">{{
+						'settings.my-listed-properties-settings.mark-as-sold' | translate }}
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

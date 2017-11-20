@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PropertiesService} from '../../properties/properties.service';
 import {ConfirmationService, Message} from 'primeng/primeng';
 
@@ -25,8 +25,11 @@ export class MyListedPropertiesComponent implements OnInit {
 			message: 'Are you sure that you want to proceed?',
 			header: 'Confirmation',
 			icon: 'fa fa-question-circle',
-			accept: () => {
-				this.messages = [{severity: 'info', summary: 'Confirmed', detail: 'You have accepted'}];
+			accept: async () => {
+				const result = await this.propertiesService.markPropertyAsSold(id);
+				if (result) {
+					this.messages = [{severity: 'info', summary: 'Confirmed', detail: 'You have accepted'}];
+				}
 			},
 			reject: () => {
 				this.messages = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
