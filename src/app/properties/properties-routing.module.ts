@@ -3,7 +3,8 @@ import { PropertyDetailsComponent } from './property-details/property-details.co
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TokenGuard } from '../authentication/token-guard.service';
-import { ListPropertyComponent } from './list-property/list-property.component';
+import { PropertyListingComponent } from './property-listing/property-listing.component';
+import { EditListingComponent } from './edit-listing/edit-listing.component';
 
 const routes: Routes = [
 	{
@@ -12,8 +13,13 @@ const routes: Routes = [
 		canActivate: [TokenGuard, MetaGuard]
 	},
 	{
+		path: 'property/:id/edit',
+		component: EditListingComponent,
+		canActivate: [TokenGuard, MetaGuard]
+	},
+	{
 		path: 'list-property',
-		component: ListPropertyComponent,
+		component: PropertyListingComponent,
 		canActivate: [TokenGuard, MetaGuard]
 	}
 ];

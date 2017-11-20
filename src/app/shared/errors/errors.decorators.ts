@@ -17,7 +17,7 @@ export function DefaultAsyncAPIErrorHandling(errorStringKey: string, message?: s
 			try {
 				const result = await originalMethod.apply(this, args);
 			} catch (error) {
-				console.log(this);
+				console.error(error);
 				if (message) {
 					this.translateService.get([errorStringKey, message]).subscribe((keyTranslations) => {
 						this.errorsService.pushError({

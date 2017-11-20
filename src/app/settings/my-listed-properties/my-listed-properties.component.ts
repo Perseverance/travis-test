@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {PropertiesService} from '../../properties/properties.service';
+import { Component, OnInit } from '@angular/core';
+import { PropertiesService } from '../../properties/properties.service';
 
 @Component({
 	selector: 'app-my-listed-properties',
@@ -7,14 +7,13 @@ import {PropertiesService} from '../../properties/properties.service';
 	styleUrls: ['./my-listed-properties.component.scss']
 })
 export class MyListedPropertiesComponent implements OnInit {
-	public myListedProperties
+	public myListedProperties;
 
 	constructor(private propertiesService: PropertiesService) {
 	}
 
 	async ngOnInit() {
 		this.myListedProperties = await this.propertiesService.getMyListedProperties();
-		console.log(this.myListedProperties);
 	}
 
 }

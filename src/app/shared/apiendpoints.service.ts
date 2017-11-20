@@ -25,6 +25,7 @@ export class APIEndpointsService {
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
 		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,
 		CREATE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/create`,
+		UPDATE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/update`,
 		UPLOAD_IMAGES: `${this.INTERNAL_API_PREFIX}/Properties/uploadImages`,
 		PROPERTIES_BY_RECTANGLE: `${this.INTERNAL_API_PREFIX}/Properties/rect`,
 		FAVOURITE_LOCATIONS: `${this.INTERNAL_API_PREFIX}/Properties/favouritelocations`,
