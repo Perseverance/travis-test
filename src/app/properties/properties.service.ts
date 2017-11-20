@@ -10,7 +10,7 @@ import {
 	GetFavouriteLocationResponse,
 	CreatePropertyRequest,
 	CreatePropertyResponse,
-	PropertyImage, GetNewPropertiesResponse, NewPropertyHome
+	PropertyImage, GetNewPropertiesResponse, PropertyPreviewResponse
 } from './properties-responses';
 import {LocalStorageService} from '../shared/localStorage.service';
 
@@ -108,7 +108,7 @@ export class PropertiesService {
 	}
 
 	private propertiesInRectangleQueryFormat(bounds: Bounds) {
-		const querySuffix = '_coords/1,50_page/';
+		const querySuffix = '_coords/1,48_page/';
 		// tslint:disable-next-line:max-line-length
 		const query = `/${bounds.southWestLatitude},${bounds.northEastLatitude},${bounds.southWestLongitude},${bounds.northEastLongitude}${querySuffix}`;
 		return query;
@@ -156,8 +156,27 @@ export class PropertiesService {
 		return result.data.data;
 	}
 
+	public async getMyListedProperties(): Promise<PropertyPreviewResponse[]> {
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.MY_LISTINGS);
+		return result.data.data;
+	}
+
+	public async markPropertyAsSold(propertyId: string): Promise<boolean> {
+		const queryParams = {
+			propertyid: propertyId
+		};
+		const result = await this.restService.postWithAccessToken(
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_SOLD, {}, {params: queryParams});
+		return true;
+	}
+
 	public async createProperty(data: CreatePropertyRequest): Promise<CreatePropertyResponse> {
 		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.CREATE_PROPERTY, data);
+		return result.data;
+	}
+
+	public async updateProperty(data: CreatePropertyRequest): Promise<CreatePropertyResponse> {
+		const result = await this.restService.putWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.UPDATE_PROPERTY, data);
 		return result.data;
 	}
 
@@ -173,7 +192,12 @@ export class PropertiesService {
 		return true;
 	}
 
-	public async requestInfo(propertyId: string, agentId: string, userName: string, userEmail: string, userPhone: string, userRequestDescription: string) {
+	public async requestInfo(propertyId: string,
+							 agentId: string,
+							 userName: string,
+							 userEmail: string,
+							 userPhone: string,
+							 userRequestDescription: string): Promise<boolean> {
 		const params = {
 			propertyId,
 			agentId,
@@ -184,5 +208,13 @@ export class PropertiesService {
 		};
 		await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.REQUEST_PROPERTY_INFO, params);
 		return true;
+	}
+
+	public async isCurrentUserPropertyOwner(propertyId: string): Promise<boolean> {
+		const params = {
+			propertyId
+		};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, {params});
+		return result.data.data;
 	}
 }

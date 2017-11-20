@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {SelectItem} from 'primeng/primeng';
-import {ThousandSeparatorPipe} from '../../../shared/pipes/thousand-separator.pipe';
-import {PropertiesFilter} from '../../../properties/properties.service';
-import {CurrencyTypeEnum} from '../../../shared/enums/currency-type.enum';
-import {LocalStorageService} from '../../../shared/localStorage.service';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { SelectItem } from 'primeng/primeng';
+import { ThousandSeparatorPipe } from '../../../shared/pipes/thousand-separator.pipe';
+import { PropertiesFilter } from '../../../properties/properties.service';
+import { CurrencyTypeEnum } from '../../../shared/enums/currency-type.enum';
+import { LocalStorageService } from '../../../shared/localStorage.service';
 
 @Component({
 	selector: 'app-price-filter',
@@ -29,19 +29,19 @@ export class PriceFilterComponent implements OnInit {
 	@Output() onAreaFilterApplied = new EventEmitter<PropertiesFilter>();
 
 	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe,
-				private localStorageService: LocalStorageService) {
+		private localStorageService: LocalStorageService) {
 		this.currencies = [];
-		this.currencies.push({label: 'USD', value: CurrencyTypeEnum.USD});
-		this.currencies.push({label: 'EUR', value: CurrencyTypeEnum.EUR});
-		this.currencies.push({label: 'RUB', value: CurrencyTypeEnum.RUB});
-		this.currencies.push({label: 'AED', value: CurrencyTypeEnum.AED});
-		this.currencies.push({label: 'HKD', value: CurrencyTypeEnum.HKD});
-		this.currencies.push({label: 'SGD', value: CurrencyTypeEnum.SGD});
-		this.currencies.push({label: 'GBP', value: CurrencyTypeEnum.GBP});
-		this.currencies.push({label: 'BGN', value: CurrencyTypeEnum.BGN});
-		this.currencies.push({label: 'CNY', value: CurrencyTypeEnum.CNY});
-		this.currencies.push({label: 'ETH', value: CurrencyTypeEnum.ETH});
-		this.currencies.push({label: 'BTC', value: CurrencyTypeEnum.BTC});
+		this.currencies.push({ label: 'USD', value: CurrencyTypeEnum.USD });
+		this.currencies.push({ label: 'EUR', value: CurrencyTypeEnum.EUR });
+		this.currencies.push({ label: 'RUB', value: CurrencyTypeEnum.RUB });
+		this.currencies.push({ label: 'AED', value: CurrencyTypeEnum.AED });
+		this.currencies.push({ label: 'HKD', value: CurrencyTypeEnum.HKD });
+		this.currencies.push({ label: 'SGD', value: CurrencyTypeEnum.SGD });
+		this.currencies.push({ label: 'GBP', value: CurrencyTypeEnum.GBP });
+		this.currencies.push({ label: 'BGN', value: CurrencyTypeEnum.BGN });
+		this.currencies.push({ label: 'CNY', value: CurrencyTypeEnum.CNY });
+		this.currencies.push({ label: 'ETH', value: CurrencyTypeEnum.ETH });
+		this.currencies.push({ label: 'BTC', value: CurrencyTypeEnum.BTC });
 	}
 
 	ngOnInit() {
@@ -124,5 +124,14 @@ export class PriceFilterComponent implements OnInit {
 
 	public currencyTypeChanged(currencyType: number) {
 		this.localStorageService.selectedCurrencyType = currencyType;
+	}
+
+	public resetForm() {
+		this.priceMinRange = this.DEFAULT_PRICE_MIN_RANGE;
+		this.priceMaxRange = this.DEFAULT_PRICE_MAX_RANGE;
+		this.sliderDraggingMin = false;
+		this.sliderDraggingMax = false;
+		this.priceRangeValue = [this.DEFAULT_PRICE_MIN_RANGE, this.DEFAULT_PRICE_MAX_RANGE];
+		this.filterSelectionActivated = false;
 	}
 }

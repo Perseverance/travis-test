@@ -1,8 +1,11 @@
-import {TranslateService} from '@ngx-translate/core';
-import {PropertiesFilter} from './../../properties/properties.service';
-import {SelectItem} from 'primeng/primeng';
-import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
-import {PROPERTY_THEMES} from '../../shared/new-property-component/new-property-component.component';
+import { AreaFilterComponent } from './area-filter/area-filter.component';
+import { PriceFilterComponent } from './price-filter/price-filter.component';
+import { TranslateService } from '@ngx-translate/core';
+import { PropertiesFilter } from './../../properties/properties.service';
+import { SelectItem } from 'primeng/primeng';
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter, ViewChild } from '@angular/core';
+import { PROPERTY_THEMES } from '../../shared/property-preview/property-preview.component';
+import { BedFilterComponent } from './bed-filter/bed-filter.component';
 
 enum LIST_TYPES {
 	GRID = 'grid',
@@ -40,31 +43,37 @@ export class PropertiesListComponent implements OnInit {
 	public filterPriceSelectionActivated = false;
 	public filterAreaSelectionActivated = false;
 	public filterBedSelectionActivated = false;
-
 	public IMAGE_WIDTH: number;
 	public IMAGE_HEIGHT: number;
+	public isFilterApplied = false;
 
 	private SMALL_IMAGE_WIDTH = 360;
 	private SMALL_IMAGE_HEIGHT = 215;
 	private BIG_IMAGE_WIDTH = 600;
 	private BIG_IMAGE_HEIGHT = 360;
 
-	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
+	@ViewChild(PriceFilterComponent)
+	private PriceFilterComponent: PriceFilterComponent;
+	@ViewChild(BedFilterComponent)
+	private BedFilterComponent: BedFilterComponent;
+	@ViewChild(AreaFilterComponent)
+	private AreaFilterComponent: AreaFilterComponent;
 
+	@Output() onFilterChanged = new EventEmitter<PropertiesFilter>();
 	constructor(private translateService: TranslateService) {
 		this.modes = [
-			{label: '', value: LIST_TYPES.GRID},
-			{label: '', value: LIST_TYPES.LIST}
+			{ label: '', value: LIST_TYPES.GRID },
+			{ label: '', value: LIST_TYPES.LIST }
 		];
 
 		const self = this;
 		this.translateService.get(['sorting.default', 'sorting.recent', 'sorting.price', 'sorting.area'])
 			.subscribe((data) => {
 				self.sortingTypes = [
-					{label: data['sorting.default'], value: SORTING_TYPES.DEFAULT},
-					{label: data['sorting.recent'], value: SORTING_TYPES.RECENT},
-					{label: data['sorting.price'], value: SORTING_TYPES.LOWEST},
-					{label: data['sorting.area'], value: SORTING_TYPES.BY_AREA}
+					{ label: data['sorting.default'], value: SORTING_TYPES.DEFAULT },
+					{ label: data['sorting.recent'], value: SORTING_TYPES.RECENT },
+					{ label: data['sorting.price'], value: SORTING_TYPES.LOWEST },
+					{ label: data['sorting.area'], value: SORTING_TYPES.BY_AREA }
 				];
 			});
 
@@ -155,6 +164,7 @@ export class PropertiesListComponent implements OnInit {
 			},
 			bedFilter: this.selectedBedTypes
 		});
+		this.isFilterApplied = true;
 	}
 
 	public onAreaFilterApplied(event: PropertiesFilter) {
@@ -175,6 +185,7 @@ export class PropertiesListComponent implements OnInit {
 			},
 			bedFilter: this.selectedBedTypes
 		});
+		this.isFilterApplied = true;
 	}
 
 	public onBedFilterApplied(event: PropertiesFilter) {
@@ -193,6 +204,7 @@ export class PropertiesListComponent implements OnInit {
 			},
 			bedFilter: this.selectedBedTypes
 		});
+		this.isFilterApplied = true;
 	}
 
 	public isAppliedPriceFilter(): boolean {
@@ -214,5 +226,34 @@ export class PropertiesListComponent implements OnInit {
 			return false;
 		}
 		return true;
+	}
+
+	public onResetApplied() {
+		this.PriceFilterComponent.resetForm();
+		this.BedFilterComponent.resetForm();
+		this.AreaFilterComponent.resetForm();
+		this.isFilterApplied = false;
+
+		this.priceFilterMinValue = undefined;
+		this.priceFilterMaxValue = undefined;
+		this.priceFilterCurrency = undefined;
+		this.areaFilterMinValue = undefined;
+		this.areaFilterMaxValue = undefined;
+		this.areaFilterUnit = undefined;
+		this.selectedBedTypes = undefined;
+
+		this.onFilterChanged.emit({
+			priceFilter: {
+				minValue: this.priceFilterMinValue,
+				maxValue: this.priceFilterMaxValue,
+				currency: this.priceFilterCurrency
+			},
+			areaFilter: {
+				minValue: this.areaFilterMinValue,
+				maxValue: this.areaFilterMaxValue,
+				areaUnit: this.areaFilterUnit
+			},
+			bedFilter: this.selectedBedTypes
+		});
 	}
 }

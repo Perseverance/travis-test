@@ -7,7 +7,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LocationSearchComponent} from '../location-search/location-search.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {NewPropertyComponentComponent} from './new-property-component/new-property-component.component';
 import {PopertyTypeLocalizeKeyPipe} from './pipes/poperty-type-localize-key.pipe';
 import {TranslateModule} from '@ngx-translate/core';
 import {ThousandSeparatorPipe} from './pipes/thousand-separator.pipe';
@@ -17,6 +16,7 @@ import {ImageEnvironmentPrefixPipe} from './pipes/image-environment-prefix.pipe'
 import {EllipsisPipe} from './ellipsis.pipe';
 import {ImageSizePipe} from './pipes/image-size.pipe';
 import {Image404Directive} from './image404.directive';
+import {PropertyPreviewComponent} from './property-preview/property-preview.component';
 
 @NgModule({
 	imports: [
@@ -26,7 +26,7 @@ import {Image404Directive} from './image404.directive';
 	],
 	declarations: [
 		LocationSearchComponent,
-		NewPropertyComponentComponent,
+		PropertyPreviewComponent,
 		PopertyTypeLocalizeKeyPipe,
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,
@@ -39,7 +39,7 @@ import {Image404Directive} from './image404.directive';
 	],
 	exports: [
 		LocationSearchComponent,
-		NewPropertyComponentComponent,
+		PropertyPreviewComponent,
 		PopertyTypeLocalizeKeyPipe,
 		ThousandSeparatorPipe,
 		CurrencySymbolPipe,

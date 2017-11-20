@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {SelectItem} from 'primeng/primeng';
-import {TranslateService} from '@ngx-translate/core';
-import {PropertiesFilter} from '../../../properties/properties.service';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { SelectItem } from 'primeng/primeng';
+import { TranslateService } from '@ngx-translate/core';
+import { PropertiesFilter } from '../../../properties/properties.service';
 
 @Component({
 	selector: 'app-bed-filter',
@@ -32,11 +32,11 @@ export class BedFilterComponent implements OnInit {
 		this.translateService.get([this.STUDIO_KEY, this.BED_1_KEY, this.BEDS_2_KEY, this.BEDS_3_KEY, this.BEDS_4_KEY])
 			.subscribe((data) => {
 				self.bedOptions = [
-					{label: data[this.STUDIO_KEY], value: self.BED_OPTION_STUDIO},
-					{label: data[this.BED_1_KEY], value: self.BED_OPTION_1_BED},
-					{label: data[this.BEDS_2_KEY], value: self.BED_OPTION_2_BEDS},
-					{label: data[this.BEDS_3_KEY], value: self.BED_OPTION_3_BEDS},
-					{label: data[this.BEDS_4_KEY], value: self.BED_OPTION_4_PLUS_BEDS}
+					{ label: data[this.STUDIO_KEY], value: self.BED_OPTION_STUDIO },
+					{ label: data[this.BED_1_KEY], value: self.BED_OPTION_1_BED },
+					{ label: data[this.BEDS_2_KEY], value: self.BED_OPTION_2_BEDS },
+					{ label: data[this.BEDS_3_KEY], value: self.BED_OPTION_3_BEDS },
+					{ label: data[this.BEDS_4_KEY], value: self.BED_OPTION_4_PLUS_BEDS }
 				];
 			});
 	}
@@ -54,5 +54,10 @@ export class BedFilterComponent implements OnInit {
 			bedFilter: this.selectedBedTypes.join()
 		});
 		overlay.hide();
+	}
+
+	public resetForm() {
+		this.selectedBedTypes = [];
+		this.filterSelectionActivated = false;
 	}
 }

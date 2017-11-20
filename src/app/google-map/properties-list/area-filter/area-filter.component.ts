@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {SelectItem} from 'primeng/primeng';
-import {PropertiesFilter} from '../../../properties/properties.service';
-import {ThousandSeparatorPipe} from '../../../shared/pipes/thousand-separator.pipe';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { SelectItem } from 'primeng/primeng';
+import { PropertiesFilter } from '../../../properties/properties.service';
+import { ThousandSeparatorPipe } from '../../../shared/pipes/thousand-separator.pipe';
 
 @Component({
 	selector: 'app-area-filter',
@@ -27,8 +27,8 @@ export class AreaFilterComponent implements OnInit {
 
 	constructor(private thousandSeparatorPipe: ThousandSeparatorPipe) {
 		this.areaUnits = [];
-		this.areaUnits.push({label: 'sqm', value: 1});
-		this.areaUnits.push({label: 'sqft', value: 2});
+		this.areaUnits.push({ label: 'sqm', value: 1 });
+		this.areaUnits.push({ label: 'sqft', value: 2 });
 	}
 
 	ngOnInit() {
@@ -110,6 +110,15 @@ export class AreaFilterComponent implements OnInit {
 	private stringRangeValueToNumber(value: string): number {
 		const rangeStr = value.replace(/[^0-9.]/g, '');
 		return parseInt(rangeStr, 10);
+	}
+
+	resetForm() {
+		this.areaMinRange = this.DEFAULT_AREA_MIN_RANGE;
+		this.areaMaxRange = this.DEFAULT_AREA_MAX_RANGE;
+		this.sliderDraggingMin = false;
+		this.sliderDraggingMax = false;
+		this.areaRangeValue = [this.DEFAULT_AREA_MIN_RANGE, this.DEFAULT_AREA_MAX_RANGE];
+		this.filterSelectionActivated = false;
 	}
 }
 

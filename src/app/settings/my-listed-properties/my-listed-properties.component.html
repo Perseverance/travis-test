@@ -1,0 +1,28 @@
+<div class="col-xs-12 my-listed-properties">
+	<p-growl [value]="messages"></p-growl>
+	<p-confirmDialog appendTo="body"></p-confirmDialog>
+	<div class="row listing-row" *ngFor="let property of myListedProperties">
+		<div class="my-property-holder" [ngClass]="{'property-sold': property.status === propertyStatusEnum.Sold}">
+			<div class="col-xs-12 col-lg-8">
+				<app-property-preview [property]="property"
+									  [inactiveComponent]="property.status === propertyStatusEnum.Sold"
+									  [imageWidth]="350" [imageHeight]="215">
+				</app-property-preview>
+			</div>
+			<div class="col-xs-12 col-lg-4 listing-buttons">
+				<div class="row">
+					<a [routerLink]="['/property', property.id, 'edit']"
+					   class="propy-control button button-small edit-listing">{{
+						'settings.my-listed-properties-settings.edit-button' | translate }}
+					</a>
+				</div>
+				<div class="row">
+					<a class="propy-control button button-small mark-sold-listing"
+					   (click)="markPropertyAsSold(property.id)">{{
+						'settings.my-listed-properties-settings.mark-as-sold' | translate }}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

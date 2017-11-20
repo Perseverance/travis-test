@@ -25,7 +25,7 @@ export interface GetFavouriteLocationResponse {
 	initialPrice: number;
 }
 
-export interface NewPropertyHome {
+export interface PropertyPreviewResponse {
 	id: string;
 	type: number;
 	address: string;
@@ -38,7 +38,7 @@ export interface NewPropertyHome {
 
 export interface GetNewPropertiesResponse {
 	locationName: string;
-	properties: NewPropertyHome[];
+	properties: PropertyPreviewResponse[];
 }
 
 interface CreatePropertyRequestTypedValue {

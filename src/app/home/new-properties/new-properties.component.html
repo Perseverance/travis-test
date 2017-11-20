@@ -6,9 +6,9 @@
     </div>
     <div *ngIf="properties">
         <div class="col-xs-12 col-sm-6 col-md-4 property" *ngFor="let property of properties">
-            <app-new-property-component [property]="property" [cityName]="citiesOptions[selectedCity].label" [imageWidth]="350" [imageHeight]="215">
+            <app-property-preview [property]="property" [cityName]="citiesOptions[selectedCity].label" [imageWidth]="350" [imageHeight]="215">
 
-            </app-new-property-component>
+            </app-property-preview>
         </div>
     </div>
 </div>

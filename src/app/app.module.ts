@@ -1,3 +1,4 @@
+import { Web3Module } from './web3/web3.module';
 import { MetaModule } from '@ngx-meta/core';
 import { SettingsModule } from './settings/settings.module';
 import { PropertiesModule } from './properties/properties.module';
@@ -49,6 +50,7 @@ export function metaFactory(): MetaLoader {
 		PropertiesModule,
 		SettingsModule,
 		GoogleMapModule,
+		Web3Module,
 		AppRoutingModule,
 		FacebookModule.forRoot(),
 		LinkedInSdkModule,

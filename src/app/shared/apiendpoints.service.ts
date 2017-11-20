@@ -23,12 +23,16 @@ export class APIEndpointsService {
 		CHANGE_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/changepassword`,
 		FORGOT_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/forgotpassword`,
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
+		IS_PROPERTY_OWNER: `${this.INTERNAL_API_PREFIX}/Properties/isCurrentUserOwner`,
 		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,
 		CREATE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/create`,
+		UPDATE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/update`,
 		UPLOAD_IMAGES: `${this.INTERNAL_API_PREFIX}/Properties/uploadImages`,
 		PROPERTIES_BY_RECTANGLE: `${this.INTERNAL_API_PREFIX}/Properties/rect`,
 		FAVOURITE_LOCATIONS: `${this.INTERNAL_API_PREFIX}/Properties/favouritelocations`,
-		NEW_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/newproperties`
+		NEW_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/newproperties`,
+		MY_LISTINGS: `${this.INTERNAL_API_PREFIX}/Properties/mylistings`,
+		MARK_PROPERTY_AS_SOLD: `${this.INTERNAL_API_PREFIX}/Properties/setsold/`
 	};
 
 	constructor() {
