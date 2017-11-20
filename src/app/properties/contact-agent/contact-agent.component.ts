@@ -1,14 +1,14 @@
-import {UserData} from './../../authentication/authentication.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {PropertiesService} from './../properties.service';
-import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {AuthenticationService} from '../../authentication/authentication.service';
+import { UserData } from './../../authentication/authentication.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { PropertiesService } from './../properties.service';
+import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -25,11 +25,11 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	@Input() propertyId: string;
 
 	constructor(private propertiesService: PropertiesService,
-				private authService: AuthenticationService,
-				private formBuilder: FormBuilder,
-				private notificationService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private authService: AuthenticationService,
+		private formBuilder: FormBuilder,
+		private notificationService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.contactAgentForm = this.formBuilder.group({

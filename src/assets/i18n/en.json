@@ -30,7 +30,8 @@
             "agency": "Agency",
             "agencyPassword": "Agency Password",
             "location": "Location of Operation",
-            "search": "Search"
+            "search": "Search",
+            "phoneNumberFormat": "e.g. +1-212-9876543"
         },
         "social": {
             "connect-with": "connect with",
