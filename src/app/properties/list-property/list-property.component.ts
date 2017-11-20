@@ -59,7 +59,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	@Input() mode = LIST_PROPERTY_MODES.NEW;
 	@Input() property: any;
 
-	@Output() onPropertyUpdated = new EventEmitter<boolean>();
+	@Output() onPropertyUpdated = new EventEmitter<void>();
 
 	@ViewChild(LocationSearchComponent)
 	private locationSearchComponent: LocationSearchComponent;
@@ -523,7 +523,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		};
 		await this.propertiesService.updateProperty(request);
 		this.resetUploadComponent();
-		this.onPropertyUpdated.emit(true);
+		this.onPropertyUpdated.emit();
 
 		this.notificationService.pushSuccess({
 			title: 'Property Upload success',
