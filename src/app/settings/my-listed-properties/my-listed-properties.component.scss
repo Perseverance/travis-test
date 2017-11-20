@@ -47,6 +47,7 @@ $section-border-color: #F0F0F0;
 			.row {
 				a {
 					cursor: default;
+					pointer-events: none;
 				}
 			}
 		}

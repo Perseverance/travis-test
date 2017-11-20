@@ -60,8 +60,9 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	}
 
 	public goToProperty(id: string) {
-		if (!this.inactiveComponent) {
-			this.router.navigate(['property', id]);
+		if (this.inactiveComponent) {
+			return;
 		}
+		this.router.navigate(['property', id]);
 	}
 }

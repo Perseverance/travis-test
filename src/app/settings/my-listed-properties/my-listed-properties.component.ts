@@ -14,6 +14,7 @@ export class MyListedPropertiesComponent implements OnInit {
 	public messages: Message[] = [];
 	public confirmationLabels: object;
 	public growlLabels: object;
+	public propertyStatusEnum = PropertyStatusEnum;
 
 	constructor(private propertiesService: PropertiesService,
 				private confirmationService: ConfirmationService,
@@ -44,26 +45,30 @@ export class MyListedPropertiesComponent implements OnInit {
 		this.confirmationService.confirm({
 			message: this.confirmationLabels['message'],
 			header: this.confirmationLabels['heading'],
-			accept: async () => {
-				const result = await this.propertiesService.markPropertyAsSold(id);
-				if (result) {
-					for (let i = 0; i < this.myListedProperties.length; i++) {
-						const property = this.myListedProperties[i];
-						if (property.id === id) {
-							this.myListedProperties[i].status = PropertyStatusEnum.Sold;
-							break;
-						}
-					}
-					this.messages = [{
-						severity: 'success',
-						summary: this.growlLabels['heading'],
-						detail: this.growlLabels['message']
-					}];
-				}
-			},
-			reject: () => {
-			}
+			accept: () => this.acceptMarkupPropertyAsSold(id)
 		});
 	}
 
+	private async acceptMarkupPropertyAsSold(id: string) {
+		const result = await this.propertiesService.markPropertyAsSold(id);
+		if (!result) {
+			return;
+		}
+		this.findAndMarkPropertyAsSold(id);
+		this.messages = [{
+			severity: 'success',
+			summary: this.growlLabels['heading'],
+			detail: this.growlLabels['message']
+		}];
+	}
+
+	private findAndMarkPropertyAsSold(id: string) {
+		for (let i = 0; i < this.myListedProperties.length; i++) {
+			const property = this.myListedProperties[i];
+			if (property.id === id) {
+				this.myListedProperties[i].status = this.propertyStatusEnum.Sold;
+				break;
+			}
+		}
+	}
 }
