@@ -1,3 +1,4 @@
+import { PropertyOwnerGuard } from './property-owner.service';
 import { MetaGuard } from '@ngx-meta/core';
 import { PropertyDetailsComponent } from './property-details/property-details.component';
 import { NgModule } from '@angular/core';
@@ -15,7 +16,7 @@ const routes: Routes = [
 	{
 		path: 'property/:id/edit',
 		component: EditListingComponent,
-		canActivate: [TokenGuard, MetaGuard]
+		canActivate: [TokenGuard, MetaGuard, PropertyOwnerGuard]
 	},
 	{
 		path: 'list-property',

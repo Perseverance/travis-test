@@ -1,3 +1,4 @@
+import { PropertyOwnerGuard } from './property-owner.service';
 import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { NgxCarouselModule } from 'ngx-carousel';
@@ -19,7 +20,6 @@ import { ContactAgentComponent } from './contact-agent/contact-agent.component';
 import { RatingModule } from 'primeng/primeng';
 import { PropertyListingComponent } from './property-listing/property-listing.component';
 import { EditListingComponent } from './edit-listing/edit-listing.component';
-
 
 @NgModule({
 	imports: [
@@ -51,7 +51,8 @@ import { EditListingComponent } from './edit-listing/edit-listing.component';
 	],
 	providers: [
 		PropertiesService,
-		MockedFavouriteLocationsService
+		MockedFavouriteLocationsService,
+		PropertyOwnerGuard
 	]
 })
 export class PropertiesModule {
