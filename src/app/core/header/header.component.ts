@@ -26,7 +26,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public isUserAnonymous: boolean;
 	public userInfo: any;
 	public isLanding = false;
-	public avatarImageUrl = '';
 
 	constructor(router: Router,
 		private route: ActivatedRoute,
