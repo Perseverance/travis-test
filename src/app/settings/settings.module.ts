@@ -11,6 +11,7 @@ import {ChangePasswordComponent} from './change-password/change-password.compone
 import {MyListedPropertiesComponent} from './my-listed-properties/my-listed-properties.component';
 import {SharedModule} from '../shared/shared.module';
 import {ConfirmDialogModule, GrowlModule} from 'primeng/primeng';
+import {ProWalletModule} from '../pro-wallet/pro-wallet.module';
 
 @NgModule({
 	imports: [
@@ -22,7 +23,8 @@ import {ConfirmDialogModule, GrowlModule} from 'primeng/primeng';
 		TranslateModule,
 		SharedModule,
 		ConfirmDialogModule,
-		GrowlModule
+		GrowlModule,
+		ProWalletModule
 	],
 	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent]
 })
