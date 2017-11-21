@@ -30,6 +30,7 @@ import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
 import {BrowserDetectionService} from '../shared/browser-detection.service';
 import {LanguageLabelPipe} from '../shared/pipes/language-label.pipe';
 import {ConfirmationService} from 'primeng/primeng';
+import {ProWalletService} from '../pro-wallet/pro-wallet.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -79,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		PropertySizeUnitOfMeasurePipe,
 		ThousandSeparatorPipe,
 		BrowserDetectionService,
-		ConfirmationService
+		ConfirmationService,
+		ProWalletService
 	],
 	exports: [
 		TranslateModule,
