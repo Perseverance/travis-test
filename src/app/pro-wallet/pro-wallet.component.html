@@ -1,8 +1,18 @@
 <div class="col-xs-12 my-pro-wallet">
-	<div class="row transaction-header">
-
-	</div>
-	<div class="row transaction-row">
-
+	<div class="transaction-holder">
+		<div class="row transaction-header">
+			{{ 'settings.my-pro-wallet.transaction-heading' | translate }}
+		</div>
+		<div class="row"
+			 *ngIf="!hasTransactions">
+			<div class="col-xs-12 text-center">
+				<h4>{{ 'settings.my-pro-wallet.no-transactions' | translate }}</h4>
+			</div>
+		</div>
+		<div *ngIf="hasTransactions">
+			<div class="row transaction-row"
+				 *ngFor="let transaction of userTransactionsHistory?.transactions">
+			</div>
+		</div>
 	</div>
 </div>

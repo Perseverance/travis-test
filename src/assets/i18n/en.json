@@ -273,7 +273,7 @@
 			"general-settings": "General settings",
 			"email-notifications-settings": "Email notifications",
 			"password-settings": "Password",
-			"my-listed-properties": "My properties",
+			"my-listed-properties": "My Listings",
 			"pro-wallet": "My PRO Wallet"
 		},
 		"general-settings": {
@@ -297,7 +297,12 @@
 			"confirmation-heading": "Confirmation",
 			"confirmation-message": "Are you sure that you want to mark property as sold?",
 			"growl-heading": "Confirmed",
-			"growl-message": "The property is marked as sold"
+			"growl-message": "The property is marked as sold",
+			"no-listed-properties": "No properties listed!"
+		},
+		"my-pro-wallet": {
+			"transaction-heading": "Transaction History",
+			"no-transactions": "No Transactions"
 		}
 	},
 	"about": {

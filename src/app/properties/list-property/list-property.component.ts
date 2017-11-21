@@ -1,20 +1,20 @@
-import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
-import { PropertiesService } from './../properties.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SelectItem } from 'primeng/components/common/selectitem';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { LocationSearchComponent } from '../../location-search/location-search.component';
-import { environment } from '../../../environments/environment';
-import { GoogleMapsMarkersService } from '../../shared/google-maps-markers.service';
-import { BigNumberFormatPipe } from '../../shared/pipes/big-number-format.pipe';
-import { CurrencySymbolPipe } from '../../shared/pipes/currency-symbol.pipe';
-import { log } from 'util';
+import {CreatePropertyResponse, PropertyImage} from './../properties-responses';
+import {PropertiesService} from './../properties.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, Input, EventEmitter, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SelectItem} from 'primeng/components/common/selectitem';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {LocationSearchComponent} from '../../location-search/location-search.component';
+import {environment} from '../../../environments/environment';
+import {GoogleMapsMarkersService} from '../../shared/google-maps-markers.service';
+import {BigNumberFormatPipe} from '../../shared/pipes/big-number-format.pipe';
+import {CurrencySymbolPipe} from '../../shared/pipes/currency-symbol.pipe';
+import {log} from 'util';
 
 export enum LIST_PROPERTY_MODES {
 	NEW = 'new',
@@ -65,51 +65,51 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	private locationSearchComponent: LocationSearchComponent;
 
 	constructor(private formBuilder: FormBuilder,
-		private authService: AuthenticationService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		private notificationService: NotificationsService,
-		private googleMarkersService: GoogleMapsMarkersService,
-		private bigNumberPipe: BigNumberFormatPipe,
-		private currencySymbolPipe: CurrencySymbolPipe,
-		private propertiesService: PropertiesService) {
+				private authService: AuthenticationService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				private notificationService: NotificationsService,
+				private googleMarkersService: GoogleMapsMarkersService,
+				private bigNumberPipe: BigNumberFormatPipe,
+				private currencySymbolPipe: CurrencySymbolPipe,
+				private propertiesService: PropertiesService) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
-		this.propertyTypes.push({ label: '', value: null });
-		this.propertyTypes.push({ label: 'Single Family Home', value: 1 });
-		this.propertyTypes.push({ label: 'Apartment', value: 2 });
-		this.propertyTypes.push({ label: 'Townhouse', value: 3 });
-		this.propertyTypes.push({ label: 'Condo', value: 4 });
-		this.propertyTypes.push({ label: 'Co-op', value: 5 });
-		this.propertyTypes.push({ label: 'Loft', value: 6 });
-		this.propertyTypes.push({ label: 'TIC', value: 7 });
-		this.propertyTypes.push({ label: 'Villa', value: 8 });
-		this.propertyTypes.push({ label: 'Summer Villa', value: 9 });
-		this.propertyTypes.push({ label: 'Development Only', value: 10 });
-		this.propertyTypes.push({ label: 'Studio', value: 11 });
-		this.propertyTypes.push({ label: 'Maisonette', value: 12 });
-		this.propertyTypes.push({ label: 'Penthouse', value: 13 });
-		this.propertyTypes.push({ label: 'Bungalow', value: 14 });
-		this.propertyTypes.push({ label: 'Student Room', value: 15 });
-		this.propertyTypes.push({ label: 'Commercial', value: 20 });
+		this.propertyTypes.push({label: '', value: null});
+		this.propertyTypes.push({label: 'Single Family Home', value: 1});
+		this.propertyTypes.push({label: 'Apartment', value: 2});
+		this.propertyTypes.push({label: 'Townhouse', value: 3});
+		this.propertyTypes.push({label: 'Condo', value: 4});
+		this.propertyTypes.push({label: 'Co-op', value: 5});
+		this.propertyTypes.push({label: 'Loft', value: 6});
+		this.propertyTypes.push({label: 'TIC', value: 7});
+		this.propertyTypes.push({label: 'Villa', value: 8});
+		this.propertyTypes.push({label: 'Summer Villa', value: 9});
+		this.propertyTypes.push({label: 'Development Only', value: 10});
+		this.propertyTypes.push({label: 'Studio', value: 11});
+		this.propertyTypes.push({label: 'Maisonette', value: 12});
+		this.propertyTypes.push({label: 'Penthouse', value: 13});
+		this.propertyTypes.push({label: 'Bungalow', value: 14});
+		this.propertyTypes.push({label: 'Student Room', value: 15});
+		this.propertyTypes.push({label: 'Commercial', value: 20});
 
 		this.currencies = [];
-		this.currencies.push({ label: 'USD', value: 1 });
-		this.currencies.push({ label: 'EUR', value: 2 });
-		this.currencies.push({ label: 'RUB', value: 3 });
-		this.currencies.push({ label: 'AED', value: 4 });
-		this.currencies.push({ label: 'HKD', value: 5 });
-		this.currencies.push({ label: 'SGD', value: 6 });
-		this.currencies.push({ label: 'GBP', value: 7 });
-		this.currencies.push({ label: 'BGN', value: 8 });
-		this.currencies.push({ label: 'CNY', value: 9 });
-		this.currencies.push({ label: 'ETH', value: 10 });
-		this.currencies.push({ label: 'BTC', value: 11 });
+		this.currencies.push({label: 'USD', value: 1});
+		this.currencies.push({label: 'EUR', value: 2});
+		this.currencies.push({label: 'RUB', value: 3});
+		this.currencies.push({label: 'AED', value: 4});
+		this.currencies.push({label: 'HKD', value: 5});
+		this.currencies.push({label: 'SGD', value: 6});
+		this.currencies.push({label: 'GBP', value: 7});
+		this.currencies.push({label: 'BGN', value: 8});
+		this.currencies.push({label: 'CNY', value: 9});
+		this.currencies.push({label: 'ETH', value: 10});
+		this.currencies.push({label: 'BTC', value: 11});
 
 		this.areaUnits = [];
-		this.areaUnits.push({ label: 'sqm', value: 1 });
-		this.areaUnits.push({ label: 'sqft', value: 2 });
+		this.areaUnits.push({label: 'sqm', value: 1});
+		this.areaUnits.push({label: 'sqft', value: 2});
 
 		this.listPropertyForm = this.formBuilder.group({
 			propertyType: ['', Validators.required],
@@ -149,7 +149,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		});
 
 		this.options = {
-			center: { lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE },
+			center: {lat: this.DEFAULT_LATITUDE, lng: this.DEFAULT_LONGITUDE},
 			zoom: this.DEFAULT_ZOOM
 		};
 	}
@@ -433,7 +433,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			title: 'Property Upload success',
 			message: '',
 			time: (new Date().getTime()),
-			timeout: 2000
+			timeout: 3000
 		});
 
 		this.resetListingForm();
@@ -585,10 +585,10 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 	private createAndSetPropertyMarker(lat: number, lng: number) {
 		const marker = new google.maps.Marker(
 			{
-				position: { lat: lat, lng: lng },
+				position: {lat: lat, lng: lng},
 				icon: this.googleMarkersService.defaultMarkerSettings,
 				label: this.googleMarkersService.getMarkerLabel
-					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(this.price.value), true))
+				(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(this.price.value), true))
 			});
 		this.overlays = [marker];
 	}
@@ -599,17 +599,17 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	private uploadedFilesSectionManipulation() {
 		setTimeout(() => {
-			const uploadedFilesClassName = 'ui-fileupload-files';
-			const photoSectionId = 'photo_section';
-			const additionBottomPaddingPx = 20;
-			const filesHolderElements = document.getElementsByClassName(uploadedFilesClassName) as HTMLCollectionOf<HTMLElement>;
-			let i;
-			for (i = 0; i < filesHolderElements.length; i++) {
-				const filesHolderElementHeight = filesHolderElements[i].clientHeight + additionBottomPaddingPx;
-				const photoSection = document.getElementById(photoSectionId);
-				photoSection.style.paddingBottom = `${filesHolderElementHeight}px`;
-			}
-		},
+				const uploadedFilesClassName = 'ui-fileupload-files';
+				const photoSectionId = 'photo_section';
+				const additionBottomPaddingPx = 20;
+				const filesHolderElements = document.getElementsByClassName(uploadedFilesClassName) as HTMLCollectionOf<HTMLElement>;
+				let i;
+				for (i = 0; i < filesHolderElements.length; i++) {
+					const filesHolderElementHeight = filesHolderElements[i].clientHeight + additionBottomPaddingPx;
+					const photoSection = document.getElementById(photoSectionId);
+					photoSection.style.paddingBottom = `${filesHolderElementHeight}px`;
+				}
+			},
 			100);
 	}
 

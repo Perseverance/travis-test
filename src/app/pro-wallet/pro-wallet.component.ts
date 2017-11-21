@@ -9,13 +9,16 @@ import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
 })
 export class ProWalletComponent implements OnInit {
 	public userTransactionsHistory: UserTransactionsHistoryResponse;
+	public hasTransactions = false;
 
 	constructor(private proWalletService: ProWalletService) {
 	}
 
 	async ngOnInit() {
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
-		console.log(this.userTransactionsHistory);
+		if (this.userTransactionsHistory.transactions && this.userTransactionsHistory.transactions.length > 0) {
+			this.hasTransactions = true;
+		}
 	}
 
 }
