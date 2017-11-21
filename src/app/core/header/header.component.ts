@@ -9,6 +9,7 @@ import { Router, ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/rout
 import { DOCUMENT } from '@angular/platform-browser';
 import { MomentService } from '../../shared/moment.service';
 
+
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
