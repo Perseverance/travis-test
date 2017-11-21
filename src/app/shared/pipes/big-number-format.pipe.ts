@@ -1,11 +1,10 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'bigNumberFormat'})
+@Pipe({ name: 'bigNumberFormat' })
 export class BigNumberFormatPipe implements PipeTransform {
 	transform(value: string, hasCurrencySymbol?: boolean): string {
 		let returnValue: string;
 		let currencySymbol: string;
-		let isFormatted = true;
 		if (value !== undefined) {
 			if (hasCurrencySymbol) {
 				// Get value without currency symbol
@@ -28,16 +27,14 @@ export class BigNumberFormatPipe implements PipeTransform {
 				returnValue = (+value / Math.pow(10, 3)).toFixed(1) + 'K';
 			}
 
-			if (returnValue === undefined) {
-				isFormatted = false;
-			}
+			const isFormatted = (returnValue !== undefined);
 
 			if (currencySymbol) {
 				value = `${currencySymbol} ${value}`;
 				returnValue = `${currencySymbol} ${returnValue}`;
 			}
 
-			return isFormatted ? returnValue : value;
+			return isFormatted ? returnValue : (+value).toFixed(1);
 		}
 	}
 }
