@@ -31,6 +31,7 @@ import {BrowserDetectionService} from '../shared/browser-detection.service';
 import {LanguageLabelPipe} from '../shared/pipes/language-label.pipe';
 import {ConfirmationService} from 'primeng/primeng';
 import {ProWalletService} from '../pro-wallet/pro-wallet.service';
+import {AvatarModule} from 'ngx-avatar';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,7 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 				deps: [HttpClient]
 			}
 		}),
-		SharedModule
+		SharedModule,
+		AvatarModule
 	],
 	declarations: [
 		HeaderComponent,
