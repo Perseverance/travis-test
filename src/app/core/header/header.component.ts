@@ -25,8 +25,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
 	public userInfo: any;
-
 	public isLanding = false;
+	public avatarImageUrl = '';
 
 	constructor(router: Router,
 		private route: ActivatedRoute,
@@ -53,7 +53,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 				this.isLanding = (event.url === '/');
 			});
 	}
-
 
 	@HostListener('window:scroll', ['$event'])
 	onScrollEvent($event) {
