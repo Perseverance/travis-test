@@ -42,13 +42,8 @@
                 <li><span class="user-separator hidden-xs" *ngIf="!isUserAnonymous">&nbsp;&#124;&nbsp;</span></li>
                 <li *ngIf="!isUserAnonymous" class="hidden-xs">
                     <a href="" class="account-name" [routerLink]="['/settings']">
-<<<<<<< HEAD
                         <ngx-avatar name="{{ userInfo.firstName }} {{ userInfo.lastName }}" src="{{ (userInfo.isImageUploaded ? userInfo.avatar : '') | imageEnvPrefix }}"
                             size="35" initialsSize="2" cornerRadius="4"></ngx-avatar>
-=======
-                        <ngx-avatar name="{{ userInfo.firstName }} {{ userInfo.lastName }}" size="35" initialsSize="2" cornerRadius="4">
-                        </ngx-avatar>
->>>>>>> sprint-frodo
                     </a>
 
                 </li>
