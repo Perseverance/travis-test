@@ -1,3 +1,4 @@
+import { SETTINGS_TABS } from './../../settings/settings/settings.component';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { DefaultLanguage } from './../i18nSetup';
 import { environment } from './../../../environments/environment';
@@ -26,6 +27,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public isUserAnonymous: boolean;
 	public userInfo: any;
 	public isLanding = false;
+	public settingsTabs = SETTINGS_TABS;
 
 	constructor(router: Router,
 		private route: ActivatedRoute,
