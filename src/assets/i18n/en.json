@@ -302,7 +302,8 @@
 		},
 		"my-pro-wallet": {
 			"transaction-heading": "Transaction History",
-			"no-transactions": "No Transactions"
+			"no-transactions": "No Transactions",
+			"transaction-number": "TX#"
 		}
 	},
 	"about": {
