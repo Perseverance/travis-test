@@ -28,6 +28,6 @@ export const environment = {
 		DEFAULT_MARKER_LABEL_FONT_SIZE: '11px',
 		MAP_DEFAULT_ZOOM: 12
 	},
-	intercomClientId: 'ot4ofyvp'
-
+	intercomClientId: 'ot4ofyvp',
+	smartLookId: '3e92012c793f28d6d226a85cc4428e5d5af0cfc0'
 };

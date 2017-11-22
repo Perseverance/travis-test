@@ -7,6 +7,7 @@ import { AllSupportedLanguage, DefaultLanguage } from './core/i18nSetup';
 import { CurrencyTypeEnum } from './shared/enums/currency-type.enum';
 import { MomentService } from './shared/moment.service';
 import { Intercom } from 'ng2-intercom/intercom';
+import smartlookClient from 'smartlook-client';
 
 @Component({
 	selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		smartlookClient.init(environment.smartLookId);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
