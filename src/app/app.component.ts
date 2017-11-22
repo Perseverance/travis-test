@@ -32,7 +32,9 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		smartlookClient.init(environment.smartLookId);
+		if (environment.production) {
+			smartlookClient.init(environment.smartLookId);
+		}
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
