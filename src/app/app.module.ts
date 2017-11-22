@@ -15,6 +15,7 @@ import { LinkedInSdkModule } from 'angular-linkedin-sdk';
 import { GoogleMapModule } from './google-map/google-map.module';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/core';
+import { IntercomModule, INTERCOM_DIRECTIVES } from 'ng2-intercom';
 
 export function metaFactory(): MetaLoader {
 	return new MetaStaticLoader({
@@ -38,7 +39,8 @@ export function metaFactory(): MetaLoader {
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		...INTERCOM_DIRECTIVES,
 	],
 	imports: [
 		BrowserModule,
@@ -58,7 +60,8 @@ export function metaFactory(): MetaLoader {
 		MetaModule.forRoot({
 			provide: MetaLoader,
 			useFactory: (metaFactory)
-		})
+		}),
+		IntercomModule,
 
 	],
 	bootstrap: [AppComponent]

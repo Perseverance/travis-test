@@ -22,5 +22,6 @@ export const environment = {
 		DEFAULT_MARKER_LABEL_COLOR_HOVERED: '#FFFFFF',
 		DEFAULT_MARKER_LABEL_FONT_SIZE: '11px',
 		MAP_DEFAULT_ZOOM: 12
-	}
+	},
+	intercomClientId: 'ot4ofyvp'
 };
