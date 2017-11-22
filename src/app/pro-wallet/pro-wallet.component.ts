@@ -17,5 +17,4 @@ export class ProWalletComponent implements OnInit {
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
 		console.log(this.userTransactionsHistory);
 	}
-
 }

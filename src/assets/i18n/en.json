@@ -17,7 +17,8 @@
 			"active": "Active",
 			"save-changes": "Save changes",
 			"cancel": "Cancel",
-			"email": "Email"
+			"email": "Email",
+			"balance": "balance"
 		},
 		"placeholder": {
 			"yourEmail": "Your Email",
@@ -90,6 +91,20 @@
 			"penthouse": "Penthouse",
 			"bungalow": "Bungalow",
 			"student-room": "Student room"
+		},
+		"transaction-status": {
+			"pending": "Pending",
+			"completed": "Completed",
+			"rejected": "Rejected"
+		},
+		"transaction-reason": {
+			"registration": "Registration",
+			"agent-registration": "Agent registration",
+			"affiliate-register": "Affiliate register",
+			"affiliate-owner-register": "Affiliate owner register",
+			"check-in": "Check in",
+			"premium-property": "Premium property",
+			"tokens-redeemed": "Tokens redeemed"
 		}
 	},
 	"footer": {
@@ -303,7 +318,11 @@
 		"my-pro-wallet": {
 			"transaction-heading": "Transaction History",
 			"no-transactions": "No Transactions",
-			"transaction-number": "TX#"
+			"transaction-number": "TX#",
+			"status": "Status",
+			"reason": "Reason",
+			"amount": "Amount",
+			"pro-currency": "PRO"
 		}
 	},
 	"about": {

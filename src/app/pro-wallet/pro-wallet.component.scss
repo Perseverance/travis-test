@@ -19,16 +19,44 @@
 				top: 15px;
 			}
 		}
-		.transaction-row {
+		.transaction-record {
 			background: #fff;
 			margin-bottom: 4px;
 			padding: 7px 10px 7px 10px;
-			height: 98px;
 			color: $gray-darkest;
+			.row {
+				height: 34px;
+			}
+			&.tx-pending {
+				border-left: solid 2px $blue-dark;
+			}
+			&.tx-completed {
+				border-left: solid 2px $green-dark;
+			}
+			&.tx-rejected {
+				border-left: solid 2px darken($red-main, 10%);
+			}
 			@include box-shadow(0px,
 				1px,
 				3px,
 				rgba(0, 0, 0, 0.14));
+			.label-holder {
+				height: 34px;
+				line-height: 34px;
+				font-size: 14px;
+				color: $gray-dark;
+				font-weight: lighter;
+			}
+			.label-span {
+				font-size: 14px;
+				font-weight: lighter;
+				color: $gray-dark;
+			}
+			.value {
+				font-size: 14px;
+				font-weight: normal;
+				margin-left: 10px;
+			}
 			input {
 				@include ellipsis(100%);
 				background: none;
@@ -36,6 +64,7 @@
 				box-shadow: none;
 				color: $gray-darkest;
 				font-size: 14px;
+				font-weight: normal;
 			}
 			.input-group-btn {
 				font-size: 14px;

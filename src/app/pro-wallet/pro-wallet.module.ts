@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {ProWalletComponent} from './pro-wallet.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {ClipboardModule} from 'ngx-clipboard/dist';
+import {TransactionStatusLocalizeKeyPipe} from './translations/transaction-status-localize-key.pipe';
+import {TransactionRewardLocalizeKeyPipe} from './translations/transaction-reward-localize-key.pipe';
 
 @NgModule({
 	imports: [
@@ -10,7 +12,11 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
 		TranslateModule,
 		ClipboardModule
 	],
-	declarations: [ProWalletComponent],
+	declarations: [
+		ProWalletComponent,
+		TransactionStatusLocalizeKeyPipe,
+		TransactionRewardLocalizeKeyPipe
+	],
 	exports: [ProWalletComponent]
 })
 export class ProWalletModule {
