@@ -7,7 +7,7 @@ import { AllSupportedLanguage, DefaultLanguage } from './core/i18nSetup';
 import { CurrencyTypeEnum } from './shared/enums/currency-type.enum';
 import { MomentService } from './shared/moment.service';
 import { Intercom } from 'ng2-intercom/intercom';
-import smartlookClient from 'smartlook-client';
+import { default as smartlookClient } from 'smartlook-client';
 
 @Component({
 	selector: 'app-root',
