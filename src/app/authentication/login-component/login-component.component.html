@@ -1,6 +1,6 @@
 <div class="row login-holder">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-        <form class="propy-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form data-recording-ignore="mask" class="propy-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <h3 class="text-center">{{ 'common.label.signin' | translate }}</h3>
             <div class="form-group">
                 <input formControlName="email" type="email" class="form-control propy-control" id="email" placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
