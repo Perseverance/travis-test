@@ -54,8 +54,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	private setupParamsWatcher() {
 		return this.route.queryParams
 			.subscribe(params => {
-				console.log(params);
-				console.log((params.selectedTab in this.settingsTabs));
 				if (!params.selectedTab || !(params.selectedTab in this.settingsTabs)) {
 					return;
 				}

@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ProWalletComponent} from './pro-wallet.component';
 import {TranslateModule} from '@ngx-translate/core';
@@ -10,7 +11,9 @@ import {TransactionRewardLocalizeKeyPipe} from './translations/transaction-rewar
 	imports: [
 		CommonModule,
 		TranslateModule,
-		ClipboardModule
+		ClipboardModule,
+		FormsModule,
+		ReactiveFormsModule
 	],
 	declarations: [
 		ProWalletComponent,

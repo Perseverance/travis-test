@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { UserData } from './../../authentication/authentication.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { PropertiesService } from './../properties.service';
@@ -9,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -16,10 +18,11 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 	styleUrls: ['./contact-agent.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
-export class ContactAgentComponent extends ErrorsDecoratableComponent implements OnInit {
+export class ContactAgentComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public contactAgentForm: FormGroup;
 	private successMessage: string;
+	private userDataSubscription: Subscription;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
@@ -40,7 +43,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			agentId: [undefined, [Validators.required]]
 		});
 
-		this.authService.subscribeToUserData({
+		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
 					return;
@@ -59,6 +62,10 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		});
 
 		this.agentId.setValue(this.agents[0].id);
+	}
+
+	ngOnDestroy(): void {
+		this.userDataSubscription.unsubscribe();
 	}
 
 	public get name() {
