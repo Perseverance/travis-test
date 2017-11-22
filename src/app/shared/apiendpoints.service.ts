@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class APIEndpointsService {
@@ -24,6 +24,7 @@ export class APIEndpointsService {
 		FORGOT_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/forgotpassword`,
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
 		USER_TRANSACTION_HISTORY: `${this.INTERNAL_API_PREFIX}/users/transactions`,
+		USER_UPDATE_WALLET: `${this.INTERNAL_API_PREFIX}/users/updatewallet`,
 		IS_PROPERTY_OWNER: `${this.INTERNAL_API_PREFIX}/Properties/isCurrentUserOwner`,
 		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,
 		CREATE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/create`,

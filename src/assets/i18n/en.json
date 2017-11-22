@@ -18,7 +18,8 @@
             "save-changes": "Save changes",
             "cancel": "Cancel",
             "email": "Email",
-            "balance": "balance"
+            "balance": "balance",
+            "set": "Set"
         },
         "placeholder": {
             "yourEmail": "Your Email",
@@ -300,6 +301,11 @@
             "growl-heading": "Confirmed",
             "growl-message": "The property is marked as sold",
             "no-listed-properties": "No properties listed!"
+        },
+        "set-pro-address": {
+            "your-ethereum-address-placeholder": "Your Ethereum Address",
+            "succesfully-set-address": "Address successfully set",
+            "could-not-set-address": "Could not set your Ethereum address"
         },
         "my-pro-wallet": {
             "transaction-heading": "Transaction History",
