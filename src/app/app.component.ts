@@ -35,21 +35,21 @@ export class AppComponent implements OnInit {
 		if (environment.production) {
 			smartlookClient.init(environment.smartLookId);
 		}
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (userInfo.isAnonymous) {
-					this.intercom.init({
-						app_id: environment.intercomClientId,
-						name: 'Anonymous'
-					});
-					return;
-				}
-				this.intercom.init({
-					app_id: environment.intercomClientId,
-					name: `${userInfo.user.firstName} ${userInfo.user.lastName}`,
-					email: userInfo.user.email
-				});
-			}
-		});
+		// this.authService.subscribeToUserData({
+		// 	next: (userInfo: UserData) => {
+		// 		if (userInfo.isAnonymous) {
+		// 			this.intercom.init({
+		// 				app_id: environment.intercomClientId,
+		// 				name: 'Anonymous'
+		// 			});
+		// 			return;
+		// 		}
+		// 		this.intercom.init({
+		// 			app_id: environment.intercomClientId,
+		// 			name: `${userInfo.user.firstName} ${userInfo.user.lastName}`,
+		// 			email: userInfo.user.email
+		// 		});
+		// 	}
+		// });
 	}
 }
