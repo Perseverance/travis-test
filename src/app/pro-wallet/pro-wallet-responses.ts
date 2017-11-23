@@ -7,6 +7,7 @@ export interface UserTransactionsHistoryResponse {
 
 export interface Transaction {
 	txId: string;
+	recipient: string;
 	amount: number;
 	createdTimeStamp: number;
 	reward: number;

@@ -3,6 +3,9 @@
 
 .my-pro-wallet {
 	.address-holder {
+		@media #{$xs} {
+			margin-bottom: 15px;
+		}
 		input {
 			@include ellipsis(100%);
 		}
@@ -20,6 +23,10 @@
 			background-color: white;
 			color: $gray-darkest;
 			margin-bottom: 8px;
+			text-align: center;
+			@media #{$xxs} {
+				text-align: left;
+			}
 			@include box-shadow(0px,
 				1px,
 				3px,

@@ -326,6 +326,7 @@
 			"transaction-heading": "Transaction History",
 			"no-transactions": "No Transactions",
 			"transaction-number": "TX#",
+			"recipient": "To",
 			"status": "Status",
 			"reason": "Reason",
 			"amount": "Amount",

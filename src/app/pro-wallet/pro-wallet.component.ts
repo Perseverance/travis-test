@@ -78,6 +78,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
 		this.redeemSectionVisibility = this.userTransactionsHistory.isCanRedeemStashedTokens;
 		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
+		console.log(this.userTransactionsHistory);
 	}
 
 	public get proWalletAddress() {
