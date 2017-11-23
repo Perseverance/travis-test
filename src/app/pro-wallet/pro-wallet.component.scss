@@ -78,7 +78,7 @@
 			.value {
 				font-size: 14px;
 				font-weight: normal;
-				margin-left: 10px;
+				padding-left: 25px;
 			}
 			input {
 				@include ellipsis(100%);
