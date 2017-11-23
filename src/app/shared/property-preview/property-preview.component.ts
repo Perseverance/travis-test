@@ -1,7 +1,8 @@
-import {Subscription} from 'rxjs/Subscription';
-import {MapEventsService, PropertyHoveredEvent} from './../../google-map/map-events.service';
-import {Component, Input, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {Router} from '@angular/router';
+import { PropertiesService } from './../../properties/properties.service';
+import { Subscription } from 'rxjs/Subscription';
+import { MapEventsService, PropertyHoveredEvent } from './../../google-map/map-events.service';
+import { Component, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 export enum PROPERTY_THEMES {
 	BIG = 'big',
@@ -24,22 +25,24 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	@Input() imageHeight: number;
 	@Input() inactiveComponent = false;
 	public isOutsideHovered = false;
+	public isPropertyHidden = false;
 
 	private mapEventsSubscription: Subscription;
 
 	constructor(private router: Router,
-				private mapEventsService: MapEventsService) {
+		private mapEventsService: MapEventsService,
+		private propertiesService: PropertiesService) {
 	}
 
 	onMouseEnter() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: true});
+			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: true });
 		}
 	}
 
 	onMouseLeave() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: false});
+			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: false });
 		}
 	}
 
@@ -64,5 +67,12 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.router.navigate(['property', id]);
+	}
+
+	public async propertyHide(event) {
+		event.stopPropagation();
+		this.isPropertyHidden = !this.isPropertyHidden;
+		const result = await this.propertiesService.hideProperty(this.property.id, this.isPropertyHidden);
+
 	}
 }

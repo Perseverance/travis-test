@@ -34,7 +34,8 @@ export class APIEndpointsService {
 		FAVOURITE_LOCATIONS: `${this.INTERNAL_API_PREFIX}/Properties/favouritelocations`,
 		NEW_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/newproperties`,
 		MY_LISTINGS: `${this.INTERNAL_API_PREFIX}/Properties/mylistings`,
-		MARK_PROPERTY_AS_SOLD: `${this.INTERNAL_API_PREFIX}/Properties/setsold/`
+		MARK_PROPERTY_AS_SOLD: `${this.INTERNAL_API_PREFIX}/Properties/setsold/`,
+		HIDE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/hidden`
 	};
 
 	constructor() {

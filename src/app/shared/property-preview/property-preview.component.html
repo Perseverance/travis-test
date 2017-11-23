@@ -1,28 +1,25 @@
-<div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
-	 [ngClass]="{ 'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
-	<div class="image-holder" (click)="goToProperty(property.id)">
-		<div class="labels-container">
-			<div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' |
-				translate }}
-			</div>
-			<div class="text-uppercase label verified-label" *ngIf="property.verified">{{
-				'landing.new-properties.verified' | translate }}
-			</div>
-		</div>
-		<img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"/>
-		<div class="right-arrow-holder" *ngIf="showArrow && !inactiveComponent">
-		</div>
-	</div>
-	<div class="property-info">
-		<span [title]="property.address">{{property.address}}</span>
-		<!-- &nbsp;/&nbsp;{{ cityName }} -->
-	</div>
-	<div class="additional-property-info">
-		<span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
-		<span class="text-uppercase" *ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
-		<span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure}}</span>
-	</div>
-	<h4 class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
-		currencySymbol}}
-	</h4>
+<div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" [ngClass]="{ 'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
+    <div class="image-holder" (click)="goToProperty(property.id)">
+        <div class="labels-container">
+            <div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}
+            </div>
+            <div class="text-uppercase label verified-label" *ngIf="property.verified">{{ 'landing.new-properties.verified' | translate }}
+            </div>
+        </div>
+        <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}" />
+        <div class="right-arrow-holder" *ngIf="showArrow && !inactiveComponent">
+        </div>
+        <span [class]="isPropertyHidden ? 'icon glyphicon glyphicon-eye-close' : 'icon glyphicon glyphicon-eye-open'" (click)="propertyHide($event)"></span>
+    </div>
+    <div class="property-info">
+        <span [title]="property.address">{{property.address}}</span>
+        <!-- &nbsp;/&nbsp;{{ cityName }} -->
+    </div>
+    <div class="additional-property-info">
+        <span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
+        <span class="text-uppercase" *ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
+        <span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure}}</span>
+    </div>
+    <h4 class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
+    </h4>
 </div>
