@@ -10,6 +10,7 @@ import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {NotificationsService} from '../shared/notifications/notifications.service';
 import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
+import {ConfirmationService} from 'primeng/primeng';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -22,7 +23,10 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 	public proWalletAddressForm: FormGroup;
 	private successMessage: string;
-
+	public redeemSectionVisibility = false;
+	public refreshTransactionHistoryProcessing = false;
+	public confirmationLabels: object;
+	public stashedTokensBalance: number;
 	private userDataSubscription: Subscription;
 
 	constructor(private proWalletService: ProWalletService,
@@ -30,7 +34,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 				private authService: AuthenticationService,
 				private notificationsService: NotificationsService,
 				errorsService: ErrorsService,
-				translateService: TranslateService) {
+				translateService: TranslateService,
+				private confirmationService: ConfirmationService) {
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
@@ -50,8 +55,18 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	async ngOnInit() {
 		await this.getTransactionHistory();
 
-		this.translateService.stream('settings.set-pro-address.succesfully-set-address').subscribe(value => {
-			this.successMessage = value;
+		this.translateService.stream([
+			'settings.set-pro-address.succesfully-set-address',
+			'settings.my-pro-wallet.confirmation-redeem-heading',
+			'settings.my-pro-wallet.confirmation-redeem-message',
+			'settings.my-pro-wallet.successfully-redeemed'
+		]).subscribe((translations) => {
+			this.successMessage = translations['settings.set-pro-address.succesfully-set-address'],
+				this.confirmationLabels = {
+					heading: translations['settings.my-pro-wallet.confirmation-redeem-heading'],
+					message: translations['settings.my-pro-wallet.confirmation-redeem-message'],
+					successfullyRedeemed: translations['settings.my-pro-wallet.successfully-redeemed']
+				};
 		});
 	}
 
@@ -61,7 +76,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 	private async getTransactionHistory() {
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
-		console.log(this.userTransactionsHistory);
+		this.redeemSectionVisibility = this.userTransactionsHistory.isCanRedeemStashedTokens;
+		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
 	}
 
 	public get proWalletAddress() {
@@ -78,5 +94,31 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
+	}
+
+	public redeemProTokensClick() {
+		this.confirmationService.confirm({
+			message: this.confirmationLabels['message'],
+			header: this.confirmationLabels['heading'],
+			key: 'redeemDialog',
+			accept: () => this.acceptRedeemingProTokens()
+		});
+	}
+
+	@DefaultAsyncAPIErrorHandling('settings.my-pro-wallet.redeemed-error-title', 'settings.my-pro-wallet.redeemed-error-message')
+	public async acceptRedeemingProTokens() {
+		const result = await this.proWalletService.convertStashedTokens();
+		this.notificationsService.pushSuccess({
+			title: this.confirmationLabels['successfullyRedeemed'],
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+	}
+
+	public async refreshTransactionHistory() {
+		this.refreshTransactionHistoryProcessing = true;
+		await this.getTransactionHistory();
+		this.refreshTransactionHistoryProcessing = false;
 	}
 }

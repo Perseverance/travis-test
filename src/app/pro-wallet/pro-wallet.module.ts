@@ -6,6 +6,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {TransactionStatusLocalizeKeyPipe} from './translations/transaction-status-localize-key.pipe';
 import {TransactionRewardLocalizeKeyPipe} from './translations/transaction-reward-localize-key.pipe';
+import {ConfirmDialogModule} from 'primeng/primeng';
 
 @NgModule({
 	imports: [
@@ -13,7 +14,8 @@ import {TransactionRewardLocalizeKeyPipe} from './translations/transaction-rewar
 		TranslateModule,
 		ClipboardModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		ConfirmDialogModule
 	],
 	declarations: [
 		ProWalletComponent,

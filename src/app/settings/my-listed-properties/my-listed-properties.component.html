@@ -1,6 +1,6 @@
 <div class="col-xs-12 my-listed-properties">
 	<!--<p-growl [value]="messages"></p-growl>-->
-	<p-confirmDialog appendTo="body"></p-confirmDialog>
+	<p-confirmDialog key="markAsSoldDialog"></p-confirmDialog>
 	<div class="row" *ngIf="myListedProperties && myListedProperties.length == 0">
 		<div class="col-xs-12 text-center">
 			<h4>{{ 'settings.my-listed-properties-settings.no-listed-properties' | translate }}</h4>

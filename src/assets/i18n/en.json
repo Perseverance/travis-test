@@ -328,7 +328,13 @@
 			"status": "Status",
 			"reason": "Reason",
 			"amount": "Amount",
-			"pro-currency": "PRO"
+			"pro-currency": "PRO",
+			"redeem-button": "Redeem",
+			"confirmation-redeem-heading": "Confirmation",
+			"confirmation-redeem-message": "Are you sure that you want to redeem your PRO tokens?",
+			"successfully-redeemed": "Your PRO tokens were successfully redeemed",
+			"redeemed-error-title": "Could not redeem your PRO tokens",
+			"redeemed-error-message": "We encountered a problem while redeeming your PRO tokens"
 		}
 	},
 	"about": {
