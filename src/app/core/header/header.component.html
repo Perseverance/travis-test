@@ -48,7 +48,7 @@
 
                 </li>
                 <li *ngIf="!isUserAnonymous">
-                    <a href="" [routerLink]="['/settings']" [queryParams]="{selectedTab: settingsTabs.WALLET}"><span class="text-capitalize">{{'common.label.balance'| translate}}</span>:&nbsp;{{userInfo.proTokens | bigNumberFormat}}&nbsp;PRO</a>
+                    <a href="" [routerLink]="['/settings']" [queryParams]="{selectedTab: settingsTabs.WALLET}"><span class="text-capitalize">{{'common.label.balance'| translate}}</span>:&nbsp;{{userInfo.proTokens | bigNumberFormat : false: true}}&nbsp;PRO</a>
                 </li>
                 <li *ngIf="!isUserAnonymous" class="dropdown notifications-dropdown hidden-xs">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

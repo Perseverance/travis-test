@@ -19,7 +19,8 @@
             "cancel": "Cancel",
             "email": "Email",
             "balance": "balance",
-            "set": "Set"
+            "set": "Set",
+            "share": "Share to Facebook"
         },
         "placeholder": {
             "yourEmail": "Your Email",
