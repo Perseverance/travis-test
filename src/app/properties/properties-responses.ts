@@ -70,3 +70,11 @@ export interface PropertyImage {
 	name: string;
 	file: string;
 }
+
+export interface HidePropertyRequest {
+	id: number;
+}
+
+export interface HidePropertyResponse {
+	data: string;
+}
