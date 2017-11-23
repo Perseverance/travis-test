@@ -23,6 +23,9 @@ export class ProWalletTranslationsService {
 			case ProTransactionStatusEnum.Rejected: {
 				return `${rejectedKey}`;
 			}
+			default: {
+				throw new Error('Invalid transaction status');
+			}
 		}
 	}
 
@@ -56,6 +59,9 @@ export class ProWalletTranslationsService {
 			}
 			case RewardTypeEnum.TokensRedeemed: {
 				return `${tokensRedeemedKey}`;
+			}
+			default: {
+				throw new Error('Invalid reward type of transaction reason');
 			}
 		}
 	}

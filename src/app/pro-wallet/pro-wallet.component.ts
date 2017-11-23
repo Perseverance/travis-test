@@ -23,7 +23,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 	public proWalletAddressForm: FormGroup;
 	private successMessage: string;
-	public redeemSectionVisibility = false;
+	public shouldShowRedeemSection = false;
 	public refreshTransactionHistoryProcessing = false;
 	public confirmationLabels: object;
 	public stashedTokensBalance: number;
@@ -76,9 +76,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 	private async getTransactionHistory() {
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
-		this.redeemSectionVisibility = this.userTransactionsHistory.isCanRedeemStashedTokens;
+		this.shouldShowRedeemSection = this.userTransactionsHistory.isCanRedeemStashedTokens;
 		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
-		console.log(this.userTransactionsHistory);
 	}
 
 	public get proWalletAddress() {
@@ -97,7 +96,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		});
 	}
 
-	public redeemProTokensClick() {
+	public redeemProTokens() {
 		this.confirmationService.confirm({
 			message: this.confirmationLabels['message'],
 			header: this.confirmationLabels['heading'],
@@ -108,7 +107,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 	@DefaultAsyncAPIErrorHandling('settings.my-pro-wallet.redeemed-error-title', 'settings.my-pro-wallet.redeemed-error-message')
 	public async acceptRedeemingProTokens() {
-		const result = await this.proWalletService.convertStashedTokens();
+		await this.proWalletService.convertStashedTokens();
 		this.notificationsService.pushSuccess({
 			title: this.confirmationLabels['successfullyRedeemed'],
 			message: '',
