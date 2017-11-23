@@ -24,6 +24,7 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	@Input() imageWidth: number;
 	@Input() imageHeight: number;
 	@Input() inactiveComponent = false;
+	@Input() isHiddenIconShown = false;
 	public isOutsideHovered = false;
 	public isPropertyHidden = false;
 

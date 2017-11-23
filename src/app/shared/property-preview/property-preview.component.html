@@ -9,7 +9,8 @@
         <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}" />
         <div class="right-arrow-holder" *ngIf="showArrow && !inactiveComponent">
         </div>
-        <span [class]="isPropertyHidden ? 'icon glyphicon glyphicon-eye-close' : 'icon glyphicon glyphicon-eye-open'" (click)="propertyHide($event)"></span>
+        <span *ngIf="isHiddenIconShown" [class]="isPropertyHidden ? 'icon glyphicon glyphicon-eye-close' : 'icon glyphicon glyphicon-eye-open'"
+            (click)="propertyHide($event)"></span>
     </div>
     <div class="property-info">
         <span [title]="property.address">{{property.address}}</span>
