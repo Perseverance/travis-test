@@ -38,10 +38,10 @@
 					 [ngClass]="{'tx-pending': transaction.status == 0, 'tx-completed': transaction.status == 1,
 						'tx-rejected': transaction.status == 2}">
 					<div class="row">
-						<div class="col-xs-1 label-holder">
+						<div class="col-xs-3 col-sm-2 label-holder">
 							{{ 'settings.my-pro-wallet.transaction-number' | translate }}
 						</div>
-						<div class="col-xs-11">
+						<div class="col-xs-9 col-sm-10">
 							<div class="input-group">
 								<input readonly type="text" class="form-control" value="{{transaction.txId}}"
 									   #txIdInput>
@@ -53,40 +53,36 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xs-1 label-holder">
+						<div class="col-xs-3 col-sm-2 label-holder">
 							{{ 'settings.my-pro-wallet.recipient' | translate }}
 						</div>
-						<div class="col-xs-11">
+						<div class="col-xs-9 col-sm-10">
 							<input readonly title="Recipient" type="text" class="form-control"
 								   value="{{transaction.recipient}}">
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xs-12 col-sm-5">
-							<span class="label-span hidden-xs">
-								{{ 'settings.my-pro-wallet.status' | translate}}
-							</span>
-							<span class="value">
-								{{ transaction.status | transactionStatusLocalizeKey | translate }}
-							</span>
+						<div class="col-xs-3 col-sm-2 label-span">
+							{{ 'settings.my-pro-wallet.status' | translate}}
 						</div>
-						<div class="col-xs-12 col-sm-7">
-							<span class="label-span hidden-xs">
-								{{ 'settings.my-pro-wallet.reason' | translate}}
-							</span>
-							<span class="value">
-								{{ transaction.status | transactionRewardLocalizeKey | translate }}
-							</span>
+						<div class="col-xs-9 col-sm-10 value">
+							{{ transaction.status | transactionStatusLocalizeKey | translate }}
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xs-12">
-						<span class="label-span hidden-xs">
+						<div class="col-xs-3 col-sm-2 label-span">
+							{{ 'settings.my-pro-wallet.reason' | translate}}
+						</div>
+						<div class="col-xs-9 col-sm-10 value">
+							{{ transaction.reward | transactionRewardLocalizeKey | translate }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3 col-sm-2 label-span">
 							{{ 'settings.my-pro-wallet.amount' | translate }}
-						</span>
-							<span class="value">
+						</div>
+						<div class="col-xs-9 col-sm-10 value">
 							{{ transaction.amount }} {{ 'settings.my-pro-wallet.pro-currency' | translate }}
-						</span>
 						</div>
 					</div>
 				</div>

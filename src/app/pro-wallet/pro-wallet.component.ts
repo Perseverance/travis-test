@@ -11,6 +11,7 @@ import {AuthenticationService} from '../authentication/authentication.service';
 import {NotificationsService} from '../shared/notifications/notifications.service';
 import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
 import {ConfirmationService} from 'primeng/primeng';
+import {WalletAddressValidator} from './pro-wallet-address-validator';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -39,7 +40,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
-			proWalletAddress: [null, [Validators.required]],
+			proWalletAddress: [null, [Validators.required, WalletAddressValidator.walletAddressValidator]],
 		});
 
 		this.userDataSubscription = this.authService.subscribeToUserData({
@@ -87,7 +88,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
 		await this.proWalletService.updateAddress(this.proWalletAddress.value);
-		await this.getTransactionHistory();
+		this.authService.getCurrentUser();
+		this.getTransactionHistory();
 		this.notificationsService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -108,6 +110,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	@DefaultAsyncAPIErrorHandling('settings.my-pro-wallet.redeemed-error-title', 'settings.my-pro-wallet.redeemed-error-message')
 	public async acceptRedeemingProTokens() {
 		await this.proWalletService.convertStashedTokens();
+		this.getTransactionHistory();
 		this.notificationsService.pushSuccess({
 			title: this.confirmationLabels['successfullyRedeemed'],
 			message: '',
