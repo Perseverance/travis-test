@@ -24,5 +24,5 @@ export const environment = {
 		MAP_DEFAULT_ZOOM: 12
 	},
 	intercomClientId: 'ot4ofyvp',
-	smartLookId: '3e92012c793f28d6d226a85cc4428e5d5af0cfc0'
+	smartLookId: '6bb5a0bdab863c838a4ecf0000364eec693fa91e'
 };
