@@ -47,6 +47,7 @@ export class MyListedPropertiesComponent implements OnInit {
 		this.confirmationService.confirm({
 			message: this.confirmationLabels['message'],
 			header: this.confirmationLabels['heading'],
+			key: 'markAsSoldDialog',
 			accept: () => this.acceptMarkupPropertyAsSold(id)
 		});
 	}
