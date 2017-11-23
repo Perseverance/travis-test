@@ -1,15 +1,22 @@
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { Web3Service } from '../../web3/web3.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {Web3Service} from '../../web3/web3.service';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 
 export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
 	MY_LISTINGS: 'MY_LISTINGS',
 	WALLET: 'WALLET',
 	PASSWORD: 'PASSWORD'
+};
+
+export const TABS_INDEX = {
+	GENERAL: 0,
+	MY_LISTINGS: 1,
+	WALLET: 2,
+	PASSWORD: 3
 };
 
 @Component({
@@ -27,8 +34,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	private paramsSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
-		// ,private web3Service: Web3Service
-		private route: ActivatedRoute) {
+				// ,private web3Service: Web3Service
+				private route: ActivatedRoute,
+				private router: Router) {
 	}
 
 	ngOnInit() {
@@ -60,6 +68,32 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 				this.selectedTab = params.selectedTab;
 			});
+	}
+
+	public setQueryParamForSelectedTab(id: number) {
+		const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+
+		switch (id) {
+			case TABS_INDEX.MY_LISTINGS: {
+				queryParams['selectedTab'] = SETTINGS_TABS.MY_LISTINGS;
+				break;
+			}
+			case TABS_INDEX.WALLET: {
+				queryParams['selectedTab'] = SETTINGS_TABS.WALLET;
+				break;
+			}
+			case TABS_INDEX.PASSWORD: {
+				queryParams['selectedTab'] = SETTINGS_TABS.PASSWORD;
+				break;
+			}
+			default: {
+				queryParams['selectedTab'] = SETTINGS_TABS.GENERAL;
+				break;
+			}
+		}
+
+		const currentPath = window.location.pathname;
+		this.router.navigate([currentPath], {queryParams: queryParams});
 	}
 
 	private listenForWeb3Loaded() {
