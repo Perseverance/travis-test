@@ -7,6 +7,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   call npm install npm@latest -g
   call npm install --no-optional
   call npm cache clean --force
+  call npm rebuild node-sass
   
   IF NOT DEFINED IsProdEnvironment (
     SET IsProdEnvironment="false"
