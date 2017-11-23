@@ -77,6 +77,11 @@
             position: relative;
             bottom: 1px;
         }
+        button.btn-facebook {
+            margin-left: 40px;
+            padding-right: 10px;
+            font-family: $font-family-helvetica;
+        }
     }
     .info-tabs {
         margin-top: 25px;

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'bigNumberFormat' })
 export class BigNumberFormatPipe implements PipeTransform {
-	transform(value: string, hasCurrencySymbol?: boolean): string {
+	transform(value: string, hasCurrencySymbol = false, forceToFixed = false): string {
 		let returnValue: string;
 		let currencySymbol: string;
 		if (value !== undefined) {
@@ -29,12 +29,16 @@ export class BigNumberFormatPipe implements PipeTransform {
 
 			const isFormatted = (returnValue !== undefined);
 
+			if (forceToFixed) {
+				value = (+value).toFixed(1);
+			}
+
 			if (currencySymbol) {
 				value = `${currencySymbol} ${value}`;
 				returnValue = `${currencySymbol} ${returnValue}`;
 			}
 
-			return isFormatted ? returnValue : (+value).toFixed(1);
+			return isFormatted ? returnValue : value;
 		}
 	}
 }
