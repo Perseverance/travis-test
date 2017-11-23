@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { log } from 'util';
 import { MetaService } from '@ngx-meta/core';
+import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
 
 @Component({
 	selector: 'app-property-details',
@@ -51,6 +52,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
 		private currencySymbolPipe: CurrencySymbolPipe,
 		private propertyConversionService: PropertyConversionService,
+		private fb: FacebookService,
 		private appRef: ApplicationRef,
 		private zone: NgZone,
 		private translateService: TranslateService,
@@ -166,5 +168,19 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		console.log(this.map);
 		google.maps.event.trigger(this.map.el.nativeElement, 'resize');
 		this.zone.run(() => { });
+	}
+
+	public shareInFacebook() {
+
+		const url = window.location.href;
+		const params: UIParams = {
+			href: url,
+			method: 'share'
+		};
+
+		this.fb.ui(params)
+			.then((res: UIResponse) => { })
+			.catch((e: any) => console.error(e));
+
 	}
 }

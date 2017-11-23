@@ -32,6 +32,7 @@ import {LanguageLabelPipe} from '../shared/pipes/language-label.pipe';
 import {ConfirmationService} from 'primeng/primeng';
 import {ProWalletService} from '../pro-wallet/pro-wallet.service';
 import {AvatarModule} from 'ngx-avatar';
+import {ProWalletTranslationsService} from '../pro-wallet/translations/pro-wallet-translations.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -83,7 +84,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ThousandSeparatorPipe,
 		BrowserDetectionService,
 		ConfirmationService,
-		ProWalletService
+		ProWalletService,
+		ProWalletTranslationsService
 	],
 	exports: [
 		TranslateModule,
