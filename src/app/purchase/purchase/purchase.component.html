@@ -1,0 +1,36 @@
+<div class="row purchase">
+    <div *ngIf="isUserAnonymous; then anonymous; else notAnonymous">
+    </div>
+
+    <ng-template #anonymous>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 propy-payment">
+            <div class="row stripe-header">
+                <div class="col-xs-12">
+                    <h3>{{ 'purchase.wait-message' | translate }}</h3>
+                    <h4>{{ 'purchase.login-or-signup' | translate }}.</h4>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #notAnonymous>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 propy-payment">
+            <div class="row stripe-header">
+                <div class="col-xs-12">
+                    <h3 class="text-center">{{ 'purchase.reserve-property' | translate }}</h3>
+                    <p class="text-center">{{ 'purchase.disclaimer' | translate }}</p>
+                </div>
+            </div>
+            <div class="row stripe-form">
+                <div class="col-xs-12">
+                    <form novalidate (ngSubmit)="reserveProperty($event)" [formGroup]="stripeForm">
+                        <input class="name" type="text" formControlName="name" placeholder="Name on card">
+                        <ngx-stripe-card [options]="cardOptions"></ngx-stripe-card>
+                        <button class="btn btn-block propy-control button-big btn-purchase" type="submit">{{ 'purchase.deposit-5000' | translate }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</div>
