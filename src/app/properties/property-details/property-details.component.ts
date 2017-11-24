@@ -199,15 +199,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 
 	private async checkIfPropertyReservedByYou(property: any) {
-		const currentUser = await this.authService.getCurrentUser();
-		if (property.reservedByUserId === null || property.reservedByUserId === '') {
+		this.isPropertyReserved = (property.reservedByUserId && property.reservedByUserId.length > 0);
+		if (!this.isPropertyReserved) {
 			return;
 		}
 
-		if (currentUser.data.data.id === property.reservedByUserId) {
-			this.isPropertyReservedByYou = true;
-		} else {
-			this.isPropertyReserved = true;
-		}
+		const currentUser = await this.authService.getCurrentUser();
+		this.isPropertyReservedByYou = (currentUser.data.data.id === property.reservedByUserId);
 	}
 }

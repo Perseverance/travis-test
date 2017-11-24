@@ -44,14 +44,16 @@
 					</div>
 					<div class="col-xs-3 text-right">
 						<a href="" class="btn btn-block propy-control button-small btn-purchase text-uppercase"
-						   [ngClass]="{'disabled-reservation': isPropertyReservedByYou || isPropertyReserved}"
+						   [ngClass]="{'disabled-reservation': isPropertyReserved}"
 						   [routerLink]="['/purchase', property.id]">
 							<span
-								*ngIf="!isPropertyReservedByYou && !isPropertyReserved">{{ 'property-details.reserve-property' | translate}}</span>
+								*ngIf="!isPropertyReserved">{{ 'property-details.reserve-property' | translate}}</span>
+
 							<span
-								*ngIf="isPropertyReserved">{{ 'property-details.reserved-property' | translate}}</span>
+								*ngIf="isPropertyReserved && isPropertyReservedByYou">{{ 'property-details.reserved-by-you' | translate}}</span>
+
 							<span
-								*ngIf="isPropertyReservedByYou">{{ 'property-details.reserved-by-you' | translate}}</span>
+								*ngIf="isPropertyReserved && !isPropertyReservedByYou">{{ 'property-details.reserved-property' | translate}}</span>
 						</a>
 					</div>
 				</div>
