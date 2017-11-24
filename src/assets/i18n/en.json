@@ -120,6 +120,7 @@
 		"city3": "Dubai",
 		"city4": "Beijing",
 		"city5": "Moscow",
+		"city6": "Auckland",
 		"country1": "United States",
 		"country2": "China",
 		"country3": "UAE",
@@ -336,7 +337,8 @@
 			"confirmation-redeem-message": "Are you sure that you want to redeem your PRO tokens?",
 			"successfully-redeemed": "Your PRO tokens were successfully redeemed",
 			"redeemed-error-title": "Could not redeem your PRO tokens",
-			"redeemed-error-message": "We encountered a problem while redeeming your PRO tokens"
+			"redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
+			"wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
 		}
 	},
 	"about": {

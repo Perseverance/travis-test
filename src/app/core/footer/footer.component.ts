@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 
 @Component({
 	selector: 'app-footer',
@@ -23,15 +23,17 @@ export class FooterComponent implements OnInit {
 		this.locations[3] = beijing;
 		const moscow = new MapLocation(37.3516344, 55.7494718, 10);
 		this.locations[4] = moscow;
+		const auckland = new MapLocation(174.725389, -36.8626662, 11);
+		this.locations[5] = auckland;
 	}
 
 	ngOnInit() {
 		this.currentYear = (new Date()).getFullYear();
 		this.router.events
-		.filter(event => event instanceof NavigationEnd)
-		.subscribe((event: NavigationEnd) => {
-			this.shouldShowFooter = !event.url.startsWith('/map');
-		});
+			.filter(event => event instanceof NavigationEnd)
+			.subscribe((event: NavigationEnd) => {
+				this.shouldShowFooter = !event.url.startsWith('/map');
+			});
 	}
 
 	public goToMapLocation(id: number) {
@@ -51,6 +53,7 @@ export class MapLocation {
 	longitude: number;
 	latitude: number;
 	zoomLevel: number;
+
 	constructor(longitude: number, latitude: number, zoomLevel: number) {
 		this.longitude = longitude;
 		this.latitude = latitude;

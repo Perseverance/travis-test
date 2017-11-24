@@ -29,6 +29,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public confirmationLabels: object;
 	public stashedTokensBalance: number;
 	private userDataSubscription: Subscription;
+	public shouldShowWalletAddressDesc = true;
 
 	constructor(private proWalletService: ProWalletService,
 				private formBuilder: FormBuilder,
@@ -49,6 +50,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 					return;
 				}
 				this.proWalletAddress.setValue(userInfo.user.walletId);
+				this.shouldShowWalletAddressDesc = false;
 			}
 		});
 	}
@@ -79,6 +81,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
 		this.shouldShowRedeemSection = this.userTransactionsHistory.isCanRedeemStashedTokens;
 		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
+		this.authService.getCurrentUser();
 	}
 
 	public get proWalletAddress() {
@@ -90,6 +93,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		await this.proWalletService.updateAddress(this.proWalletAddress.value);
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();
+		this.shouldShowWalletAddressDesc = false;
 		this.notificationsService.pushSuccess({
 			title: this.successMessage,
 			message: '',
