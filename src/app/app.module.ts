@@ -16,6 +16,7 @@ import { GoogleMapModule } from './google-map/google-map.module';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/core';
 import { IntercomModule, INTERCOM_DIRECTIVES } from 'ng2-intercom';
+import { PurchaseModule } from './purchase/purchase.module';
 
 export function metaFactory(): MetaLoader {
 	return new MetaStaticLoader({
@@ -51,6 +52,7 @@ export function metaFactory(): MetaLoader {
 		AuthenticationModule,
 		PropertiesModule,
 		SettingsModule,
+		PurchaseModule,
 		GoogleMapModule,
 		Web3Module,
 		AppRoutingModule,

@@ -78,9 +78,28 @@
             bottom: 1px;
         }
         button.btn-facebook {
-            margin-left: 40px;
+            margin-left: 25px;
+            @media #{$md} {
+                margin-left: 0px;
+            }
             padding-right: 10px;
             font-family: $font-family-helvetica;
+        }
+    }
+    button.propy-control.button-small.btn-purchase,
+    a.propy-control.button-small.btn-purchase {
+        height: 26px;
+        min-width: 100px;
+        max-width: 130px;
+        float: right;
+        padding: 2px;
+        @include border-radius(6px);
+        background-color: $button-green;
+        &:hover {
+            background-color: darken($button-green, 2%);
+        }
+        &:focus {
+            background-color: $button-green;
         }
     }
     .info-tabs {

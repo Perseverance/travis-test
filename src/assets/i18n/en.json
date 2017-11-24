@@ -1,350 +1,361 @@
 {
-	"common": {
-		"misc": {
-			"or": "or",
-			"checking": "Checking"
-		},
-		"label": {
-			"not-selected": "Not selected",
-			"authentication-error": "Authentication еrror",
-			"login": "Login",
-			"signin": "Sign in",
-			"signup": "Sign up",
-			"register": "Register",
-			"rememberMe": "Remember me",
-			"locationSearch": "Search for location",
-			"logout": "Logout",
-			"active": "Active",
-			"save-changes": "Save changes",
-			"cancel": "Cancel",
-			"email": "Email",
-			"balance": "balance",
-			"set": "Set",
-			"share": "Share to Facebook"
-		},
-		"placeholder": {
-			"yourEmail": "Your Email",
-			"password": "Password",
-			"repeatPassword": "Repeat Password",
-			"firstName": "First Name",
-			"lastName": "Last Name",
-			"phoneNumber": "Phone Number",
-			"expertise": "Expertise",
-			"agency": "Agency",
-			"agencyPassword": "Agency Password",
-			"location": "Location of Operation",
-			"search": "Search",
-			"phoneNumberFormat": "e.g. +1-212-9876543"
-		},
-		"social": {
-			"connect-with": "connect with",
-			"connect-linkedin": "Continue with LinkedIn",
-			"connect-facebook": "Continue with Facebook",
-			"linkedin": "LinkedIn",
-			"facebook": "Facebook"
-		},
-		"validation-errors": {
-			"required": "This field is required",
-			"invalid-email": "This is not a valid email",
-			"email-registered": "This email address is already registered",
-			"invalid-password": "Your password needs to be at least 8 symbols and must contain lowercase character, uppercase character and a number",
-			"passwords-differ": "The two passwords differ",
-			"invalid-phone-number": "Your phone number appears to be invalid",
-			"toc-required": "You need to accept the terms and conditions of the site",
-			"fill-in-required": "Please fill in required fields"
-		},
-		"terms": "Terms & Conditions",
-		"no-properties": "No properties found in this area!",
-		"scales": {
-			"undefined": "No data available",
-			"feature-scale": {
-				"no": "None",
-				"low": "Low",
-				"moderate": "Moderate",
-				"high": "High"
-			},
-			"public-transport-scale": {
-				"low": "Low",
-				"medium": "Medium",
-				"good": "Good",
-				"excellent": "Excellent"
-			},
-			"binary-scale": {
-				"yes": "Yes",
-				"no": "No"
-			}
-		},
-		"no-new-notifications": "No new notifications"
-	},
-	"enums": {
-		"property-types": {
-			"single-family-house": "Single family home",
-			"apartment": "Apartment",
-			"townhouse": "Townhouse",
-			"condo": "Condo",
-			"coop": "Co-op",
-			"loft": "Loft",
-			"tic": "TIC",
-			"villa": "Villa",
-			"summer-villa": "Summer villa",
-			"development-only": "Development only",
-			"studio": "Studio",
-			"maisonette": "Maisonette",
-			"penthouse": "Penthouse",
-			"bungalow": "Bungalow",
-			"student-room": "Student room"
-		},
-		"transaction-status": {
-			"pending": "Pending",
-			"completed": "Completed",
-			"rejected": "Rejected"
-		},
-		"transaction-reason": {
-			"registration": "Registration",
-			"agent-registration": "Agent registration",
-			"affiliate-register": "Affiliate register",
-			"affiliate-owner-register": "Affiliate owner register",
-			"check-in": "Check in",
-			"premium-property": "Premium property",
-			"tokens-redeemed": "Tokens redeemed"
-		}
-	},
-	"footer": {
-		"copyright": "Copyright",
-		"all-rights": "Propy. All rights reserved.",
-		"search-by-city": "Search by city",
-		"search-by-country": "Search by country",
-		"social": "Social",
-		"city1": "San Francisco",
-		"city2": "Los Angeles",
-		"city3": "Dubai",
-		"city4": "Beijing",
-		"city5": "Moscow",
-		"city6": "Auckland",
-		"country1": "United States",
-		"country2": "China",
-		"country3": "UAE",
-		"country4": "Canada",
-		"country5": "Russia",
-		"company": "Company",
-		"about-us": "About Us",
-		"blog": "Blog"
-	},
-	"signup": {
-		"agent-checkbox": "I am an agent",
-		"agency-not-found": "No such agency found. Submitting this will create it."
-	},
-	"forgot-password": {
-		"forgot-your-password": "Forgot your password?",
-		"reset-password": "Reset password",
-		"agency-not-found": "No such agency found. Submitting this will create it.",
-		"go-back": "Go back",
-		"reset-password-success": "An email was sent to the email address provided.  Follow the link in the email in order to change password.",
-		"reset-password-fail": "There is no such user",
-		"reset-password-desc": "Enter your email and we will send you a link to reset your password"
-	},
-	"list-property": {
-		"invite-link": "Your invite link:",
-		"heading": "List property",
-		"address-placeholder": "Where is your property located?",
-		"success": "Your property has been uploaded successfuly",
-		"form-fields": {
-			"address": "Address",
-			"description": "Description",
-			"property-images": "Property Images:",
-			"accepted-currencies": "Accepted currencies",
-			"commission-fee": "Commission Fee",
-			"property-furnished": "Property is furnished",
-			"price": "Price",
-			"year-built": "Year Built",
-			"bedrooms": "Bedrooms",
-			"floor": "Floor",
-			"area": "Area",
-			"select-type": "Select Type",
-			"photos": "Photos",
-			"existing-photos": "Existing Photos",
-			"photos-title": "Drop photo here or browse to upload"
-		},
-		"submit-button": "Submit",
-		"edit-button": "Edit",
-		"error-listing-property": "Listing of property failed",
-		"not-authenticated": {
-			"warning-message": "Oops, can't do that yet.",
-			"login-or-signup": "To list your property, just sign up or login through the header above."
-		},
-		"upload-image": {
-			"choose-button-label": "Choose Image"
-		},
-		"choose": "Choose",
-		"accept-toc": "I accept",
-		"address-required": "Please enter a valid address"
-	},
-	"landing": {
-		"location-search": "Enter a city, address or ZIP code",
-		"explore-cities": "Explore the cities",
-		"real-estates": " properties",
-		"from": "from",
-		"thank-you": "Thank you for using propy beta!",
-		"find-properties": {
-			"heading": "Find the best investment properties",
-			"sub-heading": "Make it easy to build wealth through real estate investments"
-		},
-		"how-propy-works": {
-			"heading": "How Propy Works",
-			"sub-heading": "Propy.com is dedicated to solving the problems of purchasing property across borders.",
-			"interview-video-title": "Natalia Karayaneva CEO of Propy Interview on CNBC Africa",
-			"bloomberg-video-title": "Propy on Bloomberg TV",
-			"bg-office-video-title": "Sneak peak of Propy's office in Bulgaria",
-			"details": {
-				"cross-border-title": "Cross-Border Payment",
-				"cross-border-content": "Propy will facilitate the cross-border payment for you and assist with the paperwork.",
-				"property-search-title": "Property Search",
-				"property-search-content": "You can search for properties and brokers in global cities in your native language. Propy provides broad information about the neighborhoods as walkability, air- and noise-pollution and green building certifications.",
-				"blockchain-integration-title": "Blockchain Integration",
-				"blockchain-integration-content": "Propy integrates blockchain ledger for the governments to make title deeds issuance for your property instantly online, secure and cost-effective."
-			}
-		},
-		"newsletter": {
-			"newsletter-header": "Do you want to receive updates?",
-			"newsletter-description": "Get Propy newsletter",
-			"email-address": "Your email address",
-			"subscribe": "Subscribe"
-		},
-		"testimonials": {
-			"heading": "Testimonials",
-			"pinel-words": "The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.",
-			"arrington-words": "The leadership of the company is impressive, shows all the signs of persistence and execution. Andrey Zamovski is very intelligent and innovative at usage of his deep knowledge of cryptography and Ethereum Smart Contracts. The team is also international - founders and early employees from Russia, Ukraine, US and Singapore are sharing the knowledge of their markets.",
-			"baum-words": "It would be an enormous step forward if global real estate transactions were to be facilitated by a reliable, automated land registration and transfer system. Propy's proposed use of blockchain might just offer the key that opens this door.",
-			"gardner-words": "Beyond finance, real estate is perhaps the most obvious industry prime for being upended by blockchain technology. With its superb team and strong vision Propy is likely to be a leader as real estate is dirsupted by this revolutionary innovation."
-		},
-		"new-properties": {
-			"heading": "New properties",
-			"in": "in",
-			"new-label": "NEW",
-			"verified": "VERIFIED",
-			"bedrooms": "Bedrooms"
-		},
-		"proposal-ios": {
-			"header": "Introducing Propy mobile app for iOS",
-			"description": "Download the iOS mobile application and register to recieve PRO tokens. Brokers recieve additional PRO tokens to use for Premium listings. You can also list your property and make it available for all home buyers in our platform",
-			"download": "Download for iPhone"
-		}
-	},
-	"property-details": {
-		"overview": "Overview",
-		"features": "Features",
-		"location": "Location",
-		"reviews": "Reviews",
-		"no-reviews-yet": "No reviews yet",
-		"neigbourhood-map": "Neighbourhood Map",
-		"published": "Published",
-		"overview-labels": {
-			"property-type": "Property Type",
-			"area": "Property Area",
-			"bedrooms": "Bedrooms"
-		},
-		"features-labels": {
-			"crime-rate": "Crime Rate",
-			"CO2": "CO₂",
-			"noise-pollution": "Noise Pollution",
-			"public-transportation": "Public Transportation",
-			"education": "Education",
-			"walkability": "Walkability",
-			"disaster": "Distaster Likeliness",
-			"waste": "Waste Management",
-			"furnished": "Is Furnished",
-			"air-quality-index": "Air Quality Index"
-		},
-		"contact-agent": {
-			"contact-agent-title": "Contact seller",
-			"request-info": "Request Info",
-			"name": "Your name",
-			"message": "Your message",
-			"contact-success": "Your request was sent succesfully!",
-			"contact-error": "Could not contact this seller"
-		}
-	},
-	"filters": {
-		"price": "Price",
-		"area": "Area",
-		"beds": {
-			"beds-button": "Beds",
-			"studio": "Studio",
-			"1-bed": "1 bed",
-			"2-beds": "2 beds",
-			"3-beds": "3 beds",
-			"4-beds": "4+ beds"
-		},
-		"to": "to",
-		"apply": "Apply",
-		"cancel": "Cancel"
-	},
-	"sorting": {
-		"default": "Default Sort",
-		"recent": "Most Recent",
-		"price": "Price (Low to High)",
-		"area": "By Area"
-	},
-	"settings": {
-		"title": "Account settings",
-		"headers": {
-			"general-settings": "General settings",
-			"email-notifications-settings": "Email notifications",
-			"password-settings": "Password",
-			"my-listed-properties": "My Listings",
-			"pro-wallet": "My PRO Wallet"
-		},
-		"general-settings": {
-			"update-success": "Your profile was updated succesfully!",
-			"update-error": "Could not update your profile",
-			"delete-account": "Delete account",
-			"upload-new-photo": "Upload new photo",
-			"upload-new-photo-success": "Your photo has been updated successfuly",
-			"upload-new-photo-fail": "Your photo failed to upload"
-		},
-		"password-settings": {
-			"current-password": "Current password",
-			"new-password": "New password",
-			"confirm-new-password": "Confirm new password",
-			"new-password-success": "Your password has been updated successfuly",
-			"new-password-fail": "You have entered incorrect password"
-		},
-		"my-listed-properties-settings": {
-			"edit-button": "Edit",
-			"mark-as-sold": "Mark as Sold",
-			"confirmation-heading": "Confirmation",
-			"confirmation-message": "Are you sure that you want to mark property as sold?",
-			"growl-heading": "Confirmed",
-			"growl-message": "The property is marked as sold",
-			"no-listed-properties": "No properties listed!"
-		},
-		"set-pro-address": {
-			"your-ethereum-address-placeholder": "Your Ethereum Address",
-			"succesfully-set-address": "Address successfully set",
-			"could-not-set-address": "Could not set your Ethereum address"
-		},
-		"my-pro-wallet": {
-			"transaction-heading": "Transaction History",
-			"no-transactions": "No Transactions",
-			"transaction-number": "TX#",
-			"recipient": "To",
-			"status": "Status",
-			"reason": "Reason",
-			"amount": "Amount",
-			"pro-currency": "PRO",
-			"redeem-button": "Redeem",
-			"confirmation-redeem-heading": "Confirmation",
-			"confirmation-redeem-message": "Are you sure that you want to redeem your PRO tokens?",
-			"successfully-redeemed": "Your PRO tokens were successfully redeemed",
-			"redeemed-error-title": "Could not redeem your PRO tokens",
-			"redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
-			"wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
-		}
-	},
-	"about": {
-		"title": "About Propy",
-		"text-body": "Propy is a global real estate marketplace with decentrilized title registry. We aim to solve the problems facing international real estate transactions by creating a novel unified property store and asset transfer platform for the global real estate industry. Propy allows buyers, sellers, brokers, and escrow/title agents/notaries to come together through the utilization of a suite of smart contracts on blockchain to facilitate transactions. We provide a network for these actors to connect with each other and conduct real estate purchases online. The culmination of the transaction is a digital transfer of ownership on the Propy Registry. For more information about these processes and smart contracts, please refer to our",
-		"white-paper": "white paper",
-		"inqueries": "For more inquiries, please contact us at: "
-	}
+    "common": {
+        "misc": {
+            "or": "or",
+            "checking": "Checking"
+        },
+        "label": {
+            "not-selected": "Not selected",
+            "authentication-error": "Authentication еrror",
+            "login": "Login",
+            "signin": "Sign in",
+            "signup": "Sign up",
+            "register": "Register",
+            "rememberMe": "Remember me",
+            "locationSearch": "Search for location",
+            "logout": "Logout",
+            "active": "Active",
+            "save-changes": "Save changes",
+            "cancel": "Cancel",
+            "email": "Email",
+            "balance": "balance",
+            "set": "Set",
+            "share": "Share to Facebook"
+        },
+        "placeholder": {
+            "yourEmail": "Your Email",
+            "password": "Password",
+            "repeatPassword": "Repeat Password",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "phoneNumber": "Phone Number",
+            "expertise": "Expertise",
+            "agency": "Agency",
+            "agencyPassword": "Agency Password",
+            "location": "Location of Operation",
+            "search": "Search",
+            "phoneNumberFormat": "e.g. +1-212-9876543"
+        },
+        "social": {
+            "connect-with": "connect with",
+            "connect-linkedin": "Continue with LinkedIn",
+            "connect-facebook": "Continue with Facebook",
+            "linkedin": "LinkedIn",
+            "facebook": "Facebook"
+        },
+        "validation-errors": {
+            "required": "This field is required",
+            "invalid-email": "This is not a valid email",
+            "email-registered": "This email address is already registered",
+            "invalid-password": "Your password needs to be at least 8 symbols and must contain lowercase character, uppercase character and a number",
+            "passwords-differ": "The two passwords differ",
+            "invalid-phone-number": "Your phone number appears to be invalid",
+            "toc-required": "You need to accept the terms and conditions of the site",
+            "fill-in-required": "Please fill in required fields"
+        },
+        "terms": "Terms & Conditions",
+        "no-properties": "No properties found in this area!",
+        "scales": {
+            "undefined": "No data available",
+            "feature-scale": {
+                "no": "None",
+                "low": "Low",
+                "moderate": "Moderate",
+                "high": "High"
+            },
+            "public-transport-scale": {
+                "low": "Low",
+                "medium": "Medium",
+                "good": "Good",
+                "excellent": "Excellent"
+            },
+            "binary-scale": {
+                "yes": "Yes",
+                "no": "No"
+            }
+        },
+        "no-new-notifications": "No new notifications"
+    },
+    "enums": {
+        "property-types": {
+            "single-family-house": "Single family home",
+            "apartment": "Apartment",
+            "townhouse": "Townhouse",
+            "condo": "Condo",
+            "coop": "Co-op",
+            "loft": "Loft",
+            "tic": "TIC",
+            "villa": "Villa",
+            "summer-villa": "Summer villa",
+            "development-only": "Development only",
+            "studio": "Studio",
+            "maisonette": "Maisonette",
+            "penthouse": "Penthouse",
+            "bungalow": "Bungalow",
+            "student-room": "Student room"
+        },
+        "transaction-status": {
+            "pending": "Pending",
+            "completed": "Completed",
+            "rejected": "Rejected"
+        },
+        "transaction-reason": {
+            "registration": "Registration",
+            "agent-registration": "Agent registration",
+            "affiliate-register": "Affiliate register",
+            "affiliate-owner-register": "Affiliate owner register",
+            "check-in": "Check in",
+            "premium-property": "Premium property",
+            "tokens-redeemed": "Tokens redeemed"
+        }
+    },
+    "footer": {
+        "copyright": "Copyright",
+        "all-rights": "Propy. All rights reserved.",
+        "search-by-city": "Search by city",
+        "search-by-country": "Search by country",
+        "social": "Social",
+        "city1": "San Francisco",
+        "city2": "Los Angeles",
+        "city3": "Dubai",
+        "city4": "Beijing",
+        "city5": "Moscow",
+        "city6": "Auckland",
+        "country1": "United States",
+        "country2": "China",
+        "country3": "UAE",
+        "country4": "Canada",
+        "country5": "Russia",
+        "company": "Company",
+        "about-us": "About Us",
+        "blog": "Blog"
+    },
+    "signup": {
+        "agent-checkbox": "I am an agent",
+        "agency-not-found": "No such agency found. Submitting this will create it."
+    },
+    "forgot-password": {
+        "forgot-your-password": "Forgot your password?",
+        "reset-password": "Reset password",
+        "agency-not-found": "No such agency found. Submitting this will create it.",
+        "go-back": "Go back",
+        "reset-password-success": "An email was sent to the email address provided.  Follow the link in the email in order to change password.",
+        "reset-password-fail": "There is no such user",
+        "reset-password-desc": "Enter your email and we will send you a link to reset your password"
+    },
+    "list-property": {
+        "invite-link": "Your invite link:",
+        "heading": "List property",
+        "address-placeholder": "Where is your property located?",
+        "success": "Your property has been uploaded successfuly",
+        "form-fields": {
+            "address": "Address",
+            "description": "Description",
+            "property-images": "Property Images:",
+            "accepted-currencies": "Accepted currencies",
+            "commission-fee": "Commission Fee",
+            "property-furnished": "Property is furnished",
+            "price": "Price",
+            "year-built": "Year Built",
+            "bedrooms": "Bedrooms",
+            "floor": "Floor",
+            "area": "Area",
+            "select-type": "Select Type",
+            "photos": "Photos",
+            "existing-photos": "Existing Photos",
+            "photos-title": "Drop photo here or browse to upload"
+        },
+        "submit-button": "Submit",
+        "edit-button": "Edit",
+        "error-listing-property": "Listing of property failed",
+        "not-authenticated": {
+            "warning-message": "Oops, can't do that yet.",
+            "login-or-signup": "To list your property, just sign up or login through the header above."
+        },
+        "upload-image": {
+            "choose-button-label": "Choose Image"
+        },
+        "choose": "Choose",
+        "accept-toc": "I accept",
+        "address-required": "Please enter a valid address"
+    },
+    "landing": {
+        "location-search": "Enter a city, address or ZIP code",
+        "explore-cities": "Explore the cities",
+        "real-estates": " properties",
+        "from": "from",
+        "thank-you": "Thank you for using propy beta!",
+        "find-properties": {
+            "heading": "Find the best investment properties",
+            "sub-heading": "Make it easy to build wealth through real estate investments"
+        },
+        "how-propy-works": {
+            "heading": "How Propy Works",
+            "sub-heading": "Propy.com is dedicated to solving the problems of purchasing property across borders.",
+            "interview-video-title": "Natalia Karayaneva CEO of Propy Interview on CNBC Africa",
+            "bloomberg-video-title": "Propy on Bloomberg TV",
+            "bg-office-video-title": "Sneak peak of Propy's office in Bulgaria",
+            "details": {
+                "cross-border-title": "Cross-Border Payment",
+                "cross-border-content": "Propy will facilitate the cross-border payment for you and assist with the paperwork.",
+                "property-search-title": "Property Search",
+                "property-search-content": "You can search for properties and brokers in global cities in your native language. Propy provides broad information about the neighborhoods as walkability, air- and noise-pollution and green building certifications.",
+                "blockchain-integration-title": "Blockchain Integration",
+                "blockchain-integration-content": "Propy integrates blockchain ledger for the governments to make title deeds issuance for your property instantly online, secure and cost-effective."
+            }
+        },
+        "newsletter": {
+            "newsletter-header": "Do you want to receive updates?",
+            "newsletter-description": "Get Propy newsletter",
+            "email-address": "Your email address",
+            "subscribe": "Subscribe"
+        },
+        "testimonials": {
+            "heading": "Testimonials",
+            "pinel-words": "The word Global is & has been innocently or deceptively overused and in the real estate business, as practitioners only see the world from their window rather than from every country of every continent. A notable exception can be made for Propy. To my knowledge, this platform is the only one today capable of unifying and standardizing property listings in global cities, whether in the US, China, Russia, the Middle-East and Europe. If you add to that their ability to provide instant purchase deposit in escrow and manage transaction payment services, Propy is well on its way to automatizing the purchase process all the way to online title delivery. It is potentially a game-changer in our industry.",
+            "arrington-words": "The leadership of the company is impressive, shows all the signs of persistence and execution. Andrey Zamovski is very intelligent and innovative at usage of his deep knowledge of cryptography and Ethereum Smart Contracts. The team is also international - founders and early employees from Russia, Ukraine, US and Singapore are sharing the knowledge of their markets.",
+            "baum-words": "It would be an enormous step forward if global real estate transactions were to be facilitated by a reliable, automated land registration and transfer system. Propy's proposed use of blockchain might just offer the key that opens this door.",
+            "gardner-words": "Beyond finance, real estate is perhaps the most obvious industry prime for being upended by blockchain technology. With its superb team and strong vision Propy is likely to be a leader as real estate is dirsupted by this revolutionary innovation."
+        },
+        "new-properties": {
+            "heading": "New properties",
+            "in": "in",
+            "new-label": "NEW",
+            "verified": "VERIFIED",
+            "bedrooms": "Bedrooms"
+        },
+        "proposal-ios": {
+            "header": "Introducing Propy mobile app for iOS",
+            "description": "Download the iOS mobile application and register to recieve PRO tokens. Brokers recieve additional PRO tokens to use for Premium listings. You can also list your property and make it available for all home buyers in our platform",
+            "download": "Download for iPhone"
+        }
+    },
+    "property-details": {
+        "overview": "Overview",
+        "features": "Features",
+        "location": "Location",
+        "reviews": "Reviews",
+        "no-reviews-yet": "No reviews yet",
+        "neigbourhood-map": "Neighbourhood Map",
+        "published": "Published",
+        "overview-labels": {
+            "property-type": "Property Type",
+            "area": "Property Area",
+            "bedrooms": "Bedrooms"
+        },
+        "features-labels": {
+            "crime-rate": "Crime Rate",
+            "CO2": "CO₂",
+            "noise-pollution": "Noise Pollution",
+            "public-transportation": "Public Transportation",
+            "education": "Education",
+            "walkability": "Walkability",
+            "disaster": "Distaster Likeliness",
+            "waste": "Waste Management",
+            "furnished": "Is Furnished",
+            "air-quality-index": "Air Quality Index"
+        },
+        "contact-agent": {
+            "contact-agent-title": "Contact seller",
+            "request-info": "Request Info",
+            "name": "Your name",
+            "message": "Your message",
+            "contact-success": "Your request was sent succesfully!",
+            "contact-error": "Could not contact this seller"
+        }
+    },
+    "filters": {
+        "price": "Price",
+        "area": "Area",
+        "beds": {
+            "beds-button": "Beds",
+            "studio": "Studio",
+            "1-bed": "1 bed",
+            "2-beds": "2 beds",
+            "3-beds": "3 beds",
+            "4-beds": "4+ beds"
+        },
+        "to": "to",
+        "apply": "Apply",
+        "cancel": "Cancel"
+    },
+    "sorting": {
+        "default": "Default Sort",
+        "recent": "Most Recent",
+        "price": "Price (Low to High)",
+        "area": "By Area"
+    },
+    "settings": {
+        "title": "Account settings",
+        "headers": {
+            "general-settings": "General settings",
+            "email-notifications-settings": "Email notifications",
+            "password-settings": "Password",
+            "my-listed-properties": "My Listings",
+            "pro-wallet": "My PRO Wallet"
+        },
+        "general-settings": {
+            "update-success": "Your profile was updated succesfully!",
+            "update-error": "Could not update your profile",
+            "delete-account": "Delete account",
+            "upload-new-photo": "Upload new photo",
+            "upload-new-photo-success": "Your photo has been updated successfuly",
+            "upload-new-photo-fail": "Your photo failed to upload"
+        },
+        "password-settings": {
+            "current-password": "Current password",
+            "new-password": "New password",
+            "confirm-new-password": "Confirm new password",
+            "new-password-success": "Your password has been updated successfuly",
+            "new-password-fail": "You have entered incorrect password"
+        },
+        "my-listed-properties-settings": {
+            "edit-button": "Edit",
+            "mark-as-sold": "Mark as Sold",
+            "confirmation-heading": "Confirmation",
+            "confirmation-message": "Are you sure that you want to mark property as sold?",
+            "growl-heading": "Confirmed",
+            "growl-message": "The property is marked as sold",
+            "no-listed-properties": "No properties listed!"
+        },
+        "set-pro-address": {
+            "your-ethereum-address-placeholder": "Your Ethereum Address",
+            "succesfully-set-address": "Address successfully set",
+            "could-not-set-address": "Could not set your Ethereum address"
+        },
+        "my-pro-wallet": {
+            "transaction-heading": "Transaction History",
+            "no-transactions": "No Transactions",
+            "transaction-number": "TX#",
+            "recipient": "To",
+            "status": "Status",
+            "reason": "Reason",
+            "amount": "Amount",
+            "pro-currency": "PRO",
+            "redeem-button": "Redeem",
+            "confirmation-redeem-heading": "Confirmation",
+            "confirmation-redeem-message": "Are you sure that you want to redeem your PRO tokens?",
+            "successfully-redeemed": "Your PRO tokens were successfully redeemed",
+            "redeemed-error-title": "Could not redeem your PRO tokens",
+            "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
+            "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
+        }
+    },
+    "about": {
+        "title": "About Propy",
+        "text-body": "Propy is a global real estate marketplace with decentrilized title registry. We aim to solve the problems facing international real estate transactions by creating a novel unified property store and asset transfer platform for the global real estate industry. Propy allows buyers, sellers, brokers, and escrow/title agents/notaries to come together through the utilization of a suite of smart contracts on blockchain to facilitate transactions. We provide a network for these actors to connect with each other and conduct real estate purchases online. The culmination of the transaction is a digital transfer of ownership on the Propy Registry. For more information about these processes and smart contracts, please refer to our",
+        "white-paper": "white paper",
+        "inqueries": "For more inquiries, please contact us at: "
+    },
+    "purchase": {
+        "successfull-reservation": "Successfull Reservation",
+        "successfull-message": "This property was reserved for you.",
+        "error-reserving": "We could not reserve this property for you.",
+        "wait-message": "Wait a second.",
+        "login-or-signup": "To reserve your property, just sign up or login through the header above.",
+        "reserve-property": "Reserve this property",
+        "disclaimer": "To be able to reserve the property and purchase it online you will need to add credit card.",
+        "deposit-5000": "Deposit $5000"
+
+    }
 }
