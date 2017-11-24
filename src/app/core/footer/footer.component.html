@@ -14,23 +14,23 @@
             <div class="footer-title">
                 {{'footer.social' | translate}}
             </div>
-            <a href="https://www.facebook.com/propyinc/?fref=ts" target="_blank">
+            <a (click)="facebookEvent()" href="https://www.facebook.com/propyinc/?fref=ts" target="_blank">
                 <h6 class="footer-suggestion">Facebook</h6>
             </a>
-            <a href="https://twitter.com/propyinc" target="_blank">
+            <a (click)="twitterEvent()" href="https://twitter.com/propyinc" target="_blank">
                 <h6 class="footer-suggestion">Twitter</h6>
             </a>
-            <a href="https://t.me/propy" target="_blank">
+            <a (click)="telegramEvent()" href="https://t.me/propy" target="_blank">
                 <h6 class="footer-suggestion">Telegram</h6>
             </a>
-            <a href="https://www.reddit.com/user/PropyInc/" target="_blank">
+            <a (click)="reditEvent()" href="https://www.reddit.com/user/PropyInc/" target="_blank">
                 <h6 class="footer-suggestion">Reddit</h6>
             </a>
         </div>
         <div class="col-xs-12 col-sm-6 col-lg-4">
             <div class="hidden-xs">
                 <div class="footer-title">
-                        {{'footer.company' | translate}}
+                    {{'footer.company' | translate}}
                 </div>
                 <h6 class="footer-suggestion" (click)="goToAbout()">{{'footer.about-us' | translate}}</h6>
                 <a href="https://blog.propy.com/" target="_blank">

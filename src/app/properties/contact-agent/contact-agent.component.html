@@ -42,7 +42,8 @@
                 <div class="propy-validation" *ngIf="message.invalid && message.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
             </div>
         </div>
-        <button class="btn btn-block propy-control button-big" [disabled]="agentId.invalid || phoneNumber.invalid || name.invalid || email.invalid || message.invalid">
+        <button class="btn btn-block propy-control button-big" [disabled]="agentId.invalid || phoneNumber.invalid || name.invalid || email.invalid || message.invalid"
+            (click)="googleEvent()">
                 {{ 'property-details.contact-agent.contact-agent-title' | translate }}</button>
     </form>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleAnalyticsEventsService } from '../../shared/google-analytics.service';
 
 @Component({
   selector: 'app-proposal-ios',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProposalIosComponent implements OnInit {
 
-  constructor() { }
+  constructor(public googleAnalyticsEventsService: GoogleAnalyticsEventsService) { }
 
   ngOnInit() {
+  }
+  googleEvent() {
+    this.googleAnalyticsEventsService.emitEvent('page-download-ios', 'download-ios');
   }
 
 }

@@ -1,3 +1,4 @@
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutUsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public googleAnalyticsEventsService: GoogleAnalyticsEventsService) { }
 
   ngOnInit() {
   }
+  googleEvent() {
+    this.googleAnalyticsEventsService.emitEvent('page-about', 'email');
+  }
 
-}
+} 

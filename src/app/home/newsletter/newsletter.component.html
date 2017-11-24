@@ -7,8 +7,8 @@
             <div class="pull-left subscribe-email subscribe-phone">
                 <input formControlName="email" type="email" name="EMAIL" class="center-block form-control propy-control" placeholder="{{ 'landing.newsletter.email-address' | translate }}">
             </div>
-            <div class="pull-right subscribe-phone" >
-                <button type="submit" class="center-block btn propy-control button-big" onclick="submit()">{{ 'landing.newsletter.subscribe' | translate }}</button>
+            <div class="pull-right subscribe-phone">
+                <button type="submit" class="center-block btn propy-control button-big" onclick="submit()" (click)="googleEvent()">{{ 'landing.newsletter.subscribe' | translate }}</button>
             </div>
         </div>
     </form>

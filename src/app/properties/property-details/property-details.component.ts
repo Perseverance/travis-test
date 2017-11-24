@@ -1,3 +1,4 @@
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { PropertyConversionService } from './../../shared/property-conversion.service';
 import { ImageEnvironmentPrefixPipe } from './../../shared/pipes/image-environment-prefix.pipe';
 import { ImageSizePipe } from './../../shared/pipes/image-size.pipe';
@@ -56,7 +57,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private appRef: ApplicationRef,
 		private zone: NgZone,
 		private translateService: TranslateService,
-		private metaService: MetaService) {
+		private metaService: MetaService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
 		this.IMAGE_HEIGHT_PX = 480;
@@ -64,6 +66,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 
 	async ngOnInit() {
+		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
 		this.propertyImagesCarouselConfig = {
 			grid: { xs: 1, sm: 1, md: 2, lg: 2, all: 0 },
 			slide: 1,

@@ -5,6 +5,7 @@ import {
 import { } from '@types/googlemaps';
 import { FormBuilder } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
+import { GoogleAnalyticsEventsService } from '../shared/google-analytics.service';
 
 interface SearchLocation {
 	latitude: number;
@@ -36,7 +37,8 @@ export class LocationSearchComponent implements OnInit {
 
 	constructor(private ngZone: NgZone,
 		private formBuilder: FormBuilder,
-		private router: Router) {
+		private router: Router,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
 			if (event.url.startsWith('/map')) {
 				// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
@@ -79,6 +81,7 @@ export class LocationSearchComponent implements OnInit {
 			const locationName = place.name;
 			this.emitLocationFound({ latitude, longitude, locationAddress, locationName });
 		});
+		this.googleAnalyticsEventsService.emitEvent('page-search', 'search');
 	}
 
 	private displaySuggestions(predictions, displayStatus) {
