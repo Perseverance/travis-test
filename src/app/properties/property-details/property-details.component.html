@@ -47,9 +47,11 @@
 						   [ngClass]="{'disabled-reservation': isPropertyReservedByYou || isPropertyReserved}"
 						   [routerLink]="['/purchase', property.id]">
 							<span
-								*ngIf="!isPropertyReservedByYou">{{ 'property-details.reserve-property' | translate}}</span>
+								*ngIf="!isPropertyReservedByYou && !isPropertyReserved">{{ 'property-details.reserve-property' | translate}}</span>
 							<span
-								*ngIf="isPropertyReservedByYou">{{ 'property-details.reserved-property' | translate}}</span>
+								*ngIf="isPropertyReserved">{{ 'property-details.reserved-property' | translate}}</span>
+							<span
+								*ngIf="isPropertyReservedByYou">{{ 'property-details.reserved-by-you' | translate}}</span>
 						</a>
 					</div>
 				</div>

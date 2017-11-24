@@ -239,7 +239,8 @@
 		"neigbourhood-map": "Neighbourhood Map",
 		"published": "Published",
 		"reserve-property": "Reserve",
-		"reserved-property": "Reserved by you",
+		"reserved-property": "Reserved",
+		"reserved-by-you": "Reserved by you",
 		"overview-labels": {
 			"property-type": "Property Type",
 			"area": "Property Area",
