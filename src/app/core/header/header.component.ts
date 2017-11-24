@@ -42,7 +42,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 				this.isUserAnonymous = userInfo.isAnonymous;
 				this.userInfo = userInfo.user;
 				this.hasUserLoaded = true;
-				console.log(this.userInfo);
 			}
 		});
 	}
