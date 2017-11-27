@@ -27,8 +27,6 @@ export class GoogleAnalyticsEventsService {
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				this.eventLabel = event.urlAfterRedirects;
-				// ga('set', 'page', event.urlAfterRedirects);
-				// ga('send', 'pageview');
 				this.setPageEvent(event);
 			}
 		});
@@ -46,14 +44,4 @@ export class GoogleAnalyticsEventsService {
 			eventLabel: this.eventLabel,
 		});
 	}
-
-	// public emitEvent(
-	// 	eventCategory: string,
-	// 	eventAction: string) {
-	// 	ga('send', 'event', {
-	// 		eventCategory: eventCategory,
-	// 		eventAction: eventAction,
-	// 		eventLabel: this.eventLabel,
-	// 	});
-	// }
 }
