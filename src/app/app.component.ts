@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 		localStorageService.selectedCurrencyType = CurrencyTypeEnum.NONE;
 	}
 	ngOnInit() {
-		this.googleAnalyticsEventsService.setPageViewEvent('page-category', 'page');
+		this.googleAnalyticsEventsService.emitEvent('page-category', 'page');
 		if (environment.production) {
 			smartlookClient.init(environment.smartLookId);
 		}

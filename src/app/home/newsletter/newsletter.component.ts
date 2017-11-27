@@ -21,6 +21,6 @@ export class NewsletterComponent implements OnInit {
 	ngOnInit() {
 	}
 	emitEmailSubscribeAnalyticsClickEvent() {
-		this.googleAnalyticsEventsService.setPageViewEvent('page-subscribe', 'subscribe');
+		this.googleAnalyticsEventsService.emitEvent('page-subscribe', 'subscribe');
 	}
 }

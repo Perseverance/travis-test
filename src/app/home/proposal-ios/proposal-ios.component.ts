@@ -13,7 +13,7 @@ export class ProposalIosComponent implements OnInit {
   ngOnInit() {
   }
   emitProposalIOSAnalyticsClickEvent() {
-    this.googleAnalyticsEventsService.setPageViewEvent('page-download-ios', 'download-ios');
+    this.googleAnalyticsEventsService.emitEvent('page-download-ios', 'download-ios');
   }
 
 }

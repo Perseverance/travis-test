@@ -22,8 +22,7 @@ export class GoogleAnalyticsEventsService {
 			m.parentNode.insertBefore(a, m);
 		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-		ga('create', environment.googleAnalyticsId, 'auto'); // <- add the UA-ID from your tracking code
-		// <- remove the last line like me
+		ga('create', environment.googleAnalyticsId, 'auto');
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				this.eventLabel = event.urlAfterRedirects;
@@ -35,7 +34,7 @@ export class GoogleAnalyticsEventsService {
 		ga('set', 'page', event.urlAfterRedirects);
 		ga('send', 'pageview');
 	}
-	public setPageViewEvent(
+	public emitEvent(
 		eventCategory: string,
 		eventAction: string) {
 		ga('send', 'event', {

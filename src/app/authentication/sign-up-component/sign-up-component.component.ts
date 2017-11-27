@@ -192,7 +192,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async registerUser() {
-		this.googleAnalyticsEventsService.setPageViewEvent('page-sign-up', 'sign-up');
+		this.googleAnalyticsEventsService.emitEvent('page-sign-up', 'sign-up');
 		const result = await this.authService
 			.performSignUp(
 			this.email.value,

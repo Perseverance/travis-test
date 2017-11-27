@@ -38,16 +38,16 @@ export class FooterComponent implements OnInit {
 			});
 	}
 	public emitFacebookAnalyticsClickEvent() {
-		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'facebook');
+		this.googleAnalyticsEventsService.emitEvent('page-social-link', 'facebook');
 	}
 	public emitTwitterAnalyticsClickEvent() {
-		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'twitter');
+		this.googleAnalyticsEventsService.emitEvent('page-social-link', 'twitter');
 	}
 	public emitTelegramAnalyticsClickEvent() {
-		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'telegram');
+		this.googleAnalyticsEventsService.emitEvent('page-social-link', 'telegram');
 	}
 	public emitRedditAnalyticsClickEvent() {
-		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'reddit');
+		this.googleAnalyticsEventsService.emitEvent('page-social-link', 'reddit');
 	}
 	public goToMapLocation(id: number) {
 		this.router.navigate(['map', {
