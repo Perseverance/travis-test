@@ -43,7 +43,7 @@
             </div>
         </div>
         <button class="btn btn-block propy-control button-big" [disabled]="agentId.invalid || phoneNumber.invalid || name.invalid || email.invalid || message.invalid"
-            (click)="googleEvent()">
+            (click)="emitAnalyticsClickEvent()">
                 {{ 'property-details.contact-agent.contact-agent-title' | translate }}</button>
     </form>
 </div>

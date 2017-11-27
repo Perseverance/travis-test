@@ -81,7 +81,7 @@ export class LocationSearchComponent implements OnInit {
 			const locationName = place.name;
 			this.emitLocationFound({ latitude, longitude, locationAddress, locationName });
 		});
-		this.googleAnalyticsEventsService.emitEvent('page-search', 'search');
+		this.googleAnalyticsEventsService.setPageViewEvent('page-search', 'search');
 	}
 
 	private displaySuggestions(predictions, displayStatus) {

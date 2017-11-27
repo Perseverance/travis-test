@@ -20,7 +20,7 @@ export class NewsletterComponent implements OnInit {
 
 	ngOnInit() {
 	}
-	googleEvent() {
-		this.googleAnalyticsEventsService.emitEvent('page-subscribe', 'subscribe');
+	emitAnalyticsClickEvent() {
+		this.googleAnalyticsEventsService.setPageViewEvent('page-subscribe', 'subscribe');
 	}
 }

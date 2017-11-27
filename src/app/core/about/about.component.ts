@@ -12,8 +12,8 @@ export class AboutUsComponent implements OnInit {
 
   ngOnInit() {
   }
-  googleEvent() {
-    this.googleAnalyticsEventsService.emitEvent('page-about', 'email');
+  emitAnalyticsClickEvent() {
+    this.googleAnalyticsEventsService.setPageViewEvent('page-about', 'email');
   }
 
 } 

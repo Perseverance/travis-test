@@ -12,8 +12,8 @@ export class ProposalIosComponent implements OnInit {
 
   ngOnInit() {
   }
-  googleEvent() {
-    this.googleAnalyticsEventsService.emitEvent('page-download-ios', 'download-ios');
+  emitAnalyticsClickEvent() {
+    this.googleAnalyticsEventsService.setPageViewEvent('page-download-ios', 'download-ios');
   }
 
 }

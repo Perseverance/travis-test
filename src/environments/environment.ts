@@ -30,5 +30,6 @@ export const environment = {
 	},
 	intercomClientId: 'ot4ofyvp',
 	smartLookId: '3e92012c793f28d6d226a85cc4428e5d5af0cfc0',
+	stripePublicKey: 'pk_test_6wYpDH9rwqlyS2V6Vagdtsi2',
 	googleAnalyticsId: 'UA-110127661-1'
 };

@@ -7,6 +7,9 @@ declare let ga: Function;
 export class GoogleAnalyticsEventsService {
 	eventLabel;
 	constructor(public router: Router) {
+		this.setupGoogleAnalytics();
+	}
+	private setupGoogleAnalytics() {
 		(function (i, s, o, g, r, a, m) {
 			i['GoogleAnalyticsObject'] = r;
 			i[r] = i[r] || function () {
@@ -16,7 +19,7 @@ export class GoogleAnalyticsEventsService {
 				m = s.getElementsByTagName(o)[0];
 			a.async = 1;
 			a.src = g;
-			m.parentNode.insertBefore(a, m)
+			m.parentNode.insertBefore(a, m);
 		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
 		ga('create', environment.googleAnalyticsId, 'auto'); // <- add the UA-ID from your tracking code
@@ -24,12 +27,17 @@ export class GoogleAnalyticsEventsService {
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				this.eventLabel = event.urlAfterRedirects;
-				ga('set', 'page', event.urlAfterRedirects);
-				ga('send', 'pageview');
+				// ga('set', 'page', event.urlAfterRedirects);
+				// ga('send', 'pageview');
+				this.setPageEvent(event);
 			}
 		});
 	}
-	public emitEvent(
+	public setPageEvent(event) {
+		ga('set', 'page', event.urlAfterRedirects);
+		ga('send', 'pageview');
+	}
+	public setPageViewEvent(
 		eventCategory: string,
 		eventAction: string) {
 		ga('send', 'event', {
@@ -38,4 +46,14 @@ export class GoogleAnalyticsEventsService {
 			eventLabel: this.eventLabel,
 		});
 	}
+
+	// public emitEvent(
+	// 	eventCategory: string,
+	// 	eventAction: string) {
+	// 	ga('send', 'event', {
+	// 		eventCategory: eventCategory,
+	// 		eventAction: eventAction,
+	// 		eventLabel: this.eventLabel,
+	// 	});
+	// }
 }

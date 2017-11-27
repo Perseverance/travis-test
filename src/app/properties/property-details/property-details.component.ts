@@ -77,7 +77,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 
 	async ngOnInit() {
-		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
+		this.googleAnalyticsEventsService.setPageViewEvent('page-property', 'property');
 		this.propertyImagesCarouselConfig = {
 			grid: { xs: 1, sm: 1, md: 2, lg: 2, all: 0 },
 			slide: 1,

@@ -14,8 +14,7 @@ export class HomeComponent implements OnInit {
 
 	constructor(private router: Router,
 		private authService: AuthenticationService,
-		private zone: NgZone,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+		private zone: NgZone) {
 	}
 
 	ngOnInit() {
