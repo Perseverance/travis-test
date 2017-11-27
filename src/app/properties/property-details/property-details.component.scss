@@ -1,236 +1,243 @@
 @import "../../../variables";
 @import "../../../mixins";
+
 .property {
-    overflow-x: hidden;
-    >div {
-        padding: 0px;
-    }
-    .property-info {
-        margin: 0px;
-    }
-    .property-carousel-row {
-        padding: 0px;
-        width: 120%;
-        overflow: hidden;
-    }
-    .property-carousel-holder {
-        width: 100%;
-        height: 480px;
-        margin: 0px;
-        .property-carousel {
-            .left-arrow,
-            .right-arrow {
-                @include transition(background-color 500ms linear);
-                position: absolute;
-                border: none;
-                outline: none;
-                margin: auto;
-                top: 0;
-                bottom: 0;
-                width: 44px;
-                height: 44px;
-                color: white;
-                background-color: rgba($color: $button-arrow, $alpha: 0.2);
-                @include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
-                &:hover {
-                    background-color: rgba($color: $button-arrow, $alpha: 0.4)
-                }
-                i {
-                    text-align: center;
-                    font-size: 40px;
-                }
-            }
-            .left-arrow {
-                left: 1%;
-                i {
-                    margin-left: -2px;
-                }
-            }
-            .right-arrow {
-                right: 17.5%;
-                i {
-                    margin-right: -2px;
-                }
-            }
-            .ngxcarousel-items {
-                .property-img {
-                    width: 100%;
-                    height: 480px;
-                }
-                .item {
-                    padding: 0px;
-                }
-            }
-        }
-    }
-    .basic-property-info {
-        padding-top: 15px;
-        h3 {
-            font-weight: 400;
-            font-size: 30px;
-        }
-        color: $gray-medium;
-        font-size: $font-size-small;
-        i.fa-active {
-            color: $green-sec;
-            font-size: 10px;
-            position: relative;
-            bottom: 1px;
-        }
-        button.btn-facebook {
-            margin-left: 25px;
-            @media #{$md} {
-                margin-left: 0px;
-            }
-            padding-right: 10px;
-            font-family: $font-family-helvetica;
-        }
-    }
-    button.propy-control.button-small.btn-purchase,
-    a.propy-control.button-small.btn-purchase {
-        height: 26px;
-        min-width: 100px;
-        max-width: 130px;
-        float: right;
-        padding: 2px;
-        @include border-radius(6px);
-        background-color: $button-green;
-        &:hover {
-            background-color: darken($button-green, 2%);
-        }
-        &:focus {
-            background-color: $button-green;
-        }
-    }
-    .info-tabs {
-        margin-top: 25px;
-        padding: 0px 45px;
-        .info-tabs-content {
-            min-height: 500px;
-            padding-bottom: 25px;
-            .info-tabs-top-holder {
-                padding-bottom: 11px;
-                padding: 0px;
-                .nav-tabs {
-                    border: 0;
-                    li {
-                        padding: 0px 10px;
-                        text-align: center;
-                        @media #{$sm} {
-                            float: left;
-                        }
-                        a {
-                            background-color: transparent;
-                            border: none;
-                            padding: 10px 0px;
-                            display: inline;
-                            @include border-radius(0px);
-                        }
-                        &.active {
-                            a {
-                                color: $blue-main;
-                                border-bottom: 2px solid $blue-main;
-                            }
-                        }
-                    }
-                }
-            }
-            .bottom-border {
-                height: 32px;
-                border-bottom: 1px solid $gray-lighter;
-            }
-            .tab-content {
-                margin-top: 25px;
-                font-size: $font-size-medium;
-                color: $black; // This fixes the map not appearing after refresh
-                >#location.tab-pane {
-                    display: block;
-                    visibility: hidden;
-                    height: 0px;
-                    &.active {
-                        height: auto;
-                        visibility: visible;
-                    }
-                }
-                .tab-header {
-                    padding: 0px;
-                    margin-bottom: 20px;
-                    h4 {
-                        font-size: 22px;
-                        margin: 0px;
-                    }
-                }
-                #overview {
-                    .property-desc {
-                        margin-top: calc(5% + 10px);
-                        line-height: 24px;
-                        @media #{$xs} {
-                            margin-top: 55px;
-                        }
-                        @media #{$md} {
-                            margin-top: 55px;
-                        }
-                    }
-                }
-                #features {
-                    .single-feature-wrapper {
-                        padding: 15px 0px;
-                        border-bottom: 1px solid $gray-lighter;
-                        font-size: 14px;
-                        &.left {
-                            width: 48%;
-                            float: left;
-                            @media (max-width: 1300px) {
-                                width: 100%;
-                            }
-                        }
-                        &.right {
-                            width: 48%;
-                            margin-left: 4%;
-                            float: left;
-                            @media (max-width: 1300px) {
-                                width: 100%;
-                                margin: 0px;
-                            }
-                        }
-                        .single-feature-label {
-                            color: $gray-medium;
-                        }
-                        .single-feature-value {
-                            color: $black;
-                        }
-                    }
-                }
-                #location {
-                    .location-map {
-                        padding: 0px;
-                        .google-map-holder {
-                            width: 100%;
-                            height: 320px;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    .basic-property-info {
-        padding-top: 15px;
-        h3 {
-            font-weight: 400;
-            font-size: 30px;
-        }
-        color: $gray-medium;
-        font-size: $font-size-small;
-        i.fa-active {
-            color: $green-sec;
-            font-size: 10px;
-        }
-    }
-    .contact-agent-holder {
-        position: relative;
-        margin-top: -60px;
-        @media #{$xs} {
-            margin-top: 0%;
-        }
-    }
+	overflow-x: hidden;
+	> div {
+		padding: 0px;
+	}
+	.property-info {
+		margin: 0px;
+	}
+	.property-carousel-row {
+		padding: 0px;
+		width: 120%;
+		overflow: hidden;
+	}
+	.property-carousel-holder {
+		width: 100%;
+		height: 480px;
+		margin: 0px;
+		.property-carousel {
+			.left-arrow,
+			.right-arrow {
+				@include transition(background-color 500ms linear);
+				position: absolute;
+				border: none;
+				outline: none;
+				margin: auto;
+				top: 0;
+				bottom: 0;
+				width: 44px;
+				height: 44px;
+				color: white;
+				background-color: rgba($color: $button-arrow, $alpha: 0.2);
+				@include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
+				&:hover {
+					background-color: rgba($color: $button-arrow, $alpha: 0.4)
+				}
+				i {
+					text-align: center;
+					font-size: 40px;
+				}
+			}
+			.left-arrow {
+				left: 1%;
+				i {
+					margin-left: -2px;
+				}
+			}
+			.right-arrow {
+				right: 17.5%;
+				i {
+					margin-right: -2px;
+				}
+			}
+			.ngxcarousel-items {
+				.property-img {
+					width: 100%;
+					height: 480px;
+				}
+				.item {
+					padding: 0px;
+				}
+			}
+		}
+	}
+	.basic-property-info {
+		padding-top: 15px;
+		h3 {
+			font-weight: 400;
+			font-size: 30px;
+		}
+		color: $gray-medium;
+		font-size: $font-size-small;
+		i.fa-active {
+			color: $green-sec;
+			font-size: 10px;
+			position: relative;
+			bottom: 1px;
+		}
+		button.btn-facebook {
+			margin-left: 25px;
+			@media #{$md} {
+				margin-left: 0px;
+			}
+			padding-right: 10px;
+			font-family: $font-family-helvetica;
+		}
+	}
+	button.propy-control.button-small.btn-purchase,
+	a.propy-control.button-small.btn-purchase {
+		height: 26px;
+		min-width: 160px;
+		float: right;
+		padding: 2px;
+		@include border-radius(6px);
+		background-color: $button-green;
+		&:hover {
+			background-color: darken($button-green, 2%);
+		}
+		&:focus {
+			background-color: $button-green;
+		}
+		span {
+			font-weight: normal;
+		}
+		&.disabled-reservation {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+	}
+	.info-tabs {
+		margin-top: 25px;
+		padding: 0px 45px;
+		.info-tabs-content {
+			min-height: 500px;
+			padding-bottom: 25px;
+			.info-tabs-top-holder {
+				padding-bottom: 11px;
+				padding: 0px;
+				.nav-tabs {
+					border: 0;
+					li {
+						padding: 0px 10px;
+						text-align: center;
+						@media #{$sm} {
+							float: left;
+						}
+						a {
+							background-color: transparent;
+							border: none;
+							padding: 10px 0px;
+							display: inline;
+							@include border-radius(0px);
+						}
+						&.active {
+							a {
+								color: $blue-main;
+								border-bottom: 2px solid $blue-main;
+							}
+						}
+					}
+				}
+			}
+			.bottom-border {
+				height: 32px;
+				border-bottom: 1px solid $gray-lighter;
+			}
+			.tab-content {
+				margin-top: 25px;
+				font-size: $font-size-medium;
+				color: $black; // This fixes the map not appearing after refresh
+				> #location.tab-pane {
+					display: block;
+					visibility: hidden;
+					height: 0px;
+					&.active {
+						height: auto;
+						visibility: visible;
+					}
+				}
+				.tab-header {
+					padding: 0px;
+					margin-bottom: 20px;
+					h4 {
+						font-size: 22px;
+						margin: 0px;
+					}
+				}
+				#overview {
+					.property-desc {
+						margin-top: calc(5% + 10px);
+						line-height: 24px;
+						@media #{$xs} {
+							margin-top: 55px;
+						}
+						@media #{$md} {
+							margin-top: 55px;
+						}
+					}
+				}
+				#features {
+					.single-feature-wrapper {
+						padding: 15px 0px;
+						border-bottom: 1px solid $gray-lighter;
+						font-size: 14px;
+						&.left {
+							width: 48%;
+							float: left;
+							@media (max-width: 1300px) {
+								width: 100%;
+							}
+						}
+						&.right {
+							width: 48%;
+							margin-left: 4%;
+							float: left;
+							@media (max-width: 1300px) {
+								width: 100%;
+								margin: 0px;
+							}
+						}
+						.single-feature-label {
+							color: $gray-medium;
+						}
+						.single-feature-value {
+							color: $black;
+						}
+					}
+				}
+				#location {
+					.location-map {
+						padding: 0px;
+						.google-map-holder {
+							width: 100%;
+							height: 320px;
+						}
+					}
+				}
+			}
+		}
+	}
+	.basic-property-info {
+		padding-top: 15px;
+		h3 {
+			font-weight: 400;
+			font-size: 30px;
+		}
+		color: $gray-medium;
+		font-size: $font-size-small;
+		i.fa-active {
+			color: $green-sec;
+			font-size: 10px;
+		}
+	}
+	.contact-agent-holder {
+		position: relative;
+		margin-top: -60px;
+		@media #{$xs} {
+			margin-top: 0%;
+		}
+	}
 }

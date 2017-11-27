@@ -11,7 +11,16 @@ import { NgxCarousel } from 'ngx-carousel';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
 import { AuthenticationService } from './../../authentication/authentication.service';
 import { PropertiesService } from './../properties.service';
-import { Component, OnInit, OnDestroy, ViewEncapsulation, ApplicationRef, NgZone, ViewChild, ElementRef } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	ViewEncapsulation,
+	ApplicationRef,
+	NgZone,
+	ViewChild,
+	ElementRef
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -42,6 +51,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public publicTransportScale: object;
 	public binaryScale: object;
 
+	public isPropertyReserved = false;
+	public isPropertyReservedByYou = false;
 	constructor(
 		router: Router,
 		private route: ActivatedRoute,
@@ -59,10 +70,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private translateService: TranslateService,
 		private metaService: MetaService,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+
 		super(router);
 		this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
 		this.IMAGE_HEIGHT_PX = 480;
-
 	}
 
 	async ngOnInit() {
@@ -124,8 +135,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
+			self.checkIfPropertyReservedByYou(property);
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
-			self.zone.run(() => { });
+			self.zone.run(() => {
+			});
 		});
 
 
@@ -170,7 +183,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public draw() {
 		console.log(this.map);
 		google.maps.event.trigger(this.map.el.nativeElement, 'resize');
-		this.zone.run(() => { });
+		this.zone.run(() => {
+		});
 	}
 
 	public shareInFacebook() {
@@ -182,8 +196,19 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		};
 
 		this.fb.ui(params)
-			.then((res: UIResponse) => { })
+			.then((res: UIResponse) => {
+			})
 			.catch((e: any) => console.error(e));
 
+	}
+
+	private async checkIfPropertyReservedByYou(property: any) {
+		this.isPropertyReserved = (property.reservedByUserId && property.reservedByUserId.length > 0);
+		if (!this.isPropertyReserved) {
+			return;
+		}
+
+		const currentUser = await this.authService.getCurrentUser();
+		this.isPropertyReservedByYou = (currentUser.data.data.id === property.reservedByUserId);
 	}
 }
