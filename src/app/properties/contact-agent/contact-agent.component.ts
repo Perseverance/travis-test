@@ -1,3 +1,4 @@
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { Subscription } from 'rxjs/Subscription';
 import { UserData } from './../../authentication/authentication.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
@@ -32,7 +33,8 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		private formBuilder: FormBuilder,
 		private notificationService: NotificationsService,
 		errorsService: ErrorsService,
-		translateService: TranslateService) {
+		translateService: TranslateService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(errorsService, translateService);
 
 		this.contactAgentForm = this.formBuilder.group({
@@ -86,6 +88,10 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 	public get agentId() {
 		return this.contactAgentForm.get('agentId');
+	}
+
+	public emitContactAgentAnalyticsClickEvent() {
+		this.googleAnalyticsEventsService.emitEvent('page-contact', 'contact');
 	}
 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')

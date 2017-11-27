@@ -1,49 +1,49 @@
 <footer *ngIf="shouldShowFooter">
-	<div class="footer-container row col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10">
-		<div class="hidden-xs col-sm-6 col-lg-4">
-			<div class="footer-title">
-				{{'footer.search-by-city' | translate}}
-			</div>
-			<h6 class="footer-suggestion" (click)="goToMapLocation(0)">{{'footer.city1' | translate}}</h6>
-			<h6 class="footer-suggestion" (click)="goToMapLocation(1)">{{'footer.city2' | translate}}</h6>
-			<h6 class="footer-suggestion" (click)="goToMapLocation(2)">{{'footer.city3' | translate}}</h6>
-			<h6 class="footer-suggestion" (click)="goToMapLocation(3)">{{'footer.city4' | translate}}</h6>
-			<h6 class="footer-suggestion" (click)="goToMapLocation(5)">{{'footer.city6' | translate}}</h6>
-		</div>
-		<div class="hidden-xs hidden-sm hidden-md col-lg-4">
-			<div class="footer-title">
-				{{'footer.social' | translate}}
-			</div>
-			<a href="https://www.facebook.com/propyinc/?fref=ts" target="_blank">
-				<h6 class="footer-suggestion">Facebook</h6>
-			</a>
-			<a href="https://twitter.com/propyinc" target="_blank">
-				<h6 class="footer-suggestion">Twitter</h6>
-			</a>
-			<a href="https://t.me/propy" target="_blank">
-				<h6 class="footer-suggestion">Telegram</h6>
-			</a>
-			<a href="https://www.reddit.com/user/PropyInc/" target="_blank">
-				<h6 class="footer-suggestion">Reddit</h6>
-			</a>
-		</div>
-		<div class="col-xs-12 col-sm-6 col-lg-4">
-			<div class="hidden-xs">
-				<div class="footer-title">
-					{{'footer.company' | translate}}
-				</div>
-				<h6 class="footer-suggestion" (click)="goToAbout()">{{'footer.about-us' | translate}}</h6>
-				<a href="https://blog.propy.com/" target="_blank">
-					<h6 class="footer-suggestion">{{'footer.blog' | translate}}</h6>
-				</a>
-			</div>
-			<div class="pull-right col-xs-12 footer-details text-xs-center">
-				<p>
-					<span>{{'footer.copyright' | translate}}</span> &copy;
-					<span>{{ currentYear }}</span>
-					<span>{{'footer.all-rights' | translate}}</span>
-				</p>
-			</div>
-		</div>
-	</div>
+    <div class="footer-container row col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10">
+        <div class="hidden-xs col-sm-6 col-lg-4">
+            <div class="footer-title">
+                {{'footer.search-by-city' | translate}}
+            </div>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(0)">{{'footer.city1' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(1)">{{'footer.city2' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(2)">{{'footer.city3' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(3)">{{'footer.city4' | translate}}</h6>
+            <h6 class="footer-suggestion" (click)="goToMapLocation(5)">{{'footer.city6' | translate}}</h6>
+        </div>
+        <div class="hidden-xs hidden-sm hidden-md col-lg-4">
+            <div class="footer-title">
+                {{'footer.social' | translate}}
+            </div>
+            <a (click)="emitFacebookAnalyticsClickEvent()" href="https://www.facebook.com/propyinc/?fref=ts" target="_blank">
+                <h6 class="footer-suggestion">Facebook</h6>
+            </a>
+            <a (click)="emitTwitterAnalyticsClickEvent()" href="https://twitter.com/propyinc" target="_blank">
+                <h6 class="footer-suggestion">Twitter</h6>
+            </a>
+            <a (click)="emitTelegramAnalyticsClickEvent()" href="https://t.me/propy" target="_blank">
+                <h6 class="footer-suggestion">Telegram</h6>
+            </a>
+            <a (click)="emitRedditAnalyticsClickEvent()" href="https://www.reddit.com/user/PropyInc/" target="_blank">
+                <h6 class="footer-suggestion">Reddit</h6>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4">
+            <div class="hidden-xs">
+                <div class="footer-title">
+                    {{'footer.company' | translate}}
+                </div>
+                <h6 class="footer-suggestion" (click)="goToAbout()">{{'footer.about-us' | translate}}</h6>
+                <a href="https://blog.propy.com/" target="_blank">
+                    <h6 class="footer-suggestion">{{'footer.blog' | translate}}</h6>
+                </a>
+            </div>
+            <div class="pull-right col-xs-12 footer-details text-xs-center">
+                <p>
+                    <span>{{'footer.copyright' | translate}}</span> &copy;
+                    <span>{{ currentYear }}</span>
+                    <span>{{'footer.all-rights' | translate}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
 </footer>

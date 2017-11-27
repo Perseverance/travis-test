@@ -1,3 +1,4 @@
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
 import { AgencyService } from './../../shared/agency.service';
 import { CompleterService, RemoteData, CompleterItem } from 'ng2-completer';
@@ -46,7 +47,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		private completerService: CompleterService,
 		private agencyService: AgencyService,
 		errorsService: ErrorsService,
-		translateService: TranslateService) {
+		translateService: TranslateService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(errorsService, translateService);
 
@@ -190,6 +192,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async registerUser() {
+		this.googleAnalyticsEventsService.emitEvent('page-sign-up', 'sign-up');
 		const result = await this.authService
 			.performSignUp(
 			this.email.value,

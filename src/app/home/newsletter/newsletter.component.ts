@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Jsonp} from '@angular/http';
+import { Jsonp } from '@angular/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { GoogleAnalyticsEventsService } from '../../shared/google-analytics.service';
 
 @Component({
 	selector: 'app-newsletter',
@@ -10,12 +11,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class NewsletterComponent implements OnInit {
 
 	public sendMailChimpForm: FormGroup;
-	constructor(private formBuilder: FormBuilder) {
+	constructor(private formBuilder: FormBuilder,
+		private googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		this.sendMailChimpForm = this.formBuilder.group({
 			email: ['', []]
 		});
 	}
 
 	ngOnInit() {
+	}
+	emitEmailSubscribeAnalyticsClickEvent() {
+		this.googleAnalyticsEventsService.emitEvent('page-subscribe', 'subscribe');
 	}
 }

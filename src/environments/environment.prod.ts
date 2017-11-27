@@ -25,5 +25,6 @@ export const environment = {
 	},
 	intercomClientId: 'ot4ofyvp',
 	smartLookId: '6bb5a0bdab863c838a4ecf0000364eec693fa91e',
-	stripePublicKey: 'pk_live_Rejlq3HMVQLAAXkZRxSSDM5l'
+	stripePublicKey: 'pk_live_Rejlq3HMVQLAAXkZRxSSDM5l',
+	googleAnalyticsId: 'UA-65716380-2'
 };

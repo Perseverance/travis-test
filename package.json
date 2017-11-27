@@ -25,6 +25,7 @@
 		"@ngx-meta/core": "^4.0.1",
 		"@ngx-translate/core": "^8.0.0",
 		"@ngx-translate/http-loader": "^2.0.0",
+		"@types/google.analytics": "0.0.36",
 		"angular-linkedin-sdk": "^0.1.7",
 		"angular2-moment": "^1.7.0",
 		"awesome-bootstrap-checkbox": "^1.0.0",
