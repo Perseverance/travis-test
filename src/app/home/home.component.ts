@@ -1,7 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { GoogleAnalyticsEventsService } from '../shared/google-analytics.service';
 
 declare function SmartBanner(param1: any): void;
 

@@ -12,7 +12,7 @@ export class AboutUsComponent implements OnInit {
 
   ngOnInit() {
   }
-  emitAnalyticsClickEvent() {
+  emitEmailContactAnalyticsClickEvent() {
     this.googleAnalyticsEventsService.setPageViewEvent('page-about', 'email');
   }
 

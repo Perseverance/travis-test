@@ -37,16 +37,16 @@ export class FooterComponent implements OnInit {
 				this.shouldShowFooter = !event.url.startsWith('/map');
 			});
 	}
-	public emitFacebookClickEvent() {
+	public emitFacebookAnalyticsClickEvent() {
 		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'facebook');
 	}
-	public emitTwitterClickEvent() {
+	public emitTwitterAnalyticsClickEvent() {
 		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'twitter');
 	}
-	public emitTelegramClickEvent() {
+	public emitTelegramAnalyticsClickEvent() {
 		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'telegram');
 	}
-	public emitRedditClickEvent() {
+	public emitRedditAnalyticsClickEvent() {
 		this.googleAnalyticsEventsService.setPageViewEvent('page-social-link', 'reddit');
 	}
 	public goToMapLocation(id: number) {

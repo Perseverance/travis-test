@@ -90,7 +90,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		return this.contactAgentForm.get('agentId');
 	}
 
-	public emitAnalyticsClickEvent() {
+	public emitContactAgentAnalyticsClickEvent() {
 		this.googleAnalyticsEventsService.setPageViewEvent('page-contact', 'contact');
 	}
 
