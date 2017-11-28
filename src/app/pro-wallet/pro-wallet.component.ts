@@ -46,7 +46,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
-				if (!userInfo.user.walletId) {
+				if (!userInfo.user || !userInfo.user.walletId) {
 					return;
 				}
 				this.proWalletAddress.setValue(userInfo.user.walletId);
