@@ -23,7 +23,7 @@ export const environment = {
 		DEFAULT_MARKER_LABEL_FONT_SIZE: '11px',
 		MAP_DEFAULT_ZOOM: 12
 	},
-	intercomClientId: 'ot4ofyvp',
+	intercomClientId: 'zpladqap',
 	smartLookId: '6bb5a0bdab863c838a4ecf0000364eec693fa91e',
 	stripePublicKey: 'pk_live_Rejlq3HMVQLAAXkZRxSSDM5l',
 	googleAnalyticsId: 'UA-65716380-2'
