@@ -35,5 +35,8 @@ export const environment = {
 	pusher: {
 		key: '5f7c7a18cc55e6c0d7d3',
 		cluster: 'eu'
+	},
+	helloSign: {
+		clientId: 'bf1d8f7cfa6a4ebd4a33765723fa03bc'
 	}
 };
