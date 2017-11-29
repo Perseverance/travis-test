@@ -26,5 +26,12 @@ export const environment = {
 	intercomClientId: 'zpladqap',
 	smartLookId: '6bb5a0bdab863c838a4ecf0000364eec693fa91e',
 	stripePublicKey: 'pk_live_Rejlq3HMVQLAAXkZRxSSDM5l',
-	googleAnalyticsId: 'UA-65716380-2'
+	googleAnalyticsId: 'UA-65716380-2',
+	pusher: {
+		key: '5f7c7a18cc55e6c0d7d3',
+		cluster: 'eu'
+	},
+	helloSign: {
+		clientId: 'bf1d8f7cfa6a4ebd4a33765723fa03bc'
+	}
 };
