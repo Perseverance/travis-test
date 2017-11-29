@@ -38,7 +38,7 @@ export class APIEndpointsService {
 		MARK_PROPERTY_AS_SOLD: `${this.INTERNAL_API_PREFIX}/Properties/setsold/`,
 		HIDE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/hidden`,
 		RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/createChargeForReservation`,
-		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/pusher/auth`
+		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/notifications/authPusher`
 	};
 
 	constructor() {

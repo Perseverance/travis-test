@@ -33,7 +33,7 @@ export const environment = {
 	stripePublicKey: 'pk_test_6wYpDH9rwqlyS2V6Vagdtsi2',
 	googleAnalyticsId: 'UA-110127661-1',
 	pusher: {
-		key: 'ee4ccfa5076fe3b5f4df',
+		key: '5f7c7a18cc55e6c0d7d3',
 		cluster: 'eu'
 	}
 };

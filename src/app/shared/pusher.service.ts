@@ -14,7 +14,7 @@ export class PusherService {
 
 	public initializePusher(accessToken: string, userId: string): void {
 		this.pusher = new Pusher(environment.pusher.key, {
-			authEndpoint: this.apiEndpointsService.INTERNAL_ENDPOINTS.PUSHER_AUTH_ENDPOINT,
+			authEndpoint: `${environment.apiUrl}${this.apiEndpointsService.INTERNAL_ENDPOINTS.PUSHER_AUTH_ENDPOINT}`,
 			auth: {
 				headers: {
 					'Authentication': `Bearer ${accessToken}`
