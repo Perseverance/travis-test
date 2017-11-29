@@ -33,6 +33,8 @@ import {ConfirmationService} from 'primeng/primeng';
 import {ProWalletService} from '../pro-wallet/pro-wallet.service';
 import {AvatarModule} from 'ngx-avatar';
 import {ProWalletTranslationsService} from '../pro-wallet/translations/pro-wallet-translations.service';
+import {PusherService} from '../shared/pusher.service';
+import {NotificationsComponent} from './header/notifications/notifications.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -61,7 +63,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TermsComponent,
 		AboutUsComponent,
 		ReferralComponent,
-		LanguageLabelPipe
+		LanguageLabelPipe,
+		NotificationsComponent
 	],
 	providers: [
 		HttpClient,
@@ -85,7 +88,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		BrowserDetectionService,
 		ConfirmationService,
 		ProWalletService,
-		ProWalletTranslationsService
+		ProWalletTranslationsService,
+		PusherService
 	],
 	exports: [
 		TranslateModule,
@@ -93,7 +97,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		FooterComponent,
 		NotificationMessageComponent,
 		TermsComponent,
-		AboutUsComponent
+		AboutUsComponent,
+		NotificationsComponent
 	]
 })
 export class CoreModule {

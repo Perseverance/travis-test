@@ -1,22 +1,22 @@
-import { Web3Module } from './web3/web3.module';
-import { MetaModule } from '@ngx-meta/core';
-import { SettingsModule } from './settings/settings.module';
-import { PropertiesModule } from './properties/properties.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from './core/core.module';
-import { FacebookModule } from 'ngx-facebook';
-import { HomeModule } from './home/home.module';
-import { LinkedInSdkModule } from 'angular-linkedin-sdk';
-import { GoogleMapModule } from './google-map/google-map.module';
-import { InlineSVGModule } from 'ng-inline-svg';
-import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/core';
-import { IntercomModule, INTERCOM_DIRECTIVES } from 'ng2-intercom';
-import { PurchaseModule } from './purchase/purchase.module';
+import {Web3Module} from './web3/web3.module';
+import {MetaModule} from '@ngx-meta/core';
+import {SettingsModule} from './settings/settings.module';
+import {PropertiesModule} from './properties/properties.module';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {AuthenticationModule} from './authentication/authentication.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CoreModule} from './core/core.module';
+import {FacebookModule} from 'ngx-facebook';
+import {HomeModule} from './home/home.module';
+import {LinkedInSdkModule} from 'angular-linkedin-sdk';
+import {GoogleMapModule} from './google-map/google-map.module';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {PageTitlePositioning, MetaLoader, MetaStaticLoader} from '@ngx-meta/core';
+import {IntercomModule, INTERCOM_DIRECTIVES} from 'ng2-intercom';
+import {PurchaseModule} from './purchase/purchase.module';
 
 export function metaFactory(): MetaLoader {
 	return new MetaStaticLoader({
@@ -41,7 +41,7 @@ export function metaFactory(): MetaLoader {
 @NgModule({
 	declarations: [
 		AppComponent,
-		...INTERCOM_DIRECTIVES,
+		...INTERCOM_DIRECTIVES
 	],
 	imports: [
 		BrowserModule,
@@ -58,7 +58,7 @@ export function metaFactory(): MetaLoader {
 		AppRoutingModule,
 		FacebookModule.forRoot(),
 		LinkedInSdkModule,
-		InlineSVGModule.forRoot({ baseUrl: '' }),
+		InlineSVGModule.forRoot({baseUrl: ''}),
 		MetaModule.forRoot({
 			provide: MetaLoader,
 			useFactory: (metaFactory)
