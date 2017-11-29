@@ -1,0 +1,9 @@
+@import "../../../../variables";
+@import "../../../../mixins";
+
+.no-new-notifications {
+	font-size: $font-size-small;
+	color: $gray-dark;
+	padding: 10px;
+	margin: 0px;
+}
