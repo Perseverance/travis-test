@@ -12,6 +12,7 @@ import {MyListedPropertiesComponent} from './my-listed-properties/my-listed-prop
 import {SharedModule} from '../shared/shared.module';
 import {ConfirmDialogModule, GrowlModule} from 'primeng/primeng';
 import {ProWalletModule} from '../pro-wallet/pro-wallet.module';
+import {MyDealsComponent} from './my-deals/my-deals.component';
 
 @NgModule({
 	imports: [
@@ -26,7 +27,7 @@ import {ProWalletModule} from '../pro-wallet/pro-wallet.module';
 		GrowlModule,
 		ProWalletModule
 	],
-	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent]
+	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent]
 })
 export class SettingsModule {
 }

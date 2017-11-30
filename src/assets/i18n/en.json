@@ -295,7 +295,8 @@
 			"email-notifications-settings": "Email notifications",
 			"password-settings": "Password",
 			"my-listed-properties": "My Listings",
-			"pro-wallet": "My PRO Wallet"
+			"pro-wallet": "My PRO Wallet",
+			"my-deals": "My deals"
 		},
 		"general-settings": {
 			"update-success": "Your profile was updated succesfully!",
