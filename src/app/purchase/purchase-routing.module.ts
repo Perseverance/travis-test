@@ -6,7 +6,7 @@ import { PurchaseComponent } from './purchase/purchase.component';
 
 const routes: Routes = [
 	{
-		path: 'purchase/:id',
+		path: 'purchase/:id/:address',
 		component: PurchaseComponent,
 		canActivate: [TokenGuard, MetaGuard]
 	}

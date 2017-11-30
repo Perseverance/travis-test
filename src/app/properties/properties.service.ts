@@ -230,4 +230,12 @@ export class PropertiesService {
 		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, { params });
 		return result.data.data;
 	}
+
+	public async getDeedPartiesAddresses(propertyId: string, agentId: string): Promise<any> {
+		return {
+			escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625',
+			agentAddress: '0xf720b4568A72DDAa1c1FcA43cB5d5dfa46edfdf3',
+			sellerAddress: '0x252490Bbcf48C58c90F5489A2A5bA0B4cDC21947'
+		};
+	}
 }

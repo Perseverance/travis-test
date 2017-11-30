@@ -1,3 +1,4 @@
+import { SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ReserveService } from './../reserve.service';
@@ -11,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from 'ngx-stripe';
 import { ErrorsService } from '../../shared/errors/errors.service';
+import { PropertiesService } from '../../properties/properties.service';
 
 @Component({
 	selector: 'app-purchase',
@@ -32,8 +34,10 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 	public isUserAnonymous: boolean;
 
 	private idSubscription: Subscription;
+	private addressSubscription: Subscription;
 
 	private propertyId: string;
+	private propertyAddress: string;
 
 	constructor(
 		private router: Router,
@@ -44,7 +48,9 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 		private notificationService: NotificationsService,
 		translateService: TranslateService,
 		errorsService: ErrorsService,
-		private reserveService: ReserveService) {
+		private reserveService: ReserveService,
+		private propertiesService: PropertiesService,
+		private smartcontractConnectionService: SmartContractConnectionService) {
 		super(errorsService, translateService);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -96,10 +102,19 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 			}
 			self.propertyId = propertyId;
 		});
+
+		const addressObservable: Observable<string> = self.route.params.map(p => p.address);
+		this.addressSubscription = addressObservable.subscribe(async function (propertyAddress) {
+			if (!propertyAddress) {
+				throw new Error('No property address supplied');
+			}
+			self.propertyAddress = propertyAddress;
+		});
 	}
 
 	ngOnDestroy() {
 		this.idSubscription.unsubscribe();
+		this.addressSubscription.unsubscribe();
 	}
 
 	public get name() {
@@ -119,6 +134,22 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 			.subscribe(async result => {
 				if (result.token) {
 					await this.reserveService.reserveProperty(this.propertyId, result.token.id);
+					this.notificationService.pushInfo({
+						title: 'Creating Deed...',
+						message: '',
+						time: (new Date().getTime()),
+						timeout: 60000
+					});
+					const addresses = await this.propertiesService.getDeedPartiesAddresses(this.propertyId, environment.hardCodedDeedParties.agentId);
+					console.log(addresses);
+					const deedAddress = await this.smartcontractConnectionService.createDeed(
+						this.propertyAddress,
+						addresses.sellerAddress,
+						addresses.agentAddress,
+						addresses.escrowAddress
+					);
+					console.log(deedAddress);
+					await this.reserveService.sendDeedAddress(deedAddress);
 					this.notificationService.pushSuccess({
 						title: this.successTitle,
 						message: this.successMessage,

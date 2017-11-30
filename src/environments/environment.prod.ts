@@ -26,5 +26,8 @@ export const environment = {
 	intercomClientId: 'zpladqap',
 	smartLookId: '6bb5a0bdab863c838a4ecf0000364eec693fa91e',
 	stripePublicKey: 'pk_live_Rejlq3HMVQLAAXkZRxSSDM5l',
-	googleAnalyticsId: 'UA-65716380-2'
+	googleAnalyticsId: 'UA-65716380-2',
+	hardCodedDeedParties: {
+		agentId: '123123'
+	}
 };
