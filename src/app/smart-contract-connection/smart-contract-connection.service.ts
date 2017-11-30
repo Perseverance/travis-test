@@ -13,12 +13,15 @@ export enum Status {
 }
 
 export interface Deed {
-	deedContractAddress: string;
+	deedContractAddress: EthereumAddress;
 	status: Status;
 	createdAt: number;
 	lastUpdatedAt: number;
 	propertyAddress: string;
 }
+
+export type EthereumAddress = string;
+export type SmartContractAddress = string;
 
 @Injectable()
 export class SmartContractConnectionService {
@@ -27,7 +30,7 @@ export class SmartContractConnectionService {
 
 	private fakeDeedStatus = Status.reserve;
 
-	private fakeDeedAddress = '0xc213ddab16623d9f005941c4ad717c41d43e58be';
+	private fakeDeedAddress = '0x406e4e45785acf237c05c8f0d80dd2b11e4042db';
 	private fakePropertyAddress = 'Kmetska Sgrada, Gabrovo, Gabrovo, Bulgaria';
 
 	private fakeCreatedAt = this.nowMinusDays(5);
@@ -39,7 +42,7 @@ export class SmartContractConnectionService {
 		return d.getTime();
 	}
 
-	private getFakeDeeds(): Deed[] {
+	private async getDeeds(): Promise<Deed[]> {
 		const fakeDeeds = [
 			{
 				deedContractAddress: this.fakeDeedAddress,
@@ -53,15 +56,23 @@ export class SmartContractConnectionService {
 		return fakeDeeds;
 	}
 
-	public getAgentDeeds(): Deed[] {
-		return this.getFakeDeeds();
+	public async getAgentDeeds(): Promise<Deed[]> {
+		return this.getDeeds();
 	}
 
-	public getBuyerDeeds(): Deed[] {
-		return this.getFakeDeeds();
+	public async getBuyerDeeds(): Promise<Deed[]> {
+		return this.getDeeds();
 	}
 
-	public getSellerDeeds(): Deed[] {
-		return this.getFakeDeeds();
+	public async getSellerDeeds(): Promise<Deed[]> {
+		return this.getDeeds();
+	}
+
+	public async createDeed(
+		propertyLocationAddress: string,
+		sellerAddress: EthereumAddress,
+		brokerAddress: EthereumAddress,
+		escrowAddress: EthereumAddress): Promise<SmartContractAddress> {
+		return this.fakeDeedAddress;
 	}
 }
