@@ -80,11 +80,11 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async signPurchaseAgreement(deedContractAddress: string, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
-		return true;
+	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: string): Promise<boolean> {
+		return 'hardcoded_request_id';
 	}
 
-	public async markDeedVerified(deedContractAddress: string): Promise<boolean> {
+	public async signPurchaseAgreement(deedContractAddress: string, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -103,5 +103,11 @@ export class SmartContractConnectionService {
 	public async markEscrowAcceptedInvitation(deedContractAddress: string): Promise<boolean> {
 		return true;
 	}
+
+	public async markDeedVerified(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+
 
 }
