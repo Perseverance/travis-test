@@ -6,6 +6,7 @@ export enum Status {
 	agentInvited,
 	verifed,
 	purchaseAgreement,
+	settlementStatement,
 	payment,
 	receivedPayment,
 	titleDeed,
@@ -104,8 +105,37 @@ export class SmartContractConnectionService {
 		return 'hardcoded_request_id';
 	}
 
+	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async hasSellerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async hasBrokerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
 	public async signPurchaseAgreement(deedContractAddress: string, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
+
+	public async markSettlementStatementUploaded(): Promise<boolean> {
+		return true;
+	}
+
+	public async markSellerDisclosuresUploaded(sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: string): Promise<string> {
+		return 'hardcoded_request_id';
+	}
+
+	public async signSellerDisclosures(deedContractAddress: string, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
 
 }
