@@ -60,4 +60,8 @@ export class MyDealsComponent implements OnInit {
 		}
 	}
 
+	public goToTransactionToolWorkflow(data: any) {
+		console.log(data);
+	}
+
 }
