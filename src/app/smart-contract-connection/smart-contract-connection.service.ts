@@ -76,18 +76,6 @@ export class SmartContractConnectionService {
 		return this.fakeDeedAddress;
 	}
 
-	public async markPurchaseAgreementUploaded(purchaseAgreementSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
-	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: string): Promise<boolean> {
-		return 'hardcoded_request_id';
-	}
-
-	public async signPurchaseAgreement(deedContractAddress: string, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
 	public async markSellerInvitationSent(deedContractAddress: string): Promise<boolean> {
 		return true;
 	}
@@ -108,6 +96,16 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async markPurchaseAgreementUploaded(purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
 
+	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: string): Promise<string> {
+		return 'hardcoded_request_id';
+	}
+
+	public async signPurchaseAgreement(deedContractAddress: string, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
 
 }
