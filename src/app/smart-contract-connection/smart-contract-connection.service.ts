@@ -76,7 +76,11 @@ export class SmartContractConnectionService {
 		return this.fakeDeedAddress;
 	}
 
-	public async markAsSigned(deedContractAddress: string): Promise<boolean> {
+	public async markPurchaseAgreementUploaded(agreementDownloadLink: string): Promise<boolean> {
+		return true;
+	}
+
+	public async signPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
 		return true;
 	}
 }
