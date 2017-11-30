@@ -35,6 +35,7 @@ import {AvatarModule} from 'ngx-avatar';
 import {ProWalletTranslationsService} from '../pro-wallet/translations/pro-wallet-translations.service';
 import {PusherService} from '../shared/pusher.service';
 import {NotificationsComponent} from './header/notifications/notifications.component';
+import {SmartContractConnectionService} from '../smart-contract-connection/smart-contract-connection.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,7 +90,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ConfirmationService,
 		ProWalletService,
 		ProWalletTranslationsService,
-		PusherService
+		PusherService,
+		SmartContractConnectionService
 	],
 	exports: [
 		TranslateModule,

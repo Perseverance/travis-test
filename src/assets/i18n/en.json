@@ -296,7 +296,7 @@
 			"password-settings": "Password",
 			"my-listed-properties": "My Listings",
 			"pro-wallet": "My PRO Wallet",
-			"my-deals": "My deals"
+			"my-deals": "My Deals"
 		},
 		"general-settings": {
 			"update-success": "Your profile was updated succesfully!",
@@ -321,6 +321,9 @@
 			"growl-heading": "Confirmed",
 			"growl-message": "The property is marked as sold",
 			"no-listed-properties": "No properties listed!"
+		},
+		"my-deals": {
+			"heading": "My Deals"
 		},
 		"set-pro-address": {
 			"your-ethereum-address-placeholder": "Your Ethereum Address",

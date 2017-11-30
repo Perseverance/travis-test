@@ -10,7 +10,7 @@ import {GeneralSettingsComponent} from './general-settings/general-settings.comp
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {MyListedPropertiesComponent} from './my-listed-properties/my-listed-properties.component';
 import {SharedModule} from '../shared/shared.module';
-import {ConfirmDialogModule, GrowlModule} from 'primeng/primeng';
+import {ConfirmDialogModule, DataTableModule, GrowlModule} from 'primeng/primeng';
 import {ProWalletModule} from '../pro-wallet/pro-wallet.module';
 import {MyDealsComponent} from './my-deals/my-deals.component';
 
@@ -25,7 +25,8 @@ import {MyDealsComponent} from './my-deals/my-deals.component';
 		SharedModule,
 		ConfirmDialogModule,
 		GrowlModule,
-		ProWalletModule
+		ProWalletModule,
+		DataTableModule
 	],
 	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent]
 })
