@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Deed, SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
 import {AuthenticationService, UserData} from '../../authentication/authentication.service';
+import {UserRoleEnum} from '../../transaction-tool/enums/user-role.enum';
 
 export interface Deal {
 	deedContractAddress;
@@ -8,13 +9,6 @@ export interface Deal {
 	propertyAddress;
 	createdAt;
 	lastUpdatedAt;
-}
-
-export enum UserRoleEnum {
-	Agent = 1,
-	Seller = 2,
-	Buyer = 3,
-	Notary = 4
 }
 
 @Component({

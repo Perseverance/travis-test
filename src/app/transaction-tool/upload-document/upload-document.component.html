@@ -1,0 +1,9 @@
+<div class="row">
+	<p-fileUpload id="imageUpload" name="propertyImages" url="./upload.php"
+				  auto="false" showCancelButton="false"
+				  customUpload="true" accept=".pdf" previewWidth="160"
+				  (onSelect)="selectFile($event)"
+				  (onRemove)="removeFile()">
+	</p-fileUpload>
+	<a class="btn propy-control button-small" (click)="uploadDocument()">Upload</a>
+</div>
