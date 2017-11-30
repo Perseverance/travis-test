@@ -75,4 +75,8 @@ export class SmartContractConnectionService {
 		escrowAddress: EthereumAddress): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
+
+	public async markAsSigned(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
 }
