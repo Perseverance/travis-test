@@ -18,4 +18,8 @@ export class ReserveService {
 		return await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.RESERVE_PROPERTY, {}, { params });
 	}
 
+	public async sendDeedAddress(deedAddress: string): Promise<boolean> {
+		return true;
+	}
+
 }
