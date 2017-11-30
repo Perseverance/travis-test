@@ -141,14 +141,12 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 						timeout: 60000
 					});
 					const addresses = await this.propertiesService.getDeedPartiesAddresses(this.propertyId, environment.hardCodedDeedParties.agentId);
-					console.log(addresses);
 					const deedAddress = await this.smartcontractConnectionService.createDeed(
 						this.propertyAddress,
 						addresses.sellerAddress,
 						addresses.agentAddress,
 						addresses.escrowAddress
 					);
-					console.log(deedAddress);
 					await this.reserveService.sendDeedAddress(deedAddress);
 					this.notificationService.pushSuccess({
 						title: this.successTitle,
