@@ -7,6 +7,8 @@ export enum Status {
 	verifed,
 	purchaseAgreement,
 	settlementStatement,
+	sellerDisclosures,
+	closingDocuments,
 	payment,
 	receivedPayment,
 	titleDeed,
@@ -73,7 +75,8 @@ export class SmartContractConnectionService {
 		propertyLocationAddress: string,
 		sellerAddress: EthereumAddress,
 		brokerAddress: EthereumAddress,
-		escrowAddress: EthereumAddress): Promise<SmartContractAddress> {
+		escrowAddress: EthereumAddress,
+		price: number): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
 
@@ -137,5 +140,28 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async markClosingDocumentsUploaded(closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getClosingDocumentsSignatureRequestId(deedContractAddress: string): Promise<string> {
+		return 'hardcoded_request_id';
+	}
+
+	public async signClosingDocuments(deedContractAddress: string, closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getDeedPrice(deedContractAddress: string): Promise<number> {
+		return 200000;
+	}
+
+	public async sendPayment(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markPaymentReceived(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
 
 }
