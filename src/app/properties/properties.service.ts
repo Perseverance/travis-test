@@ -1,3 +1,4 @@
+import { CurrencyTypeEnum } from './../shared/enums/currency-type.enum';
 import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { PropertiesFilter } from './properties.service';
 import { environment } from './../../environments/environment';
@@ -45,11 +46,18 @@ export class PropertiesService {
 		private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
 	}
 
-	public async getProperty(propertyId: string): Promise<any> {
+	public async getProperty(propertyId: string, currency?: CurrencyTypeEnum): Promise<any> {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+
+		let result;
+		if (currency) {
+			result = await this.restService.getWithAccessTokenAndCurrency(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params }, currency);
+		} else {
+			result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+		}
+
 		return result.data.data;
 	}
 

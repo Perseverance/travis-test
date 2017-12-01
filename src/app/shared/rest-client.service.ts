@@ -1,8 +1,9 @@
-import {SessionStorageService} from './session-storage.service';
-import {LocalStorageService} from './localStorage.service';
-import {environment} from './../../environments/environment';
-import {Injectable} from '@angular/core';
+import { SessionStorageService } from './session-storage.service';
+import { LocalStorageService } from './localStorage.service';
+import { environment } from './../../environments/environment';
+import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { CurrencyTypeEnum } from './enums/currency-type.enum';
 
 @Injectable()
 export class RestClientService {
@@ -201,6 +202,21 @@ export class RestClientService {
 			headers: {
 				...this.bearerHeaderObject,
 				...this.currencyTypeHeaderObject
+			},
+			...config
+		};
+
+		return this.get(endpoint, configWithToken);
+	}
+
+	/**
+	 * getWithAccessToken - makes a get request and adds the stored access token
+	 */
+	public getWithAccessTokenAndCurrency(endpoint: string, config: object = {}, currency: CurrencyTypeEnum) {
+		const configWithToken = {
+			headers: {
+				...this.bearerHeaderObject,
+				'CurrencyType': currency
 			},
 			...config
 		};
