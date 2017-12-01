@@ -7,6 +7,8 @@ export enum Status {
 	verifed,
 	purchaseAgreement,
 	settlementStatement,
+	sellerDisclosures,
+	closingDocuments,
 	payment,
 	receivedPayment,
 	titleDeed,
@@ -134,6 +136,18 @@ export class SmartContractConnectionService {
 	}
 
 	public async signSellerDisclosures(deedContractAddress: string, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markClosingDocumentsUploaded(closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getClosingDocumentsSignatureRequestId(deedContractAddress: string): Promise<string> {
+		return 'hardcoded_request_id';
+	}
+
+	public async signClosingDocuments(deedContractAddress: string, closingDocumentsSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
