@@ -76,7 +76,7 @@ export class SmartContractConnectionService {
 		sellerAddress: EthereumAddress,
 		brokerAddress: EthereumAddress,
 		escrowAddress: EthereumAddress,
-		price: number): Promise<SmartContractAddress> {
+		priceInETH: number): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
 
@@ -161,6 +161,14 @@ export class SmartContractConnectionService {
 	}
 
 	public async markPaymentReceived(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markTitleDeedReceived(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markDeedAsClosed(deedContractAddress: string): Promise<boolean> {
 		return true;
 	}
 
