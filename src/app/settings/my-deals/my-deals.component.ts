@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Deed, SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
 import {AuthenticationService, UserData} from '../../authentication/authentication.service';
 import {UserRoleEnum} from '../../transaction-tool/enums/user-role.enum';
+import {Router} from '@angular/router';
+import {TransactionToolWorkflowService} from '../../transaction-tool/workflow/workflow.service';
 
 export interface Deal {
 	deedContractAddress;
@@ -20,7 +22,9 @@ export class MyDealsComponent implements OnInit {
 	public myDeals: Deal[];
 
 	constructor(private smartContractService: SmartContractConnectionService,
-				private authService: AuthenticationService) {
+				private authService: AuthenticationService,
+				private router: Router,
+				private workflowService: TransactionToolWorkflowService) {
 		this.authService.subscribeToUserData({
 			next: async (userInfo: UserData) => {
 				if (!userInfo.user) {
@@ -55,7 +59,8 @@ export class MyDealsComponent implements OnInit {
 	}
 
 	public goToTransactionToolWorkflow(data: any) {
-		console.log(data);
+		this.router.navigate(['/transaction-tool']);
+		this.workflowService.dealDetails = data;
 	}
 
 }

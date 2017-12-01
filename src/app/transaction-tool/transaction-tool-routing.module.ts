@@ -10,6 +10,11 @@ const transactionToolSteps: Routes = [
 		component: TransactionToolComponent,
 		children: [
 			{
+				path: '',
+				pathMatch: 'full',
+				redirectTo: 'purchase-agreement'
+			},
+			{
 				path: 'purchase-agreement',
 				component: PurchaseAgreementStepComponent
 			}

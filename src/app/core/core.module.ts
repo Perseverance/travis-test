@@ -37,6 +37,7 @@ import {PusherService} from '../shared/pusher.service';
 import {NotificationsComponent} from './header/notifications/notifications.component';
 import {SmartContractConnectionService} from '../smart-contract-connection/smart-contract-connection.service';
 import {TransactionToolModule} from '../transaction-tool/transaction-tool.module';
+import {TransactionToolWorkflowService} from '../transaction-tool/workflow/workflow.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -93,7 +94,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ProWalletService,
 		ProWalletTranslationsService,
 		PusherService,
-		SmartContractConnectionService
+		SmartContractConnectionService,
+		TransactionToolWorkflowService
 	],
 	exports: [
 		TranslateModule,
