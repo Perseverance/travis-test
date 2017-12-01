@@ -6,6 +6,9 @@ export enum Status {
 	agentInvited,
 	verifed,
 	purchaseAgreement,
+	settlementStatement,
+	sellerDisclosures,
+	closingDocuments,
 	payment,
 	receivedPayment,
 	titleDeed,
@@ -72,7 +75,93 @@ export class SmartContractConnectionService {
 		propertyLocationAddress: string,
 		sellerAddress: EthereumAddress,
 		brokerAddress: EthereumAddress,
-		escrowAddress: EthereumAddress): Promise<SmartContractAddress> {
+		escrowAddress: EthereumAddress,
+		price: number): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
+
+	public async markSellerInvitationSent(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markSellerAcceptedInvitation(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markEscrowInvitationSent(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markEscrowAcceptedInvitation(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markDeedVerified(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markPurchaseAgreementUploaded(purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: string): Promise<string> {
+		return 'hardcoded_request_id';
+	}
+
+	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async hasSellerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async hasBrokerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async signPurchaseAgreement(deedContractAddress: string, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markSettlementStatementUploaded(): Promise<boolean> {
+		return true;
+	}
+
+	public async markSellerDisclosuresUploaded(sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: string): Promise<string> {
+		return 'hardcoded_request_id';
+	}
+
+	public async signSellerDisclosures(deedContractAddress: string, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markClosingDocumentsUploaded(closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getClosingDocumentsSignatureRequestId(deedContractAddress: string): Promise<string> {
+		return 'hardcoded_request_id';
+	}
+
+	public async signClosingDocuments(deedContractAddress: string, closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async getDeedPrice(deedContractAddress: string): Promise<number> {
+		return 200000;
+	}
+
+	public async sendPayment(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markPaymentReceived(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
 }

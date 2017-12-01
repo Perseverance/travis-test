@@ -147,7 +147,7 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 						addresses.agentAddress,
 						addresses.escrowAddress
 					);
-					await this.reserveService.sendDeedAddress(deedAddress);
+					await this.reserveService.sendDeedAddress(this.propertyId, deedAddress);
 					this.notificationService.pushSuccess({
 						title: this.successTitle,
 						message: this.successMessage,
