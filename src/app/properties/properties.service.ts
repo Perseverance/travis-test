@@ -50,7 +50,14 @@ export class PropertiesService {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+
+		let result;
+		if (currency) {
+			result = await this.restService.getWithAccessTokenAndCurrency(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params }, currency);
+		} else {
+			result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+		}
+
 		return result.data.data;
 	}
 

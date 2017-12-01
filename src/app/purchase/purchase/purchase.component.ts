@@ -122,6 +122,7 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 			timeout: 15000
 		});
 		const property = await this.propertiesService.getProperty(this.propertyId, CurrencyTypeEnum.ETH); // TODO: Get price in ETH
+		console.log(property);
 		const name = this.name.value;
 		this.stripeService
 			.createToken(this.card.getCard(), { name })

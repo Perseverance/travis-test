@@ -76,7 +76,7 @@ export class SmartContractConnectionService {
 		sellerAddress: EthereumAddress,
 		brokerAddress: EthereumAddress,
 		escrowAddress: EthereumAddress,
-		price: number): Promise<SmartContractAddress> {
+		priceInETH: number): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
 
