@@ -13,6 +13,8 @@ import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@ang
 import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from 'ngx-stripe';
 import { ErrorsService } from '../../shared/errors/errors.service';
 import { PropertiesService } from '../../properties/properties.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-purchase',
@@ -34,10 +36,8 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 	public isUserAnonymous: boolean;
 
 	private idSubscription: Subscription;
-	private addressSubscription: Subscription;
 
 	private propertyId: string;
-	private propertyAddress: string;
 
 	constructor(
 		private router: Router,
@@ -49,6 +49,7 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 		translateService: TranslateService,
 		errorsService: ErrorsService,
 		private reserveService: ReserveService,
+		private deedsService: DeedsService,
 		private propertiesService: PropertiesService,
 		private smartcontractConnectionService: SmartContractConnectionService) {
 		super(errorsService, translateService);
@@ -103,31 +104,24 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 			self.propertyId = propertyId;
 		});
 
-		const addressObservable: Observable<string> = self.route.params.map(p => p.address);
-		this.addressSubscription = addressObservable.subscribe(async function (propertyAddress) {
-			if (!propertyAddress) {
-				throw new Error('No property address supplied');
-			}
-			self.propertyAddress = propertyAddress;
-		});
 	}
 
 	ngOnDestroy() {
 		this.idSubscription.unsubscribe();
-		this.addressSubscription.unsubscribe();
 	}
 
 	public get name() {
 		return this.stripeForm.get('name');
 	}
 
-	public reserveProperty() {
+	public async reserveProperty() {
 		this.notificationService.pushInfo({
 			title: 'Sending data...',
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 15000
 		});
+		const property = await this.propertiesService.getProperty(this.propertyId, CurrencyTypeEnum.ETH); // TODO: Get price in ETH
 		const name = this.name.value;
 		this.stripeService
 			.createToken(this.card.getCard(), { name })
@@ -142,12 +136,13 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 					});
 					const addresses = await this.propertiesService.getDeedPartiesAddresses(this.propertyId, environment.hardCodedDeedParties.agentId);
 					const deedAddress = await this.smartcontractConnectionService.createDeed(
-						this.propertyAddress,
+						property.address,
 						addresses.sellerAddress,
 						addresses.agentAddress,
-						addresses.escrowAddress
+						addresses.escrowAddress,
+						property.price.value
 					);
-					await this.reserveService.sendDeedAddress(this.propertyId, deedAddress);
+					await this.deedsService.sendDeedAddress(this.propertyId, deedAddress);
 					this.notificationService.pushSuccess({
 						title: this.successTitle,
 						message: this.successMessage,

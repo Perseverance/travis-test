@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-xs-3 text-right">
                         <a href="" class="btn btn-block propy-control button-small btn-purchase text-uppercase" [ngClass]="{'disabled-reservation': isPropertyReserved}"
-                            [routerLink]="['/purchase', property.id, property.address]">
+                            [routerLink]="['/purchase', property.id]">
 							<span
 								*ngIf="!isPropertyReserved">{{ 'property-details.reserve-property' | translate}}</span>
 
