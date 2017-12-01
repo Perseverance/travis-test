@@ -6,11 +6,11 @@ import {
 	CanLoad, Route
 } from '@angular/router';
 
-import {WorkflowService} from './workflow.service';
+import {TransactionToolWorkflowService} from './workflow.service';
 
 @Injectable()
 export class WorkflowGuard implements CanActivate {
-	constructor(private router: Router, private workflowService: WorkflowService) {
+	constructor(private router: Router, private workflowService: TransactionToolWorkflowService) {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
