@@ -38,7 +38,7 @@ import {NotificationsComponent} from './header/notifications/notifications.compo
 import {SmartContractConnectionService} from '../smart-contract-connection/smart-contract-connection.service';
 import {TransactionToolModule} from '../transaction-tool/transaction-tool.module';
 import {TransactionToolWorkflowService} from '../transaction-tool/workflow/workflow.service';
-import {UploadDocumentService} from '../transaction-tool/upload-document/upload-document.service';
+import {TransactionToolDocumentService} from '../transaction-tool/transaction-tool-document.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -97,7 +97,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		PusherService,
 		SmartContractConnectionService,
 		TransactionToolWorkflowService,
-		UploadDocumentService
+		TransactionToolDocumentService
 	],
 	exports: [
 		TranslateModule,
