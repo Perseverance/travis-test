@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {TransactionToolWorkflowService} from '../workflow/workflow.service';
+import {UploadDocumentService} from './upload-document.service';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
 
 @Component({
 	selector: 'app-upload-document',
@@ -8,7 +11,8 @@ import {Component, OnInit} from '@angular/core';
 export class UploadDocumentComponent implements OnInit {
 	public selectedDocument: any;
 
-	constructor() {
+	constructor(private workflowService: TransactionToolWorkflowService,
+				private uploadDocumentService: UploadDocumentService) {
 	}
 
 	ngOnInit() {
@@ -28,7 +32,8 @@ export class UploadDocumentComponent implements OnInit {
 			return;
 		}
 		const base64 = await this.convertToBase64(this.selectedDocument);
-		console.log(base64);
+		const deedContractAddres = this.workflowService.dealDetails.deedContractAddress;
+		await this.uploadDocumentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, deedContractAddres, base64);
 	}
 
 	public async convertToBase64(document): Promise<string> {
