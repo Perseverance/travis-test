@@ -8,3 +8,8 @@
 		<app-upload-document></app-upload-document>
 	</div>
 </div>
+<div class="row">
+	<div class="col-xs-12 text-center" *ngIf="userIsAgent">
+		<app-document-preview></app-document-preview>
+	</div>
+</div>
