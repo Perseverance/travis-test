@@ -164,4 +164,12 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async markTitleDeedReceived(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
+	public async markDeedAsClosed(deedContractAddress: string): Promise<boolean> {
+		return true;
+	}
+
 }
