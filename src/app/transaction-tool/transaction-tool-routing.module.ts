@@ -6,7 +6,7 @@ import {PurchaseAgreementStepComponent} from './purchase-agreement-step/purchase
 
 const transactionToolSteps: Routes = [
 	{
-		path: 'transaction-tool',
+		path: 'transaction-tool/:address',
 		component: TransactionToolComponent,
 		children: [
 			{
