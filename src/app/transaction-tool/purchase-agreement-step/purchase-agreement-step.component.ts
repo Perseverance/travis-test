@@ -29,9 +29,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				if (!userInfo.user) {
 					return;
 				}
-				if (userInfo.user.role === UserRoleEnum.Agent) {
-					this.userIsAgent = true;
-				}
+				this.userIsAgent = (userInfo.user.role === UserRoleEnum.Agent);
 			}
 		});
 	}
