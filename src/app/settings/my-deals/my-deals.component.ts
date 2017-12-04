@@ -30,7 +30,7 @@ export class MyDealsComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	private async getMyDeals(userRole: number) {
+	private async getMyDeals(userRole: number): Promise<Deed[]> {
 		switch (userRole) {
 			case UserRoleEnum.Buyer: {
 				return await this.smartContractService.getBuyerDeeds();

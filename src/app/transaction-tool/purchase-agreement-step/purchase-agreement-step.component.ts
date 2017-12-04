@@ -19,10 +19,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public selectedDocument: any;
 	public downloadLink: string;
 	private addressSubscription: Subscription;
+	public deedAddress: string;
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,
-				private workflowService: TransactionToolWorkflowService,
 				private documentService: TransactionToolDocumentService) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -34,15 +34,17 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				}
 			}
 		});
-
-		const self = this;
-		const addressObservable: Observable<string> = self.route.params.map(p => p.address);
-		this.addressSubscription = addressObservable.subscribe(async function (address) {
-			console.log(address);
-		});
 	}
 
 	ngOnInit() {
+		const self = this;
+		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
+		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
+			if (!deedAddress) {
+				throw new Error('No deed address supplied');
+			}
+			self.deedAddress = deedAddress;
+		});
 	}
 
 	public async uploadDocument(event: any) {
@@ -53,8 +55,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		}
 		const base64 = await this.convertToBase64(this.selectedDocument);
 		// ToDo: Remove workflow storage
-		// const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, deedContractAddres, base64);
-		// this.downloadLink = response.downloadLink;
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedAddress, base64);
+		this.downloadLink = response.downloadLink;
 	}
 
 	public async convertToBase64(document): Promise<string> {
