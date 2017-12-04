@@ -15,6 +15,10 @@
 					[selected]="selectedTab === settingsTabs.WALLET" headerStyleClass="settings-panel-header">
 			<app-pro-wallet></app-pro-wallet>
 		</p-tabPanel>
+		<p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}"
+					[selected]="selectedTab === settingsTabs.MY_DEALS" headerStyleClass="settings-panel-header">
+			<app-my-deals></app-my-deals>
+		</p-tabPanel>
 		<p-tabPanel *ngIf="shouldShowPassword" header="{{ 'settings.headers.password-settings' | translate }}"
 					[selected]="selectedTab === settingsTabs.PASSWORD"
 					headerStyleClass="settings-panel-header">

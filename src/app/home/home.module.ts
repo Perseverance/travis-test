@@ -11,9 +11,8 @@ import {NewPropertiesComponent} from './new-properties/new-properties.component'
 import {DropdownModule} from 'primeng/primeng';
 import {ProposalIosComponent} from './proposal-ios/proposal-ios.component';
 import {HowPropyWorksComponent} from './how-propy-works/how-propy-works.component';
-import {SafeURLPipe} from '../shared/pipes/safe-url.pipe';
 import {InlineSVGModule} from 'ng-inline-svg';
-import { NewsletterComponent } from './newsletter/newsletter.component';
+import {NewsletterComponent} from './newsletter/newsletter.component';
 
 @NgModule({
 	declarations: [
@@ -23,7 +22,6 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
 		NewPropertiesComponent,
 		ProposalIosComponent,
 		HowPropyWorksComponent,
-		SafeURLPipe,
 		NewsletterComponent
 	],
 	imports: [
