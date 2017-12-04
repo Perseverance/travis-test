@@ -8,6 +8,8 @@ import {TokenGuardLazyLoading} from './authentication/token-guard-lazy-loading.s
 import {GoogleMapComponent} from './google-map/google-map.component';
 import {MetaGuard} from '@ngx-meta/core';
 import {HelloSignComponent} from './hello-sign/hello-sign.component';
+import {TransactionToolComponent} from './transaction-tool/transaction-tool.component';
+import {PurchaseAgreementStepComponent} from './transaction-tool/purchase-agreement-step/purchase-agreement-step.component';
 
 const routes: Routes = [
 	{

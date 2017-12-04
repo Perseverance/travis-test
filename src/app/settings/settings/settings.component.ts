@@ -9,14 +9,16 @@ export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
 	MY_LISTINGS: 'MY_LISTINGS',
 	WALLET: 'WALLET',
-	PASSWORD: 'PASSWORD'
+	PASSWORD: 'PASSWORD',
+	MY_DEALS: 'MY_DEALS'
 };
 
 export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
 	WALLET: 2,
-	PASSWORD: 3
+	MY_DEALS: 3,
+	PASSWORD: 4
 };
 
 @Component({
@@ -84,6 +86,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			case TABS_INDEX.PASSWORD: {
 				queryParams['selectedTab'] = SETTINGS_TABS.PASSWORD;
+				break;
+			}
+			case TABS_INDEX.MY_DEALS: {
+				queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
 				break;
 			}
 			default: {
