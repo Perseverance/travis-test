@@ -48,11 +48,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public async uploadDocument(event: any) {
 		this.selectedDocument = event;
 
-		if (this.selectedDocument === undefined || this.selectedDocument === null) {
+		if (!this.selectedDocument) {
 			return;
 		}
 		const base64 = await this.convertToBase64(this.selectedDocument);
-		// ToDo: Remove workflow storage
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedAddress, base64);
 		this.downloadLink = response.downloadLink;
 	}

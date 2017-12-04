@@ -28,7 +28,7 @@ export class UploadDocumentComponent implements OnInit {
 	}
 
 	public async uploadDocument() {
-		if (this.selectedDocument === undefined || this.selectedDocument === null) {
+		if (!this.selectedDocument) {
 			return;
 		}
 		this.onUploadDocumentApplied.emit(this.selectedDocument);
