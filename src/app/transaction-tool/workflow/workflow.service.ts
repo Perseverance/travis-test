@@ -48,10 +48,10 @@ export class TransactionToolWorkflowService {
 			const item = this.workflow[i];
 			if (item.step === step) {
 				found = true;
-				redirectToStep = '';
+				redirectToStep = null;
 			} else {
 				valid = item.valid;
-				redirectToStep = item.step
+				redirectToStep = item.step;
 			}
 		}
 		return redirectToStep;
