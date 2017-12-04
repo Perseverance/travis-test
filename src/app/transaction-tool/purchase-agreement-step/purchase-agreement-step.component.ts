@@ -24,9 +24,9 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				if (!userInfo.user) {
 					return;
 				}
-				// if (userInfo.user.role === UserRoleEnum.Agent) {
-				this.userIsAgent = true;
-				// }
+				if (userInfo.user.role === UserRoleEnum.Agent) {
+					this.userIsAgent = true;
+				}
 			}
 		});
 	}
@@ -42,9 +42,9 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		}
 		const base64 = await this.convertToBase64(this.selectedDocument);
 		// ToDo: Remove workflow storage
-		// const deedContractAddres = this.workflowService.dealDetails.deedContractAddress;
-		// const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, deedContractAddres, base64);
-		// this.downloadLink = response.downloadLink;
+		const deedContractAddres = this.workflowService.dealDetails.deedContractAddress;
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, deedContractAddres, base64);
+		this.downloadLink = response.downloadLink;
 	}
 
 	public async convertToBase64(document): Promise<string> {
@@ -53,7 +53,6 @@ export class PurchaseAgreementStepComponent implements OnInit {
 			const reader = new FileReader();
 			reader.onloadend = function () {
 				const base64dataWithHeaders = reader.result;
-				console.log(base64dataWithHeaders);
 
 				// The reader normally adds something like this before the base64 - 'data:application/pdf;base64,'
 				// it needs to be removed
