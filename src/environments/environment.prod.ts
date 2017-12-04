@@ -28,6 +28,6 @@ export const environment = {
 	stripePublicKey: 'pk_live_Rejlq3HMVQLAAXkZRxSSDM5l',
 	googleAnalyticsId: 'UA-65716380-2',
 	hardCodedDeedParties: {
-		agentId: '123123'
+		agentId: '5a255409495fda1268997297'
 	}
 };
