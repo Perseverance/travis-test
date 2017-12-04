@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 
 import {STEPS} from './workflow.model';
-import {Deal} from '../../settings/my-deals/my-deals.component';
+import {Deed} from '../../smart-contract-connection/smart-contract-connection.service';
 
 @Injectable()
 export class TransactionToolWorkflowService {
-	public deal: Deal;
+	public deal: Deed;
 	private workflow = [
 		{step: STEPS.inviteSeller, valid: false},
 		{step: STEPS.inviteEscrow, valid: false},
@@ -22,12 +22,12 @@ export class TransactionToolWorkflowService {
 	// 	}
 	// }
 
-	public set dealDetails(deal: Deal) {
+	public set dealDetails(deal: Deed) {
 		this.deal = deal;
 		console.log(this.deal);
 	}
 
-	public get dealDetails(): Deal {
+	public get dealDetails(): Deed {
 		return this.deal;
 	}
 

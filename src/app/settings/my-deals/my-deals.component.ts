@@ -5,21 +5,13 @@ import {UserRoleEnum} from '../../transaction-tool/enums/user-role.enum';
 import {Router} from '@angular/router';
 import {TransactionToolWorkflowService} from '../../transaction-tool/workflow/workflow.service';
 
-export interface Deal {
-	deedContractAddress;
-	status;
-	propertyAddress;
-	createdAt;
-	lastUpdatedAt;
-}
-
 @Component({
 	selector: 'app-my-deals',
 	templateUrl: './my-deals.component.html',
 	styleUrls: ['./my-deals.component.scss']
 })
 export class MyDealsComponent implements OnInit {
-	public myDeals: Deal[];
+	public myDeals: Deed[];
 
 	constructor(private smartContractService: SmartContractConnectionService,
 				private authService: AuthenticationService,
@@ -30,7 +22,7 @@ export class MyDealsComponent implements OnInit {
 				if (!userInfo.user) {
 					return;
 				}
-				await this.getMyDeals(userInfo.user.role);
+				this.myDeals = await this.getMyDeals(userInfo.user.role);
 			}
 		});
 	}
@@ -38,19 +30,16 @@ export class MyDealsComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	private async getMyDeals(id: number) {
-		switch (id) {
+	private async getMyDeals(userRole: number) {
+		switch (userRole) {
 			case UserRoleEnum.Buyer: {
-				this.myDeals = await this.smartContractService.getBuyerDeeds();
-				break;
+				return await this.smartContractService.getBuyerDeeds();
 			}
 			case UserRoleEnum.Seller: {
-				this.myDeals = await this.smartContractService.getSellerDeeds();
-				break;
+				return await this.smartContractService.getSellerDeeds();
 			}
 			case UserRoleEnum.Agent: {
-				this.myDeals = await this.smartContractService.getAgentDeeds();
-				break;
+				return await this.smartContractService.getAgentDeeds();
 			}
 			default: {
 				throw new Error('Invalid user role');
