@@ -48,8 +48,7 @@ export class MyDealsComponent implements OnInit {
 	}
 
 	public goToTransactionToolWorkflow(data: any) {
-		this.router.navigate(['/transaction-tool']);
-		this.workflowService.dealDetails = data;
+		this.router.navigate(['/transaction-tool', data.deedContractAddress]);
 	}
 
 }

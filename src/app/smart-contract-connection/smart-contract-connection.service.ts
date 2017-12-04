@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export enum Status {
 	reserve,
@@ -29,9 +29,10 @@ export type SmartContractAddress = string;
 @Injectable()
 export class SmartContractConnectionService {
 
-	constructor() { }
+	constructor() {
+	}
 
-	private fakeDeedStatus = Status.reserve;
+	private fakeDeedStatus = Status.agentInvited;
 
 	private fakeDeedAddress = '0x406e4e45785acf237c05c8f0d80dd2b11e4042db';
 	private fakePropertyAddress = 'Kmetska Sgrada, Gabrovo, Gabrovo, Bulgaria';
@@ -81,12 +82,11 @@ export class SmartContractConnectionService {
 		};
 	}
 
-	public async createDeed(
-		propertyLocationAddress: string,
-		sellerAddress: EthereumAddress,
-		brokerAddress: EthereumAddress,
-		escrowAddress: EthereumAddress,
-		priceInETH: number): Promise<SmartContractAddress> {
+	public async createDeed(propertyLocationAddress: string,
+							sellerAddress: EthereumAddress,
+							brokerAddress: EthereumAddress,
+							escrowAddress: EthereumAddress,
+							priceInETH: number): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
 
@@ -179,14 +179,6 @@ export class SmartContractConnectionService {
 	}
 
 	public async markDeedAsClosed(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async markTitleDeedReceived(deedContractAddress: string): Promise<boolean> {
-		return true;
-	}
-
-	public async markDeedAsClosed(deedContractAddress: string): Promise<boolean> {
 		return true;
 	}
 

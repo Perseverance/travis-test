@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {TransactionToolComponent} from './transaction-tool.component';
 import {PurchaseAgreementStepComponent} from './purchase-agreement-step/purchase-agreement-step.component';
+import {WorkflowGuard} from './workflow/workflow-guard.service';
+import {InviteSellerComponent} from './invite-seller/invite-seller.component';
 
 const transactionToolSteps: Routes = [
 	{
@@ -12,11 +14,23 @@ const transactionToolSteps: Routes = [
 			{
 				path: '',
 				pathMatch: 'full',
-				redirectTo: 'purchase-agreement'
+				redirectTo: 'purchase-agreement',
+				canActivate: [WorkflowGuard]
+			},
+			{
+				path: 'invite-seller',
+				component: InviteSellerComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
+				path: 'invite-escrow',
+				component: PurchaseAgreementStepComponent,
+				canActivate: [WorkflowGuard]
 			},
 			{
 				path: 'purchase-agreement',
-				component: PurchaseAgreementStepComponent
+				component: PurchaseAgreementStepComponent,
+				canActivate: [WorkflowGuard]
 			}
 		]
 	}

@@ -2,35 +2,29 @@ import {Injectable} from '@angular/core';
 import {
 	CanActivate, Router,
 	ActivatedRouteSnapshot,
-	RouterStateSnapshot,
-	CanLoad, Route
+	RouterStateSnapshot
 } from '@angular/router';
 
 import {TransactionToolWorkflowService} from './workflow.service';
+import {REVERSE_STEPS, STEPS} from './workflow.model';
 
 @Injectable()
 export class WorkflowGuard implements CanActivate {
 	constructor(private router: Router, private workflowService: TransactionToolWorkflowService) {
 	}
 
-	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		const path: string = route.routeConfig.path;
+	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
-		return this.verifyWorkFlow(path);
+		return this.verifyWorkFlow(route.parent.params.address, route.url[0].path);
 	}
 
-	verifyWorkFlow(path): boolean {
-		console.log("Entered '" + path + "' path.");
-
-		// If any of the previous steps is invalid, go back to the first invalid step
-		let firstPath = this.workflowService.getFirstInvalidStep(path);
-		if (firstPath.length > 0) {
-			console.log("Redirected to '" + firstPath + "' path which it is the first invalid step.");
-			let url = `/${firstPath}`;
-			this.router.navigate([url]);
+	private async verifyWorkFlow(deedAddress: string, accessedRoute: string): Promise<boolean> {
+		const deedStep = await this.workflowService.getDeedStep(deedAddress);
+		const navigatedStep = STEPS[accessedRoute];
+		if (navigatedStep > deedStep) {
+			this.router.navigate([`/transaction-tool/`, deedAddress, REVERSE_STEPS[deedStep]]);
 			return false;
 		}
-		;
 
 		return true;
 	}

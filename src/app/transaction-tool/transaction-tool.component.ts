@@ -1,5 +1,8 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {MenuItem} from 'primeng/primeng';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -11,7 +14,7 @@ export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
 	public activeIndex = 0;
 
-	constructor() {
+	constructor(private route: ActivatedRoute) {
 	}
 
 	ngOnInit() {
@@ -42,5 +45,4 @@ export class TransactionToolComponent implements OnInit {
 			}
 		];
 	}
-
 }

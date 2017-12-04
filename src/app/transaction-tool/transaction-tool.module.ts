@@ -8,6 +8,7 @@ import {UploadDocumentComponent} from './upload-document/upload-document.compone
 import {DocumentPreviewComponent} from './document-preview/document-preview.component';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
+import { InviteSellerComponent } from './invite-seller/invite-seller.component';
 
 @NgModule({
 	imports: [
@@ -22,7 +23,8 @@ import {SharedModule} from '../shared/shared.module';
 		TransactionToolComponent,
 		PurchaseAgreementStepComponent,
 		UploadDocumentComponent,
-		DocumentPreviewComponent
+		DocumentPreviewComponent,
+		InviteSellerComponent
 	],
 	exports: [
 		TransactionToolRoutingModule

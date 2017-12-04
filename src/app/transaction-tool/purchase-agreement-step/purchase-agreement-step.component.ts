@@ -4,6 +4,9 @@ import {UserRoleEnum} from '../enums/user-role.enum';
 import {TransactionToolWorkflowService} from '../workflow/workflow.service';
 import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-purchase-agreement-step',
@@ -15,8 +18,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public userIsAgent = false;
 	public selectedDocument: any;
 	public downloadLink: string;
+	private addressSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
+				private route: ActivatedRoute,
 				private workflowService: TransactionToolWorkflowService,
 				private documentService: TransactionToolDocumentService) {
 		this.authService.subscribeToUserData({
@@ -28,6 +33,12 @@ export class PurchaseAgreementStepComponent implements OnInit {
 					this.userIsAgent = true;
 				}
 			}
+		});
+
+		const self = this;
+		const addressObservable: Observable<string> = self.route.params.map(p => p.address);
+		this.addressSubscription = addressObservable.subscribe(async function (address) {
+			console.log(address);
 		});
 	}
 
@@ -42,9 +53,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		}
 		const base64 = await this.convertToBase64(this.selectedDocument);
 		// ToDo: Remove workflow storage
-		const deedContractAddres = this.workflowService.dealDetails.deedContractAddress;
-		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, deedContractAddres, base64);
-		this.downloadLink = response.downloadLink;
+		// const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, deedContractAddres, base64);
+		// this.downloadLink = response.downloadLink;
 	}
 
 	public async convertToBase64(document): Promise<string> {
