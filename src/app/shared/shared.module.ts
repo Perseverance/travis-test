@@ -20,6 +20,8 @@ import {ImageSizePipe} from './pipes/image-size.pipe';
 import {Image404Directive} from './image404.directive';
 import {PropertyPreviewComponent} from './property-preview/property-preview.component';
 import {HelloSignComponent} from '../hello-sign/hello-sign.component';
+import {SafeResourceURLPipe} from './pipes/safe-resource-url.pipe';
+import {SafeUrlPipe} from './pipes/safe-url.pipe';
 
 @NgModule({
 	imports: [
@@ -39,7 +41,9 @@ import {HelloSignComponent} from '../hello-sign/hello-sign.component';
 		EllipsisPipe,
 		ImageSizePipe,
 		Image404Directive,
-		HelloSignComponent
+		HelloSignComponent,
+		SafeResourceURLPipe,
+		SafeUrlPipe
 	],
 	exports: [
 		LocationSearchComponent,
@@ -52,7 +56,9 @@ import {HelloSignComponent} from '../hello-sign/hello-sign.component';
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
 		ImageSizePipe,
-		HelloSignComponent
+		HelloSignComponent,
+		SafeResourceURLPipe,
+		SafeUrlPipe
 	],
 	providers: [
 		AgencyService,

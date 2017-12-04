@@ -5,11 +5,11 @@
 </div>
 <div class="row">
 	<div class="col-xs-12 text-center" *ngIf="userIsAgent">
-		<app-upload-document></app-upload-document>
+		<app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
 	</div>
 </div>
 <div class="row">
 	<div class="col-xs-12 text-center" *ngIf="userIsAgent">
-		<app-document-preview></app-document-preview>
+		<app-document-preview [downloadDocumentLink]="downloadLink"></app-document-preview>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 
 @Component({
@@ -6,16 +6,18 @@ import {TransactionToolDocumentService} from '../transaction-tool-document.servi
 	templateUrl: './document-preview.component.html',
 	styleUrls: ['./document-preview.component.scss']
 })
-export class DocumentPreviewComponent implements OnInit {
-	public downloadDocumentLink: string;
+export class DocumentPreviewComponent implements OnInit, OnChanges {
 	public iframeSrc: string;
+	@Input() downloadDocumentLink: string;
 
-	constructor(private documentService: TransactionToolDocumentService) {
+
+	constructor() {
 	}
 
 	ngOnInit() {
-		this.downloadDocumentLink = this.documentService.downloadLink;
-		this.iframeSrc = `https://docs.google.com/viewer?url=${this.downloadDocumentLink}&embedded=true`;
 	}
 
+	ngOnChanges() {
+		this.iframeSrc = `https://docs.google.com/viewer?url=${this.downloadDocumentLink}&embedded=true`;
+	}
 }

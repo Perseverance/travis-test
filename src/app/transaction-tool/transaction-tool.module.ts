@@ -7,6 +7,7 @@ import {FileUploadModule, StepsModule} from 'primeng/primeng';
 import {UploadDocumentComponent} from './upload-document/upload-document.component';
 import {DocumentPreviewComponent} from './document-preview/document-preview.component';
 import {FormsModule} from '@angular/forms';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
 	imports: [
@@ -14,7 +15,8 @@ import {FormsModule} from '@angular/forms';
 		FormsModule,
 		TransactionToolRoutingModule,
 		StepsModule,
-		FileUploadModule
+		FileUploadModule,
+		SharedModule
 	],
 	declarations: [
 		TransactionToolComponent,

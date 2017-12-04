@@ -5,19 +5,10 @@ import {SmartContractConnectionService} from '../smart-contract-connection/smart
 
 @Injectable()
 export class TransactionToolDocumentService {
-	public documentDownloadLink: string;
 
 	constructor(private restService: RestClientService,
 				private apiEndpoint: APIEndpointsService,
 				private smartContractService: SmartContractConnectionService) {
-	}
-
-	public set downloadLink(link: string) {
-		this.documentDownloadLink = link;
-	}
-
-	public get downloadLink(): string {
-		return this.documentDownloadLink;
 	}
 
 	public async uploadTransactionToolDocument(deedDocumentType: number, deedAddress: string, fileBase64: string): Promise<any> {

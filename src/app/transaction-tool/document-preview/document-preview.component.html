@@ -1,8 +1,8 @@
 <div class="row" *ngIf="downloadDocumentLink">
 	<object
-		data="{{downloadDocumentLink}}"
+		[data]="downloadDocumentLink | safeResourceURL"
 		type="application/pdf">
 		<iframe
-			src="{{iframeSrc}}"></iframe>
+			[src]="iframeSrc | safeResourceURL"></iframe>
 	</object>
 </div>
