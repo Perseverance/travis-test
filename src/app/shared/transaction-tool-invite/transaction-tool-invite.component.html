@@ -1,0 +1,19 @@
+<div class="row" *ngIf="hasDataLoaded">
+    <div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+        <div class="row">
+            <div class="col-xs-12 text-center" *ngIf="!userIsAgent">
+                <h5>Waiting for broker to invite seller</h5>
+            </div>
+            <div class="col-xs-12 text-center" *ngIf="userIsAgent">
+                <h5>Invite seller</h5>
+                <form [formGroup]="inviteForm" class="propy-form">
+                    <div class="form-group">
+                        <label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
+                        <input formControlName="email" type="text" class="form-control propy-control" id="email">
+                    </div>
+                    <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="inviteSeller()">Invite</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
