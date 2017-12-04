@@ -4,7 +4,7 @@ export enum Status {
 	reserve,
 	sellerInvited,
 	agentInvited,
-	verifed,
+	verified,
 	purchaseAgreement,
 	settlementStatement,
 	sellerDisclosures,
@@ -71,6 +71,16 @@ export class SmartContractConnectionService {
 		return this.getDeeds();
 	}
 
+	public async getDeedDetails(deedContractAddress: EthereumAddress) {
+		return {
+			deedContractAddress: this.fakeDeedAddress,
+			status: this.fakeDeedStatus,
+			propertyAddress: this.fakePropertyAddress,
+			createdAt: this.fakeCreatedAt,
+			lastUpdatedAt: this.fakelastUpdatedAt
+		};
+	}
+
 	public async createDeed(
 		propertyLocationAddress: string,
 		sellerAddress: EthereumAddress,
@@ -80,23 +90,23 @@ export class SmartContractConnectionService {
 		return this.fakeDeedAddress;
 	}
 
-	public async markSellerInvitationSent(deedContractAddress: string): Promise<boolean> {
+	public async markSellerInvitationSent(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markSellerAcceptedInvitation(deedContractAddress: string): Promise<boolean> {
+	public async markSellerAcceptedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markEscrowInvitationSent(deedContractAddress: string): Promise<boolean> {
+	public async markEscrowInvitationSent(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markEscrowAcceptedInvitation(deedContractAddress: string): Promise<boolean> {
+	public async markEscrowAcceptedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markDeedVerified(deedContractAddress: string): Promise<boolean> {
+	public async markDeedVerified(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
@@ -104,23 +114,23 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: string): Promise<string> {
+	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
 		return 'hardcoded_request_id';
 	}
 
-	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async hasSellerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+	public async hasSellerSignedPurchaseAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async hasBrokerSignedPurchaseAgreement(deedContractAddress: string): Promise<boolean> {
+	public async hasBrokerSignedPurchaseAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async signPurchaseAgreement(deedContractAddress: string, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+	public async signPurchaseAgreement(deedContractAddress: EthereumAddress, purchaseAgreementSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -132,11 +142,11 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: string): Promise<string> {
+	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
 		return 'hardcoded_request_id';
 	}
 
-	public async signSellerDisclosures(deedContractAddress: string, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+	public async signSellerDisclosures(deedContractAddress: EthereumAddress, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -144,31 +154,31 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async getClosingDocumentsSignatureRequestId(deedContractAddress: string): Promise<string> {
+	public async getClosingDocumentsSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
 		return 'hardcoded_request_id';
 	}
 
-	public async signClosingDocuments(deedContractAddress: string, closingDocumentsSignatureRequestId: string): Promise<boolean> {
+	public async signClosingDocuments(deedContractAddress: EthereumAddress, closingDocumentsSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
-	public async getDeedPrice(deedContractAddress: string): Promise<number> {
+	public async getDeedPrice(deedContractAddress: EthereumAddress): Promise<number> {
 		return 200000;
 	}
 
-	public async sendPayment(deedContractAddress: string): Promise<boolean> {
+	public async sendPayment(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markPaymentReceived(deedContractAddress: string): Promise<boolean> {
+	public async markPaymentReceived(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markTitleDeedReceived(deedContractAddress: string): Promise<boolean> {
+	public async markTitleDeedReceived(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markDeedAsClosed(deedContractAddress: string): Promise<boolean> {
+	public async markDeedAsClosed(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
