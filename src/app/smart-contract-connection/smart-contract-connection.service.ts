@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export enum Status {
 	reserve,
@@ -83,10 +83,10 @@ export class SmartContractConnectionService {
 	}
 
 	public async createDeed(propertyLocationAddress: string,
-		sellerAddress: EthereumAddress,
-		brokerAddress: EthereumAddress,
-		escrowAddress: EthereumAddress,
-		priceInETH: number): Promise<SmartContractAddress> {
+							sellerAddress: EthereumAddress,
+							brokerAddress: EthereumAddress,
+							escrowAddress: EthereumAddress,
+							priceInETH: number): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
 

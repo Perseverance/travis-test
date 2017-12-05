@@ -1,0 +1,41 @@
+<div class="row sign-document-holder">
+	<div class="col-xs-3">
+		<div class="row">
+			<div class="col-xs-12 text-uppercase text-center">
+				Signed by buyer
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 text-uppercase">
+				{{ hasBuyerSigned }}
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-3">
+		<div class="row">
+			<div class="col-xs-12 text-uppercase text-center">
+				Signed by seller
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 text-uppercase">
+				{{ hasSellerSigned }}
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-3">
+		<div class="row">
+			<div class="col-xs-12 text-uppercase text-center">
+				Signed by broker
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 text-uppercase">
+				{{ hasBrokerSigned }}
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-3">
+		<a class="btn propy-control button-small" (click)="onSignDocumentClick()">{{ signButtonLabel }}</a>
+	</div>
+</div>

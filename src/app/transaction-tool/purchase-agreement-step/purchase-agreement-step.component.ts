@@ -21,6 +21,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
+	public hasBuyerSigned: boolean;
+	public hasSellerSigned: boolean;
+	public hasBrokerSigned: boolean;
+	public signDocumentButtonLabel: string;
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,
@@ -37,6 +41,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	}
 
 	async ngOnInit() {
+		this.signDocumentButtonLabel = 'Sign agreement';
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
@@ -48,6 +53,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				return;
 			}
 			await self.setupDocumentPreview();
+			await self.markPurchaseAgreementSignatures();
 		});
 	}
 
@@ -95,5 +101,27 @@ export class PurchaseAgreementStepComponent implements OnInit {
 
 		const base64DataStartsAt = headerIndex + base64Headers.length;
 		return base64dataWithHeaders.substring(base64DataStartsAt);
+	}
+
+	public signDocument() {
+		console.log('Signed');
+	}
+
+	public async markPurchaseAgreementSignatures() {
+		await this.markBuyerSign();
+		await this.markSellerSign();
+		await this.markBrokerSign();
+	}
+
+	private async markBuyerSign() {
+		this.hasBuyerSigned = await this.smartContractService.hasBuyerSignedPurchaseAgreement(this.deedAddress);
+	}
+
+	private async markSellerSign() {
+		this.hasSellerSigned = await this.smartContractService.hasSellerSignedPurchaseAgreement(this.deedAddress);
+	}
+
+	private async markBrokerSign() {
+		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedPurchaseAgreement(this.deedAddress);
 	}
 }
