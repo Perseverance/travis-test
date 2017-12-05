@@ -1,3 +1,14 @@
-<p>
-  invite-seller works!
-</p>
+<div *ngIf="invitationDataLoaded">
+    <div *ngIf="isSellerInvited; then sellerInvited; else sellerNotInvited">
+    </div>
+
+    <ng-template #sellerInvited>
+        <!-- TODO -->
+    </ng-template>
+
+    <ng-template #sellerNotInvited>
+        <app-transaction-tool-invite></app-transaction-tool-invite>
+    </ng-template>
+
+
+</div>
