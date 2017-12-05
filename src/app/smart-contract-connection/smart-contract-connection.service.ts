@@ -98,6 +98,10 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async markSellerRejectedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async isSellerInvited(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return false;
 	}
@@ -107,6 +111,10 @@ export class SmartContractConnectionService {
 	}
 
 	public async markEscrowAcceptedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
+	public async markEscrowRejectedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 

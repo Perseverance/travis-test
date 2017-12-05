@@ -21,16 +21,19 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 
 	public isSellerInvited: boolean;
 	public invitationDataLoaded = false;
-	public successMessage = 'Invitation Successful';
+	public successMessage = 'Success!';
 
 	private addressSubscription: Subscription;
 	private deedAddress: SmartContractAddress;
 
 	public inviteSellerTitle = 'Invite seller to this deed';
 	public waitingForBrokerTitle = 'Waiting for broker to invite seller';
+	public waitingForSellerTitle = 'Waiting for seller to respond to invitation';
+	public respondToInvitationTitle = 'Respond to this invitation';
 
 	private userInfo: any;
 	public userIsAgent: boolean;
+	public userIsSeller: boolean;
 	public hasDataLoaded = false;
 
 	constructor(private authService: AuthenticationService,
@@ -47,6 +50,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 					return;
 				}
 				this.userIsAgent = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 				this.hasDataLoaded = true;
 			}
 		});
@@ -74,7 +78,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onInvite(email) {
 		this.notificationService.pushInfo({
-			title: `Inviting ${email}. Please wait. A normal blockchain transaction can go up to few minutes, be patient.`,
+			title: `Inviting ${email}. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000
@@ -89,12 +93,36 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 
 	}
 
-	public onAccept() {
-
+	public async onAccept() {
+		this.notificationService.pushInfo({
+			title: 'Recording your response. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		await this.smartContractConnectionService.markSellerAcceptedInvitation(this.deedAddress);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
-	public onReject() {
-
+	public async onReject() {
+		this.notificationService.pushInfo({
+			title: 'Recording your response. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		await this.smartContractConnectionService.markSellerRejectedInvitation(this.deedAddress);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 }

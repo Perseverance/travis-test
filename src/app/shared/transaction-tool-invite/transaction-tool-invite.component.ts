@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TransactionToolInviteComponent implements OnInit {
 
-	@Output() onSellerInvite = new EventEmitter<object>();
+	@Output() onInvite = new EventEmitter<any>();
 
 	public inviteForm: FormGroup;
 
@@ -30,7 +30,7 @@ export class TransactionToolInviteComponent implements OnInit {
 	ngOnInit() { }
 
 	public inviteSeller() {
-		this.onSellerInvite.emit({ email: this.email.value });
+		this.onInvite.emit({ email: this.email.value });
 	}
 
 }
