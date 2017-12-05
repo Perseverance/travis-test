@@ -1,12 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {TransactionToolComponent} from './transaction-tool.component';
-import {PurchaseAgreementStepComponent} from './purchase-agreement-step/purchase-agreement-step.component';
-import {WorkflowGuard} from './workflow/workflow-guard.service';
-import {InviteSellerComponent} from './invite-seller/invite-seller.component';
-import {TokenGuard} from '../authentication/token-guard.service';
-import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
+import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { TransactionToolComponent } from './transaction-tool.component';
+import { PurchaseAgreementStepComponent } from './purchase-agreement-step/purchase-agreement-step.component';
+import { WorkflowGuard } from './workflow/workflow-guard.service';
+import { InviteSellerComponent } from './invite-seller/invite-seller.component';
+import { TokenGuard } from '../authentication/token-guard.service';
+import { AuthenticatedGuard } from '../authentication/authenticated-guard.service';
 
 const transactionToolSteps: Routes = [
 	{
@@ -27,7 +28,7 @@ const transactionToolSteps: Routes = [
 			},
 			{
 				path: 'invite-escrow',
-				component: PurchaseAgreementStepComponent,
+				component: InviteEscrowComponent,
 				canActivate: [WorkflowGuard]
 			},
 			{

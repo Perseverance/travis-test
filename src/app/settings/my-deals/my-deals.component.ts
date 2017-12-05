@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Deed, SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
-import {AuthenticationService, UserData} from '../../authentication/authentication.service';
-import {UserRoleEnum} from '../../transaction-tool/enums/user-role.enum';
-import {Router} from '@angular/router';
-import {TransactionToolWorkflowService} from '../../transaction-tool/workflow/workflow.service';
+import { Component, OnInit } from '@angular/core';
+import { Deed, SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
+import { AuthenticationService, UserData } from '../../authentication/authentication.service';
+import { UserRoleEnum } from '../../transaction-tool/enums/user-role.enum';
+import { Router } from '@angular/router';
+import { TransactionToolWorkflowService } from '../../transaction-tool/workflow/workflow.service';
 
 @Component({
 	selector: 'app-my-deals',
@@ -14,9 +14,9 @@ export class MyDealsComponent implements OnInit {
 	public myDeals: Deed[];
 
 	constructor(private smartContractService: SmartContractConnectionService,
-				private authService: AuthenticationService,
-				private router: Router,
-				private workflowService: TransactionToolWorkflowService) {
+		private authService: AuthenticationService,
+		private router: Router,
+		private workflowService: TransactionToolWorkflowService) {
 		this.authService.subscribeToUserData({
 			next: async (userInfo: UserData) => {
 				if (!userInfo.user) {
@@ -40,6 +40,9 @@ export class MyDealsComponent implements OnInit {
 			}
 			case UserRoleEnum.Agent: {
 				return await this.smartContractService.getAgentDeeds();
+			}
+			case UserRoleEnum.Notary: {
+				return await this.smartContractService.getEscrowDeeds();
 			}
 			default: {
 				throw new Error('Invalid user role');

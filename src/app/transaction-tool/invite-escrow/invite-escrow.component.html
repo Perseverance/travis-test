@@ -1,0 +1,40 @@
+<div *ngIf="invitationDataLoaded">
+    <div *ngIf="isEscrowInvited; then escrowInvited; else escrowNotInvited">
+    </div>
+
+    <ng-template #escrowInvited>
+        <div class="row" *ngIf="hasDataLoaded">
+            <div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <div class="row">
+                    <div class="col-xs-12 text-center" *ngIf="!userIsEscrow">
+                        <h5>{{waitingForEscrowTitle}}</h5>
+                    </div>
+                    <div class="col-xs-12 text-center" *ngIf="userIsEscrow">
+                        <h5>{{respondToInvitationTitle}}</h5>
+                        <app-transaction-tool-invite-respond (onAccept)="onAccept()" (onReject)="onReject()"></app-transaction-tool-invite-respond>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template #escrowNotInvited>
+        <div class="row" *ngIf="hasDataLoaded">
+            <div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <div class="row">
+                    <div class="col-xs-12 text-center" *ngIf="!userIsAgent">
+                        <h5>{{waitingForBrokerTitle}}</h5>
+                    </div>
+                    <div class="col-xs-12 text-center" *ngIf="userIsAgent">
+                        <h5>{{inviteEscrowTitle}}</h5>
+                        <app-transaction-tool-invite (onInvite)="onInvite($event.email)"></app-transaction-tool-invite>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+
+</div>
