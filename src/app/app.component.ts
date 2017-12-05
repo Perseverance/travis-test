@@ -36,13 +36,14 @@ export class AppComponent implements OnInit {
 		this.momentService.moment.locale([localStorageService.selectedLanguage, DefaultLanguage]);
 		localStorageService.selectedCurrencyType = CurrencyTypeEnum.NONE;
 
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (!userInfo.isAnonymous) {
-					this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
-				}
-			}
-		});
+		// ToDo: Comment out when start to use pusher
+		// this.authService.subscribeToUserData({
+		// 	next: (userInfo: UserData) => {
+		// 		if (!userInfo.isAnonymous) {
+		// 			this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
+		// 		}
+		// 	}
+		// });
 	}
 
 	ngOnInit() {

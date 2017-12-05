@@ -18,7 +18,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public userInfo: any;
 	public userIsAgent = false;
 	public selectedDocument: any;
-	public downloadLink: string;
+	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
 
@@ -44,11 +44,16 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
-			if (await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
-				const requestSignatureId = await self.smartContractService.getPurchaseAgreementSignatureRequestId(deedAddress);
-				self.downloadLink = await self.documentService.getDownloadDocumentLink(requestSignatureId);
+			if (!await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
+				return;
 			}
+			await self.setupDocumentPreview();
 		});
+	}
+
+	private async setupDocumentPreview() {
+		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
+		this.previewLink = await this.documentService.getDownloadDocumentLink(requestSignatureId);
 	}
 
 	public async uploadDocument(event: any) {
@@ -59,7 +64,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		}
 		const base64 = await this.convertToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedAddress, base64);
-		this.downloadLink = response.downloadLink;
+		this.previewLink = response.downloadLink;
 	}
 
 	public async convertToBase64(document): Promise<string> {

@@ -24,7 +24,6 @@ export class TransactionToolDocumentService {
 	}
 
 	public async getDownloadDocumentLink(requestSignatureId: string): Promise<any> {
-		console.log(requestSignatureId);
 		const params = {
 			requestSignatureId: requestSignatureId
 		};

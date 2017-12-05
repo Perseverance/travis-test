@@ -1,15 +1,15 @@
 <div class="row">
-	<div class="col-xs-12 text-center" *ngIf="!userIsAgent">
-		<h5>Waiting to upload</h5>
+	<div class="col-xs-12 text-center" *ngIf="!userIsAgent && !previewLink">
+		<h5>Waiting to upload purchase agreement document</h5>
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-12 text-center" *ngIf="userIsAgent">
+	<div class="col-xs-12 text-center" *ngIf="userIsAgent && !previewLink">
 		<app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
 	</div>
 </div>
 <div class="row">
 	<div class="col-xs-12 text-center">
-		<app-document-preview [downloadDocumentLink]="downloadLink"></app-document-preview>
+		<app-document-preview [downloadDocumentLink]="previewLink"></app-document-preview>
 	</div>
 </div>
