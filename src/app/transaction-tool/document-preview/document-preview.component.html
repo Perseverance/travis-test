@@ -1,5 +1,5 @@
-<div class="row" *ngIf="downloadDocumentLink">
-	<object [data]="downloadDocumentLink | safeResourceURL" name="document-preview"
+<div class="row" *ngIf="previewLink">
+	<object [data]="previewLink | safeResourceURL" name="document-preview"
 			type="application/pdf">
 		<iframe [src]="iframeSrc | safeResourceURL"></iframe>
 	</object>
