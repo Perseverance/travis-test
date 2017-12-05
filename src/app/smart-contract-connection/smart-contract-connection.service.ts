@@ -32,7 +32,7 @@ export class SmartContractConnectionService {
 	constructor() {
 	}
 
-	private fakeDeedStatus = Status.reserve;
+	private fakeDeedStatus = Status.agentInvited;
 
 	private fakeDeedAddress = '0x406e4e45785acf237c05c8f0d80dd2b11e4042db';
 	private fakePropertyAddress = 'Kmetska Sgrada, Gabrovo, Gabrovo, Bulgaria';
@@ -114,8 +114,13 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async isPurchaseAgreementUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
-		return 'hardcoded_request_id';
+		return 'd692eac82a8ab180dc16a7c88582fbda18a84cd4';
+		// return 'hardcoded_request_id';
 	}
 
 	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {

@@ -41,7 +41,8 @@ export class APIEndpointsService {
 		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/notifications/authPusher`,
 		DEAL_PARTIES: `${this.INTERNAL_API_PREFIX}/deeds/dealparties`,
 		CREATE_DEED: `${this.INTERNAL_API_PREFIX}/deeds/createDeed`,
-		UPLOAD_DEED_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/uploaddocument`
+		UPLOAD_DEED_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/uploaddocument`,
+		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`
 	};
 
 	constructor() {

@@ -7,6 +7,7 @@ import {DeedDocumentType} from '../enums/deed-document-type.enum';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
+import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-purchase-agreement-step',
@@ -23,7 +24,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
@@ -34,7 +36,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		});
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
@@ -42,6 +44,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
+			if (await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
+				const requestSignatureId = await self.smartContractService.getPurchaseAgreementSignatureRequestId(deedAddress);
+				self.downloadLink = await self.documentService.getDownloadDocumentLink(requestSignatureId);
+			}
 		});
 	}
 
