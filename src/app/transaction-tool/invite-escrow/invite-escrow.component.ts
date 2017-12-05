@@ -1,3 +1,4 @@
+import { DeedsService } from './../../shared/deeds.service';
 import { UserRoleEnum } from './../enums/user-role.enum';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
@@ -39,6 +40,7 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 	constructor(private authService: AuthenticationService,
 		private route: ActivatedRoute,
 		private smartContractConnectionService: SmartContractConnectionService,
+		private deedsService: DeedsService,
 		private notificationService: NotificationsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
@@ -93,6 +95,7 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 
 	}
 
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onAccept() {
 		this.notificationService.pushInfo({
 			title: 'Recording your response. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',
@@ -101,6 +104,7 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 			timeout: 60000
 		});
 		await this.smartContractConnectionService.markSellerAcceptedInvitation(this.deedAddress);
+		await this.deedsService.sendEscrowAccept(this.deedAddress);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -109,6 +113,7 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 		});
 	}
 
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onReject() {
 		this.notificationService.pushInfo({
 			title: 'Recording your response. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',

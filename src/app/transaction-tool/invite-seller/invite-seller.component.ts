@@ -11,6 +11,7 @@ import { SmartContractConnectionService, SmartContractAddress } from './../../sm
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { DeedsService } from '../../shared/deeds.service';
 
 @Component({
 	selector: 'app-invite-seller',
@@ -39,6 +40,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 	constructor(private authService: AuthenticationService,
 		private route: ActivatedRoute,
 		private smartContractConnectionService: SmartContractConnectionService,
+		private deedsService: DeedsService,
 		private notificationService: NotificationsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
@@ -93,6 +95,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 
 	}
 
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onAccept() {
 		this.notificationService.pushInfo({
 			title: 'Recording your response. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',
@@ -101,6 +104,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 			timeout: 60000
 		});
 		await this.smartContractConnectionService.markSellerAcceptedInvitation(this.deedAddress);
+		await this.deedsService.sendSellerAccept(this.deedAddress);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -109,6 +113,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 		});
 	}
 
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onReject() {
 		this.notificationService.pushInfo({
 			title: 'Recording your response. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',
