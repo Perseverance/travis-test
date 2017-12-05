@@ -99,7 +99,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async isSellerInvited(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async markEscrowInvitationSent(deedContractAddress: EthereumAddress): Promise<boolean> {

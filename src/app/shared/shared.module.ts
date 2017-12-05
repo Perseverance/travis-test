@@ -23,6 +23,7 @@ import { HelloSignComponent } from '../hello-sign/hello-sign.component';
 import { SafeResourceURLPipe } from './pipes/safe-resource-url.pipe';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { TransactionToolInviteComponent } from './transaction-tool-invite/transaction-tool-invite.component';
+import { TransactionToolInviteRespondComponent } from './transaction-tool-invite-respond/transaction-tool-invite-respond.component';
 
 @NgModule({
 	imports: [
@@ -45,7 +46,8 @@ import { TransactionToolInviteComponent } from './transaction-tool-invite/transa
 		HelloSignComponent,
 		SafeResourceURLPipe,
 		SafeUrlPipe,
-		TransactionToolInviteComponent
+		TransactionToolInviteComponent,
+		TransactionToolInviteRespondComponent
 	],
 	exports: [
 		LocationSearchComponent,
@@ -60,6 +62,7 @@ import { TransactionToolInviteComponent } from './transaction-tool-invite/transa
 		ImageSizePipe,
 		HelloSignComponent,
 		TransactionToolInviteComponent,
+		TransactionToolInviteRespondComponent,
 		SafeResourceURLPipe,
 		SafeUrlPipe
 	],
