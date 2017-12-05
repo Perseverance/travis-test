@@ -7,6 +7,7 @@ import {DeedDocumentType} from '../enums/deed-document-type.enum';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
+import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-purchase-agreement-step',
@@ -17,13 +18,14 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public userInfo: any;
 	public userIsAgent = false;
 	public selectedDocument: any;
-	public downloadLink: string;
+	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
@@ -34,7 +36,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		});
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
@@ -42,7 +44,16 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
+			if (!await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
+				return;
+			}
+			await self.setupDocumentPreview();
 		});
+	}
+
+	private async setupDocumentPreview() {
+		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
+		this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
 	}
 
 	public async uploadDocument(event: any) {
@@ -53,7 +64,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		}
 		const base64 = await this.convertToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedAddress, base64);
-		this.downloadLink = response.downloadLink;
+		this.previewLink = response.downloadLink;
 	}
 
 	public async convertToBase64(document): Promise<string> {

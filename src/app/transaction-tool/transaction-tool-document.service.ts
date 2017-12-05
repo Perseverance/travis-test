@@ -22,4 +22,13 @@ export class TransactionToolDocumentService {
 		this.smartContractService.markPurchaseAgreementUploaded(response.data.data.requestSignatureId);
 		return response.data.data;
 	}
+
+	public async getPreviewDocumentLink(requestSignatureId: string): Promise<any> {
+		const params = {
+			requestSignatureId: requestSignatureId
+		};
+
+		const response = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.GET_DOWNLOAD_DOCUMENT_LINK, {params});
+		return response.data.data;
+	}
 }

@@ -5,11 +5,14 @@ import {TransactionToolComponent} from './transaction-tool.component';
 import {PurchaseAgreementStepComponent} from './purchase-agreement-step/purchase-agreement-step.component';
 import {WorkflowGuard} from './workflow/workflow-guard.service';
 import {InviteSellerComponent} from './invite-seller/invite-seller.component';
+import {TokenGuard} from '../authentication/token-guard.service';
+import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
 
 const transactionToolSteps: Routes = [
 	{
 		path: 'transaction-tool/:address',
 		component: TransactionToolComponent,
+		canActivate: [TokenGuard, AuthenticatedGuard],
 		children: [
 			{
 				path: '',
