@@ -53,7 +53,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 
 	private async setupDocumentPreview() {
 		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
-		this.previewLink = await this.documentService.getDownloadDocumentLink(requestSignatureId);
+		this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
 	}
 
 	public async uploadDocument(event: any) {

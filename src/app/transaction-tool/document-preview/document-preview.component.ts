@@ -8,7 +8,7 @@ import {TransactionToolDocumentService} from '../transaction-tool-document.servi
 })
 export class DocumentPreviewComponent implements OnInit, OnChanges {
 	public iframeSrc: string;
-	@Input() downloadDocumentLink: string;
+	@Input() previewLink: string;
 
 
 	constructor() {
@@ -18,6 +18,6 @@ export class DocumentPreviewComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges() {
-		this.iframeSrc = `https://docs.google.com/viewer?url=${this.downloadDocumentLink}&embedded=true`;
+		this.iframeSrc = `https://docs.google.com/viewer?url=${this.previewLink}&embedded=true`;
 	}
 }

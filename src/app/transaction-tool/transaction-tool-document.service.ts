@@ -23,7 +23,7 @@ export class TransactionToolDocumentService {
 		return response.data.data;
 	}
 
-	public async getDownloadDocumentLink(requestSignatureId: string): Promise<any> {
+	public async getPreviewDocumentLink(requestSignatureId: string): Promise<any> {
 		const params = {
 			requestSignatureId: requestSignatureId
 		};
