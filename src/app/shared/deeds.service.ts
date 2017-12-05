@@ -12,10 +12,11 @@ export class DeedsService {
 		private browserDetectionService: BrowserDetectionService) { }
 
 
-	public async sendDeedAddress(propertyId: string, deedAddress: string): Promise<boolean> {
+	public async sendDeedAddress(propertyId: string, deedAddress: string, agentId: string): Promise<boolean> {
 		const params = {
 			propertyId,
-			deedAddress
+			deedAddress,
+			agentId
 		};
 
 		await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CREATE_DEED, params);
