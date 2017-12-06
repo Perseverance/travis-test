@@ -1,4 +1,5 @@
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
+import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -34,6 +35,11 @@ const transactionToolSteps: Routes = [
 			{
 				path: 'purchase-agreement',
 				component: PurchaseAgreementStepComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
+				path: 'property-preview',
+				component: PropertyPreviewComponent,
 				canActivate: [WorkflowGuard]
 			}
 		]
