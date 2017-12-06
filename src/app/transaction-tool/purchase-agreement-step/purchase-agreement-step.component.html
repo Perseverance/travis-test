@@ -1,10 +1,10 @@
 <div class="row">
-	<div class="col-xs-12 text-center" *ngIf="!userIsAgent && !previewLink">
+	<div class="col-xs-12 text-center" *ngIf="!userIsBroker && !previewLink">
 		<h5>Waiting to upload purchase agreement document</h5>
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-12 text-center" *ngIf="userIsAgent && !previewLink">
+	<div class="col-xs-12 text-center" *ngIf="userIsBroker && !previewLink">
 		<app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
 	</div>
 </div>
@@ -19,6 +19,7 @@
 						   [hasSellerSigned]="hasSellerSigned"
 						   [hasBrokerSigned]="hasBrokerSigned"
 						   [signButtonLabel]="signDocumentButtonLabel"
+						   [showSignButton]="showSignButton()"
 						   (onSignDocument)="signDocument()"></app-sign-document>
 	</div>
 </div>

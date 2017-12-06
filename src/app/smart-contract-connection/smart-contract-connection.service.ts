@@ -140,15 +140,15 @@ export class SmartContractConnectionService {
 	}
 
 	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async hasSellerSignedPurchaseAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async hasBrokerSignedPurchaseAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async signPurchaseAgreement(deedContractAddress: EthereumAddress, purchaseAgreementSignatureRequestId: string): Promise<boolean> {

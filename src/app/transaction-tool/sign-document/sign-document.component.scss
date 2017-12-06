@@ -1,4 +1,11 @@
 .sign-document-holder {
 	margin: 15px 0;
 	padding: 20px 0;
+	.sign-button-holder {
+		.not-active {
+			pointer-events: none;
+			cursor: default;
+			opacity: 0.8;
+		}
+	}
 }

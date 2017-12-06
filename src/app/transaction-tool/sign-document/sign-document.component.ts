@@ -10,6 +10,7 @@ export class SignDocumentComponent implements OnInit {
 	@Input() hasSellerSigned: boolean;
 	@Input() hasBrokerSigned: boolean;
 	@Input() signButtonLabel: string;
+	@Input() showSignButton: boolean;
 	@Output() onSignDocument = new EventEmitter<any>();
 
 	constructor() {
