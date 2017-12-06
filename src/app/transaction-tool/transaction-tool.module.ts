@@ -9,9 +9,10 @@ import { DocumentPreviewComponent } from './document-preview/document-preview.co
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { InviteSellerComponent } from './invite-seller/invite-seller.component';
+import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
-import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { SignDocumentComponent } from './sign-document/sign-document.component';
+import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 
 @NgModule({
 	imports: [
@@ -28,6 +29,7 @@ import { SignDocumentComponent } from './sign-document/sign-document.component';
 		UploadDocumentComponent,
 		DocumentPreviewComponent,
 		InviteSellerComponent,
+		PropertyPreviewComponent,
 		InviteEscrowComponent,
 		SellerDisclosuresStepComponent,
 		SignDocumentComponent

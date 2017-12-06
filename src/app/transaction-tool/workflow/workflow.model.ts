@@ -1,5 +1,5 @@
 export const STEPS = {
-	'reserve': 0,
+	'property-preview': 0,
 	'invite-seller': 1,
 	'invite-escrow': 2,
 	'purchase-agreement': 3,
@@ -8,7 +8,7 @@ export const STEPS = {
 };
 
 export const REVERSE_STEPS = {
-	0: 'reserve',
+	0: 'property-preview',
 	1: 'invite-seller',
 	2: 'invite-escrow',
 	3: 'purchase-agreement',
