@@ -10,6 +10,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
 import {HelloSignService} from '../../shared/hello-sign.service';
 
+declare const HelloSign;
+
 @Component({
 	selector: 'app-purchase-agreement-step',
 	templateUrl: './purchase-agreement-step.component.html',
@@ -108,7 +110,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public async signDocument() {
 		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
-		const isPurchaseAgreementSigned = await this.helloSignService.signDocument(response);
+		const signingEvent = await this.helloSignService.signDocument(response);
+		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
+		}
 	}
 
 	public async getPurchaseAgreementSigners() {

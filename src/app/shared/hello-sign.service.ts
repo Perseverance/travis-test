@@ -9,19 +9,20 @@ export class HelloSignService {
 	constructor() {
 	}
 
-	public async signDocument(signUrl: string): Promise<boolean> {
-		return await (new Promise<boolean>((resolve, reject) => {
+	public async signDocument(signUrl: string): Promise<any> {
+		return (new Promise<boolean>((resolve, reject) => {
 			HelloSign.init(environment.helloSign.clientId);
 			HelloSign.open({
-				skipDomainVerification: true, // ToDo: change to false on production
+				skipDomainVerification: environment.helloSign.skipDomainVerification,
 				url: signUrl,
 				allowCancel: true,
 				uxVersion: 2,
 				debug: true,
 				messageListener: (eventData) => {
-					if (eventData.event === HelloSign.EVENT_SIGNED) {
-						resolve(true);
+					if (!eventData || !eventData.event) {
+						reject();
 					}
+					resolve(eventData.event);
 				}
 			});
 		}));
