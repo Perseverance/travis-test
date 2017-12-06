@@ -55,7 +55,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				return;
 			}
 			await self.setupDocumentPreview();
-			await self.markPurchaseAgreementSignatures();
+			await self.getPurchaseAgreementSigners();
 		});
 	}
 
@@ -106,13 +106,12 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	}
 
 	public async signDocument() {
-		console.log('Signed');
 		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
-		this.helloSignService.signDocument(response);
+		const isPurchaseAgreementSigned = await this.helloSignService.signDocument(response);
 	}
 
-	public async markPurchaseAgreementSignatures() {
+	public async getPurchaseAgreementSigners() {
 		await this.markBuyerSign();
 		await this.markSellerSign();
 		await this.markBrokerSign();

@@ -38,7 +38,6 @@ export class TransactionToolDocumentService {
 		};
 
 		const response = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.GET_SIGN_URL, {params});
-		console.log(response);
 		return response.data.data;
 	}
 }
