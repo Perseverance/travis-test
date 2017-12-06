@@ -43,6 +43,18 @@ export class TransactionToolComponent implements OnInit {
 				command: (event: any) => {
 					this.activeIndex = 3;
 				}
+			},
+			{
+				label: 'Settlement Statement',
+				command: (event: any) => {
+					this.activeIndex = 4;
+				}
+			},
+			{
+				label: 'Seller Disclosures',
+				command: (event: any) => {
+					this.activeIndex = 5;
+				}
 			}
 		];
 	}

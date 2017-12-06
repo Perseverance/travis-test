@@ -44,6 +44,11 @@ const transactionToolSteps: Routes = [
 				canActivate: [WorkflowGuard]
 			},
 			{
+				path: 'settlement-statement',
+				component: PurchaseAgreementStepComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
 				path: 'seller-disclosures',
 				component: SellerDisclosuresStepComponent,
 				canActivate: [WorkflowGuard],
