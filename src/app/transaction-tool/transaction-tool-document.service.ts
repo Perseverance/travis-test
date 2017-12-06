@@ -31,4 +31,13 @@ export class TransactionToolDocumentService {
 		const response = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.GET_DOWNLOAD_DOCUMENT_LINK, { params });
 		return response.data.data;
 	}
+
+	public async getSignUrl(requestSignatureId: string): Promise<any> {
+		const params = {
+			requestSignatureId: requestSignatureId
+		};
+
+		const response = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.GET_SIGN_URL, { params });
+		return response.data.data;
+	}
 }

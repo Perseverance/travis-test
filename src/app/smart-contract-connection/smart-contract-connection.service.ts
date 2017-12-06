@@ -134,7 +134,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
-		return 'd692eac82a8ab180dc16a7c88582fbda18a84cd4';
+		return 'b2314f2f835ffa8a8e30ad26d090ff68ff7c64d3';
 		// return 'hardcoded_request_id';
 	}
 

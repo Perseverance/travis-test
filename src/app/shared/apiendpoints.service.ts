@@ -43,6 +43,7 @@ export class APIEndpointsService {
 		CREATE_DEED: `${this.INTERNAL_API_PREFIX}/deeds/createDeed`,
 		UPLOAD_DEED_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/uploaddocument`,
 		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`,
+		GET_SIGN_URL: `${this.INTERNAL_API_PREFIX}/Deeds/documentsignurl`,
 		DEED_ADD_SELLER: `${this.INTERNAL_API_PREFIX}/Deeds/addseller`,
 		DEED_ADD_ESCROW: `${this.INTERNAL_API_PREFIX}/Deeds/addescrow`
 	};
