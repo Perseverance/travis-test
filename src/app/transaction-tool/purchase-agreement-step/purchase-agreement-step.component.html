@@ -1,25 +1,34 @@
-<div class="row">
-	<div class="col-xs-12 text-center" *ngIf="!userIsBroker && !previewLink">
-		<h5>Waiting to upload purchase agreement document</h5>
-	</div>
+<div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
 </div>
-<div class="row">
-	<div class="col-xs-12 text-center" *ngIf="userIsBroker && !previewLink">
-		<app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12 text-center">
-		<app-document-preview [previewLink]="previewLink"></app-document-preview>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12 text-center">
-		<app-sign-document [hasBuyerSigned]="hasBuyerSigned"
-						   [hasSellerSigned]="hasSellerSigned"
-						   [hasBrokerSigned]="hasBrokerSigned"
-						   [signButtonLabel]="signDocumentButtonLabel"
-						   [showSignButton]="shouldShowSignButton()"
-						   (onSignDocument)="signDocument()"></app-sign-document>
-	</div>
-</div>
+
+<ng-template #hasPreviewLink>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <app-document-preview [previewLink]="previewLink"></app-document-preview>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned" [hasBrokerSigned]="hasBrokerSigned"
+                [signButtonLabel]="signDocumentButtonLabel" [showSignButton]="shouldShowSignButton()" (onSignDocument)="signDocument()"></app-sign-document>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noPreviewLink>
+    <div class="row" *ngIf="userIsBroker; then isBroker; else isNotBroker">
+    </div>
+
+    <ng-template #isBroker>
+        <div class="col-xs-12 text-center">
+            <app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+        </div>
+    </ng-template>
+
+    <ng-template #isNotBroker>
+        <div class="col-xs-12 text-center">
+            <h5>Waiting to upload purchase agreement document</h5>
+        </div>
+    </ng-template>
+
+</ng-template>

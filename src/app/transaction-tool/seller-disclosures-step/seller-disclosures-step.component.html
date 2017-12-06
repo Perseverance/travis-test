@@ -9,20 +9,24 @@
     <div class="row">
         <div class="col-xs-12 text-center">
             <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned" [hasBrokerSigned]="hasBrokerSigned"
-                [signButtonLabel]="signDocumentButtonLabel" (onSignDocument)="signDocument()"></app-sign-document>
+                [signButtonLabel]="signDocumentButtonLabel" [showSignButton]="shouldShowSignButton()" (onSignDocument)="signDocument()"></app-sign-document>
         </div>
     </div>
 </ng-template>
 
 <ng-template #noPreviewLink>
-    <div class="row">
-        <div class="col-xs-12 text-center" *ngIf="!userIsSeller">
-            <h5>{{waitingTitle}}</h5>
-        </div>
+    <div class="row" *ngIf="userIsSeller; then isSeller; else isNotSeller">
     </div>
-    <div class="row">
-        <div class="col-xs-12 text-center" *ngIf="userIsSeller">
+
+    <ng-template #isSeller>
+        <div class="col-xs-12 text-center">
             <app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
         </div>
-    </div>
+    </ng-template>
+
+    <ng-template #isNotSeller>
+        <div class="col-xs-12 text-center">
+            <h5>{{waitingTitle}}</h5>
+        </div>
+    </ng-template>
 </ng-template>
