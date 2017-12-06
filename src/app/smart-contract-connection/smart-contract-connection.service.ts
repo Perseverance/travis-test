@@ -72,6 +72,10 @@ export class SmartContractConnectionService {
 		return this.getDeeds();
 	}
 
+	public async getEscrowDeeds(): Promise<Deed[]> {
+		return this.getDeeds();
+	}
+
 	public async getDeedDetails(deedContractAddress: EthereumAddress) {
 		return {
 			deedContractAddress: this.fakeDeedAddress,
@@ -98,8 +102,12 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async markSellerRejectedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async isSellerInvited(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return false;
+		return true;
 	}
 
 	public async markEscrowInvitationSent(deedContractAddress: EthereumAddress): Promise<boolean> {
@@ -107,6 +115,10 @@ export class SmartContractConnectionService {
 	}
 
 	public async markEscrowAcceptedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
+	public async markEscrowRejectedInvitation(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 

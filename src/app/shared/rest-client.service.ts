@@ -171,6 +171,37 @@ export class RestClientService {
 	}
 
 	/**
+	 * post - makes a post request without token with URL encoded data and Token
+	 */
+	public postWithSerializationAndToken(endpoint: string, data: object, config: object = {}) {
+		const configWithToken = {
+			headers: {
+				...this.bearerHeaderObject
+			},
+			...config
+		};
+		const url = this.forgeUrl(endpoint);
+		const dataUrlEncoded = this.serialize(data);
+		return axios.post(url, dataUrlEncoded, configWithToken);
+	}
+
+	/**
+	 * post - makes a post request without token with URL encoded data, header and Token
+	 */
+	public postWithURLEncodedAndToken(endpoint: string, data: object, config: object = {}) {
+		const configWithToken = {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				...this.bearerHeaderObject
+			},
+			...config
+		};
+		const url = this.forgeUrl(endpoint);
+		const dataUrlEncoded = this.serialize(data);
+		return axios.post(url, dataUrlEncoded, configWithToken);
+	}
+
+	/**
 	 * put - makes a put requiest without token
 	 */
 	public put(endpoint: string, data: object, config: object = {}) {

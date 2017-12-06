@@ -8,8 +8,9 @@ import {UploadDocumentComponent} from './upload-document/upload-document.compone
 import {DocumentPreviewComponent} from './document-preview/document-preview.component';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
-import { InviteSellerComponent } from './invite-seller/invite-seller.component';
-import { SignDocumentComponent } from './sign-document/sign-document.component';
+import {InviteSellerComponent} from './invite-seller/invite-seller.component';
+import {SignDocumentComponent} from './sign-document/sign-document.component';
+import {InviteEscrowComponent} from './invite-escrow/invite-escrow.component';
 
 @NgModule({
 	imports: [
@@ -26,6 +27,7 @@ import { SignDocumentComponent } from './sign-document/sign-document.component';
 		UploadDocumentComponent,
 		DocumentPreviewComponent,
 		InviteSellerComponent,
+		InviteEscrowComponent,
 		SignDocumentComponent
 	],
 	exports: [
