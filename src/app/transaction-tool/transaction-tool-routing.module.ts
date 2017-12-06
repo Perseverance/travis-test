@@ -1,3 +1,5 @@
+import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
+import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -7,7 +9,6 @@ import { WorkflowGuard } from './workflow/workflow-guard.service';
 import { InviteSellerComponent } from './invite-seller/invite-seller.component';
 import { TokenGuard } from '../authentication/token-guard.service';
 import { AuthenticatedGuard } from '../authentication/authenticated-guard.service';
-import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 
 const transactionToolSteps: Routes = [
 	{
@@ -28,7 +29,7 @@ const transactionToolSteps: Routes = [
 			},
 			{
 				path: 'invite-escrow',
-				component: PurchaseAgreementStepComponent,
+				component: InviteEscrowComponent,
 				canActivate: [WorkflowGuard]
 			},
 			{

@@ -1,3 +1,4 @@
+import { DeedsService } from './../../shared/deeds.service';
 import { UserRoleEnum } from './../enums/user-role.enum';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
@@ -11,30 +12,29 @@ import { SmartContractConnectionService, SmartContractAddress } from './../../sm
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { DeedsService } from '../../shared/deeds.service';
 
 @Component({
-	selector: 'app-invite-seller',
-	templateUrl: './invite-seller.component.html',
-	styleUrls: ['./invite-seller.component.scss']
+	selector: 'app-invite-escrow',
+	templateUrl: './invite-escrow.component.html',
+	styleUrls: ['./invite-escrow.component.scss']
 })
-export class InviteSellerComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
+export class InviteEscrowComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
-	public isSellerInvited: boolean;
+	public isEscrowInvited: boolean;
 	public invitationDataLoaded = false;
 	public successMessage = 'Success!';
 
 	private addressSubscription: Subscription;
 	private deedAddress: SmartContractAddress;
 
-	public inviteSellerTitle = 'Invite seller to this deed';
+	public inviteEscrowTitle = 'Invite escrow to this deed';
 	public waitingForBrokerTitle = 'Waiting for broker to invite seller';
-	public waitingForSellerTitle = 'Waiting for seller to respond to invitation';
+	public waitingForEscrowTitle = 'Waiting for escrow to respond to invitation';
 	public respondToInvitationTitle = 'Respond to this invitation';
 
 	private userInfo: any;
 	public userIsAgent: boolean;
-	public userIsSeller: boolean;
+	public userIsEscrow: boolean;
 	public hasDataLoaded = false;
 
 	constructor(private authService: AuthenticationService,
@@ -52,7 +52,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 					return;
 				}
 				this.userIsAgent = (userInfo.user.role === UserRoleEnum.Agent);
-				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
+				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.Notary);
 				this.hasDataLoaded = true;
 			}
 		});
@@ -66,7 +66,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
-			self.isSellerInvited = await self.smartContractConnectionService.isSellerInvited(self.deedAddress);
+			self.isEscrowInvited = await self.smartContractConnectionService.isEscrowInvited(self.deedAddress);
 			self.invitationDataLoaded = true;
 		});
 
@@ -104,7 +104,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 			timeout: 60000
 		});
 		await this.smartContractConnectionService.markSellerAcceptedInvitation(this.deedAddress);
-		await this.deedsService.sendSellerAccept(this.deedAddress);
+		await this.deedsService.sendEscrowAccept(this.deedAddress);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
