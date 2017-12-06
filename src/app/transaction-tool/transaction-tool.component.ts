@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
-	public activeIndex = 0;
+	public activeIndex = 1;
 	constructor(private route: ActivatedRoute, private router: Router) {
 	}
 
@@ -46,8 +46,7 @@ export class TransactionToolComponent implements OnInit {
 			}
 		];
 	}
-
-	onChange(event) {
+	onIndexChange(event) {
 		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[event]]);
 	}
 }
