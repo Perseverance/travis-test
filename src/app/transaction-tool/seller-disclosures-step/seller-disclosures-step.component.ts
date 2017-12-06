@@ -1,3 +1,4 @@
+import { HelloSignService } from './../../shared/hello-sign.service';
 import { DeedDocumentType } from './../enums/deed-document-type.enum';
 import { Observable } from 'rxjs/Observable';
 import { UserRoleEnum } from './../enums/user-role.enum';
@@ -7,6 +8,8 @@ import { TransactionToolDocumentService } from './../transaction-tool-document.s
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit } from '@angular/core';
+
+declare const HelloSign;
 
 @Component({
 	selector: 'app-seller-disclosures-step',
@@ -23,11 +26,16 @@ export class SellerDisclosuresStepComponent implements OnInit {
 	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
+	public hasBuyerSigned: boolean;
+	public hasSellerSigned: boolean;
+	public hasBrokerSigned: boolean;
+	public signDocumentButtonLabel: string;
 
 	constructor(private authService: AuthenticationService,
 		private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService) {
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
@@ -39,6 +47,7 @@ export class SellerDisclosuresStepComponent implements OnInit {
 	}
 
 	async ngOnInit() {
+		this.signDocumentButtonLabel = 'Sign agreement';
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
@@ -50,6 +59,7 @@ export class SellerDisclosuresStepComponent implements OnInit {
 				return;
 			}
 			await self.setupDocumentPreview();
+			await self.getPurchaseAgreementSigners();
 		});
 	}
 
@@ -97,6 +107,33 @@ export class SellerDisclosuresStepComponent implements OnInit {
 
 		const base64DataStartsAt = headerIndex + base64Headers.length;
 		return base64dataWithHeaders.substring(base64DataStartsAt);
+	}
+
+	public async signDocument() {
+		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
+		const response = await this.documentService.getSignUrl(requestSignatureId);
+		const signingEvent = await this.helloSignService.signDocument(response);
+		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			await this.smartContractService.signSellerDisclosures(this.deedAddress, requestSignatureId);
+		}
+	}
+
+	public async getPurchaseAgreementSigners() {
+		await this.markBuyerSign();
+		await this.markSellerSign();
+		await this.markBrokerSign();
+	}
+
+	private async markBuyerSign() {
+		this.hasBuyerSigned = await this.smartContractService.hasBuyerSellerDisclosuresAgreement(this.deedAddress);
+	}
+
+	private async markSellerSign() {
+		this.hasSellerSigned = await this.smartContractService.hasSellerSellerDisclosuresAgreement(this.deedAddress);
+	}
+
+	private async markBrokerSign() {
+		this.hasBrokerSigned = await this.smartContractService.hasBrokerSellerDisclosuresAgreement(this.deedAddress);
 	}
 
 }

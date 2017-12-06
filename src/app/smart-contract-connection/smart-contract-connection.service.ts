@@ -166,6 +166,18 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async hasBuyerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
+	public async hasSellerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
+	public async hasBrokerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async markSellerDisclosuresUploaded(sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
@@ -179,6 +191,18 @@ export class SmartContractConnectionService {
 	}
 
 	public async signSellerDisclosures(deedContractAddress: EthereumAddress, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async hasBuyerSellerDisclosuresAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
+	public async hasSellerSellerDisclosuresAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
+	public async hasBrokerSellerDisclosuresAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
