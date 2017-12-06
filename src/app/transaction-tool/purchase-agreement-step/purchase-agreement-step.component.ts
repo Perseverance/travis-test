@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
+import {HelloSignService} from '../../shared/hello-sign.service';
 
 @Component({
 	selector: 'app-purchase-agreement-step',
@@ -29,7 +30,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService) {
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
@@ -103,8 +105,11 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		return base64dataWithHeaders.substring(base64DataStartsAt);
 	}
 
-	public signDocument() {
+	public async signDocument() {
 		console.log('Signed');
+		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
+		const response = await this.documentService.getSignUrl(requestSignatureId);
+		this.helloSignService.signDocument(response);
 	}
 
 	public async markPurchaseAgreementSignatures() {

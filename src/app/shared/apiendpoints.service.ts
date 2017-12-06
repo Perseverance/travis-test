@@ -42,7 +42,8 @@ export class APIEndpointsService {
 		DEAL_PARTIES: `${this.INTERNAL_API_PREFIX}/deeds/dealparties`,
 		CREATE_DEED: `${this.INTERNAL_API_PREFIX}/deeds/createDeed`,
 		UPLOAD_DEED_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/uploaddocument`,
-		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`
+		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`,
+		GET_SIGN_URL: `${this.INTERNAL_API_PREFIX}/Deeds/documentsignurl`
 	};
 
 	constructor() {
