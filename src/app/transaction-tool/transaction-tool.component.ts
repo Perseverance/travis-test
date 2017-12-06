@@ -1,8 +1,8 @@
-import { REVERSE_STEPS } from './workflow/workflow.model';
+import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params, UrlSegment } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -13,12 +13,12 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
-	public activeIndex = 1;
+	public activeIndex = 0;
 	constructor(private route: ActivatedRoute, private router: Router) {
 	}
 
 	ngOnInit() {
-
+		this.activeIndex = STEPS[this.route.snapshot.firstChild.url[0].path];
 		this.workflowSteps = [
 			{
 				label: 'Property Preview',
