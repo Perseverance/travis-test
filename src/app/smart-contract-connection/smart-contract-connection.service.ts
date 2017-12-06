@@ -166,15 +166,15 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async hasBuyerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async hasBuyerSignedSettlementStatement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async hasSellerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async hasSellerSignedSettlementStatement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async hasBrokerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async hasBrokerSignedSettlementStatement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
@@ -183,26 +183,26 @@ export class SmartContractConnectionService {
 	}
 
 	public async isSellerDisclosuresUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
-		return 'e61879dda1ef009fe79eaf8d9c24839925576438';
+		return '3002444ad02dbfa4df95a32bc009c5a809d44f09';
 	}
 
 	public async signSellerDisclosures(deedContractAddress: EthereumAddress, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
-	public async hasBuyerSellerDisclosuresAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async hasBuyerSignedSellerDisclosures(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async hasSellerSellerDisclosuresAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async hasSellerSignedSellerDisclosures(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async hasBrokerSellerDisclosuresAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async hasBrokerSignedSellerDisclosures(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 

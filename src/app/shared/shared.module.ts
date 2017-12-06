@@ -1,3 +1,4 @@
+import { Base64Service } from './base64.service';
 import { DeedsService } from './deeds.service';
 import { GoogleAnalyticsEventsService } from './google-analytics.service';
 import { PropertyConversionService } from './property-conversion.service';
@@ -72,7 +73,8 @@ import { TransactionToolInviteRespondComponent } from './transaction-tool-invite
 		MomentService,
 		DeedsService,
 		PropertyConversionService,
-		GoogleAnalyticsEventsService
+		GoogleAnalyticsEventsService,
+		Base64Service
 	]
 })
 export class SharedModule {
