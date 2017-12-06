@@ -4,7 +4,6 @@ export enum Status {
 	reserve,
 	sellerInvited,
 	agentInvited,
-	verified,
 	purchaseAgreement,
 	settlementStatement,
 	sellerDisclosures,
@@ -32,7 +31,7 @@ export class SmartContractConnectionService {
 	constructor() {
 	}
 
-	private fakeDeedStatus = Status.sellerInvited;
+	private fakeDeedStatus = Status.sellerDisclosures;
 
 	private fakeDeedAddress = '0x406e4e45785acf237c05c8f0d80dd2b11e4042db';
 	private fakePropertyAddress = 'Kmetska Sgrada, Gabrovo, Gabrovo, Bulgaria';
@@ -155,6 +154,14 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async isSettlementStatementUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
+	public async signSettlementStatement(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async markSettlementStatementUploaded(): Promise<boolean> {
 		return true;
 	}
@@ -163,8 +170,12 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
+	public async isSellerDisclosuresUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
-		return 'hardcoded_request_id';
+		return 'e61879dda1ef009fe79eaf8d9c24839925576438';
 	}
 
 	public async signSellerDisclosures(deedContractAddress: EthereumAddress, sellerDisclosuresSignatureRequestId: string): Promise<boolean> {

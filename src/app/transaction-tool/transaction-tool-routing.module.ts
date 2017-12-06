@@ -1,3 +1,4 @@
+import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,7 @@ const transactionToolSteps: Routes = [
 			{
 				path: '',
 				pathMatch: 'full',
-				redirectTo: 'purchase-agreement',
+				redirectTo: 'seller-disclosures',
 				canActivate: [WorkflowGuard]
 			},
 			{
@@ -34,6 +35,11 @@ const transactionToolSteps: Routes = [
 			{
 				path: 'purchase-agreement',
 				component: PurchaseAgreementStepComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
+				path: 'seller-disclosures',
+				component: SellerDisclosuresStepComponent,
 				canActivate: [WorkflowGuard]
 			}
 		]

@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-xs-12 text-center" *ngIf="!userIsSeller && !previewLink">
+        <h5>{{waitingTitle}}</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center" *ngIf="userIsSeller && !previewLink">
+        <app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <app-document-preview [previewLink]="previewLink"></app-document-preview>
+    </div>
+</div>

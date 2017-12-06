@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import { InviteSellerComponent } from './invite-seller/invite-seller.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
+import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 
 @NgModule({
 	imports: [
@@ -26,7 +27,8 @@ import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 		UploadDocumentComponent,
 		DocumentPreviewComponent,
 		InviteSellerComponent,
-		InviteEscrowComponent
+		InviteEscrowComponent,
+		SellerDisclosuresStepComponent
 	],
 	exports: [
 		TransactionToolRoutingModule
