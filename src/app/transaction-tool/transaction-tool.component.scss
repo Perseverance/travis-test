@@ -7,7 +7,7 @@
     background-color: $white;
     @include border-radius(5px);
     .ui-steps .ui-steps-item {
-        width: 25%;
+        width: 15%;
     }
     .ui-steps.steps-custom {
         margin-bottom: 30px;
@@ -27,8 +27,5 @@
     }
     .ui-steps.steps-custom .ui-steps-item .ui-steps-title {
         color: #555555;
-    }
-    .ui-steps-item.ui-state-highlight~.ui-steps-item.ui-state-default {
-        pointer-events: none;
     }
 }
