@@ -1,3 +1,4 @@
+import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { NgModule } from '@angular/core';
@@ -19,7 +20,12 @@ const transactionToolSteps: Routes = [
 			{
 				path: '',
 				pathMatch: 'full',
-				redirectTo: 'purchase-agreement',
+				redirectTo: 'seller-disclosures',
+				canActivate: [WorkflowGuard]
+			},
+			{
+				path: 'property-preview',
+				component: PropertyPreviewComponent,
 				canActivate: [WorkflowGuard]
 			},
 			{
@@ -38,10 +44,11 @@ const transactionToolSteps: Routes = [
 				canActivate: [WorkflowGuard]
 			},
 			{
-				path: 'property-preview',
-				component: PropertyPreviewComponent,
-				canActivate: [WorkflowGuard]
+				path: 'seller-disclosures',
+				component: SellerDisclosuresStepComponent,
+				canActivate: [WorkflowGuard],
 			}
+
 		]
 	}
 ];

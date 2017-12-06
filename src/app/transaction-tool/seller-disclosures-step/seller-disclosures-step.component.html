@@ -1,0 +1,28 @@
+<div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
+</div>
+<ng-template #hasPreviewLink>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <app-document-preview [previewLink]="previewLink"></app-document-preview>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned" [hasBrokerSigned]="hasBrokerSigned"
+                [signButtonLabel]="signDocumentButtonLabel" (onSignDocument)="signDocument()"></app-sign-document>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noPreviewLink>
+    <div class="row">
+        <div class="col-xs-12 text-center" *ngIf="!userIsSeller">
+            <h5>{{waitingTitle}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center" *ngIf="userIsSeller">
+            <app-upload-document (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+        </div>
+    </div>
+</ng-template>

@@ -12,6 +12,7 @@ import { InviteSellerComponent } from './invite-seller/invite-seller.component';
 import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 import { SignDocumentComponent } from './sign-document/sign-document.component';
+import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 
 @NgModule({
 	imports: [
@@ -30,6 +31,7 @@ import { SignDocumentComponent } from './sign-document/sign-document.component';
 		InviteSellerComponent,
 		PropertyPreviewComponent,
 		InviteEscrowComponent,
+		SellerDisclosuresStepComponent,
 		SignDocumentComponent
 	],
 	exports: [
