@@ -11,6 +11,7 @@ import {SmartContractConnectionService} from '../../smart-contract-connection/sm
 import {HelloSignService} from '../../shared/hello-sign.service';
 
 declare const HelloSign;
+const SignatureUpdatingTimeoutInMilliseconds = 10000;
 
 @Component({
 	selector: 'app-purchase-agreement-step',
@@ -19,7 +20,9 @@ declare const HelloSign;
 })
 export class PurchaseAgreementStepComponent implements OnInit {
 	public userInfo: any;
-	public userIsAgent = false;
+	public userIsBuyer: boolean;
+	public userIsSeller: boolean;
+	public userIsBroker: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
@@ -39,7 +42,9 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				if (!userInfo.user) {
 					return;
 				}
-				this.userIsAgent = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
+				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});
 	}
@@ -113,6 +118,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
+			setTimeout(async () => {
+				// Workaround: waiting HelloSign to update new signature
+				await this.setupDocumentPreview();
+			}, SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
 
@@ -132,5 +141,11 @@ export class PurchaseAgreementStepComponent implements OnInit {
 
 	private async markBrokerSign() {
 		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedPurchaseAgreement(this.deedAddress);
+	}
+
+	public shouldShowSignButton(): boolean {
+		return (this.userIsBuyer && !this.hasBuyerSigned)
+			|| (this.userIsSeller && !this.hasSellerSigned)
+			|| (this.userIsBroker && !this.hasBrokerSigned);
 	}
 }

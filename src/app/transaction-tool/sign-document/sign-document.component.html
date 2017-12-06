@@ -35,7 +35,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-3">
-		<a class="btn propy-control button-small" (click)="onSignDocumentClick()">{{ signButtonLabel }}</a>
+	<div class="col-xs-3 sign-button-holder">
+		<a class="btn propy-control button-small" [ngClass]="{'not-active': !showSignButton}"
+		   (click)="onSignDocumentClick()">{{ signButtonLabel }}</a>
 	</div>
 </div>
