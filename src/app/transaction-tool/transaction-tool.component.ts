@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs/Subscription';
 export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
 	public activeIndex = 0;
-
 	constructor(private route: ActivatedRoute, private router: Router) {
 	}
 
@@ -22,25 +21,25 @@ export class TransactionToolComponent implements OnInit {
 
 		this.workflowSteps = [
 			{
-				label: '',
+				label: 'Property Preview',
 				command: (event: any) => {
 					this.activeIndex = 0;
 				}
 			},
 			{
-				label: '',
+				label: 'Invite Seller',
 				command: (event: any) => {
 					this.activeIndex = 1;
 				}
 			},
 			{
-				label: '',
+				label: 'Invite Escrow',
 				command: (event: any) => {
 					this.activeIndex = 2;
 				}
 			},
 			{
-				label: '',
+				label: 'Purchase Agreement',
 				command: (event: any) => {
 					this.activeIndex = 3;
 				}
