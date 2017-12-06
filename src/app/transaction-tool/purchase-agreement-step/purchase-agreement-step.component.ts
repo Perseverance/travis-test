@@ -11,6 +11,7 @@ import {SmartContractConnectionService} from '../../smart-contract-connection/sm
 import {HelloSignService} from '../../shared/hello-sign.service';
 
 declare const HelloSign;
+const SignatureUpdatingTimeoutInMilliseconds = 10000;
 
 @Component({
 	selector: 'app-purchase-agreement-step',
@@ -120,7 +121,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
 				await this.setupDocumentPreview();
-			}, 10000);
+			}, SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
 
@@ -142,7 +143,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedPurchaseAgreement(this.deedAddress);
 	}
 
-	public showSignButton(): boolean {
+	public shouldShowSignButton(): boolean {
 		return (this.userIsBuyer && !this.hasBuyerSigned)
 			|| (this.userIsSeller && !this.hasSellerSigned)
 			|| (this.userIsBroker && !this.hasBrokerSigned);
