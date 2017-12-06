@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import {Step, STEPS} from './workflow.model';
+import { Step, STEPS } from './workflow.model';
 import {
 	Deed, SmartContractAddress,
 	SmartContractConnectionService, Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import {Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class TransactionToolWorkflowService {
@@ -16,6 +16,8 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.reserve}`] = STEPS['invite-seller'];
 		this.statusToStepMap[`${Status.sellerInvited}`] = STEPS['invite-escrow'];
 		this.statusToStepMap[`${Status.agentInvited}`] = STEPS['purchase-agreement'];
+		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['settlement-statement'];
+		this.statusToStepMap[`${Status.sellerDisclosures}`] = STEPS['seller-disclosures'];
 	}
 
 	public async getDeedStep(deedAddress: SmartContractAddress): Promise<Step> {
