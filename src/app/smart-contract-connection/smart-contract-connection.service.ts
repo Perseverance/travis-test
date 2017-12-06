@@ -162,7 +162,7 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async markSettlementStatementUploaded(): Promise<boolean> {
+	public async markSettlementStatementUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 

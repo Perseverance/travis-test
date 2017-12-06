@@ -47,7 +47,7 @@ export class SellerDisclosuresStepComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		this.signDocumentButtonLabel = 'Sign agreement';
+		this.signDocumentButtonLabel = 'Sign seller disclosures';
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
@@ -110,7 +110,7 @@ export class SellerDisclosuresStepComponent implements OnInit {
 	}
 
 	public async signDocument() {
-		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
+		const requestSignatureId = await this.smartContractService.getSellerDisclosuresSignatureRequestId(this.deedAddress);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
