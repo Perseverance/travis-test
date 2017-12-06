@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { InviteSellerComponent } from './invite-seller/invite-seller.component';
 import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
+import { SignDocumentComponent } from './sign-document/sign-document.component';
 
 @NgModule({
 	imports: [
@@ -28,7 +29,8 @@ import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 		DocumentPreviewComponent,
 		InviteSellerComponent,
 		PropertyPreviewComponent,
-		InviteEscrowComponent
+		InviteEscrowComponent,
+		SignDocumentComponent
 	],
 	exports: [
 		TransactionToolRoutingModule
