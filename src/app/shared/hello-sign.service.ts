@@ -12,7 +12,7 @@ export class HelloSignService {
 	public signDocument(signUrl: string) {
 		HelloSign.init(environment.helloSign.clientId);
 		HelloSign.open({
-			skipDomainVerification: true,
+			skipDomainVerification: true, // ToDo: change to false on production
 			url: signUrl,
 			allowCancel: true,
 			uxVersion: 2,
