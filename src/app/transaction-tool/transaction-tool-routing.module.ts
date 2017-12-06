@@ -1,12 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {TransactionToolComponent} from './transaction-tool.component';
-import {PurchaseAgreementStepComponent} from './purchase-agreement-step/purchase-agreement-step.component';
-import {WorkflowGuard} from './workflow/workflow-guard.service';
-import {InviteSellerComponent} from './invite-seller/invite-seller.component';
-import {TokenGuard} from '../authentication/token-guard.service';
-import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { TransactionToolComponent } from './transaction-tool.component';
+import { PurchaseAgreementStepComponent } from './purchase-agreement-step/purchase-agreement-step.component';
+import { WorkflowGuard } from './workflow/workflow-guard.service';
+import { InviteSellerComponent } from './invite-seller/invite-seller.component';
+import { TokenGuard } from '../authentication/token-guard.service';
+import { AuthenticatedGuard } from '../authentication/authenticated-guard.service';
+import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 
 const transactionToolSteps: Routes = [
 	{
@@ -33,6 +34,11 @@ const transactionToolSteps: Routes = [
 			{
 				path: 'purchase-agreement',
 				component: PurchaseAgreementStepComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
+				path: 'property-preview',
+				component: PropertyPreviewComponent,
 				canActivate: [WorkflowGuard]
 			}
 		]

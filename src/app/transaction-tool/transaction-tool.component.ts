@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {MenuItem} from 'primeng/primeng';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import { REVERSE_STEPS } from './workflow/workflow.model';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { MenuItem } from 'primeng/primeng';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -14,10 +15,11 @@ export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
 	public activeIndex = 0;
 
-	constructor(private route: ActivatedRoute) {
+	constructor(private route: ActivatedRoute, private router: Router) {
 	}
 
 	ngOnInit() {
+
 		this.workflowSteps = [
 			{
 				label: '',
@@ -44,5 +46,9 @@ export class TransactionToolComponent implements OnInit {
 				}
 			}
 		];
+	}
+
+	onChange(event) {
+		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[event]]);
 	}
 }

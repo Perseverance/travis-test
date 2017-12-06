@@ -32,7 +32,7 @@ export class SmartContractConnectionService {
 	constructor() {
 	}
 
-	private fakeDeedStatus = Status.agentInvited;
+	private fakeDeedStatus = Status.purchaseAgreement;
 
 	private fakeDeedAddress = '0x406e4e45785acf237c05c8f0d80dd2b11e4042db';
 	private fakePropertyAddress = 'Kmetska Sgrada, Gabrovo, Gabrovo, Bulgaria';
