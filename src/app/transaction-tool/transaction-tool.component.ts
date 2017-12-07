@@ -1,9 +1,9 @@
-import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MenuItem } from 'primeng/primeng';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Router, Params, UrlSegment } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import {REVERSE_STEPS, STEPS} from './workflow/workflow.model';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {MenuItem} from 'primeng/primeng';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router, Params, UrlSegment} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
 	public activeIndex = 0;
+
 	constructor(private route: ActivatedRoute, private router: Router) {
 	}
 
@@ -58,7 +59,20 @@ export class TransactionToolComponent implements OnInit {
 			}
 		];
 	}
+
 	onIndexChange(event) {
 		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[event]]);
+	}
+
+	public moveToPrevStep() {
+		const prevIndex = +this.activeIndex - 1;
+		this.activeIndex = prevIndex;
+		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[prevIndex]]);
+	}
+
+	public moveToNextStep() {
+		const nextIndex = +this.activeIndex + 1;
+		this.activeIndex = nextIndex;
+		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[nextIndex]]);
 	}
 }
