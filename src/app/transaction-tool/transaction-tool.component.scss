@@ -1,6 +1,9 @@
 @import "../../_variables";
 @import "../../_mixins";
 
+$success-color: #22c230;
+$gray-color-indicator: #dcdcdc;
+
 .transaction-tool {
 	padding: 15px;
 	.ui-state-default {
@@ -56,13 +59,15 @@
 			.ui-steps-item {
 				width: 16.6%;
 				opacity: 1;
-				border-color: $green-dark;
-				border-right-color: white;
-				border-right-width: 2px;
-				background: $green-dark;
+				background: $success-color;
+				height: 5px;
+				margin-top: 18px;
+				border-right: 1px solid white;
+				border-left: 1px solid white;
 				.ui-menuitem-link {
 					height: 10px;
 					padding: 0 1em;
+					display: block;
 					.ui-steps-number {
 						visibility: hidden;
 					}
@@ -71,32 +76,69 @@
 					}
 				}
 				&.ui-state-highlight {
-					border-right: 2px white;
 					.ui-menuitem-link {
 						height: 12px;
 						.ui-steps-title {
 							visibility: visible;
 							color: $text-color-main;
+							position: absolute;
+							top: -60px;
+							left: 0;
+							right: 0;
+							text-align: center;
 						}
 						.ui-steps-number {
 							visibility: visible;
-							background-color: $green-dark;
+							background-color: $success-color;
 							color: #FFFFFF;
 							display: inline-block;
 							width: 36px;
 							border-radius: 50%;
-							margin-top: -14px;
+							margin-top: -16px;
 							margin-bottom: 10px;
+							margin-left: calc(50% - 18px);
 						}
 					}
 				}
 				&.ui-state-highlight ~ .ui-steps-item.ui-state-default {
-					border-color: $gray-medium;
-					background: $gray-medium;
-					border-right-color: white;
-					border-right-width: 2px;
+					background: $gray-color-indicator;
 					opacity: 1;
 				}
+			}
+		}
+		.left-arrow,
+		.right-arrow {
+			border: none;
+			outline: none;
+			margin: auto;
+			top: 0;
+			bottom: 200px;
+			width: 36px;
+			height: 36px;
+			color: white;
+			background-color: $gray-color-indicator;
+			@include border-radius(50%);
+			@include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
+			&:hover {
+				background-color: $blue-main;
+				i {
+					color: white;
+				}
+			}
+			i {
+				text-align: center;
+				color: white;
+				font-size: 20px;
+			}
+		}
+		.left-arrow {
+			i {
+				margin-left: -2px;
+			}
+		}
+		.right-arrow {
+			i {
+				margin-right: -2px;
 			}
 		}
 	}
