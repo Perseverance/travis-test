@@ -13,6 +13,7 @@ import { PropertyPreviewComponent } from './property-preview/property-preview.co
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 import { SignDocumentComponent } from './sign-document/sign-document.component';
 import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
+import { SettlementStatementStepComponent } from './settlement-statement-step/settlement-statement-step.component';
 
 @NgModule({
 	imports: [
@@ -32,7 +33,8 @@ import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller
 		PropertyPreviewComponent,
 		InviteEscrowComponent,
 		SellerDisclosuresStepComponent,
-		SignDocumentComponent
+		SignDocumentComponent,
+		SettlementStatementStepComponent
 	],
 	exports: [
 		TransactionToolRoutingModule

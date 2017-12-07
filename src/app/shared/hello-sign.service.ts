@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 declare const HelloSign;
 
@@ -8,6 +8,8 @@ export class HelloSignService {
 
 	constructor() {
 	}
+
+	public SignatureUpdatingTimeoutInMilliseconds = 10000;
 
 	public async signDocument(signUrl: string): Promise<any> {
 		return (new Promise<boolean>((resolve, reject) => {
