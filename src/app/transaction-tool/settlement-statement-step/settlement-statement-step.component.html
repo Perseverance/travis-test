@@ -8,8 +8,11 @@
     </div>
     <div class="row">
         <div class="col-xs-12 text-center">
-            <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned" [hasBrokerSigned]="hasBrokerSigned"
-                [signButtonLabel]="signDocumentButtonLabel" [showSignButton]="shouldShowSignButton()" (onSignDocument)="signDocument()"></app-sign-document>
+            <app-sign-document [buyerIsParticipant]="true" [hasBuyerSigned]="hasBuyerSigned"
+                [sellerIsParticipant]="true" [hasSellerSigned]="hasSellerSigned" [brokerIsParticipant]="true"
+                [hasBrokerSigned]="hasBrokerSigned" [signButtonLabel]="signDocumentButtonLabel"
+                [escrowIsParticipant]="true" [hasEscrowSigned]="hasEscrowSigned" [showSignButton]="shouldShowSignButton()"
+                (onSignDocument)="signDocument()"></app-sign-document>
         </div>
     </div>
 </ng-template>

@@ -7,11 +7,11 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-2">
+			<div class="col-xs-3">
 				<p-steps [model]="workflowSteps" (activeIndexChange)="onIndexChange($event)"
 						 [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
 			</div>
-			<div class="col-xs-10">
+			<div class="col-xs-9">
 				<router-outlet></router-outlet>
 			</div>
 		</div>
