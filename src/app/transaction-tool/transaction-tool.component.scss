@@ -1,35 +1,91 @@
 @import "../../_variables";
 @import "../../_mixins";
+
 .transaction-tool {
-    min-height: 600px;
+	min-height: 600px;
 	margin-top: 50px;
-    margin-bottom: 50px;
-    background-color: $white;
-    @include border-radius(15px);
-    .ui-steps .ui-steps-title {
-        white-space: normal;
-    }
-    .ui-steps .ui-steps-item {
-        width: 100%;
-        display: inline-block;
-    }
-    .ui-steps.steps-custom {
-        margin-bottom: 30px;
-    }
-    .ui-steps.steps-custom .ui-steps-item .ui-menuitem-link {
-        height: 10px;
-        padding: 0 1em;
-    }
-    .ui-steps.steps-custom .ui-steps-item .ui-steps-number {
-        background-color: #0081c2;
-        color: #FFFFFF;
-        display: inline-block;
-        width: 36px;
-        border-radius: 50%;
-        margin-top: -14px;
-        margin-bottom: 10px;
-    }
-    .ui-steps.steps-custom .ui-steps-item .ui-steps-title {
-        color: #555555;
-    }
+	margin-bottom: 50px;
+	background-color: $white;
+	@include border-radius(15px);
+	.ui-steps .ui-steps-title {
+		white-space: normal;
+	}
+	.ui-steps .ui-steps-item {
+		width: 100%;
+		display: inline-block;
+	}
+	.ui-steps.steps-custom {
+		margin-bottom: 30px;
+	}
+	.ui-steps.steps-custom .ui-steps-item .ui-menuitem-link {
+		height: 10px;
+		padding: 0 1em;
+	}
+	.ui-steps.steps-custom .ui-steps-item .ui-steps-number {
+		background-color: #0081c2;
+		color: #FFFFFF;
+		display: inline-block;
+		width: 36px;
+		border-radius: 50%;
+		margin-top: -14px;
+		margin-bottom: 10px;
+	}
+	.ui-steps.steps-custom .ui-steps-item .ui-steps-title {
+		color: #555555;
+	}
+
+	.ui-steps.progress-indicator {
+		margin-bottom: 30px;
+	}
+
+	.transaction-progress {
+		padding: 35px 0;
+		.ui-steps.progress-indicator {
+			.ui-steps-item {
+				width: 16.6%;
+				opacity: 1;
+				border-color: $green-dark;
+				border-right-color: white;
+				border-right-width: 2px;
+				background: $green-dark;
+				.ui-menuitem-link {
+					height: 10px;
+					padding: 0 1em;
+					.ui-steps-number {
+						visibility: hidden;
+					}
+					.ui-steps-title {
+						visibility: hidden;
+					}
+				}
+				&.ui-state-highlight {
+					border-right: 2px white;
+					.ui-menuitem-link {
+						height: 12px;
+						.ui-steps-title {
+							visibility: visible;
+							color: $text-color-main;
+						}
+						.ui-steps-number {
+							visibility: visible;
+							background-color: $green-dark;
+							color: #FFFFFF;
+							display: inline-block;
+							width: 36px;
+							border-radius: 50%;
+							margin-top: -14px;
+							margin-bottom: 10px;
+						}
+					}
+				}
+				&.ui-state-highlight ~ .ui-steps-item.ui-state-default {
+					border-color: $gray-medium;
+					background: $gray-medium;
+					border-right-color: white;
+					border-right-width: 2px;
+					opacity: 1;
+				}
+			}
+		}
+	}
 }

@@ -1,12 +1,19 @@
 <div class="row">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 transaction-tool">
-        <div class="row">
-            <div class="col-xs-2">
-                <p-steps [model]="workflowSteps" (activeIndexChange)="onIndexChange($event)" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-            </div>
-            <div class="col-xs-10">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-    </div>
+	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 transaction-tool">
+		<div class="row transaction-progress">
+			<div class="col-xs-8 col-xs-offset-2">
+				<p-steps [model]="workflowSteps" [(activeIndex)]="activeIndex" [readonly]="true"
+						 styleClass="progress-indicator"></p-steps>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2">
+				<p-steps [model]="workflowSteps" (activeIndexChange)="onIndexChange($event)"
+						 [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+			</div>
+			<div class="col-xs-10">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
 </div>
