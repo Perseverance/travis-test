@@ -22,7 +22,9 @@ export class SellerDisclosuresStepComponent implements OnInit {
 	public waitingTitle = 'Waiting to upload seller disclosures document';
 
 	public userInfo: any;
-	public userIsSeller = false;
+	public userIsBuyer: boolean;
+	public userIsSeller: boolean;
+	public userIsBroker: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
@@ -43,6 +45,8 @@ export class SellerDisclosuresStepComponent implements OnInit {
 				if (!userInfo.user) {
 					return;
 				}
+				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
+				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});
@@ -107,6 +111,12 @@ export class SellerDisclosuresStepComponent implements OnInit {
 
 	private async markBrokerSign() {
 		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedSellerDisclosures(this.deedAddress);
+	}
+
+	public shouldShowSignButton(): boolean {
+		return (this.userIsBuyer && !this.hasBuyerSigned)
+			|| (this.userIsSeller && !this.hasSellerSigned)
+			|| (this.userIsBroker && !this.hasBrokerSigned);
 	}
 
 }

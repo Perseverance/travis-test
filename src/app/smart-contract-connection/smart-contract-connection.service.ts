@@ -31,7 +31,7 @@ export class SmartContractConnectionService {
 	constructor() {
 	}
 
-	private fakeDeedStatus = Status.sellerDisclosures;
+	private fakeDeedStatus = Status.settlementStatement;
 
 	private fakeDeedAddress = '0x406e4e45785acf237c05c8f0d80dd2b11e4042db';
 	private fakePropertyAddress = 'Kmetska Sgrada, Gabrovo, Gabrovo, Bulgaria';
@@ -134,7 +134,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
-		return 'b2314f2f835ffa8a8e30ad26d090ff68ff7c64d3';
+		return '84561d5d6231ef613004e42fba2cf582f6a724ab';
 		// return 'hardcoded_request_id';
 	}
 
@@ -158,11 +158,15 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async signSettlementStatement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async markSettlementStatementUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
-	public async markSettlementStatementUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async getSettlementStatementSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
+		return '3002444ad02dbfa4df95a32bc009c5a809d44f09';
+	}
+
+	public async signSettlementStatement(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
@@ -178,24 +182,12 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async hasBuyerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasSellerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBrokerSettlementStatementAgreement(deedContractAddress: EthereumAddress): Promise<boolean> {
+	public async isSellerDisclosuresUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
 	public async markSellerDisclosuresUploaded(sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
-	}
-
-	public async isSellerDisclosuresUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return false;
 	}
 
 	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
@@ -207,15 +199,19 @@ export class SmartContractConnectionService {
 	}
 
 	public async hasBuyerSignedSellerDisclosures(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async hasSellerSignedSellerDisclosures(deedContractAddress: EthereumAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async hasBrokerSignedSellerDisclosures(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
+	}
+
+	public async isClosingDocumentsUploaded(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return false;
 	}
 
 	public async markClosingDocumentsUploaded(closingDocumentsSignatureRequestId: string): Promise<boolean> {
@@ -227,6 +223,18 @@ export class SmartContractConnectionService {
 	}
 
 	public async signClosingDocuments(deedContractAddress: EthereumAddress, closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		return true;
+	}
+
+	public async hasBuyerSignedClosingDocuments(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return false;
+	}
+
+	public async hasSellerSignedClosingDocuments(deedContractAddress: EthereumAddress): Promise<boolean> {
+		return false;
+	}
+
+	public async hasBrokerSignedClosingDocuments(deedContractAddress: EthereumAddress): Promise<boolean> {
 		return true;
 	}
 
