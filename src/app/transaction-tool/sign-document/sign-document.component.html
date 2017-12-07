@@ -1,42 +1,54 @@
 <div class="row sign-document-holder">
-	<div class="col-xs-3">
-		<div class="row">
-			<div class="col-xs-12 text-uppercase text-center">
-				Signed by buyer
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12 text-uppercase">
-				{{ hasBuyerSigned }}
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-3">
-		<div class="row">
-			<div class="col-xs-12 text-uppercase text-center">
-				Signed by seller
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12 text-uppercase">
-				{{ hasSellerSigned }}
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-3">
-		<div class="row">
-			<div class="col-xs-12 text-uppercase text-center">
-				Signed by broker
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12 text-uppercase">
-				{{ hasBrokerSigned }}
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-3 sign-button-holder">
-		<a class="btn propy-control button-small" [ngClass]="{'not-active': !showSignButton}"
-		   (click)="onSignDocumentClick()">{{ signButtonLabel }}</a>
-	</div>
+    <div class="col-xs-3 sign-button-holder">
+        <a class="btn propy-control button-small" [ngClass]="{'not-active': !showSignButton}"
+            (click)="onSignDocumentClick()">{{ signButtonLabel }}</a>
+    </div>
+    <div class="col-xs-2" *ngIf="buyerIsParticipant">
+        <div class="row">
+            <div class="col-xs-12 text-uppercase text-center">
+                Signed by buyer
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-uppercase">
+                {{ hasBuyerSigned }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-2" *ngIf="sellerIsParticipant">
+        <div class="row">
+            <div class="col-xs-12 text-uppercase text-center">
+                Signed by seller
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-uppercase">
+                {{ hasSellerSigned }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-2" *ngIf="brokerIsParticipant">
+        <div class="row">
+            <div class="col-xs-12 text-uppercase text-center">
+                Signed by broker
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-uppercase">
+                {{ hasBrokerSigned }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-2" *ngIf="escrowIsParticipant">
+        <div class="row">
+            <div class="col-xs-12 text-uppercase text-center">
+                Signed by escrow
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-uppercase">
+                {{ hasEscrowSigned }}
+            </div>
+        </div>
+    </div>
 </div>
