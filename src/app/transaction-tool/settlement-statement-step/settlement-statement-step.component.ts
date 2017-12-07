@@ -73,7 +73,7 @@ export class SettlementStatementStepComponent implements OnInit {
 	}
 
 	private async setupDocumentPreview() {
-		const requestSignatureId = await this.smartContractService.getSellerDisclosuresSignatureRequestId(this.deedAddress);
+		const requestSignatureId = await this.smartContractService.getSettlementStatementSignatureRequestId(this.deedAddress);
 		this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
 	}
 
@@ -95,6 +95,10 @@ export class SettlementStatementStepComponent implements OnInit {
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.smartContractService.signSellerDisclosures(this.deedAddress, requestSignatureId);
+			setTimeout(async () => {
+				// Workaround: waiting HelloSign to update new signature
+				await this.setupDocumentPreview();
+			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
 

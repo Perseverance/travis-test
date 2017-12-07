@@ -92,6 +92,10 @@ export class SellerDisclosuresStepComponent implements OnInit {
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.smartContractService.signSellerDisclosures(this.deedAddress, requestSignatureId);
+			setTimeout(async () => {
+				// Workaround: waiting HelloSign to update new signature
+				await this.setupDocumentPreview();
+			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
 
