@@ -1,7 +1,9 @@
-<form [formGroup]="inviteForm" class="propy-form">
-    <div class="form-group">
-        <label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
-        <input formControlName="email" type="text" class="form-control propy-control" id="email">
+<form [formGroup]="inviteForm">
+    <div class="form-group" class="col-xs-9">
+        <input formControlName="email" type="text" class="form-control propy-control" id="email"
+            placeholder="{{ 'common.label.email' | translate }}">
     </div>
-    <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="inviteSeller()">Invite</button>
+    <div class="col-xs-3">
+        <button type="button" class="btn propy-control button-big btn-cancel" (click)="inviteSeller()">Send Invitation</button>
+    </div>
 </form>

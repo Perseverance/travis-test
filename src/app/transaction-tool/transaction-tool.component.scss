@@ -1,11 +1,13 @@
 @import "../../_variables";
 @import "../../_mixins";
 .transaction-tool {
+    padding: 15px;
     min-height: 600px;
     margin-top: 50px;
     margin-bottom: 50px;
     background-color: $white;
     @include border-radius(15px);
+    @include box-shadow(0px, 6px, 20px, rgba(0, 0, 0, 0.1));
     .ui-steps .ui-steps-title {
         white-space: normal;
     }
