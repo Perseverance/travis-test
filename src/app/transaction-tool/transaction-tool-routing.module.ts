@@ -1,3 +1,4 @@
+import { SettlementStatementStepComponent } from './settlement-statement-step/settlement-statement-step.component';
 import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 import { PropertyPreviewComponent } from './property-preview/property-preview.component';
@@ -45,7 +46,7 @@ const transactionToolSteps: Routes = [
 			},
 			{
 				path: 'settlement-statement',
-				component: PurchaseAgreementStepComponent,
+				component: SettlementStatementStepComponent,
 				canActivate: [WorkflowGuard]
 			},
 			{
