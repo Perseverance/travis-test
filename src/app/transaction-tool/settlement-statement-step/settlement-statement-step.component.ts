@@ -64,7 +64,7 @@ export class SettlementStatementStepComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
-			if (!await self.smartContractService.isClosingDocumentsUploaded(deedAddress)) {
+			if (!await self.smartContractService.isSettlementStatementUploaded(deedAddress)) {
 				return;
 			}
 			await self.setupDocumentPreview();

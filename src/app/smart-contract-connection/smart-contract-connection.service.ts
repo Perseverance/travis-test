@@ -163,7 +163,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async getSettlementStatementSignatureRequestId(deedContractAddress: EthereumAddress): Promise<string> {
-		return '3002444ad02dbfa4df95a32bc009c5a809d44f09';
+		return 'f8d1bf0ec7601aec28d0cf0f339839dcf5546d1e';
 	}
 
 	public async signSettlementStatement(deedContractAddress: EthereumAddress): Promise<boolean> {
