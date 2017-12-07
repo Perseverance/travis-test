@@ -5,9 +5,13 @@
     margin-top: 50px;
     margin-bottom: 50px;
     background-color: $white;
-    @include border-radius(5px);
+    @include border-radius(15px);
+    .ui-steps .ui-steps-title {
+        white-space: normal;
+    }
     .ui-steps .ui-steps-item {
-        width: 15%;
+        width: 100%;
+        display: inline-block;
     }
     .ui-steps.steps-custom {
         margin-bottom: 30px;
