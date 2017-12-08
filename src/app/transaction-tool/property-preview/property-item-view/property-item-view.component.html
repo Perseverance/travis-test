@@ -1,21 +1,18 @@
-<div class="row">
-    <div class="property step">
-        <h2>Property Details</h2>
-    </div>
-</div>
 <div class="row" *ngIf="property">
-    <div class="media">
-        <div class="media-left">
-            <a href="#">
+    <div class="col-xs-12">
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
             <img class="media-object"  [src]="property.imageUrls[0] | imageEnvPrefix | imageSize :60:60:true" onError="this.src='/assets/images/image-404.png';">
           </a>
-        </div>
-        <div class="media-body">
-            <h4 class="media-heading">{{ property.address }}</h4>
-            <p>{{ property.price.value | thousandSeparator | currencySymbol: property.price.type}}</p>
-            <p>{{ property.bedrooms }} Beds | {{ property.size.value | sizeUnitOfMeasure
-                }} </p>
-            <p>{{ property.desc | textLimitation : 100 }}</p>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ property.address }}</h4>
+                <p>{{ property.price.value | thousandSeparator | currencySymbol: property.price.type}}</p>
+                <p>{{ property.bedrooms }} Beds | {{ property.size.value | sizeUnitOfMeasure
+                    }} </p>
+                <p>{{ property.desc | textLimitation : 100 }}</p>
+            </div>
         </div>
     </div>
 </div>
