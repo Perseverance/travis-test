@@ -71,6 +71,6 @@ export class TransactionToolComponent implements OnInit {
 		];
 	}
 	onIndexChange(event) {
-		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[event]]);
+		this.router.navigate(['transaction-tool', this.route.snapshot.params['address']]);
 	}
 }

@@ -22,7 +22,7 @@ const transactionToolSteps: Routes = [
 			{
 				path: '',
 				pathMatch: 'full',
-				redirectTo: 'seller-disclosures',
+				redirectTo: 'payment',
 				canActivate: [WorkflowGuard]
 			},
 			{
