@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService, UserData} from '../../authentication/authentication.service';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {TransactionToolWorkflowService} from '../workflow/workflow.service';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService, UserData } from '../../authentication/authentication.service';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { TransactionToolWorkflowService } from '../workflow/workflow.service';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
+import { HelloSignService } from '../../shared/hello-sign.service';
 
 declare const HelloSign;
 
@@ -19,7 +19,9 @@ declare const HelloSign;
 })
 export class PurchaseAgreementStepComponent implements OnInit {
 	public userInfo: any;
-	public userIsAgent = false;
+	public userIsBuyer: boolean;
+	public userIsSeller: boolean;
+	public userIsBroker: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
@@ -30,16 +32,18 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public signDocumentButtonLabel: string;
 
 	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService) {
+		private route: ActivatedRoute,
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
 					return;
 				}
-				this.userIsAgent = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
+				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});
 	}
@@ -113,6 +117,10 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
+			setTimeout(async () => {
+				// Workaround: waiting HelloSign to update new signature
+				await this.setupDocumentPreview();
+			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
 
@@ -132,5 +140,11 @@ export class PurchaseAgreementStepComponent implements OnInit {
 
 	private async markBrokerSign() {
 		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedPurchaseAgreement(this.deedAddress);
+	}
+
+	public shouldShowSignButton(): boolean {
+		return (this.userIsBuyer && !this.hasBuyerSigned)
+			|| (this.userIsSeller && !this.hasSellerSigned)
+			|| (this.userIsBroker && !this.hasBrokerSigned);
 	}
 }

@@ -16,8 +16,8 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.reserve}`] = STEPS['invite-seller'];
 		this.statusToStepMap[`${Status.sellerInvited}`] = STEPS['invite-escrow'];
 		this.statusToStepMap[`${Status.agentInvited}`] = STEPS['purchase-agreement'];
-		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['settlement-statement'];
-		this.statusToStepMap[`${Status.sellerDisclosures}`] = STEPS['seller-disclosures'];
+		this.statusToStepMap[`${Status.purchaseAgreement}`] = STEPS['settlement-statement'];
+		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['seller-disclosures'];
 	}
 
 	public async getDeedStep(deedAddress: SmartContractAddress): Promise<Step> {
