@@ -4,16 +4,12 @@
 
     <ng-template #sellerInvited>
         <div class="row" *ngIf="hasDataLoaded">
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <div class="row">
-                    <div class="col-xs-12 text-center" *ngIf="!userIsSeller">
-                        <h4>{{waitingForSellerTitle}}</h4>
-                    </div>
-                    <div class="col-xs-12 text-center" *ngIf="userIsSeller">
-                        <h4>{{respondToInvitationTitle}}</h4>
-                        <app-transaction-tool-invite-respond (onAccept)="onAccept()" (onReject)="onReject()"></app-transaction-tool-invite-respond>
-                    </div>
-                </div>
+            <div class="col-xs-12 text-left" *ngIf="!userIsSeller">
+                <h4>{{waitingForSellerTitle}}</h4>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-lg-4 text-left" *ngIf="userIsSeller">
+                <h4>{{respondToInvitationTitle}}</h4>
+                <app-transaction-tool-invite-respond (onAccept)="onAccept()" (onReject)="onReject()"></app-transaction-tool-invite-respond>
             </div>
         </div>
 
@@ -21,19 +17,14 @@
 
     <ng-template #sellerNotInvited>
         <div class="row" *ngIf="hasDataLoaded">
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <div class="row">
-                    <div class="col-xs-12 text-center" *ngIf="!userIsAgent">
-                        <h4>{{waitingForBrokerTitle}}</h4>
-                    </div>
-                    <div class="col-xs-12 text-center" *ngIf="userIsAgent">
-                        <h4>{{inviteSellerTitle}}</h4>
-                        <app-transaction-tool-invite (onInvite)="onInvite($event.email)"></app-transaction-tool-invite>
-                    </div>
-                </div>
+            <div class="col-xs-12 text-left" *ngIf="!userIsAgent">
+                <h4>{{waitingForBrokerTitle}}</h4>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-lg-4 text-left" *ngIf="userIsAgent">
+                <h4>{{inviteSellerTitle}}</h4>
+                <app-transaction-tool-invite (onInvite)="onInvite($event.email)"></app-transaction-tool-invite>
             </div>
         </div>
-
     </ng-template>
 
 
