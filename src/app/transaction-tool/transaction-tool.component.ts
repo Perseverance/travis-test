@@ -4,6 +4,7 @@ import {MenuItem} from 'primeng/primeng';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router, Params, UrlSegment} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
+import {SmartContractConnectionService} from '../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -14,11 +15,15 @@ import {Subscription} from 'rxjs/Subscription';
 export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
 	public activeIndex = 0;
+	public deedStatusIndex: number;
 
-	constructor(private route: ActivatedRoute, private router: Router) {
+	constructor(private route: ActivatedRoute, private router: Router,
+				private smartContractService: SmartContractConnectionService) {
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
+		const deedStatus = await this.getDeedStatus(this.route.snapshot.params['address']);
+		this.deedStatusIndex = deedStatus + 1;
 		this.activeIndex = STEPS[this.route.snapshot.firstChild.url[0].path];
 		this.workflowSteps = [
 			{
@@ -72,7 +77,15 @@ export class TransactionToolComponent implements OnInit {
 
 	public moveToNextStep() {
 		const nextIndex = +this.activeIndex + 1;
+		if (nextIndex > this.deedStatusIndex) {
+			return;
+		}
 		this.activeIndex = nextIndex;
 		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[nextIndex]]);
+	}
+
+	public async getDeedStatus(deedAddress: string): Promise<number> {
+		const deed = await this.smartContractService.getDeedDetails(deedAddress);
+		return deed.status;
 	}
 }

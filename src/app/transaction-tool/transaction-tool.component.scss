@@ -3,6 +3,7 @@
 
 $success-color: #22c230;
 $gray-color-indicator: #dcdcdc;
+$nav-prev-next-color: #969696;
 
 .transaction-tool {
 	padding: 15px;
@@ -68,6 +69,7 @@ $gray-color-indicator: #dcdcdc;
 					height: 10px;
 					padding: 0 1em;
 					display: block;
+					z-index: 2;
 					.ui-steps-number {
 						visibility: hidden;
 					}
@@ -106,39 +108,68 @@ $gray-color-indicator: #dcdcdc;
 				}
 			}
 		}
-		.left-arrow,
-		.right-arrow {
-			border: none;
-			outline: none;
-			margin: auto;
-			top: 0;
-			bottom: 200px;
-			width: 36px;
-			height: 36px;
-			color: white;
-			background-color: $gray-color-indicator;
-			@include border-radius(50%);
-			@include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
-			&:hover {
-				background-color: $blue-main;
-				i {
-					color: white;
+		.dummy-steps-holder {
+			.step-cols {
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 1;
+				bottom: 0;
+				right: 0;
+				height: 100%;
+				.ui-steps {
+					.ui-steps-item, .ui-state-highlight {
+						.ui-menuitem-link {
+							.ui-steps-number {
+								display: none !important;
+							}
+							.ui-steps-title {
+								display: none;
+							}
+						}
+					}
 				}
 			}
-			i {
-				text-align: center;
+		}
+		.nav-button {
+			color: $nav-prev-next-color;
+			.left-arrow,
+			.right-arrow {
+				border: none;
+				outline: none;
+				margin: auto;
+				top: 0;
+				bottom: 200px;
+				width: 36px;
+				height: 36px;
 				color: white;
-				font-size: 20px;
+				background-color: $gray-color-indicator;
+				@include border-radius(50%);
+				@include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
+				&:hover {
+					background-color: $blue-main;
+					i {
+						color: white;
+					}
+				}
+				i {
+					text-align: center;
+					color: white;
+					font-size: 20px;
+				}
 			}
-		}
-		.left-arrow {
-			i {
-				margin-left: -2px;
+			.left-arrow {
+				i {
+					margin-left: -2px;
+				}
 			}
-		}
-		.right-arrow {
-			i {
-				margin-right: -2px;
+			.right-arrow {
+				i {
+					margin-right: -2px;
+				}
+			}
+			&.hide-nav-button {
+				visibility: hidden;
 			}
 		}
 	}
