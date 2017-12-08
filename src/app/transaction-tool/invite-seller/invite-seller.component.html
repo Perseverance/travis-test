@@ -7,8 +7,11 @@
             <div class="col-xs-12 text-left" *ngIf="!userIsSeller">
                 <h4>{{waitingForSellerTitle}}</h4>
             </div>
-            <div class="col-xs-12 col-sm-6 col-lg-4 text-left" *ngIf="userIsSeller">
+            <div class="col-xs-12 col-sm-9 col-md-6 text-left" *ngIf="userIsSeller">
                 <h4>{{respondToInvitationTitle}}</h4>
+                <div *ngIf="deedAddress">
+                    <app-property-item-view [deedAddress]="deedAddress"></app-property-item-view>
+                </div>
                 <app-transaction-tool-invite-respond (onAccept)="onAccept()" (onReject)="onReject()"></app-transaction-tool-invite-respond>
             </div>
         </div>
