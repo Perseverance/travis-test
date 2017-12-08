@@ -16,6 +16,7 @@ import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 import { SignDocumentComponent } from './sign-document/sign-document.component';
 import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { SettlementStatementStepComponent } from './settlement-statement-step/settlement-statement-step.component';
+import { PaymentStepComponent } from './payment-step/payment-step.component';
 
 @NgModule({
 	imports: [
@@ -38,7 +39,8 @@ import { SettlementStatementStepComponent } from './settlement-statement-step/se
 		SignDocumentComponent,
 		TextLimitationPipe,
 		PropertyItemViewComponent,
-		SettlementStatementStepComponent
+		SettlementStatementStepComponent,
+		PaymentStepComponent
 	],
 	exports: [
 		TransactionToolRoutingModule
