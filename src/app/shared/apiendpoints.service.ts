@@ -45,7 +45,8 @@ export class APIEndpointsService {
 		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`,
 		GET_SIGN_URL: `${this.INTERNAL_API_PREFIX}/Deeds/documentsignurl`,
 		DEED_ADD_SELLER: `${this.INTERNAL_API_PREFIX}/Deeds/addseller`,
-		DEED_ADD_ESCROW: `${this.INTERNAL_API_PREFIX}/Deeds/addescrow`
+		DEED_ADD_ESCROW: `${this.INTERNAL_API_PREFIX}/Deeds/addescrow`,
+		PROPERTY_PREVIEW: `${this.INTERNAL_API_PREFIX}/Deeds/property`,
 	};
 
 	constructor() {
