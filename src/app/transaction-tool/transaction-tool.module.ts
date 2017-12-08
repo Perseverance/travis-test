@@ -1,3 +1,5 @@
+import { PropertyItemViewComponent } from './property-preview/property-item-view/property-item-view.component';
+import { TextLimitationPipe } from './../shared/pipes/text-limitation.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransactionToolComponent } from './transaction-tool.component';
@@ -34,6 +36,8 @@ import { SettlementStatementStepComponent } from './settlement-statement-step/se
 		InviteEscrowComponent,
 		SellerDisclosuresStepComponent,
 		SignDocumentComponent,
+		TextLimitationPipe,
+		PropertyItemViewComponent,
 		SettlementStatementStepComponent
 	],
 	exports: [
