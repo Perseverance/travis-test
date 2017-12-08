@@ -1,3 +1,4 @@
+import { PaymentStepComponent } from './payment-step/payment-step.component';
 import { SettlementStatementStepComponent } from './settlement-statement-step/settlement-statement-step.component';
 import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
@@ -52,6 +53,16 @@ const transactionToolSteps: Routes = [
 			{
 				path: 'seller-disclosures',
 				component: SellerDisclosuresStepComponent,
+				canActivate: [WorkflowGuard],
+			},
+			{
+				path: 'closing-documents',
+				component: SellerDisclosuresStepComponent,
+				canActivate: [WorkflowGuard],
+			},
+			{
+				path: 'payment',
+				component: PaymentStepComponent,
 				canActivate: [WorkflowGuard],
 			}
 
