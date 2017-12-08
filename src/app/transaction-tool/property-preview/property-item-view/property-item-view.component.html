@@ -13,7 +13,8 @@
         <div class="media-body">
             <h4 class="media-heading">{{ property.address }}</h4>
             <p>{{ property.price.value | thousandSeparator | currencySymbol: property.price.type}}</p>
-            <p>{{ property.bedrooms }} Beds | {{ property.size.value | sizeUnitOfMeasure }} </p>
+            <p>{{ property.bedrooms }} Beds | {{ property.size.value | sizeUnitOfMeasure
+                }} </p>
             <p>{{ property.desc | textLimitation : 100 }}</p>
         </div>
     </div>
