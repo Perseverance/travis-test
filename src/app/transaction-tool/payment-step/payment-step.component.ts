@@ -72,10 +72,10 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async sendPayment() {
 		this.notificationsService.pushInfo({
-			title: 'Recording your response. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',
+			title: 'Sending payment transaction. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.',
 			message: '',
 			time: (new Date().getTime()),
-			timeout: 60000
+			timeout: 180000
 		});
 		await this.smartContractService.sendPayment(this.deedAddress);
 		this.notificationsService.pushSuccess({
