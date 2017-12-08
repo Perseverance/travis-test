@@ -25,7 +25,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 	public successMessage = 'Success!';
 
 	private addressSubscription: Subscription;
-	private deedAddress: SmartContractAddress;
+	public deedAddress: SmartContractAddress;
 
 	public inviteSellerTitle = 'Invite seller to this deed';
 	public waitingForBrokerTitle = 'Waiting for broker to invite seller';

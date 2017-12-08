@@ -25,7 +25,7 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 	public successMessage = 'Success!';
 
 	private addressSubscription: Subscription;
-	private deedAddress: SmartContractAddress;
+	public deedAddress: SmartContractAddress;
 
 	public inviteEscrowTitle = 'Invite escrow to this deed';
 	public waitingForBrokerTitle = 'Waiting for broker to invite seller';
