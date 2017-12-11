@@ -1,5 +1,5 @@
-import { EthereumAddress, SmartContractAddress } from './smart-contract-connection.service';
-import { Injectable } from '@angular/core';
+import {EthereumAddress, SmartContractAddress} from './smart-contract-connection.service';
+import {Injectable} from '@angular/core';
 
 export enum Status {
 	reserve,
@@ -91,10 +91,10 @@ export class SmartContractConnectionService {
 	}
 
 	public async createDeed(propertyLocationAddress: string,
-		sellerAddress: EthereumAddress,
-		brokerAddress: EthereumAddress,
-		escrowAddress: EthereumAddress,
-		priceInETH: number): Promise<SmartContractAddress> {
+							sellerAddress: EthereumAddress,
+							brokerAddress: EthereumAddress,
+							escrowAddress: EthereumAddress,
+							priceInETH: number): Promise<SmartContractAddress> {
 		return this.fakeDeedAddress;
 	}
 
@@ -160,7 +160,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
+		return true;
 	}
 
 	public async hasSellerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
@@ -172,7 +172,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signPurchaseAgreement(deedContractAddress: SmartContractAddress,
-		purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+									   purchaseAgreementSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -217,7 +217,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signSellerDisclosures(deedContractAddress: SmartContractAddress,
-		sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+									   sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -246,7 +246,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signClosingDocuments(deedContractAddress: SmartContractAddress,
-		closingDocumentsSignatureRequestId: string): Promise<boolean> {
+									  closingDocumentsSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 

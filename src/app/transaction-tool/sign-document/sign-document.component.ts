@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthenticationService, UserData} from '../../authentication/authentication.service';
+import {UserRoleEnum} from '../enums/user-role.enum';
 
 @Component({
 	selector: 'app-sign-document',
@@ -6,6 +8,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 	styleUrls: ['./sign-document.component.scss']
 })
 export class SignDocumentComponent implements OnInit {
+	public userRoleEnum = UserRoleEnum;
+	public currentUserRole: number;
 	@Input() buyerIsParticipant = false;
 	@Input() sellerIsParticipant = false;
 	@Input() brokerIsParticipant = false;
@@ -14,11 +18,18 @@ export class SignDocumentComponent implements OnInit {
 	@Input() hasSellerSigned: boolean;
 	@Input() hasBrokerSigned: boolean;
 	@Input() hasEscrowSigned: boolean;
-	@Input() signButtonLabel: string;
 	@Input() showSignButton: boolean;
 	@Output() onSignDocument = new EventEmitter<any>();
 
-	constructor() {
+	constructor(private authService: AuthenticationService) {
+		this.authService.subscribeToUserData({
+			next: async (userInfo: UserData) => {
+				if (!userInfo.user) {
+					return;
+				}
+				this.currentUserRole = userInfo.user.role;
+			}
+		});
 	}
 
 	ngOnInit() {

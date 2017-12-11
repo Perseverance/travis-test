@@ -52,14 +52,13 @@ export class SettlementStatementStepComponent implements OnInit {
 				}
 				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
 				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.Notary);
+				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.Escrow);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});
 	}
 
 	async ngOnInit() {
-		this.signDocumentButtonLabel = 'Sign settlement statement';
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {

@@ -52,7 +52,6 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		this.signDocumentButtonLabel = 'Sign agreement';
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {

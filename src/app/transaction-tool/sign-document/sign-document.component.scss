@@ -1,7 +1,23 @@
+@import "../../../_variables";
+@import "../../../_mixins";
+
+$top-border-color: #dcdcdc;
+$sign-label-color: #9ba1a4;
+
 .sign-document-holder {
-	margin: 15px 0;
+	margin: 25px 0;
 	padding: 20px 0;
+	border-top: 1px solid $top-border-color;
+	.sign-label {
+		color: $sign-label-color;
+	}
+	.sign-status {
+	}
 	.sign-button-holder {
+		a {
+			width: 90%;
+			margin-left: 5%;
+		}
 		.not-active {
 			pointer-events: none;
 			cursor: default;
