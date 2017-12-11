@@ -41,11 +41,14 @@ export class APIEndpointsService {
 		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/notifications/authPusher`,
 		DEAL_PARTIES: `${this.INTERNAL_API_PREFIX}/deeds/dealparties`,
 		CREATE_DEED: `${this.INTERNAL_API_PREFIX}/deeds/createDeed`,
+		GET_DEED: `${this.INTERNAL_API_PREFIX}/deeds/single`,
+		MY_DEEDS: `${this.INTERNAL_API_PREFIX}/deeds/mydeeds`,
 		UPLOAD_DEED_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/uploaddocument`,
 		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`,
 		GET_SIGN_URL: `${this.INTERNAL_API_PREFIX}/Deeds/documentsignurl`,
-		DEED_ADD_SELLER: `${this.INTERNAL_API_PREFIX}/Deeds/addseller`,
-		DEED_ADD_ESCROW: `${this.INTERNAL_API_PREFIX}/Deeds/addescrow`,
+		INVITE_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/inviteparty`,
+		ACCEPT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/acceptparty`,
+		REJECT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/rejectparty`,
 		PROPERTY_PREVIEW: `${this.INTERNAL_API_PREFIX}/Deeds/property`
 	};
 

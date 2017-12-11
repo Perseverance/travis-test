@@ -1,3 +1,4 @@
+import { DeedsService } from './../../shared/deeds.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -29,10 +30,11 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	public escrowAddress: EthereumAddress;
 
 	private addressSubscription: Subscription;
-	public deedAddress: SmartContractAddress;
+	public deedId: SmartContractAddress;
 
 	constructor(private authService: AuthenticationService,
 		private smartContractService: SmartContractConnectionService,
+		private deedsService: DeedsService,
 		private route: ActivatedRoute,
 		private notificationsService: NotificationsService,
 		errorsService: ErrorsService,
@@ -53,13 +55,13 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	async ngOnInit() {
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
-		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
-			if (!deedAddress) {
+		this.addressSubscription = addressObservable.subscribe(async function (deedId) {
+			if (!deedId) {
 				throw new Error('No deed address supplied');
 			}
-			self.deedAddress = deedAddress;
-			self.deedDetails = await self.smartContractService.getDeedDetails(deedAddress);
-			self.escrowAddress = await self.smartContractService.getEscrowAddress(deedAddress);
+			self.deedId = deedId;
+			self.deedDetails = await self.deedsService.getDeedDetails(deedId);
+			self.escrowAddress = await self.smartContractService.getEscrowAddress(deedId);
 			self.invitationDataLoaded = true;
 		});
 
@@ -77,7 +79,7 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 			time: (new Date().getTime()),
 			timeout: 180000
 		});
-		await this.smartContractService.sendPayment(this.deedAddress);
+		await this.smartContractService.sendPayment(this.deedId);
 		this.notificationsService.pushSuccess({
 			title: 'Success',
 			message: '',

@@ -49,7 +49,7 @@ export class SettlementStatementStepComponent implements OnInit {
 				}
 				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
 				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.Notary);
+				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.Escrow);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});

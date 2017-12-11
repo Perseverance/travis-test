@@ -11,33 +11,46 @@ export class DeedsService {
 		private apiEndpoints: APIEndpointsService,
 		private browserDetectionService: BrowserDetectionService) { }
 
-
-	public async sendDeedAddress(propertyId: string, deedAddress: string, agentId: string): Promise<boolean> {
-		const params = {
-			propertyId,
-			deedAddress,
-			agentId
-		};
-
-		await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CREATE_DEED, params);
-		return true;
+	public async getMyDeeds(): Promise<any> {
+		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.MY_DEEDS);
+		return result.data.data;
 	}
 
-	public async sendSellerAccept(deedAddress: SmartContractAddress) {
+	public async getDeedDetails(deedId: string): Promise<any> {
+		const params = {
+			deedId
+		};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.MY_DEEDS, { params });
+		return result.data.data;
+	}
+
+	public async inviteParty(role: number, deedId: string, userEmail: string) {
 		const data = {
-			deedAddress
+			role,
+			deedId,
+			userEmail
 		};
 
-		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.DEED_ADD_SELLER, data);
+		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.INVITE_PARTY, data);
 		await result.data.data;
 	}
 
-	public async sendEscrowAccept(deedAddress: SmartContractAddress) {
+
+	public async acceptInvite(deedId: string) {
 		const data = {
-			deedAddress
+			deedId
 		};
 
-		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.DEED_ADD_ESCROW, data);
+		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.ACCEPT_PARTY, data);
+		await result.data.data;
+	}
+
+	public async rejectInvite(deedId: string) {
+		const data = {
+			deedId
+		};
+
+		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REJECT_PARTY, data);
 		await result.data.data;
 	}
 

@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router, Params, UrlSegment } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { SmartContractConnectionService } from '../smart-contract-connection/smart-contract-connection.service';
+import { DeedsService } from '../shared/deeds.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -18,7 +18,7 @@ export class TransactionToolComponent implements OnInit {
 	public deedStatusIndex: number;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-		private smartContractService: SmartContractConnectionService) {
+		private deedsService: DeedsService) {
 	}
 
 	async ngOnInit() {
@@ -108,8 +108,8 @@ export class TransactionToolComponent implements OnInit {
 		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[nextIndex]]);
 	}
 
-	public async getDeedStatus(deedAddress: string): Promise<number> {
-		const deed = await this.smartContractService.getDeedDetails(deedAddress);
+	public async getDeedStatus(deedId: string): Promise<number> {
+		const deed = await this.deedsService.getDeedDetails(deedId);
 		return deed.status;
 	}
 }

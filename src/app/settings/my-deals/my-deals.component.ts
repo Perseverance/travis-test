@@ -1,3 +1,4 @@
+import { DeedsService } from './../../shared/deeds.service';
 import { Component, OnInit } from '@angular/core';
 import { Deed, SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
 import { AuthenticationService, UserData } from '../../authentication/authentication.service';
@@ -11,10 +12,11 @@ import { TransactionToolWorkflowService } from '../../transaction-tool/workflow/
 	styleUrls: ['./my-deals.component.scss']
 })
 export class MyDealsComponent implements OnInit {
-	public myDeals: Deed[];
+	public myDeals: any[];
 
 	constructor(private smartContractService: SmartContractConnectionService,
 		private authService: AuthenticationService,
+		private deedsService: DeedsService,
 		private router: Router,
 		private workflowService: TransactionToolWorkflowService) {
 		this.authService.subscribeToUserData({
@@ -30,28 +32,12 @@ export class MyDealsComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	private async getMyDeals(userRole: number): Promise<Deed[]> {
-		switch (userRole) {
-			case UserRoleEnum.Buyer: {
-				return await this.smartContractService.getBuyerDeeds();
-			}
-			case UserRoleEnum.Seller: {
-				return await this.smartContractService.getSellerDeeds();
-			}
-			case UserRoleEnum.Agent: {
-				return await this.smartContractService.getAgentDeeds();
-			}
-			case UserRoleEnum.Notary: {
-				return await this.smartContractService.getEscrowDeeds();
-			}
-			default: {
-				throw new Error('Invalid user role');
-			}
-		}
+	private async getMyDeals(userRole: number): Promise<any[]> {
+		return await this.deedsService.getMyDeeds();
 	}
 
 	public goToTransactionToolWorkflow(data: any) {
-		this.router.navigate(['/transaction-tool', data.deedContractAddress]);
+		this.router.navigate(['/transaction-tool', data.deedId]);
 	}
 
 }

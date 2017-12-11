@@ -2,5 +2,5 @@ export enum UserRoleEnum {
 	Agent = 1,
 	Seller = 2,
 	Buyer = 3,
-	Notary = 4
+	Escrow = 4
 }

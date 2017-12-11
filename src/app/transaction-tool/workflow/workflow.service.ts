@@ -6,13 +6,15 @@ import {
 	SmartContractConnectionService, Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
 import { Subscription } from 'rxjs/Subscription';
+import { DeedsService } from '../../shared/deeds.service';
 
 @Injectable()
 export class TransactionToolWorkflowService {
 	public deedAddress;
 	private statusToStepMap = {};
 
-	constructor(private smartContractService: SmartContractConnectionService) {
+	constructor(private smartContractService: SmartContractConnectionService,
+		private deedService: DeedsService) {
 		this.statusToStepMap[`${Status.reserve}`] = STEPS['invite-seller'];
 		this.statusToStepMap[`${Status.sellerInvited}`] = STEPS['accept-seller'];
 		this.statusToStepMap[`${Status.sellerAccepted}`] = STEPS['invite-escrow'];
@@ -24,8 +26,8 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.closingDocuments}`] = STEPS['payment'];
 	}
 
-	public async getDeedStep(deedAddress: SmartContractAddress): Promise<Step> {
-		const deed = await this.smartContractService.getDeedDetails(this.deedAddress);
+	public async getDeedStep(deedId: string): Promise<Step> {
+		const deed = await this.deedService.getDeedDetails(deedId);
 		const step = this.statusToStepMap[`${deed.status}`];
 		return step;
 	}
