@@ -7,7 +7,7 @@ import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decorat
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { SmartContractConnectionService, SmartContractAddress } from './../../smart-contract-connection/smart-contract-connection.service';
+import { SmartContractConnectionService, SmartContractAddress, Status } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
@@ -66,7 +66,8 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
-			self.isSellerInvited = await self.smartContractConnectionService.isSellerInvited(self.deedAddress);
+			const deed = await self.smartContractConnectionService.getDeedDetails(deedAddress);
+			self.isSellerInvited = (deed.status >= Status.sellerInvited);
 			self.invitationDataLoaded = true;
 		});
 

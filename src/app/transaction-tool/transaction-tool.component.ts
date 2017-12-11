@@ -39,39 +39,51 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Invite Escrow',
+				label: 'Seller Invitation Response',
 				command: (event: any) => {
 					this.activeIndex = 2;
 				}
 			},
 			{
-				label: 'Purchase Agreement',
+				label: 'Invite Escrow',
 				command: (event: any) => {
 					this.activeIndex = 3;
 				}
 			},
 			{
-				label: 'Settlement Statement',
+				label: 'Escrow Invitation Response',
 				command: (event: any) => {
 					this.activeIndex = 4;
 				}
 			},
 			{
-				label: 'Seller Disclosures',
+				label: 'Purchase Agreement',
 				command: (event: any) => {
 					this.activeIndex = 5;
 				}
 			},
 			{
-				label: 'Closing Documents',
+				label: 'Settlement Statement',
 				command: (event: any) => {
 					this.activeIndex = 6;
 				}
 			},
 			{
-				label: 'Payment',
+				label: 'Seller Disclosures',
 				command: (event: any) => {
 					this.activeIndex = 7;
+				}
+			},
+			{
+				label: 'Closing Documents',
+				command: (event: any) => {
+					this.activeIndex = 8;
+				}
+			},
+			{
+				label: 'Payment',
+				command: (event: any) => {
+					this.activeIndex = 9;
 				}
 			}
 		];
@@ -98,7 +110,6 @@ export class TransactionToolComponent implements OnInit {
 
 	public async getDeedStatus(deedAddress: string): Promise<number> {
 		const deed = await this.smartContractService.getDeedDetails(deedAddress);
-		console.log(deed);
 		return deed.status;
 	}
 }
