@@ -1,14 +1,14 @@
-import { DeedDocumentType } from './../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from './../enums/user-role.enum';
-import { Base64Service } from './../../shared/base64.service';
-import { HelloSignService } from './../../shared/hello-sign.service';
-import { SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
-import { TransactionToolDocumentService } from './../transaction-tool-document.service';
-import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit } from '@angular/core';
+import {DeedDocumentType} from './../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from './../enums/user-role.enum';
+import {Base64Service} from './../../shared/base64.service';
+import {HelloSignService} from './../../shared/hello-sign.service';
+import {SmartContractConnectionService} from './../../smart-contract-connection/smart-contract-connection.service';
+import {TransactionToolDocumentService} from './../transaction-tool-document.service';
+import {ActivatedRoute} from '@angular/router';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Component, OnInit} from '@angular/core';
 
 declare const HelloSign;
 
@@ -20,6 +20,8 @@ declare const HelloSign;
 export class SettlementStatementStepComponent implements OnInit {
 
 	public waitingTitle = 'Waiting to upload settlement statement';
+	public uploadSettlementTitle = 'Settlement Statement';
+	public uploadSettlementSubtitle = 'Please upload settlement statement document:';
 
 	public userInfo: any;
 	public userIsBuyer: boolean;
@@ -37,11 +39,11 @@ export class SettlementStatementStepComponent implements OnInit {
 	public signDocumentButtonLabel: string;
 
 	constructor(private authService: AuthenticationService,
-		private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private base64Service: Base64Service) {
+				private route: ActivatedRoute,
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private base64Service: Base64Service) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
