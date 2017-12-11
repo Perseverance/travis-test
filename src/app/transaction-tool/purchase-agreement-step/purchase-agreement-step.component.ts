@@ -30,8 +30,9 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public hasSellerSigned: boolean;
 	public hasBrokerSigned: boolean;
 	public signDocumentButtonLabel: string;
-	public uploadPurchaseTitle = 'Purchase Agreement';
+	public purchaseTitle = 'Purchase Agreement';
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
+	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,

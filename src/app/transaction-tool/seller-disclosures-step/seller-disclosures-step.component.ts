@@ -20,8 +20,9 @@ declare const HelloSign;
 export class SellerDisclosuresStepComponent implements OnInit {
 
 	public waitingTitle = 'Waiting to upload seller disclosures document';
-	public uploadDisclosuresTitle = 'Seller Disclosure';
+	public disclosuresTitle = 'Seller Disclosure';
 	public uploadDisclosuresSubtitle = 'Please upload seller disclosure documents:';
+	public previewDisclosuresSubtitle = 'Please review and sign seller disclosure.';
 
 	public userInfo: any;
 	public userIsBuyer: boolean;

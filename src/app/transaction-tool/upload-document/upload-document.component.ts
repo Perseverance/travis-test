@@ -1,9 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {TransactionToolWorkflowService} from '../workflow/workflow.service';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 import {PropertiesFilter} from '../../properties/properties.service';
-import {InputTextarea} from 'primeng/primeng';
 
 @Component({
 	selector: 'app-upload-document',

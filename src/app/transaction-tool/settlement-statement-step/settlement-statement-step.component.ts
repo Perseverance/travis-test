@@ -20,8 +20,9 @@ declare const HelloSign;
 export class SettlementStatementStepComponent implements OnInit {
 
 	public waitingTitle = 'Waiting to upload settlement statement';
-	public uploadSettlementTitle = 'Settlement Statement';
+	public settlementTitle = 'Settlement Statement';
 	public uploadSettlementSubtitle = 'Please upload settlement statement document:';
+	public previewSettlementSubtitle = 'Please review and sign settlement statement.';
 
 	public userInfo: any;
 	public userIsBuyer: boolean;
