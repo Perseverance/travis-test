@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 
 @Component({
 	selector: 'app-document-preview',
@@ -8,6 +7,8 @@ import {TransactionToolDocumentService} from '../transaction-tool-document.servi
 })
 export class DocumentPreviewComponent implements OnInit, OnChanges {
 	public iframeSrc: string;
+	@Input() previewTitle: string;
+	@Input() previewSubtitle: string;
 	@Input() previewLink: string;
 
 

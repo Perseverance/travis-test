@@ -55,7 +55,7 @@ $nav-prev-next-color: #969696;
         padding: 35px 0;
         .ui-steps.progress-indicator {
             .ui-steps-item {
-                width: 16.6%;
+                width: 12.5%;
                 opacity: 1;
                 background: $success-color;
                 height: 5px;
@@ -168,30 +168,6 @@ $nav-prev-next-color: #969696;
             }
             &.hide-nav-button {
                 visibility: hidden;
-            }
-        }
-    }
-    .dummy-steps-holder {
-        .step-cols {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            bottom: 0;
-            right: 0;
-            height: 100%;
-            .ui-steps {
-                .ui-steps-item,
-                .ui-state-highlight {
-                    .ui-menuitem-link {
-                        .ui-steps-number {
-                            display: none !important;
-                        }
-                        .ui-steps-title {
-                            display: none;
-                        }
-                    }
-                }
             }
         }
     }
