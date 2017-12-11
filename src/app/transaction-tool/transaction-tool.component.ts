@@ -38,49 +38,49 @@ export class TransactionToolComponent implements OnInit {
 				label: 'Property Preview',
 				command: (event: any) => {
 					this.activeIndex = 0;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Invite Seller',
 				command: (event: any) => {
 					this.activeIndex = 1;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Invite Escrow',
 				command: (event: any) => {
 					this.activeIndex = 2;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Purchase Agreement',
 				command: (event: any) => {
 					this.activeIndex = 3;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Settlement Statement',
 				command: (event: any) => {
 					this.activeIndex = 4;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Seller Disclosures',
 				command: (event: any) => {
 					this.activeIndex = 5;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Closing Documents',
 				command: (event: any) => {
 					this.activeIndex = 6;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 
 				}
 			},
@@ -88,7 +88,7 @@ export class TransactionToolComponent implements OnInit {
 				label: 'Payment',
 				command: (event: any) => {
 					this.activeIndex = 7;
-					this.checkCurrentStatus(this.activeIndex);
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			}
 		];
@@ -103,11 +103,11 @@ export class TransactionToolComponent implements OnInit {
 		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[this.curreentState]]);
 
 	}
-	public checkCurrentStatus(currentActiveIndex: number) {
-		if (currentActiveIndex > this.deedStatusIndex) {
-			currentActiveIndex = this.deedStatusIndex;
-			return (this.activeIndex = currentActiveIndex);
+	public getCurrentStatus(currentActiveIndex: number) {
+		if (currentActiveIndex <= this.deedStatusIndex) {
+			return currentActiveIndex;
 		}
+		return this.deedStatusIndex;
 	}
 
 	public moveToPrevStep() {
