@@ -1,10 +1,10 @@
-import {REVERSE_STEPS, STEPS} from './workflow/workflow.model';
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {MenuItem} from 'primeng/primeng';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router, Params, UrlSegment} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import {SmartContractConnectionService} from '../smart-contract-connection/smart-contract-connection.service';
+import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { MenuItem } from 'primeng/primeng';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Router, Params, UrlSegment } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { SmartContractConnectionService } from '../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -18,7 +18,7 @@ export class TransactionToolComponent implements OnInit {
 	public deedStatusIndex: number;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-				private smartContractService: SmartContractConnectionService) {
+		private smartContractService: SmartContractConnectionService) {
 	}
 
 	async ngOnInit() {
@@ -98,6 +98,7 @@ export class TransactionToolComponent implements OnInit {
 
 	public async getDeedStatus(deedAddress: string): Promise<number> {
 		const deed = await this.smartContractService.getDeedDetails(deedAddress);
+		console.log(deed);
 		return deed.status;
 	}
 }

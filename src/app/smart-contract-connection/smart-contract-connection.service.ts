@@ -2,17 +2,19 @@ import { EthereumAddress, SmartContractAddress } from './smart-contract-connecti
 import { Injectable } from '@angular/core';
 
 export enum Status {
-	reserve,
-	sellerInvited,
-	agentInvited,
-	purchaseAgreement,
-	settlementStatement,
-	sellerDisclosures,
-	closingDocuments,
-	payment,
-	receivedPayment,
-	titleDeed,
-	closed
+	reserve = 0,
+	sellerInvited = 1,
+	sellerAccepted = 2,
+	escrowInvited = 3,
+	escrowAccepted = 4,
+	purchaseAgreement = 5,
+	settlementStatement = 6,
+	sellerDisclosures = 7,
+	closingDocuments = 8,
+	payment = 9,
+	receivedPayment = 10,
+	titleDeed = 11,
+	completed = 12
 }
 
 export interface Deed {
