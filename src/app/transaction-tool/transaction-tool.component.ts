@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router, Params, UrlSegment, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { SmartContractConnectionService } from '../smart-contract-connection/smart-contract-connection.service';
+import { DeedsService } from '../shared/deeds.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -20,7 +20,7 @@ export class TransactionToolComponent implements OnInit {
 	public addressRoute: string;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-		private smartContractService: SmartContractConnectionService) {
+		private deedsService: DeedsService) {
 		this.router.events
 			.filter(event => event instanceof NavigationEnd)
 			.subscribe((event: NavigationEnd) => {
@@ -49,35 +49,35 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Invite Escrow',
+				label: 'Seller Invitation Response',
 				command: (event: any) => {
 					this.activeIndex = 2;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Purchase Agreement',
+				label: 'Invite Escrow',
 				command: (event: any) => {
 					this.activeIndex = 3;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Settlement Statement',
+				label: 'Escrow Invitation Response',
 				command: (event: any) => {
 					this.activeIndex = 4;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Seller Disclosures',
+				label: 'Purchase Agreement',
 				command: (event: any) => {
 					this.activeIndex = 5;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Closing Documents',
+				label: 'Settlement Statement',
 				command: (event: any) => {
 					this.activeIndex = 6;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -85,9 +85,23 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Payment',
+				label: 'Seller Disclosures',
 				command: (event: any) => {
 					this.activeIndex = 7;
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
+				}
+			},
+			{
+				label: 'Closing Documents',
+				command: (event: any) => {
+					this.activeIndex = 8;
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
+				}
+			},
+			{
+				label: 'Payment',
+				command: (event: any) => {
+					this.activeIndex = 9;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			}
@@ -125,8 +139,8 @@ export class TransactionToolComponent implements OnInit {
 		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[nextIndex]]);
 	}
 
-	public async getDeedStatus(deedAddress: string): Promise<number> {
-		const deed = await this.smartContractService.getDeedDetails(deedAddress);
+	public async getDeedStatus(deedId: string): Promise<number> {
+		const deed = await this.deedsService.getDeedDetails(deedId);
 		return deed.status;
 	}
 }
