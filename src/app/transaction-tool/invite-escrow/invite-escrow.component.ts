@@ -28,7 +28,7 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 	public deedAddress: SmartContractAddress;
 
 	public inviteEscrowTitle = 'Invite escrow to this deed';
-	public waitingForBrokerTitle = 'Waiting for broker to invite seller';
+	public waitingForBrokerTitle = 'Waiting for broker to invite escrow';
 	public waitingForEscrowTitle = 'Waiting for escrow to respond to invitation';
 	public respondToInvitationTitle = 'Respond to this invitation';
 

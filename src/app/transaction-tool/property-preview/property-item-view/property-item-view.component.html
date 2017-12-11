@@ -1,17 +1,41 @@
 <div class="row" *ngIf="property">
-    <div class="col-xs-12">
-        <div class="media">
-            <div class="media-left">
-                <a href="#">
-            <img class="media-object"  [src]="property.imageUrls[0] | imageEnvPrefix | imageSize :60:60:true" onError="this.src='/assets/images/image-404.png';">
-          </a>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="address">
+            <div class="row property-address-price">
+                <div class="col-xs-7 col-sm-9 col-md-9 col-lg-9">
+                    <h4 class="media-heading">{{ property.address }}</h4>
+                </div>
+                <div class="col-xs-3 col-xs-offset-2 col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1 property-price">
+                    <p>{{ property.price.value | thousandSeparator | currencySymbol:
+                        property.price.type}}
+                    </p>
+                </div>
             </div>
-            <div class="media-body">
-                <h4 class="media-heading">{{ property.address }}</h4>
-                <p>{{ property.price.value | thousandSeparator | currencySymbol: property.price.type}}</p>
-                <p>{{ property.bedrooms }} Beds | {{ property.size.value | sizeUnitOfMeasure
-                    }} </p>
-                <p>{{ property.desc | textLimitation : 100 }}</p>
+        </div>
+
+        <div class="media">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded"  [src]="property.imageUrls[0] | imageEnvPrefix" onError="this.src='/assets/images/image-404.png';">
+                          </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <div class="media-body">
+                        <div class="row property-details">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <p>{{ property.bedrooms }} BEDROOMS | {{ property.size.value
+                                    | sizeUnitOfMeasure }}
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <p>{{ property.desc | textLimitation : 100 }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
