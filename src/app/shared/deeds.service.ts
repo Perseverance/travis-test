@@ -20,7 +20,7 @@ export class DeedsService {
 		const params = {
 			deedId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.MY_DEEDS, { params });
+		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
 		return result.data.data;
 	}
 

@@ -24,6 +24,7 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['seller-disclosures'];
 		this.statusToStepMap[`${Status.sellerDisclosures}`] = STEPS['closing-documents'];
 		this.statusToStepMap[`${Status.closingDocuments}`] = STEPS['payment'];
+		this.statusToStepMap[`${Status.payment}`] = STEPS['payment']; // TODO fix
 	}
 
 	public async getDeedStep(deedId: string): Promise<Step> {
