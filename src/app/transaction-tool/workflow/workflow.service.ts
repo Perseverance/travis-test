@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Step, STEPS } from './workflow.model';
 import {
-	Deed, SmartContractAddress,
+	SmartContractAddress,
 	SmartContractConnectionService, Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
 import { Subscription } from 'rxjs/Subscription';

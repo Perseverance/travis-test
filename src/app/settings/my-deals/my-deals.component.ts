@@ -1,6 +1,6 @@
 import { DeedsService } from './../../shared/deeds.service';
 import { Component, OnInit } from '@angular/core';
-import { Deed, SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
+import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
 import { AuthenticationService, UserData } from '../../authentication/authentication.service';
 import { UserRoleEnum } from '../../transaction-tool/enums/user-role.enum';
 import { Router } from '@angular/router';
@@ -31,7 +31,7 @@ export class MyDealsComponent implements OnInit {
 
 	ngOnInit() {
 	}
-	
+
 	private async getMyDeals(userRole: number): Promise<any[]> {
 		return await this.deedsService.getMyDeeds();
 	}

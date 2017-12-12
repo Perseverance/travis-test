@@ -2,7 +2,7 @@ import { DeedsService } from './../../shared/deeds.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { ActivatedRoute } from '@angular/router';
 import {
-	SmartContractAddress, Deed,
+	SmartContractAddress,
 	SmartContractConnectionService, EthereumAddress
 } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Observable } from 'rxjs/Observable';
@@ -26,7 +26,7 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	public userIsBuyer: boolean;
 	public hasUserDataLoaded = false;
 	public invitationDataLoaded = false;
-	public deedDetails: Deed;
+	public deedDetails: any;
 	public escrowAddress: EthereumAddress;
 
 	private addressSubscription: Subscription;
