@@ -16,7 +16,8 @@ export class TransactionToolWorkflowService {
 	constructor(private smartContractService: SmartContractConnectionService,
 		private deedService: DeedsService) {
 		this.statusToStepMap[`${Status.reserve}`] = STEPS['invite'];
-		this.statusToStepMap[`${Status.partiesInvited}`] = STEPS['purchase-agreement'];
+		this.statusToStepMap[`${Status.partiesInvited}`] = STEPS['invite'];
+		this.statusToStepMap[`${Status.partiesAccepted}`] = STEPS['purchase-agreement'];
 		this.statusToStepMap[`${Status.purchaseAgreement}`] = STEPS['settlement-statement'];
 		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['seller-disclosures'];
 		this.statusToStepMap[`${Status.sellerDisclosures}`] = STEPS['closing-documents'];
