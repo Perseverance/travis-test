@@ -31,6 +31,7 @@ export class TransactionToolComponent implements OnInit {
 
 	async ngOnInit() {
 		const deedStatus = await this.getDeedStatus(this.route.snapshot.params['address']);
+
 		this.deedStatusIndex = deedStatus + 1;
 		this.activeIndex = STEPS[this.addressRoute];
 		this.workflowSteps = [
@@ -42,44 +43,23 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Invite Seller',
+				label: 'Invitation',
 				command: (event: any) => {
 					this.activeIndex = 1;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Seller Invitation Response',
+				label: 'Purchase Agreement',
 				command: (event: any) => {
 					this.activeIndex = 2;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Invite Escrow',
-				command: (event: any) => {
-					this.activeIndex = 3;
-					this.activeIndex = this.getCurrentStatus(this.activeIndex);
-				}
-			},
-			{
-				label: 'Escrow Invitation Response',
-				command: (event: any) => {
-					this.activeIndex = 4;
-					this.activeIndex = this.getCurrentStatus(this.activeIndex);
-				}
-			},
-			{
-				label: 'Purchase Agreement',
-				command: (event: any) => {
-					this.activeIndex = 5;
-					this.activeIndex = this.getCurrentStatus(this.activeIndex);
-				}
-			},
-			{
 				label: 'Title Report',
 				command: (event: any) => {
-					this.activeIndex = 6;
+					this.activeIndex = 3;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 
 				}
@@ -87,21 +67,21 @@ export class TransactionToolComponent implements OnInit {
 			{
 				label: 'Seller Disclosures',
 				command: (event: any) => {
-					this.activeIndex = 7;
+					this.activeIndex = 4;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Closing Documents',
 				command: (event: any) => {
-					this.activeIndex = 8;
+					this.activeIndex = 5;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Payment',
 				command: (event: any) => {
-					this.activeIndex = 9;
+					this.activeIndex = 6;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			}
@@ -142,6 +122,7 @@ export class TransactionToolComponent implements OnInit {
 
 	public async getDeedStatus(deedId: string): Promise<number> {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		console.log(deed);
 		return deed.status;
 	}
 }

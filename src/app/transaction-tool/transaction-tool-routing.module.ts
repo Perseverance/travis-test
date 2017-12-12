@@ -1,7 +1,7 @@
+import { InviteComponent } from './invite/invite.component';
 import { PaymentStepComponent } from './payment-step/payment-step.component';
 import { SettlementStatementStepComponent } from './settlement-statement-step/settlement-statement-step.component';
 import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
-import { InviteEscrowComponent } from './invite-escrow/invite-escrow.component';
 import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { TransactionToolComponent } from './transaction-tool.component';
 import { PurchaseAgreementStepComponent } from './purchase-agreement-step/purchase-agreement-step.component';
 import { WorkflowGuard } from './workflow/workflow-guard.service';
-import { InviteSellerComponent } from './invite-seller/invite-seller.component';
 import { TokenGuard } from '../authentication/token-guard.service';
 import { AuthenticatedGuard } from '../authentication/authenticated-guard.service';
 
@@ -26,28 +25,13 @@ const transactionToolSteps: Routes = [
 				canActivate: [WorkflowGuard]
 			},
 			{
+				path: 'invite',
+				component: InviteComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
 				path: 'property-preview',
 				component: PropertyPreviewComponent,
-				canActivate: [WorkflowGuard]
-			},
-			{
-				path: 'invite-seller',
-				component: InviteSellerComponent,
-				canActivate: [WorkflowGuard]
-			},
-			{
-				path: 'accept-seller',
-				component: InviteSellerComponent,
-				canActivate: [WorkflowGuard]
-			},
-			{
-				path: 'invite-escrow',
-				component: InviteEscrowComponent,
-				canActivate: [WorkflowGuard]
-			},
-			{
-				path: 'accept-escrow',
-				component: InviteEscrowComponent,
 				canActivate: [WorkflowGuard]
 			},
 			{

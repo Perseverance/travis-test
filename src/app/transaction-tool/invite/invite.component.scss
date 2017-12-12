@@ -1,0 +1,25 @@
+@import "../../../variables";
+// Mixins
+@import '../../../mixins';
+.invitation {
+    h3,
+    h4 {
+        margin-bottom: 40px;
+    }
+    .price-row {
+        span {
+            line-height: 44px;
+        }
+    }
+    .email-input {
+        input.form-control.propy-control {
+            height: 32px;
+            font-size: 14px;
+            @include border-radius(5px);
+        }
+        label {
+            font-weight: 200;
+            font-size: 16px;
+        }
+    }
+}

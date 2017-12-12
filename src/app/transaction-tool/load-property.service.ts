@@ -11,9 +11,9 @@ export class LoadPropertyService {
 		private apiEndpoint: APIEndpointsService) {
 	}
 
-	public async getProperty(requestAddress: string): Promise<any> {
+	public async getProperty(deedId: string): Promise<any> {
 		const params = {
-			deedAddress: requestAddress
+			deedId
 		};
 
 		const response = await this.restService.getWithAccessToken(
