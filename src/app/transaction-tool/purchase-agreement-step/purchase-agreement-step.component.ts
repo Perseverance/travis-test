@@ -18,6 +18,7 @@ declare const HelloSign;
 	styleUrls: ['./purchase-agreement-step.component.scss']
 })
 export class PurchaseAgreementStepComponent implements OnInit {
+	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
 	public userIsBuyer: boolean;
 	public userIsSeller: boolean;
@@ -29,7 +30,6 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public hasBuyerSigned: boolean;
 	public hasSellerSigned: boolean;
 	public hasBrokerSigned: boolean;
-	public signDocumentButtonLabel: string;
 	public purchaseTitle = 'Purchase Agreement';
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
@@ -52,7 +52,6 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		this.signDocumentButtonLabel = 'Sign agreement';
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
 		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {

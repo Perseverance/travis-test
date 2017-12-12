@@ -12,7 +12,8 @@
 			<app-sign-document [buyerIsParticipant]="true" [hasBuyerSigned]="hasBuyerSigned"
 							   [sellerIsParticipant]="true" [hasSellerSigned]="hasSellerSigned"
 							   [brokerIsParticipant]="true"
-							   [hasBrokerSigned]="hasBrokerSigned" [signButtonLabel]="signDocumentButtonLabel"
+							   [escrowIsParticipant]="true"
+							   [hasBrokerSigned]="hasBrokerSigned"
 							   [showSignButton]="shouldShowSignButton()"
 							   (onSignDocument)="signDocument()"></app-sign-document>
 		</div>

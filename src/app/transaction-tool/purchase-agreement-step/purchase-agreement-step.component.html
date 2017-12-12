@@ -13,8 +13,9 @@
 			<app-sign-document [buyerIsParticipant]="true" [hasBuyerSigned]="hasBuyerSigned"
 							   [sellerIsParticipant]="true" [hasSellerSigned]="hasSellerSigned"
 							   [brokerIsParticipant]="true"
-							   [hasBrokerSigned]="hasBrokerSigned" [signButtonLabel]="signDocumentButtonLabel"
+							   [hasBrokerSigned]="hasBrokerSigned"
 							   [showSignButton]="shouldShowSignButton()"
+							   [documentType]="deedDocumentTypeEnum.PurchaseAgreement"
 							   (onSignDocument)="signDocument()"></app-sign-document>
 		</div>
 	</div>
@@ -34,7 +35,7 @@
 
 	<ng-template #isNotBroker>
 		<div class="col-xs-12 text-center">
-			<h5>Waiting to upload purchase agreement document</h5>
+			<h5>Waiting for broker to upload purchase agreement</h5>
 		</div>
 	</ng-template>
 

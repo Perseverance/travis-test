@@ -1,10 +1,10 @@
-import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MenuItem } from 'primeng/primeng';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Router, Params, UrlSegment, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
-import { DeedsService } from '../shared/deeds.service';
+import {REVERSE_STEPS, STEPS} from './workflow/workflow.model';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {MenuItem} from 'primeng/primeng';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router, Params, UrlSegment, NavigationEnd} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {DeedsService} from '../shared/deeds.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -20,7 +20,7 @@ export class TransactionToolComponent implements OnInit {
 	public addressRoute: string;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-		private deedsService: DeedsService) {
+				private deedsService: DeedsService) {
 		this.router.events
 			.filter(event => event instanceof NavigationEnd)
 			.subscribe((event: NavigationEnd) => {
@@ -57,7 +57,7 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Settlement Statement',
+				label: 'Title Report',
 				command: (event: any) => {
 					this.activeIndex = 3;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -97,6 +97,7 @@ export class TransactionToolComponent implements OnInit {
 		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[this.curreentState]]);
 
 	}
+
 	public getCurrentStatus(currentActiveIndex: number) {
 		if (currentActiveIndex <= this.deedStatusIndex) {
 			return currentActiveIndex;
