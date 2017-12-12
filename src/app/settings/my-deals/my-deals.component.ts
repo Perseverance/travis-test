@@ -31,7 +31,7 @@ export class MyDealsComponent implements OnInit {
 
 	ngOnInit() {
 	}
-
+	
 	private async getMyDeals(userRole: number): Promise<any[]> {
 		return await this.deedsService.getMyDeeds();
 	}

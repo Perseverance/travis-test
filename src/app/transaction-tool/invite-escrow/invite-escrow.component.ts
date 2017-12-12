@@ -1,17 +1,17 @@
-import { DeedsService } from './../../shared/deeds.service';
-import { UserRoleEnum } from './../enums/user-role.enum';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { SmartContractAddress, Status } from './../../smart-contract-connection/smart-contract-connection.service';
-import { Component, OnInit } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import {DeedsService} from './../../shared/deeds.service';
+import {UserRoleEnum} from './../enums/user-role.enum';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+import {SmartContractAddress, Status} from './../../smart-contract-connection/smart-contract-connection.service';
+import {Component, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 
 @Component({
 	selector: 'app-invite-escrow',
@@ -38,11 +38,11 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 	public hasDataLoaded = false;
 
 	constructor(private authService: AuthenticationService,
-		private route: ActivatedRoute,
-		private deedsService: DeedsService,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private route: ActivatedRoute,
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.authService.subscribeToUserData({
