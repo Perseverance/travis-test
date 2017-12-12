@@ -12,14 +12,10 @@ export class SignDocumentComponent implements OnInit {
 	public userRoleEnum = UserRoleEnum;
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public currentUserRole: number;
-	@Input() buyerIsParticipant = false;
-	@Input() sellerIsParticipant = false;
-	@Input() brokerIsParticipant = false;
-	@Input() escrowIsParticipant = false;
 	@Input() hasBuyerSigned: boolean;
 	@Input() hasSellerSigned: boolean;
-	@Input() hasBrokerSigned: boolean;
-	@Input() hasEscrowSigned: boolean;
+	@Input() hasBuyerBrokerSigned: boolean;
+	@Input() hasSellerBrokerSigned: boolean;
 	@Input() showSignButton: boolean;
 	@Input() documentType: any;
 	@Output() onSignDocument = new EventEmitter<any>();

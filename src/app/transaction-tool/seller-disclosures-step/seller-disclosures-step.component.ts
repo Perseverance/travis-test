@@ -49,7 +49,7 @@ export class SellerDisclosuresStepComponent implements OnInit {
 					return;
 				}
 				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsBroker = (userInfo.user.role === UserRoleEnum.SellerAgent);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});

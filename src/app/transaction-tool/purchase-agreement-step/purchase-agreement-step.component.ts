@@ -28,7 +28,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public deedAddress: string;
 	public hasBuyerSigned: boolean;
 	public hasSellerSigned: boolean;
-	public hasBrokerSigned: boolean;
+	public hasBuyerBrokerSigned: boolean;
+	public hasSellerBrokerSigned: boolean;
 	public purchaseTitle = 'Purchase Agreement';
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
@@ -44,7 +45,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 					return;
 				}
 				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsBroker = (userInfo.user.role === UserRoleEnum.SellerAgent);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});
@@ -128,7 +129,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public async getPurchaseAgreementSigners() {
 		await this.markBuyerSign();
 		await this.markSellerSign();
-		await this.markBrokerSign();
+		await this.markBuyerBrokerSign();
+		await this.markSellerBrokerSign();
 	}
 
 	private async markBuyerSign() {
@@ -139,13 +141,17 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		this.hasSellerSigned = await this.smartContractService.hasSellerSignedPurchaseAgreement(this.deedAddress);
 	}
 
-	private async markBrokerSign() {
-		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedPurchaseAgreement(this.deedAddress);
+	private async markBuyerBrokerSign() {
+		this.hasBuyerBrokerSigned = await this.smartContractService.hasBuyerBrokerSignedPurchaseAgreement(this.deedAddress);
+	}
+
+	private async markSellerBrokerSign() {
+		this.hasSellerBrokerSigned = await this.smartContractService.hasSellerBrokerSignedPurchaseAgreement(this.deedAddress);
 	}
 
 	public shouldShowSignButton(): boolean {
 		return (this.userIsBuyer && !this.hasBuyerSigned)
 			|| (this.userIsSeller && !this.hasSellerSigned)
-			|| (this.userIsBroker && !this.hasBrokerSigned);
+			|| (this.userIsBroker && !this.hasBuyerBrokerSigned);
 	}
 }

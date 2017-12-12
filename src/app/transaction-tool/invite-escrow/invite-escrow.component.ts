@@ -50,8 +50,8 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 				if (userInfo.isAnonymous) {
 					return;
 				}
-				this.userIsAgent = (userInfo.user.role === UserRoleEnum.Agent);
-				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.Escrow);
+				this.userIsAgent = (userInfo.user.role === UserRoleEnum.SellerAgent);
+				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.TitleCompany);
 				this.hasDataLoaded = true;
 			}
 		});
@@ -85,7 +85,7 @@ export class InviteEscrowComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		this.deedsService.inviteParty(UserRoleEnum.Escrow, this.deedId, email);
+		this.deedsService.inviteParty(UserRoleEnum.TitleCompany, this.deedId, email);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',

@@ -49,9 +49,9 @@ export class SettlementStatementStepComponent implements OnInit {
 				if (!userInfo.user) {
 					return;
 				}
-				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
+				this.userIsBroker = (userInfo.user.role === UserRoleEnum.SellerAgent);
 				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.Escrow);
+				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.TitleCompany);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});
