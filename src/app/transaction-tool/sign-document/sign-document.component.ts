@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthenticationService, UserData} from '../../authentication/authentication.service';
 import {UserRoleEnum} from '../enums/user-role.enum';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
 
 @Component({
 	selector: 'app-sign-document',
@@ -9,6 +10,7 @@ import {UserRoleEnum} from '../enums/user-role.enum';
 })
 export class SignDocumentComponent implements OnInit {
 	public userRoleEnum = UserRoleEnum;
+	public deedDocumentTypeEnum = DeedDocumentType;
 	public currentUserRole: number;
 	@Input() buyerIsParticipant = false;
 	@Input() sellerIsParticipant = false;
@@ -19,6 +21,7 @@ export class SignDocumentComponent implements OnInit {
 	@Input() hasBrokerSigned: boolean;
 	@Input() hasEscrowSigned: boolean;
 	@Input() showSignButton: boolean;
+	@Input() documentType: any;
 	@Output() onSignDocument = new EventEmitter<any>();
 
 	constructor(private authService: AuthenticationService) {

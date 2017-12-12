@@ -13,7 +13,7 @@ export class UserRoleByTypePipe implements PipeTransform {
 				return 'Seller';
 			}
 			case UserRoleEnum.Escrow: {
-				return 'Escrow';
+				return 'Title Company';
 			}
 			default: {
 				return 'Buyer';

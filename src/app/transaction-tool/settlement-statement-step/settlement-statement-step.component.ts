@@ -19,10 +19,10 @@ declare const HelloSign;
 })
 export class SettlementStatementStepComponent implements OnInit {
 
-	public waitingTitle = 'Waiting to upload settlement statement';
-	public settlementTitle = 'Settlement Statement';
-	public uploadSettlementSubtitle = 'Please upload settlement statement document:';
-	public previewSettlementSubtitle = 'Please review and sign settlement statement.';
+	public waitingTitle = 'Waiting to upload title report';
+	public settlementTitle = 'Title Report';
+	public uploadSettlementSubtitle = 'Please upload title report document:';
+	public previewSettlementSubtitle = 'Please review and title report statement.';
 
 	public userInfo: any;
 	public userIsBuyer: boolean;
@@ -37,7 +37,6 @@ export class SettlementStatementStepComponent implements OnInit {
 	public hasSellerSigned: boolean;
 	public hasBrokerSigned: boolean;
 	public hasEscrowSigned: boolean;
-	public signDocumentButtonLabel: string;
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,

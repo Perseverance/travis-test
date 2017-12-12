@@ -8,9 +8,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 text-uppercase">
-				<div class="sign-status" *ngIf="hasBuyerSigned" [inlineSVG]="'/assets/images/signed.svg'"></div>
-				<div class="sign-status" *ngIf="!hasBuyerSigned" [inlineSVG]="'/assets/images/pending.svg'"></div>
+			<div class="col-xs-12 signed-document" *ngIf="hasBuyerSigned">
+				<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+				<p>Signed</p>
+			</div>
+			<div class="col-xs-12 pending-document" *ngIf="!hasBuyerSigned">
+				<div [inlineSVG]="'/assets/images/pending.svg'"></div>
+				<p>Pending</p>
 			</div>
 		</div>
 	</div>
@@ -23,9 +27,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 text-uppercase">
-				<div class="sign-status" *ngIf="hasSellerSigned" [inlineSVG]="'/assets/images/signed.svg'"></div>
-				<div class="sign-status" *ngIf="!hasSellerSigned" [inlineSVG]="'/assets/images/pending.svg'"></div>
+			<div class="col-xs-12 signed-document" *ngIf="hasSellerSigned">
+				<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+				<p>Signed</p>
+			</div>
+			<div class="col-xs-12 pending-document" *ngIf="!hasSellerSigned">
+				<div [inlineSVG]="'/assets/images/pending.svg'"></div>
+				<p>Pending</p>
 			</div>
 		</div>
 	</div>
@@ -38,9 +46,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 text-uppercase">
-				<div class="sign-status" *ngIf="hasBrokerSigned" [inlineSVG]="'/assets/images/signed.svg'"></div>
-				<div class="sign-status" *ngIf="!hasBrokerSigned" [inlineSVG]="'/assets/images/pending.svg'"></div>
+			<div class="col-xs-12 signed-document" *ngIf="hasBrokerSigned">
+				<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+				<p>Signed</p>
+			</div>
+			<div class="col-xs-12 pending-document" *ngIf="!hasBrokerSigned">
+				<div [inlineSVG]="'/assets/images/pending.svg'"></div>
+				<p>Pending</p>
 			</div>
 		</div>
 	</div>
@@ -49,27 +61,37 @@
 		 *ngIf="escrowIsParticipant && currentUserRole != userRoleEnum.Escrow">
 		<div class="row sign-label">
 			<div class="col-xs-12 text-uppercase text-center">
-				Escrow
+				Title Company
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 text-uppercase">
-				<div class="sign-status" *ngIf="hasEscrowSigned" [inlineSVG]="'/assets/images/signed.svg'"></div>
-				<div class="sign-status" *ngIf="!hasEscrowSigned" [inlineSVG]="'/assets/images/pending.svg'"></div>
+			<div class="col-xs-12 signed-document" *ngIf="hasEscrowSigned">
+				<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+				<p>Signed</p>
+			</div>
+			<div class="col-xs-12 pending-document" *ngIf="!hasEscrowSigned">
+				<div [inlineSVG]="'/assets/images/pending.svg'"></div>
+				<p>Pending</p>
 			</div>
 		</div>
 	</div>
 	<div class="sign-button-holder"
 		 [ngClass]="{'col-xs-3': escrowIsParticipant,
-		 'col-xs-4': !escrowIsParticipant }">
+		 'col-xs-4': !escrowIsParticipant, 'hidden': currentUserRole == userRoleEnum.Escrow && documentType == deedDocumentTypeEnum.PurchaseAgreement }">
 		<div class="row sign-label">
 			<div class="col-xs-12 text-uppercase text-center">
 				{{ currentUserRole | userRole }}
 			</div>
 		</div>
-		<div class="row">
-			<a class="btn propy-control button-small" [ngClass]="{'not-active': !showSignButton}"
+		<div class="row sign-button" *ngIf="showSignButton">
+			<a class="btn propy-control button-big" [ngClass]="{'not-active': !showSignButton}"
 			   (click)="onSignDocumentClick()">Sign</a>
+		</div>
+		<div class="row" *ngIf="!showSignButton">
+			<div class="col-xs-12 signed-document">
+				<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+				<p>Signed</p>
+			</div>
 		</div>
 	</div>
 </div>
