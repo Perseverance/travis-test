@@ -1,20 +1,18 @@
-import {EthereumAddress, SmartContractAddress} from './smart-contract-connection.service';
-import {Injectable} from '@angular/core';
+import { EthereumAddress, SmartContractAddress } from './smart-contract-connection.service';
+import { Injectable } from '@angular/core';
 
 export enum Status {
 	reserve = 0,
-	sellerInvited = 1,
-	sellerAccepted = 2,
-	escrowInvited = 3,
-	escrowAccepted = 4,
-	purchaseAgreement = 5,
-	settlementStatement = 6,
-	sellerDisclosures = 7,
-	closingDocuments = 8,
-	payment = 9,
-	receivedPayment = 10,
-	titleDeed = 11,
-	completed = 12
+	partiesInvited = 1,
+	partiesAccepted = 2,
+	purchaseAgreement = 3,
+	settlementStatement = 4,
+	sellerDisclosures = 5,
+	closingDocuments = 6,
+	payment = 7,
+	receivedPayment = 8,
+	titleDeed = 9,
+	completed = 10
 }
 
 export interface Deed {
@@ -113,7 +111,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signPurchaseAgreement(deedContractAddress: SmartContractAddress,
-									   purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+		purchaseAgreementSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -158,7 +156,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signSellerDisclosures(deedContractAddress: SmartContractAddress,
-									   sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -187,7 +185,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signClosingDocuments(deedContractAddress: SmartContractAddress,
-									  closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		closingDocumentsSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 

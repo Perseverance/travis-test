@@ -6,10 +6,10 @@ export class UserRoleByTypePipe implements PipeTransform {
 
 	transform(value: number): string {
 		switch (value) {
-			case UserRoleEnum.SellerAgent: {
+			case UserRoleEnum.SellerBroker: {
 				return 'Seller Broker';
 			}
-			case UserRoleEnum.BuyerAgent: {
+			case UserRoleEnum.BuyerBroker: {
 				return 'Buyer Broker';
 			}
 			case UserRoleEnum.Seller: {

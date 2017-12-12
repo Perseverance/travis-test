@@ -4,24 +4,24 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-property-preview',
-  templateUrl: './property-preview.component.html',
-  styleUrls: ['./property-preview.component.scss']
+	selector: 'app-property-preview',
+	templateUrl: './property-preview.component.html',
+	styleUrls: ['./property-preview.component.scss']
 })
 export class PropertyPreviewComponent implements OnInit {
-  public deedAddress: string;
-  private addressSubscription: Subscription;
-  constructor(private route: ActivatedRoute) { }
+	public deedId: string;
+	private addressSubscription: Subscription;
+	constructor(private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    const self = this;
-    const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
-    this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
-      if (!deedAddress) {
-        throw new Error('No deed address supplied');
-      }
-      self.deedAddress = deedAddress;
-    });
-  }
+	ngOnInit() {
+		const self = this;
+		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
+		this.addressSubscription = addressObservable.subscribe(async function (deedId) {
+			if (!deedId) {
+				throw new Error('No deed address supplied');
+			}
+			self.deedId = deedId;
+		});
+	}
 
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService, UserData} from '../../authentication/authentication.service';
 import {UserRoleEnum} from '../enums/user-role.enum';
+import {TransactionToolWorkflowService} from '../workflow/workflow.service';
 import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 import {DeedDocumentType} from '../enums/deed-document-type.enum';
 import {Observable} from 'rxjs/Observable';
@@ -45,7 +46,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 					return;
 				}
 				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsBroker = (userInfo.user.role === UserRoleEnum.SellerAgent);
+				this.userIsBroker = (userInfo.user.role === UserRoleEnum.SellerBroker);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});
