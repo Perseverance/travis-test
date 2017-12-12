@@ -4,59 +4,102 @@
     <div *ngIf="arePartiesInvited; then partiesInvited; else partiesNotInvited"></div>
     <ng-template #partiesInvited>
         <hr>
-        <div class="col-xs-12">
-            <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
-                (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+        <div *ngIf="userRole === 4">
+            <!-- SellerBroker -->
+            <h4>Waiting for all parties to accept</h4>
             <hr>
+            <div class="col-xs-12">
+                <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
+                    (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+                <hr>
+            </div>
         </div>
+        <div *ngIf="userRole === 1">
+            <!-- Seller -->
+            <div *ngIf="!hasSellerResponded; else waitingForAllOther;">
+                <span>You are invited as a <strong>Seller</strong>, respond to this invitation</span>
+                <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+            </div>
+        </div>
+        <div *ngIf="userRole === 2">
+            <!-- Buyer -->
+            <div *ngIf="!hasBuyerResponded; else waitingForAllOther;">
+                <span>You are invited as a <strong>Buyer</strong>, respond to this invitation</span>
+                <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+            </div>
+        </div>
+        <div *ngIf="userRole === 3">
+            <!-- Title Company -->
+            <div *ngIf="!hasTitleCompanyResponded; else waitingForAllOther;">
+                <span>You are invited as a <strong>Title Company</strong>, respond to this invitation</span>
+                <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+            </div>
+        </div>
+        <div *ngIf="userRole === 5">
+            <!-- Buyer Broker -->
+            <div *ngIf="!hasBuyerBrokerResponded; else waitingForAllOther;">
+                <span>You are invited as a <strong>Buyer Broker</strong>, respond to this invitation</span>
+                <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+            </div>
+        </div>
+        <ng-template #waitingForAllOther>
+            <h4>Waiting for all parties to accept</h4>
+        </ng-template>
     </ng-template>
 
     <ng-template #partiesNotInvited>
-        <form [formGroup]="inviteForm">
-            <div class="row price-row">
-                <div class="col-xs-2 col-xs-offset-7 text-right">
-                    <span>FINAL PRICE</span>
-                </div>
-                <div class="form-group col-xs-1">
-                    <input formControlName="priceInEth" type="text" class="form-control propy-control"
-                        id="priceInEth" placeholder="ETH">
-                </div>
-                <div class="col-xs-1">
-                    <span>ETH</span>
-                </div>
+        <div *ngIf="userRole === 4;then isSellerBroker; else isNotSellerBroker"></div>
+        <ng-template #isSellerBroker>
 
-            </div>
-            <hr>
-            <h4>Invite Participants</h4>
-            <div class="row">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
-                    <label for="sellerEmail">Seller</label>
-                    <input formControlName="sellerEmail" type="email" class="form-control propy-control"
-                        id="sellerEmail" placeholder="Seller email">
+            <form [formGroup]="inviteForm">
+                <div class="row price-row">
+                    <div class="col-xs-2 col-xs-offset-7 text-right">
+                        <span>FINAL PRICE</span>
+                    </div>
+                    <div class="form-group col-xs-1">
+                        <input formControlName="priceInEth" type="text" class="form-control propy-control"
+                            id="priceInEth" placeholder="ETH">
+                    </div>
+                    <div class="col-xs-1">
+                        <span>ETH</span>
+                    </div>
+
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
-                    <label for="buyerEmail">Buyer</label>
-                    <input formControlName="buyerEmail" type="email" class="form-control propy-control"
-                        id="buyerEmail" placeholder="Buyer email">
+                <hr>
+                <h4>Invite Participants</h4>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
+                        <label for="sellerEmail">Seller</label>
+                        <input formControlName="sellerEmail" type="email" class="form-control propy-control"
+                            id="sellerEmail" placeholder="Seller email">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
-                    <label for="buyerAgentEmail">Buyer broker</label>
-                    <input formControlName="buyerAgentEmail" type="email" class="form-control propy-control"
-                        id="buyerAgentEmail" placeholder="Buyer broker email">
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
+                        <label for="buyerEmail">Buyer</label>
+                        <input formControlName="buyerEmail" type="email" class="form-control propy-control"
+                            id="buyerEmail" placeholder="Buyer email">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group" class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
-                    <label for="titleCompanyEmail">Title company</label>
-                    <input formControlName="titleCompanyEmail" type="email" class="form-control propy-control"
-                        id="titleCompanyEmail" placeholder="Title company email">
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
+                        <label for="buyerAgentEmail">Buyer broker</label>
+                        <input formControlName="buyerAgentEmail" type="email" class="form-control propy-control"
+                            id="buyerAgentEmail" placeholder="Buyer broker email">
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="form-group" class="form-group col-xs-12 col-sm-6 col-md-3 email-input">
+                        <label for="titleCompanyEmail">Title company</label>
+                        <input formControlName="titleCompanyEmail" type="email" class="form-control propy-control"
+                            id="titleCompanyEmail" placeholder="Title company email">
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+        <ng-template #isNotSellerBroker>
+
+        </ng-template>
         <hr>
         <div class="col-xs-12">
             <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"

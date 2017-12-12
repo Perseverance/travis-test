@@ -12,10 +12,10 @@ export class TransactionToolDocumentService {
 		private smartContractService: SmartContractConnectionService) {
 	}
 
-	public async uploadTransactionToolDocument(type: number, deedAddress: string, fileBase64: string): Promise<any> {
+	public async uploadTransactionToolDocument(type: number, deedId: string, fileBase64: string): Promise<any> {
 		const params = {
 			type: type,
-			DeedAddress: deedAddress,
+			deedId: deedId,
 			FileBase64: fileBase64
 		};
 
