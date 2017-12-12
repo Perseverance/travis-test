@@ -7,7 +7,7 @@ import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decorat
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { SmartContractConnectionService, SmartContractAddress } from './../../smart-contract-connection/smart-contract-connection.service';
+import { SmartContractAddress, Status } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
@@ -25,7 +25,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 	public successMessage = 'Success!';
 
 	private addressSubscription: Subscription;
-	public deedAddress: SmartContractAddress;
+	public deedId: SmartContractAddress;
 
 	public inviteSellerTitle = 'Invite seller to this deed';
 	public waitingForBrokerTitle = 'Waiting for broker to invite seller';
@@ -39,7 +39,6 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 
 	constructor(private authService: AuthenticationService,
 		private route: ActivatedRoute,
-		private smartContractConnectionService: SmartContractConnectionService,
 		private deedsService: DeedsService,
 		private notificationService: NotificationsService,
 		errorsService: ErrorsService,
@@ -61,12 +60,13 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 	async ngOnInit() {
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
-		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
-			if (!deedAddress) {
+		this.addressSubscription = addressObservable.subscribe(async function (deedId) {
+			if (!deedId) {
 				throw new Error('No deed address supplied');
 			}
-			self.deedAddress = deedAddress;
-			self.isSellerInvited = await self.smartContractConnectionService.isSellerInvited(self.deedAddress);
+			self.deedId = deedId;
+			const deed = await self.deedsService.getDeedDetails(deedId);
+			self.isSellerInvited = (deed.status >= Status.sellerInvited);
 			self.invitationDataLoaded = true;
 		});
 
@@ -85,7 +85,7 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.smartContractConnectionService.markSellerInvitationSent(this.deedAddress);
+		this.deedsService.inviteParty(UserRoleEnum.Seller, this.deedId, email);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -103,8 +103,8 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.smartContractConnectionService.markSellerAcceptedInvitation(this.deedAddress);
-		await this.deedsService.sendSellerAccept(this.deedAddress);
+		// await this.smartContractConnectionService.markSellerAcceptedInvitation(this.deedId);
+		this.deedsService.acceptInvite(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -121,7 +121,8 @@ export class InviteSellerComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.smartContractConnectionService.markSellerRejectedInvitation(this.deedAddress);
+		// await this.smartContractConnectionService.markSellerRejectedInvitation(this.deedId);
+		this.deedsService.rejectInvite(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',

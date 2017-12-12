@@ -122,28 +122,12 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 			timeout: 15000
 		});
 		const property = await this.propertiesService.getProperty(this.propertyId, CurrencyTypeEnum.ETH); // TODO: Get price in ETH
-		console.log(property);
 		const name = this.name.value;
 		this.stripeService
 			.createToken(this.card.getCard(), { name })
 			.subscribe(async result => {
 				if (result.token) {
 					await this.reserveService.reserveProperty(this.propertyId, result.token.id);
-					this.notificationService.pushInfo({
-						title: 'Creating Deed...',
-						message: '',
-						time: (new Date().getTime()),
-						timeout: 60000
-					});
-					const addresses = await this.propertiesService.getDeedPartiesAddresses(this.propertyId, environment.hardCodedDeedParties.agentId);
-					const deedAddress = await this.smartcontractConnectionService.createDeed(
-						property.address,
-						addresses.sellerAddress,
-						addresses.agentAddress,
-						addresses.escrowAddress,
-						property.price.value
-					);
-					await this.deedsService.sendDeedAddress(this.propertyId, deedAddress, environment.hardCodedDeedParties.agentId);
 					this.notificationService.pushSuccess({
 						title: this.successTitle,
 						message: this.successMessage,

@@ -36,7 +36,17 @@ const transactionToolSteps: Routes = [
 				canActivate: [WorkflowGuard]
 			},
 			{
+				path: 'accept-seller',
+				component: InviteSellerComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
 				path: 'invite-escrow',
+				component: InviteEscrowComponent,
+				canActivate: [WorkflowGuard]
+			},
+			{
+				path: 'accept-escrow',
 				component: InviteEscrowComponent,
 				canActivate: [WorkflowGuard]
 			},

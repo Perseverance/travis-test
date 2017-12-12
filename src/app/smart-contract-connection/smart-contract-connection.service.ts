@@ -2,17 +2,19 @@ import {EthereumAddress, SmartContractAddress} from './smart-contract-connection
 import {Injectable} from '@angular/core';
 
 export enum Status {
-	reserve,
-	sellerInvited,
-	agentInvited,
-	purchaseAgreement,
-	settlementStatement,
-	sellerDisclosures,
-	closingDocuments,
-	payment,
-	receivedPayment,
-	titleDeed,
-	closed
+	reserve = 0,
+	sellerInvited = 1,
+	sellerAccepted = 2,
+	escrowInvited = 3,
+	escrowAccepted = 4,
+	purchaseAgreement = 5,
+	settlementStatement = 6,
+	sellerDisclosures = 7,
+	closingDocuments = 8,
+	payment = 9,
+	receivedPayment = 10,
+	titleDeed = 11,
+	completed = 12
 }
 
 export interface Deed {
@@ -32,72 +34,7 @@ export class SmartContractConnectionService {
 
 	constructor() {
 	}
-
-	private fakeDeedStatus = Status.closingDocuments;
-
-	private fakeDeedAddress = '0x406e4e45985acf237c05c8f0d80dd2b11e4042db';
-	private fakePropertyAddress = 'Kmetska Sgrada, Gabrovo, Gabrovo, Bulgaria';
-
-	private fakeCreatedAt = this.nowMinusDays(5);
-	private fakelastUpdatedAt = this.nowMinusDays(1);
-	private fakePriceInWei = '234774029745332110000';
-
-	private nowMinusDays(days: number): number {
-		const d = new Date();
-		d.setDate(d.getDate() - days);
-		return d.getTime();
-	}
-
-	private async getDeeds(): Promise<Deed[]> {
-		const fakeDeeds = [
-			{
-				deedContractAddress: this.fakeDeedAddress,
-				status: this.fakeDeedStatus,
-				propertyAddress: this.fakePropertyAddress,
-				createdAt: this.fakeCreatedAt,
-				lastUpdatedAt: this.fakelastUpdatedAt,
-				priceInWei: this.fakePriceInWei
-			}
-		];
-
-		return fakeDeeds;
-	}
-
-	public async getAgentDeeds(): Promise<Deed[]> {
-		return this.getDeeds();
-	}
-
-	public async getBuyerDeeds(): Promise<Deed[]> {
-		return this.getDeeds();
-	}
-
-	public async getSellerDeeds(): Promise<Deed[]> {
-		return this.getDeeds();
-	}
-
-	public async getEscrowDeeds(): Promise<Deed[]> {
-		return this.getDeeds();
-	}
-
-	public async getDeedDetails(deedContractAddress: SmartContractAddress): Promise<Deed> {
-		return {
-			deedContractAddress: this.fakeDeedAddress,
-			status: this.fakeDeedStatus,
-			propertyAddress: this.fakePropertyAddress,
-			createdAt: this.fakeCreatedAt,
-			lastUpdatedAt: this.fakelastUpdatedAt,
-			priceInWei: this.fakePriceInWei
-		};
-	}
-
-	public async createDeed(propertyLocationAddress: string,
-							sellerAddress: EthereumAddress,
-							brokerAddress: EthereumAddress,
-							escrowAddress: EthereumAddress,
-							priceInETH: number): Promise<SmartContractAddress> {
-		return this.fakeDeedAddress;
-	}
-
+	
 	public async markSellerInvitationSent(deedContractAddress: SmartContractAddress): Promise<boolean> {
 		return true;
 	}
