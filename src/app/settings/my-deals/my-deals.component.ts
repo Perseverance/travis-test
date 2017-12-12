@@ -1,5 +1,7 @@
+import { MomentService } from './../../shared/moment.service';
+import { FlowStatus } from './flow-status.model';
 import { DeedsService } from './../../shared/deeds.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Deed, SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
 import { AuthenticationService, UserData } from '../../authentication/authentication.service';
 import { UserRoleEnum } from '../../transaction-tool/enums/user-role.enum';
@@ -9,7 +11,8 @@ import { TransactionToolWorkflowService } from '../../transaction-tool/workflow/
 @Component({
 	selector: 'app-my-deals',
 	templateUrl: './my-deals.component.html',
-	styleUrls: ['./my-deals.component.scss']
+	styleUrls: ['./my-deals.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class MyDealsComponent implements OnInit {
 	public myDeals: any[];
@@ -18,13 +21,18 @@ export class MyDealsComponent implements OnInit {
 		private authService: AuthenticationService,
 		private deedsService: DeedsService,
 		private router: Router,
-		private workflowService: TransactionToolWorkflowService) {
+		private workflowService: TransactionToolWorkflowService,
+		private momentService: MomentService) {
 		this.authService.subscribeToUserData({
 			next: async (userInfo: UserData) => {
 				if (!userInfo.user) {
 					return;
 				}
 				this.myDeals = await this.getMyDeals(userInfo.user.role);
+				this.myDeals.forEach((deal) => {
+					deal.status = FlowStatus[deal.status];
+				});
+
 			}
 		});
 	}
