@@ -50,7 +50,7 @@ export class DeedsService {
 			deedId
 		};
 
-		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.ACCEPT_PARTY, data);
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.ACCEPT_PARTY, data);
 		await result.data.data;
 	}
 
@@ -59,7 +59,7 @@ export class DeedsService {
 			deedId
 		};
 
-		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REJECT_PARTY, data);
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REJECT_PARTY, data);
 		await result.data.data;
 	}
 

@@ -15,15 +15,6 @@ export enum Status {
 	completed = 10
 }
 
-export interface Deed {
-	deedContractAddress: SmartContractAddress;
-	status: Status;
-	createdAt: number;
-	lastUpdatedAt: number;
-	propertyAddress: string;
-	priceInWei: string;
-}
-
 export type EthereumAddress = string;
 export type SmartContractAddress = string;
 

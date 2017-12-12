@@ -17,6 +17,13 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 import { DeedsService } from '../../shared/deeds.service';
 
+export enum InvitationStatus {
+	NotInvited = 0,
+	Invited = 1,
+	Accepted = 2,
+	Rejected = 3
+}
+
 @Component({
 	selector: 'app-invite',
 	templateUrl: './invite.component.html',
@@ -26,12 +33,16 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	public invitationDataLoaded = false;
 	public successMessage = 'Success!';
-	public userIsSellerBroker = false;
+	public userRole: UserRoleEnum;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedId: string;
 	public arePartiesInvited: boolean;
+	public hasSellerResponded: boolean;
+	public hasBuyerResponded: boolean;
+	public hasBuyerBrokerResponded: boolean;
+	public hasTitleCompanyResponded: boolean;
 
 	private userInfo: any;
 	public hasDataLoaded = false;
@@ -78,13 +89,21 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 				throw new Error('No deed address supplied');
 			}
 			self.deedId = deedId;
-			const deed = await self.deedsService.getDeedDetails(deedId);
-			self.arePartiesInvited = (deed.status >= Status.partiesInvited);
-			self.userIsSellerBroker = (deed.currentUserRole === UserRoleEnum.SellerBroker);
+			await self.setupDeedData(deedId);
 			self.hasDataLoaded = true;
 			self.invitationDataLoaded = true;
 		});
 
+	}
+
+	private async setupDeedData(deedId) {
+		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.hasBuyerBrokerResponded = (deed.buyerBrokerStatus > InvitationStatus.Invited);
+		this.hasBuyerResponded = (deed.buyerStatus > InvitationStatus.Invited);
+		this.hasSellerResponded = (deed.sellerStatus > InvitationStatus.Invited);
+		this.hasTitleCompanyResponded = (deed.titleCompanyStatus > InvitationStatus.Invited);
+		this.arePartiesInvited = (deed.status >= Status.partiesInvited);
+		this.userRole = deed.currentUserRole;
 	}
 
 	ngOnDestroy() {
@@ -138,6 +157,45 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			this.buyerAgentEmail.value,
 			this.titleCompanyEmail.value,
 			this.priceInEth.value);
+		await this.setupDeedData(this.deedId);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+	}
+
+	// TODO change message
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
+	public async partyAccept() {
+		this.notificationService.pushInfo({
+			title: `Inviting Accepting invitation`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		await this.deedsService.acceptInvite(this.deedId);
+		await this.setupDeedData(this.deedId);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+	}
+
+	// TODO change message
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
+	public async partyReject() {
+		this.notificationService.pushInfo({
+			title: `Rejecting Invitation`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		await this.deedsService.rejectInvite(this.deedId);
+		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
