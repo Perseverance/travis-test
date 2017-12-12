@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService, UserData} from '../../authentication/authentication.service';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {TransactionToolWorkflowService} from '../workflow/workflow.service';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService, UserData } from '../../authentication/authentication.service';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { TransactionToolWorkflowService } from '../workflow/workflow.service';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
+import { HelloSignService } from '../../shared/hello-sign.service';
 
 declare const HelloSign;
 
@@ -35,17 +35,17 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
 
 	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService) {
+		private route: ActivatedRoute,
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
 					return;
 				}
 				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
+				// this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
 				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
 			}
 		});

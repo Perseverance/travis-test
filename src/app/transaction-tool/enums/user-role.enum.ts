@@ -1,6 +1,7 @@
 export enum UserRoleEnum {
-	Agent = 1,
-	Seller = 2,
-	Buyer = 3,
-	Escrow = 4
+	Seller = 1,
+	Buyer = 2,
+	TitleCompany = 3,
+	SellerBroker = 4,
+	BuyerBroker = 5
 }

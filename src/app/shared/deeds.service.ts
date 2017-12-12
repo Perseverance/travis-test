@@ -24,14 +24,23 @@ export class DeedsService {
 		return result.data.data;
 	}
 
-	public async inviteParty(role: number, deedId: string, userEmail: string) {
+	public async inviteParties(
+		deedId: string,
+		buyerEmail: string,
+		sellerEmail: string,
+		buyerBrokerEmail: string,
+		titleCompanyEmail: string,
+		PriceInETH: string) {
 		const data = {
-			role,
 			deedId,
-			userEmail
+			buyerEmail,
+			sellerEmail,
+			buyerBrokerEmail,
+			titleCompanyEmail,
+			PriceInETH
 		};
 
-		const result = await this.restService.postWithURLEncodedAndToken(this.apiEndpoints.INTERNAL_ENDPOINTS.INVITE_PARTY, data);
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.INVITE_PARTY, data);
 		await result.data.data;
 	}
 
