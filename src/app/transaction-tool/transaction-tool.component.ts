@@ -123,7 +123,6 @@ export class TransactionToolComponent implements OnInit {
 
 	public async getDeedStatus(deedId: string): Promise<number> {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		console.log(deed);
 		return deed.status;
 	}
 
