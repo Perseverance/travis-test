@@ -98,12 +98,22 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	private async setupDeedData(deedId) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		console.log(deed);
 		this.hasBuyerBrokerResponded = (deed.buyerBrokerStatus > InvitationStatus.Invited);
 		this.hasBuyerResponded = (deed.buyerStatus > InvitationStatus.Invited);
 		this.hasSellerResponded = (deed.sellerStatus > InvitationStatus.Invited);
 		this.hasTitleCompanyResponded = (deed.titleCompanyStatus > InvitationStatus.Invited);
 		this.arePartiesInvited = (deed.status >= Status.partiesInvited);
 		this.userRole = deed.currentUserRole;
+		this.disclosuresLink = this.getPreviewLink(deed.documents);
+	}
+
+	private getPreviewLink(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.SellerDisclosures) {
+				return doc.uniqueId;
+			}
+		}
 	}
 
 	ngOnDestroy() {
