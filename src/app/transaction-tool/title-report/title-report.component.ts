@@ -29,6 +29,7 @@ export class TitleReportComponent implements OnInit {
 	public userInfo: any;
 	public userIsBuyer: boolean;
 	public userIsSeller: boolean;
+	public userIsTitleCompany: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
@@ -53,17 +54,19 @@ export class TitleReportComponent implements OnInit {
 			}
 			self.deedAddress = deedAddress;
 			await self.mapCurrentUserToRole(deedAddress);
-			if (!await self.smartContractService.isSettlementStatementUploaded(deedAddress)) {
+			if (!await self.smartContractService.isTitleReportUploaded(deedAddress)) {
 				return;
 			}
 			await self.setupDocumentPreview();
-			await self.getSettlementStatementSigners();
+			await self.getTitleReportSigners();
 		});
 	}
 
 	private async setupDocumentPreview() {
-		const requestSignatureId = await this.smartContractService.getSettlementStatementSignatureRequestId(this.deedAddress);
-		this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
+		const requestSignatureId = await this.smartContractService.getTitleReportSignatureRequestId(this.deedAddress);
+		if (requestSignatureId) {
+			this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
+		}
 	}
 
 	public async uploadDocument(event: any) {
@@ -79,7 +82,7 @@ export class TitleReportComponent implements OnInit {
 
 
 	public async signDocument() {
-		const requestSignatureId = await this.smartContractService.getSettlementStatementSignatureRequestId(this.deedAddress);
+		const requestSignatureId = await this.smartContractService.getTitleReportSignatureRequestId(this.deedAddress);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
@@ -91,7 +94,7 @@ export class TitleReportComponent implements OnInit {
 		}
 	}
 
-	public async getSettlementStatementSigners() {
+	public async getTitleReportSigners() {
 		this.hasBuyerSigned = await this.smartContractService.hasBuyerSignedTitleReport(this.deedAddress);
 		this.hasSellerSigned = await this.smartContractService.hasSellerSignedTitleReport(this.deedAddress);
 	}
@@ -105,5 +108,6 @@ export class TitleReportComponent implements OnInit {
 		const deed = await this.deedsService.getDeedDetails(deedAddress);
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
+		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
 	}
 }

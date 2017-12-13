@@ -11,6 +11,7 @@ import {PurchaseAgreementStepComponent} from './purchase-agreement-step/purchase
 import {WorkflowGuard} from './workflow/workflow-guard.service';
 import {TokenGuard} from '../authentication/token-guard.service';
 import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
+import {SettlementStatementComponent} from './settlement-statement/settlement-statement.component';
 
 const transactionToolSteps: Routes = [
 	{
@@ -47,6 +48,11 @@ const transactionToolSteps: Routes = [
 			{
 				path: 'seller-disclosures',
 				component: SellerDisclosuresStepComponent,
+				canActivate: [WorkflowGuard],
+			},
+			{
+				path: 'settlement-statement',
+				component: SettlementStatementComponent,
 				canActivate: [WorkflowGuard],
 			},
 			{

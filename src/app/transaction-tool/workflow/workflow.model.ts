@@ -4,8 +4,10 @@ export const STEPS = {
 	'purchase-agreement': 2,
 	'title-report': 3,
 	'seller-disclosures': 4,
-	'closing-documents': 5,
-	'payment': 6
+	'settlement-statement': 5,
+	'affidavit': 6,
+	'closing-documents': 7,
+	'payment': 8
 };
 
 export const REVERSE_STEPS = {
@@ -14,8 +16,10 @@ export const REVERSE_STEPS = {
 	2: 'purchase-agreement',
 	3: 'title-report',
 	4: 'seller-disclosures',
-	5: 'closing-documents',
-	6: 'payment'
+	5: 'settlement-statement',
+	6: 'affidavit',
+	7: 'closing-documents',
+	8: 'payment'
 };
 
 export type Step = string;

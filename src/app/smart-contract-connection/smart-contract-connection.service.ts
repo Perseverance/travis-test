@@ -6,13 +6,15 @@ export enum Status {
 	partiesInvited = 1,
 	partiesAccepted = 2,
 	purchaseAgreement = 3,
-	settlementStatement = 4,
+	titleReport = 4,
 	sellerDisclosures = 5,
-	closingDocuments = 6,
-	payment = 7,
-	receivedPayment = 8,
-	titleDeed = 9,
-	completed = 10
+	settlementStatement = 6,
+	affidavit = 7,
+	closingDocuments = 8,
+	payment = 9,
+	receivedPayment = 10,
+	titleDeed = 11,
+	completed = 12
 }
 
 export type EthereumAddress = string;
@@ -114,6 +116,10 @@ export class SmartContractConnectionService {
 		return false;
 	}
 
+	public async isTitleReportUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async isSettlementStatementUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
 		return true;
 	}
@@ -122,8 +128,16 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async getSettlementStatementSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
-		return 'c99ef5deb31113223dea76972a9e7f2a5e17002d';
+	public async getSettlementStatementBuyerSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
+		return '87e161a35174e1ad27c10bfdcd613bc3020faa4d';
+	}
+
+	public async getSettlementStatementSellerSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
+		return '';
+	}
+
+	public async getTitleReportSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
+		return '';
 	}
 
 	public async signSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
@@ -131,14 +145,10 @@ export class SmartContractConnectionService {
 	}
 
 	public async hasBuyerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async hasSellerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBrokerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
 		return true;
 	}
 
