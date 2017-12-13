@@ -1,32 +1,29 @@
-<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 settings">
-	<h3>{{ 'settings.title' | translate }}</h3>
-	<p-tabView (onChange)="setQueryParamForSelectedTab($event.index)" orientation="left">
-		<p-tabPanel header="{{ 'settings.headers.general-settings' | translate }}"
-					[selected]="selectedTab === settingsTabs.GENERAL"
-					headerStyleClass="settings-panel-header">
-			<app-general-settings></app-general-settings>
-		</p-tabPanel>
-		<p-tabPanel header="{{ 'settings.headers.my-listed-properties' | translate }}"
-					[selected]="selectedTab === settingsTabs.MY_LISTINGS"
-					headerStyleClass="settings-panel-header">
-			<app-my-listed-properties></app-my-listed-properties>
-		</p-tabPanel>
-		<p-tabPanel header="{{ 'settings.headers.pro-wallet' | translate }}"
-					[selected]="selectedTab === settingsTabs.WALLET" headerStyleClass="settings-panel-header">
-			<app-pro-wallet></app-pro-wallet>
-		</p-tabPanel>
-		<p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}"
-					[selected]="selectedTab === settingsTabs.MY_DEALS" headerStyleClass="settings-panel-header">
-			<app-my-deals></app-my-deals>
-		</p-tabPanel>
-		<p-tabPanel *ngIf="shouldShowPassword" header="{{ 'settings.headers.password-settings' | translate }}"
-					[selected]="selectedTab === settingsTabs.PASSWORD"
-					headerStyleClass="settings-panel-header">
-			<app-change-password></app-change-password>
-		</p-tabPanel>
-		<!--<p-tabPanel header="{{ 'settings.headers.email-notifications-settings' | translate }}" headerStyleClass="settings-panel-header">
+<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 settings">
+    <h3>{{ 'settings.title' | translate }}</h3>
+    <p-tabView (onChange)="setQueryParamForSelectedTab($event.index)" orientation="left">
+        <p-tabPanel header="{{ 'settings.headers.general-settings' | translate }}" [selected]="selectedTab === settingsTabs.GENERAL"
+            headerStyleClass="settings-panel-header">
+            <app-general-settings></app-general-settings>
+        </p-tabPanel>
+        <p-tabPanel header="{{ 'settings.headers.my-listed-properties' | translate }}" [selected]="selectedTab === settingsTabs.MY_LISTINGS"
+            headerStyleClass="settings-panel-header">
+            <app-my-listed-properties></app-my-listed-properties>
+        </p-tabPanel>
+        <p-tabPanel header="{{ 'settings.headers.pro-wallet' | translate }}" [selected]="selectedTab === settingsTabs.WALLET"
+            headerStyleClass="settings-panel-header">
+            <app-pro-wallet></app-pro-wallet>
+        </p-tabPanel>
+        <p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}" [selected]="selectedTab === settingsTabs.MY_DEALS"
+            headerStyleClass="settings-panel-header">
+            <app-my-deals></app-my-deals>
+        </p-tabPanel>
+        <p-tabPanel *ngIf="shouldShowPassword" header="{{ 'settings.headers.password-settings' | translate }}"
+            [selected]="selectedTab === settingsTabs.PASSWORD" headerStyleClass="settings-panel-header">
+            <app-change-password></app-change-password>
+        </p-tabPanel>
+        <!--<p-tabPanel header="{{ 'settings.headers.email-notifications-settings' | translate }}" headerStyleClass="settings-panel-header">
             {{ 'settings.headers.email-notifications-settings' | translate }}
         </p-tabPanel>
         -->
-	</p-tabView>
+    </p-tabView>
 </div>
