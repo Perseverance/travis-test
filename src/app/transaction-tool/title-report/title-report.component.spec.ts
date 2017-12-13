@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettlementStatementStepComponent } from './settlement-statement-step.component';
+import { SettlementStatementStepComponent } from './title-report-step.component';
 
 describe('SettlementStatementStepComponent', () => {
   let component: SettlementStatementStepComponent;
