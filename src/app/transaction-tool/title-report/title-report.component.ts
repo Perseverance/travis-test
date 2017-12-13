@@ -9,52 +9,39 @@ import {ActivatedRoute} from '@angular/router';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Component, OnInit} from '@angular/core';
+import {DeedsService} from '../../shared/deeds.service';
 
 declare const HelloSign;
 
 @Component({
-	selector: 'app-settlement-statement-step',
-	templateUrl: './settlement-statement-step.component.html',
-	styleUrls: ['./settlement-statement-step.component.scss']
+	selector: 'app-title-report',
+	templateUrl: './title-report.component.html',
+	styleUrls: ['./title-report.component.scss']
 })
-export class SettlementStatementStepComponent implements OnInit {
+export class TitleReportComponent implements OnInit {
 
-	public waitingTitle = 'Waiting to upload title report';
+	public waitingTitle = 'Waiting title company user to upload title report';
 	public settlementTitle = 'Title Report';
 	public uploadSettlementSubtitle = 'Please upload title report document:';
-	public previewSettlementSubtitle = 'Please review and title report statement.';
+	public previewSettlementSubtitle = 'Please review title report.';
 
+	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
 	public userIsBuyer: boolean;
 	public userIsSeller: boolean;
-	public userIsEscrow: boolean;
-	public userIsBroker: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
 	public hasBuyerSigned: boolean;
 	public hasSellerSigned: boolean;
-	public hasBrokerSigned: boolean;
-	public hasEscrowSigned: boolean;
 
-	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
+	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
 				private smartContractService: SmartContractConnectionService,
 				private helloSignService: HelloSignService,
-				private base64Service: Base64Service) {
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (!userInfo.user) {
-					return;
-				}
-				this.userIsBroker = (userInfo.user.role === UserRoleEnum.SellerBroker);
-				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsEscrow = (userInfo.user.role === UserRoleEnum.TitleCompany);
-				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
-			}
-		});
+				private base64Service: Base64Service,
+				private deedsService: DeedsService) {
 	}
 
 	async ngOnInit() {
@@ -65,6 +52,7 @@ export class SettlementStatementStepComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
+			await self.mapCurrentUserToRole(deedAddress);
 			if (!await self.smartContractService.isSettlementStatementUploaded(deedAddress)) {
 				return;
 			}
@@ -85,7 +73,7 @@ export class SettlementStatementStepComponent implements OnInit {
 			return;
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
-		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.BuyerSettlementStatement, this.deedAddress, base64);
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.TitleReport, this.deedAddress, base64);
 		this.previewLink = response.downloadLink;
 	}
 
@@ -104,17 +92,18 @@ export class SettlementStatementStepComponent implements OnInit {
 	}
 
 	public async getSettlementStatementSigners() {
-		this.hasBuyerSigned = await this.smartContractService.hasBuyerSignedClosingDocuments(this.deedAddress);
-		this.hasSellerSigned = await this.smartContractService.hasSellerSignedClosingDocuments(this.deedAddress);
-		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedClosingDocuments(this.deedAddress);
-		this.hasEscrowSigned = await this.smartContractService.hasEscrowSignedClosingDocuments(this.deedAddress);
+		this.hasBuyerSigned = await this.smartContractService.hasBuyerSignedTitleReport(this.deedAddress);
+		this.hasSellerSigned = await this.smartContractService.hasSellerSignedTitleReport(this.deedAddress);
 	}
 
 	public shouldShowSignButton(): boolean {
 		return (this.userIsBuyer && !this.hasBuyerSigned)
-			|| (this.userIsSeller && !this.hasSellerSigned)
-			|| (this.userIsEscrow && !this.hasEscrowSigned)
-			|| (this.userIsBroker && !this.hasBrokerSigned);
+			|| (this.userIsSeller && !this.hasSellerSigned);
 	}
 
+	private async mapCurrentUserToRole(deedAddress) {
+		const deed = await this.deedsService.getDeedDetails(deedAddress);
+		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
+		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
+	}
 }
