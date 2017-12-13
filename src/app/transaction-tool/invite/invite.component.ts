@@ -98,7 +98,6 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	private async setupDeedData(deedId) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		console.log(deed);
 		this.hasBuyerBrokerResponded = (deed.buyerBrokerStatus > InvitationStatus.Invited);
 		this.hasBuyerResponded = (deed.buyerStatus > InvitationStatus.Invited);
 		this.hasSellerResponded = (deed.sellerStatus > InvitationStatus.Invited);
@@ -148,7 +147,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
-		// this.previewLink = response.downloadLink;
+		this.disclosuresLink = response.downloadLink;
 	}
 
 	// TODO change message
