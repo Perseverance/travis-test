@@ -10,10 +10,10 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<app-sign-document [buyerIsParticipant]="true" [hasBuyerSigned]="hasBuyerSigned"
-							   [sellerIsParticipant]="true" [hasSellerSigned]="hasSellerSigned"
-							   [brokerIsParticipant]="true"
-							   [hasBrokerSigned]="hasBrokerSigned"
+			<app-sign-document [hasBuyerSigned]="hasBuyerSigned"
+							   [hasSellerSigned]="hasSellerSigned"
+							   [hasBuyerBrokerSigned]="hasBuyerBrokerSigned"
+							   [hasSellerBrokerSigned]="hasSellerBrokerSigned"
 							   [showSignButton]="shouldShowSignButton()"
 							   [documentType]="deedDocumentTypeEnum.PurchaseAgreement"
 							   (onSignDocument)="signDocument()"></app-sign-document>

@@ -93,7 +93,11 @@ export class SmartContractConnectionService {
 		return false;
 	}
 
-	public async hasBrokerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
+	public async hasBuyerBrokerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
+		return false;
+	}
+
+	public async hasSellerBrokerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
 		return false;
 	}
 

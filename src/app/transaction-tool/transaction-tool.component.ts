@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router, Params, UrlSegment, NavigationEnd} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {DeedsService} from '../shared/deeds.service';
+import {Status} from '../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -16,7 +17,7 @@ export class TransactionToolComponent implements OnInit {
 	public workflowSteps: MenuItem[];
 	public activeIndex = 0;
 	public deedStatusIndex: number;
-	public curreentState: number;
+	public currentState: number;
 	public addressRoute: string;
 
 	constructor(private route: ActivatedRoute, private router: Router,
@@ -32,7 +33,7 @@ export class TransactionToolComponent implements OnInit {
 	async ngOnInit() {
 		const deedStatus = await this.getDeedStatus(this.route.snapshot.params['address']);
 
-		this.deedStatusIndex = deedStatus + 1;
+		this.deedStatusIndex = this.getDeedIndexByStatus(deedStatus);
 		this.activeIndex = STEPS[this.addressRoute];
 		this.workflowSteps = [
 			{
@@ -90,11 +91,11 @@ export class TransactionToolComponent implements OnInit {
 
 	onIndexChange(event) {
 		if (event > this.deedStatusIndex) {
-			this.curreentState = this.deedStatusIndex;
+			this.currentState = this.deedStatusIndex;
 		} else {
-			this.curreentState = event;
+			this.currentState = event;
 		}
-		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[this.curreentState]]);
+		this.router.navigate(['transaction-tool', this.route.snapshot.params['address'], REVERSE_STEPS[this.currentState]]);
 
 	}
 
@@ -124,5 +125,22 @@ export class TransactionToolComponent implements OnInit {
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		console.log(deed);
 		return deed.status;
+	}
+
+	private getDeedIndexByStatus(idx: number): number {
+		switch (idx) {
+			case Status.partiesInvited: {
+				return 1;
+			}
+			case Status.partiesAccepted: {
+				return 1;
+			}
+			case Status.purchaseAgreement: {
+				return 2;
+			}
+			default: {
+				return 0;
+			}
+		}
 	}
 }
