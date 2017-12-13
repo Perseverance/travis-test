@@ -31,6 +31,7 @@ export enum InvitationStatus {
 })
 export class InviteComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
+	public userRoleEnum = UserRoleEnum;
 	public invitationDataLoaded = false;
 	public successMessage = 'Success!';
 	public userRole: UserRoleEnum;
