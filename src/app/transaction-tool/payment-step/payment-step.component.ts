@@ -1,20 +1,20 @@
-import { DeedsService } from './../../shared/deeds.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { ActivatedRoute } from '@angular/router';
+import {DeedsService} from './../../shared/deeds.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {ActivatedRoute} from '@angular/router';
 import {
-	SmartContractAddress, Deed,
+	SmartContractAddress,
 	SmartContractConnectionService, EthereumAddress
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { UserRoleEnum } from './../enums/user-role.enum';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, OnInit } from '@angular/core';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {UserRoleEnum} from './../enums/user-role.enum';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {Component, OnInit} from '@angular/core';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 
 @Component({
 	selector: 'app-payment-step',
@@ -26,19 +26,19 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	public userIsBuyer: boolean;
 	public hasUserDataLoaded = false;
 	public invitationDataLoaded = false;
-	public deedDetails: Deed;
+	public deedDetails: any;
 	public escrowAddress: EthereumAddress;
 
 	private addressSubscription: Subscription;
 	public deedId: SmartContractAddress;
 
 	constructor(private authService: AuthenticationService,
-		private smartContractService: SmartContractConnectionService,
-		private deedsService: DeedsService,
-		private route: ActivatedRoute,
-		private notificationsService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private smartContractService: SmartContractConnectionService,
+				private deedsService: DeedsService,
+				private route: ActivatedRoute,
+				private notificationsService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.authService.subscribeToUserData({
