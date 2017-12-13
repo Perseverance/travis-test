@@ -1,21 +1,21 @@
-import {TransactionToolDocumentService} from './../transaction-tool-document.service';
-import {DeedDocumentType} from './../enums/deed-document-type.enum';
-import {Base64Service} from './../../shared/base64.service';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {UserRoleEnum} from './../enums/user-role.enum';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {SmartContractAddress, Status} from './../../smart-contract-connection/smart-contract-connection.service';
-import {Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {DeedsService} from '../../shared/deeds.service';
+import { TransactionToolDocumentService } from './../transaction-tool-document.service';
+import { DeedDocumentType } from './../enums/deed-document-type.enum';
+import { Base64Service } from './../../shared/base64.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { SmartContractAddress, Status } from './../../smart-contract-connection/smart-contract-connection.service';
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { DeedsService } from '../../shared/deeds.service';
 
 export enum InvitationStatus {
 	NotInvited = 0,
@@ -31,11 +31,12 @@ export enum InvitationStatus {
 })
 export class InviteComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
+	public userRoleEnum = UserRoleEnum;
 	public invitationDataLoaded = false;
 	public successMessage = 'Success!';
 	public userRole: UserRoleEnum;
 	public selectedDocument: any;
-	public previewLink: string;
+	public disclosuresLink: string = undefined;
 	private addressSubscription: Subscription;
 	public deedId: string;
 	public arePartiesInvited: boolean;
@@ -53,14 +54,14 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public inviteForm: FormGroup;
 
 	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				private formBuilder: FormBuilder,
-				private base64Service: Base64Service,
-				private documentService: TransactionToolDocumentService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private route: ActivatedRoute,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		private formBuilder: FormBuilder,
+		private base64Service: Base64Service,
+		private documentService: TransactionToolDocumentService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.inviteForm = this.formBuilder.group({
@@ -137,7 +138,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
-		this.previewLink = response.downloadLink;
+		// this.previewLink = response.downloadLink;
 	}
 
 	// TODO change message

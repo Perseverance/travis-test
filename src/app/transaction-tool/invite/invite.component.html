@@ -9,34 +9,29 @@
             <h4>Waiting for all parties to accept</h4>
             <hr>
             <div class="col-xs-12">
-                <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
-                    (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-                <hr>
+                {{ disclosuresLink }}
+                <div *ngIf="disclosuresLink;then previewLink; else noPreviewLink;"></div>
             </div>
         </div>
-        <div *ngIf="userRole === 1">
-            <!-- Seller -->
+        <div *ngIf="userRole === userRoleEnum.Seller">
             <div *ngIf="!hasSellerResponded; else waitingForAllOther;">
                 <span>You are invited as a <strong>Seller</strong>, respond to this invitation</span>
                 <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
             </div>
         </div>
-        <div *ngIf="userRole === 2">
-            <!-- Buyer -->
+        <div *ngIf="userRole === userRoleEnum.Buyer">
             <div *ngIf="!hasBuyerResponded; else waitingForAllOther;">
                 <span>You are invited as a <strong>Buyer</strong>, respond to this invitation</span>
                 <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
             </div>
         </div>
-        <div *ngIf="userRole === 3">
-            <!-- Title Company -->
+        <div *ngIf="userRole === userRoleEnum.TitleCompany">
             <div *ngIf="!hasTitleCompanyResponded; else waitingForAllOther;">
                 <span>You are invited as a <strong>Title Company</strong>, respond to this invitation</span>
                 <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
             </div>
         </div>
-        <div *ngIf="userRole === 5">
-            <!-- Buyer Broker -->
+        <div *ngIf="userRole === userRoleEnum.BuyerBroker">
             <div *ngIf="!hasBuyerBrokerResponded; else waitingForAllOther;">
                 <span>You are invited as a <strong>Buyer Broker</strong>, respond to this invitation</span>
                 <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
@@ -48,7 +43,7 @@
     </ng-template>
 
     <ng-template #partiesNotInvited>
-        <div *ngIf="userRole === 4;then isSellerBroker; else isNotSellerBroker"></div>
+        <div *ngIf="userRole === userRoleEnum.SellerBroker;then isSellerBroker; else isNotSellerBroker"></div>
         <ng-template #isSellerBroker>
 
             <form [formGroup]="inviteForm">
@@ -102,14 +97,18 @@
         </ng-template>
         <hr>
         <div class="col-xs-12">
-            <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
-                (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-            <hr>
+            <div *ngIf="previewLink;then previewLink; else noPreviewLink;"></div>
         </div>
         <hr>
         <div class="col-xs-12">
             <button type="button" class="btn propy-control button-big pull-right" (click)="onInvite()">Invite & Continue</button>
         </div>
     </ng-template>
-
+    <ng-template #previewLink>
+        <app-document-preview previewTitle="Disclosures" previewLink="{{ previewLink | imageEnvPrefix }}"></app-document-preview>
+    </ng-template>
+    <ng-template #noPreviewLink>
+        <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
+            (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+    </ng-template>
 </div>
