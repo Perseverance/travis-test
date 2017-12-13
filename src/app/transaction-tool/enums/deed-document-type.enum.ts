@@ -2,7 +2,9 @@ export enum DeedDocumentType {
 	SellerDisclosures = 1,
 	PurchaseAgreement = 2,
 	TitleReport = 3,
-	Affidavit = 4,
-	ClosingDocuments = 5,
-	TitleDeed = 6
+	SignedSellerDisclosures = 4,
+	BuyerSettlementStatement = 5,
+	SellerSettlementStatement = 6,
+	Affidavit = 7,
+	ClosingDocuments = 8
 }

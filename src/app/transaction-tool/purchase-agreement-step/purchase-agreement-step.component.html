@@ -10,10 +10,10 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<app-sign-document [buyerIsParticipant]="true" [hasBuyerSigned]="hasBuyerSigned"
-							   [sellerIsParticipant]="true" [hasSellerSigned]="hasSellerSigned"
-							   [brokerIsParticipant]="true"
-							   [hasBrokerSigned]="hasBrokerSigned"
+			<app-sign-document [hasBuyerSigned]="hasBuyerSigned"
+							   [hasSellerSigned]="hasSellerSigned"
+							   [hasBuyerBrokerSigned]="hasBuyerBrokerSigned"
+							   [hasSellerBrokerSigned]="hasSellerBrokerSigned"
 							   [showSignButton]="shouldShowSignButton()"
 							   [documentType]="deedDocumentTypeEnum.PurchaseAgreement"
 							   (onSignDocument)="signDocument()"></app-sign-document>
@@ -22,7 +22,7 @@
 </ng-template>
 
 <ng-template #noPreviewLink>
-	<div class="row" *ngIf="userIsBroker; then isBroker; else isNotBroker">
+	<div class="row" *ngIf="userIsSellerBroker; then isBroker; else isNotBroker">
 	</div>
 
 	<ng-template #isBroker>
@@ -35,7 +35,7 @@
 
 	<ng-template #isNotBroker>
 		<div class="col-xs-12 text-center">
-			<h5>Waiting for broker to upload purchase agreement</h5>
+			<h5>Waiting for seller broker to upload purchase agreement</h5>
 		</div>
 	</ng-template>
 

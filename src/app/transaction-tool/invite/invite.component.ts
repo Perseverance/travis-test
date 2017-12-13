@@ -94,7 +94,6 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			self.hasDataLoaded = true;
 			self.invitationDataLoaded = true;
 		});
-
 	}
 
 	private async setupDeedData(deedId) {

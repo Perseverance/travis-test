@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, UserData } from '../../authentication/authentication.service';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { TransactionToolWorkflowService } from '../workflow/workflow.service';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
-import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService, UserData} from '../../authentication/authentication.service';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {TransactionToolWorkflowService} from '../workflow/workflow.service';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
+import {HelloSignService} from '../../shared/hello-sign.service';
+import {DeedsService} from '../../shared/deeds.service';
 
 declare const HelloSign;
 
@@ -22,33 +23,25 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public userInfo: any;
 	public userIsBuyer: boolean;
 	public userIsSeller: boolean;
-	public userIsBroker: boolean;
+	public userIsBuyerBroker: boolean;
+	public userIsSellerBroker: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
 	public hasBuyerSigned: boolean;
 	public hasSellerSigned: boolean;
-	public hasBrokerSigned: boolean;
+	public hasBuyerBrokerSigned: boolean;
+	public hasSellerBrokerSigned: boolean;
 	public purchaseTitle = 'Purchase Agreement';
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
 
-	constructor(private authService: AuthenticationService,
-		private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService) {
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (!userInfo.user) {
-					return;
-				}
-				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				// this.userIsBroker = (userInfo.user.role === UserRoleEnum.Agent);
-				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
-			}
-		});
+	constructor(private route: ActivatedRoute,
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private deedsService: DeedsService) {
 	}
 
 	async ngOnInit() {
@@ -59,6 +52,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
+			await self.mapCurrentUserToRole(deedAddress);
 			if (!await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
 				return;
 			}
@@ -129,7 +123,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public async getPurchaseAgreementSigners() {
 		await this.markBuyerSign();
 		await this.markSellerSign();
-		await this.markBrokerSign();
+		await this.markBuyerBrokerSign();
+		await this.markSellerBrokerSign();
 	}
 
 	private async markBuyerSign() {
@@ -140,13 +135,26 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		this.hasSellerSigned = await this.smartContractService.hasSellerSignedPurchaseAgreement(this.deedAddress);
 	}
 
-	private async markBrokerSign() {
-		this.hasBrokerSigned = await this.smartContractService.hasBrokerSignedPurchaseAgreement(this.deedAddress);
+	private async markBuyerBrokerSign() {
+		this.hasBuyerBrokerSigned = await this.smartContractService.hasBuyerBrokerSignedPurchaseAgreement(this.deedAddress);
+	}
+
+	private async markSellerBrokerSign() {
+		this.hasSellerBrokerSigned = await this.smartContractService.hasSellerBrokerSignedPurchaseAgreement(this.deedAddress);
 	}
 
 	public shouldShowSignButton(): boolean {
 		return (this.userIsBuyer && !this.hasBuyerSigned)
 			|| (this.userIsSeller && !this.hasSellerSigned)
-			|| (this.userIsBroker && !this.hasBrokerSigned);
+			|| (this.userIsBuyerBroker && !this.hasBuyerBrokerSigned)
+			|| (this.userIsSellerBroker && !this.hasSellerBrokerSigned);
+	}
+
+	private async mapCurrentUserToRole(deedAddress) {
+		const deed = await this.deedsService.getDeedDetails(deedAddress);
+		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
+		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
+		this.userIsSellerBroker = (deed.currentUserRole === UserRoleEnum.SellerBroker);
+		this.userIsBuyerBroker = (deed.currentUserRole === UserRoleEnum.BuyerBroker);
 	}
 }
