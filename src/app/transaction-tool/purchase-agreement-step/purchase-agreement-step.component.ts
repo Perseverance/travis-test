@@ -9,6 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
 import {HelloSignService} from '../../shared/hello-sign.service';
+import {DeedsService} from '../../shared/deeds.service';
 
 declare const HelloSign;
 
@@ -22,7 +23,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public userInfo: any;
 	public userIsBuyer: boolean;
 	public userIsSeller: boolean;
-	public userIsBroker: boolean;
+	public userIsBuyerBroker: boolean;
+	public userIsSellerBroker: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
@@ -35,21 +37,11 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
 
-	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
+	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
 				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService) {
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (!userInfo.user) {
-					return;
-				}
-				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
-				this.userIsBroker = (userInfo.user.role === UserRoleEnum.SellerBroker);
-				this.userIsSeller = (userInfo.user.role === UserRoleEnum.Seller);
-			}
-		});
+				private helloSignService: HelloSignService,
+				private deedsService: DeedsService) {
 	}
 
 	async ngOnInit() {
@@ -60,6 +52,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedAddress = deedAddress;
+			await self.mapCurrentUserToRole(deedAddress);
 			if (!await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
 				return;
 			}
@@ -153,6 +146,15 @@ export class PurchaseAgreementStepComponent implements OnInit {
 	public shouldShowSignButton(): boolean {
 		return (this.userIsBuyer && !this.hasBuyerSigned)
 			|| (this.userIsSeller && !this.hasSellerSigned)
-			|| (this.userIsBroker && !this.hasBuyerBrokerSigned);
+			|| (this.userIsBuyerBroker && !this.hasBuyerBrokerSigned)
+			|| (this.userIsSellerBroker && !this.hasSellerBrokerSigned);
+	}
+
+	private async mapCurrentUserToRole(deedAddress) {
+		const deed = await this.deedsService.getDeedDetails(deedAddress);
+		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
+		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
+		this.userIsSellerBroker = (deed.currentUserRole === UserRoleEnum.SellerBroker);
+		this.userIsBuyerBroker = (deed.currentUserRole === UserRoleEnum.BuyerBroker);
 	}
 }

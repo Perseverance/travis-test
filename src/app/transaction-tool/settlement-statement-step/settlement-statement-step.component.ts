@@ -85,7 +85,7 @@ export class SettlementStatementStepComponent implements OnInit {
 			return;
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
-		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SettlementStatement, this.deedAddress, base64);
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.BuyerSettlementStatement, this.deedAddress, base64);
 		this.previewLink = response.downloadLink;
 	}
 
