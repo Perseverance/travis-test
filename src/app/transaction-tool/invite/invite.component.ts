@@ -98,6 +98,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	private async setupDeedData(deedId) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		console.log(deed);
 		this.hasBuyerBrokerResponded = (deed.buyerBrokerStatus > InvitationStatus.Invited);
 		this.hasBuyerResponded = (deed.buyerStatus > InvitationStatus.Invited);
 		this.hasSellerResponded = (deed.sellerStatus > InvitationStatus.Invited);
@@ -184,7 +185,10 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.deedsService.acceptInvite(this.deedId);
+		const result = await this.deedsService.acceptInvite(this.deedId);
+		if (result.allPartiesAccepted) {
+			// TODO move to the next status
+		}
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
