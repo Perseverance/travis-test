@@ -17,6 +17,7 @@ import {TitleReportComponent} from './title-report/title-report.component';
 import {PaymentStepComponent} from './payment-step/payment-step.component';
 import {InlineSVGModule} from 'ng-inline-svg';
 import {InviteComponent} from './invite/invite.component';
+import { SettlementStatementComponent } from './settlement-statement/settlement-statement.component';
 
 @NgModule({
 	imports: [
@@ -41,7 +42,8 @@ import {InviteComponent} from './invite/invite.component';
 		PropertyItemViewComponent,
 		TitleReportComponent,
 		PaymentStepComponent,
-		InviteComponent
+		InviteComponent,
+		SettlementStatementComponent
 	],
 	exports: [
 		TransactionToolRoutingModule
