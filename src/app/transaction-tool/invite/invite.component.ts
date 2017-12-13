@@ -35,7 +35,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public successMessage = 'Success!';
 	public userRole: UserRoleEnum;
 	public selectedDocument: any;
-	public previewLink: string;
+	public disclosuresLink: string = undefined;
 	private addressSubscription: Subscription;
 	public deedId: string;
 	public arePartiesInvited: boolean;
@@ -137,8 +137,8 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			return;
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
-		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SettlementStatement, this.deedId, base64);
-		this.previewLink = response.downloadLink;
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
+		// this.previewLink = response.downloadLink;
 	}
 
 	// TODO change message

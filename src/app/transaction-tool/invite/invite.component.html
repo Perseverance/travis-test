@@ -9,9 +9,8 @@
             <h4>Waiting for all parties to accept</h4>
             <hr>
             <div class="col-xs-12">
-                <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
-                    (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-                <hr>
+                {{ disclosuresLink }}
+                <div *ngIf="disclosuresLink;then previewLink; else noPreviewLink;"></div>
             </div>
         </div>
         <div *ngIf="userRole === 1">
@@ -102,14 +101,18 @@
         </ng-template>
         <hr>
         <div class="col-xs-12">
-            <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
-                (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-            <hr>
+            <div *ngIf="previewLink;then previewLink; else noPreviewLink;"></div>
         </div>
         <hr>
         <div class="col-xs-12">
             <button type="button" class="btn propy-control button-big pull-right" (click)="onInvite()">Invite & Continue</button>
         </div>
     </ng-template>
-
+    <ng-template #previewLink>
+        <app-document-preview previewTitle="Disclosures" previewLink="{{ previewLink | imageEnvPrefix }}"></app-document-preview>
+    </ng-template>
+    <ng-template #noPreviewLink>
+        <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
+            (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+    </ng-template>
 </div>
