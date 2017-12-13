@@ -13,17 +13,18 @@ import {Component, OnInit} from '@angular/core';
 declare const HelloSign;
 
 @Component({
-	selector: 'app-settlement-statement-step',
-	templateUrl: './settlement-statement-step.component.html',
-	styleUrls: ['./settlement-statement-step.component.scss']
+	selector: 'app-title-report',
+	templateUrl: './title-report.component.html',
+	styleUrls: ['./title-report.component.scss']
 })
-export class SettlementStatementStepComponent implements OnInit {
+export class TitleReportComponent implements OnInit {
 
 	public waitingTitle = 'Waiting to upload title report';
 	public settlementTitle = 'Title Report';
 	public uploadSettlementSubtitle = 'Please upload title report document:';
-	public previewSettlementSubtitle = 'Please review and title report statement.';
+	public previewSettlementSubtitle = 'Please review title report.';
 
+	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
 	public userIsBuyer: boolean;
 	public userIsSeller: boolean;

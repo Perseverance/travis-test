@@ -1,16 +1,16 @@
-import { InviteComponent } from './invite/invite.component';
-import { PaymentStepComponent } from './payment-step/payment-step.component';
-import { SettlementStatementStepComponent } from './settlement-statement-step/settlement-statement-step.component';
-import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
-import { PropertyPreviewComponent } from './property-preview/property-preview.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-import { TransactionToolComponent } from './transaction-tool.component';
-import { PurchaseAgreementStepComponent } from './purchase-agreement-step/purchase-agreement-step.component';
-import { WorkflowGuard } from './workflow/workflow-guard.service';
-import { TokenGuard } from '../authentication/token-guard.service';
-import { AuthenticatedGuard } from '../authentication/authenticated-guard.service';
+import {InviteComponent} from './invite/invite.component';
+import {PaymentStepComponent} from './payment-step/payment-step.component';
+import {TitleReportComponent} from './title-report/title-report.component';
+import {SellerDisclosuresStepComponent} from './seller-disclosures-step/seller-disclosures-step.component';
+import {PropertyPreviewComponent} from './property-preview/property-preview.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from '@angular/router';
+import {TransactionToolComponent} from './transaction-tool.component';
+import {PurchaseAgreementStepComponent} from './purchase-agreement-step/purchase-agreement-step.component';
+import {WorkflowGuard} from './workflow/workflow-guard.service';
+import {TokenGuard} from '../authentication/token-guard.service';
+import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
 
 const transactionToolSteps: Routes = [
 	{
@@ -40,8 +40,8 @@ const transactionToolSteps: Routes = [
 				canActivate: [WorkflowGuard]
 			},
 			{
-				path: 'settlement-statement',
-				component: SettlementStatementStepComponent,
+				path: 'title-report',
+				component: TitleReportComponent,
 				canActivate: [WorkflowGuard]
 			},
 			{
