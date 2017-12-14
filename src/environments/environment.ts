@@ -43,7 +43,7 @@ export const environment = {
 	hardCodedDeedParties: {
 		agentId: '5a255409495fda1268997297'
 	},
-	contractAddress: '0xf2b52ed369c45163fb1c4805d4829af853e08daa',
+	contractAddress: '0x60cd8e97b4e0bfcedfaedf8a0a289e5c80bc9960',
 	// web3Provider: 'http://localhost:8545',
 	infuraKey: '',
 	infuraLink: 'https://ropsten.infura.io/Up5uvBHSCSqtOmnlhL87'
