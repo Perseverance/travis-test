@@ -105,7 +105,6 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	private async setupDeedData(deedId) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		console.log(deed);
 		this.hasBuyerBrokerResponded = (deed.buyerBrokerStatus > InvitationStatus.Invited);
 		this.hasBuyerResponded = (deed.buyerStatus > InvitationStatus.Invited);
 		this.hasSellerResponded = (deed.sellerStatus > InvitationStatus.Invited);

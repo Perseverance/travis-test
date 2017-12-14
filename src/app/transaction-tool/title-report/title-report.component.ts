@@ -64,10 +64,13 @@ export class TitleReportComponent implements OnInit {
 
 	private async setupDocumentPreview(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.previewLink = this.getPreviewLink(deed.documents);
+		const signatureRequestId = this.getSignatureRequestId(deed.documents);
+		if (signatureRequestId) {
+			this.previewLink = await this.documentService.getPreviewDocumentLink(signatureRequestId);
+		}
 	}
 
-	private getPreviewLink(documents: any[]) {
+	private getSignatureRequestId(documents: any[]) {
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.TitleReport) {
 				return doc.uniqueId;
@@ -88,7 +91,8 @@ export class TitleReportComponent implements OnInit {
 
 
 	public async signDocument() {
-		const requestSignatureId = await this.smartContractService.getTitleReportSignatureRequestId(this.deedAddress);
+		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+		const requestSignatureId = this.getSignatureRequestId(deed.documents);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
