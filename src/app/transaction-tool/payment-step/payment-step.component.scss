@@ -1,0 +1,57 @@
+@import "../../../variables";
+@import "../../../mixins";
+$background-blue: #e2f6fd;
+$background-gray: #DCDCDC;
+#horizontal-line {
+    margin-top: 45px;
+}
+
+.payment {
+    margin-top: 40px;
+    h5 {
+        margin-bottom: 40px;
+        span {
+            font-weight: bold;
+        }
+    }
+    .payment-radio {
+        .form-check-label {
+            padding-top: 2px;
+        }
+        float: left;
+        margin-right: 30px;
+        margin-bottom: 40px;
+        &:last-child {
+            float: none;
+        }
+    }
+    #price {
+        border-radius: 5px;
+        background: $background-gray;
+        padding: 10px;
+    }
+    #escrowAddress {
+        border-radius: 5px;
+        color: $blue-main;
+        background: $background-blue;
+        padding: 10px;
+    }
+    .payment-info {
+        display: block;
+        margin-top: 40px;
+        button {
+            outline: none;
+            @include border-radius(9px);
+            border: none;
+            background: none;
+            padding-top: 5px;
+            &:hover {
+                background: none;
+                color: lighten($gray-darkest, 10%);
+            }
+        }
+    }
+    .price {
+        float: right;
+    }
+}

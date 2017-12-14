@@ -1,20 +1,21 @@
-import {DeedsService} from './../../shared/deeds.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {ActivatedRoute} from '@angular/router';
+import { DeedsService } from './../../shared/deeds.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { ActivatedRoute } from '@angular/router';
 import {
 	SmartContractAddress,
 	SmartContractConnectionService, EthereumAddress
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {UserRoleEnum} from './../enums/user-role.enum';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {Component, OnInit} from '@angular/core';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { Component, OnInit } from '@angular/core';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-payment-step',
@@ -28,18 +29,25 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	public invitationDataLoaded = false;
 	public deedDetails: any;
 	public escrowAddress: EthereumAddress;
+	public contactAgentForm: FormGroup;
+
 
 	private addressSubscription: Subscription;
 	public deedId: SmartContractAddress;
-
+	payments: any[];
 	constructor(private authService: AuthenticationService,
-				private smartContractService: SmartContractConnectionService,
-				private deedsService: DeedsService,
-				private route: ActivatedRoute,
-				private notificationsService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private smartContractService: SmartContractConnectionService,
+		private deedsService: DeedsService,
+		private route: ActivatedRoute,
+		private notificationsService: NotificationsService,
+		private formBuilder: FormBuilder,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
+
+		this.contactAgentForm = this.formBuilder.group({
+			paymentId: [undefined, [Validators.required]]
+		});
 
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -50,6 +58,10 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 				this.hasUserDataLoaded = true;
 			}
 		});
+		this.payments = [];
+		this.payments.push({ id: 0, name: 'ETH' });
+		this.payments.push({ id: 1, name: 'BTC' });
+		this.payments.push({ id: 2, name: 'USD' });
 	}
 
 	async ngOnInit() {
@@ -64,9 +76,12 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 			self.escrowAddress = await self.smartContractService.getEscrowAddress(deedId);
 			self.invitationDataLoaded = true;
 		});
-
+		this.paymentId.setValue(this.payments[0].id);
 	}
 
+	public get paymentId() {
+		return this.contactAgentForm.get('paymentId');
+	}
 	ngOnDestroy() {
 		this.addressSubscription.unsubscribe();
 	}

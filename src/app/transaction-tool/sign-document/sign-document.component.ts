@@ -55,8 +55,6 @@ export class SignDocumentComponent implements OnInit, OnDestroy {
 
 	public isSectionWithTwoSigners(): boolean {
 		if (this.documentType === this.deedDocumentTypeEnum.TitleReport
-			|| this.documentType === this.deedDocumentTypeEnum.BuyerSettlementStatement
-			|| this.documentType === this.deedDocumentTypeEnum.SellerSettlementStatement
 			|| this.documentType === this.deedDocumentTypeEnum.Affidavit) {
 			return true;
 		}

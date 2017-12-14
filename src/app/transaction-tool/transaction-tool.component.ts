@@ -74,16 +74,23 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Closing Documents',
+				label: 'Settlement Statement',
 				command: (event: any) => {
 					this.activeIndex = 5;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Payment',
+				label: 'Closing Documents',
 				command: (event: any) => {
 					this.activeIndex = 6;
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
+				}
+			},
+			{
+				label: 'Payment',
+				command: (event: any) => {
+					this.activeIndex = 7;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			}

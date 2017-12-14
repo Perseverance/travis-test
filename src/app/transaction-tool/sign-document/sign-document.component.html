@@ -144,4 +144,80 @@
 			</div>
 		</div>
 	</div>
+	<div *ngIf="documentType == deedDocumentTypeEnum.BuyerSettlementStatement">
+		<div class="col-xs-12"
+			 *ngIf="currentUserRole == userRoleEnum.BuyerBroker || currentUserRole == userRoleEnum.TitleCompany">
+			<div class="row sign-label">
+				<div class="col-xs-12 text-uppercase text-center">
+					Buyer
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 signed-document" *ngIf="hasBuyerSigned">
+					<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+					<p>Signed</p>
+				</div>
+				<div class="col-xs-12 pending-document" *ngIf="!hasBuyerSigned">
+					<div [inlineSVG]="'/assets/images/pending.svg'"></div>
+					<p>Pending</p>
+				</div>
+			</div>
+		</div>
+		<div class="sign-button-holder col-xs-4 col-xs-offset-4"
+			 *ngIf="currentUserRole == userRoleEnum.Buyer">
+			<div class="row sign-label">
+				<div class="col-xs-12 text-uppercase text-center">
+					{{ currentUserRole | userRole }}
+				</div>
+			</div>
+			<div class="row sign-button" *ngIf="showSignButton">
+				<a class="btn propy-control button-big" [ngClass]="{'not-active': !showSignButton}"
+				   (click)="onSignDocumentClick()">Sign</a>
+			</div>
+			<div class="row" *ngIf="!showSignButton">
+				<div class="col-xs-12 signed-document">
+					<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+					<p>Signed</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="documentType == deedDocumentTypeEnum.SellerSettlementStatement">
+		<div class="col-xs-12"
+			 *ngIf="currentUserRole == userRoleEnum.SellerBroker || currentUserRole == userRoleEnum.TitleCompany">
+			<div class="row sign-label">
+				<div class="col-xs-12 text-uppercase text-center">
+					Seller
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 signed-document" *ngIf="hasBuyerSigned">
+					<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+					<p>Signed</p>
+				</div>
+				<div class="col-xs-12 pending-document" *ngIf="!hasBuyerSigned">
+					<div [inlineSVG]="'/assets/images/pending.svg'"></div>
+					<p>Pending</p>
+				</div>
+			</div>
+		</div>
+		<div class="sign-button-holder col-xs-4 col-xs-offset-4"
+			 *ngIf="currentUserRole == userRoleEnum.Seller">
+			<div class="row sign-label">
+				<div class="col-xs-12 text-uppercase text-center">
+					{{ currentUserRole | userRole }}
+				</div>
+			</div>
+			<div class="row sign-button" *ngIf="showSignButton">
+				<a class="btn propy-control button-big" [ngClass]="{'not-active': !showSignButton}"
+				   (click)="onSignDocumentClick()">Sign</a>
+			</div>
+			<div class="row" *ngIf="!showSignButton">
+				<div class="col-xs-12 signed-document">
+					<div [inlineSVG]="'/assets/images/signed.svg'"></div>
+					<p>Signed</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
