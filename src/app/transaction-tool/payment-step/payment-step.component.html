@@ -7,9 +7,36 @@
             <div *ngIf="userIsBuyer;then isBuyer; else isNotBuyer">
             </div>
             <ng-template #isBuyer>
-                <p><span>Click the button below in order to pay {{deedDetails.priceInWei}}
-                        wei for this property. The ETH will be sent to address </span><strong>{{escrowAddress}}</strong><span> the Escrow address.</span></p>
-                <button class="btn propy-control button-big" (click)="sendPayment()">Send Payment</button>
+                <app-property-item-view [deedId]="deedId"></app-property-item-view>
+                <hr id="horizontal-line">
+                <div class="payment">
+                    <h5><span>Please select the currency in which you want to pay for this property:</span></h5>
+                    <form [formGroup]="contactAgentForm">
+                        <div class="form-check abc-radio abc-radio-info payment-radio" *ngFor="let payment of payments; let i = index">
+                            <input class="form-check-input" type="radio" formControlName="paymentId" [id]="payment.id"
+                                [value]="payment.id" [attr.disabled]="i >= 1 ? true : null">
+                            <label class="form-check-label" [for]="payment.id">
+                                        <span class="agent-wrapper">
+                                            <span class="name">{{payment.name}}</span>
+                                        </span>
+                                </label>
+                        </div>
+                        <div class="price">
+                            <span id="price"> {{deedDetails.price.value}} ETH</span>
+                        </div>
+                    </form>
+
+
+                    <div class="row payment-info">
+                        <div class="col-xs-12">
+                            <p><span>The ETH will be sent to address </span><span id="escrowAddress">{{escrowAddress}} <button class="btn btn-default" type="button"
+                                    ngxClipboard [cbContent]="escrowAddress"><i class="fa fa-clone"></i></button></span><span> the Escrow address.</span></p>
+                        </div>
+
+                    </div>
+                </div>
+
+
             </ng-template>
             <ng-template #isNotBuyer>
                 <p>Waiting for buyer to make the payment.</p>
