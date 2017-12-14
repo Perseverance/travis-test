@@ -45,7 +45,7 @@ export class DeedsService {
 	}
 
 
-	public async acceptInvite(deedId: string) {
+	public async acceptInvite(deedId: string): Promise<any> {
 		const data = {
 			deedId
 		};
@@ -54,7 +54,7 @@ export class DeedsService {
 		await result.data.data;
 	}
 
-	public async rejectInvite(deedId: string) {
+	public async rejectInvite(deedId: string): Promise<any> {
 		const data = {
 			deedId
 		};

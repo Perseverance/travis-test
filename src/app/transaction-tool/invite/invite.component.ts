@@ -1,3 +1,4 @@
+import { REVERSE_STEPS } from './../workflow/workflow.model';
 import { TransactionToolDocumentService } from './../transaction-tool-document.service';
 import { DeedDocumentType } from './../enums/deed-document-type.enum';
 import { Base64Service } from './../../shared/base64.service';
@@ -8,10 +9,10 @@ import { NotificationsService } from './../../shared/notifications/notifications
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { SmartContractAddress, Status } from './../../smart-contract-connection/smart-contract-connection.service';
+import { SmartContractAddress, Status, SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
@@ -60,6 +61,8 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		private formBuilder: FormBuilder,
 		private base64Service: Base64Service,
 		private documentService: TransactionToolDocumentService,
+		private smartContractConnection: SmartContractConnectionService,
+		private router: Router,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -184,7 +187,10 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.deedsService.acceptInvite(this.deedId);
+		const result = await this.deedsService.acceptInvite(this.deedId);
+		if (result.allPartiesAccepted) {
+			this.router.navigate(['transaction-tool', this.deedId]);
+		}
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
