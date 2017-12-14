@@ -9,13 +9,15 @@ export enum Status {
 	partiesInvited = 1,
 	partiesAccepted = 2,
 	purchaseAgreement = 3,
-	settlementStatement = 4,
+	titleReport = 4,
 	sellerDisclosures = 5,
-	closingDocuments = 6,
-	payment = 7,
-	receivedPayment = 8,
-	titleDeed = 9,
-	completed = 10
+	settlementStatement = 6,
+	affidavit = 7,
+	closingDocuments = 8,
+	payment = 9,
+	receivedPayment = 10,
+	titleDeed = 11,
+	completed = 12
 }
 
 export type EthereumAddress = string;
@@ -130,11 +132,6 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async getPurchaseAgreementSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
-		return '84561d5d6231ef613004e42fba2cf582f6a724ab';
-		// return 'hardcoded_request_id';
-	}
-
 	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
 		return true;
 	}
@@ -164,6 +161,10 @@ export class SmartContractConnectionService {
 		return false;
 	}
 
+	public async isTitleReportUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
+		return true;
+	}
+
 	public async isSettlementStatementUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
 		return true;
 	}
@@ -172,8 +173,8 @@ export class SmartContractConnectionService {
 		return true;
 	}
 
-	public async getSettlementStatementSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
-		return 'c99ef5deb31113223dea76972a9e7f2a5e17002d';
+	public async getTitleReportSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
+		return '';
 	}
 
 	public async signSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
@@ -181,14 +182,10 @@ export class SmartContractConnectionService {
 	}
 
 	public async hasBuyerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+		return false;
 	}
 
 	public async hasSellerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBrokerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
 		return true;
 	}
 
@@ -198,10 +195,6 @@ export class SmartContractConnectionService {
 
 	public async markSellerDisclosuresUploaded(sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
-	}
-
-	public async getSellerDisclosuresSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
-		return '3002444ad02dbfa4df95a32bc009c5a809d44f09';
 	}
 
 	public async signSellerDisclosures(deedContractAddress: SmartContractAddress,
@@ -227,10 +220,6 @@ export class SmartContractConnectionService {
 
 	public async markClosingDocumentsUploaded(closingDocumentsSignatureRequestId: string): Promise<boolean> {
 		return true;
-	}
-
-	public async getClosingDocumentsSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
-		return 'hardcoded_request_id';
 	}
 
 	public async signClosingDocuments(deedContractAddress: SmartContractAddress,

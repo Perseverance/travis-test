@@ -18,10 +18,10 @@
 </ng-template>
 
 <ng-template #noPreviewLink>
-	<div class="row" *ngIf="userIsEscrow; then isEscrow; else isNotEscrow">
+	<div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
 	</div>
 
-	<ng-template #isEscrow>
+	<ng-template #isTitleCompany>
 		<div class="col-xs-12 text-center">
 			<app-upload-document [uploadTitle]="settlementTitle"
 								 [uploadSubtitle]="uploadSettlementSubtitle"
@@ -29,7 +29,7 @@
 		</div>
 	</ng-template>
 
-	<ng-template #isNotEscrow>
+	<ng-template #isNotTitleCompany>
 		<div class="col-xs-12 text-center">
 			<h5>{{waitingTitle}}</h5>
 		</div>

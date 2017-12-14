@@ -1,3 +1,84 @@
-<p>
-  settlement-statement works!
-</p>
+<div *ngIf="userIsBuyer || userIsBuyerBroker || userIsTitleCompany">
+	<div *ngIf="previewBuyerLink; then buyerHasPreviewLink; else buyerNoPreviewLink">
+	</div>
+</div>
+<div *ngIf="userIsSeller || userIsSellerBroker || userIsTitleCompany">
+	<div *ngIf="previewSellerLink; then sellerHasPreviewLink; else sellerNoPreviewLink">
+	</div>
+</div>
+
+<ng-template #buyerHasPreviewLink>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<app-document-preview [previewTitle]="settlementTitle" [previewSubtitle]="uploadSettlementBuyerSubtitle"
+								  [previewLink]="previewBuyerLink"></app-document-preview>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<app-sign-document [hasBuyerSigned]="hasBuyerSigned"
+							   [hasSellerSigned]="hasSellerSigned"
+							   [showSignButton]="shouldShowSignButton()"
+							   [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
+							   (onSignDocument)="signBuyerDocument()"></app-sign-document>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #buyerNoPreviewLink>
+	<div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
+	</div>
+
+	<ng-template #isTitleCompany>
+		<div class="col-xs-12 text-center">
+			<app-upload-document [uploadTitle]="settlementTitle"
+								 [uploadSubtitle]="uploadSettlementBuyerSubtitle"
+								 (onUploadDocumentApplied)="uploadBuyerDocument($event)"></app-upload-document>
+		</div>
+	</ng-template>
+
+	<ng-template #isNotTitleCompany>
+		<div class="col-xs-12 text-center">
+			<h5>Waiting for title company user to upload purchase agreement</h5>
+		</div>
+	</ng-template>
+
+</ng-template>
+
+<ng-template #sellerHasPreviewLink>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<app-document-preview [previewTitle]="settlementTitle" [previewSubtitle]="uploadSettlementSellerSubtitle"
+								  [previewLink]="previewSellerLink"></app-document-preview>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<app-sign-document [hasBuyerSigned]="hasBuyerSigned"
+							   [hasSellerSigned]="hasSellerSigned"
+							   [showSignButton]="shouldShowSignButton()"
+							   [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
+							   (onSignDocument)="signSellerDocument()"></app-sign-document>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #sellerNoPreviewLink>
+	<div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
+	</div>
+
+	<ng-template #isTitleCompany>
+		<div class="col-xs-12 text-center">
+			<app-upload-document [uploadTitle]="settlementTitle"
+								 [uploadSubtitle]="uploadSettlementSellerSubtitle"
+								 (onUploadDocumentApplied)="uploadSellerDocument($event)"></app-upload-document>
+		</div>
+	</ng-template>
+
+	<ng-template #isNotTitleCompany>
+		<div class="col-xs-12 text-center">
+			<h5>Waiting for title company user to upload purchase agreement</h5>
+		</div>
+	</ng-template>
+
+</ng-template>

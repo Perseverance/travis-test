@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
 import {HelloSignService} from '../../shared/hello-sign.service';
 import {DeedsService} from '../../shared/deeds.service';
+import {Base64Service} from '../../shared/base64.service';
 
 declare const HelloSign;
 
@@ -41,7 +42,8 @@ export class PurchaseAgreementStepComponent implements OnInit {
 				private documentService: TransactionToolDocumentService,
 				private smartContractService: SmartContractConnectionService,
 				private helloSignService: HelloSignService,
-				private deedsService: DeedsService) {
+				private deedsService: DeedsService,
+				private base64Service: Base64Service) {
 	}
 
 	async ngOnInit() {
@@ -56,14 +58,25 @@ export class PurchaseAgreementStepComponent implements OnInit {
 			if (!await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
 				return;
 			}
-			await self.setupDocumentPreview();
+			await self.setupDocumentPreview(deedAddress);
 			await self.getPurchaseAgreementSigners();
 		});
 	}
 
-	private async setupDocumentPreview() {
-		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
-		this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
+	private async setupDocumentPreview(deedId: string) {
+		const deed = await this.deedsService.getDeedDetails(deedId);
+		const signatureRequestId = this.getSignatureRequestId(deed.documents);
+		if (signatureRequestId) {
+			this.previewLink = await this.documentService.getPreviewDocumentLink(signatureRequestId);
+		}
+	}
+
+	private getSignatureRequestId(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.PurchaseAgreement) {
+				return doc.uniqueId;
+			}
+		}
 	}
 
 	public async uploadDocument(event: any) {
@@ -72,50 +85,22 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		if (!this.selectedDocument) {
 			return;
 		}
-		const base64 = await this.convertToBase64(this.selectedDocument);
+		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedAddress, base64);
 		this.previewLink = response.downloadLink;
 	}
 
-	public async convertToBase64(document): Promise<string> {
-		const self = this;
-		const base64 = await (new Promise<string>((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onloadend = function () {
-				const base64dataWithHeaders = reader.result;
-
-				// The reader normally adds something like this before the base64 - 'data:application/pdf;base64,'
-				// it needs to be removed
-				const base64dataWithoutHeaders = self.removeBase64Headers(base64dataWithHeaders);
-				resolve(base64dataWithoutHeaders);
-			};
-
-			reader.readAsDataURL(document);
-		}));
-		return base64;
-	}
-
-	private removeBase64Headers(base64dataWithHeaders: string) {
-		const base64Headers = 'base64,';
-		const headerIndex = base64dataWithHeaders.indexOf(base64Headers);
-		if (headerIndex === -1) {
-			// Headers were not found, probably good to go
-			return base64dataWithHeaders;
-		}
-
-		const base64DataStartsAt = headerIndex + base64Headers.length;
-		return base64dataWithHeaders.substring(base64DataStartsAt);
-	}
 
 	public async signDocument() {
-		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
+		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+		const requestSignatureId = this.getSignatureRequestId(deed.documents);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
-				await this.setupDocumentPreview();
+				await this.setupDocumentPreview(this.deedAddress);
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}

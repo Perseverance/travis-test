@@ -19,8 +19,9 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.partiesInvited}`] = STEPS['invite'];
 		this.statusToStepMap[`${Status.partiesAccepted}`] = STEPS['purchase-agreement'];
 		this.statusToStepMap[`${Status.purchaseAgreement}`] = STEPS['title-report'];
-		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['seller-disclosures'];
-		this.statusToStepMap[`${Status.sellerDisclosures}`] = STEPS['closing-documents'];
+		this.statusToStepMap[`${Status.titleReport}`] = STEPS['seller-disclosures'];
+		this.statusToStepMap[`${Status.sellerDisclosures}`] = STEPS['settlement-statement'];
+		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['closing-documents']; // ToDo: add Affidavit step
 		this.statusToStepMap[`${Status.closingDocuments}`] = STEPS['payment'];
 		this.statusToStepMap[`${Status.payment}`] = STEPS['payment']; // TODO fix
 	}

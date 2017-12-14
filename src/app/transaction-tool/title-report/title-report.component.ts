@@ -29,6 +29,7 @@ export class TitleReportComponent implements OnInit {
 	public userInfo: any;
 	public userIsBuyer: boolean;
 	public userIsSeller: boolean;
+	public userIsTitleCompany: boolean;
 	public selectedDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
@@ -53,17 +54,28 @@ export class TitleReportComponent implements OnInit {
 			}
 			self.deedAddress = deedAddress;
 			await self.mapCurrentUserToRole(deedAddress);
-			if (!await self.smartContractService.isSettlementStatementUploaded(deedAddress)) {
+			if (!await self.smartContractService.isTitleReportUploaded(deedAddress)) {
 				return;
 			}
-			await self.setupDocumentPreview();
-			await self.getSettlementStatementSigners();
+			await self.setupDocumentPreview(deedAddress);
+			await self.getTitleReportSigners();
 		});
 	}
 
-	private async setupDocumentPreview() {
-		const requestSignatureId = await this.smartContractService.getSettlementStatementSignatureRequestId(this.deedAddress);
-		this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
+	private async setupDocumentPreview(deedId: string) {
+		const deed = await this.deedsService.getDeedDetails(deedId);
+		const signatureRequestId = this.getSignatureRequestId(deed.documents);
+		if (signatureRequestId) {
+			this.previewLink = await this.documentService.getPreviewDocumentLink(signatureRequestId);
+		}
+	}
+
+	private getSignatureRequestId(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.TitleReport) {
+				return doc.uniqueId;
+			}
+		}
 	}
 
 	public async uploadDocument(event: any) {
@@ -79,19 +91,20 @@ export class TitleReportComponent implements OnInit {
 
 
 	public async signDocument() {
-		const requestSignatureId = await this.smartContractService.getSettlementStatementSignatureRequestId(this.deedAddress);
+		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+		const requestSignatureId = this.getSignatureRequestId(deed.documents);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.smartContractService.signSellerDisclosures(this.deedAddress, requestSignatureId);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
-				await this.setupDocumentPreview();
+				await this.setupDocumentPreview(this.deedAddress);
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
 
-	public async getSettlementStatementSigners() {
+	public async getTitleReportSigners() {
 		this.hasBuyerSigned = await this.smartContractService.hasBuyerSignedTitleReport(this.deedAddress);
 		this.hasSellerSigned = await this.smartContractService.hasSellerSignedTitleReport(this.deedAddress);
 	}
@@ -105,5 +118,6 @@ export class TitleReportComponent implements OnInit {
 		const deed = await this.deedsService.getDeedDetails(deedAddress);
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
+		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
 	}
 }
