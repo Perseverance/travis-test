@@ -68,8 +68,12 @@ export class SmartContractConnectionService {
 			funcData,
 		);
 
-		const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
-		return result;
+
+
+		return signedData;
+
+		// const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
+		// return result;
 	}
 
 	public async markSellerInvitationSent(deedContractAddress: SmartContractAddress): Promise<boolean> {
