@@ -9,7 +9,6 @@
             <h4>Waiting for all parties to accept</h4>
             <hr>
             <div class="col-xs-12">
-                {{ disclosuresLink }}
                 <div *ngIf="disclosuresLink;then previewLink; else noPreviewLink;"></div>
             </div>
         </div>
@@ -97,7 +96,7 @@
         </ng-template>
         <hr>
         <div class="col-xs-12">
-            <div *ngIf="previewLink;then previewLink; else noPreviewLink;"></div>
+            <div *ngIf="disclosuresLink;then previewLink; else noPreviewLink;"></div>
         </div>
         <hr>
         <div class="col-xs-12">
@@ -105,7 +104,7 @@
         </div>
     </ng-template>
     <ng-template #previewLink>
-        <app-document-preview previewTitle="Disclosures" previewLink="{{ previewLink | imageEnvPrefix }}"></app-document-preview>
+        <app-document-preview previewTitle="Disclosures" previewLink="{{ disclosuresLink }}"></app-document-preview>
     </ng-template>
     <ng-template #noPreviewLink>
         <app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"

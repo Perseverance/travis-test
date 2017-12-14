@@ -104,6 +104,15 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		this.hasTitleCompanyResponded = (deed.titleCompanyStatus > InvitationStatus.Invited);
 		this.arePartiesInvited = (deed.status >= Status.partiesInvited);
 		this.userRole = deed.currentUserRole;
+		this.disclosuresLink = this.getPreviewLink(deed.documents);
+	}
+
+	private getPreviewLink(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.SellerDisclosures) {
+				return doc.uniqueId;
+			}
+		}
 	}
 
 	ngOnDestroy() {
@@ -138,7 +147,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
-		// this.previewLink = response.downloadLink;
+		this.disclosuresLink = response.downloadLink;
 	}
 
 	// TODO change message
