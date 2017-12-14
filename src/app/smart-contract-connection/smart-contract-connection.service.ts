@@ -46,7 +46,7 @@ export class SmartContractConnectionService {
 		return (this.publicKey !== undefined && this.privateKey !== undefined);
 	}
 
-	public async testSignTransaction() {
+	public async testSignTransaction(): Promise<any> {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
@@ -66,9 +66,8 @@ export class SmartContractConnectionService {
 			funcData,
 		);
 
-		console.log(signedData);
 		const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
-		console.log(result);
+		return result;
 	}
 
 	public async markSellerInvitationSent(deedContractAddress: SmartContractAddress): Promise<boolean> {
