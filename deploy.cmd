@@ -5,8 +5,10 @@ echo Handling Propy frontend deployment.
 IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   pushd "%DEPLOYMENT_SOURCE%"
   call npm install npm@latest -g
-  call npm install --no-optional
+  call npm --add-python-to-path='true' --debug install --global windows-build-tools
+  call npm cache verify
   call npm cache clean --force
+  call npm install --no-optional
   call npm rebuild node-sass
   
   IF NOT DEFINED IsProdEnvironment (
