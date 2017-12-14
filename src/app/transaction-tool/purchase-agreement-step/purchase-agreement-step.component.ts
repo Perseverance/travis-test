@@ -58,15 +58,21 @@ export class PurchaseAgreementStepComponent implements OnInit {
 			if (!await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
 				return;
 			}
-			await self.setupDocumentPreview();
+			await self.setupDocumentPreview(deedAddress);
 			await self.getPurchaseAgreementSigners();
 		});
 	}
 
-	private async setupDocumentPreview() {
-		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
-		if (requestSignatureId) {
-			this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
+	private async setupDocumentPreview(deedId: string) {
+		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.previewLink = this.getPreviewLink(deed.documents);
+	}
+
+	private getPreviewLink(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.PurchaseAgreement) {
+				return doc.uniqueId;
+			}
 		}
 	}
 
@@ -80,7 +86,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedAddress, base64);
 		this.previewLink = response.downloadLink;
 	}
-	
+
 
 	public async signDocument() {
 		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
@@ -90,7 +96,7 @@ export class PurchaseAgreementStepComponent implements OnInit {
 			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
-				await this.setupDocumentPreview();
+				await this.setupDocumentPreview(this.deedAddress);
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}

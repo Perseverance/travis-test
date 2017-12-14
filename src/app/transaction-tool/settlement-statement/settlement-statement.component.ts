@@ -8,6 +8,7 @@ import {HelloSignService} from '../../shared/hello-sign.service';
 import {DeedsService} from '../../shared/deeds.service';
 import {Observable} from 'rxjs/Observable';
 import {UserRoleEnum} from '../enums/user-role.enum';
+import {Base64Service} from '../../shared/base64.service';
 
 declare const HelloSign;
 
@@ -40,6 +41,7 @@ export class SettlementStatementComponent implements OnInit {
 				private documentService: TransactionToolDocumentService,
 				private smartContractService: SmartContractConnectionService,
 				private helloSignService: HelloSignService,
+				private base64Service: Base64Service,
 				private deedsService: DeedsService) {
 	}
 
@@ -55,20 +57,30 @@ export class SettlementStatementComponent implements OnInit {
 			if (!await self.smartContractService.isSettlementStatementUploaded(deedAddress)) {
 				return;
 			}
-			await self.setupDocumentPreview();
+			await self.setupDocumentPreview(deedAddress);
 			await self.getSettlementStatementSigners();
 		});
 	}
 
-	private async setupDocumentPreview() {
-		const buyerRequestSignatureId = await this.smartContractService.getSettlementStatementBuyerSignatureRequestId(this.deedAddress);
-		if (buyerRequestSignatureId) {
-			this.previewBuyerLink = await this.documentService.getPreviewDocumentLink(buyerRequestSignatureId);
-		}
+	private async setupDocumentPreview(deedId: string) {
+		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.previewBuyerLink = this.getBuyerPreviewLink(deed.documents);
+		this.previewSellerLink = this.getSellerPreviewLink(deed.documents);
+	}
 
-		const sellerRequestSignatureId = await this.smartContractService.getSettlementStatementSellerSignatureRequestId(this.deedAddress);
-		if (sellerRequestSignatureId) {
-			this.previewSellerLink = await this.documentService.getPreviewDocumentLink(sellerRequestSignatureId);
+	private getBuyerPreviewLink(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.BuyerSettlementStatement) {
+				return doc.uniqueId;
+			}
+		}
+	}
+
+	private getSellerPreviewLink(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.SellerSettlementStatement) {
+				return doc.uniqueId;
+			}
 		}
 	}
 
@@ -78,7 +90,7 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedSellerDocument) {
 			return;
 		}
-		const base64 = await this.convertToBase64(this.selectedSellerDocument);
+		const base64 = await this.base64Service.convertFileToBase64(this.selectedSellerDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerSettlementStatement, this.deedAddress, base64);
 		this.previewBuyerLink = response.downloadLink;
 	}
@@ -89,39 +101,9 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedBuyerDocument) {
 			return;
 		}
-		const base64 = await this.convertToBase64(this.selectedBuyerDocument);
+		const base64 = await this.base64Service.convertFileToBase64(this.selectedBuyerDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.BuyerSettlementStatement, this.deedAddress, base64);
 		this.previewBuyerLink = response.downloadLink;
-	}
-
-	public async convertToBase64(document): Promise<string> {
-		const self = this;
-		const base64 = await (new Promise<string>((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onloadend = function () {
-				const base64dataWithHeaders = reader.result;
-
-				// The reader normally adds something like this before the base64 - 'data:application/pdf;base64,'
-				// it needs to be removed
-				const base64dataWithoutHeaders = self.removeBase64Headers(base64dataWithHeaders);
-				resolve(base64dataWithoutHeaders);
-			};
-
-			reader.readAsDataURL(document);
-		}));
-		return base64;
-	}
-
-	private removeBase64Headers(base64dataWithHeaders: string) {
-		const base64Headers = 'base64,';
-		const headerIndex = base64dataWithHeaders.indexOf(base64Headers);
-		if (headerIndex === -1) {
-			// Headers were not found, probably good to go
-			return base64dataWithHeaders;
-		}
-
-		const base64DataStartsAt = headerIndex + base64Headers.length;
-		return base64dataWithHeaders.substring(base64DataStartsAt);
 	}
 
 	public async signDocument() {
@@ -132,7 +114,7 @@ export class SettlementStatementComponent implements OnInit {
 			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
-				await this.setupDocumentPreview();
+				await this.setupDocumentPreview(this.deedAddress);
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}

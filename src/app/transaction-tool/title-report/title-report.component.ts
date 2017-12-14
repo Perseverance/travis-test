@@ -57,15 +57,21 @@ export class TitleReportComponent implements OnInit {
 			if (!await self.smartContractService.isTitleReportUploaded(deedAddress)) {
 				return;
 			}
-			await self.setupDocumentPreview();
+			await self.setupDocumentPreview(deedAddress);
 			await self.getTitleReportSigners();
 		});
 	}
 
-	private async setupDocumentPreview() {
-		const requestSignatureId = await this.smartContractService.getTitleReportSignatureRequestId(this.deedAddress);
-		if (requestSignatureId) {
-			this.previewLink = await this.documentService.getPreviewDocumentLink(requestSignatureId);
+	private async setupDocumentPreview(deedId: string) {
+		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.previewLink = this.getPreviewLink(deed.documents);
+	}
+
+	private getPreviewLink(documents: any[]) {
+		for (const doc of documents) {
+			if (doc.type === DeedDocumentType.TitleReport) {
+				return doc.uniqueId;
+			}
 		}
 	}
 
@@ -89,7 +95,7 @@ export class TitleReportComponent implements OnInit {
 			await this.smartContractService.signSellerDisclosures(this.deedAddress, requestSignatureId);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
-				await this.setupDocumentPreview();
+				await this.setupDocumentPreview(this.deedAddress);
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
