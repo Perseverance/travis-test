@@ -26,6 +26,9 @@
                     <a routerLink="/list-property" class="list-property text-capitalize">{{'list-property.heading' |
 						translate }}</a>
                 </li>
+                <li *ngIf="isLanding">
+                    <a target="_blank" href="https://tokensale.propy.com/" class="list-property text-capitalize">{{ 'common.label.about' | translate }} PRO Token</a>
+                </li>
                 <li class="dropdown languages-dropdown">
                     <a href="#" class="dropdown-toggle language-selector" data-toggle="dropdown" role="button" aria-haspopup="true" ngClass="{{translate.currentLang}}"
                         aria-expanded="false">{{translate.currentLang |
