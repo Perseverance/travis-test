@@ -1,3 +1,4 @@
+import { REVERSE_STEPS } from './../workflow/workflow.model';
 import { TransactionToolDocumentService } from './../transaction-tool-document.service';
 import { DeedDocumentType } from './../enums/deed-document-type.enum';
 import { Base64Service } from './../../shared/base64.service';
@@ -8,7 +9,7 @@ import { NotificationsService } from './../../shared/notifications/notifications
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { SmartContractAddress, Status, SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
@@ -61,6 +62,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		private base64Service: Base64Service,
 		private documentService: TransactionToolDocumentService,
 		private smartContractConnection: SmartContractConnectionService,
+		private router: Router,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -106,7 +108,6 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		this.arePartiesInvited = (deed.status >= Status.partiesInvited);
 		this.userRole = deed.currentUserRole;
 		this.disclosuresLink = this.getPreviewLink(deed.documents);
-		this.smartContractConnection.testSignTransaction();
 	}
 
 	private getPreviewLink(documents: any[]) {
@@ -188,7 +189,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		});
 		const result = await this.deedsService.acceptInvite(this.deedId);
 		if (result.allPartiesAccepted) {
-			// TODO move to the next status
+			this.router.navigate(['transaction-tool', this.deedId]);
 		}
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
