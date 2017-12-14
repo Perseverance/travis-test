@@ -3,6 +3,7 @@ import { EthereumAddress, SmartContractAddress } from './smart-contract-connecti
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { TestContract } from '../web3/contracts';
+import { BaseContract } from '../web3/BaseContract';
 
 export enum Status {
 	reserve = 0,
@@ -29,11 +30,11 @@ export class SmartContractConnectionService {
 	private publicKey: string;
 	private privateKey: string;
 
-	private testContract: any;
+	private baseDeedContract: any;
 
 	constructor(private web3Service: Web3Service) {
-		const contractAbi = TestContract.abi;
-		this.testContract = new web3Service.web3.eth.Contract(
+		const contractAbi = BaseContract.abi;
+		this.baseDeedContract = new web3Service.web3.eth.Contract(
 			contractAbi,
 			environment.contractAddress,
 		);
@@ -55,13 +56,13 @@ export class SmartContractConnectionService {
 		const callOptions = {
 			from: this.publicKey,
 		};
-		const setIntMethod = this.testContract.methods.setInt(1, 2);
+		const setIntMethod = this.baseDeedContract.methods.approve();
 		const estimatedGas = await setIntMethod.estimateGas();
 		const doubleGas = estimatedGas * 2;
 
 		const funcData = setIntMethod.encodeABI(callOptions);
 		const signedData = await this.web3Service.signTransaction(
-			this.testContract._address,
+			this.baseDeedContract._address,
 			this.publicKey,
 			this.privateKey,
 			doubleGas,
