@@ -1,5 +1,8 @@
-import {EthereumAddress, SmartContractAddress} from './smart-contract-connection.service';
-import {Injectable} from '@angular/core';
+import { Web3Service } from './../web3/web3.service';
+import { EthereumAddress, SmartContractAddress } from './smart-contract-connection.service';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { TestContract } from '../web3/contracts';
 
 export enum Status {
 	reserve = 0,
@@ -21,7 +24,51 @@ export type SmartContractAddress = string;
 @Injectable()
 export class SmartContractConnectionService {
 
-	constructor() {
+	private publicKey: string;
+	private privateKey: string;
+
+	private testContract: any;
+
+	constructor(private web3Service: Web3Service) {
+		const contractAbi = TestContract.abi;
+		this.testContract = new web3Service.web3.eth.Contract(
+			contractAbi,
+			environment.contractAddress,
+		);
+	}
+
+	public saveCredentials(_publicKey: string, _privateKey: string) {
+		this.publicKey = _publicKey;
+		this.privateKey = _privateKey;
+	}
+
+	private get credentialsSet(): boolean {
+		return (this.publicKey !== undefined && this.privateKey !== undefined);
+	}
+
+	public async testSignTransaction() {
+		if (!this.credentialsSet) {
+			throw new Error('No credentials');
+		}
+		const callOptions = {
+			from: this.publicKey,
+		};
+		const setIntMethod = this.testContract.methods.setInt(1, 2);
+		const estimatedGas = await setIntMethod.estimateGas();
+		const doubleGas = estimatedGas * 2;
+
+		const funcData = setIntMethod.encodeABI(callOptions);
+		const signedData = await this.web3Service.signTransaction(
+			this.testContract._address,
+			this.publicKey,
+			this.privateKey,
+			doubleGas,
+			funcData,
+		);
+
+		console.log(signedData);
+		const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
+		console.log(result);
 	}
 
 	public async markSellerInvitationSent(deedContractAddress: SmartContractAddress): Promise<boolean> {
@@ -102,7 +149,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signPurchaseAgreement(deedContractAddress: SmartContractAddress,
-									   purchaseAgreementSignatureRequestId: string): Promise<boolean> {
+		purchaseAgreementSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -155,7 +202,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signSellerDisclosures(deedContractAddress: SmartContractAddress,
-									   sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
+		sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 
@@ -184,7 +231,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async signClosingDocuments(deedContractAddress: SmartContractAddress,
-									  closingDocumentsSignatureRequestId: string): Promise<boolean> {
+		closingDocumentsSignatureRequestId: string): Promise<boolean> {
 		return true;
 	}
 

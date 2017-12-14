@@ -11,7 +11,7 @@ import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decorat
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { SmartContractAddress, Status } from './../../smart-contract-connection/smart-contract-connection.service';
+import { SmartContractAddress, Status, SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
@@ -60,6 +60,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		private formBuilder: FormBuilder,
 		private base64Service: Base64Service,
 		private documentService: TransactionToolDocumentService,
+		private smartContractConnection: SmartContractConnectionService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -98,7 +99,6 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	private async setupDeedData(deedId) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		console.log(deed);
 		this.hasBuyerBrokerResponded = (deed.buyerBrokerStatus > InvitationStatus.Invited);
 		this.hasBuyerResponded = (deed.buyerStatus > InvitationStatus.Invited);
 		this.hasSellerResponded = (deed.sellerStatus > InvitationStatus.Invited);
@@ -106,6 +106,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		this.arePartiesInvited = (deed.status >= Status.partiesInvited);
 		this.userRole = deed.currentUserRole;
 		this.disclosuresLink = this.getPreviewLink(deed.documents);
+		this.smartContractConnection.testSignTransaction();
 	}
 
 	private getPreviewLink(documents: any[]) {
