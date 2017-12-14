@@ -5,6 +5,7 @@ echo Handling Propy frontend deployment.
 IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   pushd "%DEPLOYMENT_SOURCE%"
   call npm install npm@latest -g
+  call npm set registry https://registry.npmjs.org/
   call npm --add-python-to-path='true' --debug install --global windows-build-tools
   call npm cache verify
   call npm cache clean --force
