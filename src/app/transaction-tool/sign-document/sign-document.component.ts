@@ -39,7 +39,6 @@ export class SignDocumentComponent implements OnInit, OnDestroy {
 			const deed = await self.deedsService.getDeedDetails(deedId);
 			self.currentUserRole = deed.currentUserRole;
 		});
-		console.log(this.documentType);
 	}
 
 	public onSignDocumentClick() {
