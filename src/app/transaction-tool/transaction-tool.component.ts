@@ -125,8 +125,6 @@ export class TransactionToolComponent implements OnInit {
 	public async getDeedStatus(deedId: string): Promise<number> {
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.smartContractService.saveCredentials(deed.CurrentUserPublicKey, deed.CurrentUserPrivateKey);
-		this.smartContractService.saveCredentials(
-			'0x456d82fb5308f60715985ec63f835a9f2f82daa9', 'f3f52c780b9a0489b9e2283c14f29cd2f9a6723bf281a6863fbd2a3571bb219b');
 		return deed.status;
 	}
 
