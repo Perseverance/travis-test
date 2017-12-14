@@ -11,27 +11,19 @@
 		<div class="col-xs-12 text-center">
 			<app-sign-document [hasBuyerSigned]="hasBuyerSigned"
 							   [hasSellerSigned]="hasSellerSigned"
+							   [hasBuyerBrokerSigned]="hasBuyerBrokerSigned"
+							   [hasSellerBrokerSigned]="hasSellerBrokerSigned"
 							   [showSignButton]="shouldShowSignButton()"
+							   [documentType]="deedDocumentTypeEnum.SignedSellerDisclosures"
 							   (onSignDocument)="signDocument()"></app-sign-document>
 		</div>
 	</div>
 </ng-template>
 
 <ng-template #noPreviewLink>
-	<div class="row" *ngIf="userIsSeller; then isSeller; else isNotSeller">
-	</div>
-
-	<ng-template #isSeller>
-		<div class="col-xs-12 text-center">
-			<app-upload-document [uploadTitle]="disclosuresTitle"
-								 [uploadSubtitle]="uploadDisclosuresSubtitle"
-								 (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-		</div>
-	</ng-template>
-
-	<ng-template #isNotSeller>
+	<div class="row">
 		<div class="col-xs-12 text-center">
 			<h5>{{waitingTitle}}</h5>
 		</div>
-	</ng-template>
+	</div>
 </ng-template>

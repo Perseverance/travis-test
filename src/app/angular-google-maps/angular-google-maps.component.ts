@@ -64,7 +64,6 @@ export class AngularGoogleMapsComponent implements OnInit {
 	private async moveToParamsLocation(lat: number, lon: number, locationName?: string, zoom?: number) {
 		this.latitude = lat;
 		this.longitude = lon;
-		console.log(locationName);
 		this.locationName = locationName !== 'undefined' ? locationName : '';
 		this.zoom = zoom ? zoom : this.zoom;
 	}
