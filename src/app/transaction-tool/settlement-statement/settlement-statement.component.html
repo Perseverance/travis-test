@@ -20,7 +20,7 @@
 							   [hasSellerSigned]="hasSellerSigned"
 							   [showSignButton]="shouldShowSignButton()"
 							   [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
-							   (onSignDocument)="signDocument()"></app-sign-document>
+							   (onSignDocument)="signBuyerDocument()"></app-sign-document>
 		</div>
 	</div>
 </ng-template>
@@ -58,7 +58,7 @@
 							   [hasSellerSigned]="hasSellerSigned"
 							   [showSignButton]="shouldShowSignButton()"
 							   [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
-							   (onSignDocument)="signDocument()"></app-sign-document>
+							   (onSignDocument)="signSellerDocument()"></app-sign-document>
 		</div>
 	</div>
 </ng-template>

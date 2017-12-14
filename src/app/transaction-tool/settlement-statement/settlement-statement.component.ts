@@ -64,11 +64,17 @@ export class SettlementStatementComponent implements OnInit {
 
 	private async setupDocumentPreview(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.previewBuyerLink = this.getBuyerPreviewLink(deed.documents);
-		this.previewSellerLink = this.getSellerPreviewLink(deed.documents);
+		const buyerSignatureRequestId = this.getBuyerSignatureRequestId(deed.documents);
+		if (buyerSignatureRequestId) {
+			this.previewBuyerLink = await this.documentService.getPreviewDocumentLink(buyerSignatureRequestId);
+		}
+		const sellerSignatureRequestId = this.getSellerSignatureRequestId(deed.documents);
+		if (sellerSignatureRequestId) {
+			this.previewSellerLink = await this.documentService.getPreviewDocumentLink(sellerSignatureRequestId);
+		}
 	}
 
-	private getBuyerPreviewLink(documents: any[]) {
+	private getBuyerSignatureRequestId(documents: any[]) {
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.BuyerSettlementStatement) {
 				return doc.uniqueId;
@@ -76,7 +82,7 @@ export class SettlementStatementComponent implements OnInit {
 		}
 	}
 
-	private getSellerPreviewLink(documents: any[]) {
+	private getSellerSignatureRequestId(documents: any[]) {
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.SellerSettlementStatement) {
 				return doc.uniqueId;
@@ -106,8 +112,23 @@ export class SettlementStatementComponent implements OnInit {
 		this.previewBuyerLink = response.downloadLink;
 	}
 
-	public async signDocument() {
-		const requestSignatureId = await this.smartContractService.getPurchaseAgreementSignatureRequestId(this.deedAddress);
+	public async signBuyerDocument() {
+		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+		const requestSignatureId = this.getBuyerSignatureRequestId(deed.documents);
+		const response = await this.documentService.getSignUrl(requestSignatureId);
+		const signingEvent = await this.helloSignService.signDocument(response);
+		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
+			setTimeout(async () => {
+				// Workaround: waiting HelloSign to update new signature
+				await this.setupDocumentPreview(this.deedAddress);
+			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+		}
+	}
+
+	public async signSellerDocument() {
+		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+		const requestSignatureId = this.getSellerSignatureRequestId(deed.documents);
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
