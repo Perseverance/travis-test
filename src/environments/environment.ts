@@ -44,5 +44,8 @@ export const environment = {
 		agentId: '5a255409495fda1268997297'
 	},
 	contractAddress: '0xf2b52ed369c45163fb1c4805d4829af853e08daa',
-	web3Provider: 'http://localhost:8545'
+	// web3Provider: 'http://localhost:8545',
+	infuraKey: 'Up5uvBHSCSqtOmnlhL87',
+	infuraLink: 'https://ropsten.infura.io/' + this.infuraKey,
+	web3Provider: this.infuraLink
 };
