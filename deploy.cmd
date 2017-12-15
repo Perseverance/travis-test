@@ -7,9 +7,6 @@ IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   call node --version
   call npm install npm@latest -g
   call npm set registry https://registry.npmjs.org/
-  REM call npm --add-python-to-path='true' --debug install --global windows-build-tools
-  call npm config set python python2.7 --global
-  call npm config set python D:\Python27\python.exe --global
   call npm cache verify
   call npm install --no-optional
   call npm rebuild node-sass

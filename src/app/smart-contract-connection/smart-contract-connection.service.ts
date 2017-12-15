@@ -20,6 +20,20 @@ export enum Status {
 	completed = 12
 }
 
+export enum SMART_CONTRACT_DOCUMENT_TYPES {
+	PURCHASE_AGREEMENT = 1,
+	TITLE_REPORT = 2,
+	SELLER_DISCLOSURES = 3,
+	PAYMENT = 4,
+	AFFIDAVIT = 5,
+	OWNERSHIP_TRANSFER = 6
+}
+
+export enum SMART_CONTRACT_STATUSES {
+	STATUS_SUCCESS = 1,
+	STATUS_FAIL = 2,
+}
+
 export type EthereumAddress = string;
 export type SmartContractAddress = string;
 
@@ -74,6 +88,54 @@ export class SmartContractConnectionService {
 
 		// const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
 		// return result;
+	}
+
+	public async recordPurchaseAgreement(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', document);
+	}
+
+	public async recordTitleReport(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', document);
+	}
+
+	public async recordSellerDisclosures(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', document);
+	}
+
+	public async recordAffidavit(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', document);
+	}
+
+	public async recordOwnershipTransfer(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'OWNERSHIP_TRANSFER', document);
+	}
+
+	private async recordDocument(docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, document: string) {
+		if (!this.credentialsSet) {
+			throw new Error('No credentials');
+		}
+		const callOptions = {
+			from: this.publicKey,
+		};
+		const deedActionMethod = this.baseDeedContract.methods.action(
+			docType,
+			docKey,
+			[document],
+			SMART_CONTRACT_STATUSES.STATUS_SUCCESS);
+		const estimatedGas = await deedActionMethod.estimateGas();
+		const doubleGas = estimatedGas * 2;
+
+		const funcData = deedActionMethod.encodeABI(callOptions);
+		const signedData = await this.web3Service.signTransaction(
+			this.baseDeedContract._address,
+			this.publicKey,
+			this.privateKey,
+			doubleGas,
+			funcData,
+		);
+
+		const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
+		return result;
 	}
 
 	public async markSellerInvitationSent(deedContractAddress: SmartContractAddress): Promise<boolean> {
