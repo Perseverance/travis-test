@@ -1,15 +1,15 @@
-import {HelloSignService} from './../../shared/hello-sign.service';
-import {DeedDocumentType} from './../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from './../enums/user-role.enum';
-import {SmartContractConnectionService} from './../../smart-contract-connection/smart-contract-connection.service';
-import {ActivatedRoute} from '@angular/router';
-import {TransactionToolDocumentService} from './../transaction-tool-document.service';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {Subscription} from 'rxjs/Subscription';
-import {Component, OnInit} from '@angular/core';
-import {Base64Service} from '../../shared/base64.service';
-import {DeedsService} from '../../shared/deeds.service';
+import { HelloSignService } from './../../shared/hello-sign.service';
+import { DeedDocumentType } from './../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
+import { ActivatedRoute } from '@angular/router';
+import { TransactionToolDocumentService } from './../transaction-tool-document.service';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
+import { Base64Service } from '../../shared/base64.service';
+import { DeedsService } from '../../shared/deeds.service';
 
 declare const HelloSign;
 
@@ -39,10 +39,10 @@ export class SellerDisclosuresStepComponent implements OnInit {
 	public hasSellerBrokerSigned: boolean;
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private deedsService: DeedsService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private deedsService: DeedsService) {
 	}
 
 	async ngOnInit() {
@@ -54,9 +54,6 @@ export class SellerDisclosuresStepComponent implements OnInit {
 			}
 			self.deedAddress = deedAddress;
 			await self.mapCurrentUserToRole(deedAddress);
-			if (!await self.smartContractService.isPurchaseAgreementUploaded(deedAddress)) {
-				return;
-			}
 			await self.setupDocumentPreview(deedAddress);
 			await self.getSellerDisclosuresSigners();
 		});
@@ -84,7 +81,6 @@ export class SellerDisclosuresStepComponent implements OnInit {
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			await this.smartContractService.signPurchaseAgreement(this.deedAddress, requestSignatureId);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
 				await this.setupDocumentPreview(this.deedAddress);

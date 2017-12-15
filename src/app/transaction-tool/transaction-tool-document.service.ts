@@ -20,7 +20,6 @@ export class TransactionToolDocumentService {
 		};
 
 		const response = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_DEED_DOCUMENT, params);
-		this.smartContractService.markPurchaseAgreementUploaded(response.data.data.requestSignatureId);
 		return response.data.data;
 	}
 

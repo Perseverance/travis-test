@@ -20,6 +20,20 @@ export enum Status {
 	completed = 12
 }
 
+export enum SMART_CONTRACT_DOCUMENT_TYPES {
+	PURCHASE_AGREEMENT = 1,
+	TITLE_REPORT = 2,
+	SELLER_DISCLOSURES = 3,
+	PAYMENT = 4,
+	AFFIDAVIT = 5,
+	OWNERSHIP_TRANSFER = 6
+}
+
+export enum SMART_CONTRACT_STATUSES {
+	STATUS_SUCCESS = 1,
+	STATUS_FAIL = 2,
+}
+
 export type EthereumAddress = string;
 export type SmartContractAddress = string;
 
@@ -76,191 +90,52 @@ export class SmartContractConnectionService {
 		// return result;
 	}
 
-	public async markSellerInvitationSent(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+	public async recordPurchaseAgreement(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', document);
 	}
 
-	public async markSellerAcceptedInvitation(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+	public async recordTitleReport(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', document);
 	}
 
-	public async markSellerRejectedInvitation(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+	public async recordSellerDisclosures(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', document);
 	}
 
-	public async isSellerInvited(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+	public async recordAffidavit(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', document);
 	}
 
-	public async markEscrowInvitationSent(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+	public async recordOwnershipTransfer(document: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'OWNERSHIP_TRANSFER', document);
 	}
 
-	public async markEscrowAcceptedInvitation(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
+	private async recordDocument(docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, document: string) {
+		if (!this.credentialsSet) {
+			throw new Error('No credentials');
+		}
+		const callOptions = {
+			from: this.publicKey,
+		};
+		const deedActionMethod = this.baseDeedContract.methods.action(
+			docType,
+			[docKey],
+			[document],
+			SMART_CONTRACT_STATUSES.STATUS_SUCCESS);
+		const estimatedGas = await deedActionMethod.estimateGas();
+		const doubleGas = estimatedGas * 2;
 
-	public async markEscrowRejectedInvitation(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
+		const funcData = deedActionMethod.encodeABI(callOptions);
+		const signedData = await this.web3Service.signTransaction(
+			this.baseDeedContract._address,
+			this.publicKey,
+			this.privateKey,
+			doubleGas,
+			funcData,
+		);
 
-	public async isEscrowInvited(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async getBuyerAddress(deedContractAddress: SmartContractAddress): Promise<EthereumAddress> {
-		return '0xCf2C2352A96dDf5d1978324346c46B58d867066c';
-	}
-
-	public async getBrokerAddress(deedContractAddress: SmartContractAddress): Promise<EthereumAddress> {
-		return '0xf720b4568A72DDAa1c1FcA43cB5d5dfa46edfdf3';
-	}
-
-	public async getSellerAddress(deedContractAddress: SmartContractAddress): Promise<EthereumAddress> {
-		return '0x252490Bbcf48C58c90F5489A2A5bA0B4cDC21947';
-	}
-
-	public async getEscrowAddress(deedContractAddress: SmartContractAddress): Promise<EthereumAddress> {
-		return '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625';
-	}
-
-	public async markPurchaseAgreementUploaded(purchaseAgreementSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
-	public async isPurchaseAgreementUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBuyerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasSellerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async hasBuyerBrokerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async hasSellerBrokerSignedPurchaseAgreement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async signPurchaseAgreement(deedContractAddress: SmartContractAddress,
-		purchaseAgreementSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBuyerSignedTitleReport(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasSellerSignedTitleReport(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async isTitleReportUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async isSettlementStatementUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async markSettlementStatementUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async getTitleReportSignatureRequestId(deedContractAddress: SmartContractAddress): Promise<string> {
-		return '';
-	}
-
-	public async signSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBuyerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async hasSellerSignedSettlementStatement(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async isSellerDisclosuresUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async markSellerDisclosuresUploaded(sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
-	public async signSellerDisclosures(deedContractAddress: SmartContractAddress,
-		sellerDisclosuresSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBuyerSignedSellerDisclosures(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async hasSellerSignedSellerDisclosures(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async hasBrokerSignedSellerDisclosures(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async isClosingDocumentsUploaded(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async markClosingDocumentsUploaded(closingDocumentsSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
-	public async signClosingDocuments(deedContractAddress: SmartContractAddress,
-		closingDocumentsSignatureRequestId: string): Promise<boolean> {
-		return true;
-	}
-
-	public async hasBuyerSignedClosingDocuments(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async hasSellerSignedClosingDocuments(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return false;
-	}
-
-	public async hasBrokerSignedClosingDocuments(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async hasEscrowSignedClosingDocuments(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async getDeedPrice(deedContractAddress: SmartContractAddress): Promise<number> {
-		return 200000;
-	}
-
-	public async sendPayment(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async markPaymentReceived(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async markTitleDeedReceived(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
-	}
-
-	public async markDeedAsClosed(deedContractAddress: SmartContractAddress): Promise<boolean> {
-		return true;
+		const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
+		return result;
 	}
 
 }
