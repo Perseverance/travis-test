@@ -1,9 +1,8 @@
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {Web3Service} from '../../web3/web3.service';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
@@ -36,9 +35,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	private paramsSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
-				// ,private web3Service: Web3Service
-				private route: ActivatedRoute,
-				private router: Router) {
+		private route: ActivatedRoute,
+		private router: Router) {
 	}
 
 	ngOnInit() {
@@ -99,7 +97,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		}
 
 		const currentPath = window.location.pathname;
-		this.router.navigate([currentPath], {queryParams: queryParams});
+		this.router.navigate([currentPath], { queryParams: queryParams });
 	}
 
 	private listenForWeb3Loaded() {

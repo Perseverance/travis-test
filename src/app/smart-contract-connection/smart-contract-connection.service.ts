@@ -1,9 +1,8 @@
-import { Web3Service } from './../web3/web3.service';
 import { EthereumAddress, SmartContractAddress } from './smart-contract-connection.service';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { TestContract } from '../web3/contracts';
-import { BaseContract } from '../web3/BaseContract';
+import { Web3Service } from '../web3-connection/web3-connection.service';
+import { BaseContract } from '../web3-connection/BaseContract';
 
 export enum Status {
 	reserve = 0,
