@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { DeedsService } from './../../shared/deeds.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { ActivatedRoute } from '@angular/router';
@@ -73,7 +74,7 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 			}
 			self.deedId = deedId;
 			self.deedDetails = await self.deedsService.getDeedDetails(deedId);
-			self.escrowAddress = await self.smartContractService.getEscrowAddress(deedId);
+			self.escrowAddress = environment.escrowAddress;
 			self.invitationDataLoaded = true;
 		});
 		this.paymentId.setValue(this.payments[0].id);
@@ -94,7 +95,6 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 			time: (new Date().getTime()),
 			timeout: 180000
 		});
-		await this.smartContractService.sendPayment(this.deedId);
 		this.notificationsService.pushSuccess({
 			title: 'Success',
 			message: '',
