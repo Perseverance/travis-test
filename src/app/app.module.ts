@@ -1,4 +1,3 @@
-import { Web3Module } from './web3/web3.module';
 import { MetaModule } from '@ngx-meta/core';
 import { SettingsModule } from './settings/settings.module';
 import { PropertiesModule } from './properties/properties.module';
@@ -18,6 +17,7 @@ import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/co
 import { IntercomModule, INTERCOM_DIRECTIVES } from 'ng2-intercom';
 import { PurchaseModule } from './purchase/purchase.module';
 import { TransactionToolComponent } from './transaction-tool/transaction-tool.component';
+import { Web3Module } from './web3-connection/web3-connection.module';
 
 export function metaFactory(): MetaLoader {
 	return new MetaStaticLoader({
