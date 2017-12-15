@@ -1,0 +1,26 @@
+<div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
+</div>
+<ng-template #hasPreviewLink>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<app-document-preview [previewTitle]="affidavitTitle" [previewSubtitle]="previewAffidavitSubtitle"
+								  [previewLink]="previewLink"></app-document-preview>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
+							   [showSignButton]="shouldShowSignButton()"
+							   [documentType]="deedDocumentTypeEnum.Affidavit"
+							   (onSignDocument)="signDocument()"></app-sign-document>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #noPreviewLink>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<h5>{{waitingTitle}}</h5>
+		</div>
+	</div>
+</ng-template>
