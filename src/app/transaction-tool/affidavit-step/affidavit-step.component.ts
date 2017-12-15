@@ -19,7 +19,7 @@ declare const HelloSign;
 })
 export class AffidavitStepComponent implements OnInit {
 
-	public waitingTitle = 'Waiting title company user to upload title report';
+	public waitingTitle = 'Awaiting affidavit generation';
 	public affidavitTitle = 'Affidavit';
 	public previewAffidavitSubtitle = 'Please review affidavit.';
 	public uploadAffidavitSubtitle = 'Please upload affidavit document:';
@@ -53,11 +53,7 @@ export class AffidavitStepComponent implements OnInit {
 			}
 			self.deedAddress = deedAddress;
 			await self.mapCurrentUserToRole(deedAddress);
-			if (!await self.smartContractService.isTitleReportUploaded(deedAddress)) {
-				return;
-			}
 			await self.setupDocumentPreview(deedAddress);
-			await self.getTitleReportSigners();
 		});
 	}
 
@@ -71,7 +67,7 @@ export class AffidavitStepComponent implements OnInit {
 
 	private getSignatureRequestId(documents: any[]) {
 		for (const doc of documents) {
-			if (doc.type === DeedDocumentType.TitleReport) {
+			if (doc.type === DeedDocumentType.Affidavit) {
 				return doc.uniqueId;
 			}
 		}
@@ -84,7 +80,7 @@ export class AffidavitStepComponent implements OnInit {
 			return;
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
-		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.TitleReport, this.deedAddress, base64);
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.Affidavit, this.deedAddress, base64);
 		this.previewLink = response.downloadLink;
 	}
 
@@ -103,11 +99,6 @@ export class AffidavitStepComponent implements OnInit {
 		}
 	}
 
-	public async getTitleReportSigners() {
-		this.hasBuyerSigned = await this.smartContractService.hasBuyerSignedTitleReport(this.deedAddress);
-		this.hasSellerSigned = await this.smartContractService.hasSellerSignedTitleReport(this.deedAddress);
-	}
-
 	public shouldShowSignButton(): boolean {
 		return (this.userIsBuyer && !this.hasBuyerSigned)
 			|| (this.userIsSeller && !this.hasSellerSigned);
@@ -115,6 +106,7 @@ export class AffidavitStepComponent implements OnInit {
 
 	private async mapCurrentUserToRole(deedAddress) {
 		const deed = await this.deedsService.getDeedDetails(deedAddress);
+		console.log(deed);
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);

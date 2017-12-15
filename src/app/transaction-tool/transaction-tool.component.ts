@@ -1,12 +1,12 @@
-import { SmartContractConnectionService } from './../smart-contract-connection/smart-contract-connection.service';
-import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MenuItem } from 'primeng/primeng';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Router, Params, UrlSegment, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
-import { DeedsService } from '../shared/deeds.service';
-import { Status } from '../smart-contract-connection/smart-contract-connection.service';
+import {SmartContractConnectionService} from './../smart-contract-connection/smart-contract-connection.service';
+import {REVERSE_STEPS, STEPS} from './workflow/workflow.model';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {MenuItem} from 'primeng/primeng';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router, Params, UrlSegment, NavigationEnd} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {DeedsService} from '../shared/deeds.service';
+import {Status} from '../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -22,7 +22,7 @@ export class TransactionToolComponent implements OnInit {
 	public addressRoute: string;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-		private deedsService: DeedsService, private smartContractService: SmartContractConnectionService) {
+				private deedsService: DeedsService, private smartContractService: SmartContractConnectionService) {
 		this.router.events
 			.filter(event => event instanceof NavigationEnd)
 			.subscribe((event: NavigationEnd) => {
@@ -81,16 +81,23 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Closing Documents',
+				label: 'Payment',
 				command: (event: any) => {
 					this.activeIndex = 6;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Payment',
+				label: 'Affidavit',
 				command: (event: any) => {
 					this.activeIndex = 7;
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
+				}
+			},
+			{
+				label: 'Closing Documents',
+				command: (event: any) => {
+					this.activeIndex = 8;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			}
@@ -141,10 +148,28 @@ export class TransactionToolComponent implements OnInit {
 				return 1;
 			}
 			case Status.partiesAccepted: {
-				return 1;
+				return 2;
 			}
 			case Status.purchaseAgreement: {
-				return 2;
+				return 3;
+			}
+			case Status.titleReport: {
+				return 4;
+			}
+			case Status.sellerDisclosures: {
+				return 5;
+			}
+			case Status.settlementStatement: {
+				return 6;
+			}
+			case Status.payment: {
+				return 7;
+			}
+			case Status.affidavit: {
+				return 8;
+			}
+			case Status.closingDocuments: {
+				return 9;
 			}
 			default: {
 				return 0;
