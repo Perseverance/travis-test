@@ -2,41 +2,37 @@
 </div>
 
 <ng-template #hasPreviewLink>
-	<div class="row">
-		<div class="col-xs-12 text-center">
-			<app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitle"
-								  [previewLink]="previewLink"></app-document-preview>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 text-center">
-			<app-sign-document [hasBuyerSigned]="hasBuyerSigned"
-							   [hasSellerSigned]="hasSellerSigned"
-							   [hasBuyerBrokerSigned]="hasBuyerBrokerSigned"
-							   [hasSellerBrokerSigned]="hasSellerBrokerSigned"
-							   [showSignButton]="shouldShowSignButton()"
-							   [documentType]="deedDocumentTypeEnum.PurchaseAgreement"
-							   (onSignDocument)="signDocument()"></app-sign-document>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitle"
+                [previewLink]="previewLink"></app-document-preview>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
+                [hasBuyerBrokerSigned]="hasBuyerBrokerSigned" [hasSellerBrokerSigned]="hasSellerBrokerSigned"
+                [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.PurchaseAgreement"
+                (onSignDocument)="signDocument()"></app-sign-document>
+        </div>
+    </div>
 </ng-template>
 
 <ng-template #noPreviewLink>
-	<div class="row" *ngIf="userIsSellerBroker; then isBroker; else isNotBroker">
-	</div>
+    <div class="row" *ngIf="userIsSellerBroker; then isBroker; else isNotBroker">
+    </div>
 
-	<ng-template #isBroker>
-		<div class="col-xs-12 text-center">
-			<app-upload-document [uploadTitle]="purchaseTitle"
-								 [uploadSubtitle]="uploadPurchaseSubtitle"
-								 (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-		</div>
-	</ng-template>
+    <ng-template #isBroker>
+        <div class="col-xs-12 text-center">
+            <app-upload-document [uploadTitle]="purchaseTitle" [uploadSubtitle]="uploadPurchaseSubtitle"
+                (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+        </div>
+    </ng-template>
 
-	<ng-template #isNotBroker>
-		<div class="col-xs-12 text-center">
-			<h5>Waiting for seller broker to upload purchase agreement</h5>
-		</div>
-	</ng-template>
+    <ng-template #isNotBroker>
+        <div class="col-xs-12 text-center">
+            <h5>Waiting for seller broker to upload purchase agreement</h5>
+        </div>
+    </ng-template>
 
 </ng-template>
