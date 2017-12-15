@@ -1,21 +1,21 @@
-import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
-import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
-import { AgencyService } from './../../shared/agency.service';
-import { CompleterService, RemoteData, CompleterItem } from 'ng2-completer';
-import { Agency } from './../../models/agency.model';
-import { AgencySuggestionsService } from './../agency-suggestions.service';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decorators';
-import { environment } from './../../../environments/environment';
-import { APIEndpointsService } from './../../shared/apiendpoints.service';
-import { SignUpFormValidators } from './sign-up-components.validators';
-import { AuthenticationService } from './../authentication.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute, Router } from '@angular/router';
+import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
+import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
+import {AgencyService} from './../../shared/agency.service';
+import {CompleterService, RemoteData, CompleterItem} from 'ng2-completer';
+import {Agency} from './../../models/agency.model';
+import {AgencySuggestionsService} from './../agency-suggestions.service';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {DefaultAsyncAPIErrorHandling} from './../../shared/errors/errors.decorators';
+import {environment} from './../../../environments/environment';
+import {APIEndpointsService} from './../../shared/apiendpoints.service';
+import {SignUpFormValidators} from './sign-up-components.validators';
+import {AuthenticationService} from './../authentication.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
 	selector: 'app-sign-up-component',
@@ -40,15 +40,15 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	protected agencyAutoCompleteDataService: RemoteData;
 
 	constructor(private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private router: Router,
-		private route: ActivatedRoute,
-		private agencySuggestionsService: AgencySuggestionsService,
-		private completerService: CompleterService,
-		private agencyService: AgencyService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+				private formBuilder: FormBuilder,
+				private router: Router,
+				private route: ActivatedRoute,
+				private agencySuggestionsService: AgencySuggestionsService,
+				private completerService: CompleterService,
+				private agencyService: AgencyService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(errorsService, translateService);
 
@@ -66,7 +66,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			passwords: this.formBuilder.group({
 				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
 				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
-			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
+			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			iAmAnAgent: [false],
@@ -99,8 +99,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				if (params.redirect) {
 					this.redirectToUrl = params.redirect;
 				}
-				if (params.referral) {
-					this.referralId = params.referral;
+				if (params.referrerId) {
+					this.referralId = params.referrerId;
 				}
 
 			});
@@ -195,11 +195,11 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.googleAnalyticsEventsService.emitEvent('page-sign-up', 'sign-up');
 		const result = await this.authService
 			.performSignUp(
-			this.email.value,
-			this.password.value,
-			this.firstName.value,
-			this.lastName.value,
-			this.rememberMe.value
+				this.email.value,
+				this.password.value,
+				this.firstName.value,
+				this.lastName.value,
+				this.rememberMe.value
 			);
 		if (this.iAmAnAgent.value) {
 			if (this.agencyId == null) {
