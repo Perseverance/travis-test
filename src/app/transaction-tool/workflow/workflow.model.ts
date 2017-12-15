@@ -5,9 +5,9 @@ export const STEPS = {
 	'title-report': 3,
 	'seller-disclosures': 4,
 	'settlement-statement': 5,
-	'affidavit': 6,
-	'closing-documents': 7,
-	'payment': 8
+	'payment': 6,
+	'affidavit': 7,
+	'closing-documents': 8
 };
 
 export const REVERSE_STEPS = {
@@ -17,9 +17,9 @@ export const REVERSE_STEPS = {
 	3: 'title-report',
 	4: 'seller-disclosures',
 	5: 'settlement-statement',
-	6: 'affidavit',
-	7: 'closing-documents',
-	8: 'payment'
+	6: 'payment',
+	7: 'affidavit',
+	8: 'closing-documents'
 };
 
 export type Step = string;
