@@ -106,7 +106,6 @@ export class AffidavitStepComponent implements OnInit {
 
 	private async mapCurrentUserToRole(deedAddress) {
 		const deed = await this.deedsService.getDeedDetails(deedAddress);
-		console.log(deed);
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
