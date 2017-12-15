@@ -119,7 +119,7 @@ export class SmartContractConnectionService {
 		};
 		const deedActionMethod = this.baseDeedContract.methods.action(
 			docType,
-			docKey,
+			[docKey],
 			[document],
 			SMART_CONTRACT_STATUSES.STATUS_SUCCESS);
 		const estimatedGas = await deedActionMethod.estimateGas();
