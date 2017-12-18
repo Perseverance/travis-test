@@ -13,6 +13,11 @@ import {Subscription} from 'rxjs/Subscription';
 import {Component, OnInit} from '@angular/core';
 import {Base64Service} from '../../shared/base64.service';
 import {DeedsService} from '../../shared/deeds.service';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {ErrorsService} from '../../shared/errors/errors.service';
+import {TranslateService} from '@ngx-translate/core';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
+import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
 
 declare const HelloSign;
 
@@ -21,7 +26,7 @@ declare const HelloSign;
 	templateUrl: './seller-disclosures-step.component.html',
 	styleUrls: ['./seller-disclosures-step.component.scss']
 })
-export class SellerDisclosuresStepComponent implements OnInit {
+export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent implements OnInit {
 
 	public waitingTitle = 'Waiting seller broker to upload seller disclosures document';
 	public disclosuresTitle = 'Seller Disclosures';
@@ -47,7 +52,11 @@ export class SellerDisclosuresStepComponent implements OnInit {
 				private documentService: TransactionToolDocumentService,
 				private smartContractService: SmartContractConnectionService,
 				private helloSignService: HelloSignService,
-				private deedsService: DeedsService) {
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
+		super(errorsService, translateService);
 	}
 
 	async ngOnInit() {
@@ -79,23 +88,54 @@ export class SellerDisclosuresStepComponent implements OnInit {
 
 	private getSignatureDocument(documents: any[]) {
 		for (const doc of documents) {
-			if (doc.type === DeedDocumentType.PurchaseAgreement) {
+			if (doc.type === DeedDocumentType.TitleReport) {
 				return doc;
 			}
 		}
 	}
 
 	public async signDocument() {
-		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
-		const requestSignatureId = this.getSignatureRequestId(deed.documents);
-		const response = await this.documentService.getSignUrl(requestSignatureId);
+		if (!this.signingDocument) {
+			throw new Error('No document to sign');
+		}
+		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			await this.deedsService.markDocumentSigned(this.signingDocument.id);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
-				await this.setupDocumentPreview(this.deedAddress);
+				await this.setupDocument(this.deedId);
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
+	}
+
+	// TODO change message
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
+	public async sendDocumentToBlockchain() {
+		this.notificationService.pushInfo({
+			title: `Sending the document to the blockchain.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		const documentString = await this.documentService.getDocumentData(this.previewLink);
+		const result = await this.smartContractService.recordSellerDisclosures(documentString);
+		if (result.status === '0x0') {
+			throw new Error('Could not save to the blockchain. Try Again');
+		}
+		this.notificationService.pushInfo({
+			title: `Sending the document to the backend.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 10000
+		});
+		await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
+		this.notificationService.pushSuccess({
+			title: 'Successfully Sent',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public getSellerDisclosuresSigners(doc: any) {
