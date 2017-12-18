@@ -8,19 +8,20 @@ export enum Status {
 	reserve = 0,
 	partiesInvited = 1,
 	partiesAccepted = 2,
-	purchaseAgreement = 3,
-	purchaseAgreementBlockchain = 4,
-	titleReport = 5,
-	titleReportBlockchain = 6,
-	sellerDisclosures = 7,
-	sellerDisclosuresBlockchain = 8,
-	settlementStatement = 9,
-	affidavit = 10,
-	closingDocuments = 11,
-	payment = 12,
-	receivedPayment = 13,
-	titleDeed = 14,
-	completed = 15
+	reservedOnBlockchain = 3,
+	purchaseAgreement = 4,
+	purchaseAgreementBlockchain = 5,
+	titleReport = 6,
+	titleReportBlockchain = 7,
+	sellerDisclosures = 8,
+	sellerDisclosuresBlockchain = 9,
+	settlementStatement = 10,
+	payment = 11,
+	receivedPayment = 12,
+	affidavit = 13,
+	affidavitBlockchain = 14,
+	closingDocuments = 15,
+	completed = 16
 }
 
 export enum SMART_CONTRACT_DOCUMENT_TYPES {
@@ -127,7 +128,7 @@ export class SmartContractConnectionService {
 			[this.web3Service.web3.utils.sha3(doc)],
 			SMART_CONTRACT_STATUSES.STATUS_SUCCESS);
 		const estimatedGas = await deedActionMethod.estimateGas();
-		const doubleGas = estimatedGas * 2;
+		const doubleGas = estimatedGas * 4;
 
 		const funcData = deedActionMethod.encodeABI(callOptions);
 		const signedData = await this.web3Service.signTransaction(
