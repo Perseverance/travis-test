@@ -72,4 +72,14 @@ export class DeedsService {
 		await result.data.data;
 	}
 
+	public async sendDocumentTxHash(documentId: string, txHash: string) {
+		const data = {
+			documentId,
+			txHash
+		};
+
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SAVE_DOCUMENT_HASH, data);
+		await result.data.data;
+	}
+
 }

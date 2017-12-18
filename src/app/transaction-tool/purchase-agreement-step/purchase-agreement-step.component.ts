@@ -131,7 +131,11 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			timeout: 60000
 		});
 		const result = await this.smartContractService.recordPurchaseAgreement(this.signingDocument.uniqueId);
+		if (result.status === '0x0') {
+			throw new Error('Could not save to the blockchain. Try Again');
+		}
 		// TODO send the result.txHash and this.signingDocument.id to the backend
+		await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
 		this.notificationService.pushSuccess({
 			title: 'Successfully Sent',
 			message: '',

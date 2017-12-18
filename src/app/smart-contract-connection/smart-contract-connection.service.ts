@@ -127,7 +127,7 @@ export class SmartContractConnectionService {
 			[this.web3Service.web3.utils.sha3(doc)],
 			SMART_CONTRACT_STATUSES.STATUS_SUCCESS);
 		const estimatedGas = await deedActionMethod.estimateGas();
-		const doubleGas = estimatedGas * 2;
+		const doubleGas = estimatedGas * 4;
 
 		const funcData = deedActionMethod.encodeABI(callOptions);
 		const signedData = await this.web3Service.signTransaction(
