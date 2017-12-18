@@ -40,4 +40,9 @@ export class TransactionToolDocumentService {
 		const response = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.GET_SIGN_URL, { params });
 		return response.data.data;
 	}
+
+	public async getDocumentData(previewLink: string) {
+		const result = await this.restService.download(previewLink);
+		return result.data;
+	}
 }
