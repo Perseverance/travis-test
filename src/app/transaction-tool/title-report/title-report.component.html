@@ -29,10 +29,10 @@
 </ng-template>
 
 <ng-template #noPreviewLink>
-	<div class="row" *ngIf="userIsSeller; then isSellerUpload; else isNotSellerWait">
+	<div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
 	</div>
 
-	<ng-template #isSellerUpload>
+	<ng-template #isTitleCompany>
 		<div class="col-xs-12 text-center">
 			<app-upload-document [uploadTitle]="settlementTitle"
 								 [uploadSubtitle]="uploadSettlementSubtitle"
@@ -40,7 +40,7 @@
 		</div>
 	</ng-template>
 
-	<ng-template #isNotSellerWait>
+	<ng-template #isNotTitleCompany>
 		<div class="col-xs-12 text-center">
 			<h5>{{waitingTitle}}</h5>
 		</div>
