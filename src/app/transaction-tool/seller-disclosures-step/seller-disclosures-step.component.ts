@@ -74,7 +74,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.shouldSendToBlockchain = (deed.status === Status.titleReport);
+		this.shouldSendToBlockchain = (deed.status === Status.sellerDisclosures);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		await this.setupDocumentPreview(this.signingDocument);
 	}
@@ -88,7 +88,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 
 	private getSignatureDocument(documents: any[]) {
 		for (const doc of documents) {
-			if (doc.type === DeedDocumentType.TitleReport) {
+			if (doc.type === DeedDocumentType.SignedSellerDisclosures) {
 				return doc;
 			}
 		}
