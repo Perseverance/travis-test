@@ -20,6 +20,8 @@ export class ClosingDocumentsComponent implements OnInit {
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
 	public userIsTitleCompany: boolean;
+	public userIsBuyer: boolean;
+
 
 	public selectedDocument: any;
 	public previewLink: string;
@@ -76,6 +78,8 @@ export class ClosingDocumentsComponent implements OnInit {
 	private async mapCurrentUserToRole(deedAddress) {
 		const deed = await this.deedsService.getDeedDetails(deedAddress);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
+
 	}
 
 }

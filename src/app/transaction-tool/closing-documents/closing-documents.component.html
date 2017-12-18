@@ -3,6 +3,19 @@
 
 <ng-template #hasPreviewLink>
     <div class="row">
+        <div class="row" *ngIf="userIsBuyer; then isBuyer; else isNotBuyer">
+        </div>
+        <ng-template #isBuyer>
+            <div class="col-xs-12 text-center">
+                <h5>Congratulations! The property transfer is complete. We will soon
+                    be shipping the paper deed to your physical address.</h5>
+            </div>
+        </ng-template>
+        <ng-template #isNotBuyer>
+            <div class="col-xs-12 text-center">
+                <h5>Completed!</h5>
+            </div>
+        </ng-template>
         <div class="col-xs-12 text-center">
             <app-document-preview [previewTitle]="closeTitle" [previewSubtitle]="previewCloseSubtitle"
                 [previewLink]="previewLink"></app-document-preview>
