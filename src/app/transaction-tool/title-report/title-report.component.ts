@@ -130,11 +130,17 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		const result = await this.smartContractService.recordTitleReport(this.signingDocument.uniqueId);
+		const documentString = await this.documentService.getDocumentData(this.previewLink);
+		const result = await this.smartContractService.recordTitleReport(documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
-		// TODO send the result.txHash and this.signingDocument.id to the backend
+		this.notificationService.pushInfo({
+			title: `Sending the document to the backend.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 10000
+		});
 		await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
 		this.notificationService.pushSuccess({
 			title: 'Successfully Sent',
