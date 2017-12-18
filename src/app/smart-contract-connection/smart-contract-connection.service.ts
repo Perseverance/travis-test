@@ -8,19 +8,20 @@ export enum Status {
 	reserve = 0,
 	partiesInvited = 1,
 	partiesAccepted = 2,
-	purchaseAgreement = 3,
-	purchaseAgreementBlockchain = 4,
-	titleReport = 5,
-	titleReportBlockchain = 6,
-	sellerDisclosures = 7,
-	sellerDisclosuresBlockchain = 8,
-	settlementStatement = 9,
-	affidavit = 10,
-	closingDocuments = 11,
-	payment = 12,
-	receivedPayment = 13,
-	titleDeed = 14,
-	completed = 15
+	reservedOnBlockchain = 3,
+	purchaseAgreement = 4,
+	purchaseAgreementBlockchain = 5,
+	titleReport = 6,
+	titleReportBlockchain = 7,
+	sellerDisclosures = 8,
+	sellerDisclosuresBlockchain = 9,
+	settlementStatement = 10,
+	payment = 11,
+	affidavit = 12,
+	affidavitBlockchain = 13,
+	closingDocuments = 14,
+	receivedPayment = 15,
+	completed = 16
 }
 
 export enum SMART_CONTRACT_DOCUMENT_TYPES {
