@@ -153,6 +153,10 @@ export class RestClientService {
 		return axios.get(url, configWithoutToken);
 	}
 
+	public download(link: string) {
+		return axios.get(link);
+	}
+
 	/**
 	 * post - makes a post request without token
 	 */
