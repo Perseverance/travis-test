@@ -55,10 +55,10 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 				if (userInfo.isAnonymous) {
 					return;
 				}
-				this.userIsBuyer = (userInfo.user.role === UserRoleEnum.Buyer);
 				this.hasUserDataLoaded = true;
 			}
 		});
+
 		this.payments = [];
 		this.payments.push({ id: 0, name: 'ETH' });
 		this.payments.push({ id: 1, name: 'BTC' });
@@ -74,8 +74,10 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 			}
 			self.deedId = deedId;
 			self.deedDetails = await self.deedsService.getDeedDetails(deedId);
-			self.escrowAddress = environment.escrowAddress;
+			self.escrowAddress = self.deedDetails.paymentAddress;
 			self.invitationDataLoaded = true;
+			await self.mapCurrentUserToRole(deedId);
+
 		});
 		this.paymentId.setValue(this.payments[0].id);
 	}
@@ -85,6 +87,11 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	}
 	ngOnDestroy() {
 		this.addressSubscription.unsubscribe();
+	}
+
+	private async mapCurrentUserToRole(deedId) {
+		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 	}
 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
