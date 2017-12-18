@@ -1,11 +1,12 @@
 <div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
 </div>
 <ng-template #hasPreviewLink>
-	<div class="row" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
+	<div class="row text-center" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
 		<div *ngIf="userIsSeller;else notSeller">
 			<i>Status: Waiting For You To Record The Title Report To The Blockchain. Please use the button below!</i>
 			<br>
-			<a class="btn propy-control button-big" (click)="sendDocumentToBlockchain() ">Record Document</a>
+			<a class="btn propy-control button-big record-document-button" (click)="sendDocumentToBlockchain() ">Record
+				Document</a>
 		</div>
 		<ng-template #notSeller>
 			<i>Status: Waiting for Seller To Record The Title Report To The Blockchain</i>
