@@ -1,15 +1,18 @@
-import { HelloSignService } from './../../shared/hello-sign.service';
-import { DeedDocumentType } from './../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from './../enums/user-role.enum';
-import { SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
-import { ActivatedRoute } from '@angular/router';
-import { TransactionToolDocumentService } from './../transaction-tool-document.service';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit } from '@angular/core';
-import { Base64Service } from '../../shared/base64.service';
-import { DeedsService } from '../../shared/deeds.service';
+import {HelloSignService} from './../../shared/hello-sign.service';
+import {DeedDocumentType} from './../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from './../enums/user-role.enum';
+import {
+	SmartContractConnectionService,
+	Status
+} from './../../smart-contract-connection/smart-contract-connection.service';
+import {ActivatedRoute} from '@angular/router';
+import {TransactionToolDocumentService} from './../transaction-tool-document.service';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Component, OnInit} from '@angular/core';
+import {Base64Service} from '../../shared/base64.service';
+import {DeedsService} from '../../shared/deeds.service';
 
 declare const HelloSign;
 
@@ -32,45 +35,52 @@ export class SellerDisclosuresStepComponent implements OnInit {
 	public userIsSellerBroker: boolean;
 	public previewLink: string;
 	private addressSubscription: Subscription;
-	public deedAddress: string;
+	public deedId: string;
 	public hasBuyerSigned: boolean;
 	public hasSellerSigned: boolean;
 	public hasBuyerBrokerSigned: boolean;
 	public hasSellerBrokerSigned: boolean;
+	public shouldSendToBlockchain: boolean;
+	public signingDocument: any;
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private deedsService: DeedsService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private deedsService: DeedsService) {
 	}
 
 	async ngOnInit() {
 		const self = this;
 		const addressObservable: Observable<string> = self.route.parent.params.map(p => p.address);
-		this.addressSubscription = addressObservable.subscribe(async function (deedAddress) {
-			if (!deedAddress) {
+		this.addressSubscription = addressObservable.subscribe(async function (deedId) {
+			if (!deedId) {
 				throw new Error('No deed address supplied');
 			}
-			self.deedAddress = deedAddress;
-			await self.mapCurrentUserToRole(deedAddress);
-			await self.setupDocumentPreview(deedAddress);
-			await self.getSellerDisclosuresSigners();
+			self.deedId = deedId;
+			await self.mapCurrentUserToRole(deedId);
+			await self.setupDocument(deedId);
 		});
 	}
 
-	private async setupDocumentPreview(deedId: string) {
+	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		const signatureRequestId = this.getSignatureRequestId(deed.documents);
-		if (signatureRequestId) {
-			this.previewLink = await this.documentService.getPreviewDocumentLink(signatureRequestId);
-		}
+		this.shouldSendToBlockchain = (deed.status === Status.titleReport);
+		this.signingDocument = this.getSignatureDocument(deed.documents);
+		await this.setupDocumentPreview(this.signingDocument);
 	}
 
-	private getSignatureRequestId(documents: any[]) {
+	private async setupDocumentPreview(doc: any) {
+		if (doc && doc.uniqueId) {
+			this.previewLink = await this.documentService.getPreviewDocumentLink(doc.uniqueId);
+		}
+		this.getSellerDisclosuresSigners(doc);
+	}
+
+	private getSignatureDocument(documents: any[]) {
 		for (const doc of documents) {
-			if (doc.type === DeedDocumentType.SignedSellerDisclosures) {
-				return doc.uniqueId;
+			if (doc.type === DeedDocumentType.PurchaseAgreement) {
+				return doc;
 			}
 		}
 	}
@@ -88,28 +98,24 @@ export class SellerDisclosuresStepComponent implements OnInit {
 		}
 	}
 
-	public async getSellerDisclosuresSigners() {
-		// ToDo: get from backend
-		await this.markBuyerSign();
-		await this.markSellerSign();
-		await this.markBuyerBrokerSign();
-		await this.markSellerBrokerSign();
+	public getSellerDisclosuresSigners(doc: any) {
+		if (!doc) {
+			return;
+		}
+
+		this.hasBuyerSigned = this.hasPartySigned(doc, UserRoleEnum.Buyer);
+		this.hasSellerSigned = this.hasPartySigned(doc, UserRoleEnum.Seller);
+		this.hasBuyerBrokerSigned = this.hasPartySigned(doc, UserRoleEnum.BuyerBroker);
+		this.hasSellerBrokerSigned = this.hasPartySigned(doc, UserRoleEnum.SellerBroker);
 	}
 
-	private async markBuyerSign() {
-		this.hasBuyerSigned = false;
-	}
-
-	private async markSellerSign() {
-		this.hasSellerSigned = true;
-	}
-
-	private async markBuyerBrokerSign() {
-		this.hasBuyerBrokerSigned = false;
-	}
-
-	private async markSellerBrokerSign() {
-		this.hasSellerBrokerSigned = false;
+	private hasPartySigned(doc: any, role: UserRoleEnum) {
+		for (const signer of doc.signatures) {
+			if (signer.role === role) {
+				return signer.isSigned;
+			}
+		}
+		return false;
 	}
 
 	public shouldShowSignButton(): boolean {
