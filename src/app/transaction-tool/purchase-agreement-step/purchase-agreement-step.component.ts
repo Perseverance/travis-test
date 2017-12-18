@@ -11,7 +11,10 @@ import { DeedDocumentType } from '../enums/deed-document-type.enum';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { SmartContractConnectionService, Status } from '../../smart-contract-connection/smart-contract-connection.service';
+import {
+	SmartContractConnectionService,
+	Status
+} from '../../smart-contract-connection/smart-contract-connection.service';
 import { HelloSignService } from '../../shared/hello-sign.service';
 import { DeedsService } from '../../shared/deeds.service';
 import { Base64Service } from '../../shared/base64.service';
@@ -101,7 +104,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedId, base64);
-		this.signingDocument = response.result;
+		this.signingDocument = response;
 		await this.setupDocumentPreview(this.signingDocument);
 	}
 
@@ -130,11 +133,17 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		const result = await this.smartContractService.recordPurchaseAgreement(this.signingDocument.uniqueId);
+		const documentString = await this.documentService.getDocumentData(this.previewLink);
+		const result = await this.smartContractService.recordPurchaseAgreement(documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
-		// TODO send the result.txHash and this.signingDocument.id to the backend
+		this.notificationService.pushInfo({
+			title: `Sending the document to the backend.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 10000
+		});
 		await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
 		this.notificationService.pushSuccess({
 			title: 'Successfully Sent',

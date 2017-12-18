@@ -9,7 +9,8 @@ export class DeedsService {
 
 	constructor(private restService: RestClientService,
 		private apiEndpoints: APIEndpointsService,
-		private browserDetectionService: BrowserDetectionService) { }
+		private browserDetectionService: BrowserDetectionService) {
+	}
 
 	public async getMyDeeds(): Promise<any> {
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.MY_DEEDS);
@@ -24,8 +25,7 @@ export class DeedsService {
 		return result.data.data;
 	}
 
-	public async inviteParties(
-		deedId: string,
+	public async inviteParties(deedId: string,
 		buyerEmail: string,
 		sellerEmail: string,
 		buyerBrokerEmail: string,
@@ -72,9 +72,9 @@ export class DeedsService {
 		await result.data.data;
 	}
 
-	public async sendDocumentTxHash(documentId: string, txHash: string) {
+	public async sendDocumentTxHash(id: string, txHash: string) {
 		const data = {
-			documentId,
+			id,
 			txHash
 		};
 
