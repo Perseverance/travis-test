@@ -148,6 +148,9 @@ export class TransactionToolComponent implements OnInit {
 				return 1;
 			}
 			case Status.partiesAccepted: {
+				return 1;
+			}
+			case Status.reservedOnBlockchain: {
 				return 2;
 			}
 			case Status.purchaseAgreement: {

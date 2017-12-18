@@ -72,7 +72,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.shouldSendToBlockchain = deed.status === Status.purchaseAgreement;
+		this.shouldSendToBlockchain = (deed.status === Status.purchaseAgreement);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		await this.setupDocumentPreview(this.signingDocument);
 

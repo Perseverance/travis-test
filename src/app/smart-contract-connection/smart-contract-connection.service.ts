@@ -17,10 +17,10 @@ export enum Status {
 	sellerDisclosuresBlockchain = 9,
 	settlementStatement = 10,
 	payment = 11,
-	affidavit = 12,
-	affidavitBlockchain = 13,
-	closingDocuments = 14,
-	receivedPayment = 15,
+	receivedPayment = 12,
+	affidavit = 13,
+	affidavitBlockchain = 14,
+	closingDocuments = 15,
 	completed = 16
 }
 

@@ -1,26 +1,26 @@
-import {REVERSE_STEPS} from './../workflow/workflow.model';
-import {TransactionToolDocumentService} from './../transaction-tool-document.service';
-import {DeedDocumentType} from './../enums/deed-document-type.enum';
-import {Base64Service} from './../../shared/base64.service';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {UserRoleEnum} from './../enums/user-role.enum';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { REVERSE_STEPS } from './../workflow/workflow.model';
+import { TransactionToolDocumentService } from './../transaction-tool-document.service';
+import { DeedDocumentType } from './../enums/deed-document-type.enum';
+import { Base64Service } from './../../shared/base64.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import {
 	SmartContractAddress,
 	Status,
 	SmartContractConnectionService
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import {Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {DeedsService} from '../../shared/deeds.service';
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { DeedsService } from '../../shared/deeds.service';
 
 export enum InvitationStatus {
 	NotInvited = 0,
@@ -49,6 +49,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public hasBuyerResponded: boolean;
 	public hasBuyerBrokerResponded: boolean;
 	public hasTitleCompanyResponded: boolean;
+	public isWaitingForReservation = false;
 
 	private userInfo: any;
 	public hasDataLoaded = false;
@@ -59,16 +60,16 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public inviteForm: FormGroup;
 
 	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				private formBuilder: FormBuilder,
-				private base64Service: Base64Service,
-				private documentService: TransactionToolDocumentService,
-				private smartContractConnection: SmartContractConnectionService,
-				private router: Router,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private route: ActivatedRoute,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		private formBuilder: FormBuilder,
+		private base64Service: Base64Service,
+		private documentService: TransactionToolDocumentService,
+		private smartContractConnection: SmartContractConnectionService,
+		private router: Router,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.inviteForm = this.formBuilder.group({
@@ -112,6 +113,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		this.arePartiesInvited = (deed.status >= Status.partiesInvited);
 		this.userRole = deed.currentUserRole;
 		this.disclosuresLink = this.getPreviewLink(deed.documents);
+		this.isWaitingForReservation = (deed.status === Status.partiesAccepted);
 	}
 
 	private getPreviewLink(documents: any[]) {
