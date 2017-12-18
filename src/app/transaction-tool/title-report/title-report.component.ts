@@ -13,6 +13,11 @@ import {AuthenticationService, UserData} from './../../authentication/authentica
 import {Subscription} from 'rxjs/Subscription';
 import {Component, OnInit} from '@angular/core';
 import {DeedsService} from '../../shared/deeds.service';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
+import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
+import {ErrorsService} from '../../shared/errors/errors.service';
+import {TranslateService} from '@ngx-translate/core';
 
 declare const HelloSign;
 
@@ -21,7 +26,7 @@ declare const HelloSign;
 	templateUrl: './title-report.component.html',
 	styleUrls: ['./title-report.component.scss']
 })
-export class TitleReportComponent implements OnInit {
+export class TitleReportComponent extends ErrorsDecoratableComponent implements OnInit {
 
 	public waitingTitle = 'Waiting title company user to upload title report';
 	public settlementTitle = 'Title Report';
@@ -47,7 +52,11 @@ export class TitleReportComponent implements OnInit {
 				private smartContractService: SmartContractConnectionService,
 				private helloSignService: HelloSignService,
 				private base64Service: Base64Service,
-				private deedsService: DeedsService) {
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
+		super(errorsService, translateService);
 	}
 
 	async ngOnInit() {
@@ -60,7 +69,6 @@ export class TitleReportComponent implements OnInit {
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
-			await self.getTitleReportSigners();
 		});
 	}
 
@@ -93,22 +101,47 @@ export class TitleReportComponent implements OnInit {
 			return;
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
-		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.TitleReport, this.deedAddress, base64);
-		this.previewLink = response.downloadLink;
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.TitleReport, this.deedId, base64);
+		this.signingDocument = response;
+		await this.setupDocumentPreview(this.signingDocument);
 	}
 
-
 	public async signDocument() {
-		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
-		const requestSignatureId = this.getSignatureRequestId(deed.documents);
-		const response = await this.documentService.getSignUrl(requestSignatureId);
+		if (!this.signingDocument) {
+			throw new Error('No document to sign');
+		}
+		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			await this.deedsService.markDocumentSigned(this.signingDocument.id);
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
-				await this.setupDocumentPreview(this.deedAddress);
+				await this.setupDocument(this.deedId);
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
+	}
+
+	// TODO change message
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
+	public async sendDocumentToBlockchain() {
+		this.notificationService.pushInfo({
+			title: `Sending the document to the blockchain.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		const result = await this.smartContractService.recordTitleReport(this.signingDocument.uniqueId);
+		if (result.status === '0x0') {
+			throw new Error('Could not save to the blockchain. Try Again');
+		}
+		// TODO send the result.txHash and this.signingDocument.id to the backend
+		await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
+		this.notificationService.pushSuccess({
+			title: 'Successfully Sent',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public getTitleReportSigners(doc: any) {
