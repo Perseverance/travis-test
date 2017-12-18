@@ -63,4 +63,13 @@ export class DeedsService {
 		await result.data.data;
 	}
 
+	public async markDocumentSigned(documentId: string): Promise<any> {
+		const data = {
+			documentId
+		};
+
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SIGN_DOCUMENT, data);
+		await result.data.data;
+	}
+
 }

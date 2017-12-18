@@ -2,6 +2,18 @@
 </div>
 
 <ng-template #hasPreviewLink>
+    <div class="row" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
+        <div *ngIf="userIsSellerBroker;else notSellerBroker">
+            <i>Status: Waiting For You To Record The Purchase Agreement To The Blockchain. Please use the button below!</i>
+            <br>
+            <a class="btn propy-control button-big" [ngClass]="{'not-active': !showSignButton}"
+                (click)="sendDocumentToBlockchain()">Record Document</a>
+        </div>
+        <ng-template #notSellerBroker>
+            <i>Status: Waiting for Seller Broker To Record The Purchase Agreement To The Blockchain</i>
+        </ng-template>
+    </div>
+    <ng-template #noBlockChainYet></ng-template>
     <div class="row">
         <div class="col-xs-12 text-center">
             <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitle"

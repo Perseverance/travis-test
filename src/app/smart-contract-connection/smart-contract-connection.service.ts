@@ -9,15 +9,18 @@ export enum Status {
 	partiesInvited = 1,
 	partiesAccepted = 2,
 	purchaseAgreement = 3,
-	titleReport = 4,
-	sellerDisclosures = 5,
-	settlementStatement = 6,
-	affidavit = 7,
-	closingDocuments = 8,
-	payment = 9,
-	receivedPayment = 10,
-	titleDeed = 11,
-	completed = 12
+	purchaseAgreementBlockchain = 4,
+	titleReport = 5,
+	titleReportBlockchain = 6,
+	sellerDisclosures = 7,
+	sellerDisclosuresBlockchain = 8,
+	settlementStatement = 9,
+	affidavit = 10,
+	closingDocuments = 11,
+	payment = 12,
+	receivedPayment = 13,
+	titleDeed = 14,
+	completed = 15
 }
 
 export enum SMART_CONTRACT_DOCUMENT_TYPES {
@@ -90,37 +93,38 @@ export class SmartContractConnectionService {
 		// return result;
 	}
 
-	public async recordPurchaseAgreement(document: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', document);
+	public async recordPurchaseAgreement(doc: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', doc);
 	}
 
-	public async recordTitleReport(document: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', document);
+	public async recordTitleReport(doc: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', doc);
 	}
 
-	public async recordSellerDisclosures(document: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', document);
+	public async recordSellerDisclosures(doc: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
 	}
 
-	public async recordAffidavit(document: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', document);
+	public async recordAffidavit(doc: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', doc);
 	}
 
-	public async recordOwnershipTransfer(document: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'OWNERSHIP_TRANSFER', document);
+	public async recordOwnershipTransfer(doc: string): Promise<any> {
+		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'OWNERSHIP_TRANSFER', doc);
 	}
 
-	private async recordDocument(docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, document: string) {
+	private async recordDocument(docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, doc: string) {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
 		const callOptions = {
 			from: this.publicKey,
 		};
+
 		const deedActionMethod = this.baseDeedContract.methods.action(
 			docType,
-			[docKey],
-			[document],
+			[this.web3Service.web3.utils.asciiToHex(docKey)],
+			[this.web3Service.web3.utils.sha3(doc)],
 			SMART_CONTRACT_STATUSES.STATUS_SUCCESS);
 		const estimatedGas = await deedActionMethod.estimateGas();
 		const doubleGas = estimatedGas * 2;

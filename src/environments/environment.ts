@@ -46,6 +46,6 @@ export const environment = {
 	contractAddress: '0x60cd8e97b4e0bfcedfaedf8a0a289e5c80bc9960',
 	// web3Provider: 'http://localhost:8545',
 	infuraKey: '',
-	infuraLink: 'https://ropsten.infura.io/Up5uvBHSCSqtOmnlhL87',
+	infuraLink: 'https://rinkeby.infura.io/Up5uvBHSCSqtOmnlhL87',
 	escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625'
 };

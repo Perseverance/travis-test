@@ -46,6 +46,7 @@ export class APIEndpointsService {
 		UPLOAD_DEED_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/uploaddocument`,
 		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`,
 		GET_SIGN_URL: `${this.INTERNAL_API_PREFIX}/Deeds/documentsignurl`,
+		SIGN_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
 		INVITE_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/inviteparty`,
 		ACCEPT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/acceptparty`,
 		REJECT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/rejectparty`,
