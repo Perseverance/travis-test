@@ -1,6 +1,17 @@
 <div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
 </div>
 <ng-template #hasPreviewLink>
+	<div class="row" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
+		<div *ngIf="userIsSeller;else notSeller">
+			<i>Status: Waiting For You To Record The Title Report To The Blockchain. Please use the button below!</i>
+			<br>
+			<a class="btn propy-control button-big" (click)="sendDocumentToBlockchain() ">Record Document</a>
+		</div>
+		<ng-template #notSeller>
+			<i>Status: Waiting for Seller To Record The Title Report To The Blockchain</i>
+		</ng-template>
+	</div>
+	<ng-template #noBlockChainYet></ng-template>
 	<div class="row">
 		<div class="col-xs-12 text-center">
 			<app-document-preview [previewTitle]="settlementTitle" [previewSubtitle]="previewSettlementSubtitle"
@@ -18,10 +29,10 @@
 </ng-template>
 
 <ng-template #noPreviewLink>
-	<div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
+	<div class="row" *ngIf="userIsSeller; then isSellerUpload; else isNotSellerWait">
 	</div>
 
-	<ng-template #isTitleCompany>
+	<ng-template #isSellerUpload>
 		<div class="col-xs-12 text-center">
 			<app-upload-document [uploadTitle]="settlementTitle"
 								 [uploadSubtitle]="uploadSettlementSubtitle"
@@ -29,7 +40,7 @@
 		</div>
 	</ng-template>
 
-	<ng-template #isNotTitleCompany>
+	<ng-template #isNotSellerWait>
 		<div class="col-xs-12 text-center">
 			<h5>{{waitingTitle}}</h5>
 		</div>
