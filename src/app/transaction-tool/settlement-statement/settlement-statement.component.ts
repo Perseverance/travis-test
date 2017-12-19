@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute} from '@angular/router';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
-import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {Base64Service} from '../../shared/base64.service';
-import {NotificationsService} from '../../shared/notifications/notifications.service';
+import { Component, OnInit } from '@angular/core';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
+import { HelloSignService } from '../../shared/hello-sign.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { Base64Service } from '../../shared/base64.service';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 declare const HelloSign;
 
@@ -38,14 +38,15 @@ export class SettlementStatementComponent implements OnInit {
 	public uploadSettlementBuyerSubtitle = 'Buyer Settlement Statement';
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
 	public successMessage = 'Success!';
+	public hasDataLoaded = false;
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private base64Service: Base64Service,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private base64Service: Base64Service,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService) {
 	}
 
 	async ngOnInit() {
@@ -59,6 +60,7 @@ export class SettlementStatementComponent implements OnInit {
 			await self.mapCurrentUserToRole(deedAddress);
 			await self.setupDocumentPreview(deedAddress);
 			await self.getSettlementStatementSigners();
+			self.hasDataLoaded = true;
 		});
 	}
 

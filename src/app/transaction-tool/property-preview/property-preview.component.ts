@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class PropertyPreviewComponent implements OnInit {
 	public deedId: string;
 	private addressSubscription: Subscription;
+	public hasDataLoaded = false;
 	constructor(private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -21,6 +22,7 @@ export class PropertyPreviewComponent implements OnInit {
 				throw new Error('No deed address supplied');
 			}
 			self.deedId = deedId;
+			self.hasDataLoaded = true;
 		});
 	}
 

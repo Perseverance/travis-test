@@ -32,6 +32,7 @@ export class ClosingDocumentsComponent implements OnInit {
 	public uploadCloseSubtitle = 'Please upload closing document:';
 	public previewCloseSubtitle = 'Please review closing document.';
 	public successMessage = 'Success!';
+	public hasDataLoaded = false;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -51,6 +52,7 @@ export class ClosingDocumentsComponent implements OnInit {
 			await self.mapCurrentUserToRole(deedAddress);
 
 			await self.setupDocumentPreview(deedAddress);
+			self.hasDataLoaded = true;
 		});
 	}
 

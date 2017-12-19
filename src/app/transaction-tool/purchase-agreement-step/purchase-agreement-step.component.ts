@@ -48,6 +48,8 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
 	public successMessage = 'Success!';
+	public hasDataLoaded = false;
+
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -71,6 +73,8 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.hasDataLoaded = true;
+
 		});
 	}
 
