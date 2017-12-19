@@ -1,3 +1,4 @@
+import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { Base64Service } from './../../shared/base64.service';
 import { DeedsService } from './../../shared/deeds.service';
 import { HelloSignService } from './../../shared/hello-sign.service';
@@ -35,7 +36,8 @@ export class ClosingDocumentsComponent implements OnInit {
 		private documentService: TransactionToolDocumentService,
 		private smartContractService: SmartContractConnectionService,
 		private deedsService: DeedsService,
-		private base64Service: Base64Service) { }
+		private base64Service: Base64Service,
+		private notificationService: NotificationsService) { }
 
 	async ngOnInit() {
 		const self = this;
@@ -70,6 +72,12 @@ export class ClosingDocumentsComponent implements OnInit {
 		if (!this.selectedDocument) {
 			return;
 		}
+		this.notificationService.pushInfo({
+			title: `Please wait. A document is uploading, so be patient.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.ClosingDocuments, this.deedAddress, base64);
 		this.previewLink = response.downloadLink;

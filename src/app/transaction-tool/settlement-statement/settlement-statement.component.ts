@@ -1,3 +1,4 @@
+import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { Component, OnInit } from '@angular/core';
 import { DeedDocumentType } from '../enums/deed-document-type.enum';
 import { Subscription } from 'rxjs/Subscription';
@@ -42,7 +43,8 @@ export class SettlementStatementComponent implements OnInit {
 		private smartContractService: SmartContractConnectionService,
 		private helloSignService: HelloSignService,
 		private base64Service: Base64Service,
-		private deedsService: DeedsService) {
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService) {
 	}
 
 	async ngOnInit() {
@@ -108,6 +110,12 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedBuyerDocument) {
 			return;
 		}
+		this.notificationService.pushInfo({
+			title: `Please wait. A document is uploading, so be patient.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedBuyerDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(
 			DeedDocumentType.BuyerSettlementStatement,

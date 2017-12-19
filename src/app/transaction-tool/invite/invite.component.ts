@@ -154,6 +154,12 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		if (!this.selectedDocument) {
 			return;
 		}
+		this.notificationService.pushInfo({
+			title: `Please wait. A document is uploading, so be patient.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
 		this.disclosuresLink = response.downloadLink;

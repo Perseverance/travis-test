@@ -1,23 +1,23 @@
-import {DeedDocumentType} from './../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from './../enums/user-role.enum';
-import {Base64Service} from './../../shared/base64.service';
-import {HelloSignService} from './../../shared/hello-sign.service';
+import { DeedDocumentType } from './../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { Base64Service } from './../../shared/base64.service';
+import { HelloSignService } from './../../shared/hello-sign.service';
 import {
 	SmartContractConnectionService,
 	Status
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import {TransactionToolDocumentService} from './../transaction-tool-document.service';
-import {ActivatedRoute} from '@angular/router';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {Subscription} from 'rxjs/Subscription';
-import {Component, OnInit} from '@angular/core';
-import {DeedsService} from '../../shared/deeds.service';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {NotificationsService} from '../../shared/notifications/notifications.service';
-import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
-import {ErrorsService} from '../../shared/errors/errors.service';
-import {TranslateService} from '@ngx-translate/core';
+import { TransactionToolDocumentService } from './../transaction-tool-document.service';
+import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
+import { DeedsService } from '../../shared/deeds.service';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
+import { ErrorsService } from '../../shared/errors/errors.service';
+import { TranslateService } from '@ngx-translate/core';
 
 declare const HelloSign;
 
@@ -48,14 +48,14 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public shouldSendToBlockchain: boolean;
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private base64Service: Base64Service,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private base64Service: Base64Service,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -100,6 +100,12 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		if (!this.selectedDocument) {
 			return;
 		}
+		this.notificationService.pushInfo({
+			title: `Please wait. A document is uploading, so be patient.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.TitleReport, this.deedId, base64);
 		this.signingDocument = response;
