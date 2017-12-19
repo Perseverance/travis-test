@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
-import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
-import { DeedsService } from '../../shared/deeds.service';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { Base64Service } from '../../shared/base64.service';
+import {Component, OnInit} from '@angular/core';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute} from '@angular/router';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
+import {HelloSignService} from '../../shared/hello-sign.service';
+import {DeedsService} from '../../shared/deeds.service';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {Base64Service} from '../../shared/base64.service';
 
 declare const HelloSign;
 
@@ -38,11 +38,11 @@ export class SettlementStatementComponent implements OnInit {
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private base64Service: Base64Service,
-		private deedsService: DeedsService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private base64Service: Base64Service,
+				private deedsService: DeedsService) {
 	}
 
 	async ngOnInit() {
@@ -99,7 +99,7 @@ export class SettlementStatementComponent implements OnInit {
 			this.deedAddress,
 			base64
 		);
-		this.previewBuyerLink = response.downloadLink;
+		this.previewBuyerLink = response.uniqueId;
 	}
 
 	public async uploadBuyerDocument(event: any) {
@@ -114,7 +114,7 @@ export class SettlementStatementComponent implements OnInit {
 			this.deedAddress,
 			base64
 		);
-		this.previewBuyerLink = response.downloadLink;
+		this.previewBuyerLink = response.uniqueId;
 	}
 
 	public async signBuyerDocument() {

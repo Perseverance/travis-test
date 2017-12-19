@@ -72,7 +72,7 @@ export class ClosingDocumentsComponent implements OnInit {
 		}
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.ClosingDocuments, this.deedAddress, base64);
-		this.previewLink = response.downloadLink;
+		this.previewLink = response.uniqueId;
 	}
 
 	private async mapCurrentUserToRole(deedAddress) {
