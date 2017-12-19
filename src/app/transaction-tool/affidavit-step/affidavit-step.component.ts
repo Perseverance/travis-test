@@ -31,6 +31,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public affidavitTitle = 'Affidavit';
 	public previewAffidavitSubtitle = 'Please review affidavit.';
 	public uploadAffidavitSubtitle = 'Please upload affidavit document:';
+	public successMessage = 'Success!';
 
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
@@ -109,6 +110,12 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.Affidavit, this.deedId, base64);
 		this.signingDocument = response;
 		await this.setupDocumentPreview(this.signingDocument);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public async signDocument() {

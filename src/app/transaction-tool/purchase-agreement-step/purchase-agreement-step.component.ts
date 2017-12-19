@@ -47,6 +47,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public purchaseTitle = 'Purchase Agreement';
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
+	public successMessage = 'Success!';
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -111,6 +112,12 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.PurchaseAgreement, this.deedId, base64);
 		this.signingDocument = response;
 		await this.setupDocumentPreview(this.signingDocument);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 

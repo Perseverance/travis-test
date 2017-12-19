@@ -32,6 +32,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public settlementTitle = 'Title Report';
 	public uploadSettlementSubtitle = 'Please upload title report document:';
 	public previewSettlementSubtitle = 'Please review title report.';
+	public successMessage = 'Success!';
 
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
@@ -110,6 +111,12 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.TitleReport, this.deedId, base64);
 		this.signingDocument = response;
 		await this.setupDocumentPreview(this.signingDocument);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public async signDocument() {

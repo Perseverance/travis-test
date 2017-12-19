@@ -37,6 +37,7 @@ export class SettlementStatementComponent implements OnInit {
 	public settlementTitle = 'Settlement statement';
 	public uploadSettlementBuyerSubtitle = 'Buyer Settlement Statement';
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
+	public successMessage = 'Success!';
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -95,6 +96,12 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedSellerDocument) {
 			return;
 		}
+		this.notificationService.pushInfo({
+			title: `Please wait. A document is uploading, so be patient.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedSellerDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(
 			DeedDocumentType.SellerSettlementStatement,
@@ -102,6 +109,12 @@ export class SettlementStatementComponent implements OnInit {
 			base64
 		);
 		this.previewBuyerLink = response.downloadLink;
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public async uploadBuyerDocument(event: any) {
@@ -123,6 +136,12 @@ export class SettlementStatementComponent implements OnInit {
 			base64
 		);
 		this.previewBuyerLink = response.downloadLink;
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public async signBuyerDocument() {

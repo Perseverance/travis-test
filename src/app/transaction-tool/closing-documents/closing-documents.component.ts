@@ -31,6 +31,7 @@ export class ClosingDocumentsComponent implements OnInit {
 	public closeTitle = 'Closing Document';
 	public uploadCloseSubtitle = 'Please upload closing document:';
 	public previewCloseSubtitle = 'Please review closing document.';
+	public successMessage = 'Success!';
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -81,6 +82,12 @@ export class ClosingDocumentsComponent implements OnInit {
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.ClosingDocuments, this.deedAddress, base64);
 		this.previewLink = response.downloadLink;
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	private async mapCurrentUserToRole(deedAddress) {
