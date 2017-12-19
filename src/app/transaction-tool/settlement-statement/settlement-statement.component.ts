@@ -135,17 +135,13 @@ export class SettlementStatementComponent implements OnInit {
 			this.deedAddress,
 			base64
 		);
-<<<<<<< HEAD
-		this.previewBuyerLink = response.downloadLink;
+		this.previewBuyerLink = response.uniqueId;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
-=======
-		this.previewBuyerLink = response.uniqueId;
->>>>>>> sprint-hodor
 	}
 
 	public async signBuyerDocument() {
