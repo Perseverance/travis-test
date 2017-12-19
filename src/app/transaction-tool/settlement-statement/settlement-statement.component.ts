@@ -30,6 +30,8 @@ export class SettlementStatementComponent implements OnInit {
 	public selectedSellerDocument: any;
 	public previewBuyerLink: string;
 	public previewSellerLink: string;
+	public buyerSigningDocument: any;
+	public sellerSigningDocument: any;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
 	public hasBuyerSigned: boolean;
@@ -58,34 +60,35 @@ export class SettlementStatementComponent implements OnInit {
 			self.deedAddress = deedAddress;
 			await self.mapCurrentUserToRole(deedAddress);
 			await self.setupDocumentPreview(deedAddress);
-			await self.getSettlementStatementSigners();
 		});
 	}
 
 	private async setupDocumentPreview(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		const buyerSignatureRequestId = this.getBuyerSignatureRequestId(deed.documents);
-		if (buyerSignatureRequestId) {
-			this.previewBuyerLink = await this.documentService.getPreviewDocumentLink(buyerSignatureRequestId);
+		this.buyerSigningDocument = this.getBuyerDocument(deed.documents);
+		if (this.buyerSigningDocument) {
+			this.previewBuyerLink = this.buyerSigningDocument.fileName;
+			this.getBuyerSettlementStatementSigners(this.buyerSigningDocument);
 		}
-		const sellerSignatureRequestId = this.getSellerSignatureRequestId(deed.documents);
-		if (sellerSignatureRequestId) {
-			this.previewSellerLink = await this.documentService.getPreviewDocumentLink(sellerSignatureRequestId);
+		this.sellerSigningDocument = this.getSellerDocument(deed.documents);
+		if (this.sellerSigningDocument) {
+			this.previewSellerLink = this.sellerSigningDocument.fileName;
+			this.getSellerSettlementStatementSigners(this.sellerSigningDocument);
 		}
 	}
 
-	private getBuyerSignatureRequestId(documents: any[]) {
+	private getBuyerDocument(documents: any[]) {
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.BuyerSettlementStatement) {
-				return doc.uniqueId;
+				return doc;
 			}
 		}
 	}
 
-	private getSellerSignatureRequestId(documents: any[]) {
+	private getSellerDocument(documents: any[]) {
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.SellerSettlementStatement) {
-				return doc.uniqueId;
+				return doc;
 			}
 		}
 	}
@@ -108,7 +111,7 @@ export class SettlementStatementComponent implements OnInit {
 			this.deedAddress,
 			base64
 		);
-		this.previewBuyerLink = response.uniqueId;
+		this.previewSellerLink = response.fileName;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -135,7 +138,7 @@ export class SettlementStatementComponent implements OnInit {
 			this.deedAddress,
 			base64
 		);
-		this.previewBuyerLink = response.uniqueId;
+		this.previewBuyerLink = response.fileName;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -146,8 +149,8 @@ export class SettlementStatementComponent implements OnInit {
 
 	public async signBuyerDocument() {
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
-		const requestSignatureId = this.getBuyerSignatureRequestId(deed.documents);
-		const response = await this.documentService.getSignUrl(requestSignatureId);
+		const buyerDocument = this.getBuyerDocument(deed.documents);
+		const response = await this.documentService.getSignUrl(buyerDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			this.notificationService.pushInfo({
@@ -158,6 +161,7 @@ export class SettlementStatementComponent implements OnInit {
 			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
+				await this.deedsService.markDocumentSigned(buyerDocument.id);
 				await this.setupDocumentPreview(this.deedAddress);
 				this.notificationService.pushSuccess({
 					title: 'Successfully Retrieved',
@@ -171,8 +175,8 @@ export class SettlementStatementComponent implements OnInit {
 
 	public async signSellerDocument() {
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
-		const requestSignatureId = this.getSellerSignatureRequestId(deed.documents);
-		const response = await this.documentService.getSignUrl(requestSignatureId);
+		const sellerDocument = this.getSellerDocument(deed.documents);
+		const response = await this.documentService.getSignUrl(sellerDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			this.notificationService.pushInfo({
@@ -183,6 +187,7 @@ export class SettlementStatementComponent implements OnInit {
 			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
+				await this.deedsService.markDocumentSigned(sellerDocument.id);
 				await this.setupDocumentPreview(this.deedAddress);
 				this.notificationService.pushSuccess({
 					title: 'Successfully Retrieved',
@@ -194,17 +199,29 @@ export class SettlementStatementComponent implements OnInit {
 		}
 	}
 
-	public async getSettlementStatementSigners() {
-		await this.markBuyerSign();
-		await this.markSellerSign();
+	public getBuyerSettlementStatementSigners(doc: any) {
+		if (!doc) {
+			return;
+		}
+
+		this.hasBuyerSigned = this.hasPartySigned(doc, UserRoleEnum.Buyer);
 	}
 
-	private async markBuyerSign() {
-		this.hasBuyerSigned = false;
+	public getSellerSettlementStatementSigners(doc: any) {
+		if (!doc) {
+			return;
+		}
+
+		this.hasSellerSigned = this.hasPartySigned(doc, UserRoleEnum.Seller);
 	}
 
-	private async markSellerSign() {
-		this.hasSellerSigned = true;
+	private hasPartySigned(doc: any, role: UserRoleEnum) {
+		for (const signer of doc.signatures) {
+			if (signer.role === role) {
+				return signer.isSigned;
+			}
+		}
+		return false;
 	}
 
 	public shouldShowSignButton(): boolean {
