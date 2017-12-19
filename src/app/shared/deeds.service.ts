@@ -41,7 +41,7 @@ export class DeedsService {
 		};
 
 		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.INVITE_PARTY, data);
-		await result.data.data;
+		return result.data.data;
 	}
 
 
@@ -51,7 +51,7 @@ export class DeedsService {
 		};
 
 		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.ACCEPT_PARTY, data);
-		await result.data.data;
+		return result.data.data;
 	}
 
 	public async rejectInvite(deedId: string): Promise<any> {
@@ -60,7 +60,7 @@ export class DeedsService {
 		};
 
 		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REJECT_PARTY, data);
-		await result.data.data;
+		return result.data.data;
 	}
 
 	public async markDocumentSigned(documentId: string): Promise<any> {
@@ -69,7 +69,7 @@ export class DeedsService {
 		};
 
 		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SIGN_DOCUMENT, data);
-		await result.data.data;
+		return result.data.data;
 	}
 
 	public async sendDocumentTxHash(id: string, txHash: string) {
@@ -79,7 +79,7 @@ export class DeedsService {
 		};
 
 		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SAVE_DOCUMENT_HASH, data);
-		await result.data.data;
+		return result.data.data;
 	}
 
 }
