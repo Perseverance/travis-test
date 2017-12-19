@@ -11,12 +11,14 @@ import { CurrencyTypeEnum } from '../../../shared/enums/currency-type.enum';
 })
 export class PropertyItemViewComponent implements OnInit {
 	public property: any;
+	public deed: any;
 	@Input() deedId;
 	constructor(private propertiesService: PropertiesService,
 		private deedsService: DeedsService) { }
 
 	async ngOnInit() {
 		const deed = await this.deedsService.getDeedDetails(this.deedId);
+		this.deed = deed;
 		const result = await this.propertiesService.getProperty(deed.propertyId, CurrencyTypeEnum.ETH);
 		this.property = result;
 	}

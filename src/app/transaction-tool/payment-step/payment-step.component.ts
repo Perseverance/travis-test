@@ -77,7 +77,6 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 			self.escrowAddress = self.deedDetails.paymentAddress;
 			self.invitationDataLoaded = true;
 			await self.mapCurrentUserToRole(deedId);
-
 		});
 		this.paymentId.setValue(this.payments[0].id);
 	}
