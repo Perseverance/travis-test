@@ -162,7 +162,6 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
-		console.log(response);
 		this.disclosuresLink = response.fileName;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
