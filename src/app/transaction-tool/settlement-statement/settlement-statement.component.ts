@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute} from '@angular/router';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
-import {SmartContractConnectionService} from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {Base64Service} from '../../shared/base64.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { Component, OnInit } from '@angular/core';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
+import { HelloSignService } from '../../shared/hello-sign.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { Base64Service } from '../../shared/base64.service';
 
 declare const HelloSign;
 
@@ -36,13 +37,15 @@ export class SettlementStatementComponent implements OnInit {
 	public settlementTitle = 'Settlement statement';
 	public uploadSettlementBuyerSubtitle = 'Buyer Settlement Statement';
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
+	public successMessage = 'Success!';
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private base64Service: Base64Service,
-				private deedsService: DeedsService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private base64Service: Base64Service,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService) {
 	}
 
 	async ngOnInit() {
@@ -93,6 +96,12 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedSellerDocument) {
 			return;
 		}
+		this.notificationService.pushInfo({
+			title: `Please wait. A document is uploading, so be patient.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedSellerDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(
 			DeedDocumentType.SellerSettlementStatement,
@@ -100,6 +109,12 @@ export class SettlementStatementComponent implements OnInit {
 			base64
 		);
 		this.previewBuyerLink = response.uniqueId;
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public async uploadBuyerDocument(event: any) {
@@ -108,6 +123,12 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedBuyerDocument) {
 			return;
 		}
+		this.notificationService.pushInfo({
+			title: `Please wait. A document is uploading, so be patient.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedBuyerDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(
 			DeedDocumentType.BuyerSettlementStatement,
@@ -115,6 +136,12 @@ export class SettlementStatementComponent implements OnInit {
 			base64
 		);
 		this.previewBuyerLink = response.uniqueId;
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public async signBuyerDocument() {
