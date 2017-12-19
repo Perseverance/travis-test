@@ -100,7 +100,6 @@
 				</form>
 			</ng-template>
 			<ng-template #isNotSellerBroker>
-
 			</ng-template>
 			<hr>
 			<div class="col-xs-12">
@@ -108,8 +107,9 @@
 			</div>
 			<hr>
 			<div class="col-xs-12">
-				<button type="button" class="btn propy-control button-big pull-right" (click)="onInvite()">Invite &
-					Continue
+				<button type="button" [ngClass]="{disabled : !disclosuresLink}"
+						class="btn propy-control button-big pull-right"
+						(click)="onInvite()">Invite & Continue
 				</button>
 			</div>
 		</ng-template>
