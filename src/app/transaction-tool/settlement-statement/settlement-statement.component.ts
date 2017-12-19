@@ -108,7 +108,7 @@ export class SettlementStatementComponent implements OnInit {
 			this.deedAddress,
 			base64
 		);
-		this.previewBuyerLink = response.downloadLink;
+		this.previewBuyerLink = response.uniqueId;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -135,6 +135,7 @@ export class SettlementStatementComponent implements OnInit {
 			this.deedAddress,
 			base64
 		);
+<<<<<<< HEAD
 		this.previewBuyerLink = response.downloadLink;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
@@ -142,6 +143,9 @@ export class SettlementStatementComponent implements OnInit {
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
+=======
+		this.previewBuyerLink = response.uniqueId;
+>>>>>>> sprint-hodor
 	}
 
 	public async signBuyerDocument() {
