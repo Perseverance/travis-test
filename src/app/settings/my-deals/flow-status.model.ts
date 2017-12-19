@@ -1,5 +1,5 @@
 export const FlowStatus = {
-	0: 'Reserve',
+	0: 'Reserved',
 	1: 'All Parties Invited',
 	2: 'All Parties Accepted',
 	3: 'Reserved on Blockchain',
