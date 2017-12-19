@@ -129,9 +129,21 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.deedsService.markDocumentSigned(this.signingDocument.id);
+			this.notificationService.pushInfo({
+				title: `Retrieving signed document.`,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 60000
+			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
 				await this.setupDocument(this.deedId);
+				this.notificationService.pushSuccess({
+					title: 'Successfully Retrieved',
+					message: '',
+					time: (new Date().getTime()),
+					timeout: 4000
+				});
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
