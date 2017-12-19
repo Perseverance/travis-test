@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class APIEndpointsService {
@@ -51,7 +51,8 @@ export class APIEndpointsService {
 		INVITE_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/inviteparty`,
 		ACCEPT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/acceptparty`,
 		REJECT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/rejectparty`,
-		PROPERTY_PREVIEW: `${this.INTERNAL_API_PREFIX}/Deeds/property`
+		PROPERTY_PREVIEW: `${this.INTERNAL_API_PREFIX}/Deeds/property`,
+		GET_DOCUMENT_CONTENT: `${this.INTERNAL_API_PREFIX}/Deeds/documentcontent`
 	};
 
 	constructor() {
