@@ -1,24 +1,24 @@
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, UserData } from '../../authentication/authentication.service';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { TransactionToolWorkflowService } from '../workflow/workflow.service';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService, UserData} from '../../authentication/authentication.service';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {TransactionToolWorkflowService} from '../workflow/workflow.service';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
-import { DeedsService } from '../../shared/deeds.service';
-import { Base64Service } from '../../shared/base64.service';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import {HelloSignService} from '../../shared/hello-sign.service';
+import {DeedsService} from '../../shared/deeds.service';
+import {Base64Service} from '../../shared/base64.service';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 
 declare const HelloSign;
 
@@ -50,14 +50,14 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public successMessage = 'Success!';
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private deedsService: DeedsService,
-		private base64Service: Base64Service,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private deedsService: DeedsService,
+				private base64Service: Base64Service,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -82,8 +82,8 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	}
 
 	private async setupDocumentPreview(doc: any) {
-		if (doc && doc.uniqueId) {
-			this.previewLink = await this.documentService.getPreviewDocumentLink(doc.uniqueId);
+		if (doc && doc.fileName) {
+			this.previewLink = doc.fileName;
 		}
 		this.getPurchaseAgreementSigners(doc);
 	}
@@ -128,7 +128,6 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			await this.deedsService.markDocumentSigned(this.signingDocument.id);
 			this.notificationService.pushInfo({
 				title: `Retrieving signed document.`,
 				message: '',
@@ -137,6 +136,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
+				await this.deedsService.markDocumentSigned(this.signingDocument.id);
 				await this.setupDocument(this.deedId);
 				this.notificationService.pushSuccess({
 					title: 'Successfully Retrieved',
