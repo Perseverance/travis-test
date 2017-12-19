@@ -80,8 +80,8 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 	}
 
 	private async setupDocumentPreview(doc: any) {
-		if (doc && doc.uniqueId) {
-			this.previewLink = await this.documentService.getPreviewDocumentLink(doc.uniqueId);
+		if (doc && doc.fileName) {
+			this.previewLink = doc.fileName;
 		}
 		this.getSellerDisclosuresSigners(doc);
 	}
@@ -101,7 +101,6 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			await this.deedsService.markDocumentSigned(this.signingDocument.id);
 			this.notificationService.pushInfo({
 				title: `Retrieving signed document.`,
 				message: '',
@@ -110,6 +109,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
+				await this.deedsService.markDocumentSigned(this.signingDocument.id);
 				await this.setupDocument(this.deedId);
 				this.notificationService.pushSuccess({
 					title: 'Successfully Retrieved',
