@@ -104,7 +104,8 @@
             </div>
             <hr>
             <div class="col-xs-12">
-                <button type="button" class="btn propy-control button-big pull-right" (click)="onInvite()">Invite & Continue</button>
+                <button type="button" [ngClass]="{disabled : noPreviewLink}" class="btn propy-control button-big pull-right"
+                    (click)="onInvite()">Invite & Continue</button>
             </div>
         </ng-template>
         <ng-template #previewLink>
