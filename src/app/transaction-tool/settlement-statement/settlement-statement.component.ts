@@ -9,6 +9,7 @@ import {DeedsService} from '../../shared/deeds.service';
 import {Observable} from 'rxjs/Observable';
 import {UserRoleEnum} from '../enums/user-role.enum';
 import {Base64Service} from '../../shared/base64.service';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
 
 declare const HelloSign;
 
@@ -42,6 +43,7 @@ export class SettlementStatementComponent implements OnInit {
 				private smartContractService: SmartContractConnectionService,
 				private helloSignService: HelloSignService,
 				private base64Service: Base64Service,
+				private notificationService: NotificationsService,
 				private deedsService: DeedsService) {
 	}
 
@@ -123,9 +125,21 @@ export class SettlementStatementComponent implements OnInit {
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			this.notificationService.pushInfo({
+				title: `Retrieving signed document.`,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 60000
+			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
 				await this.setupDocumentPreview(this.deedAddress);
+				this.notificationService.pushSuccess({
+					title: 'Successfully Retrieved',
+					message: '',
+					time: (new Date().getTime()),
+					timeout: 4000
+				});
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
@@ -136,9 +150,21 @@ export class SettlementStatementComponent implements OnInit {
 		const response = await this.documentService.getSignUrl(requestSignatureId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			this.notificationService.pushInfo({
+				title: `Retrieving signed document.`,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 60000
+			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
 				await this.setupDocumentPreview(this.deedAddress);
+				this.notificationService.pushSuccess({
+					title: 'Successfully Retrieved',
+					message: '',
+					time: (new Date().getTime()),
+					timeout: 4000
+				});
 			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
 		}
 	}
