@@ -9,7 +9,7 @@ import {TransactionToolWorkflowService} from '../workflow/workflow.service';
 import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 import {DeedDocumentType} from '../enums/deed-document-type.enum';
 import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {
 	SmartContractConnectionService,
@@ -58,6 +58,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 				private deedsService: DeedsService,
 				private base64Service: Base64Service,
 				private notificationService: NotificationsService,
+				private router: Router,
 				errorsService: ErrorsService,
 				translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -173,6 +174,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			timeout: 10000
 		});
 		await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
+		this.router.navigate(['transaction-tool', this.deedId]);
 		this.notificationService.pushSuccess({
 			title: 'Successfully Sent',
 			message: '',
