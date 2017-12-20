@@ -100,7 +100,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async recordSellerDisclosures(deedAddress: string, doc: string): Promise<any> {
-		return this.recordDocument(deedAddress, MART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
+		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
 	}
 
 	public async recordAffidavit(deedAddress: string, doc: string): Promise<any> {
