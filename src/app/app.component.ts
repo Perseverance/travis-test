@@ -11,6 +11,7 @@ import {MomentService} from './shared/moment.service';
 import {Intercom} from 'ng2-intercom/intercom';
 import {default as smartlookClient} from 'smartlook-client';
 import {PusherService} from './shared/pusher.service';
+import {Message} from 'primeng/primeng';
 
 @Component({
 	selector: 'app-root',
@@ -18,6 +19,8 @@ import {PusherService} from './shared/pusher.service';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+	public globalGrowlMessages: Message[] = [];
+
 	constructor(public authService: AuthenticationService,
 				public translateService: TranslateService,
 				private localStorageService: LocalStorageService,
@@ -37,13 +40,13 @@ export class AppComponent implements OnInit {
 		localStorageService.selectedCurrencyType = CurrencyTypeEnum.NONE;
 
 		// ToDo: Comment out when start to use pusher
-		// this.authService.subscribeToUserData({
-		// 	next: (userInfo: UserData) => {
-		// 		if (!userInfo.isAnonymous) {
-		// 			this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
-		// 		}
-		// 	}
-		// });
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				if (!userInfo.isAnonymous) {
+					this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
+				}
+			}
+		});
 	}
 
 	ngOnInit() {

@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {APIEndpointsService} from './apiendpoints.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Message} from 'primeng/primeng';
 
 declare const Pusher: any;
 
@@ -8,8 +10,11 @@ declare const Pusher: any;
 export class PusherService {
 	pusher: any;
 	pusherChannel: any;
+	public globalMessages: Message[] = [];
 
-	constructor(private apiEndpointsService: APIEndpointsService) {
+	constructor(private apiEndpointsService: APIEndpointsService,
+				private route: ActivatedRoute,
+				private router: Router) {
 	}
 
 	public initializePusher(accessToken: string, userId: string): void {
@@ -24,13 +29,39 @@ export class PusherService {
 			encrypted: true
 		});
 
-		this.pusherChannel = this.pusher.subscribe(`private-${userId}`);
+		this.pusherChannel = this.pusher.subscribe(`${userId}_private`);
 		this.bindEventsToChannel(this.pusherChannel);
 	}
 
 	public bindEventsToChannel(channel: any) {
-		channel.bind('my-event', (data) => {
-			console.log(data);
+		// Event for Invitation
+		channel.bind('1', (data) => {
+			this.globalGrowlMessages = [{
+				severity: 'info',
+				summary: 'Deal Invitation',
+				detail: 'Please check My Deals.'
+			}];
 		});
+
+		// Event for status changed
+		channel.bind('2', (data) => {
+			if (!this.router.url.startsWith('/transaction-tool')) {
+				this.globalGrowlMessages = [{
+					severity: 'info',
+					summary: 'Deal Status Changed',
+					detail: 'Please check My Deals.'
+				}];
+				return;
+			}
+			this.router.navigate(['transaction-tool', data.message]);
+		});
+	}
+
+	set globalGrowlMessages(value: any) {
+		this.globalMessages = value;
+	}
+
+	get globalGrowlMessages(): any {
+		return this.globalMessages;
 	}
 }

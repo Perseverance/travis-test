@@ -24,7 +24,7 @@ const transactionToolSteps: Routes = [
 			{
 				path: '',
 				pathMatch: 'full',
-				redirectTo: 'payment',
+				redirectTo: 'closing-documents',
 				canActivate: [WorkflowGuard]
 			},
 			{
