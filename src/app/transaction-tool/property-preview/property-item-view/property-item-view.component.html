@@ -6,8 +6,7 @@
                     <h4 class="media-heading">{{ property.address }}</h4>
                 </div>
                 <div class="col-xs-3 col-xs-offset-2 col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1 property-price">
-                    <p>{{ deed.finalPrice.value | thousandSeparator | currencySymbol:
-                        property.price.type}}
+                    <p>{{ deed.finalPrice.value | currencySymbol: property.price.type}}
                     </p>
                 </div>
             </div>

@@ -21,6 +21,7 @@ export class PropertyItemViewComponent implements OnInit {
 		this.deed = deed;
 		const result = await this.propertiesService.getProperty(deed.propertyId, CurrencyTypeEnum.ETH);
 		this.property = result;
+		console.log(this.deed);
 	}
 
 }

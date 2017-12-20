@@ -22,7 +22,7 @@
                                 </label>
                         </div>
                         <div class="price">
-                            <span id="price"> {{deedDetails.finalPrice.value}} ETH</span>
+                            <span id="price"> {{deedDetails.finalPrice.value | currencySymbol: deedDetails.finalPrice.type}}</span>
                         </div>
                     </form>
 
