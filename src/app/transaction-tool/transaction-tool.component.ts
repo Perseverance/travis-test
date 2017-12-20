@@ -191,4 +191,8 @@ export class TransactionToolComponent implements OnInit {
 			}
 		}
 	}
+
+	public async updateProgressIndex() {
+		await this.ngOnInit();
+	}
 }
