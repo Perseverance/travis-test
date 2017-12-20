@@ -46,6 +46,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public hasBuyerSigned: boolean;
 	public hasSellerSigned: boolean;
 	public shouldSendToBlockchain: boolean;
+	public hasDataLoaded = false;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -69,6 +70,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.hasDataLoaded = true;
 		});
 	}
 

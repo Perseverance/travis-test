@@ -47,6 +47,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public hasBuyerSigned: boolean;
 	public hasSellerSigned: boolean;
 	public shouldSendToBlockchain: boolean;
+	public hasDataLoaded = false;
 
 	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
@@ -70,6 +71,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.hasDataLoaded = true;
 		});
 	}
 
