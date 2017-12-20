@@ -47,6 +47,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public hasSellerSigned: boolean;
 	public shouldSendToBlockchain: boolean;
 	public hasDataLoaded = false;
+	private deedAddress: string;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -78,6 +79,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.shouldSendToBlockchain = (deed.status === Status.affidavit);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
+		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
 	}
 
@@ -157,7 +159,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			timeout: 60000
 		});
 		const documentString = await this.documentService.getDocumentData(this.previewLink);
-		const result = await this.smartContractService.recordAffidavit(documentString);
+		const result = await this.smartContractService.recordAffidavit(this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}

@@ -48,6 +48,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 	public shouldSendToBlockchain: boolean;
 	public signingDocument: any;
 	public hasDataLoaded = false;
+	private deedAddress: string;
 
 
 	constructor(private route: ActivatedRoute,
@@ -79,6 +80,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.shouldSendToBlockchain = (deed.status === Status.sellerDisclosures);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
+		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
 	}
 
@@ -134,7 +136,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 			timeout: 60000
 		});
 		const documentString = await this.documentService.getDocumentData(this.previewLink);
-		const result = await this.smartContractService.recordSellerDisclosures(documentString);
+		const result = await this.smartContractService.recordSellerDisclosures(this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}

@@ -1,24 +1,24 @@
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService, UserData} from '../../authentication/authentication.service';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {TransactionToolWorkflowService} from '../workflow/workflow.service';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService, UserData } from '../../authentication/authentication.service';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { TransactionToolWorkflowService } from '../workflow/workflow.service';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {Base64Service} from '../../shared/base64.service';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import { HelloSignService } from '../../shared/hello-sign.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { Base64Service } from '../../shared/base64.service';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 
 declare const HelloSign;
 
@@ -49,18 +49,19 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
 	public successMessage = 'Success!';
 	public hasDataLoaded = false;
+	private deedAddress: string;
 
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private deedsService: DeedsService,
-				private base64Service: Base64Service,
-				private notificationService: NotificationsService,
-				private router: Router,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private deedsService: DeedsService,
+		private base64Service: Base64Service,
+		private notificationService: NotificationsService,
+		private router: Router,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -83,6 +84,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.shouldSendToBlockchain = (deed.status === Status.purchaseAgreement);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
+		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
 	}
 
@@ -163,7 +165,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			timeout: 60000
 		});
 		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
-		const result = await this.smartContractService.recordPurchaseAgreement(documentString);
+		const result = await this.smartContractService.recordPurchaseAgreement(this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}

@@ -48,13 +48,10 @@ export class SmartContractConnectionService {
 	private privateKey: string;
 
 	private baseDeedContract: any;
+	private contractAbi: any;
 
 	constructor(private web3Service: Web3Service) {
-		const contractAbi = BaseContract.abi;
-		this.baseDeedContract = new web3Service.web3.eth.Contract(
-			contractAbi,
-			environment.contractAddress,
-		);
+		this.contractAbi = BaseContract.abi;
 	}
 
 	public saveCredentials(_publicKey: string, _privateKey: string) {
@@ -94,33 +91,38 @@ export class SmartContractConnectionService {
 		// return result;
 	}
 
-	public async recordPurchaseAgreement(doc: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', doc);
+	public async recordPurchaseAgreement(deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', doc);
 	}
 
-	public async recordTitleReport(doc: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', doc);
+	public async recordTitleReport(deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', doc);
 	}
 
-	public async recordSellerDisclosures(doc: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
+	public async recordSellerDisclosures(deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(deedAddress, MART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
 	}
 
-	public async recordAffidavit(doc: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', doc);
+	public async recordAffidavit(deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', doc);
 	}
 
-	public async recordOwnershipTransfer(doc: string): Promise<any> {
-		return this.recordDocument(SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'OWNERSHIP_TRANSFER', doc);
+	public async recordOwnershipTransfer(deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'OWNERSHIP_TRANSFER', doc);
 	}
 
-	private async recordDocument(docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, doc: string) {
+	private async recordDocument(deedAddress: string, docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, doc: string) {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
 		const callOptions = {
 			from: this.publicKey,
 		};
+
+		this.baseDeedContract = new this.web3Service.web3.eth.Contract(
+			this.contractAbi,
+			deedAddress,
+		);
 
 		const deedActionMethod = this.baseDeedContract.methods.action(
 			docType,
