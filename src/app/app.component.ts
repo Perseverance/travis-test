@@ -1,5 +1,5 @@
 import {GoogleAnalyticsEventsService} from './shared/google-analytics.service';
-import {Router, NavigationEnd} from '@angular/router';
+import {Router} from '@angular/router';
 import {environment} from './../environments/environment';
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService, UserData} from './authentication/authentication.service';
@@ -11,7 +11,6 @@ import {MomentService} from './shared/moment.service';
 import {Intercom} from 'ng2-intercom/intercom';
 import {default as smartlookClient} from 'smartlook-client';
 import {PusherService} from './shared/pusher.service';
-import {Message} from 'primeng/primeng';
 
 @Component({
 	selector: 'app-root',
@@ -19,7 +18,6 @@ import {Message} from 'primeng/primeng';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-	public globalGrowlMessages: Message[] = [];
 
 	constructor(public authService: AuthenticationService,
 				public translateService: TranslateService,

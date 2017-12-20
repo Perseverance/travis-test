@@ -16,9 +16,7 @@ import {InlineSVGModule} from 'ng-inline-svg';
 import {PageTitlePositioning, MetaLoader, MetaStaticLoader} from '@ngx-meta/core';
 import {IntercomModule, INTERCOM_DIRECTIVES} from 'ng2-intercom';
 import {PurchaseModule} from './purchase/purchase.module';
-import {TransactionToolComponent} from './transaction-tool/transaction-tool.component';
 import {Web3Module} from './web3-connection/web3-connection.module';
-import {GrowlModule} from 'primeng/primeng';
 
 export function metaFactory(): MetaLoader {
 	return new MetaStaticLoader({
@@ -65,8 +63,7 @@ export function metaFactory(): MetaLoader {
 			provide: MetaLoader,
 			useFactory: (metaFactory)
 		}),
-		IntercomModule,
-		GrowlModule
+		IntercomModule
 	],
 	bootstrap: [AppComponent]
 })
