@@ -1,22 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute} from '@angular/router';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import { Component, OnInit } from '@angular/core';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
-import {Base64Service} from '../../shared/base64.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {NotificationsService} from '../../shared/notifications/notifications.service';
-import {ErrorsService} from '../../shared/errors/errors.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
+import { HelloSignService } from '../../shared/hello-sign.service';
+import { Base64Service } from '../../shared/base64.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { ErrorsService } from '../../shared/errors/errors.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
 
 declare const HelloSign;
 
@@ -47,16 +47,17 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public hasSellerSigned: boolean;
 	public shouldSendToBlockchain: boolean;
 	public hasDataLoaded = false;
+	private deedAddress: string;
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private base64Service: Base64Service,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private base64Service: Base64Service,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -78,6 +79,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.shouldSendToBlockchain = (deed.status === Status.affidavit);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
+		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
 	}
 
@@ -156,8 +158,8 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		const documentString = await this.documentService.getDocumentData(this.previewLink);
-		const result = await this.smartContractService.recordAffidavit(documentString);
+		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
+		const result = await this.smartContractService.recordAffidavit(this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
