@@ -38,7 +38,7 @@ export const environment = {
 	hardCodedDeedParties: {
 		agentId: '5a255409495fda1268997297'
 	},
-	contractAddress: '0xde2390f2225a1ef42db69ec63035453046e5f047',
+	contractAddress: '0x6dae591ae5a4cc8a65ef88c9367564be1a317bf0',
 	infuraLink: 'https://rinkeby.infura.io/Up5uvBHSCSqtOmnlhL87',
 	escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625'
 };

@@ -1,15 +1,15 @@
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { Base64Service } from './../../shared/base64.service';
-import { DeedsService } from './../../shared/deeds.service';
-import { HelloSignService } from './../../shared/hello-sign.service';
-import { SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
-import { TransactionToolDocumentService } from './../transaction-tool-document.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { DeedDocumentType } from './../enums/deed-document-type.enum';
-import { Component, OnInit } from '@angular/core';
-import { UserRoleEnum } from '../enums/user-role.enum';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {Base64Service} from './../../shared/base64.service';
+import {DeedsService} from './../../shared/deeds.service';
+import {HelloSignService} from './../../shared/hello-sign.service';
+import {SmartContractConnectionService} from './../../smart-contract-connection/smart-contract-connection.service';
+import {TransactionToolDocumentService} from './../transaction-tool-document.service';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+import {DeedDocumentType} from './../enums/deed-document-type.enum';
+import {Component, OnInit} from '@angular/core';
+import {UserRoleEnum} from '../enums/user-role.enum';
 
 
 @Component({
@@ -25,6 +25,7 @@ export class ClosingDocumentsComponent implements OnInit {
 
 
 	public selectedDocument: any;
+	public signingDocument: any;
 	public previewLink: string;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
@@ -35,11 +36,12 @@ export class ClosingDocumentsComponent implements OnInit {
 	public hasDataLoaded = false;
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private deedsService: DeedsService,
-		private base64Service: Base64Service,
-		private notificationService: NotificationsService) { }
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private deedsService: DeedsService,
+				private base64Service: Base64Service,
+				private notificationService: NotificationsService) {
+	}
 
 	async ngOnInit() {
 		const self = this;
@@ -51,20 +53,27 @@ export class ClosingDocumentsComponent implements OnInit {
 			self.deedAddress = deedAddress;
 			await self.mapCurrentUserToRole(deedAddress);
 
-			await self.setupDocumentPreview(deedAddress);
+			await self.setupDocument(deedAddress);
 			self.hasDataLoaded = true;
 		});
 	}
 
-	private async setupDocumentPreview(deedId: string) {
+	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.previewLink = this.getSignatureRequestId(deed.documents);
+		this.signingDocument = this.getSignatureDocument(deed.documents);
+		await this.setupDocumentPreview(this.signingDocument);
 	}
 
-	private getSignatureRequestId(documents: any[]) {
+	private async setupDocumentPreview(doc: any) {
+		if (doc && doc.fileName) {
+			this.previewLink = doc.fileName;
+		}
+	}
+
+	private getSignatureDocument(documents: any[]) {
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.ClosingDocuments) {
-				return doc.uniqueId;
+				return doc;
 			}
 		}
 	}
@@ -83,7 +92,7 @@ export class ClosingDocumentsComponent implements OnInit {
 		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.ClosingDocuments, this.deedAddress, base64);
-		this.previewLink = response.uniqueId;
+		this.previewLink = response.fileName;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',

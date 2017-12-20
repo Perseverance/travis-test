@@ -47,6 +47,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public hasSellerSigned: boolean;
 	public shouldSendToBlockchain: boolean;
 	public hasDataLoaded = false;
+	private deedAddress: string;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -78,12 +79,13 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.shouldSendToBlockchain = (deed.status === Status.affidavit);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
+		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
 	}
 
 	private async setupDocumentPreview(doc: any) {
-		if (doc && doc.uniqueId) {
-			this.previewLink = await this.documentService.getPreviewDocumentLink(doc.uniqueId);
+		if (doc && doc.fileName) {
+			this.previewLink = doc.fileName;
 		}
 		this.getAffidavitSigners(doc);
 	}
@@ -127,7 +129,6 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			await this.deedsService.markDocumentSigned(this.signingDocument.id);
 			this.notificationService.pushInfo({
 				title: `Retrieving signed document.`,
 				message: '',
@@ -136,6 +137,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			});
 			setTimeout(async () => {
 				// Workaround: waiting HelloSign to update new signature
+				await this.deedsService.markDocumentSigned(this.signingDocument.id);
 				await this.setupDocument(this.deedId);
 				this.notificationService.pushSuccess({
 					title: 'Successfully Retrieved',
@@ -156,8 +158,8 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		const documentString = await this.documentService.getDocumentData(this.previewLink);
-		const result = await this.smartContractService.recordAffidavit(documentString);
+		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
+		const result = await this.smartContractService.recordAffidavit(this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
