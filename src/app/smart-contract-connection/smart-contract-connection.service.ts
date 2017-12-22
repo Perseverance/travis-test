@@ -1,8 +1,8 @@
-import { EthereumAddress, SmartContractAddress } from './smart-contract-connection.service';
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { Web3Service } from '../web3-connection/web3-connection.service';
-import { BaseContract } from '../web3-connection/BaseContract';
+import {EthereumAddress, SmartContractAddress} from './smart-contract-connection.service';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {Web3Service} from '../web3-connection/web3-connection.service';
+import {BaseContract} from '../web3-connection/BaseContract';
 
 export enum Status {
 	reserve = 0,
@@ -17,10 +17,9 @@ export enum Status {
 	sellerDisclosuresBlockchain = 9,
 	settlementStatement = 10,
 	payment = 11,
-	receivedPayment = 12,
-	affidavit = 13,
-	affidavitBlockchain = 14,
-	closingDocuments = 15,
+	affidavit = 12,
+	affidavitBlockchain = 13,
+	closingDocuments = 14,
 	completed = 16
 }
 
@@ -82,7 +81,6 @@ export class SmartContractConnectionService {
 			doubleGas,
 			funcData,
 		);
-
 
 
 		return signedData;
