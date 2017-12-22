@@ -50,6 +50,8 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public hasBuyerBrokerResponded: boolean;
 	public hasTitleCompanyResponded: boolean;
 	public isWaitingForReservation = false;
+	public deed: any;
+	public deedStatus = Status;
 
 	private userInfo: any;
 	public hasDataLoaded = false;
@@ -106,6 +108,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	private async setupDeedData(deedId) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.deed = deed;
 		this.hasBuyerBrokerResponded = (deed.buyerBrokerStatus > InvitationStatus.Invited);
 		this.hasBuyerResponded = (deed.buyerStatus > InvitationStatus.Invited);
 		this.hasSellerResponded = (deed.sellerStatus > InvitationStatus.Invited);
