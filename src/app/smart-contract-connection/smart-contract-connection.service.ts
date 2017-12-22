@@ -19,8 +19,7 @@ export enum Status {
 	payment = 11,
 	affidavit = 12,
 	affidavitBlockchain = 13,
-	closingDocuments = 14,
-	completed = 16
+	closingDocuments = 14
 }
 
 export enum SMART_CONTRACT_DOCUMENT_TYPES {
