@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {APIEndpointsService} from './apiendpoints.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Message} from 'primeng/primeng';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { APIEndpointsService } from './apiendpoints.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Message } from 'primeng/primeng';
 
 declare const Pusher: any;
 
@@ -13,8 +13,8 @@ export class PusherService {
 	public globalMessages: Message[] = [];
 
 	constructor(private apiEndpointsService: APIEndpointsService,
-				private route: ActivatedRoute,
-				private router: Router) {
+		private route: ActivatedRoute,
+		private router: Router) {
 	}
 
 	public initializePusher(accessToken: string, userId: string): void {
@@ -34,6 +34,8 @@ export class PusherService {
 	}
 
 	public bindEventsToChannel(channel: any) {
+
+
 		// Event for Invitation
 		channel.bind('1', (data) => {
 			this.globalGrowlMessages = [{
@@ -51,6 +53,10 @@ export class PusherService {
 					summary: 'Deal Status Changed',
 					detail: 'Please check My Deals.'
 				}];
+				return;
+			}
+			const deedId = (this.router.url.split('/'))[2];
+			if (deedId !== data.message) {
 				return;
 			}
 			this.router.navigate(['transaction-tool', data.message]);
