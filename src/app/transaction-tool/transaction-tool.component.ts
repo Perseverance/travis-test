@@ -1,12 +1,12 @@
-import { SmartContractConnectionService } from './../smart-contract-connection/smart-contract-connection.service';
-import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MenuItem } from 'primeng/primeng';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Router, Params, UrlSegment, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
-import { DeedsService } from '../shared/deeds.service';
-import { Status } from '../smart-contract-connection/smart-contract-connection.service';
+import {SmartContractConnectionService} from './../smart-contract-connection/smart-contract-connection.service';
+import {REVERSE_STEPS, STEPS} from './workflow/workflow.model';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {MenuItem} from 'primeng/primeng';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router, Params, UrlSegment, NavigationEnd} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {DeedsService} from '../shared/deeds.service';
+import {Status} from '../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -22,7 +22,7 @@ export class TransactionToolComponent implements OnInit {
 	public addressRoute: string;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-		private deedsService: DeedsService, private smartContractService: SmartContractConnectionService) {
+				private deedsService: DeedsService, private smartContractService: SmartContractConnectionService) {
 		this.router.events
 			.filter(event => event instanceof NavigationEnd)
 			.subscribe((event: NavigationEnd) => {
@@ -181,10 +181,13 @@ export class TransactionToolComponent implements OnInit {
 				return 7;
 			}
 			case Status.affidavit: {
+				return 7;
+			}
+			case Status.affidavitBlockchain: {
 				return 8;
 			}
 			case Status.closingDocuments: {
-				return 9;
+				return 8;
 			}
 			default: {
 				return 0;
