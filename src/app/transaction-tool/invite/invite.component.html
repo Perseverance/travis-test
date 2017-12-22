@@ -123,7 +123,49 @@
 				</ng-template>
 			</ng-template>
 			<ng-template #invitationPassed>
-				<div>Moved back from greater step</div>
+				<div class="row invite-passed-signers">
+					<div class="col-xs-3">
+						<div class="row text-center">
+							<div class="col-xs-12">Buyer</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-xs-12" [inlineSVG]="'/assets/images/signed.svg'"></div>
+							<p>Accepted</p>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="row text-center">
+							<div class="col-xs-12">Buyer broker</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-xs-12" [inlineSVG]="'/assets/images/signed.svg'"></div>
+							<p>Accepted</p>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="row text-center">
+							<div class="col-xs-12">Seller</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-xs-12" [inlineSVG]="'/assets/images/signed.svg'"></div>
+							<p>Accepted</p>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="row text-center">
+							<div class="col-xs-12">Seller broker</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-xs-12" [inlineSVG]="'/assets/images/signed.svg'"></div>
+							<p>Accepted</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div *ngIf="disclosuresLink;then previewLink; else noPreviewLink;"></div>
+					</div>
+				</div>
 			</ng-template>
 			<ng-template #previewLink>
 				<app-document-preview previewTitle="Disclosures"
