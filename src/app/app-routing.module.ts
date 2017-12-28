@@ -46,6 +46,18 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	{
+		path: 'packer',
+		canActivate: [MetaGuard],
+		redirectTo: 'property/packer',
+		pathMatch: 'full'
+	},
+	{
+		path: 'packer-house',
+		canActivate: [MetaGuard],
+		redirectTo: 'property/packer-house',
+		pathMatch: 'full'
+	},
+	{
 		path: '**',
 		canActivate: [MetaGuard],
 		redirectTo: '',
