@@ -130,6 +130,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		const self = this;
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
+			//temporary solution for Packer house
+			if(propertyId === "packer" || propertyId === "packer-house"){
+				propertyId = "5a3980e64170310df43e959a";
+			}
 			const property = await self.propertiesService.getProperty(propertyId);
 			self.setupMetaTags(property);
 			self.createAndSetMapOptions(property);
