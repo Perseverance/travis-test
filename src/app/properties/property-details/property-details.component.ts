@@ -72,7 +72,11 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(router);
-		this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
+		if(window.screen.width > 990){
+			this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
+		}else{
+			this.IMAGE_WIDTH_PX = window.screen.width;
+		}
 		this.IMAGE_HEIGHT_PX = 480;
 	}
 
