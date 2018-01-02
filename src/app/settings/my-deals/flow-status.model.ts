@@ -13,7 +13,8 @@ export const FlowStatus = {
 	11: 'Payment',
 	12: 'Affidavit',
 	13: 'Affidavit Sent To Blockchain',
-	14: 'Completed',
+	14: 'Closing Documents',
+	15: 'Ownership Transfered',
 };
 
 export type FlowStatus = string;

@@ -21,6 +21,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { InviteComponent } from './invite/invite.component';
 import { SettlementStatementComponent } from './settlement-statement/settlement-statement.component';
 import { AffidavitStepComponent } from './affidavit-step/affidavit-step.component';
+import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 
 @NgModule({
 	imports: [
@@ -49,7 +50,8 @@ import { AffidavitStepComponent } from './affidavit-step/affidavit-step.componen
 		InviteComponent,
 		SettlementStatementComponent,
 		AffidavitStepComponent,
-		ClosingDocumentsComponent
+		ClosingDocumentsComponent,
+		TransferOwnershipComponent
 	],
 	exports: [
 		TransactionToolRoutingModule
