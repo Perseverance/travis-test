@@ -1,3 +1,4 @@
+import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { ClosingDocumentsComponent } from './closing-documents/closing-documents.component';
 import { InviteComponent } from './invite/invite.component';
 import { PaymentStepComponent } from './payment-step/payment-step.component';
@@ -24,7 +25,7 @@ const transactionToolSteps: Routes = [
 			{
 				path: '',
 				pathMatch: 'full',
-				redirectTo: 'closing-documents',
+				redirectTo: 'transfer',
 				canActivate: [WorkflowGuard]
 			},
 			{
@@ -70,6 +71,11 @@ const transactionToolSteps: Routes = [
 			{
 				path: 'payment',
 				component: PaymentStepComponent,
+				canActivate: [WorkflowGuard],
+			},
+			{
+				path: 'transfer',
+				component: TransferOwnershipComponent,
 				canActivate: [WorkflowGuard],
 			}
 

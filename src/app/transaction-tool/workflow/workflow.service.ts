@@ -29,6 +29,7 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.payment}`] = STEPS['affidavit'];
 		this.statusToStepMap[`${Status.affidavit}`] = STEPS['affidavit'];
 		this.statusToStepMap[`${Status.affidavitBlockchain}`] = STEPS['closing-documents'];
+		this.statusToStepMap[`${Status.closingDocuments}`] = STEPS['transfer'];
 
 	}
 
