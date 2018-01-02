@@ -5,6 +5,13 @@ $gray-color-indicator: #dcdcdc;
 $nav-prev-next-color: #969696;
 .transaction-tool {
     padding: 15px;
+    .transaction-version {
+        padding-left: 2em;
+        @media #{$xxs} {
+            padding-left: 0;
+            text-align: right;
+        }
+    }
     .ui-state-default {
         border: none;
         background: none;
