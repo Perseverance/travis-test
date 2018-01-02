@@ -31,6 +31,8 @@ import {UIParams, UIResponse, FacebookService} from 'ngx-facebook';
 import {LanguagesEnum} from '../../shared/enums/supported-languages.enum';
 import {LocalStorageService} from '../../shared/localStorage.service';
 import {MomentService} from '../../shared/moment.service';
+import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
+import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-property-details',
@@ -88,6 +90,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 	async ngOnInit() {
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
+		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
+
 		this.propertyImagesCarouselConfig = {
 			grid: {xs: 1, sm: 1, md: 2, lg: 2, all: 0},
 			slide: 1,
@@ -154,8 +158,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.zone.run(() => {
 			});
 		});
-
-		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
 	}
 
 	private setupMetaTags(property: any) {
@@ -231,11 +233,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			.subscribe(params => {
 				console.log(params);
 				if (params.language) {
-					this.applyParamLanguage(params.language)
-					console.log('language');
+					this.applyParamLanguage(params.language);
 				}
 				if (params.currency) {
-					console.log('currency');
+					this.applyParamCurrency(params.currency);
 				}
 
 			});
@@ -243,7 +244,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 	private applyParamLanguage(language: string) {
 		const requestedLanguage = language.toLowerCase();
-		if (!this.isValidLanguage(requestedLanguage)) {
+		if (!this.isSupportedLanguage(requestedLanguage)) {
 			return;
 		}
 
@@ -252,11 +253,37 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.storageService.selectedLanguage = requestedLanguage;
 	}
 
-	private isValidLanguage(language: string): boolean {
+	private isSupportedLanguage(language: string): boolean {
 		if (language === LanguagesEnum.ENGLISH ||
 			language === LanguagesEnum.CHINESE ||
 			language === LanguagesEnum.ARABIC ||
 			language === LanguagesEnum.RUSSIAN) {
+			return true;
+		}
+		return false;
+	}
+
+	private applyParamCurrency(currency: string) {
+		const requestedCurrency = currency.toUpperCase();
+		if (!this.isSupportedCurrency(requestedCurrency)) {
+			return;
+		}
+
+		this.storageService.selectedCurrencyType = CurrencyTypeEnum[`${requestedCurrency}`];
+	}
+
+	private isSupportedCurrency(currency: string): boolean {
+		if (currency === CurrencyEnum.unitedStatesDollar ||
+			currency === CurrencyEnum.europeanEuro ||
+			currency === CurrencyEnum.russianRuble ||
+			currency === CurrencyEnum.uaeDirham ||
+			currency === CurrencyEnum.hongKongDollar ||
+			currency === CurrencyEnum.singaporeDollar ||
+			currency === CurrencyEnum.poundSterling ||
+			currency === CurrencyEnum.bulgarianLev ||
+			currency === CurrencyEnum.chineseYuanRenminbi ||
+			currency === CurrencyEnum.ether ||
+			currency === CurrencyEnum.bitcoin) {
 			return true;
 		}
 		return false;
