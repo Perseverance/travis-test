@@ -21,6 +21,10 @@
             [selected]="selectedTab === settingsTabs.PASSWORD" headerStyleClass="settings-panel-header">
             <app-change-password></app-change-password>
         </p-tabPanel>
+        <p-tabPanel header="{{ 'settings.headers.refferal-link' | translate }}" [selected]="selectedTab === settingsTabs.REFFERAL_LINK"
+            headerStyleClass="settings-panel-header">
+            <app-refferal-link></app-refferal-link>
+        </p-tabPanel>
         <!--<p-tabPanel header="{{ 'settings.headers.email-notifications-settings' | translate }}" headerStyleClass="settings-panel-header">
             {{ 'settings.headers.email-notifications-settings' | translate }}
         </p-tabPanel>
