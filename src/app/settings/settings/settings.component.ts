@@ -9,7 +9,8 @@ export const SETTINGS_TABS = {
 	MY_LISTINGS: 'MY_LISTINGS',
 	WALLET: 'WALLET',
 	PASSWORD: 'PASSWORD',
-	MY_DEALS: 'MY_DEALS'
+	MY_DEALS: 'MY_DEALS',
+	REFFERAL_LINK: 'REFFERAL_LINK'
 };
 
 export const TABS_INDEX = {
@@ -17,7 +18,8 @@ export const TABS_INDEX = {
 	MY_LISTINGS: 1,
 	WALLET: 2,
 	MY_DEALS: 3,
-	PASSWORD: 4
+	PASSWORD: 4,
+	REFFERAL_LINK: 5
 };
 
 @Component({
@@ -88,6 +90,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			case TABS_INDEX.MY_DEALS: {
 				queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
+				break;
+			}
+			case TABS_INDEX.REFFERAL_LINK: {
+				queryParams['selectedTab'] = SETTINGS_TABS.REFFERAL_LINK;
 				break;
 			}
 			default: {

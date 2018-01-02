@@ -1,0 +1,18 @@
+<div class="row payment-info">
+    <div class="col-xs-12">
+        <h2>Refferal Program</h2>
+        <p>You can invite a friend and get a bonus PRO Token, when he/she is singed
+            up.
+        </p>
+        <button type="button" class="btn propy-control button-small refferal-button-desktop"
+            data-toggle="collapse" data-target="#link" (click)="changeButtonText()">{{buttonText}} Link</button>
+        <div id="link" class="collapse">
+            <span id="escrowAddress">{{inviteLink}} <button class="btn btn-default" type="button"
+                  ngxClipboard [cbContent]="inviteLink"><i class="fa fa-clone"></i></button></span>
+        </div>
+        <div class="mobile">
+            <button class="btn propy-control button-small" type="button" ngxClipboard [cbContent]="inviteLink">Copy Refferal Link</button>
+        </div>
+
+    </div>
+</div>
