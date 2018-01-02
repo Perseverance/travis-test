@@ -7,9 +7,6 @@ import {HomeComponent} from './home/home.component';
 import {TokenGuardLazyLoading} from './authentication/token-guard-lazy-loading.service';
 import {GoogleMapComponent} from './google-map/google-map.component';
 import {MetaGuard} from '@ngx-meta/core';
-import {HelloSignComponent} from './hello-sign/hello-sign.component';
-import {TransactionToolComponent} from './transaction-tool/transaction-tool.component';
-import {PurchaseAgreementStepComponent} from './transaction-tool/purchase-agreement-step/purchase-agreement-step.component';
 
 const routes: Routes = [
 	{
@@ -43,9 +40,21 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	{
-		path: 'hello-sign',
-		canActivate: [TokenGuard],
-		component: HelloSignComponent,
+		path: 'Users/RequestInvite',
+		canActivate: [MetaGuard],
+		redirectTo: 'signup',
+		pathMatch: 'full'
+	},
+	{
+		path: 'packer',
+		canActivate: [MetaGuard],
+		redirectTo: 'property/packer',
+		pathMatch: 'full'
+	},
+	{
+		path: 'packer-house',
+		canActivate: [MetaGuard],
+		redirectTo: 'property/packer-house',
 		pathMatch: 'full'
 	},
 	{

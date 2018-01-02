@@ -39,7 +39,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 		this.contactAgentForm = this.formBuilder.group({
 			name: ['', [Validators.required]],
-			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
+			phoneNumber: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.email]],
 			message: ['', [Validators.required]],
 			agentId: [undefined, [Validators.required]]
