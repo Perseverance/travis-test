@@ -231,7 +231,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private setupQueryParamsWatcher() {
 		return this.route.queryParams
 			.subscribe(params => {
-				console.log(params);
 				if (params.language) {
 					this.applyParamLanguage(params.language);
 				}
