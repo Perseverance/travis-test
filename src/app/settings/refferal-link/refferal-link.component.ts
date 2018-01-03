@@ -1,6 +1,6 @@
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { Component, OnInit, ViewEncapsulation, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 
 @Component({
