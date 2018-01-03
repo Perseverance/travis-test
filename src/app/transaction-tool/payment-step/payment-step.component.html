@@ -1,7 +1,7 @@
 <div *ngIf="hasUserDataLoaded && invitationDataLoaded; then dataLoaded;else dataNotLoaded"></div>
 
 <ng-template #dataLoaded>
-    <h4>Payment</h4>
+    <h3>Payment</h3>
     <div class="row">
         <div class="col-xs-12">
             <div *ngIf="userIsBuyer;then isBuyer; else isNotBuyer">

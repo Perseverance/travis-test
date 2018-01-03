@@ -17,11 +17,10 @@ export enum Status {
 	sellerDisclosuresBlockchain = 9,
 	settlementStatement = 10,
 	payment = 11,
-	receivedPayment = 12,
-	affidavit = 13,
-	affidavitBlockchain = 14,
-	closingDocuments = 15,
-	completed = 16
+	affidavit = 12,
+	affidavitBlockchain = 13,
+	closingDocuments = 14,
+	transferred = 15
 }
 
 export enum SMART_CONTRACT_DOCUMENT_TYPES {
@@ -84,7 +83,6 @@ export class SmartContractConnectionService {
 		);
 
 
-
 		return signedData;
 
 		// const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
@@ -108,7 +106,7 @@ export class SmartContractConnectionService {
 	}
 
 	public async recordOwnershipTransfer(deedAddress: string, doc: string): Promise<any> {
-		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'OWNERSHIP_TRANSFER', doc);
+		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'TITLE_HASH', doc);
 	}
 
 	private async recordDocument(deedAddress: string, docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, doc: string) {
@@ -130,7 +128,7 @@ export class SmartContractConnectionService {
 			[this.web3Service.web3.utils.sha3(doc)],
 			SMART_CONTRACT_STATUSES.STATUS_SUCCESS);
 		const estimatedGas = await deedActionMethod.estimateGas();
-		const doubleGas = estimatedGas * 4;
+		const doubleGas = 200000;
 
 		const funcData = deedActionMethod.encodeABI(callOptions);
 		const signedData = await this.web3Service.signTransaction(

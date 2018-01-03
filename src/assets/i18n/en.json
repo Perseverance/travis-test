@@ -20,7 +20,8 @@
             "email": "Email",
             "balance": "balance",
             "set": "Set",
-            "share": "Share to Facebook"
+            "share": "Share to Facebook",
+            "about": "About"
         },
         "placeholder": {
             "yourEmail": "Your Email",
@@ -297,7 +298,8 @@
             "password-settings": "Password",
             "my-listed-properties": "My Listings",
             "pro-wallet": "My PRO Wallet",
-            "my-deals": "My Deals"
+            "my-deals": "My Deals",
+            "refferal-link": "Referral Link"
         },
         "general-settings": {
             "update-success": "Your profile was updated succesfully!",
@@ -345,6 +347,14 @@
             "redeemed-error-title": "Could not redeem your PRO tokens",
             "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
             "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
+        },
+        "refferal-program": {
+            "refferal-head": "Refferal Program",
+            "refferal-paragraph": "You can invite a friend and get a bonus PRO Token each, when they create an account at Propy.",
+            "refferal-show": "Show Link",
+            "refferal-hide": "Hide Link",
+            "refferal-link": "Link",
+            "refferal-button": "Copy Refferal Link"
         }
     },
     "about": {

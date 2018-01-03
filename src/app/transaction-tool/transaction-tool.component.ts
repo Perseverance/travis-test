@@ -100,6 +100,13 @@ export class TransactionToolComponent implements OnInit {
 					this.activeIndex = 8;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
+			},
+			{
+				label: 'Ownership Transfer',
+				command: (event: any) => {
+					this.activeIndex = 9;
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
+				}
 			}
 		];
 	}
@@ -181,6 +188,9 @@ export class TransactionToolComponent implements OnInit {
 				return 7;
 			}
 			case Status.affidavit: {
+				return 7;
+			}
+			case Status.affidavitBlockchain: {
 				return 8;
 			}
 			case Status.closingDocuments: {

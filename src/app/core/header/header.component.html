@@ -33,18 +33,20 @@
 					<a routerLink="/list-property" class="list-property text-capitalize">{{'list-property.heading' |
 						translate }}</a>
 				</li>
+				<li *ngIf="isLanding">
+					<a target="_blank" href="https://tokensale.propy.com/" class="list-property text-capitalize">{{
+						'common.label.about' | translate }} PRO Token</a>
+				</li>
 				<li class="dropdown languages-dropdown">
 					<a href="#" class="dropdown-toggle language-selector" data-toggle="dropdown" role="button"
 					   aria-haspopup="true" ngClass="{{translate.currentLang}}"
-					   aria-expanded="false">{{translate.currentLang |
-						languageLabel }}<i
-							class="fa fa-chevron-down" aria-hidden="true"></i></a>
+					   aria-expanded="false">{{translate.currentLang | languageLabel }}<i
+						class="fa fa-chevron-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu">
 						<li *ngFor="let lang of translate.getLangs()">
 							<a #langSelect class="language-selector" (click)="selectLanguage(langSelect.rel)"
 							   [rel]="lang" ngClass="{{lang}}" [class.active]="lang === translate.currentLang"
-							   *ngIf="lang != translate.currentLang">{{
-								lang | languageLabel }}</a>
+							   *ngIf="lang != translate.currentLang">{{ lang | languageLabel }}</a>
 						</li>
 					</ul>
 				</li>

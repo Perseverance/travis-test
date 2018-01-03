@@ -1,28 +1,40 @@
 @import "../../../variables";
 // Mixins
 @import '../../../mixins';
+
+$success-color: #22c230;
+
 .invitation {
-    h3,
-    h4 {
-        margin-bottom: 40px;
-    }
-    .price-row {
-        span {
-            line-height: 44px;
-        }
-    }
-    .email-input {
-        input.form-control.propy-control {
-            height: 32px;
-            font-size: 14px;
-            @include border-radius(5px);
-        }
-        label {
-            font-weight: 200;
-            font-size: 16px;
-        }
-    }
-    .invite-btn {
-        margin-top: 15px;
-    }
+	h3,
+	h4 {
+		margin-bottom: 40px;
+	}
+	.price-row {
+		span {
+			line-height: 44px;
+		}
+	}
+	.email-input {
+		input.form-control.propy-control {
+			height: 32px;
+			font-size: 14px;
+			@include border-radius(5px);
+		}
+		label {
+			font-weight: 200;
+			font-size: 16px;
+		}
+	}
+	.invite-btn {
+		margin-top: 15px;
+	}
+	.invite-passed-signers {
+		padding: 20px 0;
+		margin: 15px 0;
+		border-top: 1px solid $border-default;
+		border-bottom: 1px solid $border-default;
+		p {
+			color: $success-color;
+		}
+	}
 }
