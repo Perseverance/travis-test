@@ -72,6 +72,15 @@ export class DeedsService {
 		return result.data.data;
 	}
 
+	public async markDocumentAgreed(documentId: string): Promise<any> {
+		const data = {
+			documentId
+		};
+
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.AGREE_DOCUMENT, data);
+		return result.data.data;
+	}
+
 	public async sendDocumentTxHash(id: string, txHash: string) {
 		const data = {
 			id,

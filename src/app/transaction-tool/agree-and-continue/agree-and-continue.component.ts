@@ -18,11 +18,11 @@ export class AgreeAndContinueComponent implements OnInit, OnDestroy {
 	private addressSubscription: Subscription;
 	@Input() hasBuyerAgreed: boolean;
 	@Input() hasSellerAgreed: boolean;
-	@Input() hasBuyerBrokerAgreed: boolean;
-	@Input() hasSellerBrokerAgreed: boolean;
+	@Input() hasBuyerBrokerSigned: boolean;
+	@Input() hasSellerBrokerSigned: boolean;
 	@Input() showAgreeButton: boolean;
 	@Input() documentType: any;
-	@Output() onSignDocument = new EventEmitter<any>();
+	@Output() onAgreeDocument = new EventEmitter<any>();
 
 	constructor(private route: ActivatedRoute,
 		private deedsService: DeedsService) { }
@@ -38,9 +38,23 @@ export class AgreeAndContinueComponent implements OnInit, OnDestroy {
 			self.currentUserRole = deed.currentUserRole;
 		});
 	}
+	public isSectionWithFourSigners(): boolean {
+		if (this.documentType === this.deedDocumentTypeEnum.PurchaseAgreement
+			|| this.documentType === this.deedDocumentTypeEnum.SignedSellerDisclosures) {
+			return true;
+		}
+		return false;
+	}
+	public isSectionWithTwoSigners(): boolean {
+		if (this.documentType === this.deedDocumentTypeEnum.TitleReport
+			|| this.documentType === this.deedDocumentTypeEnum.Affidavit) {
+			return true;
+		}
+		return false;
+	}
 
-	public onSignDocumentClick() {
-		this.onSignDocument.emit();
+	public onAgreeDocumentClick() {
+		this.onAgreeDocument.emit();
 	}
 
 	ngOnDestroy() {

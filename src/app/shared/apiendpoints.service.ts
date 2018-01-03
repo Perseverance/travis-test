@@ -52,7 +52,8 @@ export class APIEndpointsService {
 		ACCEPT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/acceptparty`,
 		REJECT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/rejectparty`,
 		PROPERTY_PREVIEW: `${this.INTERNAL_API_PREFIX}/Deeds/property`,
-		GET_DOCUMENT_CONTENT: `${this.INTERNAL_API_PREFIX}/Deeds/documentcontent`
+		GET_DOCUMENT_CONTENT: `${this.INTERNAL_API_PREFIX}/Deeds/documentcontent`,
+		AGREE_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
 	};
 
 	constructor() {
