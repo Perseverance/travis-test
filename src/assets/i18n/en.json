@@ -347,6 +347,14 @@
             "redeemed-error-title": "Could not redeem your PRO tokens",
             "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
             "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
+        },
+        "refferal-program": {
+            "refferal-head": "Refferal Program",
+            "refferal-paragraph": "You can invite a friend and get a bonus PRO Token each, when they create an account at Propy.",
+            "refferal-show": "Show Link",
+            "refferal-hide": "Hide Link",
+            "refferal-link": "Link",
+            "refferal-button": "Copy Refferal Link"
         }
     },
     "about": {
