@@ -14,7 +14,6 @@ export class RefferalLinkComponent implements OnInit {
 	public inviteLink: string;
 	public userId: string;
 	private REFERRAL_PATH = 'Users/RequestInvite?referrerId=';
-	public buttonText: string;
 	public buttonLabelHide = false;
 	public buttonLabels: object;
 	public buttonTextLabelShow: string;
