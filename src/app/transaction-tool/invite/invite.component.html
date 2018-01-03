@@ -168,8 +168,35 @@
 				</div>
 			</ng-template>
 			<ng-template #previewLink>
-				<app-document-preview previewTitle="Disclosures"
-									  previewLink="{{ disclosuresLink }}"></app-document-preview>
+				<div class="row reupload-holder" *ngIf="deed.status < deedStatus.partiesAccepted">
+					<div class="col-xs-12">
+						<div class="row reupload-button-holder">
+							<div class="col-xs-12">
+								<button type="button" *ngIf="!reuploadDocumentActivated"
+										class="btn propy-control button-big pull-right"
+										(click)="reuploadDocumentActivated = true">Reupload
+								</button>
+								<button type="button" *ngIf="reuploadDocumentActivated"
+										class="btn propy-control cancel-reuploading button-big btn-white pull-right"
+										(click)="reuploadDocumentActivated = false">Cancel reuploading
+								</button>
+							</div>
+						</div>
+						<div class="row" *ngIf="reuploadDocumentActivated">
+							<div class="col-xs-12">
+								<app-upload-document [uploadTitle]="disclosuresTitle"
+													 [uploadSubtitle]="uploadDisclosuresSubtitle"
+													 (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="!reuploadDocumentActivated">
+					<div class="col-xs-12">
+						<app-document-preview previewTitle="Disclosures"
+											  previewLink="{{ disclosuresLink }}"></app-document-preview>
+					</div>
+				</div>
 			</ng-template>
 			<ng-template #noPreviewLink>
 				<app-upload-document [uploadTitle]="disclosuresTitle" [uploadSubtitle]="uploadDisclosuresSubtitle"
