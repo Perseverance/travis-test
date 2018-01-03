@@ -1,5 +1,7 @@
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnChanges } from '@angular/core';
+
 
 @Component({
 	selector: 'app-refferal-link',
@@ -12,9 +14,13 @@ export class RefferalLinkComponent implements OnInit {
 	public inviteLink: string;
 	public userId: string;
 	private REFERRAL_PATH = 'Users/RequestInvite?referrerId=';
-	public buttonText = 'Show';
+	public buttonText: string;
+	public buttonLabelHide = false;
+	public buttonLabels: object;
+	public buttonTextLabelShow: string;
+	public buttonTextLabelHide: string;
 
-	constructor(private authService: AuthenticationService) {
+	constructor(private authService: AuthenticationService, private translateService: TranslateService, ) {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.user) {
@@ -27,14 +33,17 @@ export class RefferalLinkComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.translateService.stream([
+			'settings.refferal-program.refferal-show',
+			'settings.refferal-program.refferal-hide',
+		]).subscribe((translations) => {
+			this.buttonTextLabelShow = translations['settings.refferal-program.refferal-show'],
+				this.buttonTextLabelHide = translations['settings.refferal-program.refferal-hide']
+		});
 	}
 
 	changeButtonText() {
-		if (this.buttonText === 'Show') {
-			this.buttonText = 'Hide';
-		} else {
-			this.buttonText = 'Show';
-		}
+		this.buttonLabelHide = !this.buttonLabelHide;
 	}
 
 }
