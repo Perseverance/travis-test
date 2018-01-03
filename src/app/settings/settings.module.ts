@@ -14,6 +14,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ConfirmDialogModule, DataTableModule, GrowlModule } from 'primeng/primeng';
 import { ProWalletModule } from '../pro-wallet/pro-wallet.module';
 import { MyDealsComponent } from './my-deals/my-deals.component';
+import { RefferalLinkComponent } from './refferal-link/refferal-link.component';
+import { ClipboardModule } from 'ngx-clipboard/dist/src';
 
 @NgModule({
 	imports: [
@@ -28,9 +30,10 @@ import { MyDealsComponent } from './my-deals/my-deals.component';
 		GrowlModule,
 		ProWalletModule,
 		DataTableModule,
-		MomentModule
+		MomentModule,
+		ClipboardModule
 	],
-	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent]
+	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent, RefferalLinkComponent]
 })
 export class SettingsModule {
 }

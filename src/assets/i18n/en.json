@@ -298,7 +298,8 @@
             "password-settings": "Password",
             "my-listed-properties": "My Listings",
             "pro-wallet": "My PRO Wallet",
-            "my-deals": "My Deals"
+            "my-deals": "My Deals",
+            "refferal-link": "Referral Link"
         },
         "general-settings": {
             "update-success": "Your profile was updated succesfully!",
@@ -347,7 +348,16 @@
             "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
             "download-your-wallet": "Download your wallet file",
             "wallet-password": "Your Wallet Password",
-            "generate-wallet": "Generate wallet"
+            "generate-wallet": "Generate wallet",
+            "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
+        },
+        "refferal-program": {
+            "refferal-head": "Refferal Program",
+            "refferal-paragraph": "You can invite a friend and get a bonus PRO Token each, when they create an account at Propy.",
+            "refferal-show": "Show Link",
+            "refferal-hide": "Hide Link",
+            "refferal-link": "Link",
+            "refferal-button": "Copy Refferal Link"
         }
     },
     "about": {
