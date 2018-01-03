@@ -49,7 +49,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public hasBuyerResponded: boolean;
 	public hasBuyerBrokerResponded: boolean;
 	public hasTitleCompanyResponded: boolean;
-	public reuploadDocumentActivated: boolean;
+	public reuploadingDocumentActivated: boolean;
 	public isWaitingForReservation = false;
 	public deed: any;
 	public deedStatus = Status;
@@ -169,7 +169,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
 		this.disclosuresLink = response.fileName;
-		this.reuploadDocumentActivated = false;
+		this.reuploadingDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
