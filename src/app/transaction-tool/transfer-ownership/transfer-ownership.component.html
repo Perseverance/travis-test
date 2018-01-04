@@ -7,7 +7,7 @@
         <div *ngIf="userIsTitleCompany;else notTitleCompany">
             <i>Status: Waiting For You To Record The Transfer Ownership Change To The Blockchain. Please use the button below!</i>
             <br>
-            <a class="btn propy-control button-big record-document-button" (click)="recordOwnershipTransfer()">Record Transfer</a>
+            <app-record-blockchain-form (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
         </div>
         <ng-template #notTitleCompany>
             <i>Status: Waiting for Title Company To Record The Ownership Transfer to the blockchain</i>

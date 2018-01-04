@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { ClosingDocumentsComponent } from './closing-documents/closing-documents.component';
 import { ClipboardModule } from 'ngx-clipboard/dist';
 import { PropertyItemViewComponent } from './property-preview/property-item-view/property-item-view.component';
@@ -22,6 +23,7 @@ import { InviteComponent } from './invite/invite.component';
 import { SettlementStatementComponent } from './settlement-statement/settlement-statement.component';
 import { AffidavitStepComponent } from './affidavit-step/affidavit-step.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
+import { RecordBlockchainFormComponent } from './record-blockchain-form/record-blockchain-form.component';
 
 @NgModule({
 	imports: [
@@ -33,7 +35,8 @@ import { TransferOwnershipComponent } from './transfer-ownership/transfer-owners
 		FileUploadModule,
 		SharedModule,
 		InlineSVGModule,
-		ClipboardModule
+		ClipboardModule,
+		TranslateModule
 	],
 	declarations: [
 		TransactionToolComponent,
@@ -51,7 +54,8 @@ import { TransferOwnershipComponent } from './transfer-ownership/transfer-owners
 		SettlementStatementComponent,
 		AffidavitStepComponent,
 		ClosingDocumentsComponent,
-		TransferOwnershipComponent
+		TransferOwnershipComponent,
+		RecordBlockchainFormComponent
 	],
 	exports: [
 		TransactionToolRoutingModule

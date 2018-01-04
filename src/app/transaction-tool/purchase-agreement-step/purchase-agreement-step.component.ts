@@ -157,7 +157,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
-	public async sendDocumentToBlockchain() {
+	public async onRecordClick(password) {
 		this.notificationService.pushInfo({
 			title: `Sending the document to the blockchain.`,
 			message: '',
@@ -165,7 +165,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			timeout: 60000
 		});
 		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
-		const result = await this.smartContractService.recordPurchaseAgreement('PropyNinja1', this.deedAddress, documentString);
+		const result = await this.smartContractService.recordPurchaseAgreement(password, this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
