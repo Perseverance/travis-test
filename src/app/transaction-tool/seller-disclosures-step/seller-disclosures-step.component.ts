@@ -93,7 +93,6 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 
 	private getSignatureDocument(documents: any[]) {
 		let signatureDocument;
-		console.log(documents);
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.SignedSellerDisclosures) {
 				signatureDocument = doc;
