@@ -87,7 +87,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		const url = window.URL;
 		const fileUrl = url.createObjectURL(blob);
 
-		downloader.setAttribute('href', data);
+		downloader.setAttribute('href', fileUrl);
 		downloader.setAttribute('download', 'pro-wallet-backup.json');
 		downloader.click();
 
