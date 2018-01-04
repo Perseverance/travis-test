@@ -65,8 +65,18 @@
 									<span>FINAL PRICE</span>
 								</div>
 								<div class="form-group col-xs-2">
-									<input formControlName="priceInEth" type="text" class="form-control propy-control"
+									<input formControlName="priceInEth" type="number" class="form-control propy-control"
 										   id="priceInEth">
+									<div *ngIf="priceInEth.touched">
+										<div class="propy-validation"
+											 *ngIf="priceInEth.invalid && priceInEth.errors['required']">This field is
+											required
+										</div>
+										<div class="propy-validation"
+											 *ngIf="priceInEth.invalid && priceInEth.errors['invalidEthNumber']">Please
+											add a valid number
+										</div>
+									</div>
 								</div>
 								<div class="col-xs-1">
 									<span>ETH</span>
@@ -80,6 +90,12 @@
 									<label for="sellerEmail">Seller</label>
 									<input formControlName="sellerEmail" type="email" class="form-control propy-control"
 										   id="sellerEmail" placeholder="Seller email">
+									<div *ngIf="sellerEmail.touched">
+										<div class="propy-validation"
+											 *ngIf="sellerEmail.invalid && sellerEmail.errors['required']">This field is
+											required
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="row">
@@ -87,6 +103,12 @@
 									<label for="buyerEmail">Buyer</label>
 									<input formControlName="buyerEmail" type="email" class="form-control propy-control"
 										   id="buyerEmail" placeholder="Buyer email">
+									<div *ngIf="buyerEmail.touched">
+										<div class="propy-validation"
+											 *ngIf="buyerEmail.invalid && buyerEmail.errors['required']">This field is
+											required
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="row">
@@ -95,6 +117,12 @@
 									<input formControlName="buyerAgentEmail" type="email"
 										   class="form-control propy-control"
 										   id="buyerAgentEmail" placeholder="Buyer broker email">
+									<div *ngIf="buyerAgentEmail.touched">
+										<div class="propy-validation"
+											 *ngIf="buyerAgentEmail.invalid && buyerAgentEmail.errors['required']">This
+											field is required
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="row">
@@ -103,6 +131,12 @@
 									<input formControlName="titleCompanyEmail" type="email"
 										   class="form-control propy-control"
 										   id="titleCompanyEmail" placeholder="Title company email">
+									<div *ngIf="titleCompanyEmail.touched">
+										<div class="propy-validation"
+											 *ngIf="titleCompanyEmail.invalid && titleCompanyEmail.errors['required']">
+											This field is required
+										</div>
+									</div>
 								</div>
 							</div>
 						</form>
@@ -115,7 +149,7 @@
 					</div>
 					<hr>
 					<div class="col-xs-12">
-						<button type="button" [ngClass]="{disabled : !disclosuresLink}"
+						<button type="button" [disabled]="inviteForm.invalid" [ngClass]="{disabled : !disclosuresLink}"
 								class="btn propy-control invite-btn button-big pull-right"
 								(click)="onInvite()">Invite & Continue
 						</button>

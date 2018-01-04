@@ -8,8 +8,7 @@
 				<i>Status: Waiting For You To Record The Title Report To The Blockchain. Please use the button
 					below!</i>
 				<br>
-				<a class="btn propy-control button-big record-document-button" (click)="sendDocumentToBlockchain() ">Record
-					Document</a>
+				<app-record-blockchain-form (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
 			</div>
 			<ng-template #notSeller>
 				<i>Status: Waiting for Seller To Record The Title Report To The Blockchain</i>
