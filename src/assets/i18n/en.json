@@ -244,6 +244,8 @@
         "reserve-property": "Reserve",
         "reserved-property": "Reserved",
         "reserved-by-you": "Reserved by you",
+        "no-wallet-set": "No wallet set!",
+        "no-wallet-set-message": "You have not set your wallet. Go to the wallet section and generate your pro wallet!",
         "overview-labels": {
             "property-type": "Property Type",
             "area": "Property Area",

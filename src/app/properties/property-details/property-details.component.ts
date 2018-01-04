@@ -1,16 +1,17 @@
-import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
-import {PropertyConversionService} from './../../shared/property-conversion.service';
-import {ImageEnvironmentPrefixPipe} from './../../shared/pipes/image-environment-prefix.pipe';
-import {ImageSizePipe} from './../../shared/pipes/image-size.pipe';
-import {TranslateService} from '@ngx-translate/core';
-import {GoogleMapsMarkersService} from './../../shared/google-maps-markers.service';
-import {CurrencySymbolPipe} from './../../shared/pipes/currency-symbol.pipe';
-import {BigNumberFormatPipe} from './../../shared/pipes/big-number-format.pipe';
-import {environment} from './../../../environments/environment';
-import {NgxCarousel} from 'ngx-carousel';
-import {RedirectableComponent} from './../../shared/redirectable/redirectable.component';
-import {AuthenticationService} from './../../authentication/authentication.service';
-import {PropertiesService} from './../properties.service';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
+import { PropertyConversionService } from './../../shared/property-conversion.service';
+import { ImageEnvironmentPrefixPipe } from './../../shared/pipes/image-environment-prefix.pipe';
+import { ImageSizePipe } from './../../shared/pipes/image-size.pipe';
+import { TranslateService } from '@ngx-translate/core';
+import { GoogleMapsMarkersService } from './../../shared/google-maps-markers.service';
+import { CurrencySymbolPipe } from './../../shared/pipes/currency-symbol.pipe';
+import { BigNumberFormatPipe } from './../../shared/pipes/big-number-format.pipe';
+import { environment } from './../../../environments/environment';
+import { NgxCarousel } from 'ngx-carousel';
+import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
+import { AuthenticationService } from './../../authentication/authentication.service';
+import { PropertiesService } from './../properties.service';
 import {
 	Component,
 	OnInit,
@@ -21,18 +22,18 @@ import {
 	ViewChild,
 	ElementRef
 } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {log} from 'util';
-import {MetaService} from '@ngx-meta/core';
-import {UIParams, UIResponse, FacebookService} from 'ngx-facebook';
-import {LanguagesEnum} from '../../shared/enums/supported-languages.enum';
-import {LocalStorageService} from '../../shared/localStorage.service';
-import {MomentService} from '../../shared/moment.service';
-import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
-import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { log } from 'util';
+import { MetaService } from '@ngx-meta/core';
+import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
+import { LanguagesEnum } from '../../shared/enums/supported-languages.enum';
+import { LocalStorageService } from '../../shared/localStorage.service';
+import { MomentService } from '../../shared/moment.service';
+import { CurrencyEnum } from '../../shared/enums/supported-currencies.enum';
+import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-property-details',
@@ -60,24 +61,28 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public isPropertyReserved = false;
 	public isPropertyReservedByYou = false;
 
+	private walletErrorTitle: string;
+	private walletErrorMessage: string;
+
 	constructor(router: Router,
-				private route: ActivatedRoute,
-				private propertiesService: PropertiesService,
-				private authService: AuthenticationService,
-				private googleMarkersService: GoogleMapsMarkersService,
-				private bigNumberPipe: BigNumberFormatPipe,
-				private imageSizePipe: ImageSizePipe,
-				private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
-				private currencySymbolPipe: CurrencySymbolPipe,
-				private propertyConversionService: PropertyConversionService,
-				private fb: FacebookService,
-				private appRef: ApplicationRef,
-				private zone: NgZone,
-				private translateService: TranslateService,
-				private storageService: LocalStorageService,
-				private momentService: MomentService,
-				private metaService: MetaService,
-				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+		private route: ActivatedRoute,
+		private propertiesService: PropertiesService,
+		private authService: AuthenticationService,
+		private googleMarkersService: GoogleMapsMarkersService,
+		private bigNumberPipe: BigNumberFormatPipe,
+		private imageSizePipe: ImageSizePipe,
+		private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
+		private currencySymbolPipe: CurrencySymbolPipe,
+		private propertyConversionService: PropertyConversionService,
+		private fb: FacebookService,
+		private appRef: ApplicationRef,
+		private zone: NgZone,
+		private translateService: TranslateService,
+		private storageService: LocalStorageService,
+		private momentService: MomentService,
+		private metaService: MetaService,
+		private errorsService: ErrorsService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(router);
 		if (window.screen.width > 990) {
@@ -86,7 +91,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			this.IMAGE_WIDTH_PX = window.screen.width;
 		}
 		this.IMAGE_HEIGHT_PX = 480;
-		
+
 		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
 	}
 
@@ -94,7 +99,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
 
 		this.propertyImagesCarouselConfig = {
-			grid: {xs: 1, sm: 1, md: 2, lg: 2, all: 0},
+			grid: { xs: 1, sm: 1, md: 2, lg: 2, all: 0 },
 			slide: 1,
 			speed: 600,
 			point: {
@@ -114,7 +119,9 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			'common.scales.public-transport-scale.good',
 			'common.scales.public-transport-scale.excellent',
 			'common.scales.binary-scale.yes',
-			'common.scales.binary-scale.no'
+			'common.scales.binary-scale.no',
+			'property-details.no-wallet-set',
+			'property-details.no-wallet-set-message',
 		]).subscribe((translations) => {
 			this.featureScale = {
 				undefined: translations['common.scales.undefined'],
@@ -141,14 +148,15 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 				2: translations['common.scales.binary-scale.no']
 			};
 
+			this.walletErrorTitle = translations['property-details.no-wallet-set'];
+			this.walletErrorMessage = translations['property-details.no-wallet-set-message']
+
 		});
 		const self = this;
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
-			//temporary solution for Packer house
-			if (propertyId === "packer" || propertyId === "packer-house") {
-				propertyId = "5a3980e64170310df43e959a";
-			}
+			// temporary solution for Packer house
+			propertyId = self.emulatePackerHousePropertyId(propertyId);
 			const property = await self.propertiesService.getProperty(propertyId);
 			self.setupMetaTags(property);
 			self.createAndSetMapOptions(property);
@@ -159,6 +167,13 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.zone.run(() => {
 			});
 		});
+	}
+
+	private emulatePackerHousePropertyId(propertyId) {
+		if (propertyId === 'packer' || propertyId === 'packer-house') {
+			return '5a3980e64170310df43e959a';
+		}
+		return propertyId;
 	}
 
 	private setupMetaTags(property: any) {
@@ -177,7 +192,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 	private createAndSetMapOptions(property: any) {
 		this.options = {
-			center: {lat: property.latitude, lng: property.longitude},
+			center: { lat: property.latitude, lng: property.longitude },
 			zoom: this.DEFAULT_ZOOM
 		};
 	}
@@ -185,10 +200,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private createAndSetPropertyMarker(property: any) {
 		const marker = new google.maps.Marker(
 			{
-				position: {lat: property.latitude, lng: property.longitude},
+				position: { lat: property.latitude, lng: property.longitude },
 				icon: this.googleMarkersService.defaultMarkerSettings,
 				label: this.googleMarkersService.getMarkerLabel
-				(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
+					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
 			});
 		this.overlays = [marker];
 	}
@@ -287,5 +302,22 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			return true;
 		}
 		return false;
+	}
+
+	public async reserveProperty($event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const currentUser = await this.authService.getCurrentUser();
+		if (currentUser.data.data.jsonFile) {
+			this.router.navigate(['/purchase', this.property.id]);
+			return;
+		}
+
+		this.errorsService.pushError({
+			errorTitle: this.walletErrorTitle,
+			errorMessage: this.walletErrorMessage,
+			errorTime: (new Date()).getDate()
+		});
+
 	}
 }
