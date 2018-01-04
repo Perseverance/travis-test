@@ -204,6 +204,9 @@ export class TransactionToolComponent implements OnInit {
 			case Status.closingDocuments: {
 				return 9;
 			}
+			case Status.transferred: {
+				return 10;
+			}
 			default: {
 				return 0;
 			}

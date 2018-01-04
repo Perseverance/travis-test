@@ -86,11 +86,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			this.IMAGE_WIDTH_PX = window.screen.width;
 		}
 		this.IMAGE_HEIGHT_PX = 480;
+		
+		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
 	}
 
 	async ngOnInit() {
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
-		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
 
 		this.propertyImagesCarouselConfig = {
 			grid: {xs: 1, sm: 1, md: 2, lg: 2, all: 0},
