@@ -34,8 +34,8 @@ export class SettlementStatementComponent implements OnInit {
 	public sellerSigningDocument: any;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
-	public hasBuyerAgreed: boolean;
-	public hasSellerAgreed: boolean;
+	public hasBuyerSigned: boolean;
+	public hasSellerSigned: boolean;
 	public settlementTitle = 'Settlement statement';
 	public uploadSettlementBuyerSubtitle = 'Buyer Settlement Statement';
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
@@ -149,88 +149,88 @@ export class SettlementStatementComponent implements OnInit {
 		});
 	}
 
-	// public async signBuyerDocument() {
-	// 	const deed = await this.deedsService.getDeedDetails(this.deedAddress);
-	// 	const buyerDocument = this.getBuyerDocument(deed.documents);
-	// 	const response = await this.documentService.getSignUrl(buyerDocument.uniqueId);
-	// 	const signingEvent = await this.helloSignService.signDocument(response);
-	// 	if (signingEvent === HelloSign.EVENT_SIGNED) {
-	// 		this.notificationService.pushInfo({
-	// 			title: `Retrieving signed document.`,
-	// 			message: '',
-	// 			time: (new Date().getTime()),
-	// 			timeout: 60000
-	// 		});
-	// 		setTimeout(async () => {
-	// 			// Workaround: waiting HelloSign to update new signature
-	// 			await this.deedsService.markDocumentSigned(buyerDocument.id);
-	// 			await this.setupDocumentPreview(this.deedAddress);
-	// 			this.notificationService.pushSuccess({
-	// 				title: 'Successfully Retrieved',
-	// 				message: '',
-	// 				time: (new Date().getTime()),
-	// 				timeout: 4000
-	// 			});
-	// 		}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
-	// 	}
-	// }
-	public async agreedBuyerDocument() {
+	public async signBuyerDocument() {
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 		const buyerDocument = this.getBuyerDocument(deed.documents);
-		await this.deedsService.markDocumentAgreed(buyerDocument.id);
-		this.notificationService.pushSuccess({
-			title: 'Successfully Agreed',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
+		const response = await this.documentService.getSignUrl(buyerDocument.uniqueId);
+		const signingEvent = await this.helloSignService.signDocument(response);
+		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			this.notificationService.pushInfo({
+				title: `Retrieving signed document.`,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 60000
+			});
+			setTimeout(async () => {
+				// Workaround: waiting HelloSign to update new signature
+				await this.deedsService.markDocumentSigned(buyerDocument.id);
+				await this.setupDocumentPreview(this.deedAddress);
+				this.notificationService.pushSuccess({
+					title: 'Successfully Retrieved',
+					message: '',
+					time: (new Date().getTime()),
+					timeout: 4000
+				});
+			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+		}
 	}
+	// public async agreedBuyerDocument() {
+	// 	const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+	// 	const buyerDocument = this.getBuyerDocument(deed.documents);
+	// 	await this.deedsService.markDocumentAgreed(buyerDocument.id);
+	// 	this.notificationService.pushSuccess({
+	// 		title: 'Successfully Agreed',
+	// 		message: '',
+	// 		time: (new Date().getTime()),
+	// 		timeout: 4000
+	// 	});
+	// }
 
-	public async agreeSellerDocument() {
-		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
-		const sellerDocument = this.getSellerDocument(deed.documents);
-		await this.deedsService.markDocumentAgreed(sellerDocument.id);
-		this.notificationService.pushSuccess({
-			title: 'Successfully Agreed',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
-	}
-
-
-	// public async signSellerDocument() {
+	// public async agreeSellerDocument() {
 	// 	const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 	// 	const sellerDocument = this.getSellerDocument(deed.documents);
-	// 	const response = await this.documentService.getSignUrl(sellerDocument.uniqueId);
-	// 	const signingEvent = await this.helloSignService.signDocument(response);
-	// 	if (signingEvent === HelloSign.EVENT_SIGNED) {
-	// 		this.notificationService.pushInfo({
-	// 			title: `Retrieving signed document.`,
-	// 			message: '',
-	// 			time: (new Date().getTime()),
-	// 			timeout: 60000
-	// 		});
-	// 		setTimeout(async () => {
-	// 			// Workaround: waiting HelloSign to update new signature
-	// 			await this.deedsService.markDocumentSigned(sellerDocument.id);
-	// 			await this.setupDocumentPreview(this.deedAddress);
-	// 			this.notificationService.pushSuccess({
-	// 				title: 'Successfully Retrieved',
-	// 				message: '',
-	// 				time: (new Date().getTime()),
-	// 				timeout: 4000
-	// 			});
-	// 		}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
-	// 	}
+	// 	await this.deedsService.markDocumentAgreed(sellerDocument.id);
+	// 	this.notificationService.pushSuccess({
+	// 		title: 'Successfully Agreed',
+	// 		message: '',
+	// 		time: (new Date().getTime()),
+	// 		timeout: 4000
+	// 	});
 	// }
+
+
+	public async signSellerDocument() {
+		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+		const sellerDocument = this.getSellerDocument(deed.documents);
+		const response = await this.documentService.getSignUrl(sellerDocument.uniqueId);
+		const signingEvent = await this.helloSignService.signDocument(response);
+		if (signingEvent === HelloSign.EVENT_SIGNED) {
+			this.notificationService.pushInfo({
+				title: `Retrieving signed document.`,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 60000
+			});
+			setTimeout(async () => {
+				// Workaround: waiting HelloSign to update new signature
+				await this.deedsService.markDocumentSigned(sellerDocument.id);
+				await this.setupDocumentPreview(this.deedAddress);
+				this.notificationService.pushSuccess({
+					title: 'Successfully Retrieved',
+					message: '',
+					time: (new Date().getTime()),
+					timeout: 4000
+				});
+			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+		}
+	}
 
 	public getBuyerSettlementStatementSigners(doc: any) {
 		if (!doc) {
 			return;
 		}
 
-		this.hasBuyerAgreed = this.hasPartySigned(doc, UserRoleEnum.Buyer);
+		this.hasBuyerSigned = this.hasPartySigned(doc, UserRoleEnum.Buyer);
 	}
 
 	public getSellerSettlementStatementSigners(doc: any) {
@@ -238,7 +238,7 @@ export class SettlementStatementComponent implements OnInit {
 			return;
 		}
 
-		this.hasSellerAgreed = this.hasPartySigned(doc, UserRoleEnum.Seller);
+		this.hasSellerSigned = this.hasPartySigned(doc, UserRoleEnum.Seller);
 	}
 
 	private hasPartySigned(doc: any, role: UserRoleEnum) {
@@ -251,8 +251,8 @@ export class SettlementStatementComponent implements OnInit {
 	}
 
 	public shouldShowSignButton(): boolean {
-		return (this.userIsBuyer && !this.hasBuyerAgreed)
-			|| (this.userIsSeller && !this.hasSellerAgreed);
+		return (this.userIsBuyer && !this.hasBuyerSigned)
+			|| (this.userIsSeller && !this.hasSellerSigned);
 	}
 
 	private async mapCurrentUserToRole(deedAddress) {
