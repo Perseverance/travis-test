@@ -87,7 +87,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		const url = window.URL;
 		const fileUrl = url.createObjectURL(blob);
 
-		downloader.setAttribute('href', data);
+		downloader.setAttribute('href', fileUrl);
 		downloader.setAttribute('download', 'pro-wallet-backup.json');
 		downloader.click();
 
@@ -111,7 +111,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
 		const result = await this.web3Service.createAccount(this.proWalletPassword.value);
-		await this.proWalletService.setWallet(result.publicKey, JSON.stringify(result.jsonFile));
+		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile));
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();
 		this.jsonWallet = result.jsonFile;

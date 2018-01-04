@@ -21,7 +21,8 @@
             "balance": "balance",
             "set": "Set",
             "share": "Share to Facebook",
-            "about": "About"
+            "about": "About",
+            "record-to-blockchain": "Record to Blockchain"
         },
         "placeholder": {
             "yourEmail": "Your Email",
