@@ -136,7 +136,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 			timeout: 60000
 		});
 		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
-		const result = await this.smartContractService.recordSellerDisclosures(this.deedAddress, documentString);
+		const result = await this.smartContractService.recordSellerDisclosures('PropyNinja1', this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}

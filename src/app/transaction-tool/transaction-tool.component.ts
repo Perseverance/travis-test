@@ -1,3 +1,4 @@
+import { UserData, AuthenticationService } from './../authentication/authentication.service';
 import { SmartContractConnectionService } from './../smart-contract-connection/smart-contract-connection.service';
 import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
@@ -22,12 +23,20 @@ export class TransactionToolComponent implements OnInit {
 	public addressRoute: string;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-		private deedsService: DeedsService, private smartContractService: SmartContractConnectionService) {
+		private deedsService: DeedsService, private smartContractService: SmartContractConnectionService,
+		private authService: AuthenticationService) {
 		this.router.events
 			.filter(event => event instanceof NavigationEnd)
 			.subscribe((event: NavigationEnd) => {
 				this.addressRoute = (event.urlAfterRedirects.substring(event.urlAfterRedirects.lastIndexOf('/')).slice(1));
 			});
+
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.smartContractService.saveCredentials(JSON.parse(userInfo.user.jsonFile));
+			}
+		});
+
 
 	}
 
@@ -145,7 +154,6 @@ export class TransactionToolComponent implements OnInit {
 
 	public async getDeedStatus(deedId: string): Promise<number> {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.smartContractService.saveCredentials(deed.currentUserPublicKey, deed.currentUserPrivateKey);
 		return deed.status;
 	}
 

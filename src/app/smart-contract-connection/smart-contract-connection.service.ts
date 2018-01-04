@@ -43,8 +43,7 @@ export type SmartContractAddress = string;
 @Injectable()
 export class SmartContractConnectionService {
 
-	private publicKey: string;
-	private privateKey: string;
+	private jsonFile: object;
 
 	private baseDeedContract: any;
 	private contractAbi: any;
@@ -53,68 +52,53 @@ export class SmartContractConnectionService {
 		this.contractAbi = BaseContract.abi;
 	}
 
-	public saveCredentials(_publicKey: string, _privateKey: string) {
-		this.publicKey = _publicKey;
-		this.privateKey = _privateKey;
+	public saveCredentials(_jsonFile: object) {
+		this.jsonFile = _jsonFile;
 	}
 
 	private get credentialsSet(): boolean {
-		return (this.publicKey !== undefined && this.privateKey !== undefined);
+		return (this.jsonFile !== undefined);
 	}
 
-	public async testSignTransaction(): Promise<any> {
+	public async recordPurchaseAgreement(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', doc);
+	}
+
+	public async recordTitleReport(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', doc);
+	}
+
+	public async recordSellerDisclosures(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
+	}
+
+	public async recordAffidavit(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', doc);
+	}
+
+	public async recordOwnershipTransfer(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'TITLE_HASH', doc);
+	}
+
+	private convertWalletToKeys(walletPassword: string) {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
-		const callOptions = {
-			from: this.publicKey,
-		};
-		const setIntMethod = this.baseDeedContract.methods.approve();
-		const estimatedGas = await setIntMethod.estimateGas();
-		const doubleGas = estimatedGas * 2;
-
-		const funcData = setIntMethod.encodeABI(callOptions);
-		const signedData = await this.web3Service.signTransaction(
-			this.baseDeedContract._address,
-			this.publicKey,
-			this.privateKey,
-			doubleGas,
-			funcData,
-		);
-
-
-		return signedData;
-
-		// const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
-		// return result;
+		return this.web3Service.convertWalletToKeys(this.jsonFile, walletPassword);
 	}
 
-	public async recordPurchaseAgreement(deedAddress: string, doc: string): Promise<any> {
-		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', doc);
-	}
-
-	public async recordTitleReport(deedAddress: string, doc: string): Promise<any> {
-		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', doc);
-	}
-
-	public async recordSellerDisclosures(deedAddress: string, doc: string): Promise<any> {
-		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
-	}
-
-	public async recordAffidavit(deedAddress: string, doc: string): Promise<any> {
-		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', doc);
-	}
-
-	public async recordOwnershipTransfer(deedAddress: string, doc: string): Promise<any> {
-		return this.recordDocument(deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'TITLE_HASH', doc);
-	}
-
-	private async recordDocument(deedAddress: string, docType: SMART_CONTRACT_DOCUMENT_TYPES, docKey: string, doc: string) {
+	private async recordDocument(
+		walletPassword: string,
+		deedAddress: string,
+		docType: SMART_CONTRACT_DOCUMENT_TYPES,
+		docKey: string,
+		doc: string) {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
+		const keys = this.convertWalletToKeys(walletPassword);
 		const callOptions = {
-			from: this.publicKey,
+			from: keys.address,
 		};
 
 		this.baseDeedContract = new this.web3Service.web3.eth.Contract(
@@ -133,8 +117,8 @@ export class SmartContractConnectionService {
 		const funcData = deedActionMethod.encodeABI(callOptions);
 		const signedData = await this.web3Service.signTransaction(
 			this.baseDeedContract._address,
-			this.publicKey,
-			this.privateKey,
+			keys.address,
+			keys.privateKey,
 			doubleGas,
 			funcData,
 		);

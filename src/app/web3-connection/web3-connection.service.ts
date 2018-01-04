@@ -19,20 +19,20 @@ export class Web3Service {
 
 	public async signTransaction(
 		toAddress,
-		fromPublicKey,
+		fromAddress,
 		fromPrivateKey,
 		gasLimit,
 		funcData,
 		value = 0) {
 		const privateKeyBuff = new Buffer(fromPrivateKey, 'hex');
 
-		const nonceNumber = await this.web3.eth.getTransactionCount(fromPublicKey);
+		const nonceNumber = await this.web3.eth.getTransactionCount(fromAddress);
 		const gasPrice = await this.web3.eth.getGasPrice();
 		const rawTx = {
 			'nonce': nonceNumber,
 			'gasPrice': this.web3.utils.toHex(gasPrice),
 			'gasLimit': gasLimit,
-			'from': fromPublicKey,
+			'from': fromAddress,
 			'to': toAddress,
 			'value': this.web3.utils.toHex(value),
 			'data': funcData,
@@ -93,11 +93,27 @@ export class Web3Service {
 		const wallet = await Wallet.fromPrivateKey(privateKey);
 
 		const result = {
-			publicKey: wallet.getAddressString(),
+			address: wallet.getAddressString(),
 			fileName: wallet.getV3Filename(),
 			jsonFile: wallet.toV3(_password)
 		};
 		return result;
+	}
+
+	public convertWalletToKeys(jsonFile: object, walletPassword: string) {
+		const wallet = Wallet.fromV3(jsonFile, walletPassword);
+
+		const address = wallet.getAddressString();
+		let privateKey = wallet.getPrivateKeyString();
+
+		if (privateKey.startsWith('0x')) {
+			privateKey = privateKey.substring(2);
+		}
+
+		return {
+			address,
+			privateKey
+		};
 	}
 
 
