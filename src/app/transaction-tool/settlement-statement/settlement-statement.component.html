@@ -22,7 +22,7 @@
                     [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
                     (onSignDocument)="signBuyerDocument()"></app-sign-document> -->
 
-                <app-agree-and-continue [hasBuyerAgreed]="hasBuyerSigned" [hasSellerAgreed]="hasSellerSigned"
+                <app-agree-and-continue [hasBuyerAgreed]="hasBuyerAgreed" [hasSellerAgreed]="hasSellerAgreed"
                     [showAgreeButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
                     (onAgreeDocument)="agreedBuyerDocument()"></app-agree-and-continue>
             </div>
@@ -60,7 +60,7 @@
                 <!-- <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
                     [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
                     (onSignDocument)="signSellerDocument()"></app-sign-document> -->
-                <app-agree-and-continue [hasBuyerAgreed]="hasBuyerSigned" [hasSellerAgreed]="hasSellerSigned"
+                <app-agree-and-continue [hasBuyerAgreed]="hasBuyerAgreed" [hasSellerAgreed]="hasSellerAgreed"
                     [showAgreeButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
                     (onAgreeDocument)="agreeSellerDocument()"></app-agree-and-continue>
             </div>

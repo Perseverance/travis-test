@@ -34,8 +34,8 @@ export class SettlementStatementComponent implements OnInit {
 	public sellerSigningDocument: any;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
-	public hasBuyerSigned: boolean;
-	public hasSellerSigned: boolean;
+	public hasBuyerAgreed: boolean;
+	public hasSellerAgreed: boolean;
 	public settlementTitle = 'Settlement statement';
 	public uploadSettlementBuyerSubtitle = 'Buyer Settlement Statement';
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
@@ -189,7 +189,7 @@ export class SettlementStatementComponent implements OnInit {
 	public async agreeSellerDocument() {
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 		const sellerDocument = this.getSellerDocument(deed.documents);
-		await this.deedsService.markDocumentSigned(sellerDocument.id);
+		await this.deedsService.markDocumentAgreed(sellerDocument.id);
 		this.notificationService.pushSuccess({
 			title: 'Successfully Agreed',
 			message: '',
@@ -230,7 +230,7 @@ export class SettlementStatementComponent implements OnInit {
 			return;
 		}
 
-		this.hasBuyerSigned = this.hasPartySigned(doc, UserRoleEnum.Buyer);
+		this.hasBuyerAgreed = this.hasPartySigned(doc, UserRoleEnum.Buyer);
 	}
 
 	public getSellerSettlementStatementSigners(doc: any) {
@@ -238,7 +238,7 @@ export class SettlementStatementComponent implements OnInit {
 			return;
 		}
 
-		this.hasSellerSigned = this.hasPartySigned(doc, UserRoleEnum.Seller);
+		this.hasSellerAgreed = this.hasPartySigned(doc, UserRoleEnum.Seller);
 	}
 
 	private hasPartySigned(doc: any, role: UserRoleEnum) {
@@ -251,8 +251,8 @@ export class SettlementStatementComponent implements OnInit {
 	}
 
 	public shouldShowSignButton(): boolean {
-		return (this.userIsBuyer && !this.hasBuyerSigned)
-			|| (this.userIsSeller && !this.hasSellerSigned);
+		return (this.userIsBuyer && !this.hasBuyerAgreed)
+			|| (this.userIsSeller && !this.hasSellerAgreed);
 	}
 
 	private async mapCurrentUserToRole(deedAddress) {
