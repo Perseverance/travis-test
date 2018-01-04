@@ -1,17 +1,18 @@
-import {Subscription} from 'rxjs/Subscription';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserData} from './../authentication/authentication.service';
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ProWalletService} from './pro-wallet.service';
-import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
-import {AuthenticationService} from '../authentication/authentication.service';
-import {NotificationsService} from '../shared/notifications/notifications.service';
-import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
-import {ConfirmationService} from 'primeng/primeng';
-import {WalletAddressValidator} from './pro-wallet-address-validator';
+import { Web3Service } from './../web3-connection/web3-connection.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../shared/errors/errors.decoratable.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserData } from './../authentication/authentication.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProWalletService } from './pro-wallet.service';
+import { UserTransactionsHistoryResponse } from './pro-wallet-responses';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { NotificationsService } from '../shared/notifications/notifications.service';
+import { DefaultAsyncAPIErrorHandling } from '../shared/errors/errors.decorators';
+import { ConfirmationService } from 'primeng/primeng';
+import { WalletAddressValidator } from './pro-wallet-address-validator';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -29,28 +30,30 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public confirmationLabels: object;
 	public stashedTokensBalance: number;
 	private userDataSubscription: Subscription;
-	public shouldShowWalletAddressDesc = true;
+	public showBackupWalletButton = false;
+	public jsonWallet: string;
 
 	constructor(private proWalletService: ProWalletService,
-				private formBuilder: FormBuilder,
-				private authService: AuthenticationService,
-				private notificationsService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService,
-				private confirmationService: ConfirmationService) {
+		private formBuilder: FormBuilder,
+		private authService: AuthenticationService,
+		private notificationsService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService,
+		private confirmationService: ConfirmationService,
+		private web3Service: Web3Service) {
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
-			proWalletAddress: [null, [Validators.required, WalletAddressValidator.walletAddressValidator]],
+			proWalletPassword: [null, [Validators.required]],
 		});
-
+		const self = this;
 		this.userDataSubscription = this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (!userInfo.user || !userInfo.user.walletId) {
+			next: async (userInfo: UserData) => {
+				if (!userInfo.user || !userInfo.user.jsonFile) {
 					return;
 				}
-				this.proWalletAddress.setValue(userInfo.user.walletId);
-				this.shouldShowWalletAddressDesc = false;
+				this.jsonWallet = JSON.parse(userInfo.user.jsonFile);
+				this.showBackupWalletButton = true;
 			}
 		});
 	}
@@ -73,6 +76,23 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		});
 	}
 
+	private downloadJSONFile() {
+		if (!this.jsonWallet) {
+			throw new Error('No wallet to backup');
+		}
+		const downloader = document.createElement('a');
+
+		const data = JSON.stringify(this.jsonWallet);
+		const blob = new Blob([data], { type: 'text/json' });
+		const url = window.URL;
+		const fileUrl = url.createObjectURL(blob);
+
+		downloader.setAttribute('href', data);
+		downloader.setAttribute('download', 'pro-wallet-backup.json');
+		downloader.click();
+
+	}
+
 	ngOnDestroy(): void {
 		this.userDataSubscription.unsubscribe();
 	}
@@ -84,16 +104,18 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.authService.getCurrentUser();
 	}
 
-	public get proWalletAddress() {
-		return this.proWalletAddressForm.get('proWalletAddress');
+	public get proWalletPassword() {
+		return this.proWalletAddressForm.get('proWalletPassword');
 	}
 
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
-		await this.proWalletService.updateAddress(this.proWalletAddress.value);
+		const result = await this.web3Service.createAccount(this.proWalletPassword.value);
+		await this.proWalletService.setWallet(result.publicKey, JSON.stringify(result.jsonFile));
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();
-		this.shouldShowWalletAddressDesc = false;
+		this.jsonWallet = result.jsonFile;
+		this.showBackupWalletButton = true;
 		this.notificationsService.pushSuccess({
 			title: this.successMessage,
 			message: '',
