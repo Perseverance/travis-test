@@ -346,6 +346,9 @@
             "successfully-redeemed": "Your PRO tokens were successfully redeemed",
             "redeemed-error-title": "Could not redeem your PRO tokens",
             "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
+            "download-your-wallet": "Download your wallet file",
+            "wallet-password": "Your Wallet Password",
+            "generate-wallet": "Generate wallet",
             "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
         },
         "refferal-program": {
@@ -357,8 +360,7 @@
             "refferal-button": "Copy Refferal Link",
             "download-your-wallet": "Download your wallet file",
             "wallet-password": "Your Wallet Password",
-            "generate-wallet": "Generate wallet",
-            "refferal-button": "Copy Refferal Link"
+            "generate-wallet": "Generate wallet"
         }
     },
     "about": {
