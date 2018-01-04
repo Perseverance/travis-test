@@ -186,31 +186,44 @@ export class SettlementStatementComponent implements OnInit {
 		});
 	}
 
-	public async signSellerDocument() {
+	public async agreeSellerDocument() {
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 		const sellerDocument = this.getSellerDocument(deed.documents);
-		const response = await this.documentService.getSignUrl(sellerDocument.uniqueId);
-		const signingEvent = await this.helloSignService.signDocument(response);
-		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Retrieving signed document.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
-			setTimeout(async () => {
-				// Workaround: waiting HelloSign to update new signature
-				await this.deedsService.markDocumentSigned(sellerDocument.id);
-				await this.setupDocumentPreview(this.deedAddress);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
-			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
-		}
+		await this.deedsService.markDocumentSigned(sellerDocument.id);
+		this.notificationService.pushSuccess({
+			title: 'Successfully Agreed',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
+
+
+	// public async signSellerDocument() {
+	// 	const deed = await this.deedsService.getDeedDetails(this.deedAddress);
+	// 	const sellerDocument = this.getSellerDocument(deed.documents);
+	// 	const response = await this.documentService.getSignUrl(sellerDocument.uniqueId);
+	// 	const signingEvent = await this.helloSignService.signDocument(response);
+	// 	if (signingEvent === HelloSign.EVENT_SIGNED) {
+	// 		this.notificationService.pushInfo({
+	// 			title: `Retrieving signed document.`,
+	// 			message: '',
+	// 			time: (new Date().getTime()),
+	// 			timeout: 60000
+	// 		});
+	// 		setTimeout(async () => {
+	// 			// Workaround: waiting HelloSign to update new signature
+	// 			await this.deedsService.markDocumentSigned(sellerDocument.id);
+	// 			await this.setupDocumentPreview(this.deedAddress);
+	// 			this.notificationService.pushSuccess({
+	// 				title: 'Successfully Retrieved',
+	// 				message: '',
+	// 				time: (new Date().getTime()),
+	// 				timeout: 4000
+	// 			});
+	// 		}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+	// 	}
+	// }
 
 	public getBuyerSettlementStatementSigners(doc: any) {
 		if (!doc) {

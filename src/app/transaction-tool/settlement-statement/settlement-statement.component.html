@@ -62,7 +62,7 @@
                     (onSignDocument)="signSellerDocument()"></app-sign-document> -->
                 <app-agree-and-continue [hasBuyerAgreed]="hasBuyerSigned" [hasSellerAgreed]="hasSellerSigned"
                     [showAgreeButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
-                    (onAgreeDocument)="signSellerDocument()"></app-agree-and-continue>
+                    (onAgreeDocument)="agreeSellerDocument()"></app-agree-and-continue>
             </div>
         </div>
     </ng-template>

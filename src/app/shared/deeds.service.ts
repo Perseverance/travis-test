@@ -68,7 +68,7 @@ export class DeedsService {
 			documentId
 		};
 
-		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SIGN_DOCUMENT, data);
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.AGREE_DOCUMENT, data);
 		return result.data.data;
 	}
 
