@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute} from '@angular/router';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import { Component, OnInit } from '@angular/core';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {Base64Service} from '../../shared/base64.service';
-import {NotificationsService} from '../../shared/notifications/notifications.service';
+import { HelloSignService } from '../../shared/hello-sign.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { Base64Service } from '../../shared/base64.service';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 declare const HelloSign;
 
@@ -33,12 +33,12 @@ export class SettlementStatementComponent implements OnInit {
 	public selectedSellerDocument: any;
 	public previewBuyerLink: string;
 	public previewSellerLink: string;
-	public buyerSigningDocument: any;
-	public sellerSigningDocument: any;
+	public buyerAgreeingDocument: any;
+	public sellerAgreeingDocument: any;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
-	public hasBuyerSigned: boolean;
-	public hasSellerSigned: boolean;
+	public hasBuyerAgreed: boolean;
+	public hasSellerAgreed: boolean;
 	public settlementTitle = 'Settlement statement';
 	public uploadSettlementBuyerSubtitle = 'Buyer Settlement Statement';
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
@@ -50,12 +50,12 @@ export class SettlementStatementComponent implements OnInit {
 	public deedStatus = Status;
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private base64Service: Base64Service,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private base64Service: Base64Service,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService) {
 	}
 
 	async ngOnInit() {
@@ -75,15 +75,15 @@ export class SettlementStatementComponent implements OnInit {
 	private async setupDocumentPreview(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.deed = deed;
-		this.buyerSigningDocument = this.getBuyerDocument(deed.documents);
-		if (this.buyerSigningDocument) {
-			this.previewBuyerLink = this.buyerSigningDocument.fileName;
-			this.getBuyerSettlementStatementSigners(this.buyerSigningDocument);
+		this.buyerAgreeingDocument = this.getBuyerDocument(deed.documents);
+		if (this.buyerAgreeingDocument) {
+			this.previewBuyerLink = this.buyerAgreeingDocument.fileName;
+			this.getBuyerSettlementStatementSigners(this.buyerAgreeingDocument);
 		}
-		this.sellerSigningDocument = this.getSellerDocument(deed.documents);
-		if (this.sellerSigningDocument) {
-			this.previewSellerLink = this.sellerSigningDocument.fileName;
-			this.getSellerSettlementStatementSigners(this.sellerSigningDocument);
+		this.sellerAgreeingDocument = this.getSellerDocument(deed.documents);
+		if (this.sellerAgreeingDocument) {
+			this.previewSellerLink = this.sellerAgreeingDocument.fileName;
+			this.getSellerSettlementStatementSigners(this.sellerAgreeingDocument);
 		}
 	}
 
@@ -163,56 +163,30 @@ export class SettlementStatementComponent implements OnInit {
 		});
 	}
 
-	public async signBuyerDocument() {
+	public async agreeBuyerDocument() {
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 		const buyerDocument = this.getBuyerDocument(deed.documents);
-		const response = await this.documentService.getSignUrl(buyerDocument.uniqueId);
-		const signingEvent = await this.helloSignService.signDocument(response);
-		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Retrieving signed document.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
-			setTimeout(async () => {
-				// Workaround: waiting HelloSign to update new signature
-				await this.deedsService.markDocumentSigned(buyerDocument.id);
-				await this.setupDocumentPreview(this.deedAddress);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
-			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
-		}
+		await this.deedsService.markDocumentAgreed(buyerDocument.id);
+		await this.setupDocumentPreview(this.deedAddress);
+		this.notificationService.pushSuccess({
+			title: 'Successfully Agreed',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
-	public async signSellerDocument() {
+	public async agreeSellerDocument() {
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 		const sellerDocument = this.getSellerDocument(deed.documents);
-		const response = await this.documentService.getSignUrl(sellerDocument.uniqueId);
-		const signingEvent = await this.helloSignService.signDocument(response);
-		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Retrieving signed document.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
-			setTimeout(async () => {
-				// Workaround: waiting HelloSign to update new signature
-				await this.deedsService.markDocumentSigned(sellerDocument.id);
-				await this.setupDocumentPreview(this.deedAddress);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
-			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
-		}
+		await this.deedsService.markDocumentAgreed(sellerDocument.id);
+		await this.setupDocumentPreview(this.deedAddress);
+		this.notificationService.pushSuccess({
+			title: 'Successfully Agreed',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 	}
 
 	public getBuyerSettlementStatementSigners(doc: any) {
@@ -220,7 +194,7 @@ export class SettlementStatementComponent implements OnInit {
 			return;
 		}
 
-		this.hasBuyerSigned = this.hasPartySigned(doc, UserRoleEnum.Buyer);
+		this.hasBuyerAgreed = this.hasPartyAgreed(doc, UserRoleEnum.Buyer);
 	}
 
 	public getSellerSettlementStatementSigners(doc: any) {
@@ -228,10 +202,10 @@ export class SettlementStatementComponent implements OnInit {
 			return;
 		}
 
-		this.hasSellerSigned = this.hasPartySigned(doc, UserRoleEnum.Seller);
+		this.hasSellerAgreed = this.hasPartyAgreed(doc, UserRoleEnum.Seller);
 	}
 
-	private hasPartySigned(doc: any, role: UserRoleEnum) {
+	private hasPartyAgreed(doc: any, role: UserRoleEnum) {
 		for (const signer of doc.signatures) {
 			if (signer.role === role) {
 				return signer.isSigned;
@@ -240,9 +214,9 @@ export class SettlementStatementComponent implements OnInit {
 		return false;
 	}
 
-	public shouldShowSignButton(): boolean {
-		return (this.userIsBuyer && !this.hasBuyerSigned)
-			|| (this.userIsSeller && !this.hasSellerSigned);
+	public shouldShowAgreedButton(): boolean {
+		return (this.userIsBuyer && !this.hasBuyerAgreed)
+			|| (this.userIsSeller && !this.hasSellerAgreed);
 	}
 
 	private async mapCurrentUserToRole(deedAddress) {

@@ -1,0 +1,39 @@
+@import "../../../_variables";
+@import "../../../_mixins";
+$top-border-color: #dcdcdc;
+$sign-label-color: #9ba1a4;
+$signed-color: #22c230;
+$pending-color: #52caf5;
+.agree-document-holder {
+    margin: 25px 0;
+    padding: 20px 0;
+    border-top: 1px solid $top-border-color;
+    .agree-label {
+        color: $sign-label-color;
+    }
+    .agree-button-holder {
+        .agree-button {
+            margin-top: 25px;
+            a {
+                width: 90%;
+                margin-left: 5%;
+                line-height: 30px;
+            }
+            .not-active {
+                pointer-events: none;
+                cursor: default;
+                opacity: 0.8;
+            }
+        }
+    }
+    .agreed-document {
+        p {
+            color: $signed-color;
+        }
+    }
+    .pending-document {
+        p {
+            color: $pending-color;
+        }
+    }
+}
