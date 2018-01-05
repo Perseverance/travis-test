@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { DeedDocumentType } from './../enums/deed-document-type.enum';
 import { Observable } from 'rxjs/Observable';
 import { UserRoleEnum } from './../enums/user-role.enum';
@@ -37,6 +38,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	public signingDocument: any;
 	public isTransferFinished = false;
 	private deedAddress: string;
+	public txHash: string;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -91,6 +93,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
+		this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 		this.notificationService.pushInfo({
 			title: `Sending the document to the backend.`,
 			message: '',

@@ -1,84 +1,81 @@
 <div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
 <ng-template #dataLoaded>
-	<div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
-	</div>
+    <div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
+    </div>
 
-	<ng-template #hasPreviewLink>
-		<div class="row text-center" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
-			<div *ngIf="userIsSellerBroker;else notSellerBroker">
-				<i>Status: Waiting For You To Record The Purchase Agreement To The Blockchain. Please use the button
+    <ng-template #hasPreviewLink>
+        <div class="row text-center" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
+            <div *ngIf="userIsSellerBroker;else notSellerBroker">
+                <i>Status: Waiting For You To Record The Purchase Agreement To The Blockchain. Please use the button
 					below!</i>
-				<br>
-				<app-record-blockchain-form (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
-			</div>
-			<ng-template #notSellerBroker>
-				<i>Status: Waiting for Seller Broker To Record The Purchase Agreement To The Blockchain</i>
-			</ng-template>
-		</div>
-		<ng-template #noBlockChainYet></ng-template>
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="row" *ngIf="userIsSellerBroker">
-					<div class="col-xs-12 reupload-holder" *ngIf="deed.status < deedStatus.purchaseAgreement">
-						<div class="row reupload-button-holder">
-							<div class="col-xs-12">
-								<button type="button" *ngIf="!reuploadingDocumentActivated"
-										class="btn propy-control button-big pull-right"
-										(click)="reuploadingDocumentActivated = true">Reupload
+                <br>
+                <app-record-blockchain-form (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+                <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
+            </div>
+            <ng-template #notSellerBroker>
+                <i>Status: Waiting for Seller Broker To Record The Purchase Agreement To The Blockchain</i>
+            </ng-template>
+        </div>
+        <ng-template #noBlockChainYet></ng-template>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row" *ngIf="userIsSellerBroker">
+                    <div class="col-xs-12 reupload-holder" *ngIf="deed.status < deedStatus.purchaseAgreement">
+                        <div class="row reupload-button-holder">
+                            <div class="col-xs-12">
+                                <button type="button" *ngIf="!reuploadingDocumentActivated" class="btn propy-control button-big pull-right"
+                                    (click)="reuploadingDocumentActivated = true">Reupload
 								</button>
-								<button type="button" *ngIf="reuploadingDocumentActivated"
-										class="btn propy-control cancel-reuploading button-big btn-white pull-right"
-										(click)="reuploadingDocumentActivated = false">Cancel reuploading
+                                <button type="button" *ngIf="reuploadingDocumentActivated" class="btn propy-control cancel-reuploading button-big btn-white pull-right"
+                                    (click)="reuploadingDocumentActivated = false">Cancel reuploading
 								</button>
-							</div>
-						</div>
-						<div class="row" *ngIf="reuploadingDocumentActivated">
-							<div class="col-xs-12">
-								<app-upload-document [uploadTitle]="purchaseTitle"
-													 [uploadSubtitle]="uploadPurchaseSubtitle"
-													 (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated">
-						<app-document-preview [previewTitle]="purchaseTitle"
-											  [previewSubtitle]="previewPurchaseSubtitle "
-											  [previewLink]="previewLink "></app-document-preview>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row" *ngIf="!reuploadingDocumentActivated">
-			<div class="col-xs-12 text-center">
-				<app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
-								   [hasBuyerBrokerSigned]="hasBuyerBrokerSigned " [hasSellerBrokerSigned]="hasSellerBrokerSigned " [showSignButton]="shouldShowSignButton() "
-								   [documentType]="deedDocumentTypeEnum.PurchaseAgreement "
-								   (onSignDocument)="signDocument() "></app-sign-document>
-			</div>
-		</div>
-	</ng-template>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="reuploadingDocumentActivated">
+                            <div class="col-xs-12">
+                                <app-upload-document [uploadTitle]="purchaseTitle" [uploadSubtitle]="uploadPurchaseSubtitle"
+                                    (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated">
+                        <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitle "
+                            [previewLink]="previewLink "></app-document-preview>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!reuploadingDocumentActivated">
+            <div class="col-xs-12 text-center">
+                <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
+                    [hasBuyerBrokerSigned]="hasBuyerBrokerSigned " [hasSellerBrokerSigned]="hasSellerBrokerSigned "
+                    [showSignButton]="shouldShowSignButton() " [documentType]="deedDocumentTypeEnum.PurchaseAgreement "
+                    (onSignDocument)="signDocument() "></app-sign-document>
+            </div>
+        </div>
+    </ng-template>
 
-	<ng-template #noPreviewLink>
-		<div class="row " *ngIf="userIsSellerBroker; then isBroker; else isNotBroker ">
-		</div>
+    <ng-template #noPreviewLink>
+        <div class="row " *ngIf="userIsSellerBroker; then isBroker; else isNotBroker ">
+        </div>
 
-		<ng-template #isBroker>
-			<div class="col-xs-12 text-center">
-				<app-upload-document [uploadTitle]="purchaseTitle" [uploadSubtitle]="uploadPurchaseSubtitle"
-									 (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
-			</div>
-		</ng-template>
+        <ng-template #isBroker>
+            <div class="col-xs-12 text-center">
+                <app-upload-document [uploadTitle]="purchaseTitle" [uploadSubtitle]="uploadPurchaseSubtitle"
+                    (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+            </div>
+        </ng-template>
 
-		<ng-template #isNotBroker>
-			<div class="col-xs-12 text-center ">
-				<h5>Waiting for seller broker to upload purchase agreement</h5>
-			</div>
-		</ng-template>
+        <ng-template #isNotBroker>
+            <div class="col-xs-12 text-center ">
+                <h5>Waiting for seller broker to upload purchase agreement</h5>
+            </div>
+        </ng-template>
 
-	</ng-template>
+    </ng-template>
 </ng-template>
 <ng-template #dataNotLoaded>
-	<h4>Loading...</h4>
+    <h4>Loading...</h4>
 </ng-template>

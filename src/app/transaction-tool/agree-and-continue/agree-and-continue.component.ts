@@ -1,33 +1,29 @@
-import { UserRoleEnum } from './../enums/user-role.enum';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AuthenticationService, UserData } from '../../authentication/authentication.service';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
 import { Observable } from 'rxjs/Observable';
+import { DeedsService } from './../../shared/deeds.service';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
 import { Subscription } from 'rxjs/Subscription';
-import { DeedsService } from '../../shared/deeds.service';
 
 @Component({
-	selector: 'app-sign-document',
-	templateUrl: './sign-document.component.html',
-	styleUrls: ['./sign-document.component.scss']
+	selector: 'app-agree-and-continue',
+	templateUrl: './agree-and-continue.component.html',
+	styleUrls: ['./agree-and-continue.component.scss']
 })
-export class SignDocumentComponent implements OnInit, OnDestroy {
+export class AgreeAndContinueComponent implements OnInit, OnDestroy {
 	public userRoleEnum = UserRoleEnum;
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public currentUserRole: number;
 	private addressSubscription: Subscription;
-	@Input() hasBuyerSigned: boolean;
-	@Input() hasSellerSigned: boolean;
-	@Input() hasBuyerBrokerSigned: boolean;
-	@Input() hasSellerBrokerSigned: boolean;
-	@Input() showSignButton: boolean;
+	@Input() hasBuyerAgreed: boolean;
+	@Input() hasSellerAgreed: boolean;
+	@Input() showAgreeButton: boolean;
 	@Input() documentType: any;
-	@Output() onSignDocument = new EventEmitter<any>();
+	@Output() onAgreeDocument = new EventEmitter<any>();
 
 	constructor(private route: ActivatedRoute,
-		private deedsService: DeedsService) {
-	}
+		private deedsService: DeedsService) { }
 
 	ngOnInit() {
 		const self = this;
@@ -40,11 +36,6 @@ export class SignDocumentComponent implements OnInit, OnDestroy {
 			self.currentUserRole = deed.currentUserRole;
 		});
 	}
-
-	public onSignDocumentClick() {
-		this.onSignDocument.emit();
-	}
-
 	public isSectionWithFourSigners(): boolean {
 		if (this.documentType === this.deedDocumentTypeEnum.PurchaseAgreement
 			|| this.documentType === this.deedDocumentTypeEnum.SignedSellerDisclosures) {
@@ -52,7 +43,6 @@ export class SignDocumentComponent implements OnInit, OnDestroy {
 		}
 		return false;
 	}
-
 	public isSectionWithTwoSigners(): boolean {
 		if (this.documentType === this.deedDocumentTypeEnum.TitleReport
 			|| this.documentType === this.deedDocumentTypeEnum.Affidavit) {
@@ -61,7 +51,12 @@ export class SignDocumentComponent implements OnInit, OnDestroy {
 		return false;
 	}
 
+	public onAgreeDocumentClick() {
+		this.onAgreeDocument.emit();
+	}
+
 	ngOnDestroy() {
 		this.addressSubscription.unsubscribe();
 	}
+
 }
