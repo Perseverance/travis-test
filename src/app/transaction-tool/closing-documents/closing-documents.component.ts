@@ -34,6 +34,7 @@ export class ClosingDocumentsComponent implements OnInit {
 	public previewCloseSubtitle = 'Please review closing document.';
 	public successMessage = 'Success!';
 	public hasDataLoaded = false;
+	public reuploadingDocumentActivated: boolean;
 
 	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
@@ -71,11 +72,13 @@ export class ClosingDocumentsComponent implements OnInit {
 	}
 
 	private getSignatureDocument(documents: any[]) {
+		let signatureDocument;
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.ClosingDocuments) {
-				return doc;
+				signatureDocument = doc;
 			}
 		}
+		return signatureDocument;
 	}
 
 	public async uploadDocument(event: any) {
@@ -93,6 +96,7 @@ export class ClosingDocumentsComponent implements OnInit {
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.ClosingDocuments, this.deedAddress, base64);
 		this.previewLink = response.fileName;
+		this.reuploadingDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
