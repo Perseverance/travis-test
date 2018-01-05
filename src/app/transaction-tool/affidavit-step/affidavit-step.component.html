@@ -8,6 +8,7 @@
                 <i>Status: Waiting For You To Record The Affidavit To The Blockchain. Please use the button below!</i>
                 <br>
                 <app-record-blockchain-form (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+                <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
             </div>
             <ng-template #notSellerUser>
                 <i>Status: Waiting for Seller To Record The Affidavit To The Blockchain</i>

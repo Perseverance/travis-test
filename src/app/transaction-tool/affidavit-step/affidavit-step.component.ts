@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { DeedDocumentType } from '../enums/deed-document-type.enum';
 import { Subscription } from 'rxjs/Subscription';
@@ -48,6 +49,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public shouldSendToBlockchain: boolean;
 	public hasDataLoaded = false;
 	private deedAddress: string;
+	public txHash: string;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -164,6 +166,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
+		this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 		this.notificationService.pushInfo({
 			title: `Sending the document to the backend.`,
 			message: '',

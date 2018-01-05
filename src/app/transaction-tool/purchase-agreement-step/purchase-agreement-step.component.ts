@@ -1,24 +1,25 @@
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService, UserData} from '../../authentication/authentication.service';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {TransactionToolWorkflowService} from '../workflow/workflow.service';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import { environment } from './../../../environments/environment';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService, UserData } from '../../authentication/authentication.service';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { TransactionToolWorkflowService } from '../workflow/workflow.service';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {Base64Service} from '../../shared/base64.service';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import { HelloSignService } from '../../shared/hello-sign.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { Base64Service } from '../../shared/base64.service';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 
 declare const HelloSign;
 
@@ -53,17 +54,18 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	private deedAddress: string;
 	public deed: any;
 	public deedStatus = Status;
+	public txHash: string;
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private deedsService: DeedsService,
-				private base64Service: Base64Service,
-				private notificationService: NotificationsService,
-				private router: Router,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private deedsService: DeedsService,
+		private base64Service: Base64Service,
+		private notificationService: NotificationsService,
+		private router: Router,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -175,6 +177,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
+		this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 		this.notificationService.pushInfo({
 			title: `Sending the document to the backend.`,
 			message: '',
