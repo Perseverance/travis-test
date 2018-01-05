@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
-import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
-import { DeedsService } from '../../shared/deeds.service';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { Base64Service } from '../../shared/base64.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
+import {Component, OnInit} from '@angular/core';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute} from '@angular/router';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import {
+	SmartContractConnectionService,
+	Status
+} from '../../smart-contract-connection/smart-contract-connection.service';
+import {HelloSignService} from '../../shared/hello-sign.service';
+import {DeedsService} from '../../shared/deeds.service';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {Base64Service} from '../../shared/base64.service';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
 
 declare const HelloSign;
 
@@ -41,14 +44,18 @@ export class SettlementStatementComponent implements OnInit {
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
 	public successMessage = 'Success!';
 	public hasDataLoaded = false;
+	public reuploadingBuyerDocumentActivated: boolean;
+	public reuploadingSellerDocumentActivated: boolean;
+	public deed: any;
+	public deedStatus = Status;
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private base64Service: Base64Service,
-		private deedsService: DeedsService,
-		private notificationService: NotificationsService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private base64Service: Base64Service,
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService) {
 	}
 
 	async ngOnInit() {
@@ -67,6 +74,7 @@ export class SettlementStatementComponent implements OnInit {
 
 	private async setupDocumentPreview(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.deed = deed;
 		this.buyerSigningDocument = this.getBuyerDocument(deed.documents);
 		if (this.buyerSigningDocument) {
 			this.previewBuyerLink = this.buyerSigningDocument.fileName;
@@ -80,19 +88,23 @@ export class SettlementStatementComponent implements OnInit {
 	}
 
 	private getBuyerDocument(documents: any[]) {
+		let buyerDocument;
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.BuyerSettlementStatement) {
-				return doc;
+				buyerDocument = doc;
 			}
 		}
+		return buyerDocument;
 	}
 
 	private getSellerDocument(documents: any[]) {
+		let sellerDocument;
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.SellerSettlementStatement) {
-				return doc;
+				sellerDocument = doc;
 			}
 		}
+		return sellerDocument;
 	}
 
 	public async uploadSellerDocument(event: any) {
@@ -114,6 +126,7 @@ export class SettlementStatementComponent implements OnInit {
 			base64
 		);
 		this.previewSellerLink = response.fileName;
+		this.reuploadingSellerDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -141,6 +154,7 @@ export class SettlementStatementComponent implements OnInit {
 			base64
 		);
 		this.previewBuyerLink = response.fileName;
+		this.reuploadingBuyerDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
