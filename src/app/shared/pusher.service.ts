@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { APIEndpointsService } from './apiendpoints.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Message } from 'primeng/primeng';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {APIEndpointsService} from './apiendpoints.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Message} from 'primeng/primeng';
+import {TransactionToolDocuments} from '../transaction-tool/enums/transaction-tool-document-types.model';
 
 declare const Pusher: any;
 
@@ -13,8 +14,8 @@ export class PusherService {
 	public globalMessages: Message[] = [];
 
 	constructor(private apiEndpointsService: APIEndpointsService,
-		private route: ActivatedRoute,
-		private router: Router) {
+				private route: ActivatedRoute,
+				private router: Router) {
 	}
 
 	public initializePusher(accessToken: string, userId: string): void {
@@ -60,6 +61,23 @@ export class PusherService {
 				return;
 			}
 			this.router.navigate(['transaction-tool', data.message]);
+		});
+
+		// Event for document reuploading
+		channel.bind('3', (data) => {
+			const responseData = JSON.parse(data.message);
+			if (!this.router.url.startsWith('/transaction-tool')) {
+				return;
+			}
+			const deedId = (this.router.url.split('/'))[2];
+			if (deedId !== responseData.DeedId) {
+				return;
+			}
+
+			this.globalGrowlMessages = [{
+				severity: 'info',
+				summary: `${TransactionToolDocuments[responseData.DocumentType]} - new version uploaded`
+			}];
 		});
 	}
 
