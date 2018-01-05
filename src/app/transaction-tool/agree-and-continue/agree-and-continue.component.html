@@ -199,16 +199,18 @@
                     {{ currentUserRole | userRole }}
                 </div>
             </div>
-            <div class="row agree-button" *ngIf="showAgreeButton">
-                <a class="btn propy-control button-big" [ngClass]="{'not-active': !showAgreeButton}"
+            <div class="row agree-button" *ngIf="showAgreeButton; else notShowAgreeButton">
+                <a class="btn propy-control button-big" [ngClass]="{'not-active': notShowAgreeButton}"
                     (click)="onAgreeDocumentClick()">Agree & Continue</a>
             </div>
-            <div class="row" *ngIf="!showAgreeButton">
+            <ng-template #notShowAgreeButton>
+                <div class="row"></div>
                 <div class="col-xs-12 agreed-document">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
-            </div>
+            </ng-template>
+
         </div>
     </div>
 </div>
