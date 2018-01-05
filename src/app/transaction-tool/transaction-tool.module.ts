@@ -1,3 +1,5 @@
+import { AgreeAndContinueComponent } from './agree-and-continue/agree-and-continue.component';
+import { TranslateModule } from '@ngx-translate/core';
 import { ClosingDocumentsComponent } from './closing-documents/closing-documents.component';
 import { ClipboardModule } from 'ngx-clipboard/dist';
 import { PropertyItemViewComponent } from './property-preview/property-item-view/property-item-view.component';
@@ -22,7 +24,7 @@ import { InviteComponent } from './invite/invite.component';
 import { SettlementStatementComponent } from './settlement-statement/settlement-statement.component';
 import { AffidavitStepComponent } from './affidavit-step/affidavit-step.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
-import { AgreeAndContinueComponent } from './agree-and-continue/agree-and-continue.component';
+import { RecordBlockchainFormComponent } from './record-blockchain-form/record-blockchain-form.component';
 
 @NgModule({
 	imports: [
@@ -34,7 +36,8 @@ import { AgreeAndContinueComponent } from './agree-and-continue/agree-and-contin
 		FileUploadModule,
 		SharedModule,
 		InlineSVGModule,
-		ClipboardModule
+		ClipboardModule,
+		TranslateModule
 	],
 	declarations: [
 		TransactionToolComponent,
@@ -53,6 +56,7 @@ import { AgreeAndContinueComponent } from './agree-and-continue/agree-and-contin
 		AffidavitStepComponent,
 		ClosingDocumentsComponent,
 		TransferOwnershipComponent,
+		RecordBlockchainFormComponent,
 		AgreeAndContinueComponent
 	],
 	exports: [

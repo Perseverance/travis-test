@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { default as Web3 } from 'web3';
+import Web3 from 'web3';
+import Accounts from 'web3-eth-accounts';
 import { default as EthereumTx } from 'ethereumjs-tx';
+import { default as Wallet } from 'ethereumjs-wallet';
 import { environment } from '../../environments/environment';
 import { Buffer } from 'buffer';
 
@@ -8,27 +10,29 @@ import { Buffer } from 'buffer';
 export class Web3Service {
 
 	public web3: Web3;
+	public accounts: Accounts;
 
 	constructor() {
 		this.web3 = new Web3(new Web3.providers.HttpProvider(environment.infuraLink));
+		this.accounts = new Accounts(environment.infuraLink);
 	}
 
 	public async signTransaction(
 		toAddress,
-		fromPublicKey,
+		fromAddress,
 		fromPrivateKey,
 		gasLimit,
 		funcData,
 		value = 0) {
 		const privateKeyBuff = new Buffer(fromPrivateKey, 'hex');
 
-		const nonceNumber = await this.web3.eth.getTransactionCount(fromPublicKey);
+		const nonceNumber = await this.web3.eth.getTransactionCount(fromAddress);
 		const gasPrice = await this.web3.eth.getGasPrice();
 		const rawTx = {
 			'nonce': nonceNumber,
 			'gasPrice': this.web3.utils.toHex(gasPrice),
 			'gasLimit': gasLimit,
-			'from': fromPublicKey,
+			'from': fromAddress,
 			'to': toAddress,
 			'value': this.web3.utils.toHex(value),
 			'data': funcData,
@@ -80,6 +84,36 @@ export class Web3Service {
 	public toBytes32(i) {
 		const stringed = '0000000000000000000000000000000000000000000000000000000000000000' + i.toString(16);
 		return '0x' + stringed.substring(stringed.length - 64, stringed.length);
+	}
+
+
+	public async createAccount(_password: string) {
+		const account = await this.accounts.create();
+		const privateKey = new Buffer(account.privateKey.slice(2), 'hex');
+		const wallet = await Wallet.fromPrivateKey(privateKey);
+
+		const result = {
+			address: wallet.getAddressString(),
+			fileName: wallet.getV3Filename(),
+			jsonFile: wallet.toV3(_password)
+		};
+		return result;
+	}
+
+	public convertWalletToKeys(jsonFile: object, walletPassword: string) {
+		const wallet = Wallet.fromV3(jsonFile, walletPassword);
+
+		const address = wallet.getAddressString();
+		let privateKey = wallet.getPrivateKeyString();
+
+		if (privateKey.startsWith('0x')) {
+			privateKey = privateKey.substring(2);
+		}
+
+		return {
+			address,
+			privateKey
+		};
 	}
 
 

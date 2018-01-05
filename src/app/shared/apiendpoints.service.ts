@@ -25,6 +25,7 @@ export class APIEndpointsService {
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
 		USER_TRANSACTION_HISTORY: `${this.INTERNAL_API_PREFIX}/users/transactions`,
 		USER_UPDATE_WALLET: `${this.INTERNAL_API_PREFIX}/users/updatewallet`,
+		SET_WALLET: `${this.INTERNAL_API_PREFIX}/users/setwallet`,
 		CONVERT_STASHED_TOKENS: `${this.INTERNAL_API_PREFIX}/users/convertstashedtokens`,
 		IS_PROPERTY_OWNER: `${this.INTERNAL_API_PREFIX}/Properties/isCurrentUserOwner`,
 		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,

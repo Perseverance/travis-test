@@ -1,3 +1,4 @@
+import { WalletSetGuard } from './workflow/wallet-set-guard.service';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { ClosingDocumentsComponent } from './closing-documents/closing-documents.component';
 import { InviteComponent } from './invite/invite.component';
@@ -20,7 +21,7 @@ const transactionToolSteps: Routes = [
 	{
 		path: 'transaction-tool/:address',
 		component: TransactionToolComponent,
-		canActivate: [TokenGuard, AuthenticatedGuard],
+		canActivate: [TokenGuard, AuthenticatedGuard, WalletSetGuard],
 		children: [
 			{
 				path: '',

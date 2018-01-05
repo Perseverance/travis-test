@@ -13,15 +13,9 @@ export class TestimonialsComponent implements OnInit {
 	public carouselTile: NgxCarousel;
 	private PINEL_WORDS_KEY = 'landing.testimonials.pinel-words';
 	private ARRINGTON_WORDS_KEY = 'landing.testimonials.arrington-words';
-	private BAUM_WORDS_KEY = 'landing.testimonials.baum-words';
 	private GARDNER_WORDS_KEY = 'landing.testimonials.gardner-words';
 
 	constructor(public translateService: TranslateService) {
-
-		this.testemonialsDescriptions.push({
-			dummyValue: '',
-			value: ''
-		});
 		this.testemonialsDescriptions.push({
 			dummyValue: '',
 			value: ''
@@ -51,19 +45,14 @@ export class TestimonialsComponent implements OnInit {
 			this.testemonialsDescriptions[0].dummyValue = keyTranslation;
 			this.testemonialsDescriptions[1].dummyValue = keyTranslation;
 			this.testemonialsDescriptions[2].dummyValue = keyTranslation;
-			this.testemonialsDescriptions[3].dummyValue = keyTranslation;
 		});
 
 		this.translateService.stream(this.ARRINGTON_WORDS_KEY).subscribe((keyTranslation: string) => {
 			this.testemonialsDescriptions[1].value = keyTranslation;
 		});
 
-		this.translateService.stream(this.BAUM_WORDS_KEY).subscribe((keyTranslation: string) => {
-			this.testemonialsDescriptions[2].value = keyTranslation;
-		});
-
 		this.translateService.stream(this.GARDNER_WORDS_KEY).subscribe((keyTranslation: string) => {
-			this.testemonialsDescriptions[3].value = keyTranslation;
+			this.testemonialsDescriptions[2].value = keyTranslation;
 		});
 	}
 

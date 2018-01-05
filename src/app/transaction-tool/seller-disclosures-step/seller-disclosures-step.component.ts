@@ -1,23 +1,23 @@
-import { HelloSignService } from './../../shared/hello-sign.service';
-import { DeedDocumentType } from './../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from './../enums/user-role.enum';
+import {HelloSignService} from './../../shared/hello-sign.service';
+import {DeedDocumentType} from './../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from './../enums/user-role.enum';
 import {
 	SmartContractConnectionService,
 	Status
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import { ActivatedRoute } from '@angular/router';
-import { TransactionToolDocumentService } from './../transaction-tool-document.service';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit } from '@angular/core';
-import { Base64Service } from '../../shared/base64.service';
-import { DeedsService } from '../../shared/deeds.service';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { ErrorsService } from '../../shared/errors/errors.service';
-import { TranslateService } from '@ngx-translate/core';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
+import {ActivatedRoute} from '@angular/router';
+import {TransactionToolDocumentService} from './../transaction-tool-document.service';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Component, OnInit} from '@angular/core';
+import {Base64Service} from '../../shared/base64.service';
+import {DeedsService} from '../../shared/deeds.service';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {ErrorsService} from '../../shared/errors/errors.service';
+import {TranslateService} from '@ngx-translate/core';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
+import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
 
 declare const HelloSign;
 
@@ -52,13 +52,13 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private deedsService: DeedsService,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -92,11 +92,13 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 	}
 
 	private getSignatureDocument(documents: any[]) {
+		let signatureDocument;
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.SignedSellerDisclosures) {
-				return doc;
+				signatureDocument = doc;
 			}
 		}
+		return signatureDocument;
 	}
 
 	public async signDocument() {
@@ -128,7 +130,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
-	public async sendDocumentToBlockchain() {
+	public async onRecordClick(password) {
 		this.notificationService.pushInfo({
 			title: `Sending the document to the blockchain.`,
 			message: '',
@@ -136,7 +138,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 			timeout: 60000
 		});
 		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
-		const result = await this.smartContractService.recordSellerDisclosures(this.deedAddress, documentString);
+		const result = await this.smartContractService.recordSellerDisclosures(password, this.deedAddress, documentString);
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}

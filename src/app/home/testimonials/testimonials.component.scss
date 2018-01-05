@@ -1,126 +1,121 @@
 @import "../../../variables";
 @import "../../../mixins";
+
 $arrow-background-color: #DCF6FF;
 $testimonials-text-size: 19px;
 .testimonials {
-    padding-top: 40px;
-    padding-bottom: 20px;
-    h3 {
-        font-weight: 500;
-    }
-    .testimonials-carousel {
-        .item {
-            padding: 0 10%;
-            .tile {
-                box-shadow: none !important;
-                .dummy-value {
-                    font-size: $testimonials-text-size;
-                    color: transparent;
-                    margin-top: 40px;
-                }
-                .real-value {
-                    font-size: $testimonials-text-size;
-                    position: absolute;
-                    top: 40px;
-                    width: 80%;
-                    color: $gray-darkest;
-                    font-weight: lighter;
-                    padding-left: 30px;
-                    text-align: center;
-                }
-            }
-        }
-        .left-arrow,
-        .right-arrow {
-            position: absolute;
-            border: none;
-            outline: none;
-            margin: auto;
-            top: 0;
-            bottom: 200px;
-            width: 40px;
-            height: 40px;
-            color: white;
-            background-color: $arrow-background-color;
-            @include border-radius(50%);
-            @include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
-            &:hover {
-                background-color: $blue-main;
-                i {
-                    color: white;
-                }
-            }
-            i {
-                text-align: center;
-                color: $blue-main;
-                font-size: 20px;
-            }
-        }
-        .left-arrow {
-            left: 10px;
-            i {
-                margin-left: -2px;
-            }
-        }
-        .right-arrow {
-            right: 10px;
-            i {
-                margin-right: -2px;
-            }
-        }
-        .ngxcarouselPointDefault {
-            ul.ngxcarouselPoint {
-                margin-top: 30px;
-                overflow: hidden;
-                li {
-                    width: 24%;
-                    max-width: 230px;
-                    height: 99%;
-                    min-height: 180px;
-                    max-height: 185px;
-                    background-color: transparent !important;
-                    @include border-radius(0 !important);
-                    background-size: 100% !important;
-                    background-repeat: no-repeat !important;
-                    background-position: center !important;
-                    &:first-child {
-                        background-image: url('../../../assets/images/testimonials/alain-pinel-inactive.png');
-                        &.active {
-                            background-image: url('../../../assets/images/testimonials/alain-pinel-active.png');
-                        }
-                    }
-                    &:nth-child(2) {
-                        background-image: url('../../../assets/images/testimonials/michael-arrington-inactive.png');
-                        &.active {
-                            background-image: url('../../../assets/images/testimonials/michael-arrington-active.png');
-                        }
-                    }
-                    &:nth-child(3) {
-                        background-image: url('../../../assets/images/testimonials/andrew-baum-inactive.png');
-                        &.active {
-                            background-image: url('../../../assets/images/testimonials/andrew-baum-active.png');
-                        }
-                    }
-                    &:last-child {
-                        background-image: url('../../../assets/images/testimonials/jeremy-gardner-inactive.png');
-                        &.active {
-                            background-image: url('../../../assets/images/testimonials/jeremy-gardner-active.png');
-                        }
-                    }
-                    &.active {
-                        transform: scale(1) !important;
-                        background-color: white !important;
-                        @include border-radius(5px !important);
-                        @include box-shadow(0px,
-                        2px,
-                        12px,
-                        rgba(0,
-                        0,
-                        0,
-                        0.14));
-                    }
-                }
-            }
-        }
-    }
+	padding-top: 40px;
+	padding-bottom: 20px;
+	h3 {
+		font-weight: 500;
+	}
+	.testimonials-carousel {
+		.item {
+			padding: 0 10%;
+			.tile {
+				box-shadow: none !important;
+				.dummy-value {
+					font-size: $testimonials-text-size;
+					color: transparent;
+					margin-top: 40px;
+				}
+				.real-value {
+					font-size: $testimonials-text-size;
+					position: absolute;
+					top: 40px;
+					width: 80%;
+					color: $gray-darkest;
+					font-weight: lighter;
+					padding-left: 30px;
+					text-align: center;
+				}
+			}
+		}
+		.left-arrow,
+		.right-arrow {
+			position: absolute;
+			border: none;
+			outline: none;
+			margin: auto;
+			top: 0;
+			bottom: 200px;
+			width: 40px;
+			height: 40px;
+			color: white;
+			background-color: $arrow-background-color;
+			@include border-radius(50%);
+			@include box-shadow(0px, 5px, 25px, rgba(0, 0, 0, 0.05));
+			&:hover {
+				background-color: $blue-main;
+				i {
+					color: white;
+				}
+			}
+			i {
+				text-align: center;
+				color: $blue-main;
+				font-size: 20px;
+			}
+		}
+		.left-arrow {
+			left: 10px;
+			i {
+				margin-left: -2px;
+			}
+		}
+		.right-arrow {
+			right: 10px;
+			i {
+				margin-right: -2px;
+			}
+		}
+		.ngxcarouselPointDefault {
+			ul.ngxcarouselPoint {
+				margin-top: 30px;
+				overflow: hidden;
+				li {
+					width: 24%;
+					max-width: 230px;
+					height: 99%;
+					min-height: 180px;
+					max-height: 185px;
+					background-color: transparent !important;
+					@include border-radius(0 !important);
+					background-size: 100% !important;
+					background-repeat: no-repeat !important;
+					background-position: center !important;
+					&:first-child {
+						background-image: url('../../../assets/images/testimonials/alain-pinel-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/alain-pinel-active.png');
+						}
+					}
+					&:nth-child(2) {
+						background-image: url('../../../assets/images/testimonials/michael-arrington-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/michael-arrington-active.png');
+						}
+					}
+					&:last-child {
+						background-image: url('../../../assets/images/testimonials/jeremy-gardner-inactive.png');
+						&.active {
+							background-image: url('../../../assets/images/testimonials/jeremy-gardner-active.png');
+						}
+					}
+					&.active {
+						transform: scale(1) !important;
+						background-color: white !important;
+						@include border-radius(5px !important);
+						@include box-shadow(0px,
+							2px,
+							12px,
+							rgba(0,
+								0,
+								0,
+								0.14));
+					}
+				}
+			}
+		}
+	}
 }

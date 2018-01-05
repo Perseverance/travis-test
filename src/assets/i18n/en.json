@@ -21,7 +21,8 @@
             "balance": "balance",
             "set": "Set",
             "share": "Share to Facebook",
-            "about": "About"
+            "about": "About",
+            "record-to-blockchain": "Record to Blockchain"
         },
         "placeholder": {
             "yourEmail": "Your Email",
@@ -243,6 +244,8 @@
         "reserve-property": "Reserve",
         "reserved-property": "Reserved",
         "reserved-by-you": "Reserved by you",
+        "no-wallet-set": "No wallet set!",
+        "no-wallet-set-message": "You have not set your wallet. Go to the wallet section and generate your pro wallet!",
         "overview-labels": {
             "property-type": "Property Type",
             "area": "Property Area",
@@ -346,15 +349,21 @@
             "successfully-redeemed": "Your PRO tokens were successfully redeemed",
             "redeemed-error-title": "Could not redeem your PRO tokens",
             "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
+            "download-your-wallet": "Download your wallet file",
+            "wallet-password": "Your Wallet Password",
+            "generate-wallet": "Generate wallet",
             "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
         },
         "refferal-program": {
-            "refferal-head": "Refferal Program",
+            "refferal-head": "Referral Program",
             "refferal-paragraph": "You can invite a friend and get a bonus PRO Token each, when they create an account at Propy.",
             "refferal-show": "Show Link",
             "refferal-hide": "Hide Link",
             "refferal-link": "Link",
-            "refferal-button": "Copy Refferal Link"
+            "refferal-button": "Copy Referral Link",
+            "download-your-wallet": "Download your wallet file",
+            "wallet-password": "Your Wallet Password",
+            "generate-wallet": "Generate wallet"
         }
     },
     "about": {

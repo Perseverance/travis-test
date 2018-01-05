@@ -91,7 +91,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public emitContactAgentAnalyticsClickEvent() {
-		this.googleAnalyticsEventsService.emitEvent('page-contact', 'contact');
+		this.googleAnalyticsEventsService.emitEvent('page-contact', this.propertyId);
 	}
 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')

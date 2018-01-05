@@ -1,26 +1,27 @@
-import {REVERSE_STEPS} from './../workflow/workflow.model';
-import {TransactionToolDocumentService} from './../transaction-tool-document.service';
-import {DeedDocumentType} from './../enums/deed-document-type.enum';
-import {Base64Service} from './../../shared/base64.service';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {UserRoleEnum} from './../enums/user-role.enum';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { CustomNumberValidator } from './eth-price-validator';
+import { REVERSE_STEPS } from './../workflow/workflow.model';
+import { TransactionToolDocumentService } from './../transaction-tool-document.service';
+import { DeedDocumentType } from './../enums/deed-document-type.enum';
+import { Base64Service } from './../../shared/base64.service';
+import { FormGroup, Validators, FormBuilder, FormControl, ValidationErrors } from '@angular/forms';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import {
 	SmartContractAddress,
 	Status,
 	SmartContractConnectionService
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import {Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {DeedsService} from '../../shared/deeds.service';
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { DeedsService } from '../../shared/deeds.service';
 
 export enum InvitationStatus {
 	NotInvited = 0,
@@ -49,6 +50,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public hasBuyerResponded: boolean;
 	public hasBuyerBrokerResponded: boolean;
 	public hasTitleCompanyResponded: boolean;
+	public reuploadingDocumentActivated: boolean;
 	public isWaitingForReservation = false;
 	public deed: any;
 	public deedStatus = Status;
@@ -62,16 +64,16 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public inviteForm: FormGroup;
 
 	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				private formBuilder: FormBuilder,
-				private base64Service: Base64Service,
-				private documentService: TransactionToolDocumentService,
-				private smartContractConnection: SmartContractConnectionService,
-				private router: Router,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private route: ActivatedRoute,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		private formBuilder: FormBuilder,
+		private base64Service: Base64Service,
+		private documentService: TransactionToolDocumentService,
+		private smartContractConnection: SmartContractConnectionService,
+		private router: Router,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.inviteForm = this.formBuilder.group({
@@ -79,9 +81,8 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			buyerEmail: ['', [Validators.required]],
 			buyerAgentEmail: ['', [Validators.required]],
 			titleCompanyEmail: ['', [Validators.required]],
-			priceInEth: ['', [Validators.required]],
+			priceInEth: ['', [Validators.required, CustomNumberValidator.minimalNumber]],
 		});
-
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
@@ -120,11 +121,13 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	}
 
 	private getPreviewLink(documents: any[]) {
+		let documentPreviewLink;
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.SellerDisclosures) {
-				return doc.fileName;
+				documentPreviewLink = doc.fileName;
 			}
 		}
+		return documentPreviewLink;
 	}
 
 	ngOnDestroy() {
@@ -166,6 +169,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
 		this.disclosuresLink = response.fileName;
+		this.reuploadingDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
