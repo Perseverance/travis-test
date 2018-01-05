@@ -85,15 +85,15 @@ $testimonials-text-size: 19px;
 					background-repeat: no-repeat !important;
 					background-position: center !important;
 					&:first-child {
-						background-image: url('../../../assets/images/testimonials/michael-arrington-inactive.png');
+						background-image: url('../../../assets/images/testimonials/alain-pinel-inactive.png');
 						&.active {
-							background-image: url('../../../assets/images/testimonials/michael-arrington-active.png');
+							background-image: url('../../../assets/images/testimonials/alain-pinel-active.png');
 						}
 					}
 					&:nth-child(2) {
-						background-image: url('../../../assets/images/testimonials/andrew-baum-inactive.png');
+						background-image: url('../../../assets/images/testimonials/michael-arrington-inactive.png');
 						&.active {
-							background-image: url('../../../assets/images/testimonials/andrew-baum-active.png');
+							background-image: url('../../../assets/images/testimonials/michael-arrington-active.png');
 						}
 					}
 					&:last-child {
