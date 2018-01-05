@@ -9,6 +9,7 @@
 				below!</i>
                 <br>
                 <app-record-blockchain-form (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+                <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
             </div>
             <ng-template #notSellerBroker>
                 <i>Status: Waiting for Seller Broker To Record The Seller Disclosures To The Blockchain</i>

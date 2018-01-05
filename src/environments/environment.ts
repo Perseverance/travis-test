@@ -47,5 +47,6 @@ export const environment = {
 	// web3Provider: 'http://localhost:8545',
 	infuraKey: '',
 	infuraLink: 'https://rinkeby.infura.io/Up5uvBHSCSqtOmnlhL87',
-	escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625'
+	escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625',
+	rinkebyTxLink: 'https://rinkeby.etherscan.io/tx/'
 };
