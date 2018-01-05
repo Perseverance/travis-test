@@ -5,8 +5,8 @@
         <button type="button" class="btn propy-control button-small refferal-button-desktop"
             data-toggle="collapse" data-target="#link" (click)="changeButtonText()">{{ buttonLabelHide ? buttonTextLabelHide : buttonTextLabelShow }}</button>
         <div id="link" class="collapse">
-            <span id="escrowAddress">{{inviteLink}} <button class="btn btn-default" type="button"
-                  ngxClipboard [cbContent]="inviteLink"><i class="fa fa-clone"></i></button></span>
+            <span id="escrowAddress">{{inviteLink}} <button class="btn btn-default copy-btn" type="button"
+                  ngxClipboard [cbContent]="inviteLink">Copy</button></span>
         </div>
         <div class="mobile">
             <button class="btn propy-control button-small" type="button" ngxClipboard [cbContent]="inviteLink">{{ 'settings.refferal-program.refferal-button' | translate }}</button>
