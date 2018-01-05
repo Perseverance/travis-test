@@ -77,10 +77,10 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		super(errorsService, translateService);
 
 		this.inviteForm = this.formBuilder.group({
-			sellerEmail: ['', [Validators.required]],
-			buyerEmail: ['', [Validators.required]],
-			buyerAgentEmail: ['', [Validators.required]],
-			titleCompanyEmail: ['', [Validators.required]],
+			sellerEmail: ['', [Validators.required, Validators.email]],
+			buyerEmail: ['', [Validators.required, Validators.email]],
+			buyerAgentEmail: ['', [Validators.required, Validators.email]],
+			titleCompanyEmail: ['', [Validators.required, Validators.email]],
 			priceInEth: ['', [Validators.required, CustomNumberValidator.minimalNumber]],
 		});
 		this.authService.subscribeToUserData({
