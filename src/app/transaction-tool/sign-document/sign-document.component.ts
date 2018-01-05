@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {AuthenticationService, UserData} from '../../authentication/authentication.service';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import {DeedsService} from '../../shared/deeds.service';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AuthenticationService, UserData } from '../../authentication/authentication.service';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { DeedsService } from '../../shared/deeds.service';
 
 @Component({
 	selector: 'app-sign-document',
@@ -26,7 +26,7 @@ export class SignDocumentComponent implements OnInit, OnDestroy {
 	@Output() onSignDocument = new EventEmitter<any>();
 
 	constructor(private route: ActivatedRoute,
-				private deedsService: DeedsService) {
+		private deedsService: DeedsService) {
 	}
 
 	ngOnInit() {

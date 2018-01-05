@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute } from '@angular/router';
 import { TransactionToolDocumentService } from '../transaction-tool-document.service';
 import { SmartContractConnectionService } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
 import { DeedsService } from '../../shared/deeds.service';
 import { Observable } from 'rxjs/Observable';
 import { UserRoleEnum } from '../enums/user-role.enum';
@@ -30,8 +29,8 @@ export class SettlementStatementComponent implements OnInit {
 	public selectedSellerDocument: any;
 	public previewBuyerLink: string;
 	public previewSellerLink: string;
-	public buyerSigningDocument: any;
-	public sellerSigningDocument: any;
+	public buyerAgreeingDocument: any;
+	public sellerAgreeingDocument: any;
 	private addressSubscription: Subscription;
 	public deedAddress: string;
 	public hasBuyerAgreed: boolean;
@@ -45,7 +44,6 @@ export class SettlementStatementComponent implements OnInit {
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
 		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
 		private base64Service: Base64Service,
 		private deedsService: DeedsService,
 		private notificationService: NotificationsService) {
@@ -67,15 +65,15 @@ export class SettlementStatementComponent implements OnInit {
 
 	private async setupDocumentPreview(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.buyerSigningDocument = this.getBuyerDocument(deed.documents);
-		if (this.buyerSigningDocument) {
-			this.previewBuyerLink = this.buyerSigningDocument.fileName;
-			this.getBuyerSettlementStatementSigners(this.buyerSigningDocument);
+		this.buyerAgreeingDocument = this.getBuyerDocument(deed.documents);
+		if (this.buyerAgreeingDocument) {
+			this.previewBuyerLink = this.buyerAgreeingDocument.fileName;
+			this.getBuyerSettlementStatementSigners(this.buyerAgreeingDocument);
 		}
-		this.sellerSigningDocument = this.getSellerDocument(deed.documents);
-		if (this.sellerSigningDocument) {
-			this.previewSellerLink = this.sellerSigningDocument.fileName;
-			this.getSellerSettlementStatementSigners(this.sellerSigningDocument);
+		this.sellerAgreeingDocument = this.getSellerDocument(deed.documents);
+		if (this.sellerAgreeingDocument) {
+			this.previewSellerLink = this.sellerAgreeingDocument.fileName;
+			this.getSellerSettlementStatementSigners(this.sellerAgreeingDocument);
 		}
 	}
 
@@ -232,7 +230,7 @@ export class SettlementStatementComponent implements OnInit {
 			return;
 		}
 
-		this.hasBuyerAgreed = this.hasPartySigned(doc, UserRoleEnum.Buyer);
+		this.hasBuyerAgreed = this.hasPartyAgreed(doc, UserRoleEnum.Buyer);
 	}
 
 	public getSellerSettlementStatementSigners(doc: any) {
@@ -240,10 +238,10 @@ export class SettlementStatementComponent implements OnInit {
 			return;
 		}
 
-		this.hasSellerAgreed = this.hasPartySigned(doc, UserRoleEnum.Seller);
+		this.hasSellerAgreed = this.hasPartyAgreed(doc, UserRoleEnum.Seller);
 	}
 
-	private hasPartySigned(doc: any, role: UserRoleEnum) {
+	private hasPartyAgreed(doc: any, role: UserRoleEnum) {
 		for (const signer of doc.signatures) {
 			if (signer.role === role) {
 				return signer.isSigned;
@@ -252,7 +250,7 @@ export class SettlementStatementComponent implements OnInit {
 		return false;
 	}
 
-	public shouldShowSignButton(): boolean {
+	public shouldShowAgreedButton(): boolean {
 		return (this.userIsBuyer && !this.hasBuyerAgreed)
 			|| (this.userIsSeller && !this.hasSellerAgreed);
 	}

@@ -19,11 +19,11 @@
         <div class="row">
             <div class="col-xs-12 text-center">
                 <!-- <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
-                    [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
+                    [showSignButton]="shouldShowAgreedButton()" [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
                     (onSignDocument)="signBuyerDocument()"></app-sign-document> -->
 
                 <app-agree-and-continue [hasBuyerAgreed]="hasBuyerAgreed" [hasSellerAgreed]="hasSellerAgreed"
-                    [showAgreeButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
+                    [showAgreeButton]="shouldShowAgreedButton()" [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
                     (onAgreeDocument)="agreeBuyerDocument()"></app-agree-and-continue>
             </div>
         </div>
@@ -58,10 +58,10 @@
         <div class="row">
             <div class="col-xs-12 text-center">
                 <!-- <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
-                    [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
+                    [showSignButton]="shouldShowAgreedButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
                     (onSignDocument)="signSellerDocument()"></app-sign-document> -->
                 <app-agree-and-continue [hasBuyerAgreed]="hasBuyerAgreed" [hasSellerAgreed]="hasSellerAgreed"
-                    [showAgreeButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
+                    [showAgreeButton]="shouldShowAgreedButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
                     (onAgreeDocument)="agreeSellerDocument()"></app-agree-and-continue>
             </div>
         </div>

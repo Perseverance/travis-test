@@ -1,13 +1,13 @@
-<div class="row sign-document-holder" *ngIf="documentType != deedDocumentTypeEnum.ClosingDocuments">
+<div class="row agree-document-holder" *ngIf="documentType != deedDocumentTypeEnum.ClosingDocuments">
     <div *ngIf="isSectionWithFourSigners()">
         <div class="col-xs-3" *ngIf="currentUserRole != userRoleEnum.Buyer">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Buyer
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasBuyerAgreed">
+                <div class="col-xs-12 agreed-document" *ngIf="hasBuyerAgreed">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -18,13 +18,13 @@
             </div>
         </div>
         <div class="col-xs-3" *ngIf="currentUserRole != userRoleEnum.Seller">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Seller
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasSellerAgreed">
+                <div class="col-xs-12 agreed-document" *ngIf="hasSellerAgreed">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -35,13 +35,13 @@
             </div>
         </div>
         <div class="col-xs-3" *ngIf="currentUserRole != userRoleEnum.BuyerBroker">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Buyer broker
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasBuyerBrokerSigned">
+                <div class="col-xs-12 agreed-document" *ngIf="hasBuyerBrokerSigned">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -52,13 +52,13 @@
             </div>
         </div>
         <div class="col-xs-3" *ngIf="currentUserRole != userRoleEnum.SellerBroker">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Seller broker
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasSellerBrokerSigned">
+                <div class="col-xs-12 agreed-document" *ngIf="hasSellerBrokerSigned">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -68,18 +68,18 @@
                 </div>
             </div>
         </div>
-        <div class="sign-button-holder col-xs-3" *ngIf="currentUserRole != userRoleEnum.TitleCompany">
-            <div class="row sign-label">
+        <div class="agree-button-holder col-xs-3" *ngIf="currentUserRole != userRoleEnum.TitleCompany">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     {{ currentUserRole | userRole }}
                 </div>
             </div>
-            <div class="row sign-button" *ngIf="showAgreeButton">
+            <div class="row agree-button" *ngIf="showAgreeButton">
                 <a class="btn propy-control button-big" [ngClass]="{'not-active': !showAgreeButton}"
                     (click)="onAgreeDocumentClick()">Agree & Continue</a>
             </div>
             <div class="row" *ngIf="!showAgreeButton">
-                <div class="col-xs-12 signed-document">
+                <div class="col-xs-12 agreed-document">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -88,13 +88,13 @@
     </div>
     <div *ngIf="isSectionWithTwoSigners()">
         <div class="col-xs-6" *ngIf="currentUserRole != userRoleEnum.Buyer">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Buyer
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasBuyerAgreed">
+                <div class="col-xs-12 agreed-document" *ngIf="hasBuyerAgreed">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -105,13 +105,13 @@
             </div>
         </div>
         <div class="col-xs-6" *ngIf="currentUserRole != userRoleEnum.Seller">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Seller
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasSellerAgreed">
+                <div class="col-xs-12 agreed-document" *ngIf="hasSellerAgreed">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -121,18 +121,18 @@
                 </div>
             </div>
         </div>
-        <div class="sign-button-holder col-xs-6" *ngIf="currentUserRole != userRoleEnum.TitleCompany && currentUserRole != userRoleEnum.BuyerBroker && currentUserRole != userRoleEnum.SellerBroker">
-            <div class="row sign-label">
+        <div class="agree-button-holder col-xs-6" *ngIf="currentUserRole != userRoleEnum.TitleCompany && currentUserRole != userRoleEnum.BuyerBroker && currentUserRole != userRoleEnum.SellerBroker">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     {{ currentUserRole | userRole }}
                 </div>
             </div>
-            <div class="row sign-button" *ngIf="showAgreeButton">
+            <div class="row agree-button" *ngIf="showAgreeButton">
                 <a class="btn propy-control button-big" [ngClass]="{'not-active': !showAgreeButton}"
                     (click)="onAgreeDocumentClick()">Agree & Continue</a>
             </div>
             <div class="row" *ngIf="!showAgreeButton">
-                <div class="col-xs-12 signed-document">
+                <div class="col-xs-12 agreed-document">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -141,13 +141,13 @@
     </div>
     <div *ngIf="documentType == deedDocumentTypeEnum.BuyerSettlementStatement">
         <div class="col-xs-12" *ngIf="currentUserRole == userRoleEnum.BuyerBroker || currentUserRole == userRoleEnum.TitleCompany">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Buyer
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasBuyerAgreed">
+                <div class="col-xs-12 agreed-document" *ngIf="hasBuyerAgreed">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -157,18 +157,18 @@
                 </div>
             </div>
         </div>
-        <div class="sign-button-holder col-xs-4 col-xs-offset-4" *ngIf="currentUserRole == userRoleEnum.Buyer">
-            <div class="row sign-label">
+        <div class="agree-button-holder col-xs-4 col-xs-offset-4" *ngIf="currentUserRole == userRoleEnum.Buyer">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     {{ currentUserRole | userRole }}
                 </div>
             </div>
-            <div class="row sign-button" *ngIf="showAgreeButton">
+            <div class="row agree-button" *ngIf="showAgreeButton">
                 <a class="btn propy-control button-big" [ngClass]="{'not-active': !showAgreeButton}"
                     (click)="onAgreeDocumentClick()">Agree & Continue</a>
             </div>
             <div class="row" *ngIf="!showAgreeButton">
-                <div class="col-xs-12 signed-document">
+                <div class="col-xs-12 agreed-document">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
@@ -177,34 +177,34 @@
     </div>
     <div *ngIf="documentType == deedDocumentTypeEnum.SellerSettlementStatement">
         <div class="col-xs-12" *ngIf="currentUserRole == userRoleEnum.SellerBroker || currentUserRole == userRoleEnum.TitleCompany">
-            <div class="row sign-label">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     Seller
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 signed-document" *ngIf="hasBuyerAgreed">
+                <div class="col-xs-12 agreed-document" *ngIf="hasSellerAgreed">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>
-                <div class="col-xs-12 pending-document" *ngIf="!hasBuyerAgreed">
+                <div class="col-xs-12 pending-document" *ngIf="!hasSellerAgreed">
                     <div [inlineSVG]="'/assets/images/pending.svg'"></div>
                     <p>Pending</p>
                 </div>
             </div>
         </div>
-        <div class="sign-button-holder col-xs-4 col-xs-offset-4" *ngIf="currentUserRole == userRoleEnum.Seller">
-            <div class="row sign-label">
+        <div class="agree-button-holder col-xs-4 col-xs-offset-4" *ngIf="currentUserRole == userRoleEnum.Seller">
+            <div class="row agree-label">
                 <div class="col-xs-12 text-uppercase text-center">
                     {{ currentUserRole | userRole }}
                 </div>
             </div>
-            <div class="row sign-button" *ngIf="showAgreeButton">
+            <div class="row agree-button" *ngIf="showAgreeButton">
                 <a class="btn propy-control button-big" [ngClass]="{'not-active': !showAgreeButton}"
                     (click)="onAgreeDocumentClick()">Agree & Continue</a>
             </div>
             <div class="row" *ngIf="!showAgreeButton">
-                <div class="col-xs-12 signed-document">
+                <div class="col-xs-12 agreed-document">
                     <div [inlineSVG]="'/assets/images/signed.svg'"></div>
                     <p>Agreed</p>
                 </div>

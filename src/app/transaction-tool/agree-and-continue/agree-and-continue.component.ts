@@ -18,8 +18,6 @@ export class AgreeAndContinueComponent implements OnInit, OnDestroy {
 	private addressSubscription: Subscription;
 	@Input() hasBuyerAgreed: boolean;
 	@Input() hasSellerAgreed: boolean;
-	@Input() hasBuyerBrokerSigned: boolean;
-	@Input() hasSellerBrokerSigned: boolean;
 	@Input() showAgreeButton: boolean;
 	@Input() documentType: any;
 	@Output() onAgreeDocument = new EventEmitter<any>();
