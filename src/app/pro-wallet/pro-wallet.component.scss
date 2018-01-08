@@ -1,118 +1,119 @@
 @import "../../variables";
 @import "../../mixins";
-
 .my-pro-wallet {
-	.address-holder {
-		@media #{$xs} {
-			margin-bottom: 15px;
-		}
-		input {
-			@include ellipsis(100%);
-		}
-	}
-	.wallet-address-description {
-		margin-bottom: 15px;
-		border-bottom: 1px solid $gray-lighter;
-		p {
-			font-size: 14px;
-			text-align: justify;
-		}
-	}
-	.redeem-holder {
-		padding: 40px 0;
-		margin-bottom: 25px;
-		border-top: 1px solid $gray-lighter;
-		border-bottom: 1px solid $gray-lighter;
-	}
-	.transaction-holder {
-		.transaction-header {
-			height: 46px;
-			line-height: 46px;
-			background-color: white;
-			color: $gray-darkest;
-			margin-bottom: 8px;
-			text-align: center;
-			@media #{$xxs} {
-				text-align: left;
-			}
-			@include box-shadow(0px,
-				1px,
-				3px,
-				rgba(0, 0, 0, 0.14));
-			.fa-refresh {
-				position: absolute;
-				right: 22px;
-				top: 10px;
-				font-size: 24px;
-				cursor: pointer;
-				&:hover {
-					color: $gray-dark;
-				}
-			}
-		}
-		.transaction-record {
-			background: #fff;
-			margin-bottom: 4px;
-			padding: 7px 10px 7px 10px;
-			color: $gray-darkest;
-			.row {
-				height: 34px;
-			}
-			&.tx-pending {
-				border-left: solid 2px $blue-dark;
-			}
-			&.tx-completed {
-				border-left: solid 2px $green-dark;
-			}
-			&.tx-rejected {
-				border-left: solid 2px darken($red-main, 10%);
-			}
-			@include box-shadow(0px,
-				1px,
-				3px,
-				rgba(0, 0, 0, 0.14));
-			.label-holder {
-				height: 34px;
-				line-height: 34px;
-				font-size: 14px;
-				color: $gray-dark;
-				font-weight: lighter;
-			}
-			.label-span {
-				font-size: 14px;
-				font-weight: lighter;
-				color: $gray-dark;
-			}
-			.value {
-				font-size: 14px;
-				font-weight: normal;
-				padding-left: 25px;
-			}
-			input {
-				@include ellipsis(100%);
-				background: none;
-				border: none;
-				box-shadow: none;
-				color: $gray-darkest;
-				font-size: 14px;
-				font-weight: normal;
-			}
-			.input-group-btn {
-				font-size: 14px;
-				button {
-					height: 34px;
-					outline: none;
-					@include border-radius(9px);
-					border: none;
-					&:hover {
-						background: none;
-						color: lighten($gray-darkest, 10%);
-					}
-				}
-			}
-		}
-		.refresh-processing {
-			opacity: 0.2;
-		}
-	}
+    .address-holder {
+        @media #{$xs} {
+            margin-bottom: 15px;
+        }
+        input {
+            @include ellipsis(100%);
+        }
+    }
+    .wallet-address-description {
+        margin-bottom: 15px;
+        border-bottom: 1px solid $gray-lighter;
+        p {
+            font-size: 14px;
+            text-align: justify;
+        }
+    }
+    .redeem-holder {
+        padding: 40px 0;
+        margin-bottom: 25px;
+        border-top: 1px solid $gray-lighter;
+        border-bottom: 1px solid $gray-lighter;
+    }
+    .transaction-holder {
+        .transaction-header {
+            height: 46px;
+            line-height: 46px;
+            background-color: white;
+            color: $gray-darkest;
+            margin-bottom: 8px;
+            text-align: center;
+            @media #{$xxs} {
+                text-align: left;
+            }
+            @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+            .fa-refresh {
+                position: absolute;
+                right: 22px;
+                top: 10px;
+                font-size: 24px;
+                cursor: pointer;
+                &:hover {
+                    color: $gray-dark;
+                }
+            }
+        }
+        .transaction-record {
+            background: #fff;
+            margin-bottom: 4px;
+            padding: 7px 10px 7px 10px;
+            color: $gray-darkest;
+            .row {
+                height: 34px;
+            }
+            &.tx-pending {
+                border-left: solid 2px $blue-dark;
+            }
+            &.tx-completed {
+                border-left: solid 2px $green-dark;
+            }
+            &.tx-rejected {
+                border-left: solid 2px darken($red-main, 10%);
+            }
+            @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+            .label-holder {
+                height: 34px;
+                line-height: 34px;
+                font-size: 14px;
+                color: $gray-dark;
+                font-weight: lighter;
+            }
+            .label-span {
+                font-size: 14px;
+                font-weight: lighter;
+                color: $gray-dark;
+            }
+            .value {
+                font-size: 14px;
+                font-weight: normal;
+                padding-left: 25px;
+            }
+            input {
+                @include ellipsis(100%);
+                background: none;
+                border: none;
+                box-shadow: none;
+                color: $gray-darkest;
+                font-size: 14px;
+                font-weight: normal;
+            }
+            .input-group-btn {
+                font-size: 14px;
+                button {
+                    @include border-radius(9px);
+                    color: $blue-main;
+                    border-color: $blue-main;
+                    &:hover {
+                        color: $blue-light;
+                        border-color: $blue-light;
+                        background: none;
+                    }
+                }
+                .copy-btn:active {
+                    background: none;
+                    color: $blue-dark;
+                    border-color: $blue-dark;
+                }
+                .copy-btn:active:focus {
+                    outline: 0;
+                }
+            }
+        }
+        .refresh-processing {
+            opacity: 0.2;
+        }
+    }
 }
