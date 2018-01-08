@@ -336,6 +336,10 @@
             "could-not-set-address": "Could not set your Ethereum address"
         },
         "my-pro-wallet": {
+            "pro-wallet-heading": "Create New Wallet",
+            "pro-wallet-text-info": "This password encrypts your private key. This does not act as a seed to generate your keys. You will need this password + your private key to unlock your wallet.",
+            "pro-wallet-password": "Enter a password",
+            "pro-wallet-download-text": "Do not lose it! Do not share it! Make a backup!",
             "transaction-heading": "Transaction History",
             "no-transactions": "No Transactions",
             "transaction-number": "TX#",
@@ -352,7 +356,7 @@
             "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
             "download-your-wallet": "Download your wallet file",
             "wallet-password": "Your Wallet Password",
-            "generate-wallet": "Generate wallet",
+            "generate-wallet": "Generate New Wallet",
             "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
         },
         "refferal-program": {

@@ -1,12 +1,38 @@
 @import "../../variables";
 @import "../../mixins";
 .my-pro-wallet {
+    .row {
+        margin-bottom: 10px;
+    }
+    .text-password {
+        margin-bottom: 20px;
+    }
     .address-holder {
         @media #{$xs} {
             margin-bottom: 15px;
         }
         input {
             @include ellipsis(100%);
+        }
+        .download-btn {
+            @include border-radius(9px);
+            color: $blue-main;
+            border-color: $blue-main;
+            background: none;
+            margin-bottom: 20px;
+            &:hover {
+                color: $blue-light;
+                border-color: $blue-light;
+                background: none;
+            }
+        }
+        .download-btn:active {
+            background: none;
+            color: $blue-dark;
+            border-color: $blue-dark;
+        }
+        .download-btn:active:focus {
+            outline: 0;
         }
     }
     .wallet-address-description {
@@ -18,9 +44,9 @@
         }
     }
     .redeem-holder {
-        padding: 40px 0;
+        padding-top: 20px;
+        padding-bottom: 40px;
         margin-bottom: 25px;
-        border-top: 1px solid $gray-lighter;
         border-bottom: 1px solid $gray-lighter;
     }
     .transaction-holder {
