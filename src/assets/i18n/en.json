@@ -393,7 +393,7 @@
     "verification": {
         "successfull-verification": "Account successfully activated. You can log into your account now!",
         "verification-error": "Could not verify your account. Please try again or resend yourself a verification email.",
-        "resend-success": "Successfully resent the verification email",
+        "resend-success": "Successfully re-sent the verification email",
         "resend-error": "Could not re-send verification email. Are you sure you used the correct email?"
     }
 }
