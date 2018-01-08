@@ -178,6 +178,15 @@ export class PropertiesService {
 		return true;
 	}
 
+	public async markPropertyAsUnlisted(propertyId: string): Promise<boolean> {
+		const queryParams = {
+			propertyid: propertyId
+		};
+		const result = await this.restService.postWithAccessToken(
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_UNLISTED, {}, { params: queryParams });
+		return true;
+	}
+
 	public async createProperty(data: CreatePropertyRequest): Promise<CreatePropertyResponse> {
 		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.CREATE_PROPERTY, data);
 		return result.data;
