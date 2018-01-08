@@ -1,0 +1,108 @@
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+
+@Component({
+	selector: 'app-verification',
+	templateUrl: './verification.component.html',
+	styleUrls: ['./verification.component.scss']
+})
+export class VerificationComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
+
+	private codeSubscription: Subscription;
+	public resendForm: FormGroup;
+	private verificationSuccess: string;
+	private resendSuccess: string;
+	public verificationTouched = false;
+
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router,
+		private formBuilder: FormBuilder,
+		private notificationsService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService
+	) {
+		super(errorsService, translateService);
+		this.resendForm = this.formBuilder.group({
+			email: ['',
+				[Validators.required, Validators.email]
+			]
+		});
+	}
+
+	ngOnInit() {
+		this.translateService.get([
+			'verification.successfull-verification',
+			'verification.resend-success'
+		]).subscribe((translations) => {
+			this.verificationSuccess = translations['verification.successfull-verification'];
+			this.resendSuccess = translations['verification.resend-success'];
+			this.codeSubscription = this.setupQueryParamsWatcher();
+		});
+	}
+
+	ngOnDestroy(): void {
+		this.codeSubscription.unsubscribe();
+	}
+
+	private setupQueryParamsWatcher() {
+		return this.route.queryParams
+			.subscribe(async params => {
+				if (params.code) {
+					await this.sendActivationCode(params.code);
+				} else {
+					this.errorsService.pushError({
+						errorMessage: 'Malformed Link. Please try again the link in your email',
+						errorTitle: 'Malformed link.',
+						errorTime: (new Date()).getTime()
+					});
+					this.moveToSignIn();
+				}
+			});
+	}
+
+	@DefaultAsyncAPIErrorHandling('verification.verification-error')
+	private async sendActivationCode(code: string) {
+		console.log(code);
+		this.notificationsService.pushSuccess({
+			title: this.verificationSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+		// this.moveToSignIn();
+	}
+
+	public get email() {
+		return this.resendForm.get('email');
+	}
+
+	@DefaultAsyncAPIErrorHandling('verification.resend-success')
+	public async resendVerification() {
+		this.verificationTouched = true;
+		if (this.resendForm.invalid) {
+			return;
+		}
+		this.notificationsService.pushSuccess({
+			title: this.resendSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
+		this.verificationTouched = false;
+	}
+
+	private moveToSignIn() {
+		this.router.navigate(['/login']);
+	}
+
+}
