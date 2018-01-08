@@ -37,6 +37,7 @@ export class APIEndpointsService {
 		NEW_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/newproperties`,
 		MY_LISTINGS: `${this.INTERNAL_API_PREFIX}/Properties/mylistings`,
 		MARK_PROPERTY_AS_SOLD: `${this.INTERNAL_API_PREFIX}/Properties/setsold/`,
+		MARK_PROPERTY_AS_UNLISTED: `${this.INTERNAL_API_PREFIX}/Properties/unlist/`,
 		HIDE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/hidden`,
 		RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/createChargeForReservation`,
 		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/notifications/authPusher`,

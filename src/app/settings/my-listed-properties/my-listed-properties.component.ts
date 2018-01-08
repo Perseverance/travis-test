@@ -29,29 +29,26 @@ export class MyListedPropertiesComponent implements OnInit {
 		this.translateService.stream([
 			'settings.my-listed-properties-settings.confirmation-heading',
 			'settings.my-listed-properties-settings.confirmation-message',
+			'settings.my-listed-properties-settings.confirmation-message-unlist',
 			'settings.my-listed-properties-settings.growl-heading',
-			'settings.my-listed-properties-settings.growl-message'
+			'settings.my-listed-properties-settings.growl-message',
+			'settings.my-listed-properties-settings.growl-message-unlist'
+
 		]).subscribe((translations) => {
 			this.confirmationLabels = {
 				heading: translations['settings.my-listed-properties-settings.confirmation-heading'],
-				message: translations['settings.my-listed-properties-settings.confirmation-message']
+				message: translations['settings.my-listed-properties-settings.confirmation-message'],
+				messageUnlist: translations['settings.my-listed-properties-settings.confirmation-message-unlist']
 			};
 			this.growlLabels = {
 				heading: translations['settings.my-listed-properties-settings.growl-heading'],
-				message: translations['settings.my-listed-properties-settings.growl-message']
+				message: translations['settings.my-listed-properties-settings.growl-message'],
+				messageUnlist: translations['settings.my-listed-properties-settings.growl-message-unlist']
 			};
 		});
 	}
 
 	public markPropertyAsSold(id: string) {
-		this.confirmationService.confirm({
-			message: this.confirmationLabels['message'],
-			header: this.confirmationLabels['heading'],
-			key: 'markAsSoldDialog',
-			accept: () => this.acceptMarkupPropertyAsSold(id)
-		});
-	}
-	public markPropertyAsUnlisted(id: string) {
 		this.confirmationService.confirm({
 			message: this.confirmationLabels['message'],
 			header: this.confirmationLabels['heading'],
@@ -84,6 +81,44 @@ export class MyListedPropertiesComponent implements OnInit {
 			const property = this.myListedProperties[i];
 			if (property.id === id) {
 				this.myListedProperties[i].status = this.propertyStatusEnum.Sold;
+				break;
+			}
+		}
+	}
+
+	public markPropertyAsUnlisted(id: string) {
+		this.confirmationService.confirm({
+			message: this.confirmationLabels['messageUnlist'],
+			header: this.confirmationLabels['heading'],
+			key: 'markAsUnlistDialog',
+			accept: () => this.acceptMarkupPropertyAsUnlisted(id)
+		});
+	}
+
+	private async acceptMarkupPropertyAsUnlisted(id: string) {
+		const result = await this.propertiesService.markPropertyAsUnlisted(id);
+		if (!result) {
+			return;
+		}
+		this.findAndMarkPropertyAsUnlisted(id);
+		this.notificationService.pushSuccess({
+			title: this.growlLabels['messageUnlist'],
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 2000
+		});
+		this.messages = [{
+			severity: 'success',
+			summary: this.growlLabels['heading'],
+			detail: this.growlLabels['messageUnlist']
+		}];
+	}
+
+	private findAndMarkPropertyAsUnlisted(id: string) {
+		for (let i = 0; i < this.myListedProperties.length; i++) {
+			const property = this.myListedProperties[i];
+			if (property.id === id) {
+				this.myListedProperties[i].status = this.propertyStatusEnum.Unlisted;
 				break;
 			}
 		}

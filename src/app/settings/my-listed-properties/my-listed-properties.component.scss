@@ -39,9 +39,9 @@ $section-border-color: #F0F0F0;
                     }
                 }
                 &.mark-unlist-listing {
-                    background: $red-main;
+                    background: $red-button;
                     &:hover {
-                        background: $green-sec;
+                        background: $red-button-bright;
                         text-decoration: none;
                     }
                 }
