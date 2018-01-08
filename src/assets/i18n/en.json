@@ -22,7 +22,8 @@
             "set": "Set",
             "share": "Share to Facebook",
             "about": "About",
-            "record-to-blockchain": "Record to Blockchain"
+            "record-to-blockchain": "Record to Blockchain",
+            "copy": "Copy"
         },
         "placeholder": {
             "yourEmail": "Your Email",
