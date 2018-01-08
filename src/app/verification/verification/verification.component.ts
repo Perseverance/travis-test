@@ -1,3 +1,4 @@
+import { VerificationService } from './../verification.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -27,6 +28,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 		private router: Router,
 		private formBuilder: FormBuilder,
 		private notificationsService: NotificationsService,
+		private verificationService: VerificationService,
 		errorsService: ErrorsService,
 		translateService: TranslateService
 	) {
@@ -71,7 +73,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('verification.verification-error')
 	private async sendActivationCode(code: string) {
-		console.log(code);
+		await this.verificationService.sendVerificationCode(code);
 		this.notificationsService.pushSuccess({
 			title: this.verificationSuccess,
 			message: '',
@@ -85,12 +87,13 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 		return this.resendForm.get('email');
 	}
 
-	@DefaultAsyncAPIErrorHandling('verification.resend-success')
+	@DefaultAsyncAPIErrorHandling('verification.resend-error')
 	public async resendVerification() {
 		this.verificationTouched = true;
 		if (this.resendForm.invalid) {
 			return;
 		}
+		await this.verificationService.resendVerficiation(this.email.value);
 		this.notificationsService.pushSuccess({
 			title: this.resendSuccess,
 			message: '',

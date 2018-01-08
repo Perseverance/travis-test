@@ -46,6 +46,7 @@ import { LoadPropertyService } from '../transaction-tool/load-property.service';
 import { NotificationGrowlComponent } from '../notification-growl/notification-growl.component';
 import { GrowlModule } from 'primeng/components/growl/growl';
 import { WalletSetGuard } from '../transaction-tool/workflow/wallet-set-guard.service';
+import { VerificationService } from '../verification/verification.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -111,7 +112,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		WorkflowGuard,
 		WalletSetGuard,
 		HelloSignService,
-		LoadPropertyService
+		LoadPropertyService,
+		VerificationService
 	],
 	exports: [
 		TranslateModule,
