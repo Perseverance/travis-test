@@ -1,17 +1,17 @@
-import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
-import { Subscription } from 'rxjs/Subscription';
-import { UserData } from './../../authentication/authentication.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { PropertiesService } from './../properties.service';
-import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { AuthenticationService } from '../../authentication/authentication.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
+import {Subscription} from 'rxjs/Subscription';
+import {UserData} from './../../authentication/authentication.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {PropertiesService} from './../properties.service';
+import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -24,22 +24,23 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	public contactAgentForm: FormGroup;
 	private successMessage: string;
 	private userDataSubscription: Subscription;
+	public defaultCountryCode = '';
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
 
 	constructor(private propertiesService: PropertiesService,
-		private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+				private authService: AuthenticationService,
+				private formBuilder: FormBuilder,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(errorsService, translateService);
 
 		this.contactAgentForm = this.formBuilder.group({
 			name: ['', [Validators.required]],
-			phoneNumber: ['', [Validators.required]],
+			phoneNumber: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern('^\\+[0-9-]+')])],
 			email: ['', [Validators.required, Validators.email]],
 			message: ['', [Validators.required]],
 			agentId: [undefined, [Validators.required]]
@@ -52,6 +53,9 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 				}
 				this.name.setValue(`${userInfo.user.firstName} ${userInfo.user.lastName}`);
 				this.phoneNumber.setValue(userInfo.user.phoneNumber);
+				if (!userInfo.user.phoneNumber) {
+					this.defaultCountryCode = 'us';
+				}
 				this.email.setValue(userInfo.user.email);
 			}
 		});
