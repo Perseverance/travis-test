@@ -21,15 +21,22 @@ $background-blue: #e2f6fd;
         }
     }
     button {
-        outline: none;
         @include border-radius(9px);
-        border: none;
-        background: none;
-        padding-top: 5px;
+        color: $blue-main;
+        border-color: $blue-main;
         &:hover {
+            color: $blue-light;
+            border-color: $blue-light;
             background: none;
-            color: lighten($gray-darkest, 10%);
         }
+    }
+    .copy-btn:active {
+        background: none;
+        color: $blue-dark;
+        border-color: $blue-dark;
+    }
+    .copy-btn:active:focus {
+        outline: 0;
     }
     .mobile {
         display: none;
