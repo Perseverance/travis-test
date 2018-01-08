@@ -327,7 +327,8 @@
             "confirmation-message": "Are you sure that you want to mark property as sold?",
             "growl-heading": "Confirmed",
             "growl-message": "The property is marked as sold",
-            "no-listed-properties": "No properties listed!"
+            "no-listed-properties": "No properties listed!",
+            "mark-as-unlisted": "Unlist"
         },
         "my-deals": {},
         "set-pro-address": {

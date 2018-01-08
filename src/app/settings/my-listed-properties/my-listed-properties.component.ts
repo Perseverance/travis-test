@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {PropertiesService} from '../../properties/properties.service';
-import {ConfirmationService, Message} from 'primeng/primeng';
-import {PropertyStatusEnum} from '../../shared/enums/property-status.enum';
-import {TranslateService} from '@ngx-translate/core';
-import {NotificationsService} from '../../shared/notifications/notifications.service';
+import { Component, OnInit } from '@angular/core';
+import { PropertiesService } from '../../properties/properties.service';
+import { ConfirmationService, Message } from 'primeng/primeng';
+import { PropertyStatusEnum } from '../../shared/enums/property-status.enum';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 @Component({
 	selector: 'app-my-listed-properties',
@@ -18,9 +18,9 @@ export class MyListedPropertiesComponent implements OnInit {
 	public propertyStatusEnum = PropertyStatusEnum;
 
 	constructor(private propertiesService: PropertiesService,
-				private confirmationService: ConfirmationService,
-				private translateService: TranslateService,
-				private notificationService: NotificationsService) {
+		private confirmationService: ConfirmationService,
+		private translateService: TranslateService,
+		private notificationService: NotificationsService) {
 	}
 
 	async ngOnInit() {
@@ -44,6 +44,14 @@ export class MyListedPropertiesComponent implements OnInit {
 	}
 
 	public markPropertyAsSold(id: string) {
+		this.confirmationService.confirm({
+			message: this.confirmationLabels['message'],
+			header: this.confirmationLabels['heading'],
+			key: 'markAsSoldDialog',
+			accept: () => this.acceptMarkupPropertyAsSold(id)
+		});
+	}
+	public markPropertyAsUnlisted(id: string) {
 		this.confirmationService.confirm({
 			message: this.confirmationLabels['message'],
 			header: this.confirmationLabels['heading'],
