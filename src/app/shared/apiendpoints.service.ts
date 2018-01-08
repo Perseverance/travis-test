@@ -56,6 +56,8 @@ export class APIEndpointsService {
 		PROPERTY_PREVIEW: `${this.INTERNAL_API_PREFIX}/Deeds/property`,
 		GET_DOCUMENT_CONTENT: `${this.INTERNAL_API_PREFIX}/Deeds/documentcontent`,
 		AGREE_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
+		VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/verification`,
+		RESEND_VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/resendverification`
 	};
 
 	constructor() {
