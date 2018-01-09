@@ -91,11 +91,11 @@ export class MyListedPropertiesComponent implements OnInit {
 			message: this.confirmationLabels['messageUnlist'],
 			header: this.confirmationLabels['heading'],
 			key: 'markAsUnlistDialog',
-			accept: () => this.acceptMarkupPropertyAsUnlisted(id)
+			accept: () => this.acceptMarkPropertyAsUnlisted(id)
 		});
 	}
 
-	private async acceptMarkupPropertyAsUnlisted(id: string) {
+	private async acceptMarkPropertyAsUnlisted(id: string) {
 		const result = await this.propertiesService.markPropertyAsUnlisted(id);
 		if (!result) {
 			return;
