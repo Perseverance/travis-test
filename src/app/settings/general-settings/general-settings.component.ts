@@ -39,8 +39,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(5),
-				Validators.maxLength(20),
-				Validators.pattern('[0-9]+')])
+				Validators.maxLength(20)])
 			]
 		});
 		this.authService.subscribeToUserData({
@@ -91,6 +90,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
+		const selectedCountryObject = this.childPhoneComponent.selectedCountry;
 		const phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
 		this.notificationService.pushSuccess({
@@ -99,6 +99,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
+		this.childPhoneComponent.selectedCountry = selectedCountryObject;
 	}
 
 	public cancelEdit() {

@@ -42,6 +42,11 @@
 							  [defaultCountry]="defaultPhoneCountryCode"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
 							  formControlName="phoneNumber"></int-phone-prefix>
+		    <div class="propy-validation-errors-box">
+				<div class="propy-validation" *ngIf="phoneNumber.invalid">
+				{{ phoneNumber.errors | json }}
+				</div>
+			</div>
 		</div>
 		<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
 		[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">
