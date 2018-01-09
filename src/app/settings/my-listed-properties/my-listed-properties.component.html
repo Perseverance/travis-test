@@ -12,7 +12,7 @@
     <div class="row listing-row" *ngFor="let property of myListedProperties">
         <div class="my-property-holder" [ngClass]="{'property-sold': (property.status === propertyStatusEnum.Sold || property.status === propertyStatusEnum.Unlisted) }">
             <div class="col-xs-12 col-lg-8">
-                <app-property-preview [property]="property" [inactiveComponent]="property.status === propertyStatusEnum.Sold || propertyStatusEnum.Unlisted"
+                <app-property-preview [property]="property" [inactiveComponent]="property.status === propertyStatusEnum.Sold || property.status === propertyStatusEnum.Unlisted"
                     [imageWidth]="350" [imageHeight]="215">
                 </app-property-preview>
             </div>
