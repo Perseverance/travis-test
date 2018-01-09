@@ -8,10 +8,11 @@ import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratab
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorsService} from './../../shared/errors/errors.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, Input, ViewEncapsulation, ViewChild} from '@angular/core';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -28,6 +29,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private propertiesService: PropertiesService,
 				private authService: AuthenticationService,
@@ -40,7 +42,12 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 		this.contactAgentForm = this.formBuilder.group({
 			name: ['', [Validators.required]],
-			phoneNumber: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern('^\\+[0-9-]+')])],
+			phoneNumber: ['', Validators.compose([
+				Validators.required,
+				Validators.minLength(5),
+				Validators.maxLength(20),
+				Validators.pattern('[0-9]+')])
+			],
 			email: ['', [Validators.required, Validators.email]],
 			message: ['', [Validators.required]],
 			agentId: [undefined, [Validators.required]]
@@ -49,6 +56,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
+					this.defaultCountryCode = 'us';
 					return;
 				}
 				this.name.setValue(`${userInfo.user.firstName} ${userInfo.user.lastName}`);
@@ -100,12 +108,13 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onSubmit() {
+		const phoneNumber = this.childPhoneComponent.selectedCountry.dialCode + this.phoneNumber.value;
 		await this.propertiesService.requestInfo(
 			this.propertyId,
 			this.agentId.value,
 			this.name.value,
 			this.email.value,
-			this.phoneNumber.value,
+			phoneNumber,
 			this.message.value);
 
 		this.contactAgentForm.reset();
