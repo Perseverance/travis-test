@@ -44,7 +44,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
-			proWalletPassword: [null, [Validators.required]],
+			proWalletPassword: [null, [Validators.required]]
 		});
 		const self = this;
 		this.userDataSubscription = this.authService.subscribeToUserData({
@@ -81,6 +81,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			throw new Error('No wallet to backup');
 		}
 		const downloader = document.createElement('a');
+		document.body.appendChild(downloader); // Needed for ff;
 
 		const data = JSON.stringify(this.jsonWallet);
 		const blob = new Blob([data], { type: 'text/json' });
