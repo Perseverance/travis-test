@@ -32,6 +32,8 @@
                             <p><span>The ETH will be sent to address </span><span id="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn" type="button"
                                     ngxClipboard [cbContent]="escrowAddress">Copy</button></span><span> the Escrow address.</span>
                             </p>
+                        </div>
+                        <div class="col-xs-12">
                             <p><span><strong>IMPORTANT:</strong> You need to set atleast 180000 gas when sending the payment.</span></p>
                         </div>
 
@@ -41,7 +43,16 @@
 
             </ng-template>
             <ng-template #isNotBuyer>
-                <p>Waiting for buyer to make the payment.</p>
+                <div class="row">
+                    <div class="col-xs 12" *ngIf="!isPaymentCompleted">
+                        <p>Waiting for buyer to make the payment.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs 12" *ngIf="isPaymentCompleted">
+                        <p>Payment was already completed!</p>
+                    </div>
+                </div>
             </ng-template>
         </div>
     </div>
