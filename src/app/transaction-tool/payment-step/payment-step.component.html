@@ -43,7 +43,16 @@
 
             </ng-template>
             <ng-template #isNotBuyer>
-                <p>Waiting for buyer to make the payment.</p>
+                <div class="row">
+                    <div class="col-xs 12" *ngIf="!isPaymentCompleted">
+                        <p>Waiting for buyer to make the payment.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs 12" *ngIf="isPaymentCompleted">
+                        <p>Payment was already completed!</p>
+                    </div>
+                </div>
             </ng-template>
         </div>
     </div>
