@@ -6,8 +6,9 @@ import {SignUpFormValidators} from './../../authentication/sign-up-component/sig
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-general-settings',
@@ -19,8 +20,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	public editProfileForm: FormGroup;
 	public successMessage: string;
+	public defaultPhoneCountryCode: string;
 
 	private userInfo: any;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private authService: AuthenticationService,
 				private formBuilder: FormBuilder,
@@ -33,15 +36,24 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			email: [{value: '', disabled: true}, []],
-			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
+			phoneNumber: ['', Validators.compose([
+				Validators.required,
+				Validators.minLength(5),
+				Validators.maxLength(20),
+				Validators.pattern('[0-9]+')])
+			]
 		});
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
+					this.defaultPhoneCountryCode = 'us';
 					return;
 				}
 				this.userInfo = userInfo.user;
 				this.setUserInfo(this.userInfo);
+				if (!userInfo.user.phoneNumber) {
+					this.defaultPhoneCountryCode = 'us';
+				}
 			}
 		});
 	}
@@ -79,7 +91,8 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
-		await this.authService.updateUser(this.firstName.value, this.lastName.value, this.phoneNumber.value);
+		const phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',

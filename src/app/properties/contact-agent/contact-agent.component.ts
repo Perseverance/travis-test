@@ -25,7 +25,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	public contactAgentForm: FormGroup;
 	private successMessage: string;
 	private userDataSubscription: Subscription;
-	public defaultCountryCode = '';
+	public defaultPhoneCountryCode: string;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
@@ -56,13 +56,13 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
-					this.defaultCountryCode = 'us';
+					this.defaultPhoneCountryCode = 'us';
 					return;
 				}
 				this.name.setValue(`${userInfo.user.firstName} ${userInfo.user.lastName}`);
 				this.phoneNumber.setValue(userInfo.user.phoneNumber);
 				if (!userInfo.user.phoneNumber) {
-					this.defaultCountryCode = 'us';
+					this.defaultPhoneCountryCode = 'us';
 				}
 				this.email.setValue(userInfo.user.email);
 			}
