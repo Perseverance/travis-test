@@ -32,7 +32,7 @@ export const environment = {
 		cluster: 'eu'
 	},
 	helloSign: {
-		clientId: 'bf1d8f7cfa6a4ebd4a33765723fa03bc',
+		clientId: '30a28cd02d7f49d1293ab1207d23fdce',
 		skipDomainVerification: false
 	},
 	hardCodedDeedParties: {
