@@ -8,6 +8,7 @@ import { AuthenticationService, UserData } from './../../authentication/authenti
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { VerificationService } from '../../verification/verification.service';
 
 @Component({
 	selector: 'app-general-settings',
@@ -20,12 +21,15 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public editProfileForm: FormGroup;
 	public successMessage: string;
 	public isEmailVerified: boolean;
+	private resendSuccess: string;
+	public verificationTouched = false;
 
 	private userInfo: any;
 
 	constructor(private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
 		private notificationService: NotificationsService,
+		private verificationService: VerificationService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -49,11 +53,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	ngOnInit() {
-		this.translateService.stream('settings.general-settings.update-success').subscribe(value => {
-			this.successMessage = value;
+		this.translateService.stream(['settings.general-settings.update-success', 'verification.resend-success']).subscribe(translations => {
+			this.successMessage = translations['settings.general-settings.update-success'];
+			this.resendSuccess = translations['verification.resend-success'];
 		});
-
-
 	}
 
 	private setUserInfo(userInfo: any) {
@@ -94,4 +97,20 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.setUserInfo(this.userInfo);
 	}
 
+	@DefaultAsyncAPIErrorHandling('verification.resend-error')
+	public async resendVerification() {
+		this.verificationTouched = true;
+		if (this.email.invalid) {
+			return;
+		}
+		await this.verificationService.resendVerficiation(this.email.value);
+		this.notificationService.pushSuccess({
+			title: this.resendSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
+		this.verificationTouched = false;
+	}
 }

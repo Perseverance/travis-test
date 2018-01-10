@@ -16,6 +16,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 @Component({
 	selector: 'app-sign-up-component',
@@ -36,6 +37,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	public agentLocations: string[] = new Array<string>();
 	private redirectToUrl = environment.defaultRedirectRoute;
 	private referralId: string;
+	private emailSentSuccess: string;
 
 	protected agencyAutoCompleteDataService: RemoteData;
 
@@ -46,6 +48,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		private agencySuggestionsService: AgencySuggestionsService,
 		private completerService: CompleterService,
 		private agencyService: AgencyService,
+		private notificationsService: NotificationsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
@@ -57,6 +60,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			return `${this.agencySuggestionsService.agenciesSearchURL}${term}`;
 		});
 		this.agencyAutoCompleteDataService.dataField('data');
+		this.translateService.stream(['verification.activation-email-sent']).subscribe(translations => {
+			this.emailSentSuccess = translations['verification.activation-email-sent'];
+		});
 
 		this.signupForm = this.formBuilder.group({
 			email: ['',
@@ -218,6 +224,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				phoneNumber: this.phoneNumber.value
 			});
 		}
+		this.notificationsService.pushSuccess({
+			title: this.emailSentSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 		this.router.navigate([this.redirectToUrl]);
 		if (result && this.referralId) {
 			const email = this.email.value;

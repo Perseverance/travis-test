@@ -62,11 +62,10 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 					await this.sendActivationCode(params.code);
 				} else {
 					this.errorsService.pushError({
-						errorMessage: 'Malformed Link. Please try again the link in your email',
+						errorMessage: 'Malformed Link. Please try again the link in your email or resend your activation email below',
 						errorTitle: 'Malformed link.',
 						errorTime: (new Date()).getTime()
 					});
-					this.moveToSignIn();
 				}
 			});
 	}
@@ -80,7 +79,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
-		// this.moveToSignIn();
+		this.moveToSignIn();
 	}
 
 	public get email() {

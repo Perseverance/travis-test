@@ -391,6 +391,7 @@
         "deposit-5000": "Deposit $5000"
     },
     "verification": {
+        "activation-email-sent": "Acount activation email sent! Please check your email",
         "successfull-verification": "Account successfully activated. You can log into your account now!",
         "verification-error": "Could not verify your account. Please try again or resend yourself a verification email.",
         "resend-success": "Successfully re-sent the verification email",
