@@ -25,6 +25,12 @@
                     <div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
                 </div>
             </div>
+			<div class="form-group">
+				<int-phone-prefix [locale]="'en'"
+								  [defaultCountry]="defaultPhoneCountryCode"
+								  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
+								  formControlName="phoneNumber"></int-phone-prefix>
+			</div>
             <div formGroupName="passwords">
                 <div class="form-group">
                     <input formControlName="password" type="password" class="form-control propy-control" id="password" placeholder="{{ 'common.placeholder.password' | translate }}">
@@ -57,13 +63,6 @@
             </div>
 
             <div formGroupName="agentFields" *ngIf="iAmAnAgent.value">
-                <div class="form-group">
-                    <input formControlName="phoneNumber" type="tel" class="form-control propy-control" id="phoneNumber" placeholder="{{ 'common.placeholder.phoneNumber' | translate }}">
-                    <div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
-                        <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                        <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">{{ 'common.validation-errors.invalid-phone-number' | translate }}</div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <input formControlName="expertise" type="text" class="form-control propy-control" id="expertise" placeholder="{{ 'common.placeholder.expertise' | translate }}">
                     <div *ngIf="expertise.touched" class="propy-validation-errors-box">

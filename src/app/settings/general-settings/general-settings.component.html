@@ -24,33 +24,15 @@
 			<label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
 			<input formControlName="email" type="text" class="form-control propy-control" id="email">
 		</div>
-		<!--<div class="form-group">-->
-			<!--<label for="phoneNumber" class="propy-label">{{ 'common.placeholder.phoneNumber' | translate }}</label>-->
-			<!--<input formControlName="phoneNumber" type="tel" class="form-control propy-control" id="phoneNumber"-->
-				   <!--placeholder="{{ 'common.placeholder.phoneNumber' | translate }}">-->
-			<!--<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">-->
-				<!--<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{-->
-					<!--'common.validation-errors.required' | translate }}-->
-				<!--</div>-->
-				<!--<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">{{-->
-					<!--'common.validation-errors.invalid-phone-number' | translate }}-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
 		<div class="form-group">
 			<int-phone-prefix [locale]="'en'"
 							  [defaultCountry]="defaultPhoneCountryCode"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
 							  formControlName="phoneNumber"></int-phone-prefix>
-		    <div class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="phoneNumber.invalid">
-				{{ phoneNumber.errors | json }}
-				</div>
-			</div>
 		</div>
 		<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
-		[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">
-		{{'common.label.save-changes' | translate }}
+				[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">
+			{{'common.label.save-changes' | translate }}
 		</button>
 		<button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{
 			'common.label.cancel' | translate }}
