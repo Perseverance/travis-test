@@ -271,7 +271,9 @@
             "message": "Your message",
             "contact-success": "Your request was sent succesfully!",
             "contact-error": "Could not contact this seller"
-        }
+        },
+        "verification-error": "Your account is not activated.",
+        "verification-error-message": "Please activate your account in order to reserve this property"
     },
     "filters": {
         "price": "Price",
@@ -391,8 +393,8 @@
         "deposit-5000": "Deposit $5000"
     },
     "verification": {
-        "activation-email-sent": "Acount activation email sent! Please check your email",
-        "successfull-verification": "Account successfully activated. You can log into your account now!",
+        "activation-email-sent": "We have sent an activation email to your inbox. Please click the link inside to activate your account.",
+        "successfull-verification": "Account successfully activated!",
         "verification-error": "Could not verify your account. Please try again or resend yourself a verification email.",
         "resend-success": "Successfully re-sent the verification email",
         "resend-error": "Could not re-send verification email. Are you sure you used the correct email?"

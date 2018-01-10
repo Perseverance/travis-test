@@ -79,7 +79,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
-		this.moveToSignIn();
+		this.moveToHome();
 	}
 
 	public get email() {
@@ -103,8 +103,8 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 		this.verificationTouched = false;
 	}
 
-	private moveToSignIn() {
-		this.router.navigate(['/login']);
+	private moveToHome() {
+		this.router.navigate(['/']);
 	}
 
 }

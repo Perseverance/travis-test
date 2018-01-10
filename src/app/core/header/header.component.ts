@@ -1,14 +1,14 @@
-import {SETTINGS_TABS} from './../../settings/settings/settings.component';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {DefaultLanguage} from './../i18nSetup';
-import {environment} from './../../../environments/environment';
-import {RedirectableComponent} from './../../shared/redirectable/redirectable.component';
-import {Component, OnInit, HostListener, Inject} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {LocalStorageService} from '../../shared/localStorage.service';
-import {Router, ActivatedRoute, NavigationEnd, UrlSegment} from '@angular/router';
-import {DOCUMENT} from '@angular/platform-browser';
-import {MomentService} from '../../shared/moment.service';
+import { SETTINGS_TABS } from './../../settings/settings/settings.component';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { DefaultLanguage } from './../i18nSetup';
+import { environment } from './../../../environments/environment';
+import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
+import { Component, OnInit, HostListener, Inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '../../shared/localStorage.service';
+import { Router, ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
+import { DOCUMENT } from '@angular/platform-browser';
+import { MomentService } from '../../shared/moment.service';
 
 
 @Component({
@@ -28,17 +28,19 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public userInfo: any;
 	public isLanding = false;
 	public settingsTabs = SETTINGS_TABS;
+	public isEmailVerified = true;
 
 	constructor(router: Router,
-				private route: ActivatedRoute,
-				public authService: AuthenticationService,
-				public translate: TranslateService,
-				private storage: LocalStorageService,
-				@Inject(DOCUMENT) private document: Document,
-				private momentService: MomentService) {
+		private route: ActivatedRoute,
+		public authService: AuthenticationService,
+		public translate: TranslateService,
+		private storage: LocalStorageService,
+		@Inject(DOCUMENT) private document: Document,
+		private momentService: MomentService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
+				this.isEmailVerified = userInfo.user.isEmailVerified;
 				this.isUserAnonymous = userInfo.isAnonymous;
 				this.userInfo = userInfo.user;
 				this.hasUserLoaded = true;
@@ -99,6 +101,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	}
 
 	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
-		this.router.navigate(['map', {latitude, longitude, locationName}]);
+		this.router.navigate(['map', { latitude, longitude, locationName }]);
 	}
 }
