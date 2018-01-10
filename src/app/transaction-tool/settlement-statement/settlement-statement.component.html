@@ -1,14 +1,5 @@
 <div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
 <ng-template #dataLoaded>
-    <div *ngIf="userIsTitleCompany && (!hasBuyerAgreed || !hasSellerAgreed)">
-        <i>Status: Waiting for statement acknowledgement!</i>
-    </div>
-    <div *ngIf="userIsSellerBroker && !hasSellerAgreed">
-        <i>Status: Waiting for statement acknowledgement!</i>
-    </div>
-    <div *ngIf="userIsBuyerBroker && !hasBuyerAgreed">
-        <i>Status: Waiting for statement acknowledgement!</i>
-    </div>
     <div *ngIf="userIsBuyer || userIsBuyerBroker || userIsTitleCompany">
         <div *ngIf="previewBuyerLink; then buyerHasPreviewLink; else buyerNoPreviewLink">
         </div>
@@ -21,7 +12,15 @@
     <ng-template #buyerHasPreviewLink>
         <div class="row">
             <div class="col-xs-12">
+                <div class="row" *ngIf="userIsBuyerBroker && !hasBuyerAgreed">
+                    <div class="col-xs-12 text-center">
+                        <i>Waiting for statement acknowledgement</i>
+                    </div>
+                </div>
                 <div class="row" *ngIf="userIsTitleCompany">
+                    <div class="col-xs-12 text-center" *ngIf="!hasBuyerAgreed || !hasSellerAgreed">
+                        <i>Waiting for statement acknowledgement</i>
+                    </div>
                     <div class="col-xs-12 reupload-holder" *ngIf="deed.status < deedStatus.settlementStatement">
                         <div class="row reupload-button-holder">
                             <div class="col-xs-12">
@@ -80,6 +79,11 @@
     <ng-template #sellerHasPreviewLink>
         <div class="row">
             <div class="col-xs-12">
+                <div class="row" *ngIf="userIsSellerBroker && !hasSellerAgreed">
+                    <div class="col-xs-12 text-center">
+                        <i>Waiting for statement acknowledgement</i>
+                    </div>
+                </div>
                 <div class="row" *ngIf="userIsTitleCompany">
                     <div class="col-xs-12 reupload-holder" *ngIf="deed.status < deedStatus.settlementStatement">
                         <div class="row reupload-button-holder">
