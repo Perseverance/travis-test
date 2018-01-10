@@ -64,4 +64,19 @@
 			}
 		}
 	}
+	.verified,
+	.not-verified {
+		font-size: 11px;
+		@include border-radius(5px);
+		padding: 1px 5px;
+		margin-left: 10px;
+	}
+	.verified {
+		border: 1px solid $green-dark;
+		background-color: rgba($color: $green-dark, $alpha: 0.05)
+	}
+	.not-verified {
+		border: 1px solid $red-main;
+		background-color: rgba($color: $red-main, $alpha: 0.05)
+	}
 }

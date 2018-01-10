@@ -1,14 +1,12 @@
 import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
 import {AgencyService} from './../../shared/agency.service';
 import {CompleterService, RemoteData, CompleterItem} from 'ng2-completer';
-import {Agency} from './../../models/agency.model';
 import {AgencySuggestionsService} from './../agency-suggestions.service';
 import {ErrorsService} from './../../shared/errors/errors.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
 import {DefaultAsyncAPIErrorHandling} from './../../shared/errors/errors.decorators';
 import {environment} from './../../../environments/environment';
-import {APIEndpointsService} from './../../shared/apiendpoints.service';
 import {SignUpFormValidators} from './sign-up-components.validators';
 import {AuthenticationService} from './../authentication.service';
 import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild} from '@angular/core';
@@ -96,7 +94,6 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	ngOnDestroy() {
 		for (const subscription of this.paramsSubscriptions) {
-
 			subscription.unsubscribe();
 		}
 	}

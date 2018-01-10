@@ -2,8 +2,8 @@
 	<form [formGroup]="editProfileForm" class="propy-form">
 		<div class="form-group">
 			<label for="firstName" class="propy-label">{{ 'common.placeholder.firstName' | translate }}</label>
-			<input formControlName="firstName" type="text" class="form-control propy-control" id="firstName"
-				   placeholder="{{ 'common.placeholder.firstName' | translate }}">
+			<input formControlName="firstName" type="text" class="form-control propy-control"
+				   id="firstName" placeholder="{{ 'common.placeholder.firstName' | translate }}">
 			<div *ngIf="firstName.touched" class="propy-validation-errors-box">
 				<div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">{{
 					'common.validation-errors.required' | translate }}
@@ -12,8 +12,8 @@
 		</div>
 		<div class="form-group">
 			<label for="lastName" class="propy-label">{{ 'common.placeholder.lastName' | translate }}</label>
-			<input formControlName="lastName" type="text" class="form-control propy-control" id="lastName"
-				   placeholder="{{ 'common.placeholder.lastName' | translate }}">
+			<input formControlName="lastName" type="text" class="form-control propy-control"
+				   id="lastName" placeholder="{{ 'common.placeholder.lastName' | translate }}">
 			<div *ngIf="lastName.touched" class="propy-validation-errors-box">
 				<div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{
 					'common.validation-errors.required' | translate }}
@@ -22,6 +22,7 @@
 		</div>
 		<div class="form-group">
 			<label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
+			<span [ngClass]="{'verified': isEmailVerified, 'not-verified': !isEmailVerified}">{{ isEmailVerified ? 'Verified' : 'Not Verified'}}</span>
 			<input formControlName="email" type="text" class="form-control propy-control" id="email">
 		</div>
 		<div class="form-group">
@@ -29,13 +30,12 @@
 							  [defaultCountry]="defaultPhoneCountryCode"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
 							  formControlName="phoneNumber"></int-phone-prefix>
-		</div>
-		<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
-				[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">
-			{{'common.label.save-changes' | translate }}
-		</button>
-		<button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{
-			'common.label.cancel' | translate }}
-		</button>
+			<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
+					[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">{{
+				'common.label.save-changes' | translate }}
+			</button>
+			<button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{
+				'common.label.cancel' | translate }}
+			</button>
 	</form>
 </div>

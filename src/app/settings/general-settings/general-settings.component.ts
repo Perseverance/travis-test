@@ -1,8 +1,6 @@
 import {NotificationsService} from './../../shared/notifications/notifications.service';
 import {ErrorsService} from './../../shared/errors/errors.service';
 import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
-import {SignUpFormValidators} from './../../authentication/sign-up-component/sign-up-components.validators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -21,6 +19,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public editProfileForm: FormGroup;
 	public successMessage: string;
 	public defaultPhoneCountryCode: string;
+	public isEmailVerified: boolean;
 
 	private userInfo: any;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
@@ -49,6 +48,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 					return;
 				}
 				this.userInfo = userInfo.user;
+				this.isEmailVerified = this.userInfo.isEmailVerified;
 				this.setUserInfo(this.userInfo);
 				if (!userInfo.user.phoneNumber) {
 					this.defaultPhoneCountryCode = 'us';

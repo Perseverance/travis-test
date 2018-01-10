@@ -200,8 +200,7 @@
                 </div>
             </div>
             <div class="row agree-button" *ngIf="showAgreeButton; else notShowAgreeButton">
-                <a class="btn propy-control button-big" [ngClass]="{'not-active': notShowAgreeButton}"
-                    (click)="onAgreeDocumentClick()">Agree & Continue</a>
+                <a class="btn propy-control button-big" (click)="onAgreeDocumentClick()">Agree & Continue</a>
             </div>
             <ng-template #notShowAgreeButton>
                 <div class="row"></div>
@@ -210,7 +209,6 @@
                     <p>Agreed</p>
                 </div>
             </ng-template>
-
         </div>
     </div>
 </div>

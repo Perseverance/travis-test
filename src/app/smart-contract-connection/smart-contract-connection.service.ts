@@ -84,7 +84,11 @@ export class SmartContractConnectionService {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
-		return this.web3Service.convertWalletToKeys(this.jsonFile, walletPassword);
+		try {
+			return this.web3Service.convertWalletToKeys(this.jsonFile, walletPassword);
+		} catch (e) {
+			throw new Error('Could not decrypt your wallet. Possibly wrong password');
+		}
 	}
 
 	private async recordDocument(
@@ -97,6 +101,7 @@ export class SmartContractConnectionService {
 			throw new Error('No credentials');
 		}
 		const keys = this.convertWalletToKeys(walletPassword);
+
 		const callOptions = {
 			from: keys.address,
 		};
