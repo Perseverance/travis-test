@@ -1,3 +1,4 @@
+import { DisclosuresStepComponent } from './disclosures-step/disclosures-step.component';
 import { AgreeAndContinueComponent } from './agree-and-continue/agree-and-continue.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ClosingDocumentsComponent } from './closing-documents/closing-documents.component';
@@ -16,7 +17,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { SignDocumentComponent } from './sign-document/sign-document.component';
-import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { TitleReportComponent } from './title-report/title-report.component';
 import { PaymentStepComponent } from './payment-step/payment-step.component';
 import { InlineSVGModule } from 'ng-inline-svg';
@@ -45,7 +45,7 @@ import { RecordBlockchainFormComponent } from './record-blockchain-form/record-b
 		UploadDocumentComponent,
 		DocumentPreviewComponent,
 		PropertyPreviewComponent,
-		SellerDisclosuresStepComponent,
+		DisclosuresStepComponent,
 		SignDocumentComponent,
 		TextLimitationPipe,
 		PropertyItemViewComponent,

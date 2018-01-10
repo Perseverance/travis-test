@@ -22,9 +22,9 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.purchaseAgreement}`] = STEPS['purchase-agreement'];
 		this.statusToStepMap[`${Status.purchaseAgreementBlockchain}`] = STEPS['title-report'];
 		this.statusToStepMap[`${Status.titleReport}`] = STEPS['title-report'];
-		this.statusToStepMap[`${Status.titleReportBlockchain}`] = STEPS['seller-disclosures'];
-		this.statusToStepMap[`${Status.sellerDisclosures}`] = STEPS['seller-disclosures'];
-		this.statusToStepMap[`${Status.sellerDisclosuresBlockchain}`] = STEPS['settlement-statement'];
+		this.statusToStepMap[`${Status.titleReportBlockchain}`] = STEPS['disclosures'];
+		this.statusToStepMap[`${Status.Disclosures}`] = STEPS['disclosures'];
+		this.statusToStepMap[`${Status.DisclosuresBlockchain}`] = STEPS['settlement-statement'];
 		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['payment'];
 		this.statusToStepMap[`${Status.payment}`] = STEPS['affidavit'];
 		this.statusToStepMap[`${Status.affidavit}`] = STEPS['affidavit'];
