@@ -76,7 +76,7 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Seller Disclosures',
+				label: 'Disclosures',
 				command: (event: any) => {
 					this.activeIndex = 4;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -183,10 +183,10 @@ export class TransactionToolComponent implements OnInit {
 			case Status.titleReportBlockchain: {
 				return 4;
 			}
-			case Status.sellerDisclosures: {
+			case Status.Disclosures: {
 				return 4;
 			}
-			case Status.sellerDisclosuresBlockchain: {
+			case Status.DisclosuresBlockchain: {
 				return 5;
 			}
 			case Status.settlementStatement: {

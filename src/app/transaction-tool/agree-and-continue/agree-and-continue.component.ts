@@ -38,7 +38,7 @@ export class AgreeAndContinueComponent implements OnInit, OnDestroy {
 	}
 	public isSectionWithFourSigners(): boolean {
 		if (this.documentType === this.deedDocumentTypeEnum.PurchaseAgreement
-			|| this.documentType === this.deedDocumentTypeEnum.SignedSellerDisclosures) {
+			|| this.documentType === this.deedDocumentTypeEnum.SignedDisclosures) {
 			return true;
 		}
 		return false;

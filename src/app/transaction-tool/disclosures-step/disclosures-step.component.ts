@@ -23,15 +23,15 @@ import { environment } from '../../../environments/environment';
 declare const HelloSign;
 
 @Component({
-	selector: 'app-seller-disclosures-step',
-	templateUrl: './seller-disclosures-step.component.html',
-	styleUrls: ['./seller-disclosures-step.component.scss']
+	selector: 'app-disclosures-step',
+	templateUrl: './disclosures-step.component.html',
+	styleUrls: ['./disclosures-step.component.scss']
 })
-export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent implements OnInit {
+export class DisclosuresStepComponent extends ErrorsDecoratableComponent implements OnInit {
 
-	public waitingTitle = 'Waiting seller broker to upload seller disclosures document';
-	public disclosuresTitle = 'Seller Disclosures';
-	public previewDisclosuresSubtitle = 'Please review seller disclosures.';
+	public waitingTitle = 'Waiting seller broker to upload disclosures document';
+	public disclosuresTitle = 'Disclosures';
+	public previewDisclosuresSubtitle = 'Please review disclosures.';
 
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
@@ -80,7 +80,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
-		this.shouldSendToBlockchain = (deed.status === Status.sellerDisclosures);
+		this.shouldSendToBlockchain = (deed.status === Status.Disclosures);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
@@ -96,7 +96,7 @@ export class SellerDisclosuresStepComponent extends ErrorsDecoratableComponent i
 	private getSignatureDocument(documents: any[]) {
 		let signatureDocument;
 		for (const doc of documents) {
-			if (doc.type === DeedDocumentType.SignedSellerDisclosures) {
+			if (doc.type === DeedDocumentType.SignedDisclosures) {
 				signatureDocument = doc;
 			}
 		}

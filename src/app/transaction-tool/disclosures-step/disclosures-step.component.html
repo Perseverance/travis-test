@@ -5,14 +5,14 @@
     <ng-template #hasPreviewLink>
         <div class="row text-center" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
             <div *ngIf="userIsSellerBroker;else notSellerBroker">
-                <i>Status: Waiting For You To Record The Seller Disclosures To The Blockchain. Please use the button
+                <i>Status: Waiting For You To Record The Disclosures To The Blockchain. Please use the button
 				below!</i>
                 <br>
                 <app-record-blockchain-form (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
                 <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
             </div>
             <ng-template #notSellerBroker>
-                <i>Status: Waiting for Seller Broker To Record The Seller Disclosures To The Blockchain</i>
+                <i>Status: Waiting for Seller Broker To Record The Disclosures To The Blockchain</i>
             </ng-template>
         </div>
         <ng-template #noBlockChainYet></ng-template>
@@ -26,7 +26,7 @@
             <div class="col-xs-12 text-center">
                 <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
                     [hasBuyerBrokerSigned]="hasBuyerBrokerSigned" [hasSellerBrokerSigned]="hasSellerBrokerSigned"
-                    [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SignedSellerDisclosures"
+                    [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SignedDisclosures"
                     (onSignDocument)="signDocument()"></app-sign-document>
             </div>
         </div>

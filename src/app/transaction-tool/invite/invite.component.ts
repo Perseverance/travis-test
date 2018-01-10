@@ -123,7 +123,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	private getPreviewLink(documents: any[]) {
 		let documentPreviewLink;
 		for (const doc of documents) {
-			if (doc.type === DeedDocumentType.SellerDisclosures) {
+			if (doc.type === DeedDocumentType.Disclosures) {
 				documentPreviewLink = doc.fileName;
 			}
 		}
@@ -167,7 +167,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			timeout: 60000
 		});
 		const base64 = await this.base64Service.convertFileToBase64(this.selectedDocument);
-		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.SellerDisclosures, this.deedId, base64);
+		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.Disclosures, this.deedId, base64);
 		this.disclosuresLink = response.fileName;
 		this.reuploadingDocumentActivated = false;
 		this.notificationService.pushSuccess({
