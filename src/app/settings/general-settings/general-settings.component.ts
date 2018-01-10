@@ -1,13 +1,13 @@
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
-import {SignUpFormValidators} from './../../authentication/sign-up-component/sign-up-components.validators';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
+import { SignUpFormValidators } from './../../authentication/sign-up-component/sign-up-components.validators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 
 @Component({
 	selector: 'app-general-settings',
@@ -19,20 +19,21 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	public editProfileForm: FormGroup;
 	public successMessage: string;
+	public isEmailVerified: boolean;
 
 	private userInfo: any;
 
 	constructor(private authService: AuthenticationService,
-				private formBuilder: FormBuilder,
-				private notificationService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private formBuilder: FormBuilder,
+		private notificationService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
-			email: [{value: '', disabled: true}, []],
+			email: [{ value: '', disabled: true }, []],
 			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
 		});
 		this.authService.subscribeToUserData({
@@ -41,6 +42,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 					return;
 				}
 				this.userInfo = userInfo.user;
+				this.isEmailVerified = this.userInfo.isEmailVerified;
 				this.setUserInfo(this.userInfo);
 			}
 		});

@@ -173,7 +173,16 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			timeout: 60000
 		});
 		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
-		const result = await this.smartContractService.recordPurchaseAgreement(password, this.deedAddress, documentString);
+		let result;
+		try {
+			result = await this.smartContractService.recordPurchaseAgreement(password, this.deedAddress, documentString);
+		} catch (e) {
+			this.errorsService.pushError({
+				errorTitle: '',
+				errorMessage: e.message,
+				errorTime: (new Date()).getTime()
+			});
+		}
 		if (result.status === '0x0') {
 			throw new Error('Could not save to the blockchain. Try Again');
 		}
