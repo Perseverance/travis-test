@@ -1,14 +1,5 @@
 <div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
 <ng-template #dataLoaded>
-    <!-- <div *ngIf="userIsTitleCompany && (!hasBuyerAgreed || !hasSellerAgreed)">
-        <i>Waiting for statement acknowledgement</i>
-    </div>
-    <div *ngIf="userIsSellerBroker && !hasSellerAgreed">
-        <i>Waiting for statement acknowledgement</i>
-    </div>
-    <div *ngIf="userIsBuyerBroker && !hasBuyerAgreed">
-        <i>Waiting for statement acknowledgement</i>
-    </div> -->
     <div *ngIf="userIsBuyer || userIsBuyerBroker || userIsTitleCompany">
         <div *ngIf="previewBuyerLink; then buyerHasPreviewLink; else buyerNoPreviewLink">
         </div>
