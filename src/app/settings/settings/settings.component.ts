@@ -33,6 +33,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public shouldShowPassword: any;
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
+	public isEmailVerified = true;
 
 	private paramsSubscription: Subscription;
 
@@ -46,7 +47,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			next: (userInfo: UserData) => {
 				if (userInfo.user === null) {
 					this.shouldShowPassword = true;
-				} else if (userInfo.user.externalLoginProviders === null) {
+					return;
+				}
+				this.isEmailVerified = userInfo.user.isEmailVerified;
+				if (userInfo.user.externalLoginProviders === null) {
 					this.shouldShowPassword = true;
 				} else {
 					this.shouldShowPassword = userInfo.user.externalLoginProviders.length === 0;
@@ -54,7 +58,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 		});
 		this.paramsSubscription = this.setupParamsWatcher();
-		this.listenForWeb3Loaded();
 	}
 
 	ngOnDestroy(): void {
@@ -65,6 +68,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		return this.route.queryParams
 			.subscribe(params => {
 				if (!params.selectedTab || !(params.selectedTab in this.settingsTabs)) {
+					return;
+				}
+
+				if (!this.isEmailVerified) {
+					this.setQueryParamForSelectedTab(TABS_INDEX.GENERAL);
 					return;
 				}
 
@@ -106,24 +114,5 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.router.navigate([currentPath], { queryParams: queryParams });
 	}
 
-	private listenForWeb3Loaded() {
-		// this.web3Service.web3InstanceLoaded({
-		// 	next: (web3Loaded: boolean) => {
-		// 		this.getMetamaskAccounts();
-		// 	}
-		// });
-	}
-
-	// private getMetamaskAccounts() {
-	// 	this.web3Service.getMetmaskAccounts().subscribe({
-	// 		error: (err) => {
-	// 			console.error(err);
-	// 		},
-	// 		next: (accs) => {
-	// 			console.log(accs);
-	// 		},
-	// 		complete: () => { }
-	// 	});
-	// }
 
 }
