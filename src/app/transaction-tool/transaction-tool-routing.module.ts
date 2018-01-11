@@ -4,7 +4,6 @@ import { ClosingDocumentsComponent } from './closing-documents/closing-documents
 import { InviteComponent } from './invite/invite.component';
 import { PaymentStepComponent } from './payment-step/payment-step.component';
 import { TitleReportComponent } from './title-report/title-report.component';
-import { SellerDisclosuresStepComponent } from './seller-disclosures-step/seller-disclosures-step.component';
 import { PropertyPreviewComponent } from './property-preview/property-preview.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,6 +15,7 @@ import { TokenGuard } from '../authentication/token-guard.service';
 import { AuthenticatedGuard } from '../authentication/authenticated-guard.service';
 import { SettlementStatementComponent } from './settlement-statement/settlement-statement.component';
 import { AffidavitStepComponent } from './affidavit-step/affidavit-step.component';
+import { DisclosuresStepComponent } from './disclosures-step/disclosures-step.component';
 
 const transactionToolSteps: Routes = [
 	{
@@ -50,8 +50,8 @@ const transactionToolSteps: Routes = [
 				canActivate: [WorkflowGuard]
 			},
 			{
-				path: 'seller-disclosures',
-				component: SellerDisclosuresStepComponent,
+				path: 'disclosures',
+				component: DisclosuresStepComponent,
 				canActivate: [WorkflowGuard],
 			},
 			{

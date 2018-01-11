@@ -9,6 +9,7 @@ import { LocalStorageService } from '../../shared/localStorage.service';
 import { Router, ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MomentService } from '../../shared/moment.service';
+import { PusherService } from '../../shared/pusher.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		public translate: TranslateService,
 		private storage: LocalStorageService,
 		@Inject(DOCUMENT) private document: Document,
-		private momentService: MomentService) {
+		private momentService: MomentService,
+		public pusherService: PusherService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -97,7 +99,9 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		event.preventDefault();
 		event.stopPropagation();
 		this.router.navigate(['/']);
+		const userId = this.userInfo.id;
 		this.authService.performLogout();
+		this.pusherService.unsubscribePusherChannel(userId);
 	}
 
 	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {

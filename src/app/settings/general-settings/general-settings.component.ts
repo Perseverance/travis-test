@@ -1,14 +1,13 @@
+import { VerificationService } from './../../verification/verification.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
-import { SignUpFormValidators } from './../../authentication/sign-up-component/sign-up-components.validators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { VerificationService } from '../../verification/verification.service';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-general-settings',
@@ -20,11 +19,13 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	public editProfileForm: FormGroup;
 	public successMessage: string;
+	public defaultPhoneCountryCode: string;
 	public isEmailVerified: boolean;
 	private resendSuccess: string;
 	public verificationTouched = false;
 
 	private userInfo: any;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private authService: AuthenticationService,
 		private formBuilder: FormBuilder,
@@ -38,16 +39,24 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			email: [{ value: '', disabled: true }, []],
-			phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
+			phoneNumber: ['', Validators.compose([
+				Validators.required,
+				Validators.minLength(5),
+				Validators.maxLength(20)])
+			]
 		});
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (userInfo.isAnonymous) {
+					this.defaultPhoneCountryCode = 'us';
 					return;
 				}
 				this.userInfo = userInfo.user;
 				this.isEmailVerified = this.userInfo.isEmailVerified;
 				this.setUserInfo(this.userInfo);
+				if (!userInfo.user.phoneNumber) {
+					this.defaultPhoneCountryCode = 'us';
+				}
 			}
 		});
 	}
@@ -84,13 +93,16 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
-		await this.authService.updateUser(this.firstName.value, this.lastName.value, this.phoneNumber.value);
+		const selectedCountryObject = this.childPhoneComponent.selectedCountry;
+		const phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
+		this.childPhoneComponent.selectedCountry = selectedCountryObject;
 	}
 
 	public cancelEdit() {

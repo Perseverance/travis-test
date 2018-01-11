@@ -1,27 +1,26 @@
+import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
-import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
 import { AgencyService } from './../../shared/agency.service';
 import { CompleterService, RemoteData, CompleterItem } from 'ng2-completer';
-import { Agency } from './../../models/agency.model';
 import { AgencySuggestionsService } from './../agency-suggestions.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
 import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decorators';
 import { environment } from './../../../environments/environment';
-import { APIEndpointsService } from './../../shared/apiendpoints.service';
 import { SignUpFormValidators } from './sign-up-components.validators';
 import { AuthenticationService } from './../authentication.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-sign-up-component',
 	templateUrl: './sign-up-component.component.html',
-	styleUrls: ['./sign-up-component.component.scss']
+	styleUrls: ['./sign-up-component.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class SignUpComponentComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
@@ -38,6 +37,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private redirectToUrl = environment.defaultRedirectRoute;
 	private referralId: string;
 	private emailSentSuccess: string;
+	public defaultPhoneCountryCode: string;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	protected agencyAutoCompleteDataService: RemoteData;
 
@@ -55,6 +56,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 		super(errorsService, translateService);
 
+		this.defaultPhoneCountryCode = 'us';
 		this.agencyAutoCompleteDataService = completerService.remote('', 'name', 'name');
 		this.agencyAutoCompleteDataService.urlFormater((term: string) => {
 			return `${this.agencySuggestionsService.agenciesSearchURL}${term}`;
@@ -75,9 +77,13 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
+			phoneNumber: ['', Validators.compose([
+				Validators.required,
+				Validators.minLength(5),
+				Validators.maxLength(20)])
+			],
 			iAmAnAgent: [false],
 			agentFields: this.formBuilder.group({
-				phoneNumber: ['', [Validators.required, PhoneNumberValidators.phoneNumberValidator]],
 				expertise: ['', [Validators.required]],
 				agency: ['', [Validators.required]],
 				agencyPassword: ['']
@@ -157,7 +163,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	public get phoneNumber() {
-		return this.agentFields.get('phoneNumber');
+		return this.signupForm.get('phoneNumber');
 	}
 
 	public get expertise() {
@@ -198,12 +204,14 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async registerUser() {
 		this.googleAnalyticsEventsService.emitEvent('page-sign-up', 'sign-up');
+		const phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 		const result = await this.authService
 			.performSignUp(
 			this.email.value,
 			this.password.value,
 			this.firstName.value,
 			this.lastName.value,
+			phoneNumber,
 			this.rememberMe.value
 			);
 		if (this.iAmAnAgent.value) {
@@ -220,8 +228,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				agencyId: this.agencyId,
 				agencyName: this.agency.value,
 				locations: this.agentLocations,
-				info: this.expertise.value,
-				phoneNumber: this.phoneNumber.value
+				info: this.expertise.value
 			});
 		}
 		this.notificationsService.pushSuccess({

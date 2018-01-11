@@ -34,8 +34,11 @@ export class PusherService {
 		this.bindEventsToChannel(this.pusherChannel);
 	}
 
-	public bindEventsToChannel(channel: any) {
+	public unsubscribePusherChannel(userId: string): void {
+		this.pusher.unsubscribe(`${userId}_private`);
+	}
 
+	public bindEventsToChannel(channel: any) {
 
 		// Event for Invitation
 		channel.bind('1', (data) => {

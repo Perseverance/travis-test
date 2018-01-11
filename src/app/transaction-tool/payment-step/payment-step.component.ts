@@ -4,7 +4,7 @@ import { NotificationsService } from './../../shared/notifications/notifications
 import { ActivatedRoute } from '@angular/router';
 import {
 	SmartContractAddress,
-	SmartContractConnectionService, EthereumAddress
+	SmartContractConnectionService, EthereumAddress, Status
 } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -31,7 +31,8 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 	public deedDetails: any;
 	public escrowAddress: EthereumAddress;
 	public contactAgentForm: FormGroup;
-
+	public currentDeedStatus: any;
+	public isPaymentCompleted = false;
 
 	private addressSubscription: Subscription;
 	public deedId: SmartContractAddress;
@@ -74,6 +75,10 @@ export class PaymentStepComponent extends ErrorsDecoratableComponent implements 
 			}
 			self.deedId = deedId;
 			self.deedDetails = await self.deedsService.getDeedDetails(deedId);
+			self.currentDeedStatus = self.deedDetails.status;
+			if (self.currentDeedStatus > Status.settlementStatement) {
+				self.isPaymentCompleted = true;
+			}
 			self.escrowAddress = self.deedDetails.paymentAddress;
 			self.invitationDataLoaded = true;
 			await self.mapCurrentUserToRole(deedId);

@@ -42,6 +42,8 @@
         <div class="form-group" *ngIf="!isEmailVerified">
             <button type="button" class="btn propy-control button-big" (click)="resendVerification()">Resend Verification Email</button>
         </div>
+        <int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode" [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
+            formControlName="phoneNumber"></int-phone-prefix>
         <button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()">{{
 			'common.label.save-changes' | translate }}
 		</button>

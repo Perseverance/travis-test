@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SellerDisclosuresStepComponent } from './seller-disclosures-step.component';
+import { DisclosuresStepComponent } from './disclosures-step.component';
 
 describe('SellerDisclosuresStepComponent', () => {
-  let component: SellerDisclosuresStepComponent;
-  let fixture: ComponentFixture<SellerDisclosuresStepComponent>;
+  let component: DisclosuresStepComponent;
+  let fixture: ComponentFixture<DisclosuresStepComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SellerDisclosuresStepComponent ]
+      declarations: [DisclosuresStepComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SellerDisclosuresStepComponent);
+    fixture = TestBed.createComponent(DisclosuresStepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
