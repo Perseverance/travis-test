@@ -1,15 +1,15 @@
-import { Subscription } from 'rxjs/Subscription';
-import { NextObserver } from 'rxjs/Observer';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { environment } from './../../environments/environment';
-import { OAuth2TokenTypes } from './oauth2-token-types';
-import { OAuth2GrantTypes } from './oauth2-grant-types';
-import { APIEndpointsService } from './../shared/apiendpoints.service';
-import { RestClientService } from './../shared/rest-client.service';
-import { Injectable } from '@angular/core';
-import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
-import { LinkedInService } from 'angular-linkedin-sdk';
-import { BrowserDetectionService } from '../shared/browser-detection.service';
+import {Subscription} from 'rxjs/Subscription';
+import {NextObserver} from 'rxjs/Observer';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {environment} from './../../environments/environment';
+import {OAuth2TokenTypes} from './oauth2-token-types';
+import {OAuth2GrantTypes} from './oauth2-grant-types';
+import {APIEndpointsService} from './../shared/apiendpoints.service';
+import {RestClientService} from './../shared/rest-client.service';
+import {Injectable} from '@angular/core';
+import {FacebookService, InitParams, LoginResponse, LoginOptions} from 'ngx-facebook';
+import {LinkedInService} from 'angular-linkedin-sdk';
+import {BrowserDetectionService} from '../shared/browser-detection.service';
 
 export class AnonymousUserCredentials {
 	public static firstName = 'Anonymous';
@@ -35,7 +35,6 @@ export interface RegisterAgentRequest {
 	agencyName: string;
 	locations: string[];
 	info: string;
-	phoneNumber: string;
 }
 
 export interface LinkedInAuthParams {
@@ -54,10 +53,10 @@ export class AuthenticationService {
 	private userDataSubject: ReplaySubject<UserData>;
 
 	constructor(public restClient: RestClientService,
-		public apiEndpoints: APIEndpointsService,
-		private fbService: FacebookService,
-		private linkedinService: LinkedInService,
-		private browserDetectionService: BrowserDetectionService) {
+				public apiEndpoints: APIEndpointsService,
+				private fbService: FacebookService,
+				private linkedinService: LinkedInService,
+				private browserDetectionService: BrowserDetectionService) {
 
 		const initParams: InitParams = {
 			appId: environment.fbConfigParams.appId,
@@ -70,7 +69,7 @@ export class AuthenticationService {
 		this.userDataSubject = new ReplaySubject(1);
 
 		if (!this.hasAuthCredentials) {
-			this.pushUserData({ isAnonymous: true, user: null });
+			this.pushUserData({isAnonymous: true, user: null});
 			return;
 		}
 		if (!this.restClient.isTokenExpired) {
@@ -129,15 +128,17 @@ export class AuthenticationService {
 	}
 
 	public async performSignUp(email: string,
-		password: string,
-		firstName: string,
-		lastName: string,
-		rememberMe = false, fetchUser = true): Promise<boolean> {
+							   password: string,
+							   firstName: string,
+							   lastName: string,
+							   phoneNumber: string,
+							   rememberMe = false, fetchUser = true): Promise<boolean> {
 		const data = {
 			email,
 			password,
 			firstName,
-			lastName
+			lastName,
+			phoneNumber
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
 		if (fetchUser) {
@@ -151,7 +152,7 @@ export class AuthenticationService {
 
 	public async performLogin(email: string, password: string, rememberMe = false, fetchUser = true): Promise<boolean> {
 		const config = {
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 		};
 		let result;
 		let data;
@@ -180,7 +181,7 @@ export class AuthenticationService {
 	public async performAnonymousLogin(): Promise<boolean> {
 		const doNotRememberUser = false;
 		const result = this.performLogin('', '', doNotRememberUser);
-		this.pushUserData({ isAnonymous: true, user: null });
+		this.pushUserData({isAnonymous: true, user: null});
 		return result;
 	}
 
@@ -277,8 +278,8 @@ export class AuthenticationService {
 	 * @param accessToken - the oauth access token of the corresponding login service
 	 */
 	private async externalLogin(externalLoginService: ExternalAuthenticationProviders,
-		userId: string,
-		accessToken: string): Promise<boolean> {
+								userId: string,
+								accessToken: string): Promise<boolean> {
 		const data: ExternalLoginRequest = {
 			loginProvider: externalLoginService,
 			providerKey: userId,
@@ -302,7 +303,7 @@ export class AuthenticationService {
 		}
 
 		const config = {
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 		};
 
 		let data;
@@ -377,7 +378,7 @@ export class AuthenticationService {
 		const result = await this.getUser('');
 		if (saveUser) {
 			this.user = result.data.data;
-			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
+			this.pushUserData({isAnonymous: this.isUserAnonymous, user: this.user});
 		}
 		return result;
 	}
@@ -386,7 +387,7 @@ export class AuthenticationService {
 		const params = {
 			id
 		};
-		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_USER, { params });
+		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_USER, {params});
 		return result;
 	}
 
@@ -410,7 +411,7 @@ export class AuthenticationService {
 		const result = await this.restClient.putWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.UPDATE_USER, params);
 		if (saveUser) {
 			this.user = result.data.data;
-			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
+			this.pushUserData({isAnonymous: this.isUserAnonymous, user: this.user});
 		}
 		return result.data.data;
 	}
@@ -431,7 +432,7 @@ export class AuthenticationService {
 		const params = {
 			email
 		};
-		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.FORGOT_PASSWORD, {}, { params });
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.FORGOT_PASSWORD, {}, {params});
 	}
 
 }
