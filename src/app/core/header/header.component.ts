@@ -1,3 +1,4 @@
+import { ErrorsService } from './../../shared/errors/errors.service';
 import { SETTINGS_TABS } from './../../settings/settings/settings.component';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { DefaultLanguage } from './../i18nSetup';
@@ -29,22 +30,31 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public userInfo: any;
 	public isLanding = false;
 	public settingsTabs = SETTINGS_TABS;
-	public isEmailVerified = true;
+	public isEmailVerified = false;
+
+	private verificationError: string;
+	private verificationMessage: string;
 
 	constructor(router: Router,
 		private route: ActivatedRoute,
 		public authService: AuthenticationService,
 		public translate: TranslateService,
 		private storage: LocalStorageService,
+		private errorsService: ErrorsService,
+		private translateService: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
 		private momentService: MomentService,
 		public pusherService: PusherService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
-				this.isEmailVerified = userInfo.user.isEmailVerified;
 				this.isUserAnonymous = userInfo.isAnonymous;
 				this.userInfo = userInfo.user;
+				console.log(this.userInfo);
+				if (this.userInfo) {
+					this.isEmailVerified = this.userInfo.isEmailVerified;
+				}
+
 				this.hasUserLoaded = true;
 			}
 		});
@@ -57,6 +67,16 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 			.subscribe((event: NavigationEnd) => {
 				this.isLanding = (event.url === '/');
 			});
+
+
+		this.translateService.stream([
+			'list-property.verification-error',
+			'list-property.verification-error-message'
+		]).subscribe((translations) => {
+			this.verificationError = translations['list-property.verification-error'];
+			this.verificationMessage = translations['list-property.verification-error-message'];
+
+		});
 	}
 
 	@HostListener('window:scroll', ['$event'])
@@ -102,6 +122,20 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		const userId = this.userInfo.id;
 		this.authService.performLogout();
 		this.pusherService.unsubscribePusherChannel(userId);
+	}
+
+	public goListProperty(event: Event) {
+		event.preventDefault();
+		event.stopPropagation();
+		if (!this.isEmailVerified) {
+			this.errorsService.pushError({
+				errorTitle: this.verificationError,
+				errorMessage: this.verificationMessage,
+				errorTime: (new Date()).getDate()
+			});
+			return;
+		}
+		this.router.navigate(['/list-property']);
 	}
 
 	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {

@@ -180,7 +180,9 @@
         },
         "choose": "Choose",
         "accept-toc": "I accept",
-        "address-required": "Please enter a valid address"
+        "address-required": "Please enter a valid address",
+        "verification-error": "Your account is not activated.",
+        "verification-error-message": "Please activate your account in order to list property"
     },
     "landing": {
         "location-search": "Enter a city, address or ZIP code",
