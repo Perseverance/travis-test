@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {PusherService} from '../shared/pusher.service';
+import {Router} from '@angular/router';
+import {MessageService} from 'primeng/components/common/messageservice';
 
 @Component({
 	selector: 'app-notification-growl',
@@ -9,10 +10,18 @@ import {PusherService} from '../shared/pusher.service';
 })
 export class NotificationGrowlComponent implements OnInit {
 
-	constructor(public pusherService: PusherService) {
+	constructor(private router: Router,
+				private messageService: MessageService) {
 	}
 
 	ngOnInit() {
 	}
 
+	public growlNotificationClicked(event) {
+		if (!event.message.detail) {
+			return;
+		}
+		this.router.navigate(['transaction-tool', event.message.detail]);
+		this.messageService.clear();
+	}
 }
