@@ -14,7 +14,7 @@ import { AuthenticationService, UserData } from './../../authentication/authenti
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
