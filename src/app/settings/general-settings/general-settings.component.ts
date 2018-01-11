@@ -1,12 +1,13 @@
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
+import { VerificationService } from './../../verification/verification.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-general-settings',
@@ -20,21 +21,24 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public successMessage: string;
 	public defaultPhoneCountryCode: string;
 	public isEmailVerified: boolean;
+	private resendSuccess: string;
+	public verificationTouched = false;
 
 	private userInfo: any;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private authService: AuthenticationService,
-				private formBuilder: FormBuilder,
-				private notificationService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private formBuilder: FormBuilder,
+		private notificationService: NotificationsService,
+		private verificationService: VerificationService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
-			email: [{value: '', disabled: true}, []],
+			email: [{ value: '', disabled: true }, []],
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(5),
@@ -58,11 +62,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	ngOnInit() {
-		this.translateService.stream('settings.general-settings.update-success').subscribe(value => {
-			this.successMessage = value;
+		this.translateService.stream(['settings.general-settings.update-success', 'verification.resend-success']).subscribe(translations => {
+			this.successMessage = translations['settings.general-settings.update-success'];
+			this.resendSuccess = translations['verification.resend-success'];
 		});
-
-
 	}
 
 	private setUserInfo(userInfo: any) {
@@ -106,4 +109,20 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.setUserInfo(this.userInfo);
 	}
 
+	@DefaultAsyncAPIErrorHandling('verification.resend-error')
+	public async resendVerification() {
+		this.verificationTouched = true;
+		if (this.email.invalid) {
+			return;
+		}
+		await this.verificationService.resendVerficiation(this.email.value);
+		this.notificationService.pushSuccess({
+			title: this.resendSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
+		this.verificationTouched = false;
+	}
 }

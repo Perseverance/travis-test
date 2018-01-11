@@ -64,6 +64,9 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private walletErrorTitle: string;
 	private walletErrorMessage: string;
 
+	private verificationError: string;
+	private verificationMessage: string;
+
 	constructor(router: Router,
 		private route: ActivatedRoute,
 		private propertiesService: PropertiesService,
@@ -122,6 +125,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			'common.scales.binary-scale.no',
 			'property-details.no-wallet-set',
 			'property-details.no-wallet-set-message',
+			'property-details.verification-error',
+			'property-details.verification-error-message'
 		]).subscribe((translations) => {
 			this.featureScale = {
 				undefined: translations['common.scales.undefined'],
@@ -149,7 +154,9 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			};
 
 			this.walletErrorTitle = translations['property-details.no-wallet-set'];
-			this.walletErrorMessage = translations['property-details.no-wallet-set-message']
+			this.walletErrorMessage = translations['property-details.no-wallet-set-message'];
+			this.verificationError = translations['property-details.verification-error'];
+			this.verificationMessage = translations['property-details.verification-error-message'];
 
 		});
 		const self = this;
@@ -213,7 +220,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 
 	public draw() {
-		console.log(this.map);
 		google.maps.event.trigger(this.map.el.nativeElement, 'resize');
 		this.zone.run(() => {
 		});
@@ -308,16 +314,22 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		event.preventDefault();
 		event.stopPropagation();
 		const currentUser = await this.authService.getCurrentUser();
-		if (currentUser.data.data.jsonFile) {
-			this.router.navigate(['/purchase', this.property.id]);
+		if (!currentUser.data.data.isEmailVerified) {
+			this.errorsService.pushError({
+				errorTitle: this.verificationError,
+				errorMessage: this.verificationMessage,
+				errorTime: (new Date()).getDate()
+			});
 			return;
 		}
-
-		this.errorsService.pushError({
-			errorTitle: this.walletErrorTitle,
-			errorMessage: this.walletErrorMessage,
-			errorTime: (new Date()).getDate()
-		});
-
+		if (!currentUser.data.data.jsonFile) {
+			this.errorsService.pushError({
+				errorTitle: this.walletErrorTitle,
+				errorMessage: this.walletErrorMessage,
+				errorTime: (new Date()).getDate()
+			});
+			return;
+		}
+		this.router.navigate(['/purchase', this.property.id]);
 	}
 }

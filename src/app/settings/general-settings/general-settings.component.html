@@ -22,10 +22,18 @@
             <label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
             <span [ngClass]="{'verified': isEmailVerified, 'not-verified': !isEmailVerified}">{{ isEmailVerified ? 'Verified' : 'Not Verified'}}</span>
             <input formControlName="email" type="text" class="form-control propy-control" id="email">
+            <div *ngIf="email.touched || verificationTouched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
+                <div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{ 'common.validation-errors.invalid-email' | translate }}</div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="!isEmailVerified">
+            <button type="button" class="btn propy-control button-big" (click)="resendVerification()">Resend Verification Email</button>
         </div>
         <div class="form-group">
             <int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode" [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
                 formControlName="phoneNumber"></int-phone-prefix>
+            <br />
             <button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
                 [disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">{{
 				'common.label.save-changes' | translate }}

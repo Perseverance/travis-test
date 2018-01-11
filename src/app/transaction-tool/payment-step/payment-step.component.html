@@ -25,23 +25,19 @@
                             <span id="price"> {{deedDetails.finalPrice.value | currencySymbol: deedDetails.finalPrice.type}}</span>
                         </div>
                     </form>
-
-
                     <div class="row payment-info">
                         <div class="col-xs-12">
-                            <p><span>The ETH will be sent to address </span><span id="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn" type="button"
+                            <p><span>The ETH will be sent to address </span><span class="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn" type="button"
                                     ngxClipboard [cbContent]="escrowAddress">Copy</button></span><span> the Escrow address.</span>
                             </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <p><span><strong>IMPORTANT:</strong> You need to set atleast 180000 gas when sending the payment.</span></p>
+                            <p><span><strong>IMPORTANT:</strong> In order the make sure that your transaction is processed, please allow for at least 180000 of gas limit when making the payment.</span></p>
                         </div>
                     </div>
                 </div>
-
-
             </ng-template>
             <ng-template #isNotBuyer>
                 <div class="row">
