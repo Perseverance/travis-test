@@ -220,7 +220,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 
 	public draw() {
-		console.log(this.map);
 		google.maps.event.trigger(this.map.el.nativeElement, 'resize');
 		this.zone.run(() => {
 		});
@@ -315,9 +314,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		event.preventDefault();
 		event.stopPropagation();
 		const currentUser = await this.authService.getCurrentUser();
-		console.log(currentUser);
 		if (!currentUser.data.data.isEmailVerified) {
-			console.log(this.verificationMessage);
 			this.errorsService.pushError({
 				errorTitle: this.verificationError,
 				errorMessage: this.verificationMessage,

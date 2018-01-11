@@ -298,6 +298,7 @@
     },
     "settings": {
         "title": "Account settings",
+        "not-verified-subtitle": "Activate your account to unlock more features",
         "headers": {
             "general-settings": "General settings",
             "email-notifications-settings": "Email notifications",
