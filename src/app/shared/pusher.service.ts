@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {APIEndpointsService} from './apiendpoints.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Message} from 'primeng/primeng';
-import {TransactionToolDocuments} from '../transaction-tool/enums/transaction-tool-document-types.model';
+import {MessageService} from 'primeng/components/common/messageservice';
 
 declare const Pusher: any;
 
@@ -11,11 +10,12 @@ declare const Pusher: any;
 export class PusherService {
 	pusher: any;
 	pusherChannel: any;
-	public globalMessages: Message[] = [];
+	private DEFAULT_VALUE_TIMEOUT = 5000;
 
 	constructor(private apiEndpointsService: APIEndpointsService,
 				private route: ActivatedRoute,
-				private router: Router) {
+				private router: Router,
+				private messageService: MessageService) {
 	}
 
 	public initializePusher(accessToken: string, userId: string): void {
@@ -42,21 +42,29 @@ export class PusherService {
 
 		// Event for Invitation
 		channel.bind('1', (data) => {
-			this.globalGrowlMessages = [{
+			this.messageService.add({
 				severity: 'info',
-				summary: 'Deal Invitation',
-				detail: 'Please check My Deals.'
-			}];
+				summary: 'Deal Invitation. Please check My Deals.',
+				detail: ''
+			});
+			const self = this;
+			setTimeout(function () {
+				self.messageService.clear();
+			}, this.DEFAULT_VALUE_TIMEOUT);
 		});
 
 		// Event for status changed
 		channel.bind('2', (data) => {
 			if (!this.router.url.startsWith('/transaction-tool')) {
-				this.globalGrowlMessages = [{
+				this.messageService.add({
 					severity: 'info',
-					summary: 'Deal Status Changed',
-					detail: 'Please check My Deals.'
-				}];
+					summary: `Deal Status Changed. Please check My Deals.`,
+					detail: ''
+				});
+				const self = this;
+				setTimeout(function () {
+					self.messageService.clear();
+				}, this.DEFAULT_VALUE_TIMEOUT);
 				return;
 			}
 			const deedId = (this.router.url.split('/'))[2];
@@ -66,29 +74,13 @@ export class PusherService {
 			this.router.navigate(['transaction-tool', data.message]);
 		});
 
-		// Event for document reuploading
+		// Event for new document uploaded
 		channel.bind('3', (data) => {
-			const responseData = JSON.parse(data.message);
-			if (!this.router.url.startsWith('/transaction-tool')) {
-				return;
-			}
-			const deedId = (this.router.url.split('/'))[2];
-			if (deedId !== responseData.DeedId) {
-				return;
-			}
-
-			this.globalGrowlMessages = [{
+			this.messageService.add({
 				severity: 'info',
-				summary: `${TransactionToolDocuments[responseData.DocumentType]} - new version uploaded`
-			}];
+				summary: 'A new document has been uploaded to one of your deals',
+				detail: data.message
+			});
 		});
-	}
-
-	set globalGrowlMessages(value: any) {
-		this.globalMessages = value;
-	}
-
-	get globalGrowlMessages(): any {
-		return this.globalMessages;
 	}
 }

@@ -4,17 +4,15 @@
 $success-notification-color: #22c230;
 
 .notification-message {
+	cursor: pointer;
 	.ui-growl-item-container.ui-state-highlight.ui-growl-message-info {
 		background-color: $success-notification-color;
 		@include border-radius(9px);
 		.ui-growl-item {
 			@include border-radius(9px);
-			.ui-growl-icon-close {
-				display: none;
-			}
 			.ui-growl-message {
 				p {
-					color: white;
+					display: none;
 				}
 			}
 		}
