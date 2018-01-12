@@ -21,7 +21,7 @@ export class TransactionToolInviteRespondComponent implements OnInit {
 	}
 
 	public onRejectClick() {
-		this.onAccept.emit();
+		this.onReject.emit();
 	}
 
 }
