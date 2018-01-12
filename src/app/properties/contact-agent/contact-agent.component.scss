@@ -62,10 +62,14 @@
 		resize: none;
 	}
 	.international-phone-holder {
+		margin-bottom: 10px;
 		.dropbtn {
 			height: 42px;
 			@include border-radius-separate(9px, 0, 9px, 0);
 			outline: none;
+			.fa {
+				color: $gray-light;
+			}
 		}
 		.flagInput {
 			border: 1px solid $border-default;
