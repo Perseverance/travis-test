@@ -23,6 +23,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public isEmailVerified: boolean;
 	private resendSuccess: string;
 	public verificationTouched = false;
+	public hasUserDataLoaded = false;
 
 	private userInfo: any;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
@@ -57,6 +58,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				if (!userInfo.user.phoneNumber) {
 					this.defaultPhoneCountryCode = 'us';
 				}
+				this.hasUserDataLoaded = true;
 			}
 		});
 	}

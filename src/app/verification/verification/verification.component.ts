@@ -22,6 +22,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 	private verificationSuccess: string;
 	private resendSuccess: string;
 	public verificationTouched = false;
+	public hasDataLoaded = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -67,19 +68,25 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 						errorTime: (new Date()).getTime()
 					});
 				}
+				this.hasDataLoaded = true;
 			});
 	}
 
 	@DefaultAsyncAPIErrorHandling('verification.verification-error')
 	private async sendActivationCode(code: string) {
-		await this.verificationService.sendVerificationCode(code);
-		this.notificationsService.pushSuccess({
-			title: this.verificationSuccess,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
-		this.moveToHome();
+		try {
+			await this.verificationService.sendVerificationCode(code);
+			this.notificationsService.pushSuccess({
+				title: this.verificationSuccess,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 4000
+			});
+			this.moveToHome();
+		} catch (error) {
+			this.hasDataLoaded = true;
+			throw error;
+		}
 	}
 
 	public get email() {

@@ -20,7 +20,8 @@
         </div>
         <div class="form-group">
             <label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
-            <span [ngClass]="{'verified': isEmailVerified, 'not-verified': !isEmailVerified}">{{ isEmailVerified ? 'Verified' : 'Not Verified'}}</span>
+            <span [ngClass]="{'verified': isEmailVerified, 'not-verified': !isEmailVerified}"
+                *ngIf="hasUserDataLoaded">{{ isEmailVerified ? 'Verified' : 'Not Verified'}}</span>
             <input formControlName="email" type="text" class="form-control propy-control" id="email">
             <div *ngIf="email.touched || verificationTouched" class="propy-validation-errors-box">
                 <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
