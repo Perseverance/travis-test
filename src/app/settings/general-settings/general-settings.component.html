@@ -1,4 +1,5 @@
 <div class="col-xs-12 general-settings">
+    <h5 *ngIf="!isEmailVerified" class="warning-message">{{'settings.not-verified-subtitle' | translate}}</h5>
     <form [formGroup]="editProfileForm" class="propy-form">
         <div class="form-group">
             <label for="firstName" class="propy-label">{{ 'common.placeholder.firstName' | translate }}</label>
