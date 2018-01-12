@@ -26,7 +26,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right propy-links" *ngIf="hasUserLoaded">
                 <li>
-                    <a routerLink="/list-property" class="list-property text-capitalize" *ngIf="isEmailVerified">{{'list-property.heading' |
+                    <a class="list-property text-capitalize" href="" (click)="goListProperty($event)">{{'list-property.heading' |
 						translate }}</a>
                 </li>
                 <li *ngIf="isLanding">
