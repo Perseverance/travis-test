@@ -4,6 +4,7 @@
 			<h3 class="text-center">{{ 'common.label.signup' | translate }}</h3>
 			<div class="form-group">
 				<input formControlName="email" type="email" class="form-control propy-control" id="email"
+					   autocomplete="username"
 					   placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
 				<div class="propy-validation-errors-box">
 					<div class="propy-validation propy-pending-validation" *ngIf="email.pending">{{
