@@ -125,4 +125,8 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		});
 	}
 
+	public updateControlAsTouched() {
+		this.phoneNumber.markAsTouched();
+	}
+
 }

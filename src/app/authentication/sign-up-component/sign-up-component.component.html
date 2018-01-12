@@ -1,122 +1,183 @@
 <div class="row signup">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-        <form [formGroup]="signupForm" class="propy-form">
-            <h3 class="text-center">{{ 'common.label.signup' | translate }}</h3>
-            <div class="form-group">
-                <input formControlName="email" type="email" class="form-control propy-control" id="email" placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
-                <div class="propy-validation-errors-box">
-                    <div class="propy-validation propy-pending-validation" *ngIf="email.pending">{{ 'common.misc.checking' | translate }}...</div>
-                    <div class="propy-validation" *ngIf="email.invalid && email.errors['emailTaken']">{{ 'common.validation-errors.email-registered' | translate }}</div>
-                </div>
-                <div *ngIf="email.touched" class="propy-validation-errors-box">
-                    <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                    <div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{ 'common.validation-errors.invalid-email' | translate }}</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <input formControlName="firstName" type="text" class="form-control propy-control" id="firstName" placeholder="{{ 'common.placeholder.firstName' | translate }}">
-                <div *ngIf="firstName.touched" class="propy-validation-errors-box">
-                    <div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <input formControlName="lastName" type="text" class="form-control propy-control" id="lastName" placeholder="{{ 'common.placeholder.lastName' | translate }}">
-                <div *ngIf="lastName.touched" class="propy-validation-errors-box">
-                    <div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                </div>
-            </div>
+	<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+		<form [formGroup]="signupForm" class="propy-form">
+			<h3 class="text-center">{{ 'common.label.signup' | translate }}</h3>
+			<div class="form-group">
+				<input formControlName="email" type="email" class="form-control propy-control" id="email"
+					   autocomplete="username"
+					   placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
+				<div class="propy-validation-errors-box">
+					<div class="propy-validation propy-pending-validation" *ngIf="email.pending">{{
+						'common.misc.checking' | translate }}...
+					</div>
+					<div class="propy-validation" *ngIf="email.invalid && email.errors['emailTaken']">{{
+						'common.validation-errors.email-registered' | translate }}
+					</div>
+				</div>
+				<div *ngIf="email.touched" class="propy-validation-errors-box">
+					<div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{
+						'common.validation-errors.required' | translate }}
+					</div>
+					<div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{
+						'common.validation-errors.invalid-email' | translate }}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<input formControlName="firstName" type="text" class="form-control propy-control" id="firstName"
+					   placeholder="{{ 'common.placeholder.firstName' | translate }}">
+				<div *ngIf="firstName.touched" class="propy-validation-errors-box">
+					<div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">{{
+						'common.validation-errors.required' | translate }}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<input formControlName="lastName" type="text" class="form-control propy-control" id="lastName"
+					   placeholder="{{ 'common.placeholder.lastName' | translate }}">
+				<div *ngIf="lastName.touched" class="propy-validation-errors-box">
+					<div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{
+						'common.validation-errors.required' | translate }}
+					</div>
+				</div>
+			</div>
 			<div class="form-group">
 				<int-phone-prefix [locale]="'en'"
 								  [defaultCountry]="defaultPhoneCountryCode"
 								  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
-								  formControlName="phoneNumber"></int-phone-prefix>
+								  formControlName="phoneNumber"
+								  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
+				<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
+					<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
+						'common.validation-errors.required' | translate }}
+					</div>
+					<div class="propy-validation"
+						 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
+						{{
+						'common.validation-errors.invalid-phone-number' | translate }}
+					</div>
+				</div>
 			</div>
-            <div formGroupName="passwords">
-                <div class="form-group">
-                    <input formControlName="password" type="password" class="form-control propy-control" id="password" placeholder="{{ 'common.placeholder.password' | translate }}">
-                    <div *ngIf="password.touched" class="propy-validation-errors-box">
-                        <div class="propy-validation" *ngIf="password.invalid && password.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                        <div class="propy-validation" *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">{{ 'common.validation-errors.invalid-password' | translate }}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input formControlName="repeatPassword" type="password" class="form-control propy-control" id="repeatPassword" placeholder="{{ 'common.placeholder.repeatPassword' | translate }}">
-                    <div *ngIf="repeatPassword.touched" class="propy-validation-errors-box">
-                        <div class="propy-validation" *ngIf="repeatPassword.invalid && repeatPassword.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                        <div class="propy-validation" *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">{{ 'common.validation-errors.invalid-password' | translate }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="password.touched && repeatPassword.touched">
-                <div class="propy-validation" *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">{{ 'common.validation-errors.passwords-differ' | translate }}</div>
-            </div>
+			<div formGroupName="passwords">
+				<div class="form-group">
+					<input formControlName="password" type="password" class="form-control propy-control" id="password"
+						   placeholder="{{ 'common.placeholder.password' | translate }}">
+					<div *ngIf="password.touched" class="propy-validation-errors-box">
+						<div class="propy-validation" *ngIf="password.invalid && password.errors['required']">{{
+							'common.validation-errors.required' | translate }}
+						</div>
+						<div class="propy-validation"
+							 *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">{{
+							'common.validation-errors.invalid-password' | translate }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input formControlName="repeatPassword" type="password" class="form-control propy-control"
+						   id="repeatPassword" placeholder="{{ 'common.placeholder.repeatPassword' | translate }}">
+					<div *ngIf="repeatPassword.touched" class="propy-validation-errors-box">
+						<div class="propy-validation"
+							 *ngIf="repeatPassword.invalid && repeatPassword.errors['required']">{{
+							'common.validation-errors.required' | translate }}
+						</div>
+						<div class="propy-validation"
+							 *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">{{
+							'common.validation-errors.invalid-password' | translate }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="password.touched && repeatPassword.touched">
+				<div class="propy-validation"
+					 *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">{{
+					'common.validation-errors.passwords-differ' | translate }}
+				</div>
+			</div>
 
-            <div class="form-group checkbox">
-                <div class="form-group checkbox form-check abc-checkbox">
-                    <input type="checkbox" class="form-check-input" formControlName="iAmAnAgent" id="agentCheckbox">
-                    <label class="center-block form-check-label" for="agentCheckbox">
-                        {{ 'signup.agent-checkbox' | translate }}
-                    </label>
-                </div>
-            </div>
+			<div class="form-group checkbox">
+				<div class="form-group checkbox form-check abc-checkbox">
+					<input type="checkbox" class="form-check-input" formControlName="iAmAnAgent" id="agentCheckbox">
+					<label class="center-block form-check-label" for="agentCheckbox">
+						{{ 'signup.agent-checkbox' | translate }}
+					</label>
+				</div>
+			</div>
 
-            <div formGroupName="agentFields" *ngIf="iAmAnAgent.value">
-                <div class="form-group">
-                    <input formControlName="expertise" type="text" class="form-control propy-control" id="expertise" placeholder="{{ 'common.placeholder.expertise' | translate }}">
-                    <div *ngIf="expertise.touched" class="propy-validation-errors-box">
-                        <div class="propy-validation" *ngIf="expertise.invalid && expertise.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                    </div>
-                </div>
-                <div class="form-group agency-form-group">
-                    <ng2-completer formControlName="agency" [datasource]="agencyAutoCompleteDataService" fillHighlighted="false" inputId="agency"
-                        inputName="agency" inputClass="form-control propy-control ng-no-margin" (selected)="onAgencySelected($event)"
-                        [autoMatch]="true" placeholder="{{ 'common.placeholder.agency' | translate }}" minSearchLength="3" textNoResults="{{ 'signup.agency-not-found' | translate }}"></ng2-completer>
-                </div>
-                <div class="form-group" *ngIf="false">
-                    <input formControlName="agencyPassword" type="password" class="form-control propy-control" id="agencyPassword" placeholder="{{ 'common.placeholder.agencyPassword' | translate }}">
-                    <div *ngIf="agencyPassword.touched" class="propy-validation-errors-box">
-                        <div class="propy-validation" *ngIf="agencyPassword.invalid && agencyPassword.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
-                    </div>
-                </div>
-                <div class="form-group location-form-group">
-                    <app-location-search id="location" (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"
-                        [resetAfterSearch]="true" [searchOnEnter]="false" inputPlaceholder="{{ 'common.placeholder.location' | translate }}"></app-location-search>
-                    <div class="agent-locations col-xs-12">
-                        <div class="row location" *ngFor="let location of agentLocations; let i = index">
-                            <div class="col-xs-11 location-name">{{location}}</div>
-                            <div class="col-xs-1 close-icon" (click)="removeAgentLocationAtIndex(i)"><i class="fa fa-times" aria-hidden="true"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group checkbox form-check abc-checkbox">
-                        <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="rememberMeCheckbox">
-                        <label class="center-block form-check-label" for="rememberMeCheckbox">
-                                {{ 'common.label.rememberMe' | translate }}
-                        </label>
-                    </div>
-                </div>
-            </div>
+			<div formGroupName="agentFields" *ngIf="iAmAnAgent.value">
+				<div class="form-group">
+					<input formControlName="expertise" type="text" class="form-control propy-control" id="expertise"
+						   placeholder="{{ 'common.placeholder.expertise' | translate }}">
+					<div *ngIf="expertise.touched" class="propy-validation-errors-box">
+						<div class="propy-validation" *ngIf="expertise.invalid && expertise.errors['required']">{{
+							'common.validation-errors.required' | translate }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group agency-form-group">
+					<ng2-completer formControlName="agency" [datasource]="agencyAutoCompleteDataService"
+								   fillHighlighted="false" inputId="agency"
+								   inputName="agency" inputClass="form-control propy-control ng-no-margin"
+								   (selected)="onAgencySelected($event)"
+								   [autoMatch]="true" placeholder="{{ 'common.placeholder.agency' | translate }}"
+								   minSearchLength="3"
+								   textNoResults="{{ 'signup.agency-not-found' | translate }}"></ng2-completer>
+				</div>
+				<div class="form-group" *ngIf="false">
+					<input formControlName="agencyPassword" type="password" class="form-control propy-control"
+						   id="agencyPassword" placeholder="{{ 'common.placeholder.agencyPassword' | translate }}">
+					<div *ngIf="agencyPassword.touched" class="propy-validation-errors-box">
+						<div class="propy-validation"
+							 *ngIf="agencyPassword.invalid && agencyPassword.errors['required']">{{
+							'common.validation-errors.required' | translate }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group location-form-group">
+					<app-location-search id="location"
+										 (onLocationFound)="onLocationFound($event.latitude, $event.longitude, $event.locationAddress)"
+										 [resetAfterSearch]="true" [searchOnEnter]="false"
+										 inputPlaceholder="{{ 'common.placeholder.location' | translate }}"></app-location-search>
+					<div class="agent-locations col-xs-12">
+						<div class="row location" *ngFor="let location of agentLocations; let i = index">
+							<div class="col-xs-11 location-name">{{location}}</div>
+							<div class="col-xs-1 close-icon" (click)="removeAgentLocationAtIndex(i)"><i
+								class="fa fa-times" aria-hidden="true"></i></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group checkbox form-check abc-checkbox">
+						<input type="checkbox" class="form-check-input" formControlName="rememberMe"
+							   id="rememberMeCheckbox">
+						<label class="center-block form-check-label" for="rememberMeCheckbox">
+							{{ 'common.label.rememberMe' | translate }}
+						</label>
+					</div>
+				</div>
+			</div>
 
-            <button type="button" class="btn btn-block propy-control button-big" [disabled]="email.invalid || 
+			<button type="button" class="btn btn-block propy-control button-big" [disabled]="email.invalid || 
                                                 password.invalid || 
                                                 repeatPassword.invalid || 
                                                 firstName.invalid || 
                                                 lastName.invalid ||
+                                                phoneNumber.invalid ||
                                                 (iAmAnAgent.value && agentFields.invalid) ||
                                                 (iAmAnAgent.value && agentLocations.length === 0) ||
-                                                (passwords.errors != null && passwords.errors['passwordsDiffer'])" (click)="registerUser()">
-                                                {{ 'common.label.signup' | translate }}</button>
-            <hr class="separator">
-            <div class="social">
-                <p class="title text-center"><span class="text-capitalize">{{ 'common.misc.or' | translate }}&nbsp;</span>{{ 'common.social.connect-with'
-                    | translate }}</p>
-                <app-facebook-button (click)="facebookLogin()"></app-facebook-button>
-            </div>
-        </form>
-    </div>
+                                                (passwords.errors != null && passwords.errors['passwordsDiffer'])"
+					(click)="registerUser()">
+				{{ 'common.label.signup' | translate }}
+			</button>
+			<hr class="separator">
+			<div class="social">
+				<p class="title text-center"><span
+					class="text-capitalize">{{ 'common.misc.or' | translate }}&nbsp;</span>{{
+					'common.social.connect-with'
+					| translate }}</p>
+				<app-facebook-button (click)="facebookLogin()"></app-facebook-button>
+			</div>
+		</form>
+	</div>
 </div>
