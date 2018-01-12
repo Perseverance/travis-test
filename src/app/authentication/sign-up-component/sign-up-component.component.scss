@@ -60,6 +60,9 @@ $header-margin: 60px;
 			height: 42px;
 			@include border-radius-separate(9px, 0, 9px, 0);
 			outline: none;
+			.fa {
+				color: $gray-light;
+			}
 		}
 		.flagInput {
 			border: 1px solid $border-default;
