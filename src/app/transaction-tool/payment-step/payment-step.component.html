@@ -25,11 +25,9 @@
                             <span id="price"> {{deedDetails.finalPrice.value | currencySymbol: deedDetails.finalPrice.type}}</span>
                         </div>
                     </form>
-
-
                     <div class="row payment-info">
                         <div class="col-xs-12">
-                            <p><span>The ETH will be sent to address </span><span id="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn" type="button"
+                            <p><span>The ETH will be sent to address </span><span class="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn" type="button"
                                     ngxClipboard [cbContent]="escrowAddress">Copy</button></span><span> the Escrow address.</span>
                             </p>
                         </div>
@@ -40,8 +38,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </ng-template>
             <ng-template #isNotBuyer>
                 <div class="row">
