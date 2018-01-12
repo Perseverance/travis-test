@@ -588,7 +588,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		this.property.imageUrls.splice(index, 1);
 	}
 
-	public get shouldShowExistingPhotos(): boolean {
+	public get hideShowExistingPhotos(): boolean {
 		if (!this.property) {
 			return true;
 		}
