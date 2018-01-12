@@ -3,6 +3,10 @@
 
 .general-settings {
 	background-color: transparent;
+	.warning-message {
+		color: $red-main;
+		padding-left: 35px;
+	}
 	.propy-form {
 		padding-top: 0px;
 		background-color: transparent;

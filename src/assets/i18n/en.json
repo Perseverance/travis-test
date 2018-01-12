@@ -172,7 +172,7 @@
         "edit-button": "Edit",
         "error-listing-property": "Listing of property failed",
         "not-authenticated": {
-            "warning-message": "Oops, can't do that yet.",
+            "warning-message": "Oops, can't do that yet",
             "login-or-signup": "To list your property, just sign up or login through the header above."
         },
         "upload-image": {
@@ -300,7 +300,7 @@
     },
     "settings": {
         "title": "Account settings",
-        "not-verified-subtitle": "Activate your account to unlock more features",
+        "not-verified-subtitle": "Please activate your account in order to access more features",
         "headers": {
             "general-settings": "General settings",
             "email-notifications-settings": "Email notifications",
