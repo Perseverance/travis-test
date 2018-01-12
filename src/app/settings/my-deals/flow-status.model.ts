@@ -10,7 +10,7 @@ export const FlowStatus = {
 	8: 'Recording Seller Disclosures to Blockchain',
 	9: 'Settlement Statement - Pending Upload & Acceptance',
 	10: 'Awaiting Payment',
-	11: 'Affidavit - Pending Upload & Signatures',
+	11: 'Affidavit - Pending Signatures',
 	12: 'Recording Affidavit to Blockchain',
 	13: 'Closing Documents - Pending Upload',
 	14: 'Recording Transfer of Ownership to Blockchain',
