@@ -39,6 +39,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public isSubmitClicked = false;
 	public processingSubmit = false;
+	public showExistingPhotos = false;
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
@@ -201,7 +202,9 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			propertyImages: [[]],
 			propertyImagesValidation: [[]]
 		});
-
+		if (this.property.imageUrls.length > 0) {
+			this.showExistingPhotos = true;
+		}
 	}
 
 	private waitForViewLoadAndSetLocation() {
