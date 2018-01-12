@@ -39,7 +39,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public isSubmitClicked = false;
 	public processingSubmit = false;
-	public hideExistingPhotos = false;
 
 	public hasUserLoaded = false;
 	public isUserAnonymous: boolean;
@@ -202,9 +201,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			propertyImages: [[]],
 			propertyImagesValidation: [[]]
 		});
-		if (this.property.imageUrls.length > 0) {
-			this.hideExistingPhotos = true;
-		}
 	}
 
 	private waitForViewLoadAndSetLocation() {
@@ -590,5 +586,15 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public removeExistingImage(url, index) {
 		this.property.imageUrls.splice(index, 1);
+	}
+
+	public get shouldShowExistingPhotos(): boolean {
+		if (!this.property) {
+			return true;
+		}
+		if (this.property.imageUrls && this.property.imageUrls.length > 0) {
+			return false;
+		}
+		return true;
 	}
 }
