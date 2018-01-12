@@ -50,7 +50,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 			next: (userInfo: UserData) => {
 				this.isUserAnonymous = userInfo.isAnonymous;
 				this.userInfo = userInfo.user;
-				console.log(this.userInfo);
 				if (this.userInfo) {
 					this.isEmailVerified = this.userInfo.isEmailVerified;
 				}
