@@ -44,12 +44,10 @@
 				<int-phone-prefix [locale]="'en'"
 								  [defaultCountry]="defaultPhoneCountryCode"
 								  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
-								  formControlName="phoneNumber"></int-phone-prefix>
-				{{
-				childPhoneComponent.phoneComponent.nativeElement.children[0].children[1].classList.contains('ng-touched')
-				}}
-				<div class="propy-validation-errors-box">
-					<div class="propy-validation" *ngIf="phoneNumber.invalid && email.errors['required']">{{
+								  formControlName="phoneNumber"
+								  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
+				<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
+					<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
 						'common.validation-errors.required' | translate }}
 					</div>
 					<div class="propy-validation"

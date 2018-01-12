@@ -96,9 +96,6 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		const self = this;
 		this.paramsSubscriptions.push(this.setupParamsWatcher());
 		this.paramsSubscriptions.push(this.setupQueryParamsWatcher());
-		console.log(this.childPhoneComponent);
-		const inputng4 = this.childPhoneComponent.phoneComponent.nativeElement.children[0].children[1];
-		console.log(inputng4.classList.contains('ng-touched'));
 	}
 
 	ngOnDestroy() {
@@ -275,4 +272,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		const result = await this.authService.assignRefferer(email, referralId);
 	}
 
+	public updateControlAsTouched() {
+		this.phoneNumber.markAsTouched();
+	}
 }
