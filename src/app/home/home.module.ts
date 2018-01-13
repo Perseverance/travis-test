@@ -14,6 +14,7 @@ import {HowPropyWorksComponent} from './how-propy-works/how-propy-works.componen
 import {SafeURLPipe} from '../shared/pipes/safe-url.pipe';
 import {InlineSVGModule} from 'ng-inline-svg';
 import { NewsletterComponent } from './newsletter/newsletter.component';
+import { FeaturedPropertiesComponent } from './featured-properties/featured-properties.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
 		ProposalIosComponent,
 		HowPropyWorksComponent,
 		SafeURLPipe,
-		NewsletterComponent
+		NewsletterComponent,
+		FeaturedPropertiesComponent
 	],
 	imports: [
 		CommonModule,
