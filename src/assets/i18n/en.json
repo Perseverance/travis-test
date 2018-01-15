@@ -249,7 +249,7 @@
         "reserved-property": "Reserved",
         "reserved-by-you": "Reserved by you",
         "no-wallet-set": "",
-        "no-wallet-set-message": "In order to reserve a property, you need to be logged into your account. If you do not have an account yet, please sign up!",
+        "no-wallet-set-message": "In order to reserve a property, you need to have a wallet generated. Please generate one in the PRO wallet section.",
         "overview-labels": {
             "property-type": "Property Type",
             "area": "Property Area",
