@@ -41,8 +41,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			lastName: ['', [Validators.required]],
 			email: [{value: '', disabled: true}, []],
 			phoneNumber: ['', Validators.compose([
-				Validators.required,
-				Validators.minLength(5),
+				Validators.minLength(4),
 				Validators.maxLength(20)])
 			]
 		});

@@ -35,6 +35,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	private verificationError: string;
 	private verificationMessage: string;
 
+	private notLoggedInError: string;
+
 	constructor(router: Router,
 		private route: ActivatedRoute,
 		public authService: AuthenticationService,
@@ -70,10 +72,12 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 		this.translateService.stream([
 			'list-property.verification-error',
-			'list-property.verification-error-message'
+			'list-property.verification-error-message',
+			'common.only-registered-error'
 		]).subscribe((translations) => {
 			this.verificationError = translations['list-property.verification-error'];
 			this.verificationMessage = translations['list-property.verification-error-message'];
+			this.notLoggedInError = translations['common.only-registered-error'];
 
 		});
 	}
@@ -126,6 +130,14 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public goListProperty(event: Event) {
 		event.preventDefault();
 		event.stopPropagation();
+		if (this.isUserAnonymous) {
+			this.errorsService.pushError({
+				errorTitle: '',
+				errorMessage: this.notLoggedInError,
+				errorTime: (new Date()).getDate()
+			});
+			return;
+		}
 		if (!this.isEmailVerified) {
 			this.errorsService.pushError({
 				errorTitle: this.verificationError,

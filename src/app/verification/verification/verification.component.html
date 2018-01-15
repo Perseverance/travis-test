@@ -7,7 +7,7 @@
                 <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
                 <div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{ 'common.validation-errors.invalid-email' | translate }}</div>
             </div>
-            <button type="button" class="btn btn-block propy-control button-big" (click)="resendVerification()">Resend Verification Email</button>
+            <button type="button" class="btn btn-block propy-control button-big" (click)="resendVerification()">{{ 'verification.resend-button' | translate }}</button>
         </form>
     </div>
 </div>
