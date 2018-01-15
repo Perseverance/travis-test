@@ -79,7 +79,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			lastName: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
-				Validators.minLength(5),
+				Validators.minLength(4),
 				Validators.maxLength(20)])
 			],
 			iAmAnAgent: [false],

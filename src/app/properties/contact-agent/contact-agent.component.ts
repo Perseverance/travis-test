@@ -44,7 +44,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			name: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
-				Validators.minLength(5),
+				Validators.minLength(4),
 				Validators.maxLength(20)])
 			],
 			email: ['', [Validators.required, Validators.email]],
