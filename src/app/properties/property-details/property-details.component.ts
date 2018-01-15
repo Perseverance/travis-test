@@ -67,6 +67,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private verificationError: string;
 	private verificationMessage: string;
 
+	private notLoggedInError: string;
+
 	constructor(router: Router,
 		private route: ActivatedRoute,
 		private propertiesService: PropertiesService,
@@ -126,7 +128,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			'property-details.no-wallet-set',
 			'property-details.no-wallet-set-message',
 			'property-details.verification-error',
-			'property-details.verification-error-message'
+			'property-details.verification-error-message',
+			'common.only-registered-error'
 		]).subscribe((translations) => {
 			this.featureScale = {
 				undefined: translations['common.scales.undefined'],
@@ -157,6 +160,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			this.walletErrorMessage = translations['property-details.no-wallet-set-message'];
 			this.verificationError = translations['property-details.verification-error'];
 			this.verificationMessage = translations['property-details.verification-error-message'];
+			this.notLoggedInError = translations['common.only-registered-error'];
 
 		});
 		const self = this;
@@ -314,6 +318,14 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		event.preventDefault();
 		event.stopPropagation();
 		const currentUser = await this.authService.getCurrentUser();
+		if (this.authService.isUserAnonymous) {
+			this.errorsService.pushError({
+				errorTitle: '',
+				errorMessage: this.notLoggedInError,
+				errorTime: (new Date()).getDate()
+			});
+			return;
+		}
 		if (!currentUser.data.data.isEmailVerified) {
 			this.errorsService.pushError({
 				errorTitle: this.verificationError,

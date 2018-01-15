@@ -77,7 +77,8 @@
                 "no": "No"
             }
         },
-        "no-new-notifications": "No new notifications"
+        "no-new-notifications": "No new notifications",
+        "only-registered-error": "Only registered users can perform this action. Please sign up using the buttons in the header"
     },
     "enums": {
         "property-types": {
@@ -275,7 +276,8 @@
             "contact-error": "Could not contact this seller"
         },
         "verification-error": "Your account is not activated.",
-        "verification-error-message": "Please activate your account in order to reserve this property"
+        "verification-error-message": "Please activate your account in order to reserve this property",
+        "verify-to-contact": "Please activate your account in order to contact this seller."
     },
     "filters": {
         "price": "Price",
@@ -396,6 +398,7 @@
         "deposit-5000": "Deposit $5000"
     },
     "verification": {
+        "resend-button": "Resend Verification Email",
         "activation-email-sent": "We have sent an activation email to your inbox. Please click the link inside to activate your account.",
         "successfull-verification": "Account successfully activated!",
         "verification-error": "Could not verify your account. Please try again or resend yourself a verification email.",
