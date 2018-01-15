@@ -54,7 +54,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public deed: any;
 	public deedStatus = Status;
 	public txHash: string;
-	public buttonRecordEnabled = true;
+	public recordButtonEnabled = true;
 
 
 	constructor(private route: ActivatedRoute,
@@ -164,7 +164,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onRecordClick(password) {
-		this.buttonRecordEnabled = false;
+		this.recordButtonEnabled = false;
 		try {
 			this.notificationService.pushInfo({
 				title: `Sending the document to the blockchain.`,
@@ -182,7 +182,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 					errorMessage: e.message,
 					errorTime: (new Date()).getTime()
 				});
-				this.buttonRecordEnabled = true;
+				this.recordButtonEnabled = true;
 			}
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
@@ -202,7 +202,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 				timeout: 4000
 			});
 		} catch (err) {
-			this.buttonRecordEnabled = true;
+			this.recordButtonEnabled = true;
 			throw err;
 		}
 	}

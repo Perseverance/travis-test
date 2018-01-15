@@ -7,7 +7,7 @@
         <div *ngIf="userIsTitleCompany;else notTitleCompany">
             <i>Status: Waiting For You To Record The Transfer Ownership Change To The Blockchain. Please use the button below!</i>
             <br>
-            <app-record-blockchain-form [buttonRecordEnabled]="buttonRecordEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+            <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
             <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
         </div>
         <ng-template #notTitleCompany>

@@ -39,7 +39,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	public isTransferFinished = false;
 	private deedAddress: string;
 	public txHash: string;
-	public buttonRecordEnabled = true;
+	public recordButtonEnabled = true;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -83,7 +83,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onRecordClick(password) {
-		this.buttonRecordEnabled = false;
+		this.recordButtonEnabled = false;
 		try {
 			this.notificationService.pushInfo({
 				title: `Sending the document to the blockchain.`,
@@ -101,7 +101,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 					errorMessage: e.message,
 					errorTime: (new Date()).getTime()
 				});
-				this.buttonRecordEnabled = true;
+				this.recordButtonEnabled = true;
 			}
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
@@ -121,7 +121,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 				timeout: 4000
 			});
 		} catch (err) {
-			this.buttonRecordEnabled = true;
+			this.recordButtonEnabled = true;
 			throw err;
 		}
 	}

@@ -15,7 +15,7 @@ export class RecordBlockchainFormComponent extends ErrorsDecoratableComponent im
 	public blockchainRecordForm: FormGroup;
 
 	@Output() onRecord = new EventEmitter<string>();
-	@Input() buttonRecordEnabled: boolean;
+	@Input() recordButtonEnabled: boolean;
 
 	constructor(private formBuilder: FormBuilder,
 		errorsService: ErrorsService,
