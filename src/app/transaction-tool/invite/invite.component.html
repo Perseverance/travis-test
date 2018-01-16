@@ -143,8 +143,9 @@
                         <div class="col-xs-12 buttons-holder">
                             <button type="button" [disabled]="inviteForm.invalid" [ngClass]="{disabled : !disclosuresLink}"
                                 class="btn propy-control invite-btn button-big" (click)="onInvite()">Invite & Continue
-							</button>
-                            <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{
+                            </button>
+                            <p-confirmDialog key="cancelTransactionDialog"></p-confirmDialog>
+                            <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="showCancelDialog()">{{
 								'common.label.cancel' | translate }}
 							</button>
                         </div>

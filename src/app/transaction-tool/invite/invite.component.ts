@@ -1,3 +1,4 @@
+import { ConfirmationService } from 'primeng/primeng';
 import { CustomNumberValidator } from './eth-price-validator';
 import { REVERSE_STEPS } from './../workflow/workflow.model';
 import { TransactionToolDocumentService } from './../transaction-tool-document.service';
@@ -67,6 +68,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		private route: ActivatedRoute,
 		private deedsService: DeedsService,
 		private notificationService: NotificationsService,
+		private confirmationService: ConfirmationService,
 		private formBuilder: FormBuilder,
 		private base64Service: Base64Service,
 		private documentService: TransactionToolDocumentService,
@@ -241,6 +243,15 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 4000
+		});
+	}
+
+	public showCancelDialog() {
+		this.confirmationService.confirm({
+			header: 'Are you sure',
+			message: 'Are you sure you want to cancel this deal?',
+			key: 'cancelTransactionDialog',
+			accept: async () => await this.cancelTransaction()
 		});
 	}
 
