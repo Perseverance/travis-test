@@ -243,4 +243,22 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			timeout: 4000
 		});
 	}
+
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
+	public async cancelTransaction() {
+		this.notificationService.pushInfo({
+			title: `Canceling this transaction`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		// TODO: await this.deedsService.rejectInvite(this.deedId);
+		await this.setupDeedData(this.deedId);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+	}
 }
