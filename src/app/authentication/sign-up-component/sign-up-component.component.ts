@@ -203,7 +203,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async registerUser() {
 		this.googleAnalyticsEventsService.emitEvent('page-sign-up', 'sign-up');
-		const phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		let phoneNumber;
+		if (this.phoneNumber.value) {
+			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		} else {
+			phoneNumber = '';
+		}
 		const result = await this.authService
 			.performSignUp(
 				this.email.value,
