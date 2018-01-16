@@ -276,7 +276,6 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	public activatePhoneDropDown() {
-		console.log(this.childPhoneComponent);
 		this.childPhoneComponent.showDropDown();
 	}
 }
