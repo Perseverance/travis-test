@@ -178,6 +178,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.zone.run(() => {
 			});
 		});
+		console.log('test');
 	}
 
 	private emulatePackerHousePropertyId(propertyId) {
