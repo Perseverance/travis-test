@@ -1,18 +1,18 @@
-import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
-import { Subscription } from 'rxjs/Subscription';
-import { UserData } from './../../authentication/authentication.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { PropertiesService } from './../properties.service';
-import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild } from '@angular/core';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { AuthenticationService } from '../../authentication/authentication.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
+import {Subscription} from 'rxjs/Subscription';
+import {UserData} from './../../authentication/authentication.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {PropertiesService} from './../properties.service';
+import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, Input, ViewEncapsulation, ViewChild} from '@angular/core';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -33,12 +33,12 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private propertiesService: PropertiesService,
-		private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+				private authService: AuthenticationService,
+				private formBuilder: FormBuilder,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(errorsService, translateService);
 
 		this.contactAgentForm = this.formBuilder.group({
@@ -109,7 +109,12 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onSubmit() {
-		const phoneNumber = this.childPhoneComponent.selectedCountry.dialCode + this.phoneNumber.value;
+		let phoneNumber;
+		if (this.phoneNumber.value) {
+			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		} else {
+			phoneNumber = '';
+		}
 		await this.propertiesService.requestInfo(
 			this.propertyId,
 			this.agentId.value,
