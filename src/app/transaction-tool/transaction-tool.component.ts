@@ -33,6 +33,12 @@ export class TransactionToolComponent implements OnInit {
 
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
+				if (userInfo.isAnonymous) {
+					return;
+				}
+				if (!userInfo.user) {
+					return;
+				}
 				this.smartContractService.saveCredentials(JSON.parse(userInfo.user.jsonFile));
 			}
 		});
