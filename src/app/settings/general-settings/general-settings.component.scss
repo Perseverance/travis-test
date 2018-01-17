@@ -41,7 +41,7 @@
                 color: $black;
                 font-size: $font-size-medium;
                 font-weight: 400;
-                outline: none; //@include border-radius(9px);
+                outline: none;
                 @include border-radius-separate(0, 9px, 0, 9px);
                 @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
                 &:active {

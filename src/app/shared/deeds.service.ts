@@ -4,6 +4,12 @@ import { APIEndpointsService } from './apiendpoints.service';
 import { RestClientService } from './rest-client.service';
 import { Injectable } from '@angular/core';
 
+export enum INVITATION_STATUSES {
+	INVITED = 1,
+	ACCEPTED = 2,
+	REJECTED = 3
+}
+
 @Injectable()
 export class DeedsService {
 
@@ -22,6 +28,8 @@ export class DeedsService {
 			deedId
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
+		result.data.data.status = -2;
+		result.data.data.buyerStatus = 3;
 		return result.data.data;
 	}
 
@@ -60,6 +68,15 @@ export class DeedsService {
 		};
 
 		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REJECT_PARTY, data);
+		return result.data.data;
+	}
+
+	public async cancelInvite(deedId: string): Promise<any> {
+		const data = {
+			deedId
+		};
+
+		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CANCEL_INVITE, data);
 		return result.data.data;
 	}
 

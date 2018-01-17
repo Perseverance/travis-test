@@ -15,6 +15,8 @@ export class TransactionToolWorkflowService {
 
 	constructor(private smartContractService: SmartContractConnectionService,
 		private deedService: DeedsService) {
+		this.statusToStepMap[`${Status.rejectedDeal}`] = STEPS['rejected'];
+		this.statusToStepMap[`${Status.canceledDeal}`] = STEPS['canceled'];
 		this.statusToStepMap[`${Status.reserve}`] = STEPS['invite'];
 		this.statusToStepMap[`${Status.partiesInvited}`] = STEPS['invite'];
 		this.statusToStepMap[`${Status.partiesAccepted}`] = STEPS['invite'];

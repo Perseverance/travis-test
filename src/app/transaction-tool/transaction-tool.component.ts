@@ -21,6 +21,7 @@ export class TransactionToolComponent implements OnInit {
 	public deedStatusIndex: number;
 	public currentState: number;
 	public addressRoute: string;
+	public areStepsActive = false;
 
 	constructor(private route: ActivatedRoute, private router: Router,
 		private deedsService: DeedsService, private smartContractService: SmartContractConnectionService,
@@ -42,6 +43,8 @@ export class TransactionToolComponent implements OnInit {
 
 	async ngOnInit() {
 		const deedStatus = await this.getDeedStatus(this.route.snapshot.params['address']);
+
+		this.areStepsActive = (deedStatus >= 0);
 
 		this.deedStatusIndex = this.getDeedIndexByStatus(deedStatus);
 		this.activeIndex = STEPS[this.addressRoute];

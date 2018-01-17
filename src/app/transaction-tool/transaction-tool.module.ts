@@ -1,3 +1,4 @@
+import { CanceledDealComponent } from './canceled-deal/canceled-deal.component';
 import { DisclosuresStepComponent } from './disclosures-step/disclosures-step.component';
 import { AgreeAndContinueComponent } from './agree-and-continue/agree-and-continue.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,6 +26,7 @@ import { SettlementStatementComponent } from './settlement-statement/settlement-
 import { AffidavitStepComponent } from './affidavit-step/affidavit-step.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { RecordBlockchainFormComponent } from './record-blockchain-form/record-blockchain-form.component';
+import { RejectedDealComponent } from './rejected-deal/rejected-deal.component';
 
 @NgModule({
 	imports: [
@@ -58,7 +60,9 @@ import { RecordBlockchainFormComponent } from './record-blockchain-form/record-b
 		ClosingDocumentsComponent,
 		TransferOwnershipComponent,
 		RecordBlockchainFormComponent,
-		AgreeAndContinueComponent
+		AgreeAndContinueComponent,
+		CanceledDealComponent,
+		RejectedDealComponent
 	],
 	exports: [
 		TransactionToolRoutingModule
