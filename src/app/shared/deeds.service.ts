@@ -60,9 +60,10 @@ export class DeedsService {
 		return result.data.data;
 	}
 
-	public async rejectInvite(deedId: string): Promise<any> {
+	public async rejectInvite(deedId: string, rejectionReason: string): Promise<any> {
 		const data = {
-			deedId
+			deedId,
+			rejectionReason
 		};
 
 		const result = await this.restService.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REJECT_PARTY, data);

@@ -229,14 +229,14 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
-	public async partyReject() {
+	public async partyReject(reason) {
 		this.notificationService.pushInfo({
 			title: `Rejecting Invitation`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.deedsService.rejectInvite(this.deedId);
+		await this.deedsService.rejectInvite(this.deedId, reason);
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,

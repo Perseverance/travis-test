@@ -21,25 +21,25 @@
                     <div *ngIf="userRole === userRoleEnum.Seller">
                         <div *ngIf="!hasSellerResponded; else waitingForAllOther;">
                             <span>You are invited as a <strong>Seller</strong>, respond to this invitation</span>
-                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject($event)"></app-transaction-tool-invite-respond>
                         </div>
                     </div>
                     <div *ngIf="userRole === userRoleEnum.Buyer">
                         <div *ngIf="!hasBuyerResponded; else waitingForAllOther;">
                             <span>You are invited as a <strong>Buyer</strong>, respond to this invitation</span>
-                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject($event)"></app-transaction-tool-invite-respond>
                         </div>
                     </div>
                     <div *ngIf="userRole === userRoleEnum.TitleCompany">
                         <div *ngIf="!hasTitleCompanyResponded; else waitingForAllOther;">
                             <span>You are invited as a <strong>Title Company</strong>, respond to this invitation</span>
-                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject($event)"></app-transaction-tool-invite-respond>
                         </div>
                     </div>
                     <div *ngIf="userRole === userRoleEnum.BuyerBroker">
                         <div *ngIf="!hasBuyerBrokerResponded; else waitingForAllOther;">
                             <span>You are invited as a <strong>Buyer Broker</strong>, respond to this invitation</span>
-                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject()"></app-transaction-tool-invite-respond>
+                            <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject($event)"></app-transaction-tool-invite-respond>
                         </div>
                     </div>
                     <div class="col-xs-12">
