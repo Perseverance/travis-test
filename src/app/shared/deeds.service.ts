@@ -28,8 +28,6 @@ export class DeedsService {
 			deedId
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
-		result.data.data.status = -2;
-		result.data.data.buyerStatus = 3;
 		return result.data.data;
 	}
 
