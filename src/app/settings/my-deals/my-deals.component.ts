@@ -30,7 +30,6 @@ export class MyDealsComponent implements OnInit {
 				}
 				this.myDeals = await this.getMyDeals(userInfo.user.role);
 				this.myDeals.forEach((deal) => {
-					console.log(deal.status);
 					deal.status = FlowStatus[deal.status];
 				});
 
