@@ -15,6 +15,7 @@
             (click)="propertyHide($event)"></span>
     </div>
     <div class="property-info">
+        <span *ngIf="featuredCityName">{{featuredCityName}} | </span>
         <span [title]="property.address">{{property.address}}</span>
         <!-- &nbsp;/&nbsp;{{ cityName }} -->
     </div>

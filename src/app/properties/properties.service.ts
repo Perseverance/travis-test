@@ -1,3 +1,4 @@
+import { MockedFeaturedPropertiesService } from './mocked-featured-properties.service';
 import { CurrencyTypeEnum } from './../shared/enums/currency-type.enum';
 import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { PropertiesFilter } from './properties.service';
@@ -11,7 +12,7 @@ import {
 	GetFavouriteLocationResponse,
 	CreatePropertyRequest,
 	CreatePropertyResponse,
-	PropertyImage, GetNewPropertiesResponse, PropertyPreviewResponse, HidePropertyResponse, HidePropertyRequest
+	PropertyImage, GetNewPropertiesResponse, PropertyPreviewResponse, HidePropertyResponse, HidePropertyRequest, GetFeaturePropertiesResponse
 } from './properties-responses';
 import { LocalStorageService } from '../shared/localStorage.service';
 
@@ -43,7 +44,8 @@ export class PropertiesService {
 	constructor(private restService: RestClientService,
 		private apiEndpoint: APIEndpointsService,
 		private localStorageService: LocalStorageService,
-		private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
+		private mockedFavouriteLocationsService: MockedFavouriteLocationsService,
+		private mockedFeaturedPropertiesService: MockedFeaturedPropertiesService) {
 	}
 
 	public async getProperty(propertyId: string, currency?: CurrencyTypeEnum): Promise<any> {
@@ -156,6 +158,11 @@ export class PropertiesService {
 
 	public async getMockedFavouriteLocations(): Promise<GetFavouriteLocationResponse[]> {
 		const result = await this.mockedFavouriteLocationsService.getMockedFavouriteLocations();
+		return result.data;
+	}
+
+	public async getMockedFeaturedLocations(): Promise<GetFeaturePropertiesResponse[]> {
+		const result = await this.mockedFeaturedPropertiesService.getMockedFeaturedLocations();
 		return result.data;
 	}
 

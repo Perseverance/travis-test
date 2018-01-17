@@ -25,6 +25,19 @@ export interface GetFavouriteLocationResponse {
 	initialPrice: number;
 }
 
+export interface GetFeaturePropertiesResponse {
+	id: string;
+	address: string;
+	cityName: string;
+	imageUrls: string[];
+	price: any;
+	bedrooms: number;
+	size: number;
+	sizeType: number;
+	type: number;
+}
+
+
 export interface PropertyPreviewResponse {
 	id: string;
 	type: number;
