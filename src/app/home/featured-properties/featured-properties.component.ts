@@ -32,7 +32,6 @@ export class FeaturedPropertiesComponent implements OnInit {
 		};
 		this.featureLocations = await this.propertiesService.getMockedFeaturedLocations();
 		this.showedLocations = this.featureLocations;
-		console.log(this.featureLocations);
 	}
 
 	public featuredPropertyClicked(location: GetFeaturePropertiesResponse) {
