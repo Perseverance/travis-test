@@ -1,4 +1,6 @@
 export const STEPS = {
+	'rejected': -2,
+	'canceled': -1,
 	'property-preview': 0,
 	'invite': 1,
 	'purchase-agreement': 2,
@@ -12,6 +14,8 @@ export const STEPS = {
 };
 
 export const REVERSE_STEPS = {
+	'-2': 'rejected',
+	'-1': 'canceled',
 	0: 'property-preview',
 	1: 'invite',
 	2: 'purchase-agreement',

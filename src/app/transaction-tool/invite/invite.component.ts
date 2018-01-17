@@ -263,7 +263,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		// TODO: await this.deedsService.rejectInvite(this.deedId);
+		await this.deedsService.cancelInvite(this.deedId);
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
