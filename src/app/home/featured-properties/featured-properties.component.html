@@ -18,10 +18,13 @@
                     </div>
                 </div> -->
 
-                <app-property-preview [property]="property" [cityName]="property.cityName" [imageWidth]="350"
-                    [imageHeight]="215" [showArrow]="false">
-
+                <app-property-preview [property]="property" [featuredCityName]="property.cityName"
+                    [imageWidth]="350" [imageHeight]="215" [showArrow]="true">
                 </app-property-preview>
+                <!-- <div class="right-arrow-holder">
+                </div> -->
+
+
             </ngx-tile>
             <button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i></button>
             <button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i></button>
