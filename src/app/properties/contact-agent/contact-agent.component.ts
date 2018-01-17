@@ -129,4 +129,8 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		this.phoneNumber.markAsTouched();
 	}
 
+	public activatePhoneDropDown() {
+		this.childPhoneComponent.showDropDown();
+	}
+
 }

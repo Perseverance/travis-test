@@ -14,6 +14,7 @@
 		<div class="form-group">
 			<label for="lastName" class="propy-label">{{ 'common.placeholder.lastName' | translate }}</label>
 			<input formControlName="lastName" type="text" class="form-control propy-control"
+				   (keydown.Tab)="activatePhoneDropDown()"
 				   id="lastName" placeholder="{{ 'common.placeholder.lastName' | translate }}">
 			<div *ngIf="lastName.touched" class="propy-validation-errors-box">
 				<div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{

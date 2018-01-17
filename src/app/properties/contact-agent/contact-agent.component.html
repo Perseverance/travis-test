@@ -25,6 +25,7 @@
 		</div>
 		<div class="form-group">
 			<input formControlName="name" type="text" class="form-control propy-control" id="name"
+				   (keydown.Tab)="activatePhoneDropDown()"
 				   placeholder="{{ 'property-details.contact-agent.name' | translate }}">
 		</div>
 		<div class="form-group">

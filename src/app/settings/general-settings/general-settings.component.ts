@@ -130,4 +130,8 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public updateControlAsTouched() {
 		this.phoneNumber.markAsTouched();
 	}
+
+	public activatePhoneDropDown() {
+		this.childPhoneComponent.showDropDown();
+	}
 }
