@@ -1,0 +1,26 @@
+@import "../../../variables";
+@import "../../../mixins";
+$blue-widget: #42C3F6;
+.crypto-widget {
+    position: fixed;
+    top: 95%;
+    left: 40px;
+    right: 20px; //overflow-y: auto;
+    max-height: 100%;
+    .crypto-container {
+        a {
+            text-decoration: none;
+        }
+        span {
+            @include border-radius(9px);
+            border: 2px solid $blue-widget;
+            padding: 10px;
+            color: white;
+            background-color: $blue-widget;
+            &:hover {
+                background-color: $blue-light;
+                border-color: $blue-light; // background: none;
+            }
+        }
+    }
+}
