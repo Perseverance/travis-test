@@ -37,7 +37,9 @@ export class RejectedDealComponent implements OnInit {
 		this.deed = deed;
 		const rejecterRole = this.getRejecterRoleString(deed);
 		this.rejectionText = `The ${rejecterRole} has rejected the invitation to this deal`;
-		console.log(this.deed);
+		if (deed.rejectionReason) {
+			this.rejectionText += ` with reason : '${deed.rejectionReason}'`;
+		}
 	}
 
 	private getRejecterRoleString(deed: any): string {
