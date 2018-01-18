@@ -279,4 +279,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	public updateControlAsTouched() {
 		this.phoneNumber.markAsTouched();
 	}
+
+	public activatePhoneDropDown() {
+		this.childPhoneComponent.showDropDown();
+	}
 }

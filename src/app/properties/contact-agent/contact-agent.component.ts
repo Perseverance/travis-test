@@ -124,6 +124,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			this.message.value);
 
 		this.contactAgentForm.reset();
+		this.phoneNumber.markAsUntouched();
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -134,6 +135,10 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 	public updateControlAsTouched() {
 		this.phoneNumber.markAsTouched();
+	}
+
+	public activatePhoneDropDown() {
+		this.childPhoneComponent.showDropDown();
 	}
 
 }
