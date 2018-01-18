@@ -5,7 +5,7 @@ import {ErrorsService} from './../shared/errors/errors.service';
 import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserData} from './../authentication/authentication.service';
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ProWalletService} from './pro-wallet.service';
 import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
 import {AuthenticationService} from '../authentication/authentication.service';
@@ -14,11 +14,13 @@ import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
 import {ConfirmationService} from 'primeng/primeng';
 import {WalletAddressValidator} from './pro-wallet-address-validator';
 import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-pro-wallet',
 	templateUrl: './pro-wallet.component.html',
-	styleUrls: ['./pro-wallet.component.scss']
+	styleUrls: ['./pro-wallet.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class ProWalletComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
@@ -33,6 +35,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	private userDataSubscription: Subscription;
 	public showBackupWalletButton = false;
 	public jsonWallet: string;
+	public defaultPhoneCountryCode: string;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
 				private formBuilder: FormBuilder,
@@ -48,11 +52,22 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			passwords: this.formBuilder.group({
 				password: ['', [Validators.required]],
 				repeatPassword: ['', [Validators.required]]
-			}, {validator: SignUpFormValidators.differentPasswordsValidator})
+			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
+			phoneNumber: ['', Validators.compose([
+				Validators.required,
+				Validators.minLength(4),
+				Validators.maxLength(20)])
+			]
 		});
 		const self = this;
 		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: async (userInfo: UserData) => {
+				if (userInfo.user) {
+					this.phoneNumber.setValue(userInfo.user.phoneNumber);
+					if (!userInfo.user.phoneNumber) {
+						this.defaultPhoneCountryCode = 'us';
+					}
+				}
 				if (!userInfo.user || !userInfo.user.jsonFile) {
 					return;
 				}
@@ -121,6 +136,10 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		return this.passwords.get('repeatPassword');
 	}
 
+	public get phoneNumber() {
+		return this.proWalletAddressForm.get('phoneNumber');
+	}
+
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
 		const result = await this.web3Service.createAccount(this.password.value);
@@ -162,5 +181,13 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.refreshTransactionHistoryProcessing = true;
 		await this.getTransactionHistory();
 		this.refreshTransactionHistoryProcessing = false;
+	}
+
+	public updateControlAsTouched() {
+		this.phoneNumber.markAsTouched();
+	}
+
+	public activatePhoneDropDown() {
+		this.childPhoneComponent.showDropDown();
 	}
 }

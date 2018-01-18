@@ -9,18 +9,9 @@
 			<p>{{ 'settings.my-pro-wallet.pro-wallet-text-info' | translate }}</p>
 		</div>
 	</div>
-	<!--<div class="row text-password">-->
-	<!--<div class="col-xs-12">-->
-	<!--<h4>{{ 'settings.my-pro-wallet.pro-wallet-password' | translate }}</h4>-->
-	<!--</div>-->
-	<!--</div>-->
 	<p-confirmDialog key="redeemDialog"></p-confirmDialog>
 	<div class="row address-holder">
 		<form [formGroup]="proWalletAddressForm" (ngSubmit)="onSubmit()">
-			<!--<div class="form-group col-xs-12 col-sm-6 col-lg-8">-->
-			<!--<input formControlName="proWalletPassword" type="password" class="form-control propy-control"-->
-			<!--id="name" placeholder="{{ 'settings.my-pro-wallet.wallet-password' | translate }}">-->
-			<!--</div>-->
 			<div formGroupName="passwords">
 				<div class="form-group">
 					<input formControlName="password" type="password" class="form-control propy-control"
@@ -35,6 +26,7 @@
 				<div class="form-group">
 					<input formControlName="repeatPassword" type="password" class="form-control propy-control"
 						   id="repeatProWalletPassword"
+						   (keydown.Tab)="activatePhoneDropDown()"
 						   placeholder="{{ 'common.placeholder.repeatPassword' | translate }}">
 					<div *ngIf="repeatPassword.touched" class="propy-validation-errors-box">
 						<div class="propy-validation"
@@ -45,17 +37,36 @@
 							 *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">{{
 							'common.validation-errors.invalid-password' | translate }}
 						</div>
+						<div *ngIf="password.touched && repeatPassword.touched">
+							<div class="propy-validation"
+								 *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">
+								{{
+								'common.validation-errors.passwords-differ' | translate }}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div *ngIf="password.touched && repeatPassword.touched">
-				<div class="propy-validation"
-					 *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">{{
-					'common.validation-errors.passwords-differ' | translate }}
+			<div class="form-group">
+				<int-phone-prefix [locale]="'en'"
+								  [defaultCountry]="defaultPhoneCountryCode"
+								  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
+								  formControlName="phoneNumber"
+								  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
+				<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
+					<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
+						'common.validation-errors.required' | translate }}
+					</div>
+					<div class="propy-validation"
+						 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
+						{{
+						'common.validation-errors.invalid-phone-number' | translate }}
+					</div>
 				</div>
 			</div>
 			<div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3">
-				<button class="btn btn-block propy-control button-big generate-wallet-button" [disabled]="proWalletAddressForm.invalid">
+				<button class="btn btn-block propy-control button-big generate-wallet-button"
+						[disabled]="proWalletAddressForm.invalid">
 					{{ 'settings.my-pro-wallet.generate-wallet' | translate }}
 				</button>
 			</div>
