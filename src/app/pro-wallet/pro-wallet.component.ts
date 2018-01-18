@@ -1,18 +1,19 @@
-import { Web3Service } from './../web3-connection/web3-connection.service';
-import { Subscription } from 'rxjs/Subscription';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../shared/errors/errors.decoratable.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserData } from './../authentication/authentication.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProWalletService } from './pro-wallet.service';
-import { UserTransactionsHistoryResponse } from './pro-wallet-responses';
-import { AuthenticationService } from '../authentication/authentication.service';
-import { NotificationsService } from '../shared/notifications/notifications.service';
-import { DefaultAsyncAPIErrorHandling } from '../shared/errors/errors.decorators';
-import { ConfirmationService } from 'primeng/primeng';
-import { WalletAddressValidator } from './pro-wallet-address-validator';
+import {Web3Service} from './../web3-connection/web3-connection.service';
+import {Subscription} from 'rxjs/Subscription';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserData} from './../authentication/authentication.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ProWalletService} from './pro-wallet.service';
+import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
+import {AuthenticationService} from '../authentication/authentication.service';
+import {NotificationsService} from '../shared/notifications/notifications.service';
+import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
+import {ConfirmationService} from 'primeng/primeng';
+import {WalletAddressValidator} from './pro-wallet-address-validator';
+import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -34,17 +35,20 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public jsonWallet: string;
 
 	constructor(private proWalletService: ProWalletService,
-		private formBuilder: FormBuilder,
-		private authService: AuthenticationService,
-		private notificationsService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		private confirmationService: ConfirmationService,
-		private web3Service: Web3Service) {
+				private formBuilder: FormBuilder,
+				private authService: AuthenticationService,
+				private notificationsService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				private confirmationService: ConfirmationService,
+				private web3Service: Web3Service) {
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
-			proWalletPassword: [null, [Validators.required]]
+			passwords: this.formBuilder.group({
+				password: ['', [Validators.required]],
+				repeatPassword: ['', [Validators.required]]
+			}, {validator: SignUpFormValidators.differentPasswordsValidator})
 		});
 		const self = this;
 		this.userDataSubscription = this.authService.subscribeToUserData({
@@ -84,7 +88,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		document.body.appendChild(downloader); // Needed for ff;
 
 		const data = JSON.stringify(this.jsonWallet);
-		const blob = new Blob([data], { type: 'text/json' });
+		const blob = new Blob([data], {type: 'text/json'});
 		const url = window.URL;
 		const fileUrl = url.createObjectURL(blob);
 
@@ -105,13 +109,21 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.authService.getCurrentUser();
 	}
 
-	public get proWalletPassword() {
-		return this.proWalletAddressForm.get('proWalletPassword');
+	public get passwords() {
+		return this.proWalletAddressForm.get('passwords');
+	}
+
+	public get password() {
+		return this.passwords.get('password');
+	}
+
+	public get repeatPassword() {
+		return this.passwords.get('repeatPassword');
 	}
 
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
-		const result = await this.web3Service.createAccount(this.proWalletPassword.value);
+		const result = await this.web3Service.createAccount(this.password.value);
 		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile));
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();

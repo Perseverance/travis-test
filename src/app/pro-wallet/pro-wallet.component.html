@@ -1,117 +1,155 @@
 <div class="col-xs-12 my-pro-wallet" *ngIf="userTransactionsHistory">
-    <div class="row">
-        <div class="col-xs-12">
-            <h2>{{ 'settings.my-pro-wallet.pro-wallet-heading' | translate }}</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <p>{{ 'settings.my-pro-wallet.pro-wallet-text-info' | translate }}</p>
-        </div>
-    </div>
-    <div class="row text-password">
-        <div class="col-xs-12">
-            <h4>{{ 'settings.my-pro-wallet.pro-wallet-password' | translate }}</h4>
-        </div>
-    </div>
-    <p-confirmDialog key="redeemDialog"></p-confirmDialog>
-    <div class="row address-holder">
-        <form [formGroup]="proWalletAddressForm" (ngSubmit)="onSubmit()">
-            <div class="form-group col-xs-12 col-sm-6 col-lg-8">
-                <input formControlName="proWalletPassword" type="password" class="form-control propy-control"
-                    id="name" placeholder="{{ 'settings.my-pro-wallet.wallet-password' | translate }}">
-            </div>
-            <div class="col-xs-12 col-sm-6 col-lg-4">
-                <button class="btn btn-block propy-control button-big" [disabled]="proWalletAddressForm.invalid">
-							{{ 'settings.my-pro-wallet.generate-wallet' | translate }}
-						</button>
-            </div>
-        </form>
-    </div>
-    <div class="row address-holder" *ngIf="showBackupWalletButton">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-            <button class="btn btn-block propy-control button-big download-btn" (click)="downloadJSONFile()">{{ 'settings.my-pro-wallet.download-your-wallet' | translate }}</button>
-        </div>
-        <div class="col-xs-12 text-center">
-            <p>{{ 'settings.my-pro-wallet.pro-wallet-download-text' | translate }}</p>
-        </div>
-    </div>
-    <div class="row redeem-holder" *ngIf="shouldShowRedeemSection">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-            <button class="btn btn-block propy-control button-big" (click)="redeemProTokens()">
+	<div class="row">
+		<div class="col-xs-12">
+			<h2>{{ 'settings.my-pro-wallet.pro-wallet-heading' | translate }}</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<p>{{ 'settings.my-pro-wallet.pro-wallet-text-info' | translate }}</p>
+		</div>
+	</div>
+	<!--<div class="row text-password">-->
+	<!--<div class="col-xs-12">-->
+	<!--<h4>{{ 'settings.my-pro-wallet.pro-wallet-password' | translate }}</h4>-->
+	<!--</div>-->
+	<!--</div>-->
+	<p-confirmDialog key="redeemDialog"></p-confirmDialog>
+	<div class="row address-holder">
+		<form [formGroup]="proWalletAddressForm" (ngSubmit)="onSubmit()">
+			<!--<div class="form-group col-xs-12 col-sm-6 col-lg-8">-->
+			<!--<input formControlName="proWalletPassword" type="password" class="form-control propy-control"-->
+			<!--id="name" placeholder="{{ 'settings.my-pro-wallet.wallet-password' | translate }}">-->
+			<!--</div>-->
+			<div formGroupName="passwords">
+				<div class="form-group">
+					<input formControlName="password" type="password" class="form-control propy-control"
+						   id="proWalletPassword"
+						   placeholder="{{ 'settings.my-pro-wallet.wallet-password' | translate }}">
+					<div *ngIf="password.touched" class="propy-validation-errors-box">
+						<div class="propy-validation" *ngIf="password.invalid && password.errors['required']">{{
+							'common.validation-errors.required' | translate }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input formControlName="repeatPassword" type="password" class="form-control propy-control"
+						   id="repeatProWalletPassword"
+						   placeholder="{{ 'common.placeholder.repeatPassword' | translate }}">
+					<div *ngIf="repeatPassword.touched" class="propy-validation-errors-box">
+						<div class="propy-validation"
+							 *ngIf="repeatPassword.invalid && repeatPassword.errors['required']">{{
+							'common.validation-errors.required' | translate }}
+						</div>
+						<div class="propy-validation"
+							 *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">{{
+							'common.validation-errors.invalid-password' | translate }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="password.touched && repeatPassword.touched">
+				<div class="propy-validation"
+					 *ngIf="passwords.invalid && passwords.errors != null && passwords.errors['passwordsDiffer']">{{
+					'common.validation-errors.passwords-differ' | translate }}
+				</div>
+			</div>
+			<div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3">
+				<button class="btn btn-block propy-control button-big generate-wallet-button" [disabled]="proWalletAddressForm.invalid">
+					{{ 'settings.my-pro-wallet.generate-wallet' | translate }}
+				</button>
+			</div>
+		</form>
+	</div>
+	<div class="row address-holder" *ngIf="showBackupWalletButton">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+			<button class="btn btn-block propy-control button-big download-btn" (click)="downloadJSONFile()">{{
+				'settings.my-pro-wallet.download-your-wallet' | translate }}
+			</button>
+		</div>
+		<div class="col-xs-12 text-center">
+			<p>{{ 'settings.my-pro-wallet.pro-wallet-download-text' | translate }}</p>
+		</div>
+	</div>
+	<div class="row redeem-holder" *ngIf="shouldShowRedeemSection">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+			<button class="btn btn-block propy-control button-big" (click)="redeemProTokens()">
 				{{ 'settings.my-pro-wallet.redeem-button' | translate }}
 				{{ stashedTokensBalance }}
 				{{ 'settings.my-pro-wallet.pro-currency' | translate }}
 			</button>
-        </div>
-    </div>
-    <div class="transaction-holder">
-        <div class="row transaction-header">
-            <div class="col-xs-12">
-                {{ 'settings.my-pro-wallet.transaction-heading' | translate }}
-                <i class="fa fa-refresh" (click)="refreshTransactionHistory()"></i>
-            </div>
-        </div>
-        <div [ngClass]="{'refresh-processing' : refreshTransactionHistoryProcessing }">
-            <div class="row" *ngIf="userTransactionsHistory.transactions.length > 0; else noTransactionHolder">
-                <div class="col-xs-12 transaction-record" *ngFor="let transaction of userTransactionsHistory.transactions"
-                    [ngClass]="{'tx-pending': transaction.status == 0, 'tx-completed': transaction.status == 1,
+		</div>
+	</div>
+	<div class="transaction-holder">
+		<div class="row transaction-header">
+			<div class="col-xs-12">
+				{{ 'settings.my-pro-wallet.transaction-heading' | translate }}
+				<i class="fa fa-refresh" (click)="refreshTransactionHistory()"></i>
+			</div>
+		</div>
+		<div [ngClass]="{'refresh-processing' : refreshTransactionHistoryProcessing }">
+			<div class="row" *ngIf="userTransactionsHistory.transactions.length > 0; else noTransactionHolder">
+				<div class="col-xs-12 transaction-record"
+					 *ngFor="let transaction of userTransactionsHistory.transactions"
+					 [ngClass]="{'tx-pending': transaction.status == 0, 'tx-completed': transaction.status == 1,
 						'tx-rejected': transaction.status == 2}">
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-2 label-holder">
-                            {{ 'settings.my-pro-wallet.transaction-number' | translate }}
-                        </div>
-                        <div class="col-xs-9 col-sm-10">
-                            <div class="input-group">
-                                <input readonly type="text" class="form-control" value="{{transaction.txId}}" #txIdInput>
-                                <span class="input-group-btn">
+					<div class="row">
+						<div class="col-xs-3 col-sm-2 label-holder">
+							{{ 'settings.my-pro-wallet.transaction-number' | translate }}
+						</div>
+						<div class="col-xs-9 col-sm-10">
+							<div class="input-group">
+								<input readonly type="text" class="form-control" value="{{transaction.txId}}"
+									   #txIdInput>
+								<span class="input-group-btn">
 									<button class="btn btn-default" class="btn btn-default copy-btn" type="button"
 											[ngxClipboard]="txIdInput">{{ 'common.label.copy' | translate }}</button>
 								</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-2 label-holder">
-                            {{ 'settings.my-pro-wallet.recipient' | translate }}
-                        </div>
-                        <div class="col-xs-9 col-sm-10">
-                            <input readonly title="Recipient" type="text" class="form-control" value="{{transaction.recipient}}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-2 label-span">
-                            {{ 'settings.my-pro-wallet.status' | translate}}
-                        </div>
-                        <div class="col-xs-9 col-sm-10 value">
-                            {{ transaction.status | transactionStatusLocalizeKey | translate }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-2 label-span">
-                            {{ 'settings.my-pro-wallet.reason' | translate}}
-                        </div>
-                        <div class="col-xs-9 col-sm-10 value">
-                            {{ transaction.reward | transactionRewardLocalizeKey | translate }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-2 label-span">
-                            {{ 'settings.my-pro-wallet.amount' | translate }}
-                        </div>
-                        <div class="col-xs-9 col-sm-10 value">
-                            {{ transaction.amount }} {{ 'settings.my-pro-wallet.pro-currency' | translate }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ng-template #noTransactionHolder>
-                <div class="row transaction-record">
-                    <div class="col-xs-12 text-center">
-                        <h6>{{ 'settings.my-pro-wallet.no-transactions' | translate }}</h6>
-                    </div>
-                </div>
-            </ng-template>
-        </div>
-    </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3 col-sm-2 label-holder">
+							{{ 'settings.my-pro-wallet.recipient' | translate }}
+						</div>
+						<div class="col-xs-9 col-sm-10">
+							<input readonly title="Recipient" type="text" class="form-control"
+								   value="{{transaction.recipient}}">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3 col-sm-2 label-span">
+							{{ 'settings.my-pro-wallet.status' | translate}}
+						</div>
+						<div class="col-xs-9 col-sm-10 value">
+							{{ transaction.status | transactionStatusLocalizeKey | translate }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3 col-sm-2 label-span">
+							{{ 'settings.my-pro-wallet.reason' | translate}}
+						</div>
+						<div class="col-xs-9 col-sm-10 value">
+							{{ transaction.reward | transactionRewardLocalizeKey | translate }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3 col-sm-2 label-span">
+							{{ 'settings.my-pro-wallet.amount' | translate }}
+						</div>
+						<div class="col-xs-9 col-sm-10 value">
+							{{ transaction.amount }} {{ 'settings.my-pro-wallet.pro-currency' | translate }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<ng-template #noTransactionHolder>
+				<div class="row transaction-record">
+					<div class="col-xs-12 text-center">
+						<h6>{{ 'settings.my-pro-wallet.no-transactions' | translate }}</h6>
+					</div>
+				</div>
+			</ng-template>
+		</div>
+	</div>
 </div>
