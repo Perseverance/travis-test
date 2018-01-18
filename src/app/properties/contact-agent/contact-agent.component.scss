@@ -1,114 +1,116 @@
 @import "../../../variables";
 @import "../../../mixins";
+.no-events {
+    pointer-events: none;
+}
 
 .contact-agent {
-	@media #{$xs} {
-		margin-top: 0%;
-	}
-	min-height: 522px;
-	h3 {
-		font-size: 18px;
-	}
-	.agent-radio {
-		padding-bottom: 20px;
-		label {
-			margin-top: 4px;
-			margin-bottom: 10px;
-			.agent-wrapper {
-				padding-left: 17px;
-				position: relative;
-				font-size: $font-size-medium;
-				display: inline-block;
-				margin-top: -20px;
-				@media (min-width: 768px) and (max-width: 810px) {
-					top: -20px;
-				}
-				img.agent-img {
-					@include border-radius(20px);
-				}
-				span.name {
-					padding-left: 5px;
-					position: relative;
-					top: -5px;
-					@include ellipsis(200px);
-				}
-				span.rating {
-					position: absolute;
-					left: 63px;
-					top: 22px;
-					font-size: 10px;
-					min-width: 120px;
-					.agent-rating-off {
-						color: $gray-medium;
-					}
-					.agent-rating-on {
-						color: $yellow-main;
-					}
-					.ui-rating {
-						float: left;
-					}
-					.flag {
-						float: left;
-						margin-left: 10px;
-						img {
-							height: 12px;
-						}
-					}
-				}
-			}
-		}
-	}
-	textarea.propy-control {
-		resize: none;
-	}
-	.international-phone-holder {
-		margin-bottom: 10px;
-		.dropbtn {
-			height: 42px;
-			@include border-radius-separate(9px, 0, 9px, 0);
-			outline: none;
-			.fa {
-				color: $gray-light;
-			}
-		}
-		.flagInput {
-			border: 1px solid $border-default;
-			@include border-radius-separate(9px, 0, 9px, 0);
-			@include box-shadow(0px,
-				1px,
-				3px,
-				rgba(0, 0, 0, 0.14));
-		}
-		input {
-			height: 44px;
-			background-color: white;
-			border: 1px solid $border-default;
-			color: $black;
-			font-size: $font-size-medium;
-			font-weight: 400;
-			outline: none;
-			@include border-radius(9px);
-			@include box-shadow(0px,
-				1px,
-				3px,
-				rgba(0, 0, 0, 0.14));
-			&:active {
-				border-color: $blue-regular;
-			}
-			&:focus {
-				border-color: #66afe9;
-				outline: 0;
-				box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-			}
-		}
-	}
-	.form-group {
-		.ng-invalid {
-			.international-phone-holder {
-				input.ng-touched {
-					border-color: $red-main;
-				}
-			}
-		}
-	}
+    @media #{$xs} {
+        margin-top: 0%;
+    }
+    min-height: 522px;
+    h3 {
+        font-size: 18px;
+    }
+    h5 {
+        font-size: 14px;
+        color: $red-main;
+        margin-bottom: 30px;
+    }
+    .agent-radio {
+        padding-bottom: 20px;
+        label {
+            margin-top: 4px;
+            margin-bottom: 10px;
+            .agent-wrapper {
+                padding-left: 17px;
+                position: relative;
+                font-size: $font-size-medium;
+                display: inline-block;
+                margin-top: -20px;
+                @media (min-width: 768px) and (max-width: 810px) {
+                    top: -20px;
+                }
+                img.agent-img {
+                    @include border-radius(20px);
+                }
+                span.name {
+                    padding-left: 5px;
+                    position: relative;
+                    top: -5px;
+                    @include ellipsis(200px);
+                }
+                span.rating {
+                    position: absolute;
+                    left: 63px;
+                    top: 22px;
+                    font-size: 10px;
+                    min-width: 120px;
+                    .agent-rating-off {
+                        color: $gray-medium;
+                    }
+                    .agent-rating-on {
+                        color: $yellow-main;
+                    }
+                    .ui-rating {
+                        float: left;
+                    }
+                    .flag {
+                        float: left;
+                        margin-left: 10px;
+                        img {
+                            height: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    textarea.propy-control {
+        resize: none;
+    }
+    .international-phone-holder {
+        margin-bottom: 10px;
+        .dropbtn {
+            height: 42px;
+            @include border-radius-separate(9px, 0, 9px, 0);
+            outline: none;
+            .fa {
+                color: $gray-light;
+            }
+        }
+        .flagInput {
+            border: 1px solid $border-default;
+            @include border-radius-separate(9px, 0, 9px, 0);
+            @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+        }
+        input {
+            height: 44px;
+            background-color: white;
+            border: 1px solid $border-default;
+            color: $black;
+            font-size: $font-size-medium;
+            font-weight: 400;
+            outline: none;
+            @include border-radius(9px);
+            @include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+            &:active {
+                border-color: $blue-regular;
+            }
+            &:focus {
+                border-color: #66afe9;
+                outline: 0;
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            }
+        }
+    }
+    .form-group {
+        .ng-invalid {
+            .international-phone-holder {
+                input.ng-touched {
+                    border-color: $red-main;
+                }
+            }
+        }
+    }
 }
