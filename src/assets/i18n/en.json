@@ -274,7 +274,8 @@
             "name": "Your name",
             "message": "Your message",
             "contact-success": "Your request was sent succesfully!",
-            "contact-error": "Could not contact this seller"
+            "contact-error": "Could not contact this seller",
+            "not-logged-in-message": "In order to contact the seller you need to be signed in. Please sign in or sign up using the buttons in the header."
         },
         "verification-error": "Your account is not activated.",
         "verification-error-message": "Please activate your account in order to reserve this property",
