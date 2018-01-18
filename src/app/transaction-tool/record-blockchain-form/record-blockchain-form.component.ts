@@ -2,7 +2,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 
 @Component({
@@ -15,6 +15,7 @@ export class RecordBlockchainFormComponent extends ErrorsDecoratableComponent im
 	public blockchainRecordForm: FormGroup;
 
 	@Output() onRecord = new EventEmitter<string>();
+	@Input() recordButtonEnabled: boolean;
 
 	constructor(private formBuilder: FormBuilder,
 		errorsService: ErrorsService,

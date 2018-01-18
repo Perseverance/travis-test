@@ -37,27 +37,24 @@
 			</div>
 		</div>
 		<div class="form-group" *ngIf="!isEmailVerified">
-			<button type="button" class="btn propy-control button-big" (click)="resendVerification()">Resend
-				Verification Email
+			<button type="button" class="btn propy-control button-big" (click)="resendVerification()">{{
+				'verification.resend-button' | translate }}
 			</button>
 		</div>
 		<div class="form-group">
 			<int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
-							  formControlName="phoneNumber"></int-phone-prefix>
+							  formControlName="phoneNumber"
+							  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
 			<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
-					'common.validation-errors.required' | translate }}
-				</div>
 				<div class="propy-validation"
 					 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
-					{{
-					'common.validation-errors.invalid-phone-number' | translate }}
+					{{ 'common.validation-errors.invalid-phone-number' | translate }}
 				</div>
 			</div>
 			<br/>
 			<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
-					[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">{{
+					[disabled]="firstName.invalid || lastName.invalid || email.invalid">{{
 				'common.label.save-changes' | translate }}
 			</button>
 			<button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{

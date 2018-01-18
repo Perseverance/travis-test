@@ -5,6 +5,8 @@ import { Web3Service } from '../web3-connection/web3-connection.service';
 import { BaseContract } from '../web3-connection/BaseContract';
 
 export enum Status {
+	rejectedDeal = -2,
+	canceledDeal = -1,
 	reserve = 0,
 	partiesInvited = 1,
 	partiesAccepted = 2,

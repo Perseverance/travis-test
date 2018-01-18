@@ -1,3 +1,4 @@
+import { CanceledDealComponent } from './canceled-deal/canceled-deal.component';
 import { DisclosuresStepComponent } from './disclosures-step/disclosures-step.component';
 import { AgreeAndContinueComponent } from './agree-and-continue/agree-and-continue.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { TransactionToolComponent } from './transaction-tool.component';
 import { TransactionToolRoutingModule } from './transaction-tool-routing.module';
 import { PurchaseAgreementStepComponent } from './purchase-agreement-step/purchase-agreement-step.component';
-import { FileUploadModule, StepsModule } from 'primeng/primeng';
+import { FileUploadModule, StepsModule, ConfirmDialogModule } from 'primeng/primeng';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { DocumentPreviewComponent } from './document-preview/document-preview.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +26,7 @@ import { SettlementStatementComponent } from './settlement-statement/settlement-
 import { AffidavitStepComponent } from './affidavit-step/affidavit-step.component';
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { RecordBlockchainFormComponent } from './record-blockchain-form/record-blockchain-form.component';
+import { RejectedDealComponent } from './rejected-deal/rejected-deal.component';
 
 @NgModule({
 	imports: [
@@ -37,7 +39,8 @@ import { RecordBlockchainFormComponent } from './record-blockchain-form/record-b
 		SharedModule,
 		InlineSVGModule,
 		ClipboardModule,
-		TranslateModule
+		TranslateModule,
+		ConfirmDialogModule
 	],
 	declarations: [
 		TransactionToolComponent,
@@ -57,7 +60,9 @@ import { RecordBlockchainFormComponent } from './record-blockchain-form/record-b
 		ClosingDocumentsComponent,
 		TransferOwnershipComponent,
 		RecordBlockchainFormComponent,
-		AgreeAndContinueComponent
+		AgreeAndContinueComponent,
+		CanceledDealComponent,
+		RejectedDealComponent
 	],
 	exports: [
 		TransactionToolRoutingModule

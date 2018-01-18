@@ -50,6 +50,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public hasDataLoaded = false;
 	private deedAddress: string;
 	public txHash: string;
+	public recordButtonEnabled = true;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -155,41 +156,50 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onRecordClick(password) {
-		this.notificationService.pushInfo({
-			title: `Sending the document to the blockchain.`,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 60000
-		});
-		const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
-		let result;
+		this.recordButtonEnabled = false;
 		try {
-			result = await this.smartContractService.recordAffidavit(password, this.deedAddress, documentString);
-		} catch (e) {
-			this.errorsService.pushError({
-				errorTitle: '',
-				errorMessage: e.message,
-				errorTime: (new Date()).getTime()
+
+
+			this.notificationService.pushInfo({
+				title: `Sending the document to the blockchain.`,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 60000
 			});
+			const documentString = await this.documentService.getDocumentContent(this.signingDocument.id);
+			let result;
+			try {
+				result = await this.smartContractService.recordAffidavit(password, this.deedAddress, documentString);
+			} catch (e) {
+				this.errorsService.pushError({
+					errorTitle: '',
+					errorMessage: e.message,
+					errorTime: (new Date()).getTime()
+				});
+				this.recordButtonEnabled = true;
+			}
+			if (result.status === '0x0') {
+				throw new Error('Could not save to the blockchain. Try Again');
+			}
+			this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
+			this.notificationService.pushInfo({
+				title: `Sending the document to the backend.`,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 10000
+			});
+			await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
+			this.router.navigate(['/transaction-tool', this.deedId]);
+			this.notificationService.pushSuccess({
+				title: 'Successfully Sent',
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 4000
+			});
+		} catch (err) {
+			this.recordButtonEnabled = true;
+			throw err;
 		}
-		if (result.status === '0x0') {
-			throw new Error('Could not save to the blockchain. Try Again');
-		}
-		this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
-		this.notificationService.pushInfo({
-			title: `Sending the document to the backend.`,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 10000
-		});
-		await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
-		this.router.navigate(['/transaction-tool', this.deedId]);
-		this.notificationService.pushSuccess({
-			title: 'Successfully Sent',
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
 	}
 
 	public getAffidavitSigners(doc: any) {

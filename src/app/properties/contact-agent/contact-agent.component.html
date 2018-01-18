@@ -2,7 +2,8 @@
 	<h3>{{ 'property-details.contact-agent.contact-agent-title' | translate }}</h3>
 	<form [formGroup]="contactAgentForm" (ngSubmit)="onSubmit()">
 		<div class="form-check abc-radio abc-radio-info agent-radio" *ngFor="let agent of agents">
-			<input class="form-check-input" type="radio" formControlName="agentId" [id]="agent.id" [value]="agent.id">
+			<input class="form-check-input" type="radio" formControlName="agentId" [id]="agent.id"
+				   [value]="agent.id">
 			<label class="form-check-label" [for]="agent.id">
                 <span class="agent-wrapper">
                     <img class="agent-img" [src]="agent.avatar | imageEnvPrefix | imageSize : 40: 40: true" alt=""> 
@@ -29,19 +30,16 @@
 				   placeholder="{{ 'property-details.contact-agent.name' | translate }}">
 		</div>
 		<div class="form-group">
-			<int-phone-prefix [locale]="'en'"
-							  [defaultCountry]="defaultPhoneCountryCode"
+			<int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
-							  formControlName="phoneNumber"
-							  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
+							  formControlName="phoneNumber" (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
 			<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
 				<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
 					'common.validation-errors.required' | translate }}
 				</div>
 				<div class="propy-validation"
 					 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
-					{{
-					'common.validation-errors.invalid-phone-number' | translate }}
+					{{ 'common.validation-errors.invalid-phone-number' | translate }}
 				</div>
 			</div>
 		</div>
@@ -67,8 +65,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="propy-validation" *ngIf="!userInfo.isAnonymous && !userInfo.user.isEmailVerified">{{
+			'property-details.verify-to-contact' | translate }}
+		</div>
 		<button class="btn btn-block propy-control button-big"
-				[disabled]="agentId.invalid || name.invalid || email.invalid || phoneNumber.invalid || message.invalid"
+				[disabled]="userInfo.isAnonymous || !userInfo.user.isEmailVerified || agentId.invalid || name.invalid || email.invalid || message.invalid"
 				(click)="emitContactAgentAnalyticsClickEvent()">
 			{{ 'property-details.contact-agent.contact-agent-title' | translate }}
 		</button>

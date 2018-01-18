@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -10,10 +11,20 @@ export class TransactionToolInviteRespondComponent implements OnInit {
 	@Output() onAccept = new EventEmitter<any>();
 	@Output() onReject = new EventEmitter<any>();
 
+	public rejectForm: FormGroup;
+	public rejectTouched = false;
 
-	constructor() { }
+	constructor(private formBuilder: FormBuilder) { }
 
 	ngOnInit() {
+
+		this.rejectForm = this.formBuilder.group({
+			reason: ['', [Validators.required, Validators.minLength(8)]]
+		});
+	}
+
+	public get reason() {
+		return this.rejectForm.get('reason');
 	}
 
 	public onAcceptClick() {
@@ -21,7 +32,12 @@ export class TransactionToolInviteRespondComponent implements OnInit {
 	}
 
 	public onRejectClick() {
-		this.onReject.emit();
+		this.rejectTouched = true;
+		if (this.rejectForm.invalid) {
+			return;
+		}
+		this.onReject.emit(this.reason.value);
+		this.rejectTouched = false;
 	}
 
 }

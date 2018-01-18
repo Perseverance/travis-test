@@ -1,3 +1,4 @@
+import { ConfirmationService } from 'primeng/primeng';
 import { CustomNumberValidator } from './eth-price-validator';
 import { REVERSE_STEPS } from './../workflow/workflow.model';
 import { TransactionToolDocumentService } from './../transaction-tool-document.service';
@@ -67,6 +68,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		private route: ActivatedRoute,
 		private deedsService: DeedsService,
 		private notificationService: NotificationsService,
+		private confirmationService: ConfirmationService,
 		private formBuilder: FormBuilder,
 		private base64Service: Base64Service,
 		private documentService: TransactionToolDocumentService,
@@ -227,14 +229,41 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
-	public async partyReject() {
+	public async partyReject(reason) {
 		this.notificationService.pushInfo({
 			title: `Rejecting Invitation`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.deedsService.rejectInvite(this.deedId);
+		await this.deedsService.rejectInvite(this.deedId, reason);
+		await this.setupDeedData(this.deedId);
+		this.notificationService.pushSuccess({
+			title: this.successMessage,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+	}
+
+	public showCancelDialog() {
+		this.confirmationService.confirm({
+			header: 'Are you sure',
+			message: 'Are you sure you want to cancel this deal?',
+			key: 'cancelTransactionDialog',
+			accept: async () => await this.cancelTransaction()
+		});
+	}
+
+	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
+	public async cancelTransaction() {
+		this.notificationService.pushInfo({
+			title: `Canceling this transaction`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 60000
+		});
+		await this.deedsService.cancelInvite(this.deedId);
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,

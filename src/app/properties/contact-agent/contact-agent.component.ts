@@ -26,6 +26,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	private successMessage: string;
 	private userDataSubscription: Subscription;
 	public defaultPhoneCountryCode: string;
+	public userInfo: any;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
@@ -54,6 +55,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
+				this.userInfo = userInfo;
 				if (userInfo.isAnonymous) {
 					this.defaultPhoneCountryCode = 'us';
 					return;
@@ -107,7 +109,12 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onSubmit() {
-		const phoneNumber = this.childPhoneComponent.selectedCountry.dialCode + this.phoneNumber.value;
+		let phoneNumber;
+		if (this.phoneNumber.value) {
+			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		} else {
+			phoneNumber = '';
+		}
 		await this.propertiesService.requestInfo(
 			this.propertyId,
 			this.agentId.value,

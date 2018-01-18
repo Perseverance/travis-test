@@ -4,7 +4,7 @@
             id="name" placeholder="{{ 'settings.my-pro-wallet.wallet-password' | translate }}">
     </div>
     <div class="col-xs-12 col-sm-4">
-        <button class="btn btn-block propy-control button-big" [disabled]="blockchainRecordForm.invalid">
+        <button class="btn btn-block propy-control button-big" [disabled]="blockchainRecordForm.invalid || !recordButtonEnabled">
       {{ 'common.label.record-to-blockchain' | translate }}
     </button>
     </div>

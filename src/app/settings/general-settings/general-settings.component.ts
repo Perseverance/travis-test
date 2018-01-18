@@ -69,10 +69,12 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		});
 	}
 
-	private setUserInfo(userInfo: any) {
+	private setUserInfo(userInfo: any, cancel = false) {
 		this.firstName.setValue(userInfo.firstName);
 		this.lastName.setValue(userInfo.lastName);
-		this.phoneNumber.setValue(userInfo.phoneNumber);
+		if (userInfo.phoneNumber || cancel) {
+			this.phoneNumber.setValue(userInfo.phoneNumber);
+		}
 		this.email.setValue(userInfo.email);
 	}
 
@@ -95,7 +97,12 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
 		const selectedCountryObject = this.childPhoneComponent.selectedCountry;
-		const phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		let phoneNumber;
+		if (this.phoneNumber.value) {
+			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+		} else {
+			phoneNumber = '';
+		}
 		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
@@ -107,7 +114,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	public cancelEdit() {
-		this.setUserInfo(this.userInfo);
+		this.setUserInfo(this.userInfo, true);
 	}
 
 	@DefaultAsyncAPIErrorHandling('verification.resend-error')

@@ -49,9 +49,6 @@
 								  formControlName="phoneNumber"
 								  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
 				<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
-					<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
-						'common.validation-errors.required' | translate }}
-					</div>
 					<div class="propy-validation"
 						 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
 						{{
@@ -164,7 +161,6 @@
                                                 repeatPassword.invalid || 
                                                 firstName.invalid || 
                                                 lastName.invalid ||
-                                                phoneNumber.invalid ||
                                                 (iAmAnAgent.value && agentFields.invalid) ||
                                                 (iAmAnAgent.value && agentLocations.length === 0) ||
                                                 (passwords.errors != null && passwords.errors['passwordsDiffer'])"
