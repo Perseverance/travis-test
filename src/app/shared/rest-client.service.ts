@@ -158,6 +158,13 @@ export class RestClientService {
 	}
 
 	/**
+	 * get makes a get request to a custom API endpoint from web
+	 */
+	public consumeGetDataApi(url) {
+		return axios.get(url);
+	}
+
+	/**
 	 * post - makes a post request without token
 	 */
 	public post(endpoint: string, data: object, config: object = {}) {
