@@ -184,7 +184,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onInvite(email) {
 		this.notificationService.pushInfo({
-			title: `Inviting ${email}. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.`,
+			title: `Inviting all praties. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000
