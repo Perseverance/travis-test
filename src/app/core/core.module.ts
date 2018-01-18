@@ -83,8 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ReferralComponent,
 		LanguageLabelPipe,
 		NotificationsComponent,
-		NotificationGrowlComponent,
-		CryptoWidgetComponent
+		NotificationGrowlComponent
 	],
 	providers: [
 		HttpClient,
@@ -120,8 +119,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		HelloSignService,
 		LoadPropertyService,
 		VerificationService,
-		MessageService,
-		CurrencyDataService
+		MessageService
 	],
 	exports: [
 		TranslateModule,
@@ -132,8 +130,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		AboutUsComponent,
 		NotificationsComponent,
 		TransactionToolModule,
-		NotificationGrowlComponent,
-		CryptoWidgetComponent
+		NotificationGrowlComponent
 	]
 })
 export class CoreModule {

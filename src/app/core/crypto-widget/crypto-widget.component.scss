@@ -2,16 +2,39 @@
 @import "../../../mixins";
 $blue-widget: #42C3F6;
 .crypto-widget {
+    z-index: 99999;
     position: fixed;
-    top: 95%;
-    left: 40px;
+    top: 90%;
+    left: 1%;
     right: 20px; //overflow-y: auto;
     max-height: 100%;
+    @media #{$xs} {
+        position: fixed;
+        top: 10%;
+        left: 1%;
+        right: 20px; //overflow-y: auto;
+        max-height: 100%;
+    }
+    @media #{$sm} {
+        position: fixed;
+        top: 10%;
+        left: 1%;
+        right: 20px; //overflow-y: auto;
+        max-height: 100%;
+    }
+    @media #{$md} {
+        position: fixed;
+        top: 10%;
+        left: 1%;
+        right: 20px; //overflow-y: auto;
+        max-height: 100%;
+    }
     .crypto-container {
         a {
             text-decoration: none;
         }
         span {
+            font-size: 12px;
             @include border-radius(9px);
             border: 2px solid $blue-widget;
             padding: 10px;
