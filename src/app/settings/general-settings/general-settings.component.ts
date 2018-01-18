@@ -5,7 +5,7 @@ import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratab
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
@@ -27,6 +27,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	private userInfo: any;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
+	@Input() generalTabIsActive = false;
 
 	constructor(private authService: AuthenticationService,
 				private formBuilder: FormBuilder,

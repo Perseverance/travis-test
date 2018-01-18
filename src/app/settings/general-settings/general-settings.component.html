@@ -41,7 +41,7 @@
 				'verification.resend-button' | translate }}
 			</button>
 		</div>
-		<div class="form-group">
+		<div class="form-group" *ngIf="generalTabIsActive">
 			<int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
 							  formControlName="phoneNumber"
