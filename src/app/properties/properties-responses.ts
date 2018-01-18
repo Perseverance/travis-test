@@ -35,6 +35,7 @@ export interface GetFeaturePropertiesResponse {
 	size: number;
 	sizeType: number;
 	type: number;
+	bitcoinAvailable: boolean;
 }
 
 
