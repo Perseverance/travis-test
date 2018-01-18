@@ -1,6 +1,6 @@
 export const FlowStatus = {
-	'-2': 'Deal Canceled',
-	'-1': 'Deal Rejected',
+	'-2': 'Deal Rejected',
+	'-1': 'Deal Canceled',
 	0: 'Pending Invitations',
 	1: 'Accepting Invitations',
 	2: 'Recording Reservation to Blockchain',

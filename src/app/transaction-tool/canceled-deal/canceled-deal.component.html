@@ -7,9 +7,13 @@
             </div>
         </div>
     </div>
-    <div *ngIf="deedId">
+    <div *ngIf="deedId" class="canceledDeal">
         <app-property-item-view [deedId]="deedId"></app-property-item-view>
-        <h4>The seller broker has canceled this deal.</h4>
+        <hr>
+        <div class="reason">
+            <i class="fa fa-times-circle"></i>
+            <h4>The seller broker has canceled this deal.</h4>
+        </div>
     </div>
 </ng-template>
 <ng-template #dataNotLoaded>

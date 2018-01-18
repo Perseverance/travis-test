@@ -7,9 +7,15 @@
             </div>
         </div>
     </div>
-    <div *ngIf="deedId">
+    <div *ngIf="deedId" class="rejectedDeal">
         <app-property-item-view [deedId]="deedId"></app-property-item-view>
-        <h4>{{rejectionText}}</h4>
+        <hr>
+        <div class="reason">
+            <i class="fa fa-times-circle"></i>
+            <h4>The <span class="rejector-role">{{rejecterRole}}</span> has rejected
+                the invitation to this deal with reason:</h4>
+            <p>&#8220;{{deed.rejectionReason}}&#8221;</p>
+        </div>
     </div>
 </ng-template>
 <ng-template #dataNotLoaded>

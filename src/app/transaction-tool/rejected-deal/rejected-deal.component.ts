@@ -15,7 +15,7 @@ export class RejectedDealComponent implements OnInit {
 	private addressSubscription: Subscription;
 	public hasDataLoaded = false;
 	public deed: any;
-	public rejectionText: string;
+	public rejecterRole: string;
 
 	constructor(private route: ActivatedRoute, private deedsService: DeedsService) { }
 
@@ -35,11 +35,7 @@ export class RejectedDealComponent implements OnInit {
 	private async setupRejectionText(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.deed = deed;
-		const rejecterRole = this.getRejecterRoleString(deed);
-		this.rejectionText = `The ${rejecterRole} has rejected the invitation to this deal`;
-		if (deed.rejectionReason) {
-			this.rejectionText += ` with reason : '${deed.rejectionReason}'`;
-		}
+		this.rejecterRole = this.getRejecterRoleString(deed);
 	}
 
 	private getRejecterRoleString(deed: any): string {
