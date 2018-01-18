@@ -5,7 +5,7 @@ $card-padding-with-container: $card-padding+15px;
 $card-half-padding: $card-padding/2;
 .property-card {
     background-color: $white;
-    @include border-radius(7px);
+    @include border-radius(9px);
     @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
     .image-holder {
         cursor: pointer;
@@ -29,6 +29,13 @@ $card-half-padding: $card-padding/2;
                     background: $green-sec;
                     color: white;
                 }
+            }
+            .buy-crypto-label {
+                background: #44d32a;
+                color: #fff;
+                position: absolute; // margin-left: 10px;
+                // margin-top: 10px;
+                z-index: 5000;
             }
         }
         img {
@@ -144,5 +151,8 @@ $card-half-padding: $card-padding/2;
         margin: 0px;
         font-weight: 400;
         padding: $card-half-padding $card-padding $card-padding $card-padding;
+    }
+    &.crypto-class {
+        border: 2px solid #44d32a;
     }
 }

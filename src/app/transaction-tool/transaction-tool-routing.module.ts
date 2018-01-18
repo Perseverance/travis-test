@@ -16,6 +16,8 @@ import { AuthenticatedGuard } from '../authentication/authenticated-guard.servic
 import { SettlementStatementComponent } from './settlement-statement/settlement-statement.component';
 import { AffidavitStepComponent } from './affidavit-step/affidavit-step.component';
 import { DisclosuresStepComponent } from './disclosures-step/disclosures-step.component';
+import { CanceledDealComponent } from './canceled-deal/canceled-deal.component';
+import { RejectedDealComponent } from './rejected-deal/rejected-deal.component';
 
 const transactionToolSteps: Routes = [
 	{
@@ -77,6 +79,16 @@ const transactionToolSteps: Routes = [
 			{
 				path: 'transfer',
 				component: TransferOwnershipComponent,
+				canActivate: [WorkflowGuard],
+			},
+			{
+				path: 'canceled',
+				component: CanceledDealComponent,
+				canActivate: [WorkflowGuard],
+			},
+			{
+				path: 'rejected',
+				component: RejectedDealComponent,
 				canActivate: [WorkflowGuard],
 			}
 

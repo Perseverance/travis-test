@@ -1,0 +1,14 @@
+<div class="row featured-locations">
+    <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
+    <div class="featured-holder">
+        <ngx-carousel [inputs]="carouselTile">
+            <ngx-tile NgxCarouselItem *ngFor="let property of showedLocations">
+                <app-property-preview [property]="property" [featuredCityName]="property.cityName"
+                    [imageWidth]="350" [imageHeight]="215" [showArrow]="true" [bitcoinAvailable]="property.bitcoinAvailable">
+                </app-property-preview>
+            </ngx-tile>
+            <button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+            <button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+        </ngx-carousel>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+<ng-template #dataLoaded>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="property step">
+                <h3>Property Details</h3>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="deedId" class="canceledDeal">
+        <app-property-item-view [deedId]="deedId"></app-property-item-view>
+        <hr>
+        <div class="reason">
+            <i class="fa fa-times-circle"></i>
+            <h4>The seller broker has canceled this deal.</h4>
+        </div>
+    </div>
+</ng-template>
+<ng-template #dataNotLoaded>
+    <h4>Loading...</h4>
+</ng-template>

@@ -1,4 +1,27 @@
-<div class="invite-buttons">
-    <button class="btn propy-control button-big" (click)="onAcceptClick()">Accept Invitation</button>
-    <button class="btn propy-control button-big btn-white" (click)="onRejectClick()">Reject Invitation</button>
+<div class="row">
+    <div class="invite-buttons col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="button" class="btn propy-control button-big pull-right btn-accept"
+                    (click)="onAcceptClick()">Accept Invitation</button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-12">
+                <form [formGroup]="rejectForm" class="invite-form">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <input formControlName="reason" type="text" class="propy-control" id="reason" placeholder="Rejection Reason">
+                            <button type="button" class="btn propy-control button-big btn-reject" (click)="onRejectClick()">Reject Invitation</button>
+                        </div>
+                        <div *ngIf="reason.touched || rejectTouched" class="col-xs-12">
+                            <div class="propy-validation" *ngIf="reason.invalid">Please enter a reason for your rejection
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,11 +1,12 @@
 <div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
-    [ngClass]="{ 'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
+    [ngClass]="{ 'crypto-class' : bitcoinAvailable === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
     <div class="image-holder" (click)="goToProperty(property.id)">
         <div class="labels-container">
             <div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}
             </div>
             <div class="text-uppercase label verified-label" *ngIf="property.isTransactionToolEnabled">{{ 'landing.new-properties.buy-online' | translate }}
             </div>
+            <div *ngIf="bitcoinAvailable" class="text-uppercase label buy-crypto-label">buy with bitcoin</div>
         </div>
         <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
         />
@@ -15,6 +16,7 @@
             (click)="propertyHide($event)"></span>
     </div>
     <div class="property-info">
+        <span *ngIf="featuredCityName">{{featuredCityName}} | </span>
         <span [title]="property.address">{{property.address}}</span>
         <!-- &nbsp;/&nbsp;{{ cityName }} -->
     </div>

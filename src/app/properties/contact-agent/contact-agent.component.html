@@ -1,10 +1,12 @@
-<div class="col-xs-10 col-xs-offset-1 col-md-9 col-lg-7 contact-agent propy-form">
-	<h3>{{ 'property-details.contact-agent.contact-agent-title' | translate }}</h3>
-	<form [formGroup]="contactAgentForm" (ngSubmit)="onSubmit()">
-		<div class="form-check abc-radio abc-radio-info agent-radio" *ngFor="let agent of agents">
-			<input class="form-check-input" type="radio" formControlName="agentId" [id]="agent.id"
-				   [value]="agent.id">
-			<label class="form-check-label" [for]="agent.id">
+<div class="col-xs-10 col-xs-offset-1 col-md-9 col-lg-7 contact-agent propy-form"
+    [ngClass]="{'no-events': userInfo.isAnonymous}">
+    <h3>{{ 'property-details.contact-agent.contact-agent-title' | translate }}</h3>
+    <h5>{{ 'property-details.contact-agent.not-logged-in-message' | translate }}</h5>
+    <form [formGroup]="contactAgentForm" (ngSubmit)="onSubmit()">
+        <div class="form-check abc-radio abc-radio-info agent-radio" *ngFor="let agent of agents">
+            <input class="form-check-input" type="radio" formControlName="agentId" [id]="agent.id"
+                [value]="agent.id">
+            <label class="form-check-label" [for]="agent.id">
                 <span class="agent-wrapper">
                     <img class="agent-img" [src]="agent.avatar | imageEnvPrefix | imageSize : 40: 40: true" alt=""> 
                     <span class="name">{{agent.firstName}} {{agent.lastName}}</span>
@@ -18,59 +20,54 @@
                     
                 </span>
 			</label>
-		</div>
-		<div *ngIf="agentId.touched" class="propy-validation-errors-box">
-			<div class="propy-validation" *ngIf="agentId.invalid && agentId.errors['required']">{{
-				'common.validation-errors.required' | translate }}
-			</div>
-		</div>
-		<div class="form-group">
-			<input formControlName="name" type="text" class="form-control propy-control" id="name"
-				   placeholder="{{ 'property-details.contact-agent.name' | translate }}">
-		</div>
-		<div class="form-group">
-			<int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode"
-							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
-							  formControlName="phoneNumber" (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
-			<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
-					'common.validation-errors.required' | translate }}
-				</div>
-				<div class="propy-validation"
-					 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
-					{{ 'common.validation-errors.invalid-phone-number' | translate }}
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<input formControlName="email" type="email" class="form-control propy-control" id="email"
-				   placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
-			<div *ngIf="email.touched" class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{
-					'common.validation-errors.required' | translate }}
-				</div>
-				<div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{
-					'common.validation-errors.invalid-email' | translate }}
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
+        </div>
+        <div *ngIf="agentId.touched" class="propy-validation-errors-box">
+            <div class="propy-validation" *ngIf="agentId.invalid && agentId.errors['required']">{{ 'common.validation-errors.required' | translate }}
+            </div>
+        </div>
+        <div class="form-group">
+            <input formControlName="name" type="text" class="form-control propy-control" id="name"
+                (keydown.Tab)="activatePhoneDropDown()" placeholder="{{ 'property-details.contact-agent.name' | translate }}">
+            <div *ngIf="name.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="name.invalid && name.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode" [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
+                formControlName="phoneNumber" (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
+            <div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                </div>
+                <div class="propy-validation" *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
+                    {{ 'common.validation-errors.invalid-phone-number' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input formControlName="email" type="email" class="form-control propy-control" id="email"
+                placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
+            <div *ngIf="email.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                </div>
+                <div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{ 'common.validation-errors.invalid-email' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <textarea formControlName="message" class="form-control propy-control" id="message"
-					  placeholder="{{ 'property-details.contact-agent.message' | translate }}"
-					  rows="4"></textarea>
-			<div *ngIf="message.touched" class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="message.invalid && message.errors['required']">{{
-					'common.validation-errors.required' | translate }}
-				</div>
-			</div>
-		</div>
-		<div class="propy-validation" *ngIf="!userInfo.isAnonymous && !userInfo.user.isEmailVerified">{{
-			'property-details.verify-to-contact' | translate }}
-		</div>
-		<button class="btn btn-block propy-control button-big"
-				[disabled]="userInfo.isAnonymous || !userInfo.user.isEmailVerified || agentId.invalid || name.invalid || email.invalid || message.invalid"
-				(click)="emitContactAgentAnalyticsClickEvent()">
+                placeholder="{{ 'property-details.contact-agent.message' | translate }}"
+                rows="4"></textarea>
+            <div *ngIf="message.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="message.invalid && message.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="propy-validation" *ngIf="!userInfo.isAnonymous && !userInfo.user.isEmailVerified">{{ 'property-details.verify-to-contact' | translate }}
+        </div>
+        <button class="btn btn-block propy-control button-big" [disabled]="userInfo.isAnonymous || !userInfo.user.isEmailVerified || agentId.invalid || name.invalid || email.invalid || message.invalid"
+            (click)="emitContactAgentAnalyticsClickEvent()">
 			{{ 'property-details.contact-agent.contact-agent-title' | translate }}
 		</button>
-	</form>
+    </form>
 </div>

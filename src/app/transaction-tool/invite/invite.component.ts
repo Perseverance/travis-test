@@ -184,7 +184,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onInvite(email) {
 		this.notificationService.pushInfo({
-			title: `Inviting ${email}. Please wait. A normal blockchain transaction can go up to few minutes, so be patient.`,
+			title: `Inviting all praties. Please wait.`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000
@@ -229,14 +229,14 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 
 	// TODO change message
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
-	public async partyReject() {
+	public async partyReject(reason) {
 		this.notificationService.pushInfo({
 			title: `Rejecting Invitation`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		await this.deedsService.rejectInvite(this.deedId);
+		await this.deedsService.rejectInvite(this.deedId, reason);
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
@@ -244,6 +244,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
+		this.router.navigate(['transaction-tool', this.deedId]);
 	}
 
 	public showCancelDialog() {
@@ -263,7 +264,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			time: (new Date().getTime()),
 			timeout: 60000
 		});
-		// TODO: await this.deedsService.rejectInvite(this.deedId);
+		await this.deedsService.cancelInvite(this.deedId);
 		await this.setupDeedData(this.deedId);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
@@ -271,5 +272,6 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
+		this.router.navigate(['transaction-tool', this.deedId]);
 	}
 }
