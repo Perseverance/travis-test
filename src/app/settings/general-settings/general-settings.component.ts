@@ -68,7 +68,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			this.successMessage = translations['settings.general-settings.update-success'];
 			this.resendSuccess = translations['verification.resend-success'];
 		});
-		console.log(this.generalTabIsActive);
 	}
 
 	private setUserInfo(userInfo: any, cancel = false) {
