@@ -5,18 +5,19 @@ $reason-gray: #F4F4F4;
     hr {
         margin: 20px 0px;
     }
-    h4 {
-        display: inline-block;
-    }
-    .fa.fa-times-circle {
-        color: $red-main;
-        font-size: 36px;
-        top: 4px;
-        position: relative;
-    }
     .reason {
         background-color: $reason-gray;
         padding: 20px;
         @include border-radius(6px);
+        h4 {
+            display: inline-block;
+            margin-left: 15px;
+        }
+        .fa.fa-times-circle {
+            color: $red-main;
+            font-size: 36px;
+            top: 4px;
+            position: relative;
+        }
     }
 }
