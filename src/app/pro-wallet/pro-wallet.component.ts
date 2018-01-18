@@ -36,6 +36,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public showBackupWalletButton = false;
 	public jsonWallet: string;
 	public defaultPhoneCountryCode: string;
+	public userInfo: any;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
@@ -63,6 +64,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: async (userInfo: UserData) => {
 				if (userInfo.user) {
+					this.userInfo = userInfo.user;
 					this.phoneNumber.setValue(userInfo.user.phoneNumber);
 					if (!userInfo.user.phoneNumber) {
 						this.defaultPhoneCountryCode = 'us';
@@ -142,8 +144,9 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
+		const phoneNumber = this.handlePhoneNumber();
 		const result = await this.web3Service.createAccount(this.password.value);
-		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile));
+		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile), phoneNumber);
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();
 		this.jsonWallet = result.jsonFile;
@@ -189,5 +192,18 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 	public activatePhoneDropDown() {
 		this.childPhoneComponent.showDropDown();
+	}
+
+	public handlePhoneNumber(): string {
+		let phoneNumber;
+
+		if (!this.phoneNumber.value) {
+			return '';
+		}
+
+		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
+			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+
+		return phoneNumber;
 	}
 }
