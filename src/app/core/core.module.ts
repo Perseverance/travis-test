@@ -49,6 +49,8 @@ import { WalletSetGuard } from '../transaction-tool/workflow/wallet-set-guard.se
 import { VerificationService } from '../verification/verification.service';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { NotAuthenticatedGuard } from '../authentication/not-authenticated-guard.service';
+import { CryptoWidgetComponent } from './crypto-widget/crypto-widget.component';
+import { CurrencyDataService } from './crypto-widget/currency-data.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

@@ -1,23 +1,26 @@
-import { Web3Service } from './../web3-connection/web3-connection.service';
-import { Subscription } from 'rxjs/Subscription';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../shared/errors/errors.decoratable.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserData } from './../authentication/authentication.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProWalletService } from './pro-wallet.service';
-import { UserTransactionsHistoryResponse } from './pro-wallet-responses';
-import { AuthenticationService } from '../authentication/authentication.service';
-import { NotificationsService } from '../shared/notifications/notifications.service';
-import { DefaultAsyncAPIErrorHandling } from '../shared/errors/errors.decorators';
-import { ConfirmationService } from 'primeng/primeng';
-import { WalletAddressValidator } from './pro-wallet-address-validator';
+import {Web3Service} from './../web3-connection/web3-connection.service';
+import {Subscription} from 'rxjs/Subscription';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserData} from './../authentication/authentication.service';
+import {Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ProWalletService} from './pro-wallet.service';
+import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
+import {AuthenticationService} from '../authentication/authentication.service';
+import {NotificationsService} from '../shared/notifications/notifications.service';
+import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
+import {ConfirmationService} from 'primeng/primeng';
+import {WalletAddressValidator} from './pro-wallet-address-validator';
+import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-pro-wallet',
 	templateUrl: './pro-wallet.component.html',
-	styleUrls: ['./pro-wallet.component.scss']
+	styleUrls: ['./pro-wallet.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class ProWalletComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
@@ -32,23 +35,41 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	private userDataSubscription: Subscription;
 	public showBackupWalletButton = false;
 	public jsonWallet: string;
+	public defaultPhoneCountryCode: string;
+	public userInfo: any;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
-		private formBuilder: FormBuilder,
-		private authService: AuthenticationService,
-		private notificationsService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		private confirmationService: ConfirmationService,
-		private web3Service: Web3Service) {
+				private formBuilder: FormBuilder,
+				private authService: AuthenticationService,
+				private notificationsService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				private confirmationService: ConfirmationService,
+				private web3Service: Web3Service) {
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
-			proWalletPassword: [null, [Validators.required]]
+			passwords: this.formBuilder.group({
+				password: ['', [Validators.required]],
+				repeatPassword: ['', [Validators.required]]
+			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
+			phoneNumber: ['', Validators.compose([
+				Validators.required,
+				Validators.minLength(4),
+				Validators.maxLength(20)])
+			]
 		});
 		const self = this;
 		this.userDataSubscription = this.authService.subscribeToUserData({
 			next: async (userInfo: UserData) => {
+				if (userInfo.user) {
+					this.userInfo = userInfo.user;
+					this.phoneNumber.setValue(userInfo.user.phoneNumber);
+					if (!userInfo.user.phoneNumber) {
+						this.defaultPhoneCountryCode = 'us';
+					}
+				}
 				if (!userInfo.user || !userInfo.user.jsonFile) {
 					return;
 				}
@@ -84,7 +105,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		document.body.appendChild(downloader); // Needed for ff;
 
 		const data = JSON.stringify(this.jsonWallet);
-		const blob = new Blob([data], { type: 'text/json' });
+		const blob = new Blob([data], {type: 'text/json'});
 		const url = window.URL;
 		const fileUrl = url.createObjectURL(blob);
 
@@ -105,14 +126,27 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.authService.getCurrentUser();
 	}
 
-	public get proWalletPassword() {
-		return this.proWalletAddressForm.get('proWalletPassword');
+	public get passwords() {
+		return this.proWalletAddressForm.get('passwords');
+	}
+
+	public get password() {
+		return this.passwords.get('password');
+	}
+
+	public get repeatPassword() {
+		return this.passwords.get('repeatPassword');
+	}
+
+	public get phoneNumber() {
+		return this.proWalletAddressForm.get('phoneNumber');
 	}
 
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
-		const result = await this.web3Service.createAccount(this.proWalletPassword.value);
-		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile));
+		const phoneNumber = this.handlePhoneNumber();
+		const result = await this.web3Service.createAccount(this.password.value);
+		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile), phoneNumber);
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();
 		this.jsonWallet = result.jsonFile;
@@ -150,5 +184,26 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.refreshTransactionHistoryProcessing = true;
 		await this.getTransactionHistory();
 		this.refreshTransactionHistoryProcessing = false;
+	}
+
+	public updateControlAsTouched() {
+		this.phoneNumber.markAsTouched();
+	}
+
+	public activatePhoneDropDown() {
+		this.childPhoneComponent.showDropDown();
+	}
+
+	public handlePhoneNumber(): string {
+		let phoneNumber;
+
+		if (!this.phoneNumber.value) {
+			return '';
+		}
+
+		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
+			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+
+		return phoneNumber;
 	}
 }
