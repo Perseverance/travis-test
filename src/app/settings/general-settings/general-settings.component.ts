@@ -97,12 +97,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
 		const selectedCountryObject = this.childPhoneComponent.selectedCountry;
-		let phoneNumber;
-		if (this.phoneNumber.value) {
-			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
-		} else {
-			phoneNumber = '';
-		}
+		const phoneNumber = this.handlePhoneNumber();
 		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
@@ -140,5 +135,18 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	public activatePhoneDropDown() {
 		this.childPhoneComponent.showDropDown();
+	}
+
+	public handlePhoneNumber(): string {
+		let phoneNumber;
+
+		if (!this.phoneNumber.value) {
+			return '';
+		}
+
+		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
+			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+
+		return phoneNumber;
 	}
 }
