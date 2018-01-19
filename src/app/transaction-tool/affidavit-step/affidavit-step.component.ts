@@ -134,7 +134,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			this.notificationService.pushInfo({
-				title: `Retrieving signed document.`,
+				title: `Recording the document to the Blockchain. Please do not leave this page.`,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 60000

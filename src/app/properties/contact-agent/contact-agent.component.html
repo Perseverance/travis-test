@@ -1,5 +1,5 @@
 <div class="col-xs-10 col-xs-offset-1 col-md-9 col-lg-7 contact-agent propy-form"
-    [ngClass]="{'no-events': (userInfo.isAnonymous || !userInfo.user.isEmailVerified)}">
+    [ngClass]="{'no-events': (userInfo.isAnonymous || !userInfo.user || !userInfo.user.isEmailVerified)}">
     <h3>{{ 'property-details.contact-agent.contact-agent-title' | translate }}</h3>
     <h5 *ngIf="userInfo.isAnonymous">{{ 'property-details.contact-agent.not-logged-in-message' | translate }}</h5>
     <form [formGroup]="contactAgentForm" (ngSubmit)="onSubmit()">

@@ -1,8 +1,11 @@
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {ProWalletComponent} from '../../pro-wallet/pro-wallet.component';
+import {GeneralSettingsComponent} from '../general-settings/general-settings.component';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
@@ -34,12 +37,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
 	public isEmailVerified = true;
+	public globalCountryCode: string;
 
 	private paramsSubscription: Subscription;
+	@ViewChild(ProWalletComponent) childProWalletComponent: ProWalletComponent;
+	@ViewChild(GeneralSettingsComponent) childGeneralSettingsComponent: GeneralSettingsComponent;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private authService: AuthenticationService,
-		private route: ActivatedRoute,
-		private router: Router) {
+				private route: ActivatedRoute,
+				private router: Router) {
 	}
 
 	ngOnInit() {
@@ -90,6 +97,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			case TABS_INDEX.WALLET: {
 				queryParams['selectedTab'] = SETTINGS_TABS.WALLET;
+				this.childProWalletComponent.setPhone(this.globalCountryCode);
 				break;
 			}
 			case TABS_INDEX.PASSWORD: {
@@ -106,13 +114,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			default: {
 				queryParams['selectedTab'] = SETTINGS_TABS.GENERAL;
+				this.childGeneralSettingsComponent.setPhone(this.globalCountryCode);
 				break;
 			}
 		}
 
 		const currentPath = window.location.pathname;
-		this.router.navigate([currentPath], { queryParams: queryParams });
+		this.router.navigate([currentPath], {queryParams: queryParams});
 	}
 
-
+	public updateGlobalCountryCode(event) {
+		this.globalCountryCode = event;
+	}
 }
