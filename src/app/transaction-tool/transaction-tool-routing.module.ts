@@ -57,7 +57,7 @@ const transactionToolSteps: Routes = [
 				canActivate: [WorkflowGuard],
 			},
 			{
-				path: 'settlement-statement',
+				path: 'settlement-statements',
 				component: SettlementStatementComponent,
 				canActivate: [WorkflowGuard],
 			},

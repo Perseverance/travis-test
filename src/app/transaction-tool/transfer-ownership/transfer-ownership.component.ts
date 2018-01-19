@@ -32,6 +32,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
 	public userIsTitleCompany: boolean;
+	public userIsBuyer: boolean;
 	private addressSubscription: Subscription;
 	public deedId: string;
 	public hasDataLoaded = false;
@@ -129,5 +130,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	private async mapCurrentUserToRole(deedAddress) {
 		const deed = await this.deedsService.getDeedDetails(deedAddress);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
+
 	}
 }

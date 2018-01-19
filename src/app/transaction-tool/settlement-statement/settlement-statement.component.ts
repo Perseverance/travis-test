@@ -39,7 +39,7 @@ export class SettlementStatementComponent implements OnInit {
 	public deedAddress: string;
 	public hasBuyerAgreed: boolean;
 	public hasSellerAgreed: boolean;
-	public settlementTitle = 'Settlement statement';
+	public settlementTitle = 'Settlement statements';
 	public uploadSettlementBuyerSubtitle = 'Buyer Settlement Statement';
 	public uploadSettlementSellerSubtitle = 'Seller Settlement Statement';
 	public successMessage = 'Success!';
