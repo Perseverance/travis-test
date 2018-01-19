@@ -54,7 +54,7 @@
 			</div>
 			<br/>
 			<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
-					[disabled]="firstName.invalid || lastName.invalid || email.invalid">{{
+					[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">{{
 				'common.label.save-changes' | translate }}
 			</button>
 			<button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{
