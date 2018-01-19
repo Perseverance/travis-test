@@ -4,7 +4,8 @@
 		<p-tabPanel header="{{ 'settings.headers.general-settings' | translate }}"
 					[selected]="selectedTab === settingsTabs.GENERAL"
 					headerStyleClass="settings-panel-header">
-			<app-general-settings [generalTabIsActive]="selectedTab === settingsTabs.GENERAL"></app-general-settings>
+			<app-general-settings (onCountryCodeUpdated)="updateGlobalCountryCode($event)"
+								  [generalTabIsActive]="selectedTab === settingsTabs.GENERAL"></app-general-settings>
 		</p-tabPanel>
 		<p-tabPanel header="{{ 'settings.headers.my-listed-properties' | translate }}"
 					[selected]="selectedTab === settingsTabs.MY_LISTINGS"
@@ -14,7 +15,7 @@
 		<p-tabPanel header="{{ 'settings.headers.pro-wallet' | translate }}"
 					[selected]="selectedTab === settingsTabs.WALLET"
 					headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified'>
-			<app-pro-wallet></app-pro-wallet>
+			<app-pro-wallet (onCountryCodeUpdated)="updateGlobalCountryCode($event)"></app-pro-wallet>
 		</p-tabPanel>
 		<p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}"
 					[selected]="selectedTab === settingsTabs.MY_DEALS"

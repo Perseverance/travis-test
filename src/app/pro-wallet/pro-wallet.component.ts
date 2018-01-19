@@ -5,7 +5,10 @@ import {ErrorsService} from './../shared/errors/errors.service';
 import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserData} from './../authentication/authentication.service';
-import {Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+	Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, OnChanges, Output,
+	EventEmitter
+} from '@angular/core';
 import {ProWalletService} from './pro-wallet.service';
 import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
 import {AuthenticationService} from '../authentication/authentication.service';
@@ -37,6 +40,10 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public jsonWallet: string;
 	public defaultPhoneCountryCode: string;
 	public userInfo: any;
+	public updatedCountryCode: string;
+
+	@Output() onCountryCodeUpdated = new EventEmitter<string>();
+
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
@@ -204,6 +211,17 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
 			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 
+		this.onCountryCodeUpdated.emit(this.childPhoneComponent.selectedCountry.countryCode);
+
 		return phoneNumber;
+	}
+
+	public setPhone(countryCode: string) {
+		this.ngOnInit();
+		if (countryCode) {
+			console.log('' + this.childPhoneComponent.updateSelectedCountry);
+			// const event = new CustomEvent('', {});
+			// this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+		}
 	}
 }
