@@ -6,7 +6,7 @@ import {
 	SmartContractConnectionService,
 	Status
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionToolDocumentService } from './../transaction-tool-document.service';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -56,6 +56,7 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 
 
 	constructor(private route: ActivatedRoute,
+		private router: Router,
 		private documentService: TransactionToolDocumentService,
 		private smartContractService: SmartContractConnectionService,
 		private helloSignService: HelloSignService,
@@ -138,7 +139,7 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 		this.recordButtonEnabled = false;
 		try {
 			this.notificationService.pushInfo({
-				title: `Sending the document to the blockchain.`,
+				title: `Recording the document to the Blockchain. Please do not leave this page.`,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 60000
@@ -166,6 +167,7 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 				timeout: 10000
 			});
 			await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
+			this.router.navigate(['transaction-tool', this.deedId]);
 			this.notificationService.pushSuccess({
 				title: 'Successfully Sent',
 				message: '',
