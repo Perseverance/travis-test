@@ -11,16 +11,25 @@ $blue-widget: #42C3F6;
         top: 10%;
         right: 15px;
         max-height: 100%;
+        @media screen and (orientation: landscape) {
+            top:17%;
+        }
     }
     @media #{$sm} {
         top: 10%;
         right: 15px;
         max-height: 100%;
+        @media screen and (orientation: landscape) {
+            top:17%;
+        }
     }
     @media #{$md} {
         top: 10%;
         max-height: 100%;
         right: 15px;
+        @media screen and (orientation: landscape) {
+            top:17%;
+        }
     }
     .crypto-container {
         .widget {
