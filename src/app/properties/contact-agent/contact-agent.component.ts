@@ -109,12 +109,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onSubmit() {
-		let phoneNumber;
-		if (this.phoneNumber.value) {
-			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
-		} else {
-			phoneNumber = '';
-		}
+		const phoneNumber = this.handlePhoneNumber();
 		await this.propertiesService.requestInfo(
 			this.propertyId,
 			this.agentId.value,
@@ -141,4 +136,16 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		this.childPhoneComponent.showDropDown();
 	}
 
+	public handlePhoneNumber(): string {
+		let phoneNumber;
+
+		if (!this.phoneNumber.value) {
+			return '';
+		}
+
+		phoneNumber = this.phoneNumber.value === this.userInfo.user.phoneNumber ?
+			this.userInfo.user.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+
+		return phoneNumber;
+	}
 }
