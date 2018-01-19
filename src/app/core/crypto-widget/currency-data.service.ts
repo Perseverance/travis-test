@@ -7,7 +7,7 @@ export class CurrencyDataService {
 	constructor(private restService: RestClientService) { }
 
 	public async loadCurrencyData(url: string) {
-		const responce = await this.restService.consumeGetDataApi(url);
-		return responce.data[0];
+		const response = await this.restService.consumeGetDataApi(url);
+		return response.data[0];
 	}
 }

@@ -5,7 +5,7 @@ import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratab
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
@@ -26,8 +26,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public hasUserDataLoaded = false;
 
 	private userInfo: any;
+	public updatedCountryCode: string;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 	@Input() generalTabIsActive = false;
+	@Output() onCountryCodeUpdated = new EventEmitter<string>();
 
 	constructor(private authService: AuthenticationService,
 				private formBuilder: FormBuilder,
@@ -148,6 +150,17 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
 			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 
+		this.onCountryCodeUpdated.emit(this.childPhoneComponent.selectedCountry.countryCode);
+
 		return phoneNumber;
+	}
+
+	public setPhone(countryCode: string) {
+		if (countryCode) {
+			if (this.childPhoneComponent) {
+				const event = new CustomEvent('', {});
+				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+			}
+		}
 	}
 }

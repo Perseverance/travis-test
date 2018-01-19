@@ -1,7 +1,14 @@
 <div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
 <ng-template #dataLoaded>
     <div *ngIf="isTransferFinished;else notFinished">
-        <h5>The transfer of this property was completed succesfully!</h5>
+        <div *ngIf="userIsBuyer; else notBuyer">
+            <h5>Congratulations! The property transfer has been completed successfully.
+                The local registry will soon be sending you the Property Deed to
+                your physical address.</h5>
+        </div>
+        <ng-template #notBuyer>
+            <h5>The transfer of this property was completed succesfully!</h5>
+        </ng-template>
     </div>
     <ng-template #notFinished>
         <div *ngIf="userIsTitleCompany;else notTitleCompany">

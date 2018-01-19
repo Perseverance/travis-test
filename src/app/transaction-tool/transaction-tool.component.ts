@@ -92,7 +92,7 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Settlement Statement',
+				label: 'Settlement Statements',
 				command: (event: any) => {
 					this.activeIndex = 5;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
