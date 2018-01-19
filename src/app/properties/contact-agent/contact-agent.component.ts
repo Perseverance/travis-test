@@ -117,9 +117,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			this.email.value,
 			phoneNumber,
 			this.message.value);
-
-		this.contactAgentForm.reset();
-		this.phoneNumber.markAsUntouched();
+		this.message.reset();
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
