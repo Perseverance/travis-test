@@ -22,6 +22,7 @@ export class PropertyConversionService {
 		const penthouseKey = 'Penthouse';
 		const bungalawKey = 'Bungalow';
 		const studentRoomKey = 'Student room';
+		const commercialKey = 'Commercial';
 
 		switch (value) {
 			case PropertyTypeEnum.BrokenValue: {
@@ -71,6 +72,9 @@ export class PropertyConversionService {
 			}
 			case PropertyTypeEnum.StudentRoom: {
 				return `${studentRoomKey}`;
+			}
+			case PropertyTypeEnum.Commercial: {
+				return `${commercialKey}`;
 			}
 		}
 	}
@@ -91,6 +95,7 @@ export class PropertyConversionService {
 		const penthouseKey = 'penthouse';
 		const bungalawKey = 'bungalow';
 		const studentRoomKey = 'student-room';
+		const commercialKey = 'commercial';
 
 		switch (value) {
 			case PropertyTypeEnum.BrokenValue: {
@@ -140,6 +145,9 @@ export class PropertyConversionService {
 			}
 			case PropertyTypeEnum.StudentRoom: {
 				return `${studentRoomKey}`;
+			}
+			case PropertyTypeEnum.Commercial: {
+				return `${commercialKey}`;
 			}
 		}
 	}

@@ -14,5 +14,6 @@ export enum PropertyTypeEnum {
 	Maisonette = 12,
 	Penthouse = 13,
 	Bungalow = 14,
-	StudentRoom = 15
+	StudentRoom = 15,
+	Commercial = 20,
 }
