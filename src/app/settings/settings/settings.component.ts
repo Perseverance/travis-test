@@ -126,13 +126,4 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public updateGlobalCountryCode(event) {
 		this.globalCountryCode = event;
 	}
-
-	public setPhone(countryCode: string) {
-		this.ngOnInit();
-		if (countryCode) {
-			console.log('' + this.childPhoneComponent.updateSelectedCountry);
-			// const event = new CustomEvent('', {});
-			// this.childPhoneComponent.updateSelectedCountry(event, countryCode);
-		}
-	}
 }
