@@ -5,6 +5,7 @@ import {AuthenticationService, UserData} from './../../authentication/authentica
 import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {ProWalletComponent} from '../../pro-wallet/pro-wallet.component';
 import {GeneralSettingsComponent} from '../general-settings/general-settings.component';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
@@ -41,6 +42,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	private paramsSubscription: Subscription;
 	@ViewChild(ProWalletComponent) childProWalletComponent: ProWalletComponent;
 	@ViewChild(GeneralSettingsComponent) childGeneralSettingsComponent: GeneralSettingsComponent;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,
@@ -123,5 +125,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	public updateGlobalCountryCode(event) {
 		this.globalCountryCode = event;
+	}
+
+	public setPhone(countryCode: string) {
+		this.ngOnInit();
+		if (countryCode) {
+			console.log('' + this.childPhoneComponent.updateSelectedCountry);
+			// const event = new CustomEvent('', {});
+			// this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+		}
 	}
 }

@@ -158,9 +158,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public setPhone(countryCode: string) {
 		this.ngOnInit();
 		if (countryCode) {
-			console.log('' + this.childPhoneComponent.updateSelectedCountry);
-			// const event = new CustomEvent('', {});
-			// this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+			if (this.childPhoneComponent) {
+				const event = new CustomEvent('', {});
+				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+			}
 		}
 	}
 }

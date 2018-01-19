@@ -219,9 +219,10 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public setPhone(countryCode: string) {
 		this.ngOnInit();
 		if (countryCode) {
-			console.log('' + this.childPhoneComponent.updateSelectedCountry);
-			// const event = new CustomEvent('', {});
-			// this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+			const event = new CustomEvent('', {});
+			if (this.childPhoneComponent) {
+				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+			}
 		}
 	}
 }
