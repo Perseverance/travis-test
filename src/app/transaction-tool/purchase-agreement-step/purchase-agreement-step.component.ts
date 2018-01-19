@@ -170,7 +170,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		this.recordButtonEnabled = false;
 		try {
 			this.notificationService.pushInfo({
-				title: `Sending the document to the blockchain.`,
+				title: `Recording the document to the Blockchain. Please do not leave this page.`,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 60000

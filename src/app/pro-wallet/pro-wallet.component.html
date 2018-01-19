@@ -116,7 +116,8 @@
 								<input readonly type="text" class="form-control" value="{{transaction.txId}}"
 									   #txIdInput>
 								<span class="input-group-btn">
-									<button class="btn btn-default" class="btn btn-default copy-btn" type="button"
+									<button *ngIf="transaction.status == 1" class="btn btn-default"
+											class="btn btn-default copy-btn" type="button"
 											[ngxClipboard]="txIdInput">{{ 'common.label.copy' | translate }}</button>
 								</span>
 							</div>

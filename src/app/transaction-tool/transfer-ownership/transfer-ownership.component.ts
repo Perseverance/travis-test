@@ -9,7 +9,7 @@ import {
 	Status
 } from './../../smart-contract-connection/smart-contract-connection.service';
 import { TransactionToolDocumentService } from './../transaction-tool-document.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit } from '@angular/core';
@@ -32,6 +32,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
 	public userIsTitleCompany: boolean;
+	public userIsBuyer: boolean;
 	private addressSubscription: Subscription;
 	public deedId: string;
 	public hasDataLoaded = false;
@@ -42,6 +43,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	public recordButtonEnabled = true;
 
 	constructor(private route: ActivatedRoute,
+		private router: Router,
 		private documentService: TransactionToolDocumentService,
 		private smartContractService: SmartContractConnectionService,
 		private deedsService: DeedsService,
@@ -114,6 +116,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 				timeout: 10000
 			});
 			await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
+			this.router.navigate(['transaction-tool', this.deedId]);
 			this.notificationService.pushSuccess({
 				title: 'Successfully Sent',
 				message: '',
@@ -129,5 +132,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	private async mapCurrentUserToRole(deedAddress) {
 		const deed = await this.deedsService.getDeedDetails(deedAddress);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
+
 	}
 }
