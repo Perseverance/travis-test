@@ -40,7 +40,9 @@
 		<div class="form-group">
 			<int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
-							  formControlName="phoneNumber" (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
+							  formControlName="phoneNumber"
+							  (phoneInputChangedEvent)="handlePhoneInputChanged()"
+							  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
 			<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
 				<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
 					'common.validation-errors.required' | translate }}

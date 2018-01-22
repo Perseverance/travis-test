@@ -27,6 +27,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	private userDataSubscription: Subscription;
 	public defaultPhoneCountryCode: string;
 	public userInfo: any;
+	public phoneMaxLengthWithPlusSign = 21;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
@@ -46,7 +47,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(4),
-				Validators.maxLength(20)])
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			],
 			email: ['', [Validators.required, Validators.email]],
 			message: ['', [Validators.required]],
@@ -110,6 +111,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onSubmit() {
 		const phoneNumber = this.handlePhoneNumber();
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign));
 		await this.propertiesService.requestInfo(
 			this.propertyId,
 			this.agentId.value,
@@ -145,5 +147,9 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			this.userInfo.user.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 
 		return phoneNumber;
+	}
+
+	public handlePhoneInputChanged() {
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1)));
 	}
 }
