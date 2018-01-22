@@ -67,7 +67,9 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 					this.defaultPhoneCountryCode = 'us';
 				}
 				if (this.selectedCountryOnEditProfile) {
-					this.childPhoneComponent.selectedCountry = this.selectedCountryOnEditProfile;
+					if (this.childPhoneComponent) {
+						this.childPhoneComponent.selectedCountry = this.selectedCountryOnEditProfile;
+					}
 				}
 				this.hasUserDataLoaded = true;
 			}
