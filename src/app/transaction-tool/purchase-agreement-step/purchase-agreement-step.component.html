@@ -39,16 +39,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="!hasBuyerSigned && !hasSellerSigned && !hasBuyerBrokerSigned && !hasSellerBrokerSigned; then notAllSigned; else allSigned">
+
+                </div>
+                <ng-template #notAllSigned>
                     <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated && !userIsTitleCompany">
-                        <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitle "
+                        <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitle"
                             [previewLink]="previewLink "></app-document-preview>
                     </div>
                     <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated && userIsTitleCompany">
                         <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitleEscrow"
                             [previewLink]="previewLink "></app-document-preview>
                     </div>
-                </div>
+                </ng-template>
+                <ng-template #allSigned>
+                    <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated && !userIsTitleCompany">
+                        <app-document-preview [previewTitle]="purchaseTitle" [previewLink]="previewLink "></app-document-preview>
+                    </div>
+                </ng-template>
             </div>
         </div>
         <div class="row" *ngIf="!reuploadingDocumentActivated">
