@@ -30,6 +30,9 @@ $blue-widget: #42C3F6;
         @media screen and (orientation: landscape) {
             top:17%;
         }
+        @media (min-width:768px) and (max-width: 768px) {
+            top: 33%;
+        }
     }
     .crypto-container {
         .widget {
@@ -47,6 +50,11 @@ $blue-widget: #42C3F6;
                 &:hover {
                     background-color: $blue-light;
                     border-color: $blue-light;
+                }
+                @media (hover: none),
+                (hover: on-demand) {
+                    background-color: $blue-widget;
+                    border: 2px solid $blue-widget;
                 }
             }
         }
