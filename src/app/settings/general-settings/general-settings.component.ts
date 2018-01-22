@@ -27,6 +27,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	private resendSuccess: string;
 	public verificationTouched = false;
 	public hasUserDataLoaded = false;
+	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
 
 	private userInfo: any;
@@ -48,7 +49,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			lastName: ['', [Validators.required]],
 			email: [{value: '', disabled: true}, []],
 			phoneNumber: ['', Validators.compose([
-				Validators.minLength(4),
+				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			]
 		});
@@ -105,7 +106,9 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public async editUser() {
 		const selectedCountryObject = this.childPhoneComponent.selectedCountry;
 		const phoneNumber = this.handlePhoneNumber();
-		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign));
+		this.phoneNumber.setValidators(Validators.compose([
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
@@ -170,6 +173,8 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	public handlePhoneInputChanged() {
-		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1)));
+		this.phoneNumber.setValidators(Validators.compose([
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 	}
 }
