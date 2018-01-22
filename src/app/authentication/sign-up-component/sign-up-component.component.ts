@@ -38,6 +38,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private referralId: string;
 	private emailSentSuccess: string;
 	public defaultPhoneCountryCode: string;
+	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
 
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
@@ -80,7 +81,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
-				Validators.minLength(4),
+				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			],
 			iAmAnAgent: [false],
@@ -211,7 +212,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		} else {
 			phoneNumber = '';
 		}
-		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign));
+		this.phoneNumber.setValidators(Validators.compose([
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		const result = await this.authService
 			.performSignUp(
 				this.email.value,
@@ -288,6 +291,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	public handlePhoneInputChanged() {
-		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1)));
+		this.phoneNumber.setValidators(Validators.compose([
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 	}
 }

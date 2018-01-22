@@ -5,7 +5,7 @@
                 <span class="version-number">Version: 1.0</span>
             </div>
         </div>
-        <div class="row transaction-progress">
+        <div class="row transaction-progress" *ngIf="areStepsActive">
             <div class="col-xs-9 col-xs-offset-3">
                 <div class="row">
                     <div class="col-xs-2 text-right nav-button" [ngClass]="{'hide-nav-button' : activeIndex == 0}">
