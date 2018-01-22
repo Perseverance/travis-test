@@ -38,6 +38,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private referralId: string;
 	private emailSentSuccess: string;
 	public defaultPhoneCountryCode: string;
+	public phoneMaxLengthWithPlusSign = 21;
+
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	protected agencyAutoCompleteDataService: RemoteData;
@@ -79,7 +81,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			lastName: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
 				Validators.minLength(4),
-				Validators.maxLength(20)])
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			],
 			iAmAnAgent: [false],
 			agentFields: this.formBuilder.group({
@@ -209,6 +211,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		} else {
 			phoneNumber = '';
 		}
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign));
 		const result = await this.authService
 			.performSignUp(
 				this.email.value,
@@ -282,5 +285,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	public activatePhoneDropDown() {
 		this.childPhoneComponent.showDropDown();
+	}
+
+	public handlePhoneInputChanged() {
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1)));
 	}
 }

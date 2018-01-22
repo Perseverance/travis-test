@@ -5,7 +5,10 @@ import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratab
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+	Component, EventEmitter, Input, OnInit, Output, ViewChild,
+	ViewEncapsulation
+} from '@angular/core';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
@@ -24,6 +27,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	private resendSuccess: string;
 	public verificationTouched = false;
 	public hasUserDataLoaded = false;
+	public phoneMaxLengthWithPlusSign = 21;
 
 	private userInfo: any;
 	public updatedCountryCode: string;
@@ -45,7 +49,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			email: [{value: '', disabled: true}, []],
 			phoneNumber: ['', Validators.compose([
 				Validators.minLength(4),
-				Validators.maxLength(20)])
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			]
 		});
 		this.authService.subscribeToUserData({
@@ -72,7 +76,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		});
 	}
 
-	private setUserInfo(userInfo: any, cancel = false) {
+	public setUserInfo(userInfo: any, cancel = false) {
 		this.firstName.setValue(userInfo.firstName);
 		this.lastName.setValue(userInfo.lastName);
 		if (userInfo.phoneNumber || cancel) {
@@ -101,6 +105,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public async editUser() {
 		const selectedCountryObject = this.childPhoneComponent.selectedCountry;
 		const phoneNumber = this.handlePhoneNumber();
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign));
 		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
@@ -162,5 +167,9 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
 			}
 		}
+	}
+
+	public handlePhoneInputChanged() {
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1)));
 	}
 }

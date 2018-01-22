@@ -41,6 +41,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public defaultPhoneCountryCode: string;
 	public userInfo: any;
 	public updatedCountryCode: string;
+	public phoneMaxLengthWithPlusSign = 21;
+
 
 	@Output() onCountryCodeUpdated = new EventEmitter<string>();
 
@@ -64,7 +66,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(4),
-				Validators.maxLength(20)])
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			]
 		});
 		const self = this;
@@ -152,6 +154,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
 		const phoneNumber = this.handlePhoneNumber();
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign));
 		const result = await this.web3Service.createAccount(this.password.value);
 		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile), phoneNumber);
 		this.authService.getCurrentUser();
@@ -223,5 +226,9 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
 			}
 		}
+	}
+
+	public handlePhoneInputChanged() {
+		this.phoneNumber.setValidators(Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1)));
 	}
 }
