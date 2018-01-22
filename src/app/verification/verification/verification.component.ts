@@ -59,8 +59,8 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 	private setupQueryParamsWatcher() {
 		return this.route.queryParams
 			.subscribe(async params => {
-				if (params.code) {
-					await this.sendActivationCode(params.code);
+				if (params.code && params.email) {
+					await this.sendActivationCode(params.code, params.email);
 				} else {
 					this.errorsService.pushError({
 						errorMessage: 'Malformed Link. Please try again the link in your email or resend your activation email below',
@@ -73,9 +73,10 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 	}
 
 	@DefaultAsyncAPIErrorHandling('verification.verification-error')
-	private async sendActivationCode(code: string) {
+	private async sendActivationCode(code: string, email: string) {
+		console.log(code, email);
 		try {
-			await this.verificationService.sendVerificationCode(code);
+			await this.verificationService.sendVerificationCode(code, email);
 			this.notificationsService.pushSuccess({
 				title: this.verificationSuccess,
 				message: '',
