@@ -43,7 +43,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public updatedCountryCode: string;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
-	public selectedCountryOnGenerate: any;
+	public selectedCountryOnGenerateWallet: any;
 
 
 	@Output() onCountryCodeUpdated = new EventEmitter<string>();
@@ -81,8 +81,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 						this.defaultPhoneCountryCode = 'us';
 					}
 				}
-				if (this.selectedCountryOnGenerate) {
-					this.childPhoneComponent.selectedCountry = this.selectedCountryOnGenerate;
+				if (this.selectedCountryOnGenerateWallet) {
+					this.childPhoneComponent.selectedCountry = this.selectedCountryOnGenerateWallet;
 				}
 				if (!userInfo.user || !userInfo.user.jsonFile) {
 					return;
@@ -159,7 +159,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
 		const phoneNumber = this.handlePhoneNumber();
-		this.selectedCountryOnGenerate = this.childPhoneComponent.selectedCountry;
+		this.selectedCountryOnGenerateWallet = this.childPhoneComponent.selectedCountry;
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.required,
 			Validators.minLength(this.phoneMinLength),
