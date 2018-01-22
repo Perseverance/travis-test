@@ -28,7 +28,10 @@ $blue-widget: #42C3F6;
         max-height: 100%;
         right: 15px;
         @media screen and (orientation: landscape) {
-            top:17%;
+            top: 17%;
+        }
+        @media (min-width: 768px) and (max-width: 784px) {
+            top: 24%;
         }
     }
     .crypto-container {
