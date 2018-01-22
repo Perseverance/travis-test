@@ -10,9 +10,10 @@ export class VerificationService {
 		public apiEndpoints: APIEndpointsService,
 		public authService: AuthenticationService) { }
 
-	public async sendVerificationCode(code: string) {
+	public async sendVerificationCode(code: string, email: string) {
 		const params = {
-			code
+			code,
+			email
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.VERIFY_ACCOUNT, params);
 		await this.authService.getCurrentUser(true);
