@@ -33,9 +33,9 @@ $blue-widget: #42C3F6;
     }
     @media (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
-        top: 12%;
+        top: 7%;
         @media screen and (orientation: landscape) {
-            top:15%;
+            top:10%;
         }
     }
     .crypto-container {

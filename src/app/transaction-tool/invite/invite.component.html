@@ -13,8 +13,7 @@
                 <div *ngIf="arePartiesInvited; then partiesInvited; else partiesNotInvited"></div>
                 <ng-template #partiesInvited>
                     <hr>
-                    <div *ngIf="userRole === 4">
-                        <!-- SellerBroker -->
+                    <div *ngIf="userRole === userRoleEnum.SellerBroker && !allPartiesAccepted">
                         <h4>Waiting for all parties to accept</h4>
                         <hr>
                     </div>

@@ -55,6 +55,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public isWaitingForReservation = false;
 	public deed: any;
 	public deedStatus = Status;
+	public allPartiesAccepted: boolean;
 
 	private userInfo: any;
 	public hasDataLoaded = false;
@@ -216,6 +217,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 		});
 		const result = await this.deedsService.acceptInvite(this.deedId);
 		if (result.allPartiesAccepted) {
+			this.allPartiesAccepted = true;
 			this.router.navigate(['transaction-tool', this.deedId]);
 		}
 		await this.setupDeedData(this.deedId);
