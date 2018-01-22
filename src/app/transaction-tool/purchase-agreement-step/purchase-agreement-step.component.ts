@@ -35,6 +35,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public userIsSeller: boolean;
 	public userIsBuyerBroker: boolean;
 	public userIsSellerBroker: boolean;
+	public userIsTitleCompany: boolean;
 	public selectedDocument: any;
 	public signingDocument: any;
 	public previewLink: string;
@@ -49,6 +50,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public purchaseTitle = 'Purchase Agreement';
 	public uploadPurchaseSubtitle = 'Please upload purchase agreement document:';
 	public previewPurchaseSubtitle = 'Please review and sign purchase agreement.';
+	public previewPurchaseSubtitleEscrow = 'Waiting for all parties to review and sign purchase agreement.';
 	public successMessage = 'Success!';
 	public hasDataLoaded = false;
 	private deedAddress: string;
@@ -244,5 +246,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
 		this.userIsSellerBroker = (deed.currentUserRole === UserRoleEnum.SellerBroker);
 		this.userIsBuyerBroker = (deed.currentUserRole === UserRoleEnum.BuyerBroker);
+		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+
 	}
 }
