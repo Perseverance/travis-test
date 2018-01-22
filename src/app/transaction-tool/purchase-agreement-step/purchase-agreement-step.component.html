@@ -40,8 +40,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated">
+                    <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated && !userIsTitleCompany">
                         <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitle "
+                            [previewLink]="previewLink "></app-document-preview>
+                    </div>
+                    <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated && userIsTitleCompany">
+                        <app-document-preview [previewTitle]="purchaseTitle" [previewSubtitle]="previewPurchaseSubtitleEscrow"
                             [previewLink]="previewLink "></app-document-preview>
                     </div>
                 </div>
