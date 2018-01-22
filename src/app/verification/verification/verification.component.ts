@@ -74,7 +74,6 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('verification.verification-error')
 	private async sendActivationCode(code: string, email: string) {
-		console.log(code, email);
 		try {
 			await this.verificationService.sendVerificationCode(code, email);
 			this.notificationsService.pushSuccess({
