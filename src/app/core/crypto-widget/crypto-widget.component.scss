@@ -30,9 +30,10 @@ $blue-widget: #42C3F6;
         @media screen and (orientation: landscape) {
             top:17%;
         }
-        @media (min-width:768px) and (max-width: 768px) {
-            top: 33%;
-        }
+    }
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+        top: 12%
     }
     .crypto-container {
         .widget {
