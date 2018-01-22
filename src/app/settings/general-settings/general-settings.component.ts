@@ -29,6 +29,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public hasUserDataLoaded = false;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
+	public selectedCountryOnEditProfile: any;
 
 	private userInfo: any;
 	public updatedCountryCode: string;
@@ -64,6 +65,11 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				this.setUserInfo(this.userInfo);
 				if (!userInfo.user.phoneNumber) {
 					this.defaultPhoneCountryCode = 'us';
+				}
+				if (this.selectedCountryOnEditProfile) {
+					if (this.childPhoneComponent) {
+						this.childPhoneComponent.selectedCountry = this.selectedCountryOnEditProfile;
+					}
 				}
 				this.hasUserDataLoaded = true;
 			}
@@ -104,7 +110,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
-		const selectedCountryObject = this.childPhoneComponent.selectedCountry;
+		this.selectedCountryOnEditProfile = this.childPhoneComponent.selectedCountry;
 		const phoneNumber = this.handlePhoneNumber();
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.minLength(this.phoneMinLength),
@@ -116,7 +122,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
-		this.childPhoneComponent.selectedCountry = selectedCountryObject;
 	}
 
 	public cancelEdit() {
