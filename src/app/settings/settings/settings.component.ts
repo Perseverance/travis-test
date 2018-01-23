@@ -16,13 +16,13 @@ export const SETTINGS_TABS = {
 	REFFERAL_LINK: 'REFFERAL_LINK'
 };
 
+// ToDo: Add My deals tab as 3, pass - 4, ref - 5
 export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
 	WALLET: 2,
-	MY_DEALS: 3,
-	PASSWORD: 4,
-	REFFERAL_LINK: 5
+	PASSWORD: 3,
+	REFFERAL_LINK: 4
 };
 
 @Component({
@@ -104,10 +104,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				queryParams['selectedTab'] = SETTINGS_TABS.PASSWORD;
 				break;
 			}
-			case TABS_INDEX.MY_DEALS: {
-				queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
-				break;
-			}
+			// ToDo: Check TABS_INDEX enum - top of this file, then comment out
+			// case TABS_INDEX.MY_DEALS: {
+			// 	queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
+			// 	break;
+			// }
 			case TABS_INDEX.REFFERAL_LINK: {
 				queryParams['selectedTab'] = SETTINGS_TABS.REFFERAL_LINK;
 				break;
