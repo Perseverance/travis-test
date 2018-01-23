@@ -65,7 +65,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				this.userInfo = userInfo.user;
 				this.isEmailVerified = this.userInfo.isEmailVerified;
 				this.setUserInfo(this.userInfo);
-				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
+				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.errors && this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
 				}
 				if (this.selectedCountryOnEditProfile) {
