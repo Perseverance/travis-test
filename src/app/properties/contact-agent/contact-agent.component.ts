@@ -47,6 +47,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			name: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
+				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			],
@@ -64,7 +65,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 				}
 				this.name.setValue(`${userInfo.user.firstName} ${userInfo.user.lastName}`);
 				this.phoneNumber.setValue(userInfo.user.phoneNumber);
-				if (!userInfo.user.phoneNumber) {
+				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
 				}
 				this.email.setValue(userInfo.user.email);
@@ -114,6 +115,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		const phoneNumber = this.handlePhoneNumber();
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.required,
+			PhoneNumberValidators.phoneNumberValidator,
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		await this.propertiesService.requestInfo(
@@ -157,6 +159,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
 			this.phoneNumber.setValidators(Validators.compose([
 				Validators.required,
+				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 		}

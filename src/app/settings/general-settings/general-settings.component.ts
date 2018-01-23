@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
+import {PhoneNumberValidators} from '../../shared/validators/phone-number.validators';
 
 @Component({
 	selector: 'app-general-settings',
@@ -50,6 +51,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			lastName: ['', [Validators.required]],
 			email: [{value: '', disabled: true}, []],
 			phoneNumber: ['', Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			]
@@ -63,7 +65,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				this.userInfo = userInfo.user;
 				this.isEmailVerified = this.userInfo.isEmailVerified;
 				this.setUserInfo(this.userInfo);
-				if (!userInfo.user.phoneNumber) {
+				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
 				}
 				if (this.selectedCountryOnEditProfile) {
@@ -113,6 +115,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.selectedCountryOnEditProfile = this.childPhoneComponent.selectedCountry;
 		const phoneNumber = this.handlePhoneNumber();
 		this.phoneNumber.setValidators(Validators.compose([
+			PhoneNumberValidators.phoneNumberValidator,
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		await this.authService.updateUser(this.firstName.value, this.lastName.value, phoneNumber);
@@ -180,6 +183,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public handlePhoneInputChanged() {
 		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
 			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 

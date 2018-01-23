@@ -18,6 +18,7 @@ import {ConfirmationService} from 'primeng/primeng';
 import {WalletAddressValidator} from './pro-wallet-address-validator';
 import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
 import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
+import {PhoneNumberValidators} from '../shared/validators/phone-number.validators';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -67,6 +68,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
+				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
 			]
@@ -77,7 +79,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 				if (userInfo.user) {
 					this.userInfo = userInfo.user;
 					this.phoneNumber.setValue(userInfo.user.phoneNumber);
-					if (!userInfo.user.phoneNumber) {
+					if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 						this.defaultPhoneCountryCode = 'us';
 					}
 				}
@@ -162,6 +164,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.selectedCountryOnGenerateWallet = this.childPhoneComponent.selectedCountry;
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.required,
+			PhoneNumberValidators.phoneNumberValidator,
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		const result = await this.web3Service.createAccount(this.password.value);
@@ -241,6 +244,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
 			this.phoneNumber.setValidators(Validators.compose([
 				Validators.required,
+				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 		}

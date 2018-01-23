@@ -52,6 +52,10 @@
 					{{ 'common.validation-errors.invalid-phone-number' | translate }}
 				</div>
 			</div>
+			<div class="propy-validation-errors-box invalid-existing-number"
+				 *ngIf="phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">
+				{{ 'common.validation-errors.invalid-existing-phone-number' | translate }}
+			</div>
 		</div>
 		<div class="form-group">
 			<input formControlName="email" type="email" class="form-control propy-control" id="email"
