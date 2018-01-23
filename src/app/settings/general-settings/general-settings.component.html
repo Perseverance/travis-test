@@ -53,6 +53,10 @@
 					{{ 'common.validation-errors.invalid-phone-number' | translate }}
 				</div>
 			</div>
+			<div class="propy-validation-errors-box invalid-existing-number"
+				 *ngIf="phoneNumber.value && phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">
+				{{ 'common.validation-errors.invalid-existing-phone-number' | translate }}
+			</div>
 			<br/>
 			<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
 					[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">{{

@@ -61,6 +61,10 @@
 						{{ 'common.validation-errors.invalid-phone-number' | translate }}
 					</div>
 				</div>
+				<div class="propy-validation-errors-box invalid-existing-number"
+					 *ngIf="phoneNumber.value && phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">
+					{{ 'common.validation-errors.invalid-existing-phone-number' | translate }}
+				</div>
 			</div>
 			<div class="col-xs-12 my-pro-wallet-notes" *ngIf="!phoneNumber.value || phoneNumber.invalid">
 				<p>{{ 'settings.my-pro-wallet.pro-wallet-notes' | translate }}</p>
