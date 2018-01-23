@@ -1,16 +1,16 @@
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { SETTINGS_TABS } from './../../settings/settings/settings.component';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { DefaultLanguage } from './../i18nSetup';
-import { environment } from './../../../environments/environment';
-import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
-import { Component, OnInit, HostListener, Inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from '../../shared/localStorage.service';
-import { Router, ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
-import { MomentService } from '../../shared/moment.service';
-import { PusherService } from '../../shared/pusher.service';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {SETTINGS_TABS} from './../../settings/settings/settings.component';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {DefaultLanguage} from './../i18nSetup';
+import {environment} from './../../../environments/environment';
+import {RedirectableComponent} from './../../shared/redirectable/redirectable.component';
+import {Component, OnInit, HostListener, Inject} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {LocalStorageService} from '../../shared/localStorage.service';
+import {Router, ActivatedRoute, NavigationEnd, UrlSegment} from '@angular/router';
+import {DOCUMENT} from '@angular/platform-browser';
+import {MomentService} from '../../shared/moment.service';
+import {PusherService} from '../../shared/pusher.service';
 
 
 @Component({
@@ -38,15 +38,15 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	private notLoggedInError: string;
 
 	constructor(router: Router,
-		private route: ActivatedRoute,
-		public authService: AuthenticationService,
-		public translate: TranslateService,
-		private storage: LocalStorageService,
-		private errorsService: ErrorsService,
-		private translateService: TranslateService,
-		@Inject(DOCUMENT) private document: Document,
-		private momentService: MomentService,
-		public pusherService: PusherService) {
+				private route: ActivatedRoute,
+				public authService: AuthenticationService,
+				public translate: TranslateService,
+				private storage: LocalStorageService,
+				private errorsService: ErrorsService,
+				private translateService: TranslateService,
+				@Inject(DOCUMENT) private document: Document,
+				private momentService: MomentService,
+				public pusherService: PusherService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -124,7 +124,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		this.router.navigate(['/']);
 		const userId = this.userInfo.id;
 		this.authService.performLogout();
-		this.pusherService.unsubscribePusherChannel(userId);
+		// ToDo: Comment out when start to use pusher
+		// this.pusherService.unsubscribePusherChannel(userId);
 	}
 
 	public goListProperty(event: Event) {
@@ -150,6 +151,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	}
 
 	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
-		this.router.navigate(['map', { latitude, longitude, locationName }]);
+		this.router.navigate(['map', {latitude, longitude, locationName}]);
 	}
 }
