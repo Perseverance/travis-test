@@ -2,13 +2,15 @@
     <!-- <div class="col-xs-12 text-center thank-you">
         <p>{{ 'landing.thank-you' | translate }}</p>
     </div> -->
-    <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 text-center">
+    <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-10 col-lg-offset-1 text-center">
         <h3>{{ 'landing.find-properties.heading' | translate }}.</h3>
-        <h6>{{ 'landing.find-properties.sub-heading' | translate }}.</h6>
+        <h6>{{ 'landing.find-properties.sub-heading' | translate }}</h6>
+        <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 text-center">
         <div class="col-md-12 col-lg-10 col-lg-offset-1">
             <app-location-search inputTheme="big" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}"
                 (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
         </div>
+    </div>
     </div>
 </div>
 <div class="row">
