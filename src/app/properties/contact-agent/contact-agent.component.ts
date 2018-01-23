@@ -154,9 +154,11 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	}
 
 	public handlePhoneInputChanged() {
-		this.phoneNumber.setValidators(Validators.compose([
-			Validators.required,
-			Validators.minLength(this.phoneMinLength),
-			Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				Validators.required,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
 	}
 }

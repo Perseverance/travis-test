@@ -178,8 +178,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	public handlePhoneInputChanged() {
-		this.phoneNumber.setValidators(Validators.compose([
-			Validators.minLength(this.phoneMinLength),
-			Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
 	}
 }
