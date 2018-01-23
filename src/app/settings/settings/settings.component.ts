@@ -1,22 +1,28 @@
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {Web3Service} from '../../web3/web3.service';
 import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {ProWalletComponent} from '../../pro-wallet/pro-wallet.component';
+import {GeneralSettingsComponent} from '../general-settings/general-settings.component';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
 	MY_LISTINGS: 'MY_LISTINGS',
 	WALLET: 'WALLET',
-	PASSWORD: 'PASSWORD'
+	PASSWORD: 'PASSWORD',
+	MY_DEALS: 'MY_DEALS',
+	REFFERAL_LINK: 'REFFERAL_LINK'
 };
 
 export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
 	WALLET: 2,
-	PASSWORD: 3
+	MY_DEALS: 3,
+	PASSWORD: 4,
+	REFFERAL_LINK: 5
 };
 
 @Component({
@@ -30,11 +36,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public shouldShowPassword: any;
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
+	public isEmailVerified = true;
+	public globalCountryCode: string;
 
 	private paramsSubscription: Subscription;
+	@ViewChild(ProWalletComponent) childProWalletComponent: ProWalletComponent;
+	@ViewChild(GeneralSettingsComponent) childGeneralSettingsComponent: GeneralSettingsComponent;
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private authService: AuthenticationService,
-				// ,private web3Service: Web3Service
 				private route: ActivatedRoute,
 				private router: Router) {
 	}
@@ -44,7 +54,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			next: (userInfo: UserData) => {
 				if (userInfo.user === null) {
 					this.shouldShowPassword = true;
-				} else if (userInfo.user.externalLoginProviders === null) {
+					return;
+				}
+				this.isEmailVerified = userInfo.user.isEmailVerified;
+				if (userInfo.user.externalLoginProviders === null) {
 					this.shouldShowPassword = true;
 				} else {
 					this.shouldShowPassword = userInfo.user.externalLoginProviders.length === 0;
@@ -52,7 +65,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 		});
 		this.paramsSubscription = this.setupParamsWatcher();
-		this.listenForWeb3Loaded();
 	}
 
 	ngOnDestroy(): void {
@@ -63,6 +75,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		return this.route.queryParams
 			.subscribe(params => {
 				if (!params.selectedTab || !(params.selectedTab in this.settingsTabs)) {
+					return;
+				}
+
+				if (!this.isEmailVerified) {
+					this.setQueryParamForSelectedTab(TABS_INDEX.GENERAL);
 					return;
 				}
 
@@ -80,14 +97,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			case TABS_INDEX.WALLET: {
 				queryParams['selectedTab'] = SETTINGS_TABS.WALLET;
+				this.childProWalletComponent.setPhone(this.globalCountryCode);
 				break;
 			}
 			case TABS_INDEX.PASSWORD: {
 				queryParams['selectedTab'] = SETTINGS_TABS.PASSWORD;
 				break;
 			}
+			case TABS_INDEX.MY_DEALS: {
+				queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
+				break;
+			}
+			case TABS_INDEX.REFFERAL_LINK: {
+				queryParams['selectedTab'] = SETTINGS_TABS.REFFERAL_LINK;
+				break;
+			}
 			default: {
 				queryParams['selectedTab'] = SETTINGS_TABS.GENERAL;
+				this.childGeneralSettingsComponent.setPhone(this.globalCountryCode);
 				break;
 			}
 		}
@@ -96,24 +123,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.router.navigate([currentPath], {queryParams: queryParams});
 	}
 
-	private listenForWeb3Loaded() {
-		// this.web3Service.web3InstanceLoaded({
-		// 	next: (web3Loaded: boolean) => {
-		// 		this.getMetamaskAccounts();
-		// 	}
-		// });
+	public updateGlobalCountryCode(event) {
+		this.globalCountryCode = event;
 	}
-
-	// private getMetamaskAccounts() {
-	// 	this.web3Service.getMetmaskAccounts().subscribe({
-	// 		error: (err) => {
-	// 			console.error(err);
-	// 		},
-	// 		next: (accs) => {
-	// 			console.log(accs);
-	// 		},
-	// 		complete: () => { }
-	// 	});
-	// }
-
 }

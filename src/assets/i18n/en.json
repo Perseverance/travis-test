@@ -21,7 +21,9 @@
             "balance": "balance",
             "set": "Set",
             "share": "Share to Facebook",
-            "about": "About"
+            "about": "About",
+            "record-to-blockchain": "Record to Blockchain",
+            "copy": "Copy"
         },
         "placeholder": {
             "yourEmail": "Your Email",
@@ -35,7 +37,7 @@
             "agencyPassword": "Agency Password",
             "location": "Location of Operation",
             "search": "Search",
-            "phoneNumberFormat": "e.g. +1-212-9876543"
+            "phoneNumberFormat": "e.g. 9876543"
         },
         "social": {
             "connect-with": "connect with",
@@ -75,7 +77,8 @@
                 "no": "No"
             }
         },
-        "no-new-notifications": "No new notifications"
+        "no-new-notifications": "No new notifications",
+        "only-registered-error": "Only registered users can perform this action. Please sign up using the buttons in the header"
     },
     "enums": {
         "property-types": {
@@ -93,7 +96,8 @@
             "maisonette": "Maisonette",
             "penthouse": "Penthouse",
             "bungalow": "Bungalow",
-            "student-room": "Student room"
+            "student-room": "Student room",
+            "commercial": "Commercial"
         },
         "transaction-status": {
             "pending": "Pending",
@@ -170,7 +174,7 @@
         "edit-button": "Edit",
         "error-listing-property": "Listing of property failed",
         "not-authenticated": {
-            "warning-message": "Oops, can't do that yet.",
+            "warning-message": "Oops, can't do that yet",
             "login-or-signup": "To list your property, just sign up or login through the header above."
         },
         "upload-image": {
@@ -178,17 +182,20 @@
         },
         "choose": "Choose",
         "accept-toc": "I accept",
-        "address-required": "Please enter a valid address"
+        "address-required": "Please enter a valid address",
+        "verification-error": "Your account is not activated.",
+        "verification-error-message": "Please activate your account in order to list property"
     },
     "landing": {
         "location-search": "Enter a city, address or ZIP code",
         "explore-cities": "Explore the cities",
+        "feature-properties": "Featured properties",
         "real-estates": " properties",
         "from": "from",
         "thank-you": "Thank you for using propy beta!",
         "find-properties": {
-            "heading": "Find the best investment properties",
-            "sub-heading": "Make it easy to build wealth through real estate investments"
+            "heading": "Buy and sell unique homes all over the world in bitcoin",
+            "sub-heading": "Property Transactions Secured Through Blockchain"
         },
         "how-propy-works": {
             "heading": "How Propy Works",
@@ -223,7 +230,8 @@
             "in": "in",
             "new-label": "NEW",
             "verified": "VERIFIED",
-            "bedrooms": "Bedrooms"
+            "bedrooms": "Bedrooms",
+            "buy-online": "Buy with Bitcoin Now"
         },
         "proposal-ios": {
             "header": "Introducing Propy mobile app for iOS",
@@ -242,6 +250,8 @@
         "reserve-property": "Reserve",
         "reserved-property": "Reserved",
         "reserved-by-you": "Reserved by you",
+        "no-wallet-set": "",
+        "no-wallet-set-message": "In order to reserve a property, you need to have a wallet generated. Please generate one in the PRO wallet section.",
         "overview-labels": {
             "property-type": "Property Type",
             "area": "Property Area",
@@ -265,8 +275,12 @@
             "name": "Your name",
             "message": "Your message",
             "contact-success": "Your request was sent succesfully!",
-            "contact-error": "Could not contact this seller"
-        }
+            "contact-error": "Could not contact this seller",
+            "not-logged-in-message": "In order to contact the seller you need to be signed in. Please sign in or sign up using the buttons in the header."
+        },
+        "verification-error": "Your account is not activated.",
+        "verification-error-message": "Please activate your account in order to reserve this property",
+        "verify-to-contact": "Please activate your account in order to contact this seller."
     },
     "filters": {
         "price": "Price",
@@ -291,12 +305,15 @@
     },
     "settings": {
         "title": "Account settings",
+        "not-verified-subtitle": "Please activate your account in order to access more features",
         "headers": {
             "general-settings": "General settings",
             "email-notifications-settings": "Email notifications",
             "password-settings": "Password",
             "my-listed-properties": "My Listings",
-            "pro-wallet": "My PRO Wallet"
+            "pro-wallet": "My PRO Wallet",
+            "my-deals": "My Deals",
+            "refferal-link": "Referral Link"
         },
         "general-settings": {
             "update-success": "Your profile was updated succesfully!",
@@ -318,16 +335,25 @@
             "mark-as-sold": "Mark as Sold",
             "confirmation-heading": "Confirmation",
             "confirmation-message": "Are you sure that you want to mark property as sold?",
+            "confirmation-message-unlist": "Are you sure that you want to unlist this property",
             "growl-heading": "Confirmed",
             "growl-message": "The property is marked as sold",
-            "no-listed-properties": "No properties listed!"
+            "growl-message-unlist": "The property is unlisted",
+            "no-listed-properties": "No properties listed!",
+            "mark-as-unlisted": "Unlist"
         },
+        "my-deals": {},
         "set-pro-address": {
             "your-ethereum-address-placeholder": "Your Ethereum Address",
             "succesfully-set-address": "Address successfully set",
             "could-not-set-address": "Could not set your Ethereum address"
         },
         "my-pro-wallet": {
+            "pro-wallet-heading": "Create New Wallet",
+            "pro-wallet-text-info": "This password encrypts your private key. This does not act as a seed to generate your keys. You will need this password + your private key to unlock your wallet.",
+            "pro-wallet-password": "Enter a password",
+            "pro-wallet-download-text": "Do not lose it! Do not share it! Make a backup!",
+            "pro-wallet-notes": "You must enter your phone number before you can create a PRO wallet",
             "transaction-heading": "Transaction History",
             "no-transactions": "No Transactions",
             "transaction-number": "TX#",
@@ -342,7 +368,21 @@
             "successfully-redeemed": "Your PRO tokens were successfully redeemed",
             "redeemed-error-title": "Could not redeem your PRO tokens",
             "redeemed-error-message": "We encountered a problem while redeeming your PRO tokens",
+            "download-your-wallet": "Download your wallet file",
+            "wallet-password": "Your Wallet Password",
+            "generate-wallet": "Generate New Wallet",
             "wallet-address-description": "Once you add your wallet address you can redeem all your PRO tokens to it. If you do not have any wallet yet, you can set it from input form above."
+        },
+        "refferal-program": {
+            "refferal-head": "Referral Program",
+            "refferal-paragraph": "You can invite a friend and get a bonus PRO Token each, when they create an account at Propy.",
+            "refferal-show": "Show Link",
+            "refferal-hide": "Hide Link",
+            "refferal-link": "Link",
+            "refferal-button": "Copy Referral Link",
+            "download-your-wallet": "Download your wallet file",
+            "wallet-password": "Your Wallet Password",
+            "generate-wallet": "Generate wallet"
         }
     },
     "about": {
@@ -360,5 +400,13 @@
         "reserve-property": "Reserve this property",
         "disclaimer": "To be able to reserve the property and purchase it online you will need to add credit card.",
         "deposit-5000": "Deposit $5000"
+    },
+    "verification": {
+        "resend-button": "Resend Verification Email",
+        "activation-email-sent": "We have sent an activation email to your inbox. Please click the link inside to activate your account.",
+        "successfull-verification": "Account successfully activated!",
+        "verification-error": "Could not verify your account. Please try again or resend yourself a verification email.",
+        "resend-success": "Successfully re-sent the verification email",
+        "resend-error": "Could not re-send verification email. Are you sure you used the correct email?"
     }
 }

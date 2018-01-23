@@ -27,4 +27,14 @@ export class ProWalletService {
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CONVERT_STASHED_TOKENS, {});
 		return result;
 	}
+
+	public async setWallet(publicKey: string, jsonFile: string, userPhone: string) {
+		const params = {
+			publicKey,
+			jsonFile,
+			userPhone
+		};
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SET_WALLET, params);
+		return result.data.data;
+	}
 }

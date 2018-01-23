@@ -1,0 +1,17 @@
+<div class="row upload-file-holder">
+	<h4 class="text-left">{{ uploadTitle }}</h4>
+	<h5 class="text-left">{{ uploadSubtitle }}</h5>
+	<p-fileUpload id="imageUpload" name="propertyImages" url="./upload.php"
+				  auto="false" showCancelButton="false"
+				  customUpload="true" accept=".pdf" previewWidth="160"
+				  chooseLabel="Choose File"
+				  (onSelect)="selectFile($event)"
+				  (onRemove)="removeFile()"
+				  (uploadHandler)="uploadDocument()">
+	</p-fileUpload>
+	<div class="drop-message">
+		<div class="icon-holder" [inlineSVG]="'/assets/images/doc-icon.svg'"></div>
+		<p>Drop file here or browse to upload</p>
+	</div>
+	<p class="acceptable-types-message">Acceptable ﬁle type: pdf</p>
+</div>

@@ -1,3 +1,4 @@
+import { SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ReserveService } from './../reserve.service';
@@ -11,6 +12,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from 'ngx-stripe';
 import { ErrorsService } from '../../shared/errors/errors.service';
+import { PropertiesService } from '../../properties/properties.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-purchase',
@@ -44,7 +48,10 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 		private notificationService: NotificationsService,
 		translateService: TranslateService,
 		errorsService: ErrorsService,
-		private reserveService: ReserveService) {
+		private reserveService: ReserveService,
+		private deedsService: DeedsService,
+		private propertiesService: PropertiesService,
+		private smartcontractConnectionService: SmartContractConnectionService) {
 		super(errorsService, translateService);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -96,6 +103,7 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 			}
 			self.propertyId = propertyId;
 		});
+
 	}
 
 	ngOnDestroy() {
@@ -106,13 +114,14 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 		return this.stripeForm.get('name');
 	}
 
-	public reserveProperty() {
+	public async reserveProperty() {
 		this.notificationService.pushInfo({
 			title: 'Sending data...',
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 15000
 		});
+		const property = await this.propertiesService.getProperty(this.propertyId, CurrencyTypeEnum.ETH); // TODO: Get price in ETH
 		const name = this.name.value;
 		this.stripeService
 			.createToken(this.card.getCard(), { name })

@@ -4,9 +4,11 @@ echo Handling Propy frontend deployment.
 :: 1. Install npm packages
 IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   pushd "%DEPLOYMENT_SOURCE%"
+  call node --version
   call npm install npm@latest -g
+  call npm set registry https://registry.npmjs.org/
+  call npm cache verify
   call npm install --no-optional
-  call npm cache clean --force
   call npm rebuild node-sass
   
   IF NOT DEFINED IsProdEnvironment (

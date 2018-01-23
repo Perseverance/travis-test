@@ -1,10 +1,14 @@
+import {Web3Service} from './../web3-connection/web3-connection.service';
 import {Subscription} from 'rxjs/Subscription';
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorsService} from './../shared/errors/errors.service';
 import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserData} from './../authentication/authentication.service';
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {
+	Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, OnChanges, Output,
+	EventEmitter
+} from '@angular/core';
 import {ProWalletService} from './pro-wallet.service';
 import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
 import {AuthenticationService} from '../authentication/authentication.service';
@@ -12,11 +16,14 @@ import {NotificationsService} from '../shared/notifications/notifications.servic
 import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
 import {ConfirmationService} from 'primeng/primeng';
 import {WalletAddressValidator} from './pro-wallet-address-validator';
+import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-pro-wallet',
 	templateUrl: './pro-wallet.component.html',
-	styleUrls: ['./pro-wallet.component.scss']
+	styleUrls: ['./pro-wallet.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class ProWalletComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
@@ -29,7 +36,19 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public confirmationLabels: object;
 	public stashedTokensBalance: number;
 	private userDataSubscription: Subscription;
-	public shouldShowWalletAddressDesc = true;
+	public showBackupWalletButton = false;
+	public jsonWallet: string;
+	public defaultPhoneCountryCode: string;
+	public userInfo: any;
+	public updatedCountryCode: string;
+	public phoneMinLength = 4;
+	public phoneMaxLengthWithPlusSign = 21;
+	public selectedCountryOnGenerateWallet: any;
+
+
+	@Output() onCountryCodeUpdated = new EventEmitter<string>();
+
+	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
 				private formBuilder: FormBuilder,
@@ -37,20 +56,39 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 				private notificationsService: NotificationsService,
 				errorsService: ErrorsService,
 				translateService: TranslateService,
-				private confirmationService: ConfirmationService) {
+				private confirmationService: ConfirmationService,
+				private web3Service: Web3Service) {
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
-			proWalletAddress: [null, [Validators.required, WalletAddressValidator.walletAddressValidator]],
+			passwords: this.formBuilder.group({
+				password: ['', [Validators.required]],
+				repeatPassword: ['', [Validators.required]]
+			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
+			phoneNumber: ['', Validators.compose([
+				Validators.required,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)])
+			]
 		});
-
+		const self = this;
 		this.userDataSubscription = this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (!userInfo.user || !userInfo.user.walletId) {
+			next: async (userInfo: UserData) => {
+				if (userInfo.user) {
+					this.userInfo = userInfo.user;
+					this.phoneNumber.setValue(userInfo.user.phoneNumber);
+					if (!userInfo.user.phoneNumber) {
+						this.defaultPhoneCountryCode = 'us';
+					}
+				}
+				if (this.selectedCountryOnGenerateWallet) {
+					this.childPhoneComponent.selectedCountry = this.selectedCountryOnGenerateWallet;
+				}
+				if (!userInfo.user || !userInfo.user.jsonFile) {
 					return;
 				}
-				this.proWalletAddress.setValue(userInfo.user.walletId);
-				this.shouldShowWalletAddressDesc = false;
+				this.jsonWallet = JSON.parse(userInfo.user.jsonFile);
+				this.showBackupWalletButton = true;
 			}
 		});
 	}
@@ -73,6 +111,24 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		});
 	}
 
+	private downloadJSONFile() {
+		if (!this.jsonWallet) {
+			throw new Error('No wallet to backup');
+		}
+		const downloader = document.createElement('a');
+		document.body.appendChild(downloader); // Needed for ff;
+
+		const data = JSON.stringify(this.jsonWallet);
+		const blob = new Blob([data], {type: 'text/json'});
+		const url = window.URL;
+		const fileUrl = url.createObjectURL(blob);
+
+		downloader.setAttribute('href', fileUrl);
+		downloader.setAttribute('download', 'pro-wallet-backup.json');
+		downloader.click();
+
+	}
+
 	ngOnDestroy(): void {
 		this.userDataSubscription.unsubscribe();
 	}
@@ -84,16 +140,36 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.authService.getCurrentUser();
 	}
 
-	public get proWalletAddress() {
-		return this.proWalletAddressForm.get('proWalletAddress');
+	public get passwords() {
+		return this.proWalletAddressForm.get('passwords');
+	}
+
+	public get password() {
+		return this.passwords.get('password');
+	}
+
+	public get repeatPassword() {
+		return this.passwords.get('repeatPassword');
+	}
+
+	public get phoneNumber() {
+		return this.proWalletAddressForm.get('phoneNumber');
 	}
 
 	@DefaultAsyncAPIErrorHandling('settings.set-pro-address.could-not-set-address')
 	public async onSubmit() {
-		await this.proWalletService.updateAddress(this.proWalletAddress.value);
+		const phoneNumber = this.handlePhoneNumber();
+		this.selectedCountryOnGenerateWallet = this.childPhoneComponent.selectedCountry;
+		this.phoneNumber.setValidators(Validators.compose([
+			Validators.required,
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+		const result = await this.web3Service.createAccount(this.password.value);
+		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile), phoneNumber);
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();
-		this.shouldShowWalletAddressDesc = false;
+		this.jsonWallet = result.jsonFile;
+		this.showBackupWalletButton = true;
 		this.notificationsService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -127,5 +203,44 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.refreshTransactionHistoryProcessing = true;
 		await this.getTransactionHistory();
 		this.refreshTransactionHistoryProcessing = false;
+	}
+
+	public updateControlAsTouched() {
+		this.phoneNumber.markAsTouched();
+	}
+
+	public activatePhoneDropDown() {
+		this.childPhoneComponent.showDropDown();
+	}
+
+	public handlePhoneNumber(): string {
+		let phoneNumber;
+
+		if (!this.phoneNumber.value) {
+			return '';
+		}
+
+		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
+			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+
+		this.onCountryCodeUpdated.emit(this.childPhoneComponent.selectedCountry.countryCode);
+
+		return phoneNumber;
+	}
+
+	public setPhone(countryCode: string) {
+		if (countryCode) {
+			if (this.childPhoneComponent) {
+				const event = new CustomEvent('', {});
+				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
+			}
+		}
+	}
+
+	public handlePhoneInputChanged() {
+		this.phoneNumber.setValidators(Validators.compose([
+			Validators.required,
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 	}
 }

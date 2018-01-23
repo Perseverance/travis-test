@@ -1,0 +1,145 @@
+<div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+<ng-template #dataLoaded>
+    <div *ngIf="userIsBuyer || userIsBuyerBroker || userIsTitleCompany">
+        <div *ngIf="previewBuyerLink; then buyerHasPreviewLink; else buyerNoPreviewLink">
+        </div>
+    </div>
+    <div *ngIf="userIsSeller || userIsSellerBroker || userIsTitleCompany">
+        <div *ngIf="previewSellerLink; then sellerHasPreviewLink; else sellerNoPreviewLink">
+        </div>
+    </div>
+
+    <ng-template #buyerHasPreviewLink>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row" *ngIf="userIsBuyerBroker && !hasBuyerAgreed">
+                    <div class="col-xs-12 text-center">
+                        <i>Waiting for statement acknowledgement</i>
+                    </div>
+                </div>
+                <div class="row" *ngIf="userIsTitleCompany">
+                    <div class="col-xs-12 text-center" *ngIf="!hasBuyerAgreed || !hasSellerAgreed">
+                        <i>Waiting for statement acknowledgement</i>
+                    </div>
+                    <div class="col-xs-12 reupload-holder" *ngIf="deed.status < deedStatus.settlementStatement">
+                        <div class="row reupload-button-holder">
+                            <div class="col-xs-12">
+                                <button type="button" *ngIf="!reuploadingBuyerDocumentActivated" class="btn propy-control button-big pull-right"
+                                    (click)="reuploadingBuyerDocumentActivated = true">Reupload
+								</button>
+                                <button type="button" *ngIf="reuploadingBuyerDocumentActivated" class="btn propy-control cancel-reuploading button-big btn-white pull-right"
+                                    (click)="reuploadingBuyerDocumentActivated = false">Cancel reuploading
+								</button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="reuploadingBuyerDocumentActivated">
+                            <div class="col-xs-12">
+                                <app-upload-document [uploadTitle]="settlementTitle" [uploadSubtitle]="uploadSettlementBuyerSubtitle"
+                                    (onUploadDocumentApplied)="uploadBuyerDocument($event)"></app-upload-document>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-center" *ngIf="!reuploadingBuyerDocumentActivated">
+                        <app-document-preview [previewTitle]="settlementTitle" [previewSubtitle]="uploadSettlementBuyerSubtitle"
+                            [previewLink]="previewBuyerLink"></app-document-preview>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!reuploadingBuyerDocumentActivated">
+            <div class="col-xs-12 text-center">
+                <app-agree-and-continue [hasBuyerAgreed]="hasBuyerAgreed" [hasSellerAgreed]="hasSellerAgreed"
+                    [showAgreeButton]="shouldShowAgreedButton()" [documentType]="deedDocumentTypeEnum.BuyerSettlementStatement"
+                    (onAgreeDocument)="agreeBuyerDocument()"></app-agree-and-continue>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #buyerNoPreviewLink>
+        <div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
+        </div>
+
+        <ng-template #isTitleCompany>
+            <div class="col-xs-12 text-center">
+                <app-upload-document [uploadTitle]="settlementTitle" [uploadSubtitle]="uploadSettlementBuyerSubtitle"
+                    (onUploadDocumentApplied)="uploadBuyerDocument($event)"></app-upload-document>
+            </div>
+        </ng-template>
+
+        <ng-template #isNotTitleCompany>
+            <div class="col-xs-12 text-center">
+                <h5>Waiting for title company user to upload settlement statements</h5>
+            </div>
+        </ng-template>
+
+    </ng-template>
+
+    <ng-template #sellerHasPreviewLink>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row" *ngIf="userIsSellerBroker && !hasSellerAgreed">
+                    <div class="col-xs-12 text-center">
+                        <i>Waiting for statement acknowledgement</i>
+                    </div>
+                </div>
+                <div class="row" *ngIf="userIsTitleCompany">
+                    <div class="col-xs-12 reupload-holder" *ngIf="deed.status < deedStatus.settlementStatement">
+                        <div class="row reupload-button-holder">
+                            <div class="col-xs-12">
+                                <button type="button" *ngIf="!reuploadingSellerDocumentActivated" class="btn propy-control button-big pull-right"
+                                    (click)="reuploadingSellerDocumentActivated = true">Reupload
+								</button>
+                                <button type="button" *ngIf="reuploadingSellerDocumentActivated" class="btn propy-control cancel-reuploading button-big btn-white pull-right"
+                                    (click)="reuploadingSellerDocumentActivated = false">Cancel reuploading
+								</button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="reuploadingSellerDocumentActivated">
+                            <div class="col-xs-12">
+                                <app-upload-document [uploadTitle]="settlementTitle" [uploadSubtitle]="uploadSettlementSellerSubtitle"
+                                    (onUploadDocumentApplied)="uploadSellerDocument($event)"></app-upload-document>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-center" *ngIf="!reuploadingSellerDocumentActivated">
+                        <app-document-preview [previewTitle]="settlementTitle" [previewSubtitle]="uploadSettlementSellerSubtitle"
+                            [previewLink]="previewSellerLink"></app-document-preview>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!reuploadingSellerDocumentActivated">
+            <div class="col-xs-12 text-center">
+                <app-agree-and-continue [hasBuyerAgreed]="hasBuyerAgreed" [hasSellerAgreed]="hasSellerAgreed"
+                    [showAgreeButton]="shouldShowAgreedButton()" [documentType]="deedDocumentTypeEnum.SellerSettlementStatement"
+                    (onAgreeDocument)="agreeSellerDocument()"></app-agree-and-continue>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #sellerNoPreviewLink>
+        <div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
+        </div>
+
+        <ng-template #isTitleCompany>
+            <div class="col-xs-12 text-center">
+                <app-upload-document [uploadTitle]="settlementTitle" [uploadSubtitle]="uploadSettlementSellerSubtitle"
+                    (onUploadDocumentApplied)="uploadSellerDocument($event)"></app-upload-document>
+            </div>
+        </ng-template>
+
+        <ng-template #isNotTitleCompany>
+            <div class="col-xs-12 text-center">
+                <h5>Waiting for title company user to upload settlement statements</h5>
+            </div>
+        </ng-template>
+
+    </ng-template>
+</ng-template>
+<ng-template #dataNotLoaded>
+    <h4>Loading...</h4>
+</ng-template>

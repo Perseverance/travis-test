@@ -15,6 +15,7 @@ import { GoogleMapsMarkersService } from '../../shared/google-maps-markers.servi
 import { BigNumberFormatPipe } from '../../shared/pipes/big-number-format.pipe';
 import { CurrencySymbolPipe } from '../../shared/pipes/currency-symbol.pipe';
 import { log } from 'util';
+import { Base64Service } from '../../shared/base64.service';
 
 export enum LIST_PROPERTY_MODES {
 	NEW = 'new',
@@ -72,7 +73,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		private googleMarkersService: GoogleMapsMarkersService,
 		private bigNumberPipe: BigNumberFormatPipe,
 		private currencySymbolPipe: CurrencySymbolPipe,
-		private propertiesService: PropertiesService) {
+		private propertiesService: PropertiesService,
+		private base64Service: Base64Service) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
@@ -199,7 +201,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			propertyImages: [[]],
 			propertyImagesValidation: [[]]
 		});
-
 	}
 
 	private waitForViewLoadAndSetLocation() {
@@ -320,7 +321,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			const imageName = img.name;
 
 			try {
-				const base64 = await this.convertToBase64(img);
+				const base64 = await this.base64Service.convertFileToBase64(img);
 				const currentImageObj: PropertyImage = {
 					name: imageName,
 					file: base64
@@ -337,36 +338,6 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		}
 
 		this.propertyImages.setValue(preparedImages);
-	}
-
-	public async convertToBase64(img): Promise<string> {
-		const self = this;
-		const base64 = await (new Promise<string>((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onloadend = function () {
-				const base64dataWithHeaders = reader.result;
-
-				// The reader normally adds something like this before the base64 - 'data:image/jpeg;base64,'
-				// it needs to be removed
-				const base64dataWithoutHeaders = self.removeBase64Headers(base64dataWithHeaders);
-				resolve(base64dataWithoutHeaders);
-			};
-
-			reader.readAsDataURL(img);
-		}));
-		return base64;
-	}
-
-	private removeBase64Headers(base64dataWithHeaders: string) {
-		const base64Headers = 'base64,';
-		const headerIndex = base64dataWithHeaders.indexOf(base64Headers);
-		if (headerIndex === -1) {
-			// Headers were not found, probably good to go
-			return base64dataWithHeaders;
-		}
-
-		const base64DataStartsAt = headerIndex + base64Headers.length;
-		return base64dataWithHeaders.substring(base64DataStartsAt);
 	}
 
 	@DefaultAsyncAPIErrorHandling('list-property.error-listing-property')
@@ -615,5 +586,15 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	public removeExistingImage(url, index) {
 		this.property.imageUrls.splice(index, 1);
+	}
+
+	public get hideShowExistingPhotos(): boolean {
+		if (!this.property) {
+			return true;
+		}
+		if (this.property.imageUrls && this.property.imageUrls.length > 0) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -1,0 +1,23 @@
+<div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+<ng-template #dataLoaded>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="property step">
+                <h3>Property Details</h3>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="deedId" class="rejectedDeal">
+        <app-property-item-view [deedId]="deedId"></app-property-item-view>
+        <hr>
+        <div class="reason">
+            <i class="fa fa-times-circle"></i>
+            <h4>The <span class="rejector-role">{{rejecterRole}}</span> has rejected
+                the invitation to this deal with reason:</h4>
+            <p>&#8220;{{deed.rejectionReason}}&#8221;</p>
+        </div>
+    </div>
+</ng-template>
+<ng-template #dataNotLoaded>
+    <h4>Loading...</h4>
+</ng-template>

@@ -1,3 +1,5 @@
+import { MockedFeaturedPropertiesService } from './mocked-featured-properties.service';
+import { CurrencyTypeEnum } from './../shared/enums/currency-type.enum';
 import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { PropertiesFilter } from './properties.service';
 import { environment } from './../../environments/environment';
@@ -10,7 +12,7 @@ import {
 	GetFavouriteLocationResponse,
 	CreatePropertyRequest,
 	CreatePropertyResponse,
-	PropertyImage, GetNewPropertiesResponse, PropertyPreviewResponse, HidePropertyResponse, HidePropertyRequest
+	PropertyImage, GetNewPropertiesResponse, PropertyPreviewResponse, HidePropertyResponse, HidePropertyRequest, GetFeaturePropertiesResponse
 } from './properties-responses';
 import { LocalStorageService } from '../shared/localStorage.service';
 
@@ -42,14 +44,22 @@ export class PropertiesService {
 	constructor(private restService: RestClientService,
 		private apiEndpoint: APIEndpointsService,
 		private localStorageService: LocalStorageService,
-		private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
+		private mockedFavouriteLocationsService: MockedFavouriteLocationsService,
+		private mockedFeaturedPropertiesService: MockedFeaturedPropertiesService) {
 	}
 
-	public async getProperty(propertyId: string): Promise<any> {
+	public async getProperty(propertyId: string, currency?: CurrencyTypeEnum): Promise<any> {
 		const params = {
 			id: propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+
+		let result;
+		if (currency) {
+			result = await this.restService.getWithAccessTokenAndCurrency(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params }, currency);
+		} else {
+			result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
+		}
+
 		return result.data.data;
 	}
 
@@ -151,6 +161,11 @@ export class PropertiesService {
 		return result.data;
 	}
 
+	public async getMockedFeaturedLocations(): Promise<GetFeaturePropertiesResponse[]> {
+		const result = await this.mockedFeaturedPropertiesService.getMockedFeaturedLocations();
+		return result.data;
+	}
+
 	public async getNewProperties(): Promise<GetNewPropertiesResponse[]> {
 		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.NEW_PROPERTIES);
 		return result.data.data;
@@ -167,6 +182,15 @@ export class PropertiesService {
 		};
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_SOLD, {}, { params: queryParams });
+		return true;
+	}
+
+	public async markPropertyAsUnlisted(propertyId: string): Promise<boolean> {
+		const queryParams = {
+			propertyid: propertyId
+		};
+		const result = await this.restService.postWithAccessToken(
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_UNLISTED, {}, { params: queryParams });
 		return true;
 	}
 
@@ -228,6 +252,15 @@ export class PropertiesService {
 			propertyId
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, { params });
+		return result.data.data;
+	}
+
+	public async getDeedPartiesAddresses(propertyId: string, agentId: string): Promise<any> {
+		const params = {
+			propertyId,
+			agentId
+		};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.DEAL_PARTIES, { params });
 		return result.data.data;
 	}
 }

@@ -1,17 +1,15 @@
-<div class="row featured-properties-holder">
-  <!-- <h3 class="text-center">{{ 'landing.newsletter.newsletter-header' | translate }}</h3> -->
-  <h3 class="text-center">New offer in Bitcoin:</h3>  
-      <div class="row col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-        <div class="location-holder" (click)="packerHouseClicked()">
-          <div class="listing-details" >              
-              <div class="info-holder">
-                  <div class="real-estates">                      
-                      <span>Packer house, US</span>
-                  </div>
-              </div>
-              <div class="right-arrow-holder">
-              </div>
-          </div>
-      </div>
-      </div>  
+<div class="row featured-locations">
+	<h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
+	<div class="featured-holder">
+		<ngx-carousel [inputs]="carouselTile">
+			<ngx-tile NgxCarouselItem *ngFor="let property of showedLocations">
+				<app-property-preview [property]="property" [featuredCityName]="property.cityName"
+									  [imageWidth]="350" [imageHeight]="215" [showArrow]="true"
+									  [bitcoinAvailable]="property.bitcoinAvailable">
+				</app-property-preview>
+			</ngx-tile>
+			<button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+			<button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+		</ngx-carousel>
+	</div>
 </div>

@@ -1,8 +1,9 @@
-import {SessionStorageService} from './session-storage.service';
-import {LocalStorageService} from './localStorage.service';
-import {environment} from './../../environments/environment';
-import {Injectable} from '@angular/core';
+import { SessionStorageService } from './session-storage.service';
+import { LocalStorageService } from './localStorage.service';
+import { environment } from './../../environments/environment';
+import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { CurrencyTypeEnum } from './enums/currency-type.enum';
 
 @Injectable()
 export class RestClientService {
@@ -152,6 +153,17 @@ export class RestClientService {
 		return axios.get(url, configWithoutToken);
 	}
 
+	public download(link: string) {
+		return axios.get(link);
+	}
+
+	/**
+	 * get makes a get request to a custom API endpoint from web
+	 */
+	public consumeGetDataApi(url) {
+		return axios.get(url);
+	}
+
 	/**
 	 * post - makes a post request without token
 	 */
@@ -167,6 +179,37 @@ export class RestClientService {
 		const url = this.forgeUrl(endpoint);
 		const dataUrlEncoded = this.serialize(data);
 		return axios.post(url, dataUrlEncoded, config);
+	}
+
+	/**
+	 * post - makes a post request without token with URL encoded data and Token
+	 */
+	public postWithSerializationAndToken(endpoint: string, data: object, config: object = {}) {
+		const configWithToken = {
+			headers: {
+				...this.bearerHeaderObject
+			},
+			...config
+		};
+		const url = this.forgeUrl(endpoint);
+		const dataUrlEncoded = this.serialize(data);
+		return axios.post(url, dataUrlEncoded, configWithToken);
+	}
+
+	/**
+	 * post - makes a post request without token with URL encoded data, header and Token
+	 */
+	public postWithURLEncodedAndToken(endpoint: string, data: object, config: object = {}) {
+		const configWithToken = {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				...this.bearerHeaderObject
+			},
+			...config
+		};
+		const url = this.forgeUrl(endpoint);
+		const dataUrlEncoded = this.serialize(data);
+		return axios.post(url, dataUrlEncoded, configWithToken);
 	}
 
 	/**
@@ -201,6 +244,21 @@ export class RestClientService {
 			headers: {
 				...this.bearerHeaderObject,
 				...this.currencyTypeHeaderObject
+			},
+			...config
+		};
+
+		return this.get(endpoint, configWithToken);
+	}
+
+	/**
+	 * getWithAccessToken - makes a get request and adds the stored access token
+	 */
+	public getWithAccessTokenAndCurrency(endpoint: string, config: object = {}, currency: CurrencyTypeEnum) {
+		const configWithToken = {
+			headers: {
+				...this.bearerHeaderObject,
+				'CurrencyType': currency
 			},
 			...config
 		};

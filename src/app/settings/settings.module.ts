@@ -1,3 +1,4 @@
+import {MomentModule} from 'angular2-moment';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgModule} from '@angular/core';
@@ -10,8 +11,12 @@ import {GeneralSettingsComponent} from './general-settings/general-settings.comp
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {MyListedPropertiesComponent} from './my-listed-properties/my-listed-properties.component';
 import {SharedModule} from '../shared/shared.module';
-import {ConfirmDialogModule, GrowlModule} from 'primeng/primeng';
+import {ConfirmDialogModule, DataTableModule, GrowlModule} from 'primeng/primeng';
 import {ProWalletModule} from '../pro-wallet/pro-wallet.module';
+import {MyDealsComponent} from './my-deals/my-deals.component';
+import {RefferalLinkComponent} from './refferal-link/refferal-link.component';
+import {ClipboardModule} from 'ngx-clipboard/dist/src';
+import {InternationalPhoneModule} from 'ng4-intl-phone/src/lib';
 
 @NgModule({
 	imports: [
@@ -24,9 +29,13 @@ import {ProWalletModule} from '../pro-wallet/pro-wallet.module';
 		SharedModule,
 		ConfirmDialogModule,
 		GrowlModule,
-		ProWalletModule
+		ProWalletModule,
+		DataTableModule,
+		MomentModule,
+		ClipboardModule,
+		InternationalPhoneModule
 	],
-	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent]
+	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent, RefferalLinkComponent]
 })
 export class SettingsModule {
 }

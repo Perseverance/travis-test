@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 transaction-tool">
+        <div class="row transaction-version">
+            <div class="col-xs-12 col-md-3 col-lg-3 col-xl-3">
+                <span class="version-number">Version: 1.0</span>
+            </div>
+        </div>
+        <div class="row transaction-progress" *ngIf="areStepsActive">
+            <div class="col-xs-9 col-xs-offset-3">
+                <div class="row">
+                    <div class="col-xs-2 text-right nav-button" [ngClass]="{'hide-nav-button' : activeIndex == 0}">
+                        <button class='left-arrow' (click)="moveToPrevStep()"><i class="fa fa-angle-left"
+																				 aria-hidden="true"></i></button> Prev
+                    </div>
+                    <div class="col-xs-8">
+                        <p-steps [model]="workflowSteps" [(activeIndex)]="activeIndex" [readonly]="true"
+                            styleClass="progress-indicator"></p-steps>
+                    </div>
+                    <div class="col-xs-2 nav-button" [ngClass]="{'hide-nav-button' : activeIndex == deedStatusIndex}">
+                        Next
+                        <button class='right-arrow' (click)="moveToNextStep()"><i
+							class="fa fa-angle-right"
+							aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div class="row dummy-steps-holder">
+                    <div class="col-xs-8 col-xs-offset-2 step-cols">
+                        <p-steps [model]="workflowSteps" [(activeIndex)]="deedStatusIndex" [readonly]="true"
+                            styleClass="progress-indicator"></p-steps>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3" [ngClass]="{'area-disabled': !areStepsActive}">
+                <p-steps [model]="workflowSteps" (activeIndexChange)="onIndexChange($event)" [(activeIndex)]="activeIndex"
+                    [readonly]="false"></p-steps>
+            </div>
+            <div class="col-xs-9 wokrflow-container">
+                <router-outlet (activate)="updateProgressIndex()"></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

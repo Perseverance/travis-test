@@ -1,3 +1,4 @@
+import { MockedFeaturedPropertiesService } from './mocked-featured-properties.service';
 import { PropertyOwnerGuard } from './property-owner.service';
 import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { InlineSVGModule } from 'ng-inline-svg';
@@ -20,6 +21,7 @@ import { ContactAgentComponent } from './contact-agent/contact-agent.component';
 import { RatingModule } from 'primeng/primeng';
 import { PropertyListingComponent } from './property-listing/property-listing.component';
 import { EditListingComponent } from './edit-listing/edit-listing.component';
+import { InternationalPhoneModule } from 'ng4-intl-phone/src/lib';
 
 @NgModule({
 	imports: [
@@ -39,7 +41,8 @@ import { EditListingComponent } from './edit-listing/edit-listing.component';
 		InlineSVGModule,
 		MomentModule,
 		GMapModule,
-		RatingModule
+		RatingModule,
+		InternationalPhoneModule
 	],
 	declarations: [
 		PropertyDetailsComponent,
@@ -52,7 +55,8 @@ import { EditListingComponent } from './edit-listing/edit-listing.component';
 	providers: [
 		PropertiesService,
 		MockedFavouriteLocationsService,
-		PropertyOwnerGuard
+		PropertyOwnerGuard,
+		MockedFeaturedPropertiesService
 	]
 })
 export class PropertiesModule {

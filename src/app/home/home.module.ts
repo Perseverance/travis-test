@@ -1,3 +1,4 @@
+import {CryptoWidgetComponent} from './../core/crypto-widget/crypto-widget.component';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -11,10 +12,10 @@ import {NewPropertiesComponent} from './new-properties/new-properties.component'
 import {DropdownModule} from 'primeng/primeng';
 import {ProposalIosComponent} from './proposal-ios/proposal-ios.component';
 import {HowPropyWorksComponent} from './how-propy-works/how-propy-works.component';
-import {SafeURLPipe} from '../shared/pipes/safe-url.pipe';
 import {InlineSVGModule} from 'ng-inline-svg';
-import { NewsletterComponent } from './newsletter/newsletter.component';
-import { FeaturedPropertiesComponent } from './featured-properties/featured-properties.component';
+import {NewsletterComponent} from './newsletter/newsletter.component';
+import {FeaturedPropertiesComponent} from './featured-properties/featured-properties.component';
+import {CurrencyDataService} from '../core/crypto-widget/currency-data.service';
 
 @NgModule({
 	declarations: [
@@ -24,9 +25,12 @@ import { FeaturedPropertiesComponent } from './featured-properties/featured-prop
 		NewPropertiesComponent,
 		ProposalIosComponent,
 		HowPropyWorksComponent,
-		SafeURLPipe,
 		NewsletterComponent,
-		FeaturedPropertiesComponent
+		FeaturedPropertiesComponent,
+		CryptoWidgetComponent,
+		NewsletterComponent,
+		FeaturedPropertiesComponent,
+		CryptoWidgetComponent
 	],
 	imports: [
 		CommonModule,
@@ -38,9 +42,9 @@ import { FeaturedPropertiesComponent } from './featured-properties/featured-prop
 		DropdownModule,
 		InlineSVGModule
 	],
-	providers: [],
+	providers: [CurrencyDataService],
 	bootstrap: [],
-	exports: []
+	exports: [CryptoWidgetComponent]
 })
 export class HomeModule {
 }

@@ -1,4 +1,4 @@
-import { Web3Module } from './web3/web3.module';
+import { VerificationModule } from './verification/verification.module';
 import { MetaModule } from '@ngx-meta/core';
 import { SettingsModule } from './settings/settings.module';
 import { PropertiesModule } from './properties/properties.module';
@@ -17,6 +17,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/core';
 import { IntercomModule, INTERCOM_DIRECTIVES } from 'ng2-intercom';
 import { PurchaseModule } from './purchase/purchase.module';
+import { Web3Module } from './web3-connection/web3-connection.module';
 
 export function metaFactory(): MetaLoader {
 	return new MetaStaticLoader({
@@ -41,7 +42,7 @@ export function metaFactory(): MetaLoader {
 @NgModule({
 	declarations: [
 		AppComponent,
-		...INTERCOM_DIRECTIVES,
+		...INTERCOM_DIRECTIVES
 	],
 	imports: [
 		BrowserModule,
@@ -52,6 +53,7 @@ export function metaFactory(): MetaLoader {
 		AuthenticationModule,
 		PropertiesModule,
 		SettingsModule,
+		VerificationModule,
 		PurchaseModule,
 		GoogleMapModule,
 		Web3Module,
@@ -63,8 +65,7 @@ export function metaFactory(): MetaLoader {
 			provide: MetaLoader,
 			useFactory: (metaFactory)
 		}),
-		IntercomModule,
-
+		IntercomModule
 	],
 	bootstrap: [AppComponent]
 })

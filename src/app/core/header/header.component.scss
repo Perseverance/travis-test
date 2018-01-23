@@ -173,12 +173,6 @@ $header-margin-sm: 15px;
 			margin-top: 5px;
 			@include border-radius(5px);
 			@include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
-			.no-new-notifications {
-				font-size: $font-size-small;
-				color: $gray-dark;
-				padding: 10px;
-				margin: 0px;
-			}
 		}
 	}
 	&.propy-header-top {

@@ -5,22 +5,23 @@ import { SignUpComponentComponent } from './sign-up-component/sign-up-component.
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TokenGuard } from './token-guard.service';
+import { NotAuthenticatedGuard } from './not-authenticated-guard.service';
 
 const routes: Routes = [
 	{
 		path: 'login',
 		component: LoginComponentComponent,
-		canActivate: [TokenGuard, MetaGuard]
+		canActivate: [TokenGuard, NotAuthenticatedGuard, MetaGuard]
 	},
 	{
 		path: 'signup',
 		component: SignUpComponentComponent,
-		canActivate: [TokenGuard, MetaGuard]
+		canActivate: [TokenGuard, NotAuthenticatedGuard, MetaGuard]
 	},
 	{
 		path: 'forgot',
 		component: ForgotPasswordComponent,
-		canActivate: [TokenGuard, MetaGuard]
+		canActivate: [TokenGuard, NotAuthenticatedGuard, MetaGuard]
 	}
 ];
 

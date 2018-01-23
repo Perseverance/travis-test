@@ -1,0 +1,27 @@
+<div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+<ng-template #dataLoaded>
+    <div *ngIf="isTransferFinished;else notFinished">
+        <div *ngIf="userIsBuyer; else notBuyer">
+            <h5>Congratulations! The property transfer has been completed successfully.
+                The local registry will soon be sending you the Property Deed to
+                your physical address.</h5>
+        </div>
+        <ng-template #notBuyer>
+            <h5>The transfer of this property was completed succesfully!</h5>
+        </ng-template>
+    </div>
+    <ng-template #notFinished>
+        <div *ngIf="userIsTitleCompany;else notTitleCompany">
+            <i>Status: Waiting For You To Record The Transfer Ownership Change To The Blockchain. Please use the button below!</i>
+            <br>
+            <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+            <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
+        </div>
+        <ng-template #notTitleCompany>
+            <i>Status: Waiting for Title Company To Record The Ownership Transfer to the blockchain</i>
+        </ng-template>
+    </ng-template>
+</ng-template>
+<ng-template #dataNotLoaded>
+    <h4>Loading...</h4>
+</ng-template>

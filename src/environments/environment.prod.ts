@@ -26,5 +26,20 @@ export const environment = {
 	intercomClientId: 'zpladqap',
 	smartLookId: '6bb5a0bdab863c838a4ecf0000364eec693fa91e',
 	stripePublicKey: 'pk_live_Rejlq3HMVQLAAXkZRxSSDM5l',
-	googleAnalyticsId: 'UA-65716380-2'
+	googleAnalyticsId: 'UA-65716380-2',
+	pusher: {
+		key: '5f7c7a18cc55e6c0d7d3',
+		cluster: 'eu'
+	},
+	helloSign: {
+		clientId: '30a28cd02d7f49d1293ab1207d23fdce',
+		skipDomainVerification: false
+	},
+	hardCodedDeedParties: {
+		agentId: '5a255409495fda1268997297'
+	},
+	contractAddress: '0x6dae591ae5a4cc8a65ef88c9367564be1a317bf0',
+	infuraLink: 'https://rinkeby.infura.io/Up5uvBHSCSqtOmnlhL87',
+	escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625',
+	rinkebyTxLink: 'https://rinkeby.etherscan.io/tx/'
 };

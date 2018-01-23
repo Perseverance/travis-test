@@ -7,7 +7,7 @@
 				<div class="dummy-preview-box"></div>
 				<div class="active wrapper" [ngStyle]="inverviewHolderStyleObject" (click)="thumbnailInterviewClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe allowfullscreen class="main" [src]="interviewCNBCAfricaUrl | safeURL"
+					<iframe allowfullscreen class="main" [src]="interviewCNBCAfricaUrl | safeResourceURL"
 							frameborder="0"></iframe>
 				</div>
 				<p class="propy-play-icon inverview-play-icon hidden-xs" [ngClass]="{'hidden': videoThumbnailClicked}"
@@ -20,7 +20,8 @@
 				</div>
 				<div class="active wrapper" [ngStyle]="bloombergHolderStyleObject" (click)="thumbnailBloombergClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
-					<iframe frameborder="0" class="main" allowfullscreen [src]="bloombergTvUrl | safeURL"></iframe>
+					<iframe frameborder="0" class="main" allowfullscreen
+							[src]="bloombergTvUrl | safeResourceURL"></iframe>
 				</div>
 				<p class="propy-play-icon bloomberg-play-icon hidden-xs" [ngClass]="{'hidden': videoThumbnailClicked}"
 				   (click)="thumbnailBloombergClicked()"></p>
@@ -32,7 +33,7 @@
 				<div class="active wrapper" [ngStyle]="bgOfficeHolderStyleObject" (click)="thumbnailBGOfficeClicked()"
 					 [ngClass]="{'thumbnailClicked': videoThumbnailClicked}">
 					<iframe frameborder="0" class="main" allowfullscreen
-							[src]="propysOfficeBulgariaUrl | safeURL"></iframe>
+							[src]="propysOfficeBulgariaUrl | safeResourceURL"></iframe>
 				</div>
 				<p class="propy-play-icon bg-office-play-icon hidden-xs" [ngClass]="{'hidden': videoThumbnailClicked}"
 				   (click)="thumbnailBGOfficeClicked()"></p>

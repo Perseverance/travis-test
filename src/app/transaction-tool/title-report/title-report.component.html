@@ -1,0 +1,78 @@
+<div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+<ng-template #dataLoaded>
+    <div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
+    </div>
+    <ng-template #hasPreviewLink>
+        <div class="row text-center" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
+            <div *ngIf="userIsSeller;else notSeller">
+                <i>Status: Waiting For You To Record The Title Report To The Blockchain. Please use the button
+					below!</i>
+                <br>
+                <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+                <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
+            </div>
+            <ng-template #notSeller>
+                <i>Status: Waiting for Seller To Record The Title Report To The Blockchain</i>
+            </ng-template>
+        </div>
+        <ng-template #noBlockChainYet></ng-template>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row" *ngIf="userIsTitleCompany">
+                    <div class="col-xs-12 reupload-holder" *ngIf="deed.status < deedStatus.titleReport">
+                        <div class="row reupload-button-holder">
+                            <div class="col-xs-12">
+                                <button type="button" *ngIf="!reuploadingDocumentActivated" class="btn propy-control button-big pull-right"
+                                    (click)="reuploadingDocumentActivated = true">Reupload
+								</button>
+                                <button type="button" *ngIf="reuploadingDocumentActivated" class="btn propy-control cancel-reuploading button-big btn-white pull-right"
+                                    (click)="reuploadingDocumentActivated = false">Cancel reuploading
+								</button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="reuploadingDocumentActivated">
+                            <div class="col-xs-12">
+                                <app-upload-document [uploadTitle]="settlementTitle" [uploadSubtitle]="uploadSettlementSubtitle"
+                                    (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!reuploadingDocumentActivated">
+                    <div class="col-xs-12 text-center">
+                        <app-document-preview [previewTitle]="settlementTitle" [previewSubtitle]="previewSettlementSubtitle"
+                            [previewLink]="previewLink"></app-document-preview>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!reuploadingDocumentActivated">
+            <div class="col-xs-12 text-center">
+                <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
+                    [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.TitleReport"
+                    (onSignDocument)="signDocument()"></app-sign-document>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #noPreviewLink>
+        <div class="row" *ngIf="userIsTitleCompany; then isTitleCompany; else isNotTitleCompany">
+        </div>
+
+        <ng-template #isTitleCompany>
+            <div class="col-xs-12 text-center">
+                <app-upload-document [uploadTitle]="settlementTitle" [uploadSubtitle]="uploadSettlementSubtitle"
+                    (onUploadDocumentApplied)="uploadDocument($event)"></app-upload-document>
+            </div>
+        </ng-template>
+
+        <ng-template #isNotTitleCompany>
+            <div class="col-xs-12 text-center">
+                <h5>{{waitingTitle}}</h5>
+            </div>
+        </ng-template>
+    </ng-template>
+</ng-template>
+<ng-template #dataNotLoaded>
+    <h4>Loading...</h4>
+</ng-template>

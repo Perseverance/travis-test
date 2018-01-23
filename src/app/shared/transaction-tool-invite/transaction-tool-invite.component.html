@@ -1,0 +1,11 @@
+<div class="row">
+    <form [formGroup]="inviteForm" class="invite-form">
+        <div class="form-group col-xs-9 email-input">
+            <input formControlName="email" type="text" class="form-control propy-control" id="email"
+                placeholder="{{ 'common.label.email' | translate }}">
+        </div>
+        <div class="col-xs-3">
+            <button type="button" class="btn propy-control button-big" (click)="inviteSeller()">Send Invitation</button>
+        </div>
+    </form>
+</div>

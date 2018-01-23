@@ -25,6 +25,7 @@ export class APIEndpointsService {
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
 		USER_TRANSACTION_HISTORY: `${this.INTERNAL_API_PREFIX}/users/transactions`,
 		USER_UPDATE_WALLET: `${this.INTERNAL_API_PREFIX}/users/updatewallet`,
+		SET_WALLET: `${this.INTERNAL_API_PREFIX}/users/setwallet`,
 		CONVERT_STASHED_TOKENS: `${this.INTERNAL_API_PREFIX}/users/convertstashedtokens`,
 		IS_PROPERTY_OWNER: `${this.INTERNAL_API_PREFIX}/Properties/isCurrentUserOwner`,
 		SINGLE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/single`,
@@ -36,8 +37,28 @@ export class APIEndpointsService {
 		NEW_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/newproperties`,
 		MY_LISTINGS: `${this.INTERNAL_API_PREFIX}/Properties/mylistings`,
 		MARK_PROPERTY_AS_SOLD: `${this.INTERNAL_API_PREFIX}/Properties/setsold/`,
+		MARK_PROPERTY_AS_UNLISTED: `${this.INTERNAL_API_PREFIX}/Properties/unlist/`,
 		HIDE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/hidden`,
-		RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/createChargeForReservation`
+		RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/createChargeForReservation`,
+		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/notifications/authPusher`,
+		DEAL_PARTIES: `${this.INTERNAL_API_PREFIX}/deeds/dealparties`,
+		CREATE_DEED: `${this.INTERNAL_API_PREFIX}/deeds/createDeed`,
+		GET_DEED: `${this.INTERNAL_API_PREFIX}/deeds/single`,
+		MY_DEEDS: `${this.INTERNAL_API_PREFIX}/deeds/mydeeds`,
+		UPLOAD_DEED_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/uploaddocument`,
+		GET_DOWNLOAD_DOCUMENT_LINK: `${this.INTERNAL_API_PREFIX}/Deeds/documentdownloadurl`,
+		GET_SIGN_URL: `${this.INTERNAL_API_PREFIX}/Deeds/documentsignurl`,
+		SIGN_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
+		SAVE_DOCUMENT_HASH: `${this.INTERNAL_API_PREFIX}/Deeds/savedocumenttxhash`,
+		INVITE_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/inviteparty`,
+		ACCEPT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/acceptparty`,
+		REJECT_PARTY: `${this.INTERNAL_API_PREFIX}/Deeds/rejectparty`,
+		CANCEL_INVITE: `${this.INTERNAL_API_PREFIX}/Deeds/canceldeed`,
+		PROPERTY_PREVIEW: `${this.INTERNAL_API_PREFIX}/Deeds/property`,
+		GET_DOCUMENT_CONTENT: `${this.INTERNAL_API_PREFIX}/Deeds/documentcontent`,
+		AGREE_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
+		VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/verifyemail`,
+		RESEND_VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/resendemailverification`
 	};
 
 	constructor() {

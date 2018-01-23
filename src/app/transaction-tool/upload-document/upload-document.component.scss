@@ -1,0 +1,122 @@
+@import "../../../variables";
+@import "../../../mixins";
+
+$drop-zone-color: #F4F4F4;
+$message-color: #4f5c62;
+$choose-button-color: #52caf5;
+
+.upload-file-holder {
+	h4, h5 {
+		margin-bottom: 20px;
+	}
+	h4 {
+		font-size: 30px;
+	}
+	h5 {
+		font-size: 20px;
+		font-weight: normal;
+	}
+	.ui-fileupload-content {
+		min-height: 322px;
+		background-color: $drop-zone-color;
+		@include border-radius(9px);
+		border: 1px solid $border-default;
+		@include box-shadow(0px, 1px, 3px, rgba(0, 0, 0, 0.14));
+		.ui-progressbar {
+			display: none;
+		}
+	}
+	.ui-fileupload-buttonbar {
+		position: absolute;
+		top: 62%;
+		z-index: 999;
+		background: transparent;
+		float: left;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		margin-top: 10px;
+		border: none;
+		@media #{$xs} {
+			top: 65%;
+			float: left;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		.ui-fileupload-choose {
+			background-color: transparent !important;
+			color: $choose-button-color;
+			font-size: 14px;
+			border: none;
+			&:hover {
+				background-color: transparent !important;
+				color: darken($choose-button-color, 10%);
+				border: none;
+			}
+		}
+	}
+	.ui-fileupload-files {
+		position: absolute;
+		top: 350px;
+		.ui-fileupload-row {
+			display: inline-block;
+			width: 190px;
+			div:nth-child(2) {
+				display: none;
+			}
+			div:nth-child(3) {
+				display: none;
+			}
+			.ui-button {
+				right: 43px;
+				top: -48px;
+				height: 26px;
+				width: 26px;
+				@include border-radius(50%);
+				border: none;
+				background-image: url("../../../assets/images/photo-icon-x.svg");
+				background-repeat: no-repeat;
+				background-position: center;
+				.ui-button-icon-left {
+					display: none;
+				}
+			}
+		}
+		img {
+			height: 96px;
+			@include border-radius(9px);
+		}
+	}
+	.ui-fileupload-highlight {
+		border: 2px dashed $gray-darkest;
+		background-color: darken($drop-zone-color, 10%);
+	}
+	.drop-message {
+		position: absolute;
+		top: 160px;
+		text-align: center;
+		width: 100%;
+		.icon-holder {
+			width: 46px;
+			position: relative;
+			left: calc(50% - 23px);
+		}
+		p {
+			position: absolute;
+			width: 130px;
+			left: calc(50% - 65px);
+			font-family: $font-family-helvetica;
+			font-size: 16px;
+			margin-bottom: 0;
+			color: $message-color;
+		}
+	}
+	.acceptable-types-message {
+		font-size: 12px;
+		color: $message-color;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 10px;
+		text-align: center;
+	}
+}

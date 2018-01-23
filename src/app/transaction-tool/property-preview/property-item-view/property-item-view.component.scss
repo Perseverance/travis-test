@@ -1,0 +1,27 @@
+@import "../../../../variables";
+@import "../../../../mixins";
+.row {
+    .property-address-price {
+        margin-top: 25px;
+        margin-bottom: 25px;
+        .property-price {
+            p {
+                color: $blue-dark;
+            }
+        }
+    }
+    .media {
+        .media-object {
+            //height: 150px;
+            width: 100%;
+            border-radius: 10px;
+        }
+        .media-body {
+            .property-details {
+                p {
+                    color: $gray-dark;
+                }
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import { ErrorsService } from './../../shared/errors/errors.service';
 import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { PropertyConversionService } from './../../shared/property-conversion.service';
 import { ImageEnvironmentPrefixPipe } from './../../shared/pipes/image-environment-prefix.pipe';
@@ -28,6 +29,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { log } from 'util';
 import { MetaService } from '@ngx-meta/core';
 import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
+import { LanguagesEnum } from '../../shared/enums/supported-languages.enum';
+import { LocalStorageService } from '../../shared/localStorage.service';
+import { MomentService } from '../../shared/moment.service';
+import { CurrencyEnum } from '../../shared/enums/supported-currencies.enum';
+import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-property-details',
@@ -41,6 +47,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public options: any;
 	public overlays: any[];
 	private idSubscription: Subscription;
+	private languageCurrencySubscriptions = new Array<Subscription>();
 	public propertyImagesCarouselConfig: NgxCarousel;
 	public IMAGE_HEIGHT_PX: number;
 	public IMAGE_WIDTH_PX: number;
@@ -53,8 +60,16 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 	public isPropertyReserved = false;
 	public isPropertyReservedByYou = false;
-	constructor(
-		router: Router,
+
+	private walletErrorTitle: string;
+	private walletErrorMessage: string;
+
+	private verificationError: string;
+	private verificationMessage: string;
+
+	private notLoggedInError: string;
+
+	constructor(router: Router,
 		private route: ActivatedRoute,
 		private propertiesService: PropertiesService,
 		private authService: AuthenticationService,
@@ -68,20 +83,26 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		private appRef: ApplicationRef,
 		private zone: NgZone,
 		private translateService: TranslateService,
+		private storageService: LocalStorageService,
+		private momentService: MomentService,
 		private metaService: MetaService,
+		private errorsService: ErrorsService,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(router);
-		if(window.screen.width > 990){
+		if (window.screen.width > 990) {
 			this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
-		}else{
+		} else {
 			this.IMAGE_WIDTH_PX = window.screen.width;
 		}
 		this.IMAGE_HEIGHT_PX = 480;
+
+		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
 	}
 
 	async ngOnInit() {
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
+
 		this.propertyImagesCarouselConfig = {
 			grid: { xs: 1, sm: 1, md: 2, lg: 2, all: 0 },
 			slide: 1,
@@ -103,7 +124,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			'common.scales.public-transport-scale.good',
 			'common.scales.public-transport-scale.excellent',
 			'common.scales.binary-scale.yes',
-			'common.scales.binary-scale.no'
+			'common.scales.binary-scale.no',
+			'property-details.no-wallet-set',
+			'property-details.no-wallet-set-message',
+			'property-details.verification-error',
+			'property-details.verification-error-message',
+			'common.only-registered-error'
 		]).subscribe((translations) => {
 			this.featureScale = {
 				undefined: translations['common.scales.undefined'],
@@ -130,14 +156,18 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 				2: translations['common.scales.binary-scale.no']
 			};
 
+			this.walletErrorTitle = translations['property-details.no-wallet-set'];
+			this.walletErrorMessage = translations['property-details.no-wallet-set-message'];
+			this.verificationError = translations['property-details.verification-error'];
+			this.verificationMessage = translations['property-details.verification-error-message'];
+			this.notLoggedInError = translations['common.only-registered-error'];
+
 		});
 		const self = this;
 		const idObservable: Observable<string> = self.route.params.map(p => p.id);
 		this.idSubscription = idObservable.subscribe(async function (propertyId) {
-			//temporary solution for Packer house
-			if(propertyId === "packer" || propertyId === "packer-house"){
-				propertyId = "5a3980e64170310df43e959a";
-			}
+			// temporary solution for Packer house
+			propertyId = self.emulatePackerHousePropertyId(propertyId);
 			const property = await self.propertiesService.getProperty(propertyId);
 			self.setupMetaTags(property);
 			self.createAndSetMapOptions(property);
@@ -148,8 +178,13 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.zone.run(() => {
 			});
 		});
+	}
 
-
+	private emulatePackerHousePropertyId(propertyId) {
+		if (propertyId === 'packer' || propertyId === 'packer-house') {
+			return '5a3980e64170310df43e959a';
+		}
+		return propertyId;
 	}
 
 	private setupMetaTags(property: any) {
@@ -189,7 +224,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 
 	public draw() {
-		console.log(this.map);
 		google.maps.event.trigger(this.map.el.nativeElement, 'resize');
 		this.zone.run(() => {
 		});
@@ -218,5 +252,96 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 		const currentUser = await this.authService.getCurrentUser();
 		this.isPropertyReservedByYou = (currentUser.data.data.id === property.reservedByUserId);
+	}
+
+	private setupQueryParamsWatcher() {
+		return this.route.queryParams
+			.subscribe(params => {
+				if (params.language) {
+					this.applyParamLanguage(params.language);
+				}
+				if (params.currency) {
+					this.applyParamCurrency(params.currency);
+				}
+
+			});
+	}
+
+	private applyParamLanguage(language: string) {
+		const requestedLanguage = language.toLowerCase();
+		if (!this.isSupportedLanguage(requestedLanguage)) {
+			return;
+		}
+
+		this.translateService.use(requestedLanguage);
+		this.momentService.moment.locale(requestedLanguage);
+		this.storageService.selectedLanguage = requestedLanguage;
+	}
+
+	private isSupportedLanguage(language: string): boolean {
+		if (language === LanguagesEnum.ENGLISH ||
+			language === LanguagesEnum.CHINESE ||
+			language === LanguagesEnum.ARABIC ||
+			language === LanguagesEnum.RUSSIAN) {
+			return true;
+		}
+		return false;
+	}
+
+	private applyParamCurrency(currency: string) {
+		const requestedCurrency = currency.toUpperCase();
+		if (!this.isSupportedCurrency(requestedCurrency)) {
+			return;
+		}
+
+		this.storageService.selectedCurrencyType = CurrencyTypeEnum[`${requestedCurrency}`];
+	}
+
+	private isSupportedCurrency(currency: string): boolean {
+		if (currency === CurrencyEnum.unitedStatesDollar ||
+			currency === CurrencyEnum.europeanEuro ||
+			currency === CurrencyEnum.russianRuble ||
+			currency === CurrencyEnum.uaeDirham ||
+			currency === CurrencyEnum.hongKongDollar ||
+			currency === CurrencyEnum.singaporeDollar ||
+			currency === CurrencyEnum.poundSterling ||
+			currency === CurrencyEnum.bulgarianLev ||
+			currency === CurrencyEnum.chineseYuanRenminbi ||
+			currency === CurrencyEnum.ether ||
+			currency === CurrencyEnum.bitcoin) {
+			return true;
+		}
+		return false;
+	}
+
+	public async reserveProperty($event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const currentUser = await this.authService.getCurrentUser();
+		if (this.authService.isUserAnonymous) {
+			this.errorsService.pushError({
+				errorTitle: '',
+				errorMessage: this.notLoggedInError,
+				errorTime: (new Date()).getDate()
+			});
+			return;
+		}
+		if (!currentUser.data.data.isEmailVerified) {
+			this.errorsService.pushError({
+				errorTitle: this.verificationError,
+				errorMessage: this.verificationMessage,
+				errorTime: (new Date()).getDate()
+			});
+			return;
+		}
+		if (!currentUser.data.data.jsonFile) {
+			this.errorsService.pushError({
+				errorTitle: this.walletErrorTitle,
+				errorMessage: this.walletErrorMessage,
+				errorTime: (new Date()).getDate()
+			});
+			return;
+		}
+		this.router.navigate(['/purchase', this.property.id]);
 	}
 }

@@ -1,0 +1,60 @@
+<div *ngIf="hasUserDataLoaded && invitationDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+
+<ng-template #dataLoaded>
+    <h3>Payment</h3>
+    <div class="row">
+        <div class="col-xs-12">
+            <div *ngIf="userIsBuyer;then isBuyer; else isNotBuyer">
+            </div>
+            <ng-template #isBuyer>
+                <app-property-item-view [deedId]="deedId"></app-property-item-view>
+                <hr id="horizontal-line">
+                <div class="payment">
+                    <h5><span>Please select the currency in which you want to pay for this property:</span></h5>
+                    <form [formGroup]="contactAgentForm">
+                        <div class="form-check abc-radio abc-radio-info payment-radio" *ngFor="let payment of payments; let i = index">
+                            <input class="form-check-input" type="radio" formControlName="paymentId" [id]="payment.id"
+                                [value]="payment.id" [attr.disabled]="i >= 1 ? true : null">
+                            <label class="form-check-label" [for]="payment.id">
+                                        <span class="agent-wrapper">
+                                            <span class="name">{{payment.name}}</span>
+                                        </span>
+                                </label>
+                        </div>
+                        <div class="price">
+                            <span id="price"> {{deedDetails.finalPrice.value | currencySymbol: deedDetails.finalPrice.type}}</span>
+                        </div>
+                    </form>
+                    <div class="row payment-info">
+                        <div class="col-xs-12">
+                            <p><span>The ETH will be sent to address </span><span class="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn" type="button"
+                                    ngxClipboard [cbContent]="escrowAddress">Copy</button></span><span> the Escrow address.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p><span><strong>IMPORTANT:</strong> In order the make sure that your transaction is processed, please allow for at least 180000 of gas limit when making the payment.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #isNotBuyer>
+                <div class="row">
+                    <div class="col-xs 12" *ngIf="!isPaymentCompleted">
+                        <p>Waiting for buyer to make the payment.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs 12" *ngIf="isPaymentCompleted">
+                        <p>Payment was already completed!</p>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #dataNotLoaded>
+    <h4>Loading...</h4>
+</ng-template>

@@ -10,35 +10,38 @@
 				<span class="icon-bar"></span>
 			</button>
             <a class="navbar-brand text-uppercase" [routerLink]="['/']">Propy</a>
-            <div class="nav navbar-nav col-xs-7 hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl loc-search-nav" *ngIf="!isLanding">
-                <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
+            <div class="nav navbar-nav col-xs-7 hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl loc-search-nav"
+                *ngIf="!isLanding">
+                <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}"
+                    (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
             </div>
         </div>
 
         <div class="nav hidden-xs col-sm-4 col-lg-5 loc-search-nav" *ngIf="!isLanding">
-            <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}" (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
+            <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}"
+                (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right propy-links" *ngIf="hasUserLoaded">
                 <li>
-                    <a routerLink="/list-property" class="list-property text-capitalize">{{'list-property.heading' |
+                    <a class="list-property text-capitalize" href="" (click)="goListProperty($event)">{{'list-property.heading' |
 						translate }}</a>
                 </li>
                 <li *ngIf="isLanding">
-                    <a target="_blank" href="https://tokensale.propy.com/" class="list-property text-capitalize">{{ 'common.label.about' | translate }} PRO Token</a>
+                    <a target="_blank" href="https://tokensale.propy.com/" class="list-property text-capitalize">{{
+						'common.label.about' | translate }} PRO Token</a>
                 </li>
                 <li class="dropdown languages-dropdown">
-                    <a href="#" class="dropdown-toggle language-selector" data-toggle="dropdown" role="button" aria-haspopup="true" ngClass="{{translate.currentLang}}"
-                        aria-expanded="false">{{translate.currentLang |
-						languageLabel }}<i
-							class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                    <a href="#" class="dropdown-toggle language-selector" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" ngClass="{{translate.currentLang}}" aria-expanded="false">{{translate.currentLang | languageLabel }}<i
+						class="fa fa-chevron-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-menu">
                         <li *ngFor="let lang of translate.getLangs()">
-                            <a #langSelect class="language-selector" (click)="selectLanguage(langSelect.rel)" [rel]="lang" ngClass="{{lang}}" [class.active]="lang === translate.currentLang"
-                                *ngIf="lang != translate.currentLang">{{
-								lang | languageLabel }}</a>
+                            <a #langSelect class="language-selector" (click)="selectLanguage(langSelect.rel)"
+                                [rel]="lang" ngClass="{{lang}}" [class.active]="lang === translate.currentLang"
+                                *ngIf="lang != translate.currentLang">{{ lang | languageLabel }}</a>
                         </li>
                     </ul>
                 </li>
@@ -58,16 +61,17 @@
 																		*ngIf="userInfo.walletId === null || userInfo.walletId === ''"></span></a>
                 </li>
                 <li *ngIf="!isUserAnonymous" class="dropdown notifications-dropdown hidden-xs">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">
 						<i class="fa fa-bell" aria-hidden="true"></i>
 					</a>
                     <div class="dropdown-menu">
-                        <p class="no-new-notifications text-center">{{'common.no-new-notifications'| translate}}.</p>
+                        <app-notifications></app-notifications>
                     </div>
                 </li>
                 <li *ngIf="!isUserAnonymous">
-                    <a class="btn propy-control button-small" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" href="" routerLinkActive="active"
-                        (click)="logout($event)">{{
+                    <a class="btn propy-control button-small" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        href="" routerLinkActive="active" (click)="logout($event)">{{
 						'common.label.logout' | translate }}</a>
                 </li>
                 <li *ngIf="isUserAnonymous">

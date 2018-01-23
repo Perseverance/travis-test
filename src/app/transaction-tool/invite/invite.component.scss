@@ -1,0 +1,55 @@
+@import "../../../variables";
+// Mixins
+@import '../../../mixins';
+$success-color: #22c230;
+.invitation {
+    h3,
+    h4 {
+        margin-bottom: 40px;
+    }
+    .price-row {
+        span {
+            line-height: 44px;
+        }
+    }
+    .email-input {
+        input.form-control.propy-control {
+            height: 32px;
+            font-size: 14px;
+            @include border-radius(5px);
+        }
+        label {
+            font-weight: 200;
+            font-size: 16px;
+        }
+    }
+    .buttons-holder {
+        margin-top: 15px;
+        .btn-cancel {
+            min-width: 100px;
+            margin-left: 15px;
+        }
+    }
+    .invite-passed-signers {
+        padding: 20px 0;
+        margin: 15px 0;
+        border-top: 1px solid $border-default;
+        border-bottom: 1px solid $border-default;
+        p {
+            color: $success-color;
+        }
+    }
+    .reupload-holder {
+        .reupload-button-holder {
+            position: absolute;
+            right: 30px;
+            z-index: 1;
+            .cancel-reuploading {
+                border: solid 1px $gray-light;
+            }
+        }
+    }
+    strong.role {
+        color: $blue-main;
+    }
+}

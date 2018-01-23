@@ -1,5 +1,5 @@
 import { GoogleAnalyticsEventsService } from './shared/google-analytics.service';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from './../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, UserData } from './authentication/authentication.service';
@@ -10,7 +10,7 @@ import { CurrencyTypeEnum } from './shared/enums/currency-type.enum';
 import { MomentService } from './shared/moment.service';
 import { Intercom } from 'ng2-intercom/intercom';
 import { default as smartlookClient } from 'smartlook-client';
-
+import { PusherService } from './shared/pusher.service';
 
 @Component({
 	selector: 'app-root',
@@ -18,13 +18,15 @@ import { default as smartlookClient } from 'smartlook-client';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
 	constructor(public authService: AuthenticationService,
 		public translateService: TranslateService,
 		private localStorageService: LocalStorageService,
 		private momentService: MomentService,
 		private intercom: Intercom,
 		public router: Router,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+		public pusherService: PusherService) {
 
 		translateService.addLangs(AllSupportedLanguage);
 		// this language will be used as a fallback when a translation isn't found in the current language
@@ -34,7 +36,17 @@ export class AppComponent implements OnInit {
 		translateService.use(localStorageService.selectedLanguage);
 		this.momentService.moment.locale([localStorageService.selectedLanguage, DefaultLanguage]);
 		localStorageService.selectedCurrencyType = CurrencyTypeEnum.NONE;
+
+		// ToDo: Comment out when start to use pusher
+		// this.authService.subscribeToUserData({
+		// 	next: (userInfo: UserData) => {
+		// 		if (!userInfo.isAnonymous) {
+		// 			this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
+		// 		}
+		// 	}
+		// });
 	}
+
 	ngOnInit() {
 		this.googleAnalyticsEventsService.emitEvent('page-category', 'page');
 		if (environment.production) {

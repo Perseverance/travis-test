@@ -8,7 +8,8 @@
 		"build": "ng build",
 		"test": "ng test",
 		"lint": "ng lint",
-		"e2e": "ng e2e"
+		"e2e": "ng e2e",
+		"postinstall": "node cryptofix.js"
 	},
 	"private": true,
 	"dependencies": {
@@ -34,21 +35,28 @@
 		"bootstrap-social": "^5.1.1",
 		"classlist.js": "^1.1.20150312",
 		"core-js": "^2.4.1",
+		"crypto-browserify": "^3.12.0",
+		"ethereumjs-tx": "^1.3.3",
+		"ethereumjs-wallet": "^0.6.0",
 		"font-awesome": "^4.7.0",
+		"hellosign-sdk": "^1.1.14",
 		"jquery": "^3.2.1",
 		"ng-inline-svg": "^4.0.1",
 		"ng2-completer": "^1.6.3",
 		"ng2-intercom": "^0.1.0",
+		"ng4-intl-phone": "https://github.com/LimelabsTech/ng4-intl-phone#master",
 		"ngx-avatar": "^2.8.0",
 		"ngx-carousel": "^1.3.0",
 		"ngx-clipboard": "^8.1.1",
 		"ngx-facebook": "^2.4.0",
 		"ngx-stripe": "^0.2.3",
 		"primeng": "^4.3.0",
+		"pusher-js": "^4.2.1",
 		"rxjs": "^5.4.2",
 		"smart-app-banner": "^1.4.0",
 		"smartlook-client": "^2.2.0",
 		"web3": "^1.0.0-beta.26",
+		"web3-eth-accounts": "^1.0.0-beta.27",
 		"zone.js": "^0.8.14"
 	},
 	"devDependencies": {
