@@ -33,7 +33,36 @@ $blue-widget: #42C3F6;
         @media (min-width: 768px) and (max-width: 784px) {
             top: 14%;
         }
-    }
+    } // @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px),
+    // only screen and ( min--moz-device-pixel-ratio: 2) and (max-width: 1024px),
+    // only screen and ( -o-min-device-pixel-ratio: 2/1) and (max-width: 1024px),
+    // only screen and ( min-device-pixel-ratio: 2) and (max-width: 1024px),
+    // only screen and ( min-resolution: 192dpi) and (max-width: 1024px),
+    // only screen and ( min-resolution: 2dppx) and (max-width: 1024px) {
+    //     top: 12%;
+    //     max-height: 100%;
+    //     right: 15px;
+    // }
+    // @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 767px),
+    // only screen and ( min--moz-device-pixel-ratio: 2) and (max-width: 767px),
+    // only screen and ( -o-min-device-pixel-ratio: 2/1) and (max-width: 767px),
+    // only screen and ( min-device-pixel-ratio: 2) and (max-width: 767px),
+    // only screen and ( min-resolution: 192dpi) and (max-width: 767px),
+    // only screen and ( min-resolution: 2dppx) and (max-width: 767px) {
+    //     top: 17%;
+    //     max-height: 100%;
+    //     right: 15px;
+    // }
+    // @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 666px),
+    // only screen and ( min--moz-device-pixel-ratio: 2) and (max-width: 666px),
+    // only screen and ( -o-min-device-pixel-ratio: 2/1) and (max-width: 666px),
+    // only screen and ( min-device-pixel-ratio: 2) and (max-width: 666px),
+    // only screen and ( min-resolution: 192dpi) and (max-width: 666px),
+    // only screen and ( min-resolution: 2dppx) and (max-width: 666px) {
+    //     top: 10%;
+    //     max-height: 100%;
+    //     right: 15px;
+    // }
     .crypto-container {
         .widget {
             a {
