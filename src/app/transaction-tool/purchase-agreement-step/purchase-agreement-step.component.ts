@@ -1,3 +1,4 @@
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
 import { environment } from './../../../environments/environment';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -58,6 +59,8 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public deedStatus = Status;
 	public txHash: string;
 	public recordButtonEnabled = true;
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -82,6 +85,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 
 		});
@@ -101,6 +105,10 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 			this.previewLink = doc.fileName;
 		}
 		this.getPurchaseAgreementSigners(doc);
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.PURCHASE_AGREEMENT];
 	}
 
 	private getSignatureDocument(documents: any[]) {

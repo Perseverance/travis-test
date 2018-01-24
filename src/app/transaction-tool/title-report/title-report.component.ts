@@ -19,6 +19,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
 import { ErrorsService } from '../../shared/errors/errors.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
 
 declare const HelloSign;
 
@@ -55,6 +56,8 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public deedStatus = Status;
 	public txHash: string;
 	public recordButtonEnabled = true;
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
 
 
 	constructor(private route: ActivatedRoute,
@@ -80,6 +83,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
 	}
@@ -108,6 +112,10 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			}
 		}
 		return signatureDocument;
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.TITLE_REPORT];
 	}
 
 	public async uploadDocument(event: any) {
