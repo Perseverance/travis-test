@@ -1,3 +1,4 @@
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
 import { HelloSignService } from './../../shared/hello-sign.service';
 import { DeedDocumentType } from './../enums/deed-document-type.enum';
 import { Observable } from 'rxjs/Observable';
@@ -52,6 +53,9 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 	private deedAddress: string;
 	public txHash: string;
 	public recordButtonEnabled = true;
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
+	public deed: any;
 
 
 
@@ -77,12 +81,14 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
 	}
 
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.deed = deed;
 		this.shouldSendToBlockchain = (deed.status === Status.Disclosures);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		this.deedAddress = deed.deedContractAddress;
@@ -94,6 +100,10 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 			this.previewLink = doc.fileName;
 		}
 		this.getSellerDisclosuresSigners(doc);
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.DISCLOSURES];
 	}
 
 	private getSignatureDocument(documents: any[]) {
