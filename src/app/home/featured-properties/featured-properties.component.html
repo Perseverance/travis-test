@@ -1,14 +1,27 @@
-<div class="row featured-locations">
-    <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
-    <div class="featured-holder">
-        <ngx-carousel [inputs]="carouselTile">
-            <ngx-tile NgxCarouselItem *ngFor="let property of showedLocations">
-                <app-property-preview [property]="property" [featuredCityName]="property.city" [imageWidth]="350"
-                    [imageHeight]="215" [showArrow]="true">
-                </app-property-preview>
-            </ngx-tile>
-            <button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i></button>
-            <button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i></button>
-        </ngx-carousel>
+<div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+<ng-template #dataLoaded>
+    <div class="row featured-locations">
+        <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
+        <div class="featured-holder">
+            <ngx-carousel [inputs]="carouselTile">
+                <ngx-tile NgxCarouselItem *ngFor="let property of showedLocations">
+                    <app-property-preview [property]="property" [featuredCityName]="property.city" [imageWidth]="350"
+                        [imageHeight]="215" [showArrow]="true">
+                    </app-property-preview>
+                </ngx-tile>
+                <button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                <button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+            </ngx-carousel>
+        </div>
     </div>
-</div>
+</ng-template>
+<ng-template #dataNotLoaded>
+    <div class="row featured-locations">
+        <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
+        <div class="featured-holder">
+            <div class="text-center">
+                <h3>Loading...</h3>
+            </div>
+        </div>
+    </div>
+</ng-template>
