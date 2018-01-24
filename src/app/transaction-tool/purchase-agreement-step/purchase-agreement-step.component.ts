@@ -1,18 +1,18 @@
-import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
-import { environment } from './../../../environments/environment';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, UserData } from '../../authentication/authentication.service';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { TransactionToolWorkflowService } from '../workflow/workflow.service';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
+import {environment} from './../../../environments/environment';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AuthenticationService, UserData} from '../../authentication/authentication.service';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {TransactionToolWorkflowService} from '../workflow/workflow.service';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 import {
 	SmartContractConnectionService,
 	Status
@@ -30,7 +30,7 @@ declare const HelloSign;
 	templateUrl: './purchase-agreement-step.component.html',
 	styleUrls: ['./purchase-agreement-step.component.scss']
 })
-export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent implements OnInit {
+export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 	public deedDocumentTypeEnum = DeedDocumentType;
 	public userInfo: any;
 	public userIsBuyer: boolean;
@@ -99,6 +99,10 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 				this.shouldShowSignatureDelayNotes = false;
 			}
 		});
+	}
+
+	ngOnDestroy() {
+		this.pusherService.unsubscribeDocumentSignatureUpdatedSubject();
 	}
 
 	private async setupDocument(deedId: string) {
