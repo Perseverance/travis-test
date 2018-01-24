@@ -10,6 +10,22 @@ export enum INVITATION_STATUSES {
 	REJECTED = 3
 }
 
+export enum TRANSACTION_STATUSES {
+	PENDING = 1,
+	SUCCESS = 2,
+	FAILED = 3
+}
+
+export enum BLOCKCHAIN_TRANSACTION_STEPS {
+	RESERVATION = 1,
+	PURCHASE_AGREEMENT = 2,
+	TITLE_REPORT = 3,
+	DISCLOSURES = 4,
+	AFFIDAVIT = 5,
+	CLOSING_DOCUMENTS = 6,
+	OWNERSHIP_TRANSFER = 7
+}
+
 @Injectable()
 export class DeedsService {
 
@@ -28,6 +44,27 @@ export class DeedsService {
 			deedId
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
+		result.data.data.transactionLinks = {
+			1: { // Reservation
+				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 2
+			},
+			2: { // Purchase Agreement
+				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 2
+			},
+			3: { // Title Report
+				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 2
+			},
+			4: { // Disclosures
+				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 2
+			},
+			5: null, // Affidavit
+			6: null, // Closing Documents
+			7: null // Ownership Transfer
+		};
 		return result.data.data;
 	}
 
