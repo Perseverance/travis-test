@@ -58,7 +58,8 @@ export class APIEndpointsService {
 		GET_DOCUMENT_CONTENT: `${this.INTERNAL_API_PREFIX}/Deeds/documentcontent`,
 		AGREE_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
 		VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/verifyemail`,
-		RESEND_VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/resendemailverification`
+		RESEND_VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/resendemailverification`,
+		FEATURED_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/featuredproperties`
 	};
 
 	constructor() {
