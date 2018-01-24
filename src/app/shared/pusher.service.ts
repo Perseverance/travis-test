@@ -109,8 +109,4 @@ export class PusherService {
 	public triggerDocumentSignatureUpdatedSubject(event: any) {
 		return this.documentSignatureUpdatedSubject.next(event);
 	}
-
-	public unsubscribeDocumentSignatureUpdatedSubject() {
-		this.documentSignatureUpdatedSubject.unsubscribe();
-	}
 }

@@ -63,6 +63,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public shouldShowSignatureDelayNotes = false;
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
+	private documentSignatureUpdatedSubscription: Subscription;
 
 	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
@@ -93,7 +94,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 
 		});
 
-		this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
+		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
 			next: async (data: any) => {
 				await this.setupDocument(this.deedId);
 				this.shouldShowSignatureDelayNotes = false;
@@ -102,7 +103,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	}
 
 	ngOnDestroy() {
-		this.pusherService.unsubscribeDocumentSignatureUpdatedSubject();
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {
