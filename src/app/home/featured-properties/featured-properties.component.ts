@@ -18,6 +18,8 @@ export class FeaturedPropertiesComponent implements OnInit {
 	public featureLocations;
 	public showedLocations;
 	public carouselTile: NgxCarousel;
+	public hasDataLoaded = false;
+
 
 	constructor(private propertiesService: PropertiesService, private router: Router) {
 	}
@@ -36,6 +38,7 @@ export class FeaturedPropertiesComponent implements OnInit {
 		};
 		this.featureLocations = await this.propertiesService.getFeaturedProperties();
 		this.showedLocations = this.featureLocations;
+		this.hasDataLoaded = true;
 	}
 
 	public featuredPropertyClicked(location) {
