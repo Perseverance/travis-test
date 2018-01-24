@@ -10,6 +10,12 @@ export enum INVITATION_STATUSES {
 	REJECTED = 3
 }
 
+export enum TRANSACTION_STATUSES {
+	PENDING = 1,
+	SUCCESS = 2,
+	FAILED = 3
+}
+
 @Injectable()
 export class DeedsService {
 
@@ -28,6 +34,19 @@ export class DeedsService {
 			deedId
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
+		result.data.data.transactionHashes = {
+			2: {
+				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 2
+			},
+			3: {
+				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 1
+			},
+			6: null,
+			7: null,
+			8: null
+		};
 		return result.data.data;
 	}
 
