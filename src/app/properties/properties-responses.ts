@@ -26,16 +26,7 @@ export interface GetFavouriteLocationResponse {
 }
 
 export interface GetFeaturePropertiesResponse {
-	id: string;
-	address: string;
-	cityName: string;
-	imageUrls: string[];
-	price: any;
-	bedrooms: number;
-	size: number;
-	sizeType: number;
-	type: number;
-	bitcoinAvailable: boolean;
+	properties: any;
 }
 
 
@@ -48,6 +39,7 @@ export interface PropertyPreviewResponse {
 	size: CreatePropertyRequestTypedValue;
 	price: CreatePropertyRequestTypedValue;
 	imageUrls: string[];
+	isCryptoBuy: string;
 }
 
 export interface GetNewPropertiesResponse {
