@@ -9,18 +9,26 @@ import {Subscription} from 'rxjs/Subscription';
 
 declare const Pusher: any;
 
+// ToDo: Refactor when we start using a real notification
+export enum PUSHER_EVENTS_ENUM {
+	DEAL_INVITATION = '1',
+	DEAL_STATUS_CHANGED = '2',
+	NEW_DOCUMENT_UPLOADED = '3',
+	DOCUMENT_SIGNATURE_UPDATED = '4'
+}
+
 @Injectable()
 export class PusherService {
 	private pusher: any;
 	private pusherChannel: any;
-	private downloadableDeedDocumentSubject: Subject<any>;
+	private documentSignatureUpdatedSubject: Subject<any>;
 	private DEFAULT_VALUE_TIMEOUT = 5000;
 
 	constructor(private apiEndpointsService: APIEndpointsService,
 				private route: ActivatedRoute,
 				private router: Router,
 				private messageService: MessageService) {
-		this.downloadableDeedDocumentSubject = new Subject();
+		this.documentSignatureUpdatedSubject = new Subject();
 	}
 
 	public initializePusher(accessToken: string, userId: string): void {
@@ -46,7 +54,7 @@ export class PusherService {
 	public bindEventsToChannel(channel: any) {
 
 		// Event for Invitation
-		channel.bind('1', (data) => {
+		channel.bind(PUSHER_EVENTS_ENUM.DEAL_INVITATION, (data) => {
 			this.messageService.add({
 				severity: 'info',
 				summary: 'Deal Invitation. Please check My Deals.',
@@ -59,7 +67,7 @@ export class PusherService {
 		});
 
 		// Event for status changed
-		channel.bind('2', (data) => {
+		channel.bind(PUSHER_EVENTS_ENUM.DEAL_STATUS_CHANGED, (data) => {
 			if (!this.router.url.startsWith('/transaction-tool')) {
 				this.messageService.add({
 					severity: 'info',
@@ -80,7 +88,7 @@ export class PusherService {
 		});
 
 		// Event for new document uploaded
-		channel.bind('3', (data) => {
+		channel.bind(PUSHER_EVENTS_ENUM.NEW_DOCUMENT_UPLOADED, (data) => {
 			this.messageService.add({
 				severity: 'info',
 				summary: 'A new document has been uploaded to one of your deals',
@@ -89,16 +97,16 @@ export class PusherService {
 		});
 
 		// Event for downloadable signed document
-		channel.bind('4', (data) => {
-			this.triggerDownloadableSubject(data);
+		channel.bind(PUSHER_EVENTS_ENUM.DOCUMENT_SIGNATURE_UPDATED, (data) => {
+			this.triggerDocumentSignatureUpdatedSubject(data);
 		});
 	}
 
-	public subscribeToDownloadableSubject(observer: NextObserver<any>): Subscription {
-		return this.downloadableDeedDocumentSubject.subscribe(observer);
+	public subscribeToDocumentSignatureUpdatedSubject(observer: NextObserver<any>): Subscription {
+		return this.documentSignatureUpdatedSubject.subscribe(observer);
 	}
 
-	public triggerDownloadableSubject(event: any) {
-		return this.downloadableDeedDocumentSubject.next(event);
+	public triggerDocumentSignatureUpdatedSubject(event: any) {
+		return this.documentSignatureUpdatedSubject.next(event);
 	}
 }

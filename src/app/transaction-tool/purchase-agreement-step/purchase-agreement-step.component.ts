@@ -59,6 +59,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public deedStatus = Status;
 	public txHash: string;
 	public recordButtonEnabled = true;
+	public shouldShowSignatureDelayNotes = false;
 
 	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
@@ -88,18 +89,12 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 
 		});
 
-		this.pusherService.subscribeToDownloadableSubject({
+		this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
 			next: async (data: any) => {
-				console.log(data);
 				await this.setupDocument(this.deedId);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
+				this.shouldShowSignatureDelayNotes = false;
 			}
-		})
+		});
 	}
 
 	private async setupDocument(deedId: string) {
@@ -161,13 +156,8 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Retrieving signed document.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
 			await this.deedsService.markDocumentSigned(this.signingDocument.id);
+			this.shouldShowSignatureDelayNotes = true;
 		}
 	}
 
