@@ -3,19 +3,40 @@
     <div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
     </div>
     <ng-template #hasPreviewLink>
-        <div class="row text-center" *ngIf="shouldSendToBlockchain;else noBlockChainYet">
-            <div *ngIf="userIsSellerBroker;else notSellerBroker">
-                <i>Status: Waiting For You To Record The Disclosures To The Blockchain. Please use the button
-				below!</i>
-                <br>
-                <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
-                <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
+        <div class="row text-center" *ngIf="transactionDetails == null;else hasTxDetails">
+            <div *ngIf="shouldSendToBlockchain">
+                <div *ngIf="userIsSellerBroker;else notSellerBroker">
+                    <i>Status: Waiting For You To Record The Disclosures To The Blockchain. Please use the button
+                                        below!</i>
+                    <br>
+                    <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+                </div>
             </div>
-            <ng-template #notSellerBroker>
-                <i>Status: Waiting for Seller Broker To Record The Disclosures To The Blockchain</i>
-            </ng-template>
         </div>
-        <ng-template #noBlockChainYet></ng-template>
+        <ng-template #hasTxDetails>
+            <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.SUCCESS; else notSuccessfulTx">
+                <i>Action successfully recorded to the Blockchain. Here is your receipt:</i>
+                <a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+            </div>
+            <ng-template #notSuccessfulTx>
+                <div *ngIf="userIsSellerBroker;else notSellerBroker">
+                    <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
+                        <i>Your action is being recorded to the Blockchain. To check the current status, please follow the link below.</i>
+                        <a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+                    </div>
+                    <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
+                        <i>Your Blockchain action was not successfully recorded. Please try again. Here is your receipt:</i>
+                        <a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+                        <br>
+                        <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+                    </div>
+                </div>
+            </ng-template>
+            <hr>
+        </ng-template>
+        <ng-template #notSellerBroker>
+            <i>Status: Waiting for Seller Broker To Record The Disclosures To The Blockchain</i>
+        </ng-template>
         <div class="row">
             <div class="col-xs-12 text-center">
                 <app-document-preview [previewTitle]="disclosuresTitle" [previewSubtitle]="previewDisclosuresSubtitle"

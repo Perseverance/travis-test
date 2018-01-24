@@ -2,7 +2,6 @@
 <ng-template #dataLoaded>
     <div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
     </div>
-
     <ng-template #hasPreviewLink>
         <div class="row text-center" *ngIf="transactionDetails == null;else hasTxDetails">
             <div *ngIf="shouldSendToBlockchain">
@@ -33,11 +32,11 @@
                     </div>
                 </div>
             </ng-template>
+            <hr>
         </ng-template>
         <ng-template #notSellerBroker>
             <i>Status: Waiting for Seller Broker To Record The Purchase Agreement To The Blockchain</i>
         </ng-template>
-        <hr>
         <div class="row">
             <div class="col-xs-12">
                 <div class="row" *ngIf="userIsSellerBroker">
