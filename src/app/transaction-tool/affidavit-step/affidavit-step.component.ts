@@ -1,3 +1,4 @@
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
 import { environment } from './../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { DeedDocumentType } from '../enums/deed-document-type.enum';
@@ -49,8 +50,11 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public shouldSendToBlockchain: boolean;
 	public hasDataLoaded = false;
 	private deedAddress: string;
-	public txHash: string;
+	public deed: any;
 	public recordButtonEnabled = true;
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
+
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -75,12 +79,14 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
 	}
 
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.deed = deed;
 		this.shouldSendToBlockchain = (deed.status === Status.affidavit);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		this.deedAddress = deed.deedContractAddress;
@@ -92,6 +98,10 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			this.previewLink = doc.fileName;
 		}
 		this.getAffidavitSigners(doc);
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.AFFIDAVIT];
 	}
 
 	private getSignatureDocument(documents: any[]) {
@@ -181,7 +191,6 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
 			}
-			this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 			this.notificationService.pushInfo({
 				title: `Sending the document to the backend.`,
 				message: '',
