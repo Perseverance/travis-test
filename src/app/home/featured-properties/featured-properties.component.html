@@ -16,12 +16,8 @@
     </div>
 </ng-template>
 <ng-template #dataNotLoaded>
-    <div class="row featured-locations">
-        <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
-        <div class="featured-holder">
-            <div class="text-center">
-                <h3>Loading...</h3>
-            </div>
-        </div>
+    <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
+    <div class="row progress-spinner">
+        <p-progressSpinner></p-progressSpinner>
     </div>
 </ng-template>
