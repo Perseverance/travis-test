@@ -1,6 +1,6 @@
 import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
 import {environment} from './../../../environments/environment';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DeedDocumentType} from '../enums/deed-document-type.enum';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -28,7 +28,7 @@ declare const HelloSign;
 	templateUrl: './affidavit-step.component.html',
 	styleUrls: ['./affidavit-step.component.scss']
 })
-export class AffidavitStepComponent extends ErrorsDecoratableComponent implements OnInit {
+export class AffidavitStepComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public waitingTitle = 'Awaiting affidavit generation';
 	public affidavitTitle = 'Affidavit';
@@ -57,7 +57,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	private documentSignatureUpdatedSubscription: Subscription;
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
-	
+
 	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
 				private smartContractService: SmartContractConnectionService,
@@ -92,6 +92,10 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 				this.hideSignatureDelayNote();
 			}
 		});
+	}
+
+	ngOnDestroy() {
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {

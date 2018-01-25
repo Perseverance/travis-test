@@ -12,7 +12,7 @@ import {TransactionToolDocumentService} from './../transaction-tool-document.ser
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {Subscription} from 'rxjs/Subscription';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DeedsService} from '../../shared/deeds.service';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
 import {NotificationsService} from '../../shared/notifications/notifications.service';
@@ -29,7 +29,7 @@ declare const HelloSign;
 	templateUrl: './title-report.component.html',
 	styleUrls: ['./title-report.component.scss']
 })
-export class TitleReportComponent extends ErrorsDecoratableComponent implements OnInit {
+export class TitleReportComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public waitingTitle = 'Waiting title company user to upload title report';
 	public settlementTitle = 'Title Report';
@@ -96,6 +96,10 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 				this.hideSignatureDelayNote();
 			}
 		});
+	}
+
+	ngOnDestroy() {
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {

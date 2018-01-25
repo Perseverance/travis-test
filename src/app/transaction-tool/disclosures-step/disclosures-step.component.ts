@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TransactionToolDocumentService} from './../transaction-tool-document.service';
 import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {Subscription} from 'rxjs/Subscription';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Base64Service} from '../../shared/base64.service';
 import {DeedsService} from '../../shared/deeds.service';
 import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
@@ -29,7 +29,7 @@ declare const HelloSign;
 	templateUrl: './disclosures-step.component.html',
 	styleUrls: ['./disclosures-step.component.scss']
 })
-export class DisclosuresStepComponent extends ErrorsDecoratableComponent implements OnInit {
+export class DisclosuresStepComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public waitingTitle = 'Waiting seller broker to upload disclosures document';
 	public disclosuresTitle = 'Disclosures';
@@ -93,6 +93,10 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 				this.hideSignatureDelayNote();
 			}
 		});
+	}
+
+	ngOnDestroy() {
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {
