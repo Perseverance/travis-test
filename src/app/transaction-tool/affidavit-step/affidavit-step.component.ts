@@ -1,24 +1,25 @@
-import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
-import { environment } from './../../../environments/environment';
-import { Component, OnInit } from '@angular/core';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
+import {environment} from './../../../environments/environment';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
-import { Base64Service } from '../../shared/base64.service';
-import { DeedsService } from '../../shared/deeds.service';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { ErrorsService } from '../../shared/errors/errors.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
+import {HelloSignService} from '../../shared/hello-sign.service';
+import {Base64Service} from '../../shared/base64.service';
+import {DeedsService} from '../../shared/deeds.service';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
+import {ErrorsService} from '../../shared/errors/errors.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
+import {PusherService} from '../../shared/pusher.service';
 
 declare const HelloSign;
 
@@ -27,7 +28,7 @@ declare const HelloSign;
 	templateUrl: './affidavit-step.component.html',
 	styleUrls: ['./affidavit-step.component.scss']
 })
-export class AffidavitStepComponent extends ErrorsDecoratableComponent implements OnInit {
+export class AffidavitStepComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public waitingTitle = 'Awaiting affidavit generation';
 	public affidavitTitle = 'Affidavit';
@@ -52,20 +53,22 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	private deedAddress: string;
 	public deed: any;
 	public recordButtonEnabled = true;
+	public shouldShowSignatureDelayNotes = false;
+	private documentSignatureUpdatedSubscription: Subscription;
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
 
-
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private base64Service: Base64Service,
-		private deedsService: DeedsService,
-		private notificationService: NotificationsService,
-		private router: Router,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private base64Service: Base64Service,
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService,
+				private router: Router,
+				private pusherService: PusherService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -82,6 +85,17 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
+
+		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
+			next: async (data: any) => {
+				await this.setupDocument(this.deedId);
+				this.hideSignatureDelayNote();
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {
@@ -143,23 +157,8 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Recording the document to the Blockchain. Please do not leave this page.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
-			setTimeout(async () => {
-				// Workaround: waiting HelloSign to update new signature
-				await this.deedsService.markDocumentSigned(this.signingDocument.id);
-				await this.setupDocument(this.deedId);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
-			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+			await this.deedsService.markDocumentSigned(this.signingDocument.id);
+			this.showSignatureDelayNote();
 		}
 	}
 
@@ -239,6 +238,14 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+	}
+
+	private showSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = true;
+	}
+
+	private hideSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = false;
 	}
 
 }

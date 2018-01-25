@@ -1,25 +1,26 @@
-import { environment } from './../../../environments/environment';
-import { DeedDocumentType } from './../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from './../enums/user-role.enum';
-import { Base64Service } from './../../shared/base64.service';
-import { HelloSignService } from './../../shared/hello-sign.service';
+import {environment} from './../../../environments/environment';
+import {DeedDocumentType} from './../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from './../enums/user-role.enum';
+import {Base64Service} from './../../shared/base64.service';
+import {HelloSignService} from './../../shared/hello-sign.service';
 import {
 	SmartContractConnectionService,
 	Status
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import { TransactionToolDocumentService } from './../transaction-tool-document.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit } from '@angular/core';
-import { DeedsService } from '../../shared/deeds.service';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
-import { ErrorsService } from '../../shared/errors/errors.service';
-import { TranslateService } from '@ngx-translate/core';
-import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
+import {TransactionToolDocumentService} from './../transaction-tool-document.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DeedsService} from '../../shared/deeds.service';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
+import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
+import {ErrorsService} from '../../shared/errors/errors.service';
+import {TranslateService} from '@ngx-translate/core';
+import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
+import {PusherService} from '../../shared/pusher.service';
 
 declare const HelloSign;
 
@@ -28,7 +29,7 @@ declare const HelloSign;
 	templateUrl: './title-report.component.html',
 	styleUrls: ['./title-report.component.scss']
 })
-export class TitleReportComponent extends ErrorsDecoratableComponent implements OnInit {
+export class TitleReportComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public waitingTitle = 'Waiting title company user to upload title report';
 	public settlementTitle = 'Title Report';
@@ -58,18 +59,20 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public recordButtonEnabled = true;
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
-
+	public shouldShowSignatureDelayNotes = false;
+	private documentSignatureUpdatedSubscription: Subscription;
 
 	constructor(private route: ActivatedRoute,
-		private router: Router,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private base64Service: Base64Service,
-		private deedsService: DeedsService,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private router: Router,
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private base64Service: Base64Service,
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService,
+				private pusherService: PusherService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -86,6 +89,17 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
+
+		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
+			next: async (data: any) => {
+				await this.setupDocument(this.deedId);
+				this.hideSignatureDelayNote();
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {
@@ -150,23 +164,8 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Retrieving signed document.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
-			setTimeout(async () => {
-				// Workaround: waiting HelloSign to update new signature
-				await this.deedsService.markDocumentSigned(this.signingDocument.id);
-				await this.setupDocument(this.deedId);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
-			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+			await this.deedsService.markDocumentSigned(this.signingDocument.id);
+			this.showSignatureDelayNote();
 		}
 	}
 
@@ -245,5 +244,13 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+	}
+
+	private showSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = true;
+	}
+
+	private hideSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = false;
 	}
 }
