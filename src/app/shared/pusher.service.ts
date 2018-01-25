@@ -106,7 +106,7 @@ export class PusherService {
 		return this.documentSignatureUpdatedSubject.subscribe(observer);
 	}
 
-	public triggerDocumentSignatureUpdatedSubject(event: any) {
+	private triggerDocumentSignatureUpdatedSubject(event: any) {
 		return this.documentSignatureUpdatedSubject.next(event);
 	}
 }

@@ -97,7 +97,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
 			next: async (data: any) => {
 				await this.setupDocument(this.deedId);
-				this.shouldShowSignatureDelayNotes = false;
+				this.hideSignatureDelayNote();
 			}
 		});
 	}
@@ -170,7 +170,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
 			await this.deedsService.markDocumentSigned(this.signingDocument.id);
-			this.shouldShowSignatureDelayNotes = true;
+			this.showSignatureDelayNote();
 		}
 	}
 
@@ -256,5 +256,13 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		this.userIsBuyerBroker = (deed.currentUserRole === UserRoleEnum.BuyerBroker);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
 
+	}
+
+	private showSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = true;
+	}
+
+	private hideSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = false;
 	}
 }
