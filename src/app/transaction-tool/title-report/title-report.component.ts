@@ -54,7 +54,6 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public reuploadingDocumentActivated: boolean;
 	public deed: any;
 	public deedStatus = Status;
-	public txHash: string;
 	public recordButtonEnabled = true;
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
@@ -196,7 +195,6 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
 			}
-			this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 			this.notificationService.pushInfo({
 				title: `Sending the document to the backend.`,
 				message: '',

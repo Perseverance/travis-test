@@ -51,7 +51,6 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 	public signingDocument: any;
 	public hasDataLoaded = false;
 	private deedAddress: string;
-	public txHash: string;
 	public recordButtonEnabled = true;
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
@@ -169,7 +168,6 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
 			}
-			this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 			this.notificationService.pushInfo({
 				title: `Sending the document to the backend.`,
 				message: '',

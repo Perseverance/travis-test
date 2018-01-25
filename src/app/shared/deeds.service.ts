@@ -65,8 +65,10 @@ export class DeedsService {
 				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
 				status: 2
 			},
-			6: null, // Closing Documents
-			7: null // Ownership Transfer
+			6: { // Ownership Transffer
+				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 2
+			}
 		};
 		return result.data.data;
 	}
