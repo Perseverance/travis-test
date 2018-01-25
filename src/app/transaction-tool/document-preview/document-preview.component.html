@@ -1,7 +1,8 @@
 <div class="row document-preview-holder" *ngIf="previewLink">
-    <h4 class="text-left">{{ previewTitle }}</h4>
-    <h5 class="text-left">{{ previewSubtitle }}</h5>
-    <object [data]="previewLink | safeResourceURL" name="document-preview" type="application/pdf">
+	<h4 class="text-left">{{ previewTitle }}</h4>
+	<h5 class="text-left">{{ previewSubtitle }}</h5>
+	<h5 *ngIf="showSignatureDelayNotes" class="text-left">{{ signatureDelayNotes }}</h5>
+	<object [data]="previewLink | safeResourceURL" name="document-preview" type="application/pdf">
 		<iframe [src]="iframeSrc | safeResourceURL"></iframe>
 	</object>
 </div>
