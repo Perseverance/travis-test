@@ -1,6 +1,6 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'thousandSeparator'})
+@Pipe({ name: 'thousandSeparator' })
 export class ThousandSeparatorPipe implements PipeTransform {
 
 	private DECIMAL_SEPARATOR: string;
@@ -12,15 +12,21 @@ export class ThousandSeparatorPipe implements PipeTransform {
 	}
 
 	transform(value: number | string): string {
-		let [integer] = (value || '').toString()
-			.split(this.DECIMAL_SEPARATOR);
-		integer = integer.replace(/[^0-9.]/g, '');
-		integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
+		if (value < 1000) {
+			const integer = (Number(value).toFixed(1)).toString();
+			return integer;
+		} else {
+			let [integer] = (value || '').toString()
+				.split(this.DECIMAL_SEPARATOR);
+			integer = integer.replace(/[^0-9.]/g, '');
+			integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
 
-		if (integer === '') {
-			integer = '0';
+			if (integer === '') {
+				integer = '0';
+			}
+
+			return integer;
 		}
 
-		return integer;
 	}
 }
