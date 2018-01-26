@@ -1,3 +1,4 @@
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
 import { ConfirmationService } from 'primeng/primeng';
 import { CustomNumberValidator } from './eth-price-validator';
 import { REVERSE_STEPS } from './../workflow/workflow.model';
@@ -64,6 +65,8 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public uploadDisclosuresSubtitle = 'Please upload disclosures document:';
 
 	public inviteForm: FormGroup;
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
 
 	constructor(private authService: AuthenticationService,
 		private route: ActivatedRoute,
@@ -106,8 +109,13 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 			self.deedId = deedId;
 			await self.setupDeedData(deedId);
 			self.hasDataLoaded = true;
+			self.setupTransactionLink();
 			self.invitationDataLoaded = true;
 		});
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.RESERVATION];
 	}
 
 	private async setupDeedData(deedId) {
