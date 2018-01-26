@@ -13,6 +13,7 @@ if (environment.production) {
 	scriptElement.setAttribute('defer', '');
 	scriptElement.setAttribute('src', '//js.hs-scripts.com/4204561.js');
 	document.head.appendChild(scriptElement);
+
 	enableProdMode();
 }
 
