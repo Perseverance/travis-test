@@ -45,27 +45,27 @@ export class DeedsService {
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
 		result.data.data.transactionLinks = {
 			1: { // Reservation
-				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
 				status: 2
 			},
 			2: { // Purchase Agreement
-				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
 				status: 2
 			},
 			3: { // Title Report
-				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
 				status: 2
 			},
 			4: { // Disclosures
-				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
 				status: 2
 			},
 			5: { // Affidavit
-				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
 				status: 2
 			},
 			6: { // Ownership Transffer
-				url: 'https://rinkeby.etherscan.io/tx/0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
 				status: 2
 			}
 		};
