@@ -1,4 +1,3 @@
-import { MockedFeaturedPropertiesService } from './mocked-featured-properties.service';
 import { PropertyOwnerGuard } from './property-owner.service';
 import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
 import { InlineSVGModule } from 'ng-inline-svg';
@@ -55,8 +54,7 @@ import { InternationalPhoneModule } from 'ng4-intl-phone/src/lib';
 	providers: [
 		PropertiesService,
 		MockedFavouriteLocationsService,
-		PropertyOwnerGuard,
-		MockedFeaturedPropertiesService
+		PropertyOwnerGuard
 	]
 })
 export class PropertiesModule {

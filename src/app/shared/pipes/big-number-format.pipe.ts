@@ -25,6 +25,8 @@ export class BigNumberFormatPipe implements PipeTransform {
 			} else if (abs >= Math.pow(10, 3)) {
 				// thousand
 				returnValue = (+value / Math.pow(10, 3)).toFixed(1) + 'K';
+			} else {
+				returnValue = (+value).toFixed(1);
 			}
 
 			const isFormatted = (returnValue !== undefined);
