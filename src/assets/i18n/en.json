@@ -3,15 +3,15 @@
         "misc": {
             "or": "or",
             "checking": "Checking",
-            "testPorperty": "This is test!",
-            "test2": "Another TEST",
-            "test3": "Another TEST2",
-            "test4": "Another TEST3",
+            "testPorperty": "This is cache test one!",
+            "test2": "Another cache test two",
+            "test3": "Another cache test three",
+            "test4": "Another cache test four",
             "test5": {
-                "test2": "Internal Test"
+                "test2": "Internal cache test five"
             },
             "test6": {
-                "test2": "Test1234"
+                "test2": "Internal cache test six"
             }
         },
         "label": {
