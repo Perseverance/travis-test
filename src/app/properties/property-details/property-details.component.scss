@@ -31,7 +31,7 @@
 				position: absolute;
 				margin-left: 15px;
 				margin-top: 15px;
-				z-index: 5000;
+				z-index: 1;
 			}
 		}
 		.property-carousel {
@@ -188,17 +188,6 @@
 				}
 				#overview {
 					.property-desc {
-						margin-top: calc(5% + 10px);
-						line-height: 24px;
-						@media #{$xs} {
-							margin-top: 55px;
-						}
-						@media #{$md} {
-							margin-top: 55px;
-						}
-					}
-					.property-disclaimer {
-						font-weight: bold;
 						margin-top: calc(5% + 10px);
 						line-height: 24px;
 						@media #{$xs} {

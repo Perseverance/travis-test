@@ -1,11 +1,11 @@
-import {Jsonp} from '@angular/http';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {GoogleAnalyticsEventsService} from '../../shared/google-analytics.service';
-import {Router} from '@angular/router';
-import {GetFeaturePropertiesResponse} from './../../properties/properties-responses';
-import {PropertiesService} from './../../properties/properties.service';
-import {NgxCarousel} from 'ngx-carousel';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Jsonp } from '@angular/http';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { GoogleAnalyticsEventsService } from '../../shared/google-analytics.service';
+import { Router } from '@angular/router';
+import { GetFeaturePropertiesResponse } from './../../properties/properties-responses';
+import { PropertiesService } from './../../properties/properties.service';
+import { NgxCarousel } from 'ngx-carousel';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
 	selector: 'app-featured-properties',
@@ -18,13 +18,16 @@ export class FeaturedPropertiesComponent implements OnInit {
 	public featureLocations;
 	public showedLocations;
 	public carouselTile: NgxCarousel;
+	public hasDataLoaded = false;
+	public isServiceWorking = true;
+
 
 	constructor(private propertiesService: PropertiesService, private router: Router) {
 	}
 
 	async ngOnInit() {
 		this.carouselTile = {
-			grid: {xs: 1, sm: 2, md: 3, lg: 3, all: 0},
+			grid: { xs: 1, sm: 2, md: 3, lg: 3, all: 0 },
 			speed: 1000,
 			slide: 1,
 			interval: 4000,
@@ -34,11 +37,17 @@ export class FeaturedPropertiesComponent implements OnInit {
 			easing: 'ease',
 			loop: true
 		};
-		this.featureLocations = await this.propertiesService.getMockedFeaturedLocations();
-		this.showedLocations = this.featureLocations;
+		try {
+			this.featureLocations = await this.propertiesService.getFeaturedProperties();
+			this.showedLocations = this.featureLocations;
+			this.hasDataLoaded = true;
+		} catch (error) {
+			this.isServiceWorking = false;
+		}
+
 	}
 
-	public featuredPropertyClicked(location: GetFeaturePropertiesResponse) {
+	public featuredPropertyClicked(location) {
 		this.router.navigate(['property', location.id]);
 	}
 }

@@ -1,7 +1,9 @@
 <div class="row property" *ngIf="property">
 	<div class="col-xs-12 property-carousel-row">
 		<div class="row property-carousel-holder">
-			<div class="text-uppercase label buy-crypto-label" *ngIf="property.isCryptoBuy">buy with bitcoin</div>
+			<div class="text-uppercase label buy-crypto-label" *ngIf="property.isCryptoBuy">{{
+				'landing.new-properties.buy-online' | translate }}
+			</div>
 			<ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
 				<ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">
 					<img class="property-img"
@@ -129,13 +131,12 @@
 									</div>
 									<div class="row property-desc" [innerHTML]="property.desc">
 									</div>
-									<div class="row property-disclaimer" [innerHTML]="property.disclaimer">
-									</div>
 								</div>
 								<div id="features" class="tab-pane fade">
 									<div class="row">
 										<div class="col-xs-12 tab-header">
-											<h4>{{ 'property-details.features' | translate }}</h4>
+											<h4>{{ 'property-details.features' | translate
+												}}</h4>
 										</div>
 									</div>
 									<div class="row" *ngIf="featureScale && publicTransportScale && binaryScale">
