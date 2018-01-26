@@ -1,8 +1,24 @@
 <div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
 <ng-template #dataLoaded>
     <div class="invitation" *ngIf="invitationDataLoaded">
+        <div *ngIf="transactionDetails != null && transactionDetails.status == TRANSACTION_STATUSES.SUCCESS">
+            <i>Your blockchain reservation was successful, here is your receipt:</i>
+            <a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+        </div>
         <div *ngIf="isWaitingForReservation;else notWaiting">
-            <h5 class="text-center">Waiting for the blockchain reservation</h5>
+            <div *ngIf="userRole === userRoleEnum.SellerBroker; else notSellerBroker">
+                <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
+                    <i>Your blockchain action was not successfully recorded. Please try again. Here is your receipt:</i>
+                    <a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+                </div>
+                <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
+                    <i>Your action is still being recorded to the Blockchain. To check the current status, please follow the link below.</i>
+                    <a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+                </div>
+            </div>
+            <ng-template #notSellerBroker>
+                <h5>Waiting for blockchain reservation</h5>
+            </ng-template>
         </div>
         <ng-template #notWaiting>
             <h3>Invitation to Deal</h3>
