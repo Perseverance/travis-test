@@ -8,7 +8,7 @@
         <div *ngIf="isWaitingForReservation;else notWaiting">
             <div *ngIf="userRole === userRoleEnum.SellerBroker; else notSellerBroker">
                 <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
-                    <i>Your blockchain action was not successfully recorded. Please try again. Here is your receipt:</i>
+                    <i>Your blockchain action was not successfully recorded. Please contact the support and show them your receipt:</i>
                     <a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
                 </div>
                 <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
