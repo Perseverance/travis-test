@@ -1,3 +1,4 @@
+import { WebpackTranslateLoader } from './../../webpack-translate-loader';
 import { TextLimitationPipe } from './../shared/pipes/text-limitation.pipe';
 import { AuthenticatedGuard } from './../authentication/authenticated-guard.service';
 import { ReferralComponent } from './../referral/referral.component';
@@ -65,9 +66,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TranslateModule.forChild({
 			loader: {
 				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient]
+				useClass: WebpackTranslateLoader
 			}
+
 		}),
 		SharedModule,
 		AvatarModule,
