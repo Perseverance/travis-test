@@ -23,7 +23,7 @@
         <ng-template #notWaiting>
             <h3>Invitation to Deal</h3>
             <app-property-item-view [deedId]="deedId"></app-property-item-view>
-            <div *ngIf="deed.status > deedStatus.reservedOnBlockchain; then invitationPassed; else invitationNotPass">
+            <div *ngIf="deed.status >= deedStatus.reservedOnBlockchain; then invitationPassed; else invitationNotPass">
             </div>
             <ng-template #invitationNotPass>
                 <div *ngIf="arePartiesInvited; then partiesInvited; else partiesNotInvited"></div>
