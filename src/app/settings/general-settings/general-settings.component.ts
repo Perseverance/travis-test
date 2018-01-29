@@ -73,6 +73,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 						this.childPhoneComponent.selectedCountry = this.selectedCountryOnEditProfile;
 					}
 				}
+
 				this.hasUserDataLoaded = true;
 			}
 		});
@@ -169,15 +170,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.onCountryCodeUpdated.emit(this.childPhoneComponent.selectedCountry.countryCode);
 
 		return phoneNumber;
-	}
-
-	public setPhone(countryCode: string) {
-		if (countryCode) {
-			if (this.childPhoneComponent) {
-				const event = new CustomEvent('', {});
-				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
-			}
-		}
 	}
 
 	public handlePhoneInputChanged() {

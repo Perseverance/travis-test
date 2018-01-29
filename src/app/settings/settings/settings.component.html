@@ -3,9 +3,12 @@
 	<p-tabView (onChange)="setQueryParamForSelectedTab($event.index)" orientation="left">
 		<p-tabPanel header="{{ 'settings.headers.general-settings' | translate }}"
 					[selected]="selectedTab === settingsTabs.GENERAL"
-					headerStyleClass="settings-panel-header">
-			<app-general-settings (onCountryCodeUpdated)="updateGlobalCountryCode($event)"
-								  [generalTabIsActive]="selectedTab === settingsTabs.GENERAL"></app-general-settings>
+					headerStyleClass="settings-panel-header"
+					[cache]="false">
+			<ng-template pTemplate="content">
+				<app-general-settings (onCountryCodeUpdated)="updateGlobalCountryCode($event)"
+									  [generalTabIsActive]="selectedTab === settingsTabs.GENERAL"></app-general-settings>
+			</ng-template>
 		</p-tabPanel>
 		<p-tabPanel header="{{ 'settings.headers.my-listed-properties' | translate }}"
 					[selected]="selectedTab === settingsTabs.MY_LISTINGS"
@@ -14,8 +17,11 @@
 		</p-tabPanel>
 		<p-tabPanel header="{{ 'settings.headers.pro-wallet' | translate }}"
 					[selected]="selectedTab === settingsTabs.WALLET"
-					headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified'>
-			<app-pro-wallet (onCountryCodeUpdated)="updateGlobalCountryCode($event)"></app-pro-wallet>
+					headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified'
+					[cache]="false">
+			<ng-template pTemplate="content">
+				<app-pro-wallet (onCountryCodeUpdated)="updateGlobalCountryCode($event)"></app-pro-wallet>
+			</ng-template>
 		</p-tabPanel>
 		<p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}"
 					[selected]="selectedTab === settingsTabs.MY_DEALS"

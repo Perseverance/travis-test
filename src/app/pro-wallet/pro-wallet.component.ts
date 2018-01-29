@@ -231,15 +231,6 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		return phoneNumber;
 	}
 
-	public setPhone(countryCode: string) {
-		if (countryCode) {
-			if (this.childPhoneComponent) {
-				const event = new CustomEvent('', {});
-				this.childPhoneComponent.updateSelectedCountry(event, countryCode);
-			}
-		}
-	}
-
 	public handlePhoneInputChanged() {
 		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
 			this.phoneNumber.setValidators(Validators.compose([
