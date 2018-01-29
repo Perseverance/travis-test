@@ -559,9 +559,15 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				position: { lat: lat, lng: lng },
 				icon: this.googleMarkersService.defaultMarkerSettings,
 				label: this.googleMarkersService.getMarkerLabel
-					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(this.price.value), true))
+					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(this.price.value, this.currency.value), true))
 			});
 		this.overlays = [marker];
+	}
+
+	public onCurrencyChange() {
+		if (this.propertyLat.value && this.propertyLon.value) {
+			this.createAndSetPropertyMarker(this.propertyLat.value, this.propertyLon.value);
+		}
 	}
 
 	public myUploader() {
