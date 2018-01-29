@@ -1,72 +1,81 @@
 <div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
 <ng-template #dataLoaded>
-    <div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
-    </div>
-    <ng-template #hasPreviewLink>
-        <div class="row text-center" *ngIf="transactionDetails == null;else hasTxDetails">
-            <div *ngIf="shouldSendToBlockchain">
-                <div *ngIf="userIsSellerBroker;else notSellerBroker">
-                    <i>Status: Waiting For You To Record The Disclosures To The Blockchain. Please use the button
+	<div *ngIf="previewLink; then hasPreviewLink; else noPreviewLink">
+	</div>
+	<ng-template #hasPreviewLink>
+		<div class="row text-center" *ngIf="transactionDetails == null;else hasTxDetails">
+			<div *ngIf="shouldSendToBlockchain">
+				<div *ngIf="userIsSellerBroker;else notSellerBroker">
+					<i>Status: Waiting For You To Record The Disclosures To The Blockchain. Please use the button
 						below!</i>
-                    <br>
-                    <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
-                </div>
-            </div>
-        </div>
-        <ng-template #hasTxDetails>
-            <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.SUCCESS; else notSuccessfulTx">
-                <i>Action successfully recorded to the Blockchain. Here is your receipt:</i>
-                <a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url | etherscan}}</a>
-            </div>
-            <ng-template #notSuccessfulTx>
-                <div *ngIf="userIsSellerBroker;else notSellerBroker">
-                    <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
-                        <i>Your action is being recorded to the Blockchain. To check the current status, please follow
+					<br>
+					<app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled"
+												(onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+				</div>
+			</div>
+		</div>
+		<ng-template #hasTxDetails>
+			<div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.SUCCESS; else notSuccessfulTx">
+				<i>Action successfully recorded to the Blockchain. Here is your receipt:</i>
+				<a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url |
+					etherscan}}</a>
+			</div>
+			<ng-template #notSuccessfulTx>
+				<div *ngIf="userIsSellerBroker;else notSellerBroker">
+					<div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
+						<i>Your action is being recorded to the Blockchain. To check the current status, please follow
 							the link below.</i>
-                        <a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url | etherscan}}</a>
-                    </div>
-                    <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
-                        <i>Your Blockchain action was not successfully recorded. Please try again. Here is your
+						<a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url |
+							etherscan}}</a>
+					</div>
+					<div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
+						<i>Your Blockchain action was not successfully recorded. Please try again. Here is your
 							receipt:</i>
-                        <a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url | etherscan}}</a>
-                        <br>
-                        <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
-                    </div>
-                </div>
-            </ng-template>
-        </ng-template>
-        <ng-template #notSellerBroker>
-            <i>Status: Waiting for Seller Broker To Record The Disclosures To The Blockchain</i>
-        </ng-template>
-        <div class="row">
-            <div class="col-xs-12">
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <app-document-preview [previewTitle]="disclosuresTitle" [previewSubtitle]="previewDisclosuresSubtitle"
-                    [previewLink]="previewLink" [showSignatureDelayNotes]="shouldShowSignatureDelayNotes"></app-document-preview>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
-                    [hasBuyerBrokerSigned]="hasBuyerBrokerSigned" [hasSellerBrokerSigned]="hasSellerBrokerSigned"
-                    [showSignButton]="shouldShowSignButton()" [documentType]="deedDocumentTypeEnum.SignedDisclosures"
-                    (onSignDocument)="signDocument()"></app-sign-document>
-            </div>
-        </div>
-    </ng-template>
+						<a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url |
+							etherscan}}</a>
+						<br>
+						<app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled"
+													(onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+					</div>
+				</div>
+			</ng-template>
+		</ng-template>
+		<ng-template #notSellerBroker>
+			<i>Status: Waiting for Seller Broker To Record The Disclosures To The Blockchain</i>
+		</ng-template>
+		<div class="row">
+			<div class="col-xs-12">
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<app-document-preview [previewTitle]="disclosuresTitle" [previewSubtitle]="previewDisclosuresSubtitle"
+									  [previewLink]="previewLink"
+									  [showSignatureDelayNotes]="shouldShowSignatureDelayNotes"></app-document-preview>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
+								   [hasBuyerBrokerSigned]="hasBuyerBrokerSigned"
+								   [hasSellerBrokerSigned]="hasSellerBrokerSigned"
+								   [showSignButton]="shouldShowSignButton()"
+								   [disableSignButton]="shouldShowSignatureDelayNotes"
+								   [documentType]="deedDocumentTypeEnum.SignedDisclosures"
+								   (onSignDocument)="signDocument()"></app-sign-document>
+			</div>
+		</div>
+	</ng-template>
 
-    <ng-template #noPreviewLink>
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <h5>{{waitingTitle}}</h5>
-            </div>
-        </div>
-    </ng-template>
+	<ng-template #noPreviewLink>
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h5>{{waitingTitle}}</h5>
+			</div>
+		</div>
+	</ng-template>
 </ng-template>
 <ng-template #dataNotLoaded>
-    <h4>Loading...</h4>
+	<h4>Loading...</h4>
 </ng-template>
