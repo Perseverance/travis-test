@@ -26,6 +26,11 @@ $pending-color: #52caf5;
 				cursor: default;
 				opacity: 0.8;
 			}
+			.link-disabled {
+				pointer-events: none;
+				cursor: default;
+				opacity: 0.8;
+			}
 		}
 	}
 	.signed-document {

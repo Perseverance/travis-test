@@ -84,6 +84,7 @@
 			<div class="col-xs-12 text-center">
 				<app-sign-document [hasBuyerSigned]="hasBuyerSigned" [hasSellerSigned]="hasSellerSigned"
 								   [showSignButton]="shouldShowSignButton()"
+								   [disableSignButton]="shouldShowSignatureDelayNotes"
 								   [documentType]="deedDocumentTypeEnum.TitleReport"
 								   (onSignDocument)="signDocument()"></app-sign-document>
 			</div>
