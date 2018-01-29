@@ -36,7 +36,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public updatedCountryCode: string;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 	@Input() generalTabIsActive = false;
-	@Output() onCountryCodeUpdated = new EventEmitter<string>();
 
 	constructor(private authService: AuthenticationService,
 				private formBuilder: FormBuilder,
@@ -166,9 +165,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
 			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
-
-		this.onCountryCodeUpdated.emit(this.childPhoneComponent.selectedCountry.countryCode);
-
+		
 		return phoneNumber;
 	}
 

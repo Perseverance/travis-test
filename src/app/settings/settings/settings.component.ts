@@ -38,7 +38,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
 	public isEmailVerified = true;
-	public globalCountryCode: string;
 
 	private paramsSubscription: Subscription;
 
@@ -120,7 +119,4 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.router.navigate([currentPath], {queryParams: queryParams});
 	}
 
-	public updateGlobalCountryCode(event) {
-		this.globalCountryCode = event;
-	}
 }

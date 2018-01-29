@@ -46,9 +46,6 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public phoneMaxLengthWithPlusSign = 21;
 	public selectedCountryOnGenerateWallet: any;
 
-
-	@Output() onCountryCodeUpdated = new EventEmitter<string>();
-
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
@@ -225,8 +222,6 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
 			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
-
-		this.onCountryCodeUpdated.emit(this.childPhoneComponent.selectedCountry.countryCode);
 
 		return phoneNumber;
 	}
