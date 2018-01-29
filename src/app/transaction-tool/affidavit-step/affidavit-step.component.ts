@@ -1,25 +1,25 @@
-import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
-import {environment} from './../../../environments/environment';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DeedDocumentType} from '../enums/deed-document-type.enum';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
+import { environment } from './../../../environments/environment';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DeedDocumentType } from '../enums/deed-document-type.enum';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TransactionToolDocumentService } from '../transaction-tool-document.service';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import {HelloSignService} from '../../shared/hello-sign.service';
-import {Base64Service} from '../../shared/base64.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from '../enums/user-role.enum';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {NotificationsService} from '../../shared/notifications/notifications.service';
-import {ErrorsService} from '../../shared/errors/errors.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
-import {PusherService} from '../../shared/pusher.service';
+import { HelloSignService } from '../../shared/hello-sign.service';
+import { Base64Service } from '../../shared/base64.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from '../enums/user-role.enum';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { ErrorsService } from '../../shared/errors/errors.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
+import { PusherService } from '../../shared/pusher.service';
 
 declare const HelloSign;
 
@@ -59,16 +59,16 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public transactionDetails: any = null;
 
 	constructor(private route: ActivatedRoute,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private base64Service: Base64Service,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				private router: Router,
-				private pusherService: PusherService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private base64Service: Base64Service,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		private router: Router,
+		private pusherService: PusherService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -115,7 +115,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	}
 
 	private setupTransactionLink() {
-		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.AFFIDAVIT];
+		this.transactionDetails = this.deed.transactions[BLOCKCHAIN_TRANSACTION_STEPS.AFFIDAVIT];
 	}
 
 	private getSignatureDocument(documents: any[]) {

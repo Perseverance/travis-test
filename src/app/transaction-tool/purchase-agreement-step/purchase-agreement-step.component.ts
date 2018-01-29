@@ -122,7 +122,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	}
 
 	private setupTransactionLink() {
-		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.PURCHASE_AGREEMENT];
+		this.transactionDetails = this.deed.transactions[BLOCKCHAIN_TRANSACTION_STEPS.PURCHASE_AGREEMENT];
 	}
 
 	private getSignatureDocument(documents: any[]) {

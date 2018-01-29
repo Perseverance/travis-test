@@ -11,9 +11,9 @@ export enum INVITATION_STATUSES {
 }
 
 export enum TRANSACTION_STATUSES {
-	PENDING = 1,
-	SUCCESS = 2,
-	FAILED = 3
+	PENDING = 0,
+	SUCCESS = 1,
+	FAILED = 2
 }
 
 export enum BLOCKCHAIN_TRANSACTION_STEPS {
@@ -43,30 +43,30 @@ export class DeedsService {
 			deedId
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
-		result.data.data.transactionLinks = {
+		result.data.data.transactions = {
 			1: { // Reservation
-				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 2
+				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 1
 			},
 			2: { // Purchase Agreement
-				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 2
+				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 1
 			},
 			3: { // Title Report
-				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 2
+				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 1
 			},
 			4: { // Disclosures
-				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 2
+				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 1
 			},
 			5: { // Affidavit
-				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 2
+				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 1
 			},
 			6: { // Ownership Transffer
-				url: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 2
+				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
+				status: 1
 			}
 		};
 		return result.data.data;
