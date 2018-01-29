@@ -17,19 +17,22 @@
 		<ng-template #hasTxDetails>
 			<div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.SUCCESS; else notSuccessfulTx">
 				<i>Action successfully recorded to the Blockchain. Here is your receipt:</i>
-				<a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+				<a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url |
+					etherscan}}</a>
 			</div>
 			<ng-template #notSuccessfulTx>
 				<div *ngIf="userIsSeller;else notSeller">
 					<div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
 						<i>Your action is being recorded to the Blockchain. To check the current status, please follow
 							the link below.</i>
-						<a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+						<a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url |
+							etherscan}}</a>
 					</div>
 					<div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
 						<i>Your Blockchain action was not successfully recorded. Please try again. Here is your
 							receipt:</i>
-						<a [href]="transactionDetails.url" target="_blank">{{transactionDetails.url}}</a>
+						<a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url |
+							etherscan}}</a>
 						<br>
 						<app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled"
 													(onRecord)="onRecordClick($event)"></app-record-blockchain-form>
