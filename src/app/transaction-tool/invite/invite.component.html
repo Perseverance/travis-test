@@ -3,17 +3,17 @@
     <div class="invitation" *ngIf="invitationDataLoaded">
         <div *ngIf="transactionDetails != null && transactionDetails.status == TRANSACTION_STATUSES.SUCCESS">
             <i>Your blockchain reservation was successful, here is your receipt:</i>
-            <a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url | etherscan}}</a>
+            <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
         </div>
         <div *ngIf="isWaitingForReservation;else notWaiting">
             <div *ngIf="userRole === userRoleEnum.SellerBroker; else notSellerBroker">
                 <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
                     <i>Your blockchain action was not successfully recorded. Please contact the support and show them your receipt:</i>
-                    <a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url | etherscan}}</a>
+                    <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
                 </div>
                 <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
                     <i>Your action is still being recorded to the Blockchain. To check the current status, please follow the link below.</i>
-                    <a [href]="transactionDetails.url | etherscan" target="_blank">{{transactionDetails.url | etherscan}}</a>
+                    <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
                 </div>
             </div>
             <ng-template #notSellerBroker>

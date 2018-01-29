@@ -1,26 +1,26 @@
-import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
-import {HelloSignService} from './../../shared/hello-sign.service';
-import {DeedDocumentType} from './../enums/deed-document-type.enum';
-import {Observable} from 'rxjs/Observable';
-import {UserRoleEnum} from './../enums/user-role.enum';
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
+import { HelloSignService } from './../../shared/hello-sign.service';
+import { DeedDocumentType } from './../enums/deed-document-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { UserRoleEnum } from './../enums/user-role.enum';
 import {
 	SmartContractConnectionService,
 	Status
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TransactionToolDocumentService} from './../transaction-tool-document.service';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {Subscription} from 'rxjs/Subscription';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Base64Service} from '../../shared/base64.service';
-import {DeedsService} from '../../shared/deeds.service';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {ErrorsService} from '../../shared/errors/errors.service';
-import {TranslateService} from '@ngx-translate/core';
-import {NotificationsService} from '../../shared/notifications/notifications.service';
-import {ErrorsDecoratableComponent} from '../../shared/errors/errors.decoratable.component';
-import {environment} from '../../../environments/environment';
-import {PusherService} from '../../shared/pusher.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TransactionToolDocumentService } from './../transaction-tool-document.service';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Base64Service } from '../../shared/base64.service';
+import { DeedsService } from '../../shared/deeds.service';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { ErrorsService } from '../../shared/errors/errors.service';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
+import { environment } from '../../../environments/environment';
+import { PusherService } from '../../shared/pusher.service';
 
 declare const HelloSign;
 
@@ -60,15 +60,15 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 	private documentSignatureUpdatedSubscription: Subscription;
 
 	constructor(private route: ActivatedRoute,
-				private router: Router,
-				private documentService: TransactionToolDocumentService,
-				private smartContractService: SmartContractConnectionService,
-				private helloSignService: HelloSignService,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				private pusherService: PusherService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private router: Router,
+		private documentService: TransactionToolDocumentService,
+		private smartContractService: SmartContractConnectionService,
+		private helloSignService: HelloSignService,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		private pusherService: PusherService,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -115,7 +115,7 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	private setupTransactionLink() {
-		this.transactionDetails = this.deed.transactionLinks[BLOCKCHAIN_TRANSACTION_STEPS.DISCLOSURES];
+		this.transactionDetails = this.deed.transactions[BLOCKCHAIN_TRANSACTION_STEPS.DISCLOSURES];
 	}
 
 	private getSignatureDocument(documents: any[]) {
