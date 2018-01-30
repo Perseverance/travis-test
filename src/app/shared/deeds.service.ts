@@ -43,32 +43,6 @@ export class DeedsService {
 			deedId
 		};
 		const result = await this.restService.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_DEED, { params });
-		result.data.data.transactions = {
-			1: { // Reservation
-				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 1
-			},
-			2: { // Purchase Agreement
-				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 1
-			},
-			3: { // Title Report
-				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 1
-			},
-			4: { // Disclosures
-				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 1
-			},
-			5: { // Affidavit
-				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 1
-			},
-			6: { // Ownership Transffer
-				txHash: '0xafea84ff77667fb9ac23ff474b8bafe50177e8f64cab8d4899699c4b5e0b4a27',
-				status: 1
-			}
-		};
 		return result.data.data;
 	}
 

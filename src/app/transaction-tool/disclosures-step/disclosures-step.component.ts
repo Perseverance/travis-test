@@ -115,7 +115,13 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	private setupTransactionLink() {
-		this.transactionDetails = this.deed.transactions[BLOCKCHAIN_TRANSACTION_STEPS.DISCLOSURES];
+		this.transactionDetails = null;
+		for (const deal of this.deed.transactions) {
+			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.DISCLOSURES) {
+				this.transactionDetails = deal;
+				return;
+			}
+		}
 	}
 
 	private getSignatureDocument(documents: any[]) {

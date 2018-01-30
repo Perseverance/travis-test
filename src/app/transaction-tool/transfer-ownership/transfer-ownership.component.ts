@@ -88,7 +88,13 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	}
 
 	private setupTransactionLink() {
-		this.transactionDetails = this.deed.transactions[BLOCKCHAIN_TRANSACTION_STEPS.OWNERSHIP_TRANSFER];
+		this.transactionDetails = null;
+		for (const deal of this.deed.transactions) {
+			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.OWNERSHIP_TRANSFER) {
+				this.transactionDetails = deal;
+				return;
+			}
+		}
 	}
 
 	// TODO change message
