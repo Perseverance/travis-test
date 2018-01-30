@@ -28,14 +28,13 @@ $card-half-padding: $card-padding/2;
                 &.verified-label {
                     background: $green-sec;
                     color: white;
+                    margin-right: 5px;
                 }
-            }
-            .buy-crypto-label {
-                background: #44d32a;
-                color: #fff;
-                position: absolute; // margin-left: 10px;
-                // margin-top: 10px;
-                z-index: 5000;
+                &.crypto-label {
+                    background: $green-sec;
+                    color: white;
+                    margin-right: 5px;
+                }
             }
         }
         img {

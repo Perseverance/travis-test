@@ -4,8 +4,13 @@
         <div class="labels-container">
             <div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}
             </div>
-            <div class="text-uppercase label verified-label" *ngIf="property.isCryptoBuy">{{ 'landing.new-properties.buy-online' | translate }}
-            </div>
+            <div class="text-uppercase label crypto-label" *ngIf="property.isCryptoBuy && property.isTransactionToolEnabled ;else differentLabels">{{ 'landing.new-properties.buy-btc' | translate }}</div>
+            <ng-template #differentLabels>
+                <div class="text-uppercase label verified-label" *ngIf="property.isTransactionToolEnabled">{{ 'landing.new-properties.buy-online' | translate }}
+                </div>
+                <div class="text-uppercase label crypto-label" *ngIf="property.isCryptoBuy">{{ 'landing.new-properties.buy-btc' | translate }}
+                </div>
+            </ng-template>
         </div>
         <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
         />
