@@ -232,7 +232,8 @@
             "new-label": "NEW",
             "verified": "VERIFIED",
             "bedrooms": "Bedrooms",
-            "buy-online": "Buy with Bitcoin Now"
+            "buy-btc": "Buy with Bitcoin Now",
+            "buy-online": "Buy Online"
         },
         "proposal-ios": {
             "header": "Introducing Propy mobile app for iOS",
