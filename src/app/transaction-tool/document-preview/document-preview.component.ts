@@ -7,7 +7,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 })
 export class DocumentPreviewComponent implements OnInit, OnChanges {
 	public iframeSrc: string;
-	public signatureDelayNotes = 'Your document will be updated shortly.';
+	public signatureDelayNotes = 'Your document will be updated shortly';
 
 	@Input() previewTitle: string;
 	@Input() previewSubtitle: string;
