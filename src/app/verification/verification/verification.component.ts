@@ -60,7 +60,6 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 		return this.route.queryParams
 			.subscribe(async params => {
 				if (params.code && params.email) {
-					// await this.sendActivationCode(params.code, params.email);
 					setTimeout(async () => {
 						await this.sendActivationCode(params.code, params.email);
 						this.hasDataLoaded = true;
