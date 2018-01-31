@@ -10,10 +10,12 @@ import { CurrencyDataService } from './currency-data.service';
 })
 export class CryptoWidgetComponent implements OnInit {
 	public cryptoData: any;
+	public cryptoPrice: any;
 	constructor(public currecyService: CurrencyDataService) { }
 
 	async ngOnInit() {
 		this.cryptoData = await this.currecyService.loadCurrencyData('https://api.coinmarketcap.com/v1/ticker/propy/');
+		this.cryptoPrice = (+this.cryptoData.price_usd).toFixed(4);
 	}
 
 }
