@@ -52,6 +52,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { NotAuthenticatedGuard } from '../authentication/not-authenticated-guard.service';
 import { CryptoWidgetComponent } from './crypto-widget/crypto-widget.component';
 import { CurrencyDataService } from './crypto-widget/currency-data.service';
+import { CryptoWidgetMobileComponent } from './crypto-widget-mobile/crypto-widget-mobile.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

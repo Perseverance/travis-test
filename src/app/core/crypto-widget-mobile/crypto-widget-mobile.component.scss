@@ -1,23 +1,26 @@
 @import "../../../variables";
 @import "../../../mixins";
 $blue-widget: #42C3F6;
-.crypto-widget {
-    z-index: 99999;
-    position: fixed;
-    top: 90%;
+.crypto-widget-mobile {
+    z-index: 1;
+    position: relative;
     max-height: 100%;
     max-width: 100%;
+    margin-top: 7px;
+    display: none;
     @media #{$xs} {
-        display: none;
+        display: inline-block;
     }
     @media #{$sm} {
-        display: none;
+        display: inline-block;
     }
     @media #{$md} {
-        display: none;
+        display: inline-block;
     }
-    .crypto-container {
-        .widget {
+    .crypto-container-mobile {
+        .widget-mobile {
+            position: fixed;
+            right: 15px;
             a {
                 text-decoration: none;
             }
