@@ -8,6 +8,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RedirectableComponent} from '../redirectable/redirectable.component';
 import {environment} from '../../../environments/environment';
+import {PropertiesService} from '../../properties/properties.service';
 
 @Component({
 	selector: 'app-facebook-share',
@@ -16,7 +17,7 @@ import {environment} from '../../../environments/environment';
 })
 export class FacebookShareComponent extends RedirectableComponent implements OnInit {
 	@Input() property: any;
-	public isSpecialShare: boolean;
+	@Input() userInfo: any;
 	private metaTitle = 'Buy or sell investment properties';
 	private propertyRoute = 'property';
 	private userIdQueryParamPath = '?userId=';
@@ -25,6 +26,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 				private imageSizePipe: ImageSizePipe,
 				private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
 				private propertyConversionService: PropertyConversionService,
+				private propertiesService: PropertiesService,
 				private metaService: MetaService,
 				private authService: AuthenticationService,
 				public router: Router,
@@ -44,8 +46,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			return;
 		}
 
-		const userResult = await this.authService.getCurrentUser();
-		this.setupMetaTags(this.property, userResult.data.data.id);
+		this.setupMetaTags(this.property, this.userInfo.user.id);
 		const url = window.location.href;
 		const params: UIParams = {
 			href: url,
@@ -53,8 +54,10 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		};
 
 		this.fb.ui(params)
-			.then((res: UIResponse) => {
+			.then(async (res: UIResponse) => {
 				this.revertMetaTitle();
+				await this.propertiesService.socialMediaShare(this.property.id);
+				this.authService.getCurrentUser();
 			})
 			.catch((e: any) => {
 				this.revertMetaTitle();

@@ -2,6 +2,7 @@ import {Router} from '@angular/router';
 import {PropertiesService} from './../../properties/properties.service';
 import {NgxCarousel} from 'ngx-carousel';
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AuthenticationService, UserData} from '../../authentication/authentication.service';
 
 @Component({
 	selector: 'app-featured-properties',
@@ -16,9 +17,16 @@ export class FeaturedPropertiesComponent implements OnInit {
 	public carouselTile: NgxCarousel;
 	public hasDataLoaded = false;
 	public isServiceWorking = true;
+	public userInfo: any;
 
-
-	constructor(private propertiesService: PropertiesService, private router: Router) {
+	constructor(private propertiesService: PropertiesService,
+				private router: Router,
+				private authService: AuthenticationService) {
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.userInfo = userInfo;
+			}
+		});
 	}
 
 	async ngOnInit() {

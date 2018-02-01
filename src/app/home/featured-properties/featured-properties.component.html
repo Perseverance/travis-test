@@ -8,7 +8,8 @@
 					<ngx-tile NgxCarouselItem *ngFor="let property of showedLocations">
 						<app-property-preview [property]="property" [featuredCityName]="property.city"
 											  [imageWidth]="350"
-											  [imageHeight]="215" [showArrow]="true" [isPropertyShareable]="true">
+											  [imageHeight]="215" [showArrow]="true" [isPropertyShareable]="true"
+											  [userInfo]="userInfo">
 						</app-property-preview>
 					</ngx-tile>
 					<button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i>

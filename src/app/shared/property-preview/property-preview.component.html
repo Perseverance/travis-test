@@ -39,5 +39,5 @@
 	<span class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
 		currencySymbol}}
 	</span>
-	<app-facebook-share *ngIf="isPropertyShareable" [property]="property"></app-facebook-share>
+	<app-facebook-share *ngIf="isPropertyShareable" [property]="property" [userInfo]="userInfo"></app-facebook-share>
 </div>
