@@ -1,6 +1,6 @@
 export const environment = {
 	production: true,
-	apiUrl: 'https://servicepropy.azurewebsites.net',
+	apiUrl: 'http://api.propy.com',
 	googleMaps: {
 		apiKey: 'AIzaSyDzuZpv8iXJL2lPLqvKU0J4KdFONwSPjGk',
 		defaultLanguage: 'en'
