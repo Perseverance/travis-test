@@ -16,6 +16,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { NewsletterComponent } from './newsletter/newsletter.component';
 import { FeaturedPropertiesComponent } from './featured-properties/featured-properties.component';
 import { CurrencyDataService } from '../core/crypto-widget/currency-data.service';
+import { CryptoWidgetMobileComponent } from '../core/crypto-widget-mobile/crypto-widget-mobile.component';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,7 @@ import { CurrencyDataService } from '../core/crypto-widget/currency-data.service
 		CryptoWidgetComponent,
 		NewsletterComponent,
 		FeaturedPropertiesComponent,
-		CryptoWidgetComponent
+		CryptoWidgetMobileComponent
 	],
 	imports: [
 		CommonModule,
@@ -45,7 +46,7 @@ import { CurrencyDataService } from '../core/crypto-widget/currency-data.service
 	],
 	providers: [CurrencyDataService],
 	bootstrap: [],
-	exports: [CryptoWidgetComponent]
+	exports: [CryptoWidgetComponent, CryptoWidgetMobileComponent]
 })
 export class HomeModule {
 }

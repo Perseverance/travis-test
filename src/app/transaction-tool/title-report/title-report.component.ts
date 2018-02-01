@@ -128,7 +128,13 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	}
 
 	private setupTransactionLink() {
-		this.transactionDetails = this.deed.transactions[BLOCKCHAIN_TRANSACTION_STEPS.TITLE_REPORT];
+		this.transactionDetails = null;
+		for (const deal of this.deed.transactions) {
+			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.TITLE_REPORT) {
+				this.transactionDetails = deal;
+				return;
+			}
+		}
 	}
 
 	public async uploadDocument(event: any) {

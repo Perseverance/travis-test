@@ -115,7 +115,13 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	}
 
 	private setupTransactionLink() {
-		this.transactionDetails = this.deed.transactions[BLOCKCHAIN_TRANSACTION_STEPS.RESERVATION];
+		this.transactionDetails = null;
+		for (const deal of this.deed.transactions) {
+			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.RESERVATION) {
+				this.transactionDetails = deal;
+				return;
+			}
+		}
 	}
 
 	private async setupDeedData(deedId) {

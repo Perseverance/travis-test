@@ -60,15 +60,20 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 		return this.route.queryParams
 			.subscribe(async params => {
 				if (params.code && params.email) {
-					await this.sendActivationCode(params.code, params.email);
+					setTimeout(async () => {
+						await this.sendActivationCode(params.code, params.email);
+						this.hasDataLoaded = true;
+					}, 2000);
+					window.location.href = `propy://verifyemail?email=${params.email}&code=${params.code}`;
 				} else {
 					this.errorsService.pushError({
 						errorMessage: 'Malformed Link. Please try again the link in your email or resend your activation email below',
 						errorTitle: 'Malformed link.',
 						errorTime: (new Date()).getTime()
 					});
+					this.hasDataLoaded = true;
 				}
-				this.hasDataLoaded = true;
+
 			});
 	}
 
