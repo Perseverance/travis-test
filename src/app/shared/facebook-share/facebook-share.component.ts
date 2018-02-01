@@ -5,15 +5,18 @@ import {ImageEnvironmentPrefixPipe} from '../pipes/image-environment-prefix.pipe
 import {PropertyConversionService} from '../property-conversion.service';
 import {MetaService} from '@ngx-meta/core';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {RedirectableComponent} from '../redirectable/redirectable.component';
+import {environment} from '../../../environments/environment';
 
 @Component({
 	selector: 'app-facebook-share',
 	templateUrl: './facebook-share.component.html',
 	styleUrls: ['./facebook-share.component.scss']
 })
-export class FacebookShareComponent implements OnInit {
+export class FacebookShareComponent extends RedirectableComponent implements OnInit {
 	@Input() property: any;
-	@Input() userInfo: any;
+	public isSpecialShare: boolean;
 	private metaTitle = 'Buy or sell investment properties';
 
 	constructor(private fb: FacebookService,
@@ -21,14 +24,24 @@ export class FacebookShareComponent implements OnInit {
 				private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
 				private propertyConversionService: PropertyConversionService,
 				private metaService: MetaService,
-				private authService: AuthenticationService) {
+				private authService: AuthenticationService,
+				public router: Router,
+				private route: ActivatedRoute) {
+		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 	}
 
 	ngOnInit() {
 	}
 
 	public async shareInFacebook() {
-		const currentUser = await this.authService.getCurrentUser();
+		const isUserAnonymous = this.authService.isUserAnonymous;
+		if (isUserAnonymous) {
+			const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+			queryParams['redirect'] = this.componentUrl;
+			this.router.navigate(['signup'], {queryParams: queryParams});
+			return;
+		}
+
 		this.setupMetaTags(this.property);
 		const url = window.location.href;
 		const params: UIParams = {

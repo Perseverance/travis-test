@@ -19,7 +19,8 @@ $testimonials-text-size: 19px;
 			@include border-radius(9px);
 			.property-card {
 				.btn-facebook {
-					float: right;
+					position: absolute;
+					right: 0;
 					margin-right: 15px;
 					margin-top: 8px;
 				}
