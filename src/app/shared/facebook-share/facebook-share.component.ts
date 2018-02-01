@@ -56,8 +56,10 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		this.fb.ui(params)
 			.then(async (res: UIResponse) => {
 				this.revertMetaTitle();
-				await this.propertiesService.socialMediaShare(this.property.id);
-				this.authService.getCurrentUser();
+				if (this.userInfo.user.canFacebookSpecialShare) {
+					await this.propertiesService.socialMediaShare(this.property.id);
+					this.authService.getCurrentUser();
+				}
 			})
 			.catch((e: any) => {
 				this.revertMetaTitle();
