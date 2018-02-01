@@ -63,7 +63,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 					setTimeout(async () => {
 						await this.sendActivationCode(params.code, params.email);
 						this.hasDataLoaded = true;
-					}, 25);
+					}, 125);
 					window.location.href = `propy://verifyemail?email=${params.email}&code=${params.code}`;
 				} else {
 					this.errorsService.pushError({
