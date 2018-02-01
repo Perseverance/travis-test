@@ -18,6 +18,8 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	@Input() property: any;
 	public isSpecialShare: boolean;
 	private metaTitle = 'Buy or sell investment properties';
+	private propertyRoute = 'property';
+	private userIdQueryParamPath = '?userId=';
 
 	constructor(private fb: FacebookService,
 				private imageSizePipe: ImageSizePipe,
@@ -42,7 +44,8 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			return;
 		}
 
-		this.setupMetaTags(this.property);
+		const userResult = await this.authService.getCurrentUser();
+		this.setupMetaTags(this.property, userResult.data.data.id);
 		const url = window.location.href;
 		const params: UIParams = {
 			href: url,
@@ -60,7 +63,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 
 	}
 
-	private setupMetaTags(property: any) {
+	private setupMetaTags(property: any, userId: string) {
 		const imgUrl = this.imageSizePipe.transform(this.imageEnvironmentPrefixPipe.transform(property.imageUrls[0]), 1200, 630);
 		const propertyType = this.propertyConversionService.getPropertyTypeName(property.type);
 		let title = `${propertyType} in `;
@@ -71,7 +74,8 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		}
 		this.metaService.setTitle(title);
 		this.metaService.setTag('og:image', imgUrl);
-		this.metaService.setTag('og:url', window.location.href);
+		this.metaService.setTag('og:url',
+			`${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${property.id}${this.userIdQueryParamPath}${userId}`);
 	}
 
 	private revertMetaTitle() {
