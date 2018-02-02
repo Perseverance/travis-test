@@ -53,6 +53,10 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			method: 'share'
 		};
 
+		// ToDo: Remove after localhost test
+		await this.propertiesService.socialMediaShare(this.property.id);
+		this.authService.getCurrentUser();
+
 		this.fb.ui(params)
 			.then(async (res: UIResponse) => {
 				this.revertMetaTitle();
