@@ -22,6 +22,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	private metaTitle = 'Buy or sell investment properties';
 	private propertyRoute = 'property';
 	private userIdQueryParamPath = '?userId=';
+	private isAnonymous: boolean;
 
 	constructor(private fb: FacebookService,
 				private imageSizePipe: ImageSizePipe,
@@ -39,8 +40,8 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	}
 
 	public async shareInFacebook() {
-		const isUserAnonymous = this.authService.isUserAnonymous;
-		if (isUserAnonymous) {
+		this.isAnonymous = this.authService.isUserAnonymous;
+		if (this.isAnonymous && this.isFeaturedProperty) {
 			const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
 			queryParams['redirect'] = this.componentUrl;
 			this.router.navigate(['signup'], {queryParams: queryParams});
@@ -69,7 +70,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 
 	}
 
-	private setupMetaTags(property: any, userId: string) {
+	private setupMetaTags(property: any, userId: string = null) {
 		const imgUrl = this.imageSizePipe.transform(this.imageEnvironmentPrefixPipe.transform(property.imageUrls[0]), 1200, 630);
 		const propertyType = this.propertyConversionService.getPropertyTypeName(property.type);
 		let title = `${propertyType} in `;
@@ -80,6 +81,12 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		}
 		this.metaService.setTitle(title);
 		this.metaService.setTag('og:image', imgUrl);
+		if (this.isAnonymous) {
+			this.metaService.setTag('og:url',
+				`${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${property.id}`);
+			return;
+		}
+
 		this.metaService.setTag('og:url',
 			`${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${property.id}${this.userIdQueryParamPath}${userId}`);
 	}
