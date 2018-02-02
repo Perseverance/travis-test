@@ -2,15 +2,12 @@
     [ngClass]="{ 'crypto-class' : property.isCryptoBuy === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
     <div class="image-holder" (click)="goToProperty(property.id)">
         <div class="labels-container">
-            <div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}
+            <div class="text-uppercase label new-label" *ngIf="true">{{ 'landing.new-properties.new-label' | translate }}
             </div>
-            <div class="text-uppercase label crypto-label" *ngIf="property.isCryptoBuy && property.isTransactionToolEnabled ;else differentLabels">{{ 'landing.new-properties.buy-btc' | translate }}</div>
-            <ng-template #differentLabels>
-                <div class="text-uppercase label verified-label" *ngIf="property.isTransactionToolEnabled">{{ 'landing.new-properties.buy-online' | translate }}
-                </div>
-                <div class="text-uppercase label crypto-label" *ngIf="property.isCryptoBuy">{{ 'landing.new-properties.buy-btc' | translate }}
-                </div>
-            </ng-template>
+            <div class="text-uppercase label crypto-label" *ngIf="property.isCryptoBuy || property.isTransactionToolEnabled">{{ (currencyLabel == 'fiat') ? currencyLabelsTranslations[3] : (currencyLabel
+                == 'crypto') ? currencyLabelsTranslations[2] : (currencyLabel ==
+                'btc') ? currencyLabelsTranslations[0] : (currencyLabel == 'eth')
+                ? currencyLabelsTranslations[1] : '' }}</div>
         </div>
         <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
         />

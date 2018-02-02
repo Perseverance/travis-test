@@ -192,29 +192,31 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			self.zone.run(() => {
 			});
-			property.acceptedCurrencies.forEach(element => {
-				if (element === 10) {
-					self.cryptoEth = true;
-				} else if (element === 11) {
-					self.cryptoBtc = true;
-				} else if (element < 10) {
-					self.cryptoFiat = true;
+			if (self.property.acceptedCurrencies) {
+				self.property.acceptedCurrencies.forEach(element => {
+					if (element === 10) {
+						self.cryptoEth = true;
+					} else if (element === 11) {
+						self.cryptoBtc = true;
+					} else if (element < 10) {
+						self.cryptoFiat = true;
+					}
+				});
+				if (self.cryptoFiat && !self.cryptoBtc && !self.cryptoEth) {
+					self.currencyLabel = 'fiat';
+				} else if (self.cryptoBtc && self.cryptoEth && !self.cryptoFiat) {
+					self.currencyLabel = 'crypto';
+				} else if (self.cryptoBtc && !self.cryptoEth) {
+					self.currencyLabel = 'btc';
+				} else if (!self.cryptoBtc && self.cryptoEth) {
+					self.currencyLabel = 'eth';
+				} else if (self.cryptoFiat && self.cryptoBtc && !self.cryptoEth) {
+					self.currencyLabel = 'btc';
+				} else if (self.cryptoFiat && self.cryptoEth && !self.cryptoBtc) {
+					self.currencyLabel = 'eth';
+				} else if (self.cryptoFiat && self.cryptoBtc && self.cryptoEth) {
+					self.currencyLabel = 'crypto';
 				}
-			});
-			if (self.cryptoFiat && !self.cryptoBtc && !self.cryptoEth) {
-				self.currencyLabel = 'fiat';
-			} else if (self.cryptoBtc && self.cryptoEth && !self.cryptoFiat) {
-				self.currencyLabel = 'crypto';
-			} else if (self.cryptoBtc && !self.cryptoEth) {
-				self.currencyLabel = 'btc';
-			} else if (!self.cryptoBtc && self.cryptoEth) {
-				self.currencyLabel = 'eth';
-			} else if (self.cryptoFiat && self.cryptoBtc && !self.cryptoEth) {
-				self.currencyLabel = 'btc';
-			} else if (self.cryptoFiat && self.cryptoEth && !self.cryptoBtc) {
-				self.currencyLabel = 'eth';
-			} else if (self.cryptoFiat && self.cryptoBtc && self.cryptoEth) {
-				self.currencyLabel = 'crypto';
 			}
 		});
 	}
