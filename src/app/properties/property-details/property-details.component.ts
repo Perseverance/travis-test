@@ -10,7 +10,7 @@ import {BigNumberFormatPipe} from './../../shared/pipes/big-number-format.pipe';
 import {environment} from './../../../environments/environment';
 import {NgxCarousel} from 'ngx-carousel';
 import {RedirectableComponent} from './../../shared/redirectable/redirectable.component';
-import {AuthenticationService} from './../../authentication/authentication.service';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
 import {PropertiesService} from './../properties.service';
 import {
 	Component,
@@ -63,6 +63,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private verificationMessage: string;
 
 	private notLoggedInError: string;
+	public userInfo: any;
 
 	constructor(router: Router,
 				private route: ActivatedRoute,
@@ -87,6 +88,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.IMAGE_HEIGHT_PX = 480;
 
 		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
+
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.userInfo = userInfo;
+			}
+		});
 	}
 
 	async ngOnInit() {
