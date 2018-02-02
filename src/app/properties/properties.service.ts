@@ -271,7 +271,7 @@ export class PropertiesService {
 		const params = {
 			propertyId
 		};
-		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SOCIAL_MEDIA_SHARE, {params});
+		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SOCIAL_MEDIA_SHARE, params);
 		return result.data.data;
 	}
 }
