@@ -49,7 +49,12 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		}
 
 		this.setupMetaTags(this.property, this.userInfo.user.id);
-		const url = window.location.href;
+		let url;
+		if (this.isAnonymous) {
+			url = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
+		} else {
+			url = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}${this.userIdQueryParamPath}${this.userInfo.user.id}`;
+		}
 		const params: UIParams = {
 			href: url,
 			method: 'share'
