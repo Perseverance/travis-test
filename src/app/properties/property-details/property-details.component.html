@@ -2,13 +2,15 @@
     <div class="col-xs-12 property-carousel-row">
         <div class="row property-carousel-holder">
             <div class="labels-container">
-                <div class="text-uppercase label buy-online-label" *ngIf="property.isCryptoBuy && property.isTransactionToolEnabled ;else differentLabels">{{ 'landing.new-properties.buy-btc' | translate }}</div>
-                <ng-template #differentLabels>
+                <div class="text-uppercase label buy-online-label" *ngIf="currencyLabel">{{ (currencyLabel == 'fiat') ? currencyLabelsTranslations[3] : (currencyLabel
+                    == 'crypto') ? currencyLabelsTranslations[2] : '' }}
+                </div>
+                <!-- <ng-template #differentLabels>
                     <div class="text-uppercase label buy-crypto-label" *ngIf="property.isCryptoBuy">{{ 'landing.new-properties.buy-btc' | translate }}
                     </div>
                     <div class="text-uppercase label buy-online-label" *ngIf="property.isTransactionToolEnabled">{{ 'landing.new-properties.buy-online' | translate }}
                     </div>
-                </ng-template>
+                </ng-template> -->
             </div>
             <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
                 <ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">

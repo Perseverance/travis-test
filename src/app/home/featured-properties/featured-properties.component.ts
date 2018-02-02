@@ -40,6 +40,7 @@ export class FeaturedPropertiesComponent implements OnInit {
 		try {
 			this.featureLocations = await this.propertiesService.getFeaturedProperties();
 			this.showedLocations = this.featureLocations;
+			console.log(this.showedLocations);
 			this.hasDataLoaded = true;
 		} catch (error) {
 			this.isServiceWorking = false;

@@ -68,6 +68,11 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private verificationMessage: string;
 
 	private notLoggedInError: string;
+	public currencyLabelsTranslations: object;
+	public currencyLabel: string;
+	public cryptoBtc = false;
+	public cryptoEth = false;
+	public cryptoFiat = false;
 
 	constructor(router: Router,
 		private route: ActivatedRoute,
@@ -129,7 +134,11 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			'property-details.no-wallet-set-message',
 			'property-details.verification-error',
 			'property-details.verification-error-message',
-			'common.only-registered-error'
+			'common.only-registered-error',
+			'property-details.currency-labels.buy-with-btc',
+			'property-details.currency-labels.buy-with-eth',
+			'property-details.currency-labels.buy-with-crc',
+			'property-details.currency-labels.buy-online',
 		]).subscribe((translations) => {
 			this.featureScale = {
 				undefined: translations['common.scales.undefined'],
@@ -155,6 +164,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 				1: translations['common.scales.binary-scale.yes'],
 				2: translations['common.scales.binary-scale.no']
 			};
+			this.currencyLabelsTranslations = {
+				0: translations['property-details.currency-labels.buy-with-btc'],
+				1: translations['property-details.currency-labels.buy-with-eth'],
+				2: translations['property-details.currency-labels.buy-with-crc'],
+				3: translations['property-details.currency-labels.buy-online']
+			};
 
 			this.walletErrorTitle = translations['property-details.no-wallet-set'];
 			this.walletErrorMessage = translations['property-details.no-wallet-set-message'];
@@ -177,7 +192,52 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			self.zone.run(() => {
 			});
+			console.log(property);
+			property.acceptedCurrencies.forEach(element => {
+				if (element === 10) {
+					self.cryptoEth = true;
+				} else if (element === 11) {
+					self.cryptoBtc = true;
+				} else if (element < 10) {
+					self.cryptoFiat = true;
+				}
+			});
+			console.log(self.cryptoEth);
+			console.log(self.cryptoBtc);
+			console.log(self.cryptoFiat)
+			if (self.cryptoFiat && !self.cryptoBtc && !self.cryptoEth) {
+				console.log('fiat1');
+				// self.currencyLabel = self.currencyLabelsTranslations[3];
+				self.currencyLabel = 'fiat';
+				console.log(self.currencyLabel);
+			} else if (self.cryptoBtc && self.cryptoEth && !self.cryptoFiat) {
+				console.log('crypto1');
+				// self.currencyLabel = self.currencyLabelsTranslations[2];
+				self.currencyLabel = 'crypto';
+				console.log(self.currencyLabel);
+			} else if (self.cryptoBtc && !self.cryptoEth) {
+				console.log('btc1');
+				self.currencyLabel = self.currencyLabelsTranslations[0];
+				console.log(self.currencyLabel);
+			} else if (!self.cryptoBtc && self.cryptoEth) {
+				console.log('eth1');
+				self.currencyLabel = self.currencyLabelsTranslations[1];
+				console.log(self.currencyLabel);
+			} else if (self.cryptoFiat && self.cryptoBtc && !self.cryptoEth) {
+				console.log('btc2');
+				self.currencyLabel = self.currencyLabelsTranslations[0];
+				console.log(self.currencyLabel);
+			} else if (self.cryptoFiat && self.cryptoEth && !self.cryptoBtc) {
+				console.log('eth2');
+				self.currencyLabel = self.currencyLabelsTranslations[1];
+				console.log(self.currencyLabel);
+			} else if (self.cryptoFiat && self.cryptoBtc && self.cryptoEth) {
+				console.log('crypto2');
+				self.currencyLabel = self.currencyLabelsTranslations[2];
+				console.log(self.currencyLabel);
+			}
 		});
+
 	}
 
 	private emulatePackerHousePropertyId(propertyId) {
