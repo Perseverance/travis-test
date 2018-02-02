@@ -49,7 +49,7 @@
 						<span class="hidden-xs">
                             <i class="fa fa-circle fa-active" aria-hidden="true"></i>&nbsp;{{ 'common.label.active' | translate }}&nbsp;&#124;</span>&nbsp;
 						<span class="hidden-xs">{{ 'property-details.published' | translate }} {{ (property.addedOnTimeStamp | amFromUnix) | amTimeAgo }}</span>&nbsp;
-						<app-facebook-share [property]="property"></app-facebook-share>
+						<app-facebook-share [property]="property" [userInfo]="userInfo"></app-facebook-share>
 					</div>
 					<div class="col-xs-3 col-sm-3 col-lg-3 text-right">
 						<a href="" class="btn btn-block propy-control button-small btn-purchase text-uppercase"
