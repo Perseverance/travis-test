@@ -21,6 +21,7 @@ export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
 	WALLET: 2,
+	// MY_DEALS: 3,
 	PASSWORD: 3,
 	REFFERAL_LINK: 4
 };
@@ -37,12 +38,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
 	public isEmailVerified = true;
-	public globalCountryCode: string;
 
 	private paramsSubscription: Subscription;
-	@ViewChild(ProWalletComponent) childProWalletComponent: ProWalletComponent;
-	@ViewChild(GeneralSettingsComponent) childGeneralSettingsComponent: GeneralSettingsComponent;
-	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private authService: AuthenticationService,
 				private route: ActivatedRoute,
@@ -97,7 +94,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			case TABS_INDEX.WALLET: {
 				queryParams['selectedTab'] = SETTINGS_TABS.WALLET;
-				this.childProWalletComponent.setPhone(this.globalCountryCode);
 				break;
 			}
 			case TABS_INDEX.PASSWORD: {
@@ -115,7 +111,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			default: {
 				queryParams['selectedTab'] = SETTINGS_TABS.GENERAL;
-				this.childGeneralSettingsComponent.setPhone(this.globalCountryCode);
 				break;
 			}
 		}
@@ -124,7 +119,4 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.router.navigate([currentPath], {queryParams: queryParams});
 	}
 
-	public updateGlobalCountryCode(event) {
-		this.globalCountryCode = event;
-	}
 }

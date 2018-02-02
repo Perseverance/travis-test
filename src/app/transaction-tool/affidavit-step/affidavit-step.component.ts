@@ -1,5 +1,6 @@
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
 import { environment } from './../../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DeedDocumentType } from '../enums/deed-document-type.enum';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +19,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { ErrorsService } from '../../shared/errors/errors.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
+import { PusherService } from '../../shared/pusher.service';
 
 declare const HelloSign;
 
@@ -26,7 +28,7 @@ declare const HelloSign;
 	templateUrl: './affidavit-step.component.html',
 	styleUrls: ['./affidavit-step.component.scss']
 })
-export class AffidavitStepComponent extends ErrorsDecoratableComponent implements OnInit {
+export class AffidavitStepComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public waitingTitle = 'Awaiting affidavit generation';
 	public affidavitTitle = 'Affidavit';
@@ -49,8 +51,12 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public shouldSendToBlockchain: boolean;
 	public hasDataLoaded = false;
 	private deedAddress: string;
-	public txHash: string;
+	public deed: any;
 	public recordButtonEnabled = true;
+	public shouldShowSignatureDelayNotes = false;
+	private documentSignatureUpdatedSubscription: Subscription;
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -60,6 +66,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		private deedsService: DeedsService,
 		private notificationService: NotificationsService,
 		private router: Router,
+		private pusherService: PusherService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -75,12 +82,25 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
+
+		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
+			next: async (data: any) => {
+				await this.setupDocument(this.deedId);
+				this.hideSignatureDelayNote();
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.deed = deed;
 		this.shouldSendToBlockchain = (deed.status === Status.affidavit);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		this.deedAddress = deed.deedContractAddress;
@@ -92,6 +112,16 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			this.previewLink = doc.fileName;
 		}
 		this.getAffidavitSigners(doc);
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = null;
+		for (const deal of this.deed.transactions) {
+			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.AFFIDAVIT) {
+				this.transactionDetails = deal;
+				return;
+			}
+		}
 	}
 
 	private getSignatureDocument(documents: any[]) {
@@ -133,23 +163,8 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Recording the document to the Blockchain. Please do not leave this page.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
-			setTimeout(async () => {
-				// Workaround: waiting HelloSign to update new signature
-				await this.deedsService.markDocumentSigned(this.signingDocument.id);
-				await this.setupDocument(this.deedId);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
-			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+			await this.deedsService.markDocumentSigned(this.signingDocument.id);
+			this.showSignatureDelayNote();
 		}
 	}
 
@@ -181,7 +196,6 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
 			}
-			this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 			this.notificationService.pushInfo({
 				title: `Sending the document to the backend.`,
 				message: '',
@@ -230,6 +244,14 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+	}
+
+	private showSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = true;
+	}
+
+	private hideSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = false;
 	}
 
 }

@@ -1,3 +1,4 @@
+import { WebpackTranslateLoader } from './../../webpack-translate-loader';
 import { TextLimitationPipe } from './../shared/pipes/text-limitation.pipe';
 import { AuthenticatedGuard } from './../authentication/authenticated-guard.service';
 import { ReferralComponent } from './../referral/referral.component';
@@ -51,6 +52,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { NotAuthenticatedGuard } from '../authentication/not-authenticated-guard.service';
 import { CryptoWidgetComponent } from './crypto-widget/crypto-widget.component';
 import { CurrencyDataService } from './crypto-widget/currency-data.service';
+import { CryptoWidgetMobileComponent } from './crypto-widget-mobile/crypto-widget-mobile.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -65,9 +67,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TranslateModule.forChild({
 			loader: {
 				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient]
+				useClass: WebpackTranslateLoader
 			}
+
 		}),
 		SharedModule,
 		AvatarModule,

@@ -9,16 +9,31 @@
         <ng-template #notBuyer>
             <h5>The transfer of this property was completed succesfully!</h5>
         </ng-template>
+        <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.SUCCESS">
+            <i>Here is your receipt:</i>
+            <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
+        </div>
     </div>
     <ng-template #notFinished>
         <div *ngIf="userIsTitleCompany;else notTitleCompany">
-            <i>Status: Waiting For You To Record The Transfer Ownership Change To The Blockchain. Please use the button below!</i>
-            <br>
-            <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
-            <div class="col-xs-12 text-center" *ngIf="txHash"><a [href]="txHash" target="_blank">{{txHash}}</a></div>
+            <div *ngIf="transactionDetails == null">
+                <i>Status: Waiting For You To Record The Transfer Ownership Change To The Blockchain. Please use the button below!</i>
+                <br>
+                <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+            </div>
+            <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
+                <i>Your Blockchain action was not successfully recorded. Please try again. Here is your receipt:</i>
+                <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
+                <br>
+                <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
+            </div>
+            <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
+                <i>Your action is being recorded to the Blockchain. To check the current status, please follow the link below.</i>
+                <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
+            </div>
         </div>
         <ng-template #notTitleCompany>
-            <i>Status: Waiting for Title Company To Record The Ownership Transfer to the blockchain</i>
+            <i>Status: Waiting for the Title Company to record the ownership transfer to the blockchain</i>
         </ng-template>
     </ng-template>
 </ng-template>

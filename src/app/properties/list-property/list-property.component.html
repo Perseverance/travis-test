@@ -46,7 +46,7 @@
 									translate }}</label>
                                 <div class="ui-inputgroup">
                                     <input type="number" class="propy-control" formControlName="price" pInputText id="list-prop-price">
-                                    <span class="ui-inputgroup-addon"><p-dropdown [options]="currencies"
+                                    <span class="ui-inputgroup-addon"><p-dropdown (onChange)="onCurrencyChange()" [options]="currencies"
 																				  dropdownIcon="glyphicon glyphicon-menu-down"
 																				  styleClass="currency-dropdown"
 																				  formControlName="currency"></p-dropdown></span>

@@ -27,6 +27,7 @@ import { AffidavitStepComponent } from './affidavit-step/affidavit-step.componen
 import { TransferOwnershipComponent } from './transfer-ownership/transfer-ownership.component';
 import { RecordBlockchainFormComponent } from './record-blockchain-form/record-blockchain-form.component';
 import { RejectedDealComponent } from './rejected-deal/rejected-deal.component';
+import { EtherscanPipe } from '../shared/etherscan.pipe';
 
 @NgModule({
 	imports: [

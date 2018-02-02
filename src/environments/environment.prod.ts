@@ -41,5 +41,5 @@ export const environment = {
 	contractAddress: '0x6dae591ae5a4cc8a65ef88c9367564be1a317bf0',
 	infuraLink: 'https://rinkeby.infura.io/Up5uvBHSCSqtOmnlhL87',
 	escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625',
-	rinkebyTxLink: 'https://rinkeby.etherscan.io/tx/'
+	etherscanTxLink: 'https://etherscan.io/tx/'
 };

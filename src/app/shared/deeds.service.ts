@@ -10,6 +10,21 @@ export enum INVITATION_STATUSES {
 	REJECTED = 3
 }
 
+export enum TRANSACTION_STATUSES {
+	PENDING = 0,
+	SUCCESS = 1,
+	FAILED = 2
+}
+
+export enum BLOCKCHAIN_TRANSACTION_STEPS {
+	RESERVATION = 1,
+	PURCHASE_AGREEMENT = 2,
+	TITLE_REPORT = 3,
+	DISCLOSURES = 4,
+	AFFIDAVIT = 5,
+	OWNERSHIP_TRANSFER = 6
+}
+
 @Injectable()
 export class DeedsService {
 

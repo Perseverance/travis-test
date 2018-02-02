@@ -26,6 +26,8 @@ import {SafeUrlPipe} from './pipes/safe-url.pipe';
 import {TransactionToolInviteComponent} from './transaction-tool-invite/transaction-tool-invite.component';
 import {TransactionToolInviteRespondComponent} from './transaction-tool-invite-respond/transaction-tool-invite-respond.component';
 import {UserRoleByTypePipe} from './pipes/user-role-by-type.pipe';
+import {EtherscanPipe} from './etherscan.pipe';
+import {FacebookShareComponent} from './facebook-share/facebook-share.component';
 
 @NgModule({
 	imports: [
@@ -50,7 +52,9 @@ import {UserRoleByTypePipe} from './pipes/user-role-by-type.pipe';
 		SafeUrlPipe,
 		TransactionToolInviteComponent,
 		TransactionToolInviteRespondComponent,
-		UserRoleByTypePipe
+		UserRoleByTypePipe,
+		EtherscanPipe,
+		FacebookShareComponent
 	],
 	exports: [
 		LocationSearchComponent,
@@ -63,12 +67,14 @@ import {UserRoleByTypePipe} from './pipes/user-role-by-type.pipe';
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
 		ImageSizePipe,
+		EtherscanPipe,
 		HelloSignComponent,
 		TransactionToolInviteComponent,
 		TransactionToolInviteRespondComponent,
 		SafeResourceURLPipe,
 		SafeUrlPipe,
-		UserRoleByTypePipe
+		UserRoleByTypePipe,
+		FacebookShareComponent
 	],
 	providers: [
 		AgencyService,

@@ -12,13 +12,15 @@ import { TransactionToolDocumentService } from './../transaction-tool-document.s
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DeedsService } from '../../shared/deeds.service';
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { ErrorsDecoratableComponent } from '../../shared/errors/errors.decoratable.component';
 import { ErrorsService } from '../../shared/errors/errors.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
+import { PusherService } from '../../shared/pusher.service';
 
 declare const HelloSign;
 
@@ -27,7 +29,7 @@ declare const HelloSign;
 	templateUrl: './title-report.component.html',
 	styleUrls: ['./title-report.component.scss']
 })
-export class TitleReportComponent extends ErrorsDecoratableComponent implements OnInit {
+export class TitleReportComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public waitingTitle = 'Waiting title company user to upload title report';
 	public settlementTitle = 'Title Report';
@@ -53,9 +55,11 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 	public reuploadingDocumentActivated: boolean;
 	public deed: any;
 	public deedStatus = Status;
-	public txHash: string;
 	public recordButtonEnabled = true;
-
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
+	public shouldShowSignatureDelayNotes = false;
+	private documentSignatureUpdatedSubscription: Subscription;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -65,6 +69,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		private base64Service: Base64Service,
 		private deedsService: DeedsService,
 		private notificationService: NotificationsService,
+		private pusherService: PusherService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -80,8 +85,20 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
+
+		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
+			next: async (data: any) => {
+				await this.setupDocument(this.deedId);
+				this.hideSignatureDelayNote();
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.documentSignatureUpdatedSubscription.unsubscribe();
 	}
 
 	private async setupDocument(deedId: string) {
@@ -108,6 +125,16 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			}
 		}
 		return signatureDocument;
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = null;
+		for (const deal of this.deed.transactions) {
+			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.TITLE_REPORT) {
+				this.transactionDetails = deal;
+				return;
+			}
+		}
 	}
 
 	public async uploadDocument(event: any) {
@@ -142,23 +169,8 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		const response = await this.documentService.getSignUrl(this.signingDocument.uniqueId);
 		const signingEvent = await this.helloSignService.signDocument(response);
 		if (signingEvent === HelloSign.EVENT_SIGNED) {
-			this.notificationService.pushInfo({
-				title: `Retrieving signed document.`,
-				message: '',
-				time: (new Date().getTime()),
-				timeout: 60000
-			});
-			setTimeout(async () => {
-				// Workaround: waiting HelloSign to update new signature
-				await this.deedsService.markDocumentSigned(this.signingDocument.id);
-				await this.setupDocument(this.deedId);
-				this.notificationService.pushSuccess({
-					title: 'Successfully Retrieved',
-					message: '',
-					time: (new Date().getTime()),
-					timeout: 4000
-				});
-			}, this.helloSignService.SignatureUpdatingTimeoutInMilliseconds);
+			await this.deedsService.markDocumentSigned(this.signingDocument.id);
+			this.showSignatureDelayNote();
 		}
 	}
 
@@ -188,7 +200,6 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
 			}
-			this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 			this.notificationService.pushInfo({
 				title: `Sending the document to the backend.`,
 				message: '',
@@ -237,5 +248,13 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 		this.userIsSeller = (deed.currentUserRole === UserRoleEnum.Seller);
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
+	}
+
+	private showSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = true;
+	}
+
+	private hideSignatureDelayNote() {
+		this.shouldShowSignatureDelayNotes = false;
 	}
 }

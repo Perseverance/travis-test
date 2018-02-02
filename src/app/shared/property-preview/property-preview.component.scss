@@ -1,158 +1,159 @@
 @import "../../../variables";
 @import "../../../mixins";
+
 $card-padding: 15px;
 $card-padding-with-container: $card-padding+15px;
 $card-half-padding: $card-padding/2;
 .property-card {
-    background-color: $white;
-    @include border-radius(9px);
-    @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
-    .image-holder {
-        cursor: pointer;
-        .labels-container {
-            position: absolute;
-            top: 20px;
-            left: $card-padding-with-container;
-            .label {
-                @include border-radius(3px);
-                padding: 4px 9px;
-                font-size: 10px;
-                font-weight: 300;
-                letter-spacing: 1px;
-                @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.14));
-                &.new-label {
-                    background: $blue-dark;
-                    color: white;
-                    margin-right: 5px;
-                }
-                &.verified-label {
-                    background: $green-sec;
-                    color: white;
-                }
-            }
-            .buy-crypto-label {
-                background: #44d32a;
-                color: #fff;
-                position: absolute; // margin-left: 10px;
-                // margin-top: 10px;
-                z-index: 5000;
-            }
-        }
-        img {
-            @include border-radius-separate(7px, 7px, 0px, 0px);
-            width: 100%;
-        }
-        .right-arrow-holder {
-            position: absolute;
-            top: 140px;
-            right: 25px;
-            height: 50px;
-            width: 50px;
-            background: url('../../../assets/images/right-arrow-hover.svg') 100% no-repeat;
-            visibility: hidden;
-            @media #{$sm} {
-                visibility: visible;
-            }
-        }
-        &:hover {
-            .right-arrow-holder {
-                visibility: visible;
-            }
-        }
-        .icon {
-            position: absolute;
-            display: inline-block;
-            border-radius: 60px;
-            box-shadow: 0px 0px 2px #888;
-            padding: 0.5em 0.6em;
-            background-color: white;
-            right: 30px;
-            top: (calc(20% + 202px));
-            &:hover {
-                background-color: $blue-main;
-            }
-            @media #{$lg} {
-                top: (calc(20% + 117px));
-            }
-        }
-        .glyphicon-eye-close {
-            background-color: $blue-main;
-        }
-    }
-    &.theme-small {
-        .image-holder {
-            img {
-                height: 215px;
-                @media #{$xl} {
-                    height: 320px;
-                }
-                @media #{$lg} {
-                    height: 215px;
-                }
-            }
-        }
-    }
-    &.theme-big {
-        .image-holder {
-            img {
-                height: 215px;
-                @media #{$xl} {
-                    height: 480px;
-                }
-                @media #{$lg} {
-                    height: 360px;
-                }
-            }
-        }
-    }
-    &.theme-large {
-        .image-holder {
-            img {
-                height: 430px;
-            }
-        }
-    }
-    &.outside-hover {
-        background-color: lighten($multi-select-filter, 10%);
-        @include box-shadow(0px,
-        2px,
-        10px,
-        $multi-select-filter);
-        cursor: poiner;
-    }
-    .property-info {
-        padding: $card-half-padding $card-padding $card-half-padding $card-padding;
-        font-size: $font-size-medium;
-        color: $black;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .additional-property-info {
-        padding: 0px $card-padding $card-half-padding $card-padding;
-        color: $gray-medium;
-        font-size: $font-size-xs;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        span {
-            font-weight: normal;
-            padding-right: 5px;
-        }
-        span:nth-child(2),
-        span:nth-child(3) {
-            border-left: solid 1px $gray-light;
-            padding-left: 10px;
-        }
-    }
-    h4.property-price {
-        color: $blue-dark;
-        font-size: 20px;
-        margin: 0px;
-        font-weight: 400;
-        padding: $card-half-padding $card-padding $card-padding $card-padding;
-    }
-    &.crypto-class {
-        border: 2px solid #44d32a;
-    }
+	background-color: $white;
+	@include border-radius(9px);
+	@include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.07));
+	.image-holder {
+		cursor: pointer;
+		.labels-container {
+			position: absolute;
+			top: 20px;
+			left: $card-padding-with-container;
+			.label {
+				@include border-radius(3px);
+				padding: 4px 9px;
+				font-size: 10px;
+				font-weight: 300;
+				letter-spacing: 1px;
+				@include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.14));
+				&.new-label {
+					background: $blue-dark;
+					color: white;
+					margin-right: 5px;
+				}
+				&.verified-label {
+					background: $green-sec;
+					color: white;
+					margin-right: 5px;
+				}
+				&.crypto-label {
+					background: $green-sec;
+					color: white;
+					margin-right: 5px;
+				}
+			}
+		}
+		img {
+			@include border-radius-separate(7px, 7px, 0px, 0px);
+			width: 100%;
+		}
+		.right-arrow-holder {
+			position: absolute;
+			top: 140px;
+			right: 25px;
+			height: 50px;
+			width: 50px;
+			background: url('../../../assets/images/right-arrow-hover.svg') 100% no-repeat;
+			visibility: hidden;
+			@media #{$sm} {
+				visibility: visible;
+			}
+		}
+		&:hover {
+			.right-arrow-holder {
+				visibility: visible;
+			}
+		}
+		.icon {
+			position: absolute;
+			display: inline-block;
+			border-radius: 60px;
+			box-shadow: 0px 0px 2px #888;
+			padding: 0.5em 0.6em;
+			background-color: white;
+			right: 30px;
+			top: (calc(20% + 202px));
+			&:hover {
+				background-color: $blue-main;
+			}
+			@media #{$lg} {
+				top: (calc(20% + 117px));
+			}
+		}
+		.glyphicon-eye-close {
+			background-color: $blue-main;
+		}
+	}
+	&.theme-small {
+		.image-holder {
+			img {
+				height: 215px;
+				@media #{$xl} {
+					height: 320px;
+				}
+				@media #{$lg} {
+					height: 215px;
+				}
+			}
+		}
+	}
+	&.theme-big {
+		.image-holder {
+			img {
+				height: 215px;
+				@media #{$xl} {
+					height: 480px;
+				}
+				@media #{$lg} {
+					height: 360px;
+				}
+			}
+		}
+	}
+	&.theme-large {
+		.image-holder {
+			img {
+				height: 430px;
+			}
+		}
+	}
+	&.outside-hover {
+		background-color: lighten($multi-select-filter, 10%);
+		@include box-shadow(0px,
+			2px,
+			10px,
+			$multi-select-filter);
+		cursor: poiner;
+	}
+	.property-info {
+		padding: $card-half-padding $card-padding $card-half-padding $card-padding;
+		font-size: $font-size-medium;
+		color: $black;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.additional-property-info {
+		padding: 0px $card-padding $card-half-padding $card-padding;
+		color: $gray-medium;
+		font-size: $font-size-xs;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		span {
+			font-weight: normal;
+			padding-right: 5px;
+		}
+		span:nth-child(2),
+		span:nth-child(3) {
+			border-left: solid 1px $gray-light;
+			padding-left: 10px;
+		}
+	}
+	span.property-price {
+		display: inline-block;
+		color: $blue-dark;
+		font-size: 20px;
+		margin: 0px;
+		font-weight: 400;
+		padding: $card-half-padding $card-padding $card-padding $card-padding;
+	}
+	&.crypto-class {
+		border: 2px solid #44d32a;
+	}
 }

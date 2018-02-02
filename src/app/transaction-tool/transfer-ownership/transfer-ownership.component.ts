@@ -1,3 +1,4 @@
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
 import { environment } from './../../../environments/environment';
 import { DeedDocumentType } from './../enums/deed-document-type.enum';
 import { Observable } from 'rxjs/Observable';
@@ -39,8 +40,10 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 	public signingDocument: any;
 	public isTransferFinished = false;
 	private deedAddress: string;
-	public txHash: string;
 	public recordButtonEnabled = true;
+	public deed: any;
+	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
+	public transactionDetails: any = null;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -63,14 +66,16 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 			self.deedId = deedId;
 			await self.mapCurrentUserToRole(deedId);
 			await self.setupDocument(deedId);
+			self.setupTransactionLink();
 			self.hasDataLoaded = true;
 		});
 	}
 
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
+		this.deed = deed;
 		this.signingDocument = this.getSignatureDocument(deed.documents);
-		this.isTransferFinished = (deed.status == Status.transferred);
+		this.isTransferFinished = (deed.status === Status.transferred);
 		this.deedAddress = deed.deedContractAddress;
 	}
 
@@ -78,6 +83,16 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 		for (const doc of documents) {
 			if (doc.type === DeedDocumentType.ClosingDocuments) {
 				return doc;
+			}
+		}
+	}
+
+	private setupTransactionLink() {
+		this.transactionDetails = null;
+		for (const deal of this.deed.transactions) {
+			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.OWNERSHIP_TRANSFER) {
+				this.transactionDetails = deal;
+				return;
 			}
 		}
 	}
@@ -108,7 +123,6 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
 			}
-			this.txHash = `${environment.rinkebyTxLink}${result.transactionHash}`;
 			this.notificationService.pushInfo({
 				title: `Sending the document to the backend.`,
 				message: '',

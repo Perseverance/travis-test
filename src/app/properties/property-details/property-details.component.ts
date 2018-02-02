@@ -1,39 +1,34 @@
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
-import { PropertyConversionService } from './../../shared/property-conversion.service';
-import { ImageEnvironmentPrefixPipe } from './../../shared/pipes/image-environment-prefix.pipe';
-import { ImageSizePipe } from './../../shared/pipes/image-size.pipe';
-import { TranslateService } from '@ngx-translate/core';
-import { GoogleMapsMarkersService } from './../../shared/google-maps-markers.service';
-import { CurrencySymbolPipe } from './../../shared/pipes/currency-symbol.pipe';
-import { BigNumberFormatPipe } from './../../shared/pipes/big-number-format.pipe';
-import { environment } from './../../../environments/environment';
-import { NgxCarousel } from 'ngx-carousel';
-import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
-import { AuthenticationService } from './../../authentication/authentication.service';
-import { PropertiesService } from './../properties.service';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
+import {PropertyConversionService} from './../../shared/property-conversion.service';
+import {ImageEnvironmentPrefixPipe} from './../../shared/pipes/image-environment-prefix.pipe';
+import {ImageSizePipe} from './../../shared/pipes/image-size.pipe';
+import {TranslateService} from '@ngx-translate/core';
+import {GoogleMapsMarkersService} from './../../shared/google-maps-markers.service';
+import {CurrencySymbolPipe} from './../../shared/pipes/currency-symbol.pipe';
+import {BigNumberFormatPipe} from './../../shared/pipes/big-number-format.pipe';
+import {environment} from './../../../environments/environment';
+import {NgxCarousel} from 'ngx-carousel';
+import {RedirectableComponent} from './../../shared/redirectable/redirectable.component';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {PropertiesService} from './../properties.service';
 import {
 	Component,
 	OnInit,
 	OnDestroy,
 	ViewEncapsulation,
-	ApplicationRef,
 	NgZone,
-	ViewChild,
-	ElementRef
+	ViewChild
 } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { log } from 'util';
-import { MetaService } from '@ngx-meta/core';
-import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
-import { LanguagesEnum } from '../../shared/enums/supported-languages.enum';
-import { LocalStorageService } from '../../shared/localStorage.service';
-import { MomentService } from '../../shared/moment.service';
-import { CurrencyEnum } from '../../shared/enums/supported-currencies.enum';
-import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+import {LanguagesEnum} from '../../shared/enums/supported-languages.enum';
+import {LocalStorageService} from '../../shared/localStorage.service';
+import {MomentService} from '../../shared/moment.service';
+import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
+import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-property-details',
@@ -68,26 +63,21 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private verificationMessage: string;
 
 	private notLoggedInError: string;
+	public userInfo: any;
 
 	constructor(router: Router,
-		private route: ActivatedRoute,
-		private propertiesService: PropertiesService,
-		private authService: AuthenticationService,
-		private googleMarkersService: GoogleMapsMarkersService,
-		private bigNumberPipe: BigNumberFormatPipe,
-		private imageSizePipe: ImageSizePipe,
-		private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
-		private currencySymbolPipe: CurrencySymbolPipe,
-		private propertyConversionService: PropertyConversionService,
-		private fb: FacebookService,
-		private appRef: ApplicationRef,
-		private zone: NgZone,
-		private translateService: TranslateService,
-		private storageService: LocalStorageService,
-		private momentService: MomentService,
-		private metaService: MetaService,
-		private errorsService: ErrorsService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+				private route: ActivatedRoute,
+				private propertiesService: PropertiesService,
+				private authService: AuthenticationService,
+				private googleMarkersService: GoogleMapsMarkersService,
+				private bigNumberPipe: BigNumberFormatPipe,
+				private currencySymbolPipe: CurrencySymbolPipe,
+				private zone: NgZone,
+				private translateService: TranslateService,
+				private storageService: LocalStorageService,
+				private momentService: MomentService,
+				private errorsService: ErrorsService,
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(router);
 		if (window.screen.width > 990) {
@@ -98,13 +88,19 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.IMAGE_HEIGHT_PX = 480;
 
 		this.languageCurrencySubscriptions.push(this.setupQueryParamsWatcher());
+
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.userInfo = userInfo;
+			}
+		});
 	}
 
 	async ngOnInit() {
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
 
 		this.propertyImagesCarouselConfig = {
-			grid: { xs: 1, sm: 1, md: 2, lg: 2, all: 0 },
+			grid: {xs: 1, sm: 1, md: 2, lg: 2, all: 0},
 			slide: 1,
 			speed: 600,
 			point: {
@@ -169,7 +165,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			// temporary solution for Packer house
 			propertyId = self.emulatePackerHousePropertyId(propertyId);
 			const property = await self.propertiesService.getProperty(propertyId);
-			self.setupMetaTags(property);
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
@@ -187,23 +182,9 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		return propertyId;
 	}
 
-	private setupMetaTags(property: any) {
-		const imgUrl = this.imageSizePipe.transform(this.imageEnvironmentPrefixPipe.transform(property.imageUrls[0]), 1200, 630);
-		const propertyType = this.propertyConversionService.getPropertyTypeName(property.type);
-		let title = `${propertyType} in `;
-		if (property.city) {
-			title += property.city;
-		} else {
-			title += property.address;
-		}
-		this.metaService.setTitle(title);
-		this.metaService.setTag('og:image', imgUrl);
-		this.metaService.setTag('og:url', window.location.href);
-	}
-
 	private createAndSetMapOptions(property: any) {
 		this.options = {
-			center: { lat: property.latitude, lng: property.longitude },
+			center: {lat: property.latitude, lng: property.longitude},
 			zoom: this.DEFAULT_ZOOM
 		};
 	}
@@ -211,10 +192,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private createAndSetPropertyMarker(property: any) {
 		const marker = new google.maps.Marker(
 			{
-				position: { lat: property.latitude, lng: property.longitude },
+				position: {lat: property.latitude, lng: property.longitude},
 				icon: this.googleMarkersService.defaultMarkerSettings,
 				label: this.googleMarkersService.getMarkerLabel
-					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
+				(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
 			});
 		this.overlays = [marker];
 	}
@@ -227,21 +208,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		google.maps.event.trigger(this.map.el.nativeElement, 'resize');
 		this.zone.run(() => {
 		});
-	}
-
-	public shareInFacebook() {
-
-		const url = window.location.href;
-		const params: UIParams = {
-			href: url,
-			method: 'share'
-		};
-
-		this.fb.ui(params)
-			.then((res: UIResponse) => {
-			})
-			.catch((e: any) => console.error(e));
-
 	}
 
 	private async checkIfPropertyReservedByYou(property: any) {
