@@ -7,12 +7,6 @@
                     == 'btc') ? currencyLabelsTranslations[0] : (currencyLabel ==
                     'eth') ? currencyLabelsTranslations[1] : '' }}
                 </div>
-                <!-- <ng-template #differentLabels>
-                    <div class="text-uppercase label buy-crypto-label" *ngIf="property.isCryptoBuy">{{ 'landing.new-properties.buy-btc' | translate }}
-                    </div>
-                    <div class="text-uppercase label buy-online-label" *ngIf="property.isTransactionToolEnabled">{{ 'landing.new-properties.buy-online' | translate }}
-                    </div>
-                </ng-template> -->
             </div>
             <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
                 <ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">

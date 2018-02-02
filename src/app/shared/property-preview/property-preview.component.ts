@@ -56,6 +56,7 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 				}
 			}, this.property.id);
 		}
+		console.log(this.property);
 	}
 
 	ngOnDestroy() {
