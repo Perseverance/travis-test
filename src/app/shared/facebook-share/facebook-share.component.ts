@@ -18,6 +18,7 @@ import {PropertiesService} from '../../properties/properties.service';
 export class FacebookShareComponent extends RedirectableComponent implements OnInit {
 	@Input() property: any;
 	@Input() userInfo: any;
+	@Input() isFeaturedProperty: boolean;
 	private metaTitle = 'Buy or sell investment properties';
 	private propertyRoute = 'property';
 	private userIdQueryParamPath = '?userId=';
