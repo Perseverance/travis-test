@@ -227,15 +227,18 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 				console.log(self.currencyLabel);
 			} else if (self.cryptoFiat && self.cryptoBtc && !self.cryptoEth) {
 				console.log('btc2');
-				self.currencyLabel = self.currencyLabelsTranslations[0];
+				// self.currencyLabel = self.currencyLabelsTranslations[0];
+				self.currencyLabel = 'btc';
 				console.log(self.currencyLabel);
 			} else if (self.cryptoFiat && self.cryptoEth && !self.cryptoBtc) {
 				console.log('eth2');
-				self.currencyLabel = self.currencyLabelsTranslations[1];
+				// self.currencyLabel = self.currencyLabelsTranslations[1];
+				self.currencyLabel = 'eth';
 				console.log(self.currencyLabel);
 			} else if (self.cryptoFiat && self.cryptoBtc && self.cryptoEth) {
 				console.log('crypto2');
-				self.currencyLabel = self.currencyLabelsTranslations[2];
+				// self.currencyLabel = self.currencyLabelsTranslations[2];
+				self.currencyLabel = 'crypto';
 				console.log(self.currencyLabel);
 			}
 		});
