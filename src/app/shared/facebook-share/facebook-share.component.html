@@ -1,6 +1,6 @@
 <button *ngIf="userInfo" type="button" class="btn btn-sm btn-social btn-facebook btn-xs" (click)="shareInFacebook()">
 	<span class="fa fa-facebook"></span>
-	<span *ngIf="userInfo.isAnonymous || userInfo.user.canFacebookSpecialShare" class="text">
+	<span *ngIf="userInfo.isAnonymous || userInfo?.user?.canFacebookSpecialShare" class="text">
 		{{ 'common.label.special-share' | translate }}
 	</span>
 	<span *ngIf="!userInfo.isAnonymous && !userInfo?.user?.canFacebookSpecialShare" class="text">
