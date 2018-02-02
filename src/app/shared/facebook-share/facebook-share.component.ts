@@ -40,6 +40,8 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	}
 
 	public async shareInFacebook() {
+		const anonymousLink = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
+		const notAnonymousLink = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}${this.userIdQueryParamPath}${this.userInfo.user.id}`;
 		this.isAnonymous = this.authService.isUserAnonymous;
 		if (this.isAnonymous && this.isFeaturedProperty) {
 			const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
@@ -48,8 +50,13 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			return;
 		}
 
-		this.setupMetaTags(this.property, this.userInfo.user.id);
-		const url = window.location.href;
+		this.setupMetaTags(this.property, anonymousLink, notAnonymousLink);
+		let url;
+		if (this.isAnonymous) {
+			url = anonymousLink;
+		} else {
+			url = notAnonymousLink;
+		}
 		const params: UIParams = {
 			href: url,
 			method: 'share'
@@ -70,7 +77,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 
 	}
 
-	private setupMetaTags(property: any, userId: string = null) {
+	private setupMetaTags(property: any, anonymousLink: string = null, notAnonymousLink: string = null) {
 		const imgUrl = this.imageSizePipe.transform(this.imageEnvironmentPrefixPipe.transform(property.imageUrls[0]), 1200, 630);
 		const propertyType = this.propertyConversionService.getPropertyTypeName(property.type);
 		let title = `${propertyType} in `;
@@ -82,13 +89,11 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		this.metaService.setTitle(title);
 		this.metaService.setTag('og:image', imgUrl);
 		if (this.isAnonymous) {
-			this.metaService.setTag('og:url',
-				`${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${property.id}`);
+			this.metaService.setTag('og:url', anonymousLink);
 			return;
 		}
 
-		this.metaService.setTag('og:url',
-			`${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${property.id}${this.userIdQueryParamPath}${userId}`);
+		this.metaService.setTag('og:url', notAnonymousLink);
 	}
 
 	private revertMetaTitle() {
