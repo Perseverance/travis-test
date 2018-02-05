@@ -1,6 +1,6 @@
 <div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
 	 [ngClass]="{ 'crypto-class' : property.isCryptoBuy === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
-	<a href="" class="navigation-property-link" [routerLink]="inactiveComponent ? [] : ['/property', property.id]">
+	<a href="" class="navigation-property-link" [routerLink]="inactiveComponent ? null : ['/property', property.id]">
 		<div class="image-holder" (click)="goToProperty(property.id)">
 			<div class="labels-container">
 				<div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' |
@@ -19,8 +19,7 @@
 					</div>
 				</ng-template>
 			</div>
-			<img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
-			/>
+			<img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"/>
 			<div class="right-arrow-holder" *ngIf="showArrow && !inactiveComponent">
 			</div>
 			<span *ngIf="isHiddenIconShown"
