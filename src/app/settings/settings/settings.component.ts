@@ -1,11 +1,11 @@
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {ProWalletComponent} from '../../pro-wallet/pro-wallet.component';
-import {GeneralSettingsComponent} from '../general-settings/general-settings.component';
-import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ProWalletComponent } from '../../pro-wallet/pro-wallet.component';
+import { GeneralSettingsComponent } from '../general-settings/general-settings.component';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
 
 export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
@@ -42,25 +42,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	private paramsSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
-				private router: Router) {
+		private route: ActivatedRoute,
+		private router: Router) {
 	}
 
-	ngOnInit() {
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (userInfo.user === null) {
-					this.shouldShowPassword = true;
-					return;
-				}
-				this.isEmailVerified = userInfo.user.isEmailVerified;
-				if (userInfo.user.externalLoginProviders === null) {
-					this.shouldShowPassword = true;
-				} else {
-					this.shouldShowPassword = userInfo.user.externalLoginProviders.length === 0;
-				}
-			}
-		});
+	async ngOnInit() {
+		const currentUser = await this.authService.getCurrentUser();
+		if (currentUser.data.data === null) {
+			this.shouldShowPassword = true;
+			return;
+		}
+		this.isEmailVerified = currentUser.data.data.isEmailVerified;
+		if (currentUser.data.data.externalLoginProviders === null) {
+			this.shouldShowPassword = true;
+		} else {
+			this.shouldShowPassword = currentUser.data.data.externalLoginProviders.length === 0;
+		}
 		this.paramsSubscription = this.setupParamsWatcher();
 	}
 
@@ -116,7 +113,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		}
 
 		const currentPath = window.location.pathname;
-		this.router.navigate([currentPath], {queryParams: queryParams});
+		this.router.navigate([currentPath], { queryParams: queryParams });
 	}
 
 }
