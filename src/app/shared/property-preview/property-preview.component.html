@@ -1,5 +1,5 @@
 <div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
-    [ngClass]="{ 'crypto-class' : property.isCryptoBuy === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
+    [ngClass]="{ 'crypto-class' : property.isTransactionToolEnabled === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
     <div class="image-holder" (click)="goToProperty(property.id)">
         <div class="labels-container">
             <div class="text-uppercase label new-label" *ngIf="true">{{ 'landing.new-properties.new-label' | translate }}
