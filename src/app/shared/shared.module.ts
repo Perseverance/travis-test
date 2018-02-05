@@ -28,12 +28,14 @@ import {TransactionToolInviteRespondComponent} from './transaction-tool-invite-r
 import {UserRoleByTypePipe} from './pipes/user-role-by-type.pipe';
 import {EtherscanPipe} from './etherscan.pipe';
 import {FacebookShareComponent} from './facebook-share/facebook-share.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
-		TranslateModule
+		TranslateModule,
+		RouterModule
 	],
 	declarations: [
 		LocationSearchComponent,
