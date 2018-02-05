@@ -48,6 +48,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	async ngOnInit() {
 		const currentUser = await this.authService.getCurrentUser();
+		this.paramsSubscription = this.setupParamsWatcher();
 		if (currentUser.data.data === null) {
 			this.shouldShowPassword = true;
 			return;
@@ -58,7 +59,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		} else {
 			this.shouldShowPassword = currentUser.data.data.externalLoginProviders.length === 0;
 		}
-		this.paramsSubscription = this.setupParamsWatcher();
 	}
 
 	ngOnDestroy(): void {
