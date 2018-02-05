@@ -29,6 +29,7 @@ import {LocalStorageService} from '../../shared/localStorage.service';
 import {MomentService} from '../../shared/moment.service';
 import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
 import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
+import {MetaService} from "@ngx-meta/core";
 
 @Component({
 	selector: 'app-property-details',
@@ -77,7 +78,11 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 				private storageService: LocalStorageService,
 				private momentService: MomentService,
 				private errorsService: ErrorsService,
-				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+				private imageSizePipe: ImageSizePipe,
+				private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
+				private propertyConversionService: PropertyConversionService,
+				private metaService: MetaService) {
 
 		super(router);
 		if (window.screen.width > 990) {
@@ -165,6 +170,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			// temporary solution for Packer house
 			propertyId = self.emulatePackerHousePropertyId(propertyId);
 			const property = await self.propertiesService.getProperty(propertyId);
+			self.setupMetaTags(property);
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
@@ -173,6 +179,20 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			self.zone.run(() => {
 			});
 		});
+	}
+
+	private setupMetaTags(property: any) {
+		const imgUrl = this.imageSizePipe.transform(this.imageEnvironmentPrefixPipe.transform(property.imageUrls[0]), 1200, 630);
+		const propertyType = this.propertyConversionService.getPropertyTypeName(property.type);
+		let title = `${propertyType} in `;
+		if (property.city) {
+			title += property.city;
+		} else {
+			title += property.address;
+		}
+		this.metaService.setTitle(title);
+		this.metaService.setTag('og:image', imgUrl);
+		this.metaService.setTag('og:url', window.location.href);
 	}
 
 	private emulatePackerHousePropertyId(propertyId) {
