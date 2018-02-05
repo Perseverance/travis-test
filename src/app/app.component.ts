@@ -38,13 +38,13 @@ export class AppComponent implements OnInit {
 		localStorageService.selectedCurrencyType = CurrencyTypeEnum.NONE;
 
 		// ToDo: Comment out when start to use pusher
-		// this.authService.subscribeToUserData({
-		// 	next: (userInfo: UserData) => {
-		// 		if (!userInfo.isAnonymous) {
-		// 			this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
-		// 		}
-		// 	}
-		// });
+		this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				if (!userInfo.isAnonymous) {
+					this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
+				}
+			}
+		});
 	}
 
 	ngOnInit() {
