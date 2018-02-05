@@ -47,7 +47,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 
 	public async shareInFacebook() {
 		const anonymousLink = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
-		const notAnonymousLink = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}${this.userIdQueryParamPath}${this.userInfo.user.id}`;
+		const notAnonymousLink = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
 		this.isAnonymous = this.authService.isUserAnonymous;
 		if (this.isAnonymous && this.isFeaturedProperty) {
 			this.notificationService.pushInfo({
