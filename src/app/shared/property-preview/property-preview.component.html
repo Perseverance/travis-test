@@ -4,7 +4,7 @@
         <div class="labels-container">
             <div class="text-uppercase label new-label" *ngIf="true">{{ 'landing.new-properties.new-label' | translate }}
             </div>
-            <div class="text-uppercase label crypto-label" *ngIf="property.isCryptoBuy || property.isTransactionToolEnabled">{{ (currencyLabel == 'fiat') ? currencyLabelsTranslations[3] : (currencyLabel
+            <div class="text-uppercase label crypto-label" *ngIf="property.isTransactionToolEnabled">{{ (currencyLabel == 'fiat') ? currencyLabelsTranslations[3] : (currencyLabel
                 == 'crypto') ? currencyLabelsTranslations[2] : (currencyLabel ==
                 'btc') ? currencyLabelsTranslations[0] : (currencyLabel == 'eth')
                 ? currencyLabelsTranslations[1] : '' }}</div>
