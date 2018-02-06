@@ -37,6 +37,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
 	public isEmailVerified = true;
+	public canUserActivateTabs = false;
 
 	private paramsSubscription: Subscription;
 
@@ -53,6 +54,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.isEmailVerified = currentUser.data.data.isEmailVerified;
+		this.canUserActivateTabs = currentUser.data.data.isEmailVerified;
 		if (currentUser.data.data.externalLoginProviders === null) {
 			this.shouldShowPassword = true;
 		} else {
@@ -71,7 +73,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					return;
 				}
 
-				if (!this.isEmailVerified) {
+				if (!this.canUserActivateTabs) {
 					this.setQueryParamForSelectedTab(TABS_INDEX.GENERAL);
 					return;
 				}

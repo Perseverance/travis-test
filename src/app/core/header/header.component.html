@@ -54,7 +54,7 @@
 
                 </li>
                 <li *ngIf="!isUserAnonymous">
-                    <a href="" [routerLink]="['/settings']" [queryParams]="{selectedTab: isEmailVerified ? settingsTabs.WALLET : settingsTabs.GENERAL}"><span
+                    <a href="" [routerLink]="['/settings']" [queryParams]="{selectedTab: settingsTabs.WALLET}"><span
 						class="text-capitalize">{{'common.label.balance'| translate}}</span>
 						:&nbsp;{{userInfo.proTokens
 						| bigNumberFormat : false: true}}&nbsp;PRO<span class="no-wallet-badge"
