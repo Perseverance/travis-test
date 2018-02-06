@@ -1,8 +1,10 @@
-import {PropertiesService} from './../../properties/properties.service';
-import {Subscription} from 'rxjs/Subscription';
-import {MapEventsService, PropertyHoveredEvent} from './../../google-map/map-events.service';
-import {Component, Input, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {Router} from '@angular/router';
+import { currencyLabels } from './../../properties/property-details/currencyLabels.model';
+import { TranslateService } from '@ngx-translate/core';
+import { PropertiesService } from './../../properties/properties.service';
+import { Subscription } from 'rxjs/Subscription';
+import { MapEventsService, PropertyHoveredEvent } from './../../google-map/map-events.service';
+import { Component, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 export enum PROPERTY_THEMES {
 	BIG = 'big',
@@ -30,23 +32,28 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	@Input() userInfo: any;
 	public isOutsideHovered = false;
 	public isPropertyHidden = false;
+	public currencyLabelsTranslations: object;
+	public cryptoBtc = false;
+	public cryptoEth = false;
+	public cryptoFiat = false;
 
 	private mapEventsSubscription: Subscription;
 
 	constructor(private router: Router,
-				private mapEventsService: MapEventsService,
-				private propertiesService: PropertiesService) {
+		private mapEventsService: MapEventsService,
+		private propertiesService: PropertiesService,
+		private translateService: TranslateService) {
 	}
 
 	onMouseEnter() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: true});
+			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: true });
 		}
 	}
 
 	onMouseLeave() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: false});
+			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: false });
 		}
 	}
 
@@ -58,6 +65,45 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 				}
 			}, this.property.id);
 		}
+		this.translateService.stream([
+			'property-details.currency-labels.buy-with-btc',
+			'property-details.currency-labels.buy-with-eth',
+			'property-details.currency-labels.buy-with-crc',
+			'property-details.currency-labels.buy-online',
+		]).subscribe((translations) => {
+			this.currencyLabelsTranslations = {
+				0: translations['property-details.currency-labels.buy-with-btc'],
+				1: translations['property-details.currency-labels.buy-with-eth'],
+				2: translations['property-details.currency-labels.buy-with-crc'],
+				3: translations['property-details.currency-labels.buy-online']
+			};
+
+		});
+		if (this.property.acceptedCurrencies) {
+			this.property.acceptedCurrencies.forEach(element => {
+				if (element === 10) {
+					this.cryptoEth = true;
+				} else if (element === 11) {
+					this.cryptoBtc = true;
+				} else if (element < 10) {
+					this.cryptoFiat = true;
+				}
+			});
+		}
+	}
+	public get currencyLabel() {
+		if (this.cryptoFiat && !this.cryptoBtc && !this.cryptoEth) {
+			return 'fiat';
+		} else if (this.cryptoBtc && this.cryptoEth) {
+			return 'crypto';
+		} else if (this.cryptoBtc && !this.cryptoEth) {
+			return 'btc';
+		} else if (!this.cryptoBtc && this.cryptoEth) {
+			return 'eth';
+		}
+	}
+	public get currencyTranslation() {
+		return this.currencyLabelsTranslations[currencyLabels[this.currencyLabel]];
 	}
 
 	ngOnDestroy() {
