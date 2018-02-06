@@ -22,7 +22,6 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	@Input() userInfo: any;
 	@Input() isFeaturedProperty: boolean;
 	private propertyRoute = 'property';
-	private userIdQueryParamPath = '?userId=';
 	private isAnonymous: boolean;
 	private notLoggedInError: string;
 
@@ -46,8 +45,6 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	}
 
 	public async shareInFacebook() {
-		const anonymousLink = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
-		const notAnonymousLink = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
 		this.isAnonymous = this.authService.isUserAnonymous;
 		if (this.isAnonymous && this.isFeaturedProperty) {
 			this.notificationService.pushInfo({
@@ -62,12 +59,11 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			return;
 		}
 
-		let url;
-		if (this.isAnonymous) {
-			url = anonymousLink;
-		} else {
-			url = notAnonymousLink;
+		let url = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
+		if (!this.isAnonymous) {
+			url = `${url}/${this.userInfo.user.id}`;
 		}
+		
 		const params: UIParams = {
 			href: url,
 			method: 'share'
