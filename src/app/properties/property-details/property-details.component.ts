@@ -203,7 +203,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public get currencyLabel() {
 		if (this.cryptoFiat && !this.cryptoBtc && !this.cryptoEth) {
 			return 'fiat';
-		} else if (this.cryptoBtc && this.cryptoEth && !this.cryptoFiat) {
+		} else if (this.cryptoBtc && this.cryptoEth) {
 			return 'crypto';
 		} else if (this.cryptoBtc && !this.cryptoEth) {
 			return 'btc';
