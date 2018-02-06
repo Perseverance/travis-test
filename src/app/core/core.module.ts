@@ -53,6 +53,7 @@ import { NotAuthenticatedGuard } from '../authentication/not-authenticated-guard
 import { CryptoWidgetComponent } from './crypto-widget/crypto-widget.component';
 import { CurrencyDataService } from './crypto-widget/currency-data.service';
 import { CryptoWidgetMobileComponent } from './crypto-widget-mobile/crypto-widget-mobile.component';
+import {PrerenderHelperService} from '../shared/prerender-helper.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -121,7 +122,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		HelloSignService,
 		LoadPropertyService,
 		VerificationService,
-		MessageService
+		MessageService,
+		PrerenderHelperService
 	],
 	exports: [
 		TranslateModule,
