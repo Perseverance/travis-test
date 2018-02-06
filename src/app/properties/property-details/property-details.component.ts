@@ -1,17 +1,18 @@
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
-import {PropertyConversionService} from './../../shared/property-conversion.service';
-import {ImageEnvironmentPrefixPipe} from './../../shared/pipes/image-environment-prefix.pipe';
-import {ImageSizePipe} from './../../shared/pipes/image-size.pipe';
-import {TranslateService} from '@ngx-translate/core';
-import {GoogleMapsMarkersService} from './../../shared/google-maps-markers.service';
-import {CurrencySymbolPipe} from './../../shared/pipes/currency-symbol.pipe';
-import {BigNumberFormatPipe} from './../../shared/pipes/big-number-format.pipe';
-import {environment} from './../../../environments/environment';
-import {NgxCarousel} from 'ngx-carousel';
-import {RedirectableComponent} from './../../shared/redirectable/redirectable.component';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {PropertiesService} from './../properties.service';
+import { currencyLabels } from './currencyLabels.model';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
+import { PropertyConversionService } from './../../shared/property-conversion.service';
+import { ImageEnvironmentPrefixPipe } from './../../shared/pipes/image-environment-prefix.pipe';
+import { ImageSizePipe } from './../../shared/pipes/image-size.pipe';
+import { TranslateService } from '@ngx-translate/core';
+import { GoogleMapsMarkersService } from './../../shared/google-maps-markers.service';
+import { CurrencySymbolPipe } from './../../shared/pipes/currency-symbol.pipe';
+import { BigNumberFormatPipe } from './../../shared/pipes/big-number-format.pipe';
+import { environment } from './../../../environments/environment';
+import { NgxCarousel } from 'ngx-carousel';
+import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { PropertiesService } from './../properties.service';
 import {
 	Component,
 	OnInit,
@@ -20,15 +21,15 @@ import {
 	NgZone,
 	ViewChild
 } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {LanguagesEnum} from '../../shared/enums/supported-languages.enum';
-import {LocalStorageService} from '../../shared/localStorage.service';
-import {MomentService} from '../../shared/moment.service';
-import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
-import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { LanguagesEnum } from '../../shared/enums/supported-languages.enum';
+import { LocalStorageService } from '../../shared/localStorage.service';
+import { MomentService } from '../../shared/moment.service';
+import { CurrencyEnum } from '../../shared/enums/supported-currencies.enum';
+import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
 
 @Component({
 	selector: 'app-property-details',
@@ -64,20 +65,24 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 	private notLoggedInError: string;
 	public userInfo: any;
+	public currencyLabelsTranslations: object;
+	public cryptoBtc = false;
+	public cryptoEth = false;
+	public cryptoFiat = false;
 
 	constructor(router: Router,
-				private route: ActivatedRoute,
-				private propertiesService: PropertiesService,
-				private authService: AuthenticationService,
-				private googleMarkersService: GoogleMapsMarkersService,
-				private bigNumberPipe: BigNumberFormatPipe,
-				private currencySymbolPipe: CurrencySymbolPipe,
-				private zone: NgZone,
-				private translateService: TranslateService,
-				private storageService: LocalStorageService,
-				private momentService: MomentService,
-				private errorsService: ErrorsService,
-				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+		private route: ActivatedRoute,
+		private propertiesService: PropertiesService,
+		private authService: AuthenticationService,
+		private googleMarkersService: GoogleMapsMarkersService,
+		private bigNumberPipe: BigNumberFormatPipe,
+		private currencySymbolPipe: CurrencySymbolPipe,
+		private zone: NgZone,
+		private translateService: TranslateService,
+		private storageService: LocalStorageService,
+		private momentService: MomentService,
+		private errorsService: ErrorsService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(router);
 		if (window.screen.width > 990) {
@@ -100,7 +105,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
 
 		this.propertyImagesCarouselConfig = {
-			grid: {xs: 1, sm: 1, md: 2, lg: 2, all: 0},
+			grid: { xs: 1, sm: 1, md: 2, lg: 2, all: 0 },
 			slide: 1,
 			speed: 600,
 			point: {
@@ -125,7 +130,11 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			'property-details.no-wallet-set-message',
 			'property-details.verification-error',
 			'property-details.verification-error-message',
-			'common.only-registered-error'
+			'common.only-registered-error',
+			'property-details.currency-labels.buy-with-btc',
+			'property-details.currency-labels.buy-with-eth',
+			'property-details.currency-labels.buy-with-crc',
+			'property-details.currency-labels.buy-online',
 		]).subscribe((translations) => {
 			this.featureScale = {
 				undefined: translations['common.scales.undefined'],
@@ -151,6 +160,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 				1: translations['common.scales.binary-scale.yes'],
 				2: translations['common.scales.binary-scale.no']
 			};
+			this.currencyLabelsTranslations = {
+				0: translations['property-details.currency-labels.buy-with-btc'],
+				1: translations['property-details.currency-labels.buy-with-eth'],
+				2: translations['property-details.currency-labels.buy-with-crc'],
+				3: translations['property-details.currency-labels.buy-online']
+			};
 
 			this.walletErrorTitle = translations['property-details.no-wallet-set'];
 			this.walletErrorMessage = translations['property-details.no-wallet-set-message'];
@@ -172,7 +187,32 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
 			self.zone.run(() => {
 			});
+			if (self.property.acceptedCurrencies) {
+				self.property.acceptedCurrencies.forEach(element => {
+					if (element === 10) {
+						self.cryptoEth = true;
+					} else if (element === 11) {
+						self.cryptoBtc = true;
+					} else if (element < 10) {
+						self.cryptoFiat = true;
+					}
+				});
+			}
 		});
+	}
+	public get currencyLabel() {
+		if (this.cryptoFiat && !this.cryptoBtc && !this.cryptoEth) {
+			return 'fiat';
+		} else if (this.cryptoBtc && this.cryptoEth) {
+			return 'crypto';
+		} else if (this.cryptoBtc && !this.cryptoEth) {
+			return 'btc';
+		} else if (!this.cryptoBtc && this.cryptoEth) {
+			return 'eth';
+		}
+	}
+	public get currencyTranslation() {
+		return this.currencyLabelsTranslations[currencyLabels[this.currencyLabel]];
 	}
 
 	private emulatePackerHousePropertyId(propertyId) {
@@ -184,7 +224,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 
 	private createAndSetMapOptions(property: any) {
 		this.options = {
-			center: {lat: property.latitude, lng: property.longitude},
+			center: { lat: property.latitude, lng: property.longitude },
 			zoom: this.DEFAULT_ZOOM
 		};
 	}
@@ -192,10 +232,10 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private createAndSetPropertyMarker(property: any) {
 		const marker = new google.maps.Marker(
 			{
-				position: {lat: property.latitude, lng: property.longitude},
+				position: { lat: property.latitude, lng: property.longitude },
 				icon: this.googleMarkersService.defaultMarkerSettings,
 				label: this.googleMarkersService.getMarkerLabel
-				(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
+					(this.bigNumberPipe.transform(this.currencySymbolPipe.transform(property.price.value.toString()), true))
 			});
 		this.overlays = [marker];
 	}

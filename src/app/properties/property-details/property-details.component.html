@@ -1,61 +1,49 @@
 <div class="row property" *ngIf="property">
-	<div class="col-xs-12 property-carousel-row">
-		<div class="row property-carousel-holder">
-			<div class="labels-container">
-				<div class="text-uppercase label buy-online-label"
-					 *ngIf="property.isCryptoBuy && property.isTransactionToolEnabled ;else differentLabels">{{
-					'landing.new-properties.buy-btc' | translate }}
-				</div>
-				<ng-template #differentLabels>
-					<div class="text-uppercase label buy-crypto-label" *ngIf="property.isCryptoBuy">{{
-						'landing.new-properties.buy-btc' | translate }}
-					</div>
-					<div class="text-uppercase label buy-online-label" *ngIf="property.isTransactionToolEnabled">{{
-						'landing.new-properties.buy-online' | translate }}
-					</div>
-				</ng-template>
-			</div>
-			<ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
-				<ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">
-					<img class="property-img"
-						 [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true"
-						 onError="this.src='/assets/images/image-404.png';">
-				</ngx-tile>
-				<button NgxCarouselPrev class="left-arrow">
+    <div class="col-xs-12 property-carousel-row">
+        <div class="row property-carousel-holder">
+            <div class="labels-container">
+                <div class="text-uppercase label buy-online-label" *ngIf="property.isTransactionToolEnabled">{{ currencyTranslation }}
+                </div>
+            </div>
+            <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">
+                <ngx-tile class="property-carousel-item" NgxCarouselItem *ngFor="let url of property.imageUrls">
+                    <img class="property-img" [src]="url | imageEnvPrefix | imageSize : IMAGE_WIDTH_PX: IMAGE_HEIGHT_PX: true"
+                        onError="this.src='/assets/images/image-404.png';">
+                </ngx-tile>
+                <button NgxCarouselPrev class="left-arrow">
 					<i class="fa fa-angle-left" aria-hidden="true"></i>
 				</button>
-				<button NgxCarouselNext class="right-arrow">
+                <button NgxCarouselNext class="right-arrow">
 					<i class="fa fa-angle-right" aria-hidden="true"></i>
 				</button>
-			</ngx-carousel>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-7">
-		<div class="row property-info">
-			<div class="col-xs-12 col-md-11 col-md-offset-1">
-				<div class="row" class="basic-property-info">
-					<div class="col-xs-6 col-sm-8 col-lg-8 text-left">
-						<h3>{{property.address}}</h3>
-					</div>
-					<div class="col-xs-6 col-sm-4 col-lg-4 text-right">
-						<h3>{{ property.price.value | thousandSeparator | currencySymbol:
-							property.price.type}}
-						</h3>
-					</div>
-					<div class="col-xs-9 col-sm-9 col-lg-9">
+            </ngx-carousel>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-7">
+        <div class="row property-info">
+            <div class="col-xs-12 col-md-11 col-md-offset-1">
+                <div class="row" class="basic-property-info">
+                    <div class="col-xs-6 col-sm-8 col-lg-8 text-left">
+                        <h3>{{property.address}}</h3>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-4 text-right">
+                        <h3>{{ property.price.value | thousandSeparator | currencySymbol:
+                            property.price.type}}
+                        </h3>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-lg-9">
                         <span>
                             <i class="fa fa-map-marker"
 							   aria-hidden="true"></i>&nbsp;{{property.city}}&nbsp;&#124;</span>&nbsp;
-						<span class="hidden-xs">
+                        <span class="hidden-xs">
                             <i class="fa fa-circle fa-active" aria-hidden="true"></i>&nbsp;{{ 'common.label.active' | translate }}&nbsp;&#124;</span>&nbsp;
-						<span class="hidden-xs">{{ 'property-details.published' | translate }} {{ (property.addedOnTimeStamp | amFromUnix) | amTimeAgo }}</span>&nbsp;
-						<app-facebook-share [property]="property" [userInfo]="userInfo"
-											[isFeaturedProperty]="property?.isFeaturedProperty"></app-facebook-share>
-					</div>
-					<div class="col-xs-3 col-sm-3 col-lg-3 text-right">
-						<a href="" class="btn btn-block propy-control button-small btn-purchase text-uppercase"
-						   [ngClass]="{'disabled-reservation': isPropertyReserved}"
-						   (click)="reserveProperty($event)">
+                        <span class="hidden-xs">{{ 'property-details.published' | translate }} {{ (property.addedOnTimeStamp | amFromUnix) | amTimeAgo }}</span>&nbsp;
+                        <app-facebook-share [property]="property" [userInfo]="userInfo" [isFeaturedProperty]="property?.isFeaturedProperty"></app-facebook-share>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-lg-3 text-right">
+                        <a href="" class="btn btn-block propy-control button-small btn-purchase text-uppercase"
+                            [ngClass]="{'disabled-reservation': isPropertyReserved}"
+                            (click)="reserveProperty($event)">
 							<span
 								*ngIf="!isPropertyReserved">{{ 'property-details.reserve-property' | translate}}</span>
 
@@ -65,217 +53,212 @@
 							<span
 								*ngIf="isPropertyReserved && !isPropertyReservedByYou">{{ 'property-details.reserved-property' | translate}}</span>
 						</a>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 info-tabs">
-						<div class="info-tabs-content row">
-							<div class="col-xs-12 col-md-9 info-tabs-top-holder bottom-border">
-								<ul class="nav nav-tabs">
-									<li role="presentation" class="active">
-										<a data-toggle="tab" href="#overview">{{ 'property-details.overview' | translate
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 info-tabs">
+                        <div class="info-tabs-content row">
+                            <div class="col-xs-12 col-md-9 info-tabs-top-holder bottom-border">
+                                <ul class="nav nav-tabs">
+                                    <li role="presentation" class="active">
+                                        <a data-toggle="tab" href="#overview">{{ 'property-details.overview' | translate
 											}}</a>
-									</li>
-									<li role="presentation">
-										<a data-toggle="tab" href="#features">{{ 'property-details.features' | translate
+                                    </li>
+                                    <li role="presentation">
+                                        <a data-toggle="tab" href="#features">{{ 'property-details.features' | translate
 											}}</a>
-									</li>
-									<li role="presentation">
-										<a data-toggle="tab" href="#location" (click)="draw()">{{
+                                    </li>
+                                    <li role="presentation">
+                                        <a data-toggle="tab" href="#location" (click)="draw()">{{
 											'property-details.location' | translate }}</a>
-									</li>
-									<!--
+                                    </li>
+                                    <!--
                                     <li role="presentation"><a data-toggle="tab" href="#reviews">{{
                                         'property-details.reviews' | translate }}</a></li>
                                     -->
-								</ul>
-							</div>
-							<div class="hidden-xs hidden-sm col-md-3 bottom-border"></div>
-							<div class="tab-content col-xs-12">
-								<div id="overview" class="tab-pane fade in active">
-									<div class="row">
-										<div class="col-xs-4 col-md-3">
-											<app-property-description-overview>
-												<div overview-icon>
-													<div
-														[inlineSVG]="'/assets/images/property-details/svg/house.svg'"></div>
-												</div>
-												<div overview-label>
-													<span>{{'property-details.overview-labels.property-type' | translate}}</span>
-												</div>
-												<div overview-text>
-													<span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
-												</div>
-											</app-property-description-overview>
-										</div>
-										<div class="col-xs-4 col-md-3" *ngIf="property.size.value > 0">
-											<app-property-description-overview>
-												<div overview-icon>
-													<div
-														[inlineSVG]="'/assets/images/property-details/svg/area.svg'"></div>
-												</div>
-												<div overview-label>
-													<span>{{'property-details.overview-labels.area' | translate}}</span>
-												</div>
-												<div overview-text>
-													<span>{{property.size.value | sizeUnitOfMeasure}}</span>
-												</div>
-											</app-property-description-overview>
-										</div>
-										<div class="col-xs-4 col-md-3" *ngIf="property.bedrooms > 0">
-											<app-property-description-overview>
-												<div overview-icon>
-													<div
-														[inlineSVG]="'/assets/images/property-details/svg/bedrooms.svg'"></div>
-												</div>
-												<div overview-label>
-													<span>{{'property-details.overview-labels.bedrooms' | translate}}</span>
-												</div>
-												<div overview-text>
-													<span>{{property.bedrooms}}</span>
-												</div>
-											</app-property-description-overview>
-										</div>
-									</div>
-									<div class="row property-desc" [innerHTML]="property.desc">
-									</div>
-									<div class="row property-disclaimer" [innerHTML]="property.disclaimer">
-									</div>
-								</div>
-								<div id="features" class="tab-pane fade">
-									<div class="row">
-										<div class="col-xs-12 tab-header">
-											<h4>{{ 'property-details.features' | translate
-												}}
-											</h4>
-										</div>
-									</div>
-									<div class="row" *ngIf="featureScale && publicTransportScale && binaryScale">
-										<div class="left single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.crime-rate' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{featureScale[property.crimeRate]}}
-												</div>
-											</div>
-										</div>
-										<div class="right single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.CO2' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{featureScale[property.carbonFootprint]}}
-												</div>
-											</div>
-										</div>
-										<div class="left single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.noise-pollution' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{featureScale[property.noisePollutionScore]}}
-												</div>
-											</div>
-										</div>
-										<div class="right single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.public-transportation' |
-													translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{publicTransportScale[property.publicTransportAccess]}}
-												</div>
-											</div>
-										</div>
-										<div class="left single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.education' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{featureScale[property.educationScore]}}
-												</div>
-											</div>
-										</div>
-										<div class="right single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.walkability' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{property.walkabilityScore}}
-												</div>
-											</div>
-										</div>
-										<div class="left single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.disaster' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{featureScale[property.disastersScore]}}
-												</div>
-											</div>
-										</div>
-										<div class="right single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.waste' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">
-													{{binaryScale[property.wasteManagement]}}
-												</div>
-											</div>
-										</div>
-										<div class="left single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.furnished' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">{{property.furnished}}</div>
-											</div>
-										</div>
-										<div class="right single-feature-wrapper">
-											<div class="row single-feature">
-												<div class="col-xs-7 single-feature-label">
-													{{'property-details.features-labels.air-quality-index' | translate}}
-												</div>
-												<div class="col-xs-5 single-feature-value">{{property.aqi}}</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!--
+                                </ul>
+                            </div>
+                            <div class="hidden-xs hidden-sm col-md-3 bottom-border"></div>
+                            <div class="tab-content col-xs-12">
+                                <div id="overview" class="tab-pane fade in active">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-md-3">
+                                            <app-property-description-overview>
+                                                <div overview-icon>
+                                                    <div [inlineSVG]="'/assets/images/property-details/svg/house.svg'"></div>
+                                                </div>
+                                                <div overview-label>
+                                                    <span>{{'property-details.overview-labels.property-type' | translate}}</span>
+                                                </div>
+                                                <div overview-text>
+                                                    <span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
+                                                </div>
+                                            </app-property-description-overview>
+                                        </div>
+                                        <div class="col-xs-4 col-md-3" *ngIf="property.size.value > 0">
+                                            <app-property-description-overview>
+                                                <div overview-icon>
+                                                    <div [inlineSVG]="'/assets/images/property-details/svg/area.svg'"></div>
+                                                </div>
+                                                <div overview-label>
+                                                    <span>{{'property-details.overview-labels.area' | translate}}</span>
+                                                </div>
+                                                <div overview-text>
+                                                    <span>{{property.size.value | sizeUnitOfMeasure}}</span>
+                                                </div>
+                                            </app-property-description-overview>
+                                        </div>
+                                        <div class="col-xs-4 col-md-3" *ngIf="property.bedrooms > 0">
+                                            <app-property-description-overview>
+                                                <div overview-icon>
+                                                    <div [inlineSVG]="'/assets/images/property-details/svg/bedrooms.svg'"></div>
+                                                </div>
+                                                <div overview-label>
+                                                    <span>{{'property-details.overview-labels.bedrooms' | translate}}</span>
+                                                </div>
+                                                <div overview-text>
+                                                    <span>{{property.bedrooms}}</span>
+                                                </div>
+                                            </app-property-description-overview>
+                                        </div>
+                                    </div>
+                                    <div class="row property-desc" [innerHTML]="property.desc">
+                                    </div>
+                                    <div class="row property-disclaimer" [innerHTML]="property.disclaimer">
+                                    </div>
+                                </div>
+                                <div id="features" class="tab-pane fade">
+                                    <div class="row">
+                                        <div class="col-xs-12 tab-header">
+                                            <h4>{{ 'property-details.features' | translate
+                                                }}
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="featureScale && publicTransportScale && binaryScale">
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.crime-rate' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{featureScale[property.crimeRate]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.CO2' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{featureScale[property.carbonFootprint]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.noise-pollution' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{featureScale[property.noisePollutionScore]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.public-transportation' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{publicTransportScale[property.publicTransportAccess]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.education' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{featureScale[property.educationScore]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.walkability' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{property.walkabilityScore}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.disaster' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{featureScale[property.disastersScore]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.waste' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">
+                                                    {{binaryScale[property.wasteManagement]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="left single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.furnished' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">{{property.furnished}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="right single-feature-wrapper">
+                                            <div class="row single-feature">
+                                                <div class="col-xs-7 single-feature-label">
+                                                    {{'property-details.features-labels.air-quality-index' | translate}}
+                                                </div>
+                                                <div class="col-xs-5 single-feature-value">{{property.aqi}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--
                                 <div id="reviews" class="tab-pane fade ">
                                     <h3>{{ 'property-details.reviews' | translate }}</h3>
                                     <p>{{ 'property-details.no-reviews-yet' | translate }}</p>
                                 </div>
                                 -->
-								<div id="location" class="tab-pane fade">
-									<div class="row">
-										<div class="col-xs-12 tab-header">
-											<h4>{{ 'property-details.neigbourhood-map'
-												| translate }}</h4>
-										</div>
-										<div class="col-xs-12 location-map">
-											<p-gmap #gmap [options]="options" [overlays]="overlays"
-													styleClass="google-map-holder"></p-gmap>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-5 contact-agent-holder">
-		<app-contact-agent [propertyId]="property.id" [agents]="property.agents"></app-contact-agent>
-	</div>
+                                <div id="location" class="tab-pane fade">
+                                    <div class="row">
+                                        <div class="col-xs-12 tab-header">
+                                            <h4>{{ 'property-details.neigbourhood-map'
+                                                | translate }}</h4>
+                                        </div>
+                                        <div class="col-xs-12 location-map">
+                                            <p-gmap #gmap [options]="options" [overlays]="overlays" styleClass="google-map-holder"></p-gmap>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-5 contact-agent-holder">
+        <app-contact-agent [propertyId]="property.id" [agents]="property.agents"></app-contact-agent>
+    </div>
 </div>
