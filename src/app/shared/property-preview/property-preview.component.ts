@@ -1,3 +1,4 @@
+import { currencyLabels } from './../../properties/property-details/currencyLabels.model';
 import { TranslateService } from '@ngx-translate/core';
 import { PropertiesService } from './../../properties/properties.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -32,7 +33,6 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	public isOutsideHovered = false;
 	public isPropertyHidden = false;
 	public currencyLabelsTranslations: object;
-	public currencyLabel: string;
 	public cryptoBtc = false;
 	public cryptoEth = false;
 	public cryptoFiat = false;
@@ -89,22 +89,21 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 					this.cryptoFiat = true;
 				}
 			});
-			if (this.cryptoFiat && !this.cryptoBtc && !this.cryptoEth) {
-				this.currencyLabel = 'fiat';
-			} else if (this.cryptoBtc && this.cryptoEth && !this.cryptoFiat) {
-				this.currencyLabel = 'crypto';
-			} else if (this.cryptoBtc && !this.cryptoEth) {
-				this.currencyLabel = 'btc';
-			} else if (!this.cryptoBtc && this.cryptoEth) {
-				this.currencyLabel = 'eth';
-			} else if (this.cryptoFiat && this.cryptoBtc && !this.cryptoEth) {
-				this.currencyLabel = 'btc';
-			} else if (this.cryptoFiat && this.cryptoEth && !this.cryptoBtc) {
-				this.currencyLabel = 'eth';
-			} else if (this.cryptoFiat && this.cryptoBtc && this.cryptoEth) {
-				this.currencyLabel = 'crypto';
-			}
 		}
+	}
+	public get currencyLabel() {
+		if (this.cryptoFiat && !this.cryptoBtc && !this.cryptoEth) {
+			return 'fiat';
+		} else if (this.cryptoBtc && this.cryptoEth) {
+			return 'crypto';
+		} else if (this.cryptoBtc && !this.cryptoEth) {
+			return 'btc';
+		} else if (!this.cryptoBtc && this.cryptoEth) {
+			return 'eth';
+		}
+	}
+	public get currencyTranslation() {
+		return this.currencyLabelsTranslations[currencyLabels[this.currencyLabel]];
 	}
 
 	ngOnDestroy() {
