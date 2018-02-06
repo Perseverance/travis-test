@@ -1,3 +1,4 @@
+import { currencyLabels } from './currencyLabels.model';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { PropertyConversionService } from './../../shared/property-conversion.service';
@@ -65,7 +66,6 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	private notLoggedInError: string;
 	public userInfo: any;
 	public currencyLabelsTranslations: object;
-	public currencyLabel: string;
 	public cryptoBtc = false;
 	public cryptoEth = false;
 	public cryptoFiat = false;
@@ -197,23 +197,22 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 						self.cryptoFiat = true;
 					}
 				});
-				if (self.cryptoFiat && !self.cryptoBtc && !self.cryptoEth) {
-					self.currencyLabel = 'fiat';
-				} else if (self.cryptoBtc && self.cryptoEth && !self.cryptoFiat) {
-					self.currencyLabel = 'crypto';
-				} else if (self.cryptoBtc && !self.cryptoEth) {
-					self.currencyLabel = 'btc';
-				} else if (!self.cryptoBtc && self.cryptoEth) {
-					self.currencyLabel = 'eth';
-				} else if (self.cryptoFiat && self.cryptoBtc && !self.cryptoEth) {
-					self.currencyLabel = 'btc';
-				} else if (self.cryptoFiat && self.cryptoEth && !self.cryptoBtc) {
-					self.currencyLabel = 'eth';
-				} else if (self.cryptoFiat && self.cryptoBtc && self.cryptoEth) {
-					self.currencyLabel = 'crypto';
-				}
 			}
 		});
+	}
+	public get currencyLabel() {
+		if (this.cryptoFiat && !this.cryptoBtc && !this.cryptoEth) {
+			return 'fiat';
+		} else if (this.cryptoBtc && this.cryptoEth && !this.cryptoFiat) {
+			return 'crypto';
+		} else if (this.cryptoBtc && !this.cryptoEth) {
+			return 'btc';
+		} else if (!this.cryptoBtc && this.cryptoEth) {
+			return 'eth';
+		}
+	}
+	public get currencyTranslation() {
+		return this.currencyLabelsTranslations[currencyLabels[this.currencyLabel]];
 	}
 
 	private emulatePackerHousePropertyId(propertyId) {
