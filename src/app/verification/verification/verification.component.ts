@@ -67,7 +67,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 						setTimeout(async () => {
 							await this.sendActivationCode(params.code, params.email);
 							this.hasDataLoaded = true;
-						}, 2000);
+						}, 1000);
 					} else {
 						await this.sendActivationCode(params.code, params.email);
 					}
