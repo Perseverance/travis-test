@@ -59,10 +59,10 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			return;
 		}
 
-		let url = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
-		if (!this.isAnonymous) {
-			url = `${url}/${this.userInfo.user.id}`;
-		}
+		const url = `${window.location.protocol}//${window.location.host}/${this.propertyRoute}/${this.property.id}`;
+		// if (!this.isAnonymous) {
+		// 	url = `${url}/${this.userInfo.user.id}`;
+		// }
 		
 		const params: UIParams = {
 			href: url,
