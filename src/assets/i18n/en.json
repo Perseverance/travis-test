@@ -21,6 +21,8 @@
             "balance": "balance",
             "set": "Set",
             "share": "Share to Facebook",
+            "special-share": "Share & get 1 PRO",
+            "simple-share": "Share Property",
             "about": "About",
             "record-to-blockchain": "Record to Blockchain",
             "copy": "Copy"
@@ -259,12 +261,6 @@
             "area": "Property Area",
             "bedrooms": "Bedrooms"
         },
-        "currency-labels": {
-            "buy-with-btc": "Buy with Bitcoin now",
-            "buy-with-eth": "Buy with Ether now",
-            "buy-with-crc": "Buy with Cryptocurrency",
-            "buy-online": "Buy Online"
-        },
         "features-labels": {
             "crime-rate": "Crime Rate",
             "CO2": "CO₂",
@@ -276,6 +272,12 @@
             "waste": "Waste Management",
             "furnished": "Is Furnished",
             "air-quality-index": "Air Quality Index"
+        },
+        "currency-labels": {
+            "buy-with-btc": "Buy with Bitcoin now",
+            "buy-with-eth": "Buy with Ether now",
+            "buy-with-crc": "Buy with Cryptocurrency",
+            "buy-online": "Buy Online"
         },
         "contact-agent": {
             "contact-agent-title": "Contact seller",

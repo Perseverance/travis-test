@@ -1,25 +1,29 @@
 <div *ngIf="isServiceWorking">
-    <div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
-    <ng-template #dataLoaded>
-        <div class="row featured-locations">
-            <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
-            <div class="featured-holder">
-                <ngx-carousel [inputs]="carouselTile">
-                    <ngx-tile NgxCarouselItem *ngFor="let property of showedLocations">
-                        <app-property-preview [property]="property" [featuredCityName]="property.city" [imageWidth]="350"
-                            [imageHeight]="215" [showArrow]="true">
-                        </app-property-preview>
-                    </ngx-tile>
-                    <button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i></button>
-                    <button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i></button>
-                </ngx-carousel>
-            </div>
-        </div>
-    </ng-template>
-    <ng-template #dataNotLoaded>
-        <h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
-        <div class="row progress-spinner">
-            <p-progressSpinner></p-progressSpinner>
-        </div>
-    </ng-template>
+	<div *ngIf="hasDataLoaded; then dataLoaded;else dataNotLoaded"></div>
+	<ng-template #dataLoaded>
+		<div class="row featured-locations">
+			<h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
+			<div class="featured-holder">
+				<ngx-carousel [inputs]="carouselTile">
+					<ngx-tile NgxCarouselItem *ngFor="let property of showedLocations">
+						<app-property-preview [property]="property" [featuredCityName]="property.city"
+											  [imageWidth]="350"
+											  [imageHeight]="215" [showArrow]="true" [isPropertyShareable]="true"
+											  [userInfo]="userInfo">
+						</app-property-preview>
+					</ngx-tile>
+					<button NgxCarouselPrev class='left-arrow'><i class="fa fa-angle-left" aria-hidden="true"></i>
+					</button>
+					<button NgxCarouselNext class='right-arrow'><i class="fa fa-angle-right" aria-hidden="true"></i>
+					</button>
+				</ngx-carousel>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #dataNotLoaded>
+		<h3 class="text-center">{{ 'landing.feature-properties' | translate }}</h3>
+		<div class="row progress-spinner">
+			<p-progressSpinner></p-progressSpinner>
+		</div>
+	</ng-template>
 </div>

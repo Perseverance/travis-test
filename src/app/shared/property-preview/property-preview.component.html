@@ -1,5 +1,5 @@
 <div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
-    [ngClass]="{ 'crypto-class' : property.isTransactionToolEnabled === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
+    [ngClass]="{ 'crypto-class' : property.isCryptoBuy === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
     <div class="image-holder" (click)="goToProperty(property.id)">
         <div class="labels-container">
             <div class="text-uppercase label new-label" *ngIf="true">{{ 'landing.new-properties.new-label' | translate }}
@@ -26,6 +26,9 @@
         <span class="text-uppercase" *ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
         <span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure}}</span>
     </div>
-    <h4 class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
-    </h4>
+    <span class="property-price" *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
+		currencySymbol}}
+	</span>
+    <app-facebook-share *ngIf="isPropertyShareable" [property]="property" [userInfo]="userInfo"
+        [isFeaturedProperty]="true"></app-facebook-share>
 </div>

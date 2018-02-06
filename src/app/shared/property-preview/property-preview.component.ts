@@ -27,7 +27,8 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	@Input() inactiveComponent = false;
 	@Input() isHiddenIconShown = false;
 	@Input() featuredCityName: string;
-
+	@Input() isPropertyShareable = false;
+	@Input() userInfo: any;
 	public isOutsideHovered = false;
 	public isPropertyHidden = false;
 	public currencyLabelsTranslations: object;
