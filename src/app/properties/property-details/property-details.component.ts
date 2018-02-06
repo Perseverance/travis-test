@@ -29,7 +29,8 @@ import {LocalStorageService} from '../../shared/localStorage.service';
 import {MomentService} from '../../shared/moment.service';
 import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
 import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
-import {MetaService} from "@ngx-meta/core";
+import {MetaService} from '@ngx-meta/core';
+import {PrerenderHelperService} from '../../shared/prerender-helper.service';
 
 @Component({
 	selector: 'app-property-details',
@@ -82,9 +83,12 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 				private imageSizePipe: ImageSizePipe,
 				private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
 				private propertyConversionService: PropertyConversionService,
-				private metaService: MetaService) {
-
+				private metaService: MetaService,
+				private prerenderHelperService: PrerenderHelperService) {
 		super(router);
+		
+		this.prerenderHelperService.prerenderNotReady();
+
 		if (window.screen.width > 990) {
 			this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
 		} else {
@@ -171,6 +175,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			propertyId = self.emulatePackerHousePropertyId(propertyId);
 			const property = await self.propertiesService.getProperty(propertyId);
 			self.setupMetaTags(property);
+			self.prerenderHelperService.prerenderReady();
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
