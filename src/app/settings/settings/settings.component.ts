@@ -37,7 +37,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
 	public isEmailVerified = true;
-	public canUserActivateTabs = false;
 
 	private paramsSubscription: Subscription;
 
@@ -48,18 +47,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	async ngOnInit() {
 		const currentUser = await this.authService.getCurrentUser();
-		this.paramsSubscription = this.setupParamsWatcher();
 		if (currentUser.data.data === null) {
 			this.shouldShowPassword = true;
+			this.paramsSubscription = this.setupParamsWatcher();
 			return;
 		}
 		this.isEmailVerified = currentUser.data.data.isEmailVerified;
-		this.canUserActivateTabs = currentUser.data.data.isEmailVerified;
 		if (currentUser.data.data.externalLoginProviders === null) {
 			this.shouldShowPassword = true;
 		} else {
 			this.shouldShowPassword = currentUser.data.data.externalLoginProviders.length === 0;
 		}
+		this.paramsSubscription = this.setupParamsWatcher();
 	}
 
 	ngOnDestroy(): void {
@@ -73,7 +72,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					return;
 				}
 
-				if (!this.canUserActivateTabs) {
+				if (!this.isEmailVerified) {
 					this.setQueryParamForSelectedTab(TABS_INDEX.GENERAL);
 					return;
 				}
