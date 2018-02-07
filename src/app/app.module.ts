@@ -1,6 +1,6 @@
 import { VerificationModule } from './verification/verification.module';
 import { MetaModule } from '@ngx-meta/core';
-import { SettingsModule } from './settings/settings.module';
+// import { SettingsModule } from './settings/settings.module';
 import { PropertiesModule } from './properties/properties.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -12,7 +12,6 @@ import { CoreModule } from './core/core.module';
 import { FacebookModule } from 'ngx-facebook';
 import { HomeModule } from './home/home.module';
 import { LinkedInSdkModule } from 'angular-linkedin-sdk';
-import { GoogleMapModule } from './google-map/google-map.module';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/core';
 import { IntercomModule, INTERCOM_DIRECTIVES } from 'ng2-intercom';
@@ -52,10 +51,8 @@ export function metaFactory(): MetaLoader {
 		HomeModule,
 		AuthenticationModule,
 		PropertiesModule,
-		SettingsModule,
 		VerificationModule,
 		PurchaseModule,
-		GoogleMapModule,
 		Web3Module,
 		AppRoutingModule,
 		FacebookModule.forRoot(),

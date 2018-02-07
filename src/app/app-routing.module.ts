@@ -29,9 +29,15 @@ const routes: Routes = [
 	},
 	{
 		path: 'map',
-		component: GoogleMapComponent,
+		loadChildren: './google-map/google-map.module#GoogleMapModule',
 		pathMatch: 'full',
-		canActivate: [TokenGuard, MetaGuard]
+		canLoad: [TokenGuardLazyLoading]
+	},
+	{
+		path: 'settings',
+		loadChildren: './settings/settings.module#SettingsModule',
+		canLoad: [TokenGuardLazyLoading],
+		pathMatch: 'full'
 	},
 	{
 		path: 'about',

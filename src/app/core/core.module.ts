@@ -54,6 +54,8 @@ import { CryptoWidgetComponent } from './crypto-widget/crypto-widget.component';
 import { CurrencyDataService } from './crypto-widget/currency-data.service';
 import { CryptoWidgetMobileComponent } from './crypto-widget-mobile/crypto-widget-mobile.component';
 import {PrerenderHelperService} from '../shared/prerender-helper.service';
+import {TokenGuardLazyLoading} from '../authentication/token-guard-lazy-loading.service';
+import {MapEventsService} from '../google-map/map-events.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -97,6 +99,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ErrorsService,
 		NotificationsService,
 		TokenGuard,
+		TokenGuardLazyLoading,
+		MapEventsService,
 		AuthenticatedGuard,
 		NotAuthenticatedGuard,
 		TranslateStore,
