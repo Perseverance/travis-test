@@ -170,7 +170,7 @@ export class PropertiesService {
 	}
 
 	public async getFeaturedProperties(): Promise<GetNewPropertiesResponse[]> {
-		const result = await this.restService.get(this.apiEndpoint.INTERNAL_ENDPOINTS.FEATURED_PROPERTIES);
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.FEATURED_PROPERTIES);
 		return result.data.data;
 	}
 

@@ -71,7 +71,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 
 		this.fb.ui(params)
 			.then(async (res: UIResponse) => {
-				if (this.userInfo.user.canFacebookSpecialShare) {
+				if (this.userInfo.user.canFacebookSpecialShare && this.property.isShareRewardEnabled) {
 					await this.propertiesService.socialMediaShare(this.property.id);
 					this.authService.getCurrentUser();
 				}
