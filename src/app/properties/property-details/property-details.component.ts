@@ -23,15 +23,15 @@ import {
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {LanguagesEnum} from '../../shared/enums/supported-languages.enum';
-import {LocalStorageService} from '../../shared/localStorage.service';
-import {MomentService} from '../../shared/moment.service';
-import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
-import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
-import {MetaService} from '@ngx-meta/core';
-import {PrerenderHelperService} from '../../shared/prerender-helper.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { LanguagesEnum } from '../../shared/enums/supported-languages.enum';
+import { LocalStorageService } from '../../shared/localStorage.service';
+import { MomentService } from '../../shared/moment.service';
+import { CurrencyEnum } from '../../shared/enums/supported-currencies.enum';
+import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
+import { MetaService } from '@ngx-meta/core';
+import { PrerenderHelperService } from '../../shared/prerender-helper.service';
 
 @Component({
 	selector: 'app-property-details',
@@ -73,25 +73,25 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public cryptoFiat = false;
 
 	constructor(router: Router,
-				private route: ActivatedRoute,
-				private propertiesService: PropertiesService,
-				private authService: AuthenticationService,
-				private googleMarkersService: GoogleMapsMarkersService,
-				private bigNumberPipe: BigNumberFormatPipe,
-				private currencySymbolPipe: CurrencySymbolPipe,
-				private zone: NgZone,
-				private translateService: TranslateService,
-				private storageService: LocalStorageService,
-				private momentService: MomentService,
-				private errorsService: ErrorsService,
-				public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-				private imageSizePipe: ImageSizePipe,
-				private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
-				private propertyConversionService: PropertyConversionService,
-				private metaService: MetaService,
-				private prerenderHelperService: PrerenderHelperService) {
+		private route: ActivatedRoute,
+		private propertiesService: PropertiesService,
+		private authService: AuthenticationService,
+		private googleMarkersService: GoogleMapsMarkersService,
+		private bigNumberPipe: BigNumberFormatPipe,
+		private currencySymbolPipe: CurrencySymbolPipe,
+		private zone: NgZone,
+		private translateService: TranslateService,
+		private storageService: LocalStorageService,
+		private momentService: MomentService,
+		private errorsService: ErrorsService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+		private imageSizePipe: ImageSizePipe,
+		private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
+		private propertyConversionService: PropertyConversionService,
+		private metaService: MetaService,
+		private prerenderHelperService: PrerenderHelperService) {
 		super(router);
-		
+
 		this.prerenderHelperService.prerenderNotReady();
 
 		if (window.screen.width > 990) {
