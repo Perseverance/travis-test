@@ -5,7 +5,7 @@
 
 export const environment = {
 	production: false,
-	apiUrl: 'http://servicepropydev.azurewebsites.net',
+	apiUrl: 'https://servicepropydev.azurewebsites.net',
 	googleMaps: {
 		apiKey: 'AIzaSyAcgGhw1a6q4Y0ZOIeHFw0NrBT3XtXUhQU',
 		defaultLanguage: 'en'

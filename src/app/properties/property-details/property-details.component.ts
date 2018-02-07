@@ -23,13 +23,15 @@ import {
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { LanguagesEnum } from '../../shared/enums/supported-languages.enum';
-import { LocalStorageService } from '../../shared/localStorage.service';
-import { MomentService } from '../../shared/moment.service';
-import { CurrencyEnum } from '../../shared/enums/supported-currencies.enum';
-import { CurrencyTypeEnum } from '../../shared/enums/currency-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+import {LanguagesEnum} from '../../shared/enums/supported-languages.enum';
+import {LocalStorageService} from '../../shared/localStorage.service';
+import {MomentService} from '../../shared/moment.service';
+import {CurrencyEnum} from '../../shared/enums/supported-currencies.enum';
+import {CurrencyTypeEnum} from '../../shared/enums/currency-type.enum';
+import {MetaService} from '@ngx-meta/core';
+import {PrerenderHelperService} from '../../shared/prerender-helper.service';
 
 @Component({
 	selector: 'app-property-details',
@@ -71,20 +73,27 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public cryptoFiat = false;
 
 	constructor(router: Router,
-		private route: ActivatedRoute,
-		private propertiesService: PropertiesService,
-		private authService: AuthenticationService,
-		private googleMarkersService: GoogleMapsMarkersService,
-		private bigNumberPipe: BigNumberFormatPipe,
-		private currencySymbolPipe: CurrencySymbolPipe,
-		private zone: NgZone,
-		private translateService: TranslateService,
-		private storageService: LocalStorageService,
-		private momentService: MomentService,
-		private errorsService: ErrorsService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
-
+				private route: ActivatedRoute,
+				private propertiesService: PropertiesService,
+				private authService: AuthenticationService,
+				private googleMarkersService: GoogleMapsMarkersService,
+				private bigNumberPipe: BigNumberFormatPipe,
+				private currencySymbolPipe: CurrencySymbolPipe,
+				private zone: NgZone,
+				private translateService: TranslateService,
+				private storageService: LocalStorageService,
+				private momentService: MomentService,
+				private errorsService: ErrorsService,
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+				private imageSizePipe: ImageSizePipe,
+				private imageEnvironmentPrefixPipe: ImageEnvironmentPrefixPipe,
+				private propertyConversionService: PropertyConversionService,
+				private metaService: MetaService,
+				private prerenderHelperService: PrerenderHelperService) {
 		super(router);
+		
+		this.prerenderHelperService.prerenderNotReady();
+
 		if (window.screen.width > 990) {
 			this.IMAGE_WIDTH_PX = window.screen.width * 0.6;
 		} else {
@@ -180,6 +189,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			// temporary solution for Packer house
 			propertyId = self.emulatePackerHousePropertyId(propertyId);
 			const property = await self.propertiesService.getProperty(propertyId);
+			self.setupMetaTags(property);
+			self.prerenderHelperService.prerenderReady();
 			self.createAndSetMapOptions(property);
 			self.createAndSetPropertyMarker(property);
 			self.property = property;
@@ -213,6 +224,20 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 	public get currencyTranslation() {
 		return this.currencyLabelsTranslations[currencyLabels[this.currencyLabel]];
+	}
+
+	private setupMetaTags(property: any) {
+		const imgUrl = this.imageSizePipe.transform(this.imageEnvironmentPrefixPipe.transform(property.imageUrls[0]), 1200, 630);
+		const propertyType = this.propertyConversionService.getPropertyTypeName(property.type);
+		let title = `${propertyType} in `;
+		if (property.city) {
+			title += property.city;
+		} else {
+			title += property.address;
+		}
+		this.metaService.setTitle(title);
+		this.metaService.setTag('og:image', imgUrl);
+		this.metaService.setTag('og:url', window.location.href);
 	}
 
 	private emulatePackerHousePropertyId(propertyId) {
