@@ -4,7 +4,7 @@
         <div class="labels-container">
             <div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}
             </div>
-            <div class="text-uppercase label crypto-label" *ngIf="property.isTransactionToolEnabled && property.acceptedCurrencies">{{ currencyTranslation }}</div>
+            <div class="text-uppercase label crypto-label" *ngIf="property.isTransactionToolEnabled && (property.acceptedCurrencies.length != 0)">{{ currencyTranslation }}</div>
         </div>
         <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
         />
