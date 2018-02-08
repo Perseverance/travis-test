@@ -1,20 +1,20 @@
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
-import {AgencyService} from './../../shared/agency.service';
-import {CompleterService, RemoteData, CompleterItem} from 'ng2-completer';
-import {AgencySuggestionsService} from './../agency-suggestions.service';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {DefaultAsyncAPIErrorHandling} from './../../shared/errors/errors.decorators';
-import {environment} from './../../../environments/environment';
-import {SignUpFormValidators} from './sign-up-components.validators';
-import {AuthenticationService} from './../authentication.service';
-import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild} from '@angular/core';
-import {FormBuilder, Validators, FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, Router} from '@angular/router';
-import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
+import { AgencyService } from './../../shared/agency.service';
+import { CompleterService, RemoteData, CompleterItem } from 'ng2-completer';
+import { AgencySuggestionsService } from './../agency-suggestions.service';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decorators';
+import { environment } from './../../../environments/environment';
+import { SignUpFormValidators } from './sign-up-components.validators';
+import { AuthenticationService } from './../authentication.service';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
 
 @Component({
 	selector: 'app-sign-up-component',
@@ -46,16 +46,16 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	protected agencyAutoCompleteDataService: RemoteData;
 
 	constructor(private authService: AuthenticationService,
-				private formBuilder: FormBuilder,
-				private router: Router,
-				private route: ActivatedRoute,
-				private agencySuggestionsService: AgencySuggestionsService,
-				private completerService: CompleterService,
-				private agencyService: AgencyService,
-				private notificationsService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService,
-				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private route: ActivatedRoute,
+		private agencySuggestionsService: AgencySuggestionsService,
+		private completerService: CompleterService,
+		private agencyService: AgencyService,
+		private notificationsService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(errorsService, translateService);
 
@@ -77,7 +77,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			passwords: this.formBuilder.group({
 				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
 				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
-			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
+			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
@@ -217,12 +217,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		const result = await this.authService
 			.performSignUp(
-				this.email.value,
-				this.password.value,
-				this.firstName.value,
-				this.lastName.value,
-				phoneNumber,
-				this.rememberMe.value
+			this.email.value,
+			this.password.value,
+			this.firstName.value.trim(),
+			this.lastName.value.trim(),
+			phoneNumber,
+			this.rememberMe.value
 			);
 		if (this.iAmAnAgent.value) {
 			if (this.agencyId == null) {

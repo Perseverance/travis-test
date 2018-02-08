@@ -45,21 +45,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		private router: Router) {
 	}
 
-	ngOnInit() {
-		this.authService.subscribeToUserData({
-			next: (userInfo: UserData) => {
-				if (userInfo.user === null) {
-					this.shouldShowPassword = true;
-					return;
-				}
-				this.isEmailVerified = userInfo.user.isEmailVerified;
-				if (userInfo.user.externalLoginProviders === null) {
-					this.shouldShowPassword = true;
-				} else {
-					this.shouldShowPassword = userInfo.user.externalLoginProviders.length === 0;
-				}
-			}
-		});
+	async ngOnInit() {
+		const currentUser = await this.authService.getCurrentUser();
+		if (currentUser.data.data === null) {
+			this.shouldShowPassword = true;
+			this.paramsSubscription = this.setupParamsWatcher();
+			return;
+		}
+		this.isEmailVerified = currentUser.data.data.isEmailVerified;
+		if (currentUser.data.data.externalLoginProviders === null) {
+			this.shouldShowPassword = true;
+		} else {
+			this.shouldShowPassword = currentUser.data.data.externalLoginProviders.length === 0;
+		}
 		this.paramsSubscription = this.setupParamsWatcher();
 	}
 

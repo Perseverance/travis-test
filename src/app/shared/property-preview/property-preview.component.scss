@@ -151,10 +151,18 @@ $card-half-padding: $card-padding/2;
 	span.property-price {
 		display: inline-block;
 		color: $blue-dark;
-		font-size: 20px;
 		margin: 0px;
 		font-weight: 400;
 		padding: $card-half-padding $card-padding $card-padding $card-padding;
+	}
+	.price-big {
+		font-size: 20px;
+	}
+	.price-small {
+		font-size: 20px;
+		@media (min-width: 1200px) and (max-width: 1360px) {
+			font-size: 16px;
+		}
 	}
 	&.crypto-class {
 		border: 2px solid #44d32a;

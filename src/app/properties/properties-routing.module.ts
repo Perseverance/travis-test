@@ -14,6 +14,11 @@ const routes: Routes = [
 		canActivate: [TokenGuard, MetaGuard]
 	},
 	{
+		path: 'property/:id/refId/:userId',
+		component: PropertyDetailsComponent,
+		canActivate: [TokenGuard, MetaGuard]
+	},
+	{
 		path: 'property/:id/edit',
 		component: EditListingComponent,
 		canActivate: [TokenGuard, MetaGuard, PropertyOwnerGuard]
