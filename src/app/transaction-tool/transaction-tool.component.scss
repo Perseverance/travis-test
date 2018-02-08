@@ -185,4 +185,24 @@ $nav-prev-next-color: #969696;
         line-height: 30px;
         margin-top: 15px;
     }
+    .tx-link {
+        color: $blue-light;
+    }
+    .tx-result {
+        &.tx-success {
+            color: $white;
+            background-color: $success-color;
+            padding: 15px 25px;
+            @include border-radius(14px);
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 200;
+            i {
+                position: relative;
+                top: 2px;
+                font-size: 32px;
+                margin-right: 10px;
+            }
+        }
+    }
 }

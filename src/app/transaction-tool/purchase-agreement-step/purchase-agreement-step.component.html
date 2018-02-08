@@ -15,8 +15,10 @@
         </div>
         <ng-template #hasTxDetails>
             <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.SUCCESS; else notSuccessfulTx">
-                <i>Action successfully recorded to the Blockchain. Here is your receipt:</i>
-                <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash |
+                <div class="tx-result tx-success"><i class="fa fa-check-circle"></i> Action successfully recorded to
+                    the Blockchain. </div>
+                <div>Here is your receipt:</div>
+                <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
 					etherscan}}</a>
             </div>
             <ng-template #notSuccessfulTx>
