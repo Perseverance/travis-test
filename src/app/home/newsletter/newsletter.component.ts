@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Jsonp } from '@angular/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GoogleAnalyticsEventsService } from '../../shared/google-analytics.service';
-
+declare let fbq: any;
 @Component({
 	selector: 'app-newsletter',
 	templateUrl: './newsletter.component.html',
@@ -22,5 +22,6 @@ export class NewsletterComponent implements OnInit {
 	}
 	emitEmailSubscribeAnalyticsClickEvent() {
 		this.googleAnalyticsEventsService.emitEvent('page-subscribe', 'subscribe');
+		fbq('track', 'Subscribe');
 	}
 }
