@@ -1,12 +1,9 @@
-import { TokenGuard } from './authentication/token-guard.service';
-import { TermsComponent } from './core/terms/terms.component';
-import { AboutUsComponent } from './core/about/about.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { TokenGuardLazyLoading } from './authentication/token-guard-lazy-loading.service';
-import { GoogleMapComponent } from './google-map/google-map.component';
-import { MetaGuard } from '@ngx-meta/core';
+import {TermsComponent} from './core/terms/terms.component';
+import {AboutUsComponent} from './core/about/about.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
+import {HomeComponent} from './home/home.component';
+import {MetaGuard} from '@ngx-meta/core';
 
 const routes: Routes = [
 	{
@@ -22,16 +19,16 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	{
-		path: 'old-map',
-		loadChildren: './angular-google-maps/angular-google-maps.module#AngularGoogleMapsModule',
-		pathMatch: 'full',
-		canLoad: [TokenGuardLazyLoading]
+		path: 'map',
+		loadChildren: './google-map/google-map.module#GoogleMapModule'
 	},
 	{
-		path: 'map',
-		component: GoogleMapComponent,
-		pathMatch: 'full',
-		canActivate: [TokenGuard, MetaGuard]
+		path: 'settings',
+		loadChildren: './settings/settings.module#SettingsModule'
+	},
+	{
+		path: 'transaction-tool/:address',
+		loadChildren: './transaction-tool/transaction-tool.module#TransactionToolModule'
 	},
 	{
 		path: 'about',
@@ -68,7 +65,7 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+		RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
 	],
 	exports: [RouterModule]
 })

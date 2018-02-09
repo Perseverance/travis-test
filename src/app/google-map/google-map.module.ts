@@ -18,7 +18,7 @@ import { PropertiesListComponent } from './properties-list/properties-list.compo
 import { PriceFilterComponent } from './properties-list/price-filter/price-filter.component';
 import { AreaFilterComponent } from './properties-list/area-filter/area-filter.component';
 import { BedFilterComponent } from './properties-list/bed-filter/bed-filter.component';
-import { MapEventsService } from './map-events.service';
+import {GoogleMapsRoutingModule} from './google-map-routing.module';
 
 @NgModule({
 	declarations: [
@@ -39,12 +39,11 @@ import { MapEventsService } from './map-events.service';
 		OverlayPanelModule,
 		SliderModule,
 		ProgressSpinnerModule,
-		DropdownModule
+		DropdownModule,
+		GoogleMapsRoutingModule
 
 	],
-	providers: [
-		MapEventsService
-	],
+	providers: [],
 	bootstrap: []
 })
 export class GoogleMapModule {
