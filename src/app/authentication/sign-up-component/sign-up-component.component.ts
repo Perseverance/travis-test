@@ -247,6 +247,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			time: (new Date().getTime()),
 			timeout: 4000
 		});
+		this.googleAnalyticsEventsService.emitEvent('click', 'signup_submission');
 		this.router.navigate([this.redirectToUrl]);
 		if (result && this.referralId) {
 			const email = this.email.value;
