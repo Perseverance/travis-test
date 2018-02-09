@@ -81,7 +81,8 @@
             }
         },
         "no-new-notifications": "No new notifications",
-        "only-registered-error": "Only registered users can perform this action. Please sign up using the buttons in the header"
+        "only-registered-error": "Only registered users can perform this action. Please sign up using the buttons in the header",
+        "only-registered-share": "You need be logged into your account in order to share a property"
     },
     "enums": {
         "property-types": {
