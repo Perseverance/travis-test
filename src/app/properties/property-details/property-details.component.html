@@ -2,7 +2,7 @@
     <div class="col-xs-12 property-carousel-row">
         <div class="row property-carousel-holder">
             <div class="labels-container">
-                <div class="text-uppercase label buy-online-label" *ngIf="property.isTransactionToolEnabled">{{ currencyTranslation }}
+                <div class="text-uppercase label buy-online-label" *ngIf="property.isTransactionToolEnabled && (property.acceptedCurrencies.length != 0)">{{ currencyTranslation }}
                 </div>
             </div>
             <ngx-carousel [inputs]="propertyImagesCarouselConfig" class="property-carousel">

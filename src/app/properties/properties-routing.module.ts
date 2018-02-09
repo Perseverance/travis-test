@@ -14,7 +14,7 @@ const routes: Routes = [
 		canActivate: [TokenGuard, MetaGuard]
 	},
 	{
-		path: 'property/:id/:userId',
+		path: 'property/:id/refId/:userId',
 		component: PropertyDetailsComponent,
 		canActivate: [TokenGuard, MetaGuard]
 	},

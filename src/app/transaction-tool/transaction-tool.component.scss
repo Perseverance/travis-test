@@ -3,6 +3,7 @@
 $success-color: #22c230;
 $gray-color-indicator: #dcdcdc;
 $nav-prev-next-color: #969696;
+$reason-gray: #F4F4F4;
 .transaction-tool {
     .area-disabled {
         pointer-events: none;
@@ -184,5 +185,43 @@ $nav-prev-next-color: #969696;
     .record-document-button {
         line-height: 30px;
         margin-top: 15px;
+    }
+    .tx-link {
+        color: $blue-light;
+        @include ellipsis(100%);
+    }
+    .tx-result {
+        padding: 15px 25px;
+        padding-left: 65px;
+        @include border-radius(14px);
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-weight: 200;
+        i {
+            vertical-align: top;
+            margin-left: -45px;
+            position: relative;
+            top: 2px;
+            font-size: 32px;
+            margin-right: 10px;
+        }
+        span {
+            display: inline-block;
+        }
+        &.tx-success {
+            background-color: $success-color;
+            color: $white;
+        }
+        &.tx-pending {
+            background-color: $blue-regular;
+            color: $white;
+        }
+        &.tx-fail {
+            background-color: $reason-gray;
+            color: $black;
+            i {
+                color: $red-main;
+            }
+        }
     }
 }

@@ -38,7 +38,6 @@ import {ProWalletTranslationsService} from '../pro-wallet/translations/pro-walle
 import {PusherService} from '../shared/pusher.service';
 import {NotificationsComponent} from './header/notifications/notifications.component';
 import {SmartContractConnectionService} from '../smart-contract-connection/smart-contract-connection.service';
-// import { TransactionToolModule } from '../transaction-tool/transaction-tool.module';
 import {TransactionToolWorkflowService} from '../transaction-tool/workflow/workflow.service';
 import {TransactionToolDocumentService} from '../transaction-tool/transaction-tool-document.service';
 import {WorkflowGuard} from '../transaction-tool/workflow/workflow-guard.service';
@@ -50,9 +49,6 @@ import {WalletSetGuard} from '../transaction-tool/workflow/wallet-set-guard.serv
 import {VerificationService} from '../verification/verification.service';
 import {MessageService} from 'primeng/components/common/messageservice';
 import {NotAuthenticatedGuard} from '../authentication/not-authenticated-guard.service';
-import {CryptoWidgetComponent} from './crypto-widget/crypto-widget.component';
-import {CurrencyDataService} from './crypto-widget/currency-data.service';
-import {CryptoWidgetMobileComponent} from './crypto-widget-mobile/crypto-widget-mobile.component';
 import {PrerenderHelperService} from '../shared/prerender-helper.service';
 import {TokenGuardLazyLoading} from '../authentication/token-guard-lazy-loading.service';
 import {MapEventsService} from '../google-map/map-events.service';
@@ -76,7 +72,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 		}),
 		SharedModule,
 		AvatarModule,
-		// TransactionToolModule,
 		GrowlModule
 	],
 	declarations: [
@@ -137,7 +132,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TermsComponent,
 		AboutUsComponent,
 		NotificationsComponent,
-		// TransactionToolModule,
 		NotificationGrowlComponent
 	]
 })
