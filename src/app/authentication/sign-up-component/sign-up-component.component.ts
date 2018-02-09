@@ -232,8 +232,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				this.agencyId = await this.createAgency(this.agency.value);
 			}
 			const agentResult = await this.authService.performAgentSignup({
-				firstName: this.firstName.value,
-				lastName: this.lastName.value,
+				firstName: this.firstName.value.trim(),
+				lastName: this.lastName.value.trim(),
 				email: this.email.value,
 				agencyId: this.agencyId,
 				agencyName: this.agency.value,
