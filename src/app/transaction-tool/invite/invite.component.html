@@ -2,18 +2,30 @@
 <ng-template #dataLoaded>
     <div class="invitation" *ngIf="invitationDataLoaded">
         <div *ngIf="transactionDetails != null && transactionDetails.status == TRANSACTION_STATUSES.SUCCESS">
-            <i>Your blockchain reservation was successful, here is your receipt:</i>
-            <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
+            <div class="tx-result tx-success"><i class="fa fa-check-circle"></i> Action successfully recorded to the
+                Blockchain.
+            </div>
+            <div>Here is your receipt:</div>
+            <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
+                        etherscan}}</a>
         </div>
         <div *ngIf="isWaitingForReservation;else notWaiting">
             <div *ngIf="userRole === userRoleEnum.SellerBroker; else notSellerBroker">
                 <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
-                    <i>Your blockchain action was not successfully recorded. Please contact the support and show them your receipt:</i>
-                    <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
+                    <div class="tx-result tx-fail">
+                        <i class="fa fa-times-circle"></i><span>Your Blockchain action was not successfully recorded. Please try again.</span>
+                    </div>
+                    <div>Here is your receipt:</div>
+                    <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
+                                etherscan}}</a>
                 </div>
                 <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
-                    <i>Your action is still being recorded to the Blockchain. To check the current status, please follow the link below.</i>
-                    <a [href]="transactionDetails.txHash | etherscan" target="_blank">{{transactionDetails.txHash | etherscan}}</a>
+                    <div class="tx-result tx-pending"><i class="fa fa-clock-o"></i>Your action is being recorded on
+                        the Blockchain.
+                    </div>
+                    <div>To check the current status, please follow the link below.</div>
+                    <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
+                                etherscan}}</a>
                 </div>
             </div>
             <ng-template #notSellerBroker>

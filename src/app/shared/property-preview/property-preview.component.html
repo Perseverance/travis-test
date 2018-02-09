@@ -7,7 +7,8 @@
 					| translate }}
 				</div>
 				<div class="text-uppercase label crypto-label"
-					 *ngIf="property.isTransactionToolEnabled && property.acceptedCurrencies">{{ currencyTranslation }}
+					 *ngIf="property.isTransactionToolEnabled && (property.acceptedCurrencies.length != 0)">{{
+					currencyTranslation }}
 				</div>
 			</div>
 			<img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
@@ -30,8 +31,7 @@
 		<span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure}}</span>
 	</div>
 	<span class="property-price" [ngClass]="isPropertyShareable ? 'price-small' : 'price-big'"
-		  *ngIf="property.price.value">{{ property.price.value | thousandSeparator |
-		currencySymbol}}
+		  *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
 	</span>
 	<app-facebook-share *ngIf="isPropertyShareable" [property]="property" [userInfo]="userInfo"
 						[isFeaturedProperty]="true"></app-facebook-share>
