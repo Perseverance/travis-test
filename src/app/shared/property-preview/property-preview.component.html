@@ -1,38 +1,34 @@
 <div class="property-card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
-	 [ngClass]="{ 'crypto-class' : property.isTransactionToolEnabled === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
-	<a href="" class="navigation-property-link" [routerLink]="inactiveComponent ? null : ['/property', property.id]">
-		<div class="image-holder">
-			<div class="labels-container">
-				<div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label'
-					| translate }}
-				</div>
-				<div class="text-uppercase label crypto-label"
-					 *ngIf="property.isTransactionToolEnabled && (property.acceptedCurrencies.length != 0)">{{
-					currencyTranslation }}
-				</div>
-			</div>
-			<img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
-			/>
-			<div class="right-arrow-holder" *ngIf="showArrow && !inactiveComponent">
-			</div>
-			<span *ngIf="isHiddenIconShown"
-				  [class]="isPropertyHidden ? 'icon glyphicon glyphicon-eye-close' : 'icon glyphicon glyphicon-eye-open'"
-				  (click)="propertyHide($event)"></span>
-		</div>
-	</a>
-	<div class="property-info">
-		<span *ngIf="featuredCityName">{{featuredCityName}} | </span>
-		<span [title]="property.address">{{property.address}}</span>
-		<!-- &nbsp;/&nbsp;{{ cityName }} -->
-	</div>
-	<div class="additional-property-info">
-		<span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
-		<span class="text-uppercase" *ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
-		<span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure}}</span>
-	</div>
-	<span class="property-price" [ngClass]="isPropertyShareable ? 'price-small' : 'price-big'"
-		  *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
+    [ngClass]="{ 'crypto-class' : property.isTransactionToolEnabled === true,'theme-small': theme==='small', 'theme-big': theme==='big', 'outside-hover': isOutsideHovered }">
+    <a href="" class="navigation-property-link" [routerLink]="inactiveComponent ? null : ['/property', property.id, (isPropertyFeatured)? 'featured': '']">
+        <div class="image-holder">
+            <div class="labels-container">
+                <div class="text-uppercase label new-label" *ngIf="property.isNew">{{ 'landing.new-properties.new-label' | translate }}
+                </div>
+                <div class="text-uppercase label crypto-label" *ngIf="property.isTransactionToolEnabled && (property.acceptedCurrencies.length != 0)">{{ currencyTranslation }}
+                </div>
+            </div>
+            <img src="{{property.imageUrls[0] | imageEnvPrefix  | imageSize : imageWidth: imageHeight}}"
+            />
+            <div class="right-arrow-holder" *ngIf="showArrow && !inactiveComponent">
+            </div>
+            <span *ngIf="isHiddenIconShown" [class]="isPropertyHidden ? 'icon glyphicon glyphicon-eye-close' : 'icon glyphicon glyphicon-eye-open'"
+                (click)="propertyHide($event)"></span>
+        </div>
+    </a>
+    <div class="property-info">
+        <span *ngIf="featuredCityName">{{featuredCityName}} | </span>
+        <span [title]="property.address">{{property.address}}</span>
+        <!-- &nbsp;/&nbsp;{{ cityName }} -->
+    </div>
+    <div class="additional-property-info">
+        <span>{{property.type | propertyTypeLocalizeKey | translate}}</span>
+        <span class="text-uppercase" *ngIf="property.bedrooms">{{property.bedrooms}} {{'landing.new-properties.bedrooms' | translate}}</span>
+        <span *ngIf="property.size.value">{{property.size.value | sizeUnitOfMeasure}}</span>
+    </div>
+    <span class="property-price" [ngClass]="isPropertyShareable ? 'price-small' : 'price-big'"
+        *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
 	</span>
-	<app-facebook-share *ngIf="isPropertyShareable" [property]="property" [userInfo]="userInfo"
-						[isFeaturedProperty]="true"></app-facebook-share>
+    <app-facebook-share *ngIf="isPropertyShareable" [property]="property" [userInfo]="userInfo"
+        [isFeaturedProperty]="true"></app-facebook-share>
 </div>

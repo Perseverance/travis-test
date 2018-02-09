@@ -1,10 +1,10 @@
-import {currencyLabels} from './../../properties/property-details/currencyLabels.model';
-import {TranslateService} from '@ngx-translate/core';
-import {PropertiesService} from './../../properties/properties.service';
-import {Subscription} from 'rxjs/Subscription';
-import {MapEventsService, PropertyHoveredEvent} from './../../google-map/map-events.service';
-import {Component, Input, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {Router} from '@angular/router';
+import { currencyLabels } from './../../properties/property-details/currencyLabels.model';
+import { TranslateService } from '@ngx-translate/core';
+import { PropertiesService } from './../../properties/properties.service';
+import { Subscription } from 'rxjs/Subscription';
+import { MapEventsService, PropertyHoveredEvent } from './../../google-map/map-events.service';
+import { Component, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 export enum PROPERTY_THEMES {
 	BIG = 'big',
@@ -30,6 +30,7 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	@Input() featuredCityName: string;
 	@Input() isPropertyShareable = false;
 	@Input() userInfo: any;
+	@Input() isPropertyFeatured = false;
 	public isOutsideHovered = false;
 	public isPropertyHidden = false;
 	public currencyLabelsTranslations: object;
@@ -40,20 +41,20 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 	private mapEventsSubscription: Subscription;
 
 	constructor(private router: Router,
-				private mapEventsService: MapEventsService,
-				private propertiesService: PropertiesService,
-				private translateService: TranslateService) {
+		private mapEventsService: MapEventsService,
+		private propertiesService: PropertiesService,
+		private translateService: TranslateService) {
 	}
 
 	onMouseEnter() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: true});
+			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: true });
 		}
 	}
 
 	onMouseLeave() {
 		if (this.sendHoverEvents) {
-			this.mapEventsService.pushMapHoverEvent({propertyId: this.property.id, isHovered: false});
+			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: false });
 		}
 	}
 
