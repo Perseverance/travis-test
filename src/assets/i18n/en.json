@@ -269,7 +269,7 @@
             "public-transportation": "Public Transportation",
             "education": "Education",
             "walkability": "Walkability",
-            "disaster": "Distaster Likeliness",
+            "disaster": "Disaster Likeliness",
             "waste": "Waste Management",
             "furnished": "Is Furnished",
             "air-quality-index": "Air Quality Index"
