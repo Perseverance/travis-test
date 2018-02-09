@@ -63,11 +63,11 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 			.subscribe(async params => {
 				if (params.code && params.email) {
 					if (this.isIosDeviceDetected) {
-						window.location.href = `propy://verifyemail?email=${params.email}&code=${params.code}`;
 						setTimeout(async () => {
 							await this.sendActivationCode(params.code, params.email);
 							this.hasDataLoaded = true;
-						}, 1000);
+						}, 2000);
+						window.location.href = `propy://verifyemail?email=${params.email}&code=${params.code}`;
 					} else {
 						await this.sendActivationCode(params.code, params.email);
 					}
