@@ -1,16 +1,16 @@
-import { GoogleAnalyticsEventsService } from './shared/google-analytics.service';
-import { Router } from '@angular/router';
-import { environment } from './../environments/environment';
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, UserData } from './authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from './shared/localStorage.service';
-import { AllSupportedLanguage, DefaultLanguage } from './core/i18nSetup';
-import { CurrencyTypeEnum } from './shared/enums/currency-type.enum';
-import { MomentService } from './shared/moment.service';
-import { Intercom } from 'ng2-intercom/intercom';
-import { default as smartlookClient } from 'smartlook-client';
-import { PusherService } from './shared/pusher.service';
+import {GoogleAnalyticsEventsService} from './shared/google-analytics.service';
+import {Router} from '@angular/router';
+import {environment} from './../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService, UserData} from './authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
+import {LocalStorageService} from './shared/localStorage.service';
+import {AllSupportedLanguage, DefaultLanguage} from './core/i18nSetup';
+import {CurrencyTypeEnum} from './shared/enums/currency-type.enum';
+import {MomentService} from './shared/moment.service';
+import {Intercom} from 'ng2-intercom/intercom';
+import {default as smartlookClient} from 'smartlook-client';
+import {PusherService} from './shared/pusher.service';
 
 @Component({
 	selector: 'app-root',
@@ -20,21 +20,22 @@ import { PusherService } from './shared/pusher.service';
 export class AppComponent implements OnInit {
 
 	constructor(public authService: AuthenticationService,
-		public translateService: TranslateService,
-		private localStorageService: LocalStorageService,
-		private momentService: MomentService,
-		private intercom: Intercom,
-		public router: Router,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-		public pusherService: PusherService) {
+				public translateService: TranslateService,
+				private localStorageService: LocalStorageService,
+				private momentService: MomentService,
+				private intercom: Intercom,
+				public router: Router,
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+				public pusherService: PusherService) {
 
 		translateService.addLangs(AllSupportedLanguage);
 		// this language will be used as a fallback when a translation isn't found in the current language
 		translateService.setDefaultLang(DefaultLanguage);
 
 		// the lang to use, if the lang isn't available, it will use the default language
-		translateService.use(localStorageService.selectedLanguage);
-		this.momentService.moment.locale([localStorageService.selectedLanguage, DefaultLanguage]);
+		const translationLanguage = AllSupportedLanguage.includes(localStorageService.selectedLanguage) ? localStorageService.selectedLanguage : DefaultLanguage;
+		translateService.use(translationLanguage);
+		this.momentService.moment.locale([translationLanguage, DefaultLanguage]);
 		localStorageService.selectedCurrencyType = CurrencyTypeEnum.NONE;
 
 		// ToDo: Comment out when start to use pusher
