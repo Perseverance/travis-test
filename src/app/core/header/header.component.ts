@@ -125,7 +125,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		const userId = this.userInfo.id;
 		this.authService.performLogout();
 		// ToDo: Comment out when start to use pusher
-		this.pusherService.unsubscribePusherChannel(userId);
+		// this.pusherService.unsubscribePusherChannel(userId);
 	}
 
 	public goListProperty(event: Event) {
