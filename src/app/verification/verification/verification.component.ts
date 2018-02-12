@@ -24,6 +24,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 	public verificationTouched = false;
 	public hasDataLoaded = false;
 	public isIosDeviceDetected: boolean;
+	public isFirefoxDetected: boolean;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -44,6 +45,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 
 	ngOnInit() {
 		this.isIosDeviceDetected = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+		this.isFirefoxDetected = (navigator.userAgent.toLowerCase().includes('firefox'));
 		this.translateService.get([
 			'verification.successfull-verification',
 			'verification.resend-success'
@@ -62,7 +64,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 		return this.route.queryParams
 			.subscribe(async params => {
 				if (params.code && params.email) {
-					if (this.isIosDeviceDetected) {
+					if (this.isIosDeviceDetected && !this.isFirefoxDetected) {
 						window.location.href = `propy://verifyemail?email=${params.email}&code=${params.code}`;
 						setTimeout(async () => {
 							await this.sendActivationCode(params.code, params.email);
