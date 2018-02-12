@@ -46,6 +46,19 @@ export class PropertyPreviewComponent implements OnInit, OnDestroy {
 		private translateService: TranslateService) {
 	}
 
+	public get propertyLink(): string[] {
+		const route = [];
+		if (this.inactiveComponent) {
+			return null;
+		}
+		route.push('/property');
+		route.push(this.property.id);
+		if (this.isPropertyFeatured) {
+			route.push('featured');
+		}
+		return route;
+	}
+
 	onMouseEnter() {
 		if (this.sendHoverEvents) {
 			this.mapEventsService.pushMapHoverEvent({ propertyId: this.property.id, isHovered: true });
