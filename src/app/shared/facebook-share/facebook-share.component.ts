@@ -74,7 +74,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			.then(async (res: UIResponse) => {
 				if (this.property.isShareRewardEnabled) {
 					await this.propertiesService.socialMediaShare(this.property.id);
-					// this.authService.getCurrentUser();
+					this.authService.getCurrentUser();
 					this.property.isShareRewardEnabled = false;
 				}
 			})
