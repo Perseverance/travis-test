@@ -46,7 +46,6 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 	ngOnInit() {
 		this.isIosDeviceDetected = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 		this.isFirefoxDetected = (navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
-		console.log(this.isFirefoxDetected);
 		this.translateService.get([
 			'verification.successfull-verification',
 			'verification.resend-success'
