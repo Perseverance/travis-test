@@ -5,7 +5,7 @@
 
 export const environment = {
 	production: false,
-	apiUrl: 'https://apidev.propy.com/',
+	apiUrl: 'https://apidev.propy.com',
 	googleMaps: {
 		apiKey: 'AIzaSyAcgGhw1a6q4Y0ZOIeHFw0NrBT3XtXUhQU',
 		defaultLanguage: 'en'
