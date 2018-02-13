@@ -19,13 +19,18 @@ export class WorkflowGuard implements CanActivate {
 	}
 
 	private async verifyWorkFlow(deedId: string, accessedRoute: string): Promise<boolean> {
-		const deedStep = await this.workflowService.getDeedStep(deedId);
-		const navigatedStep = STEPS[accessedRoute];
-		if (navigatedStep > deedStep) {
-			this.router.navigate([`/transaction-tool/`, deedId, REVERSE_STEPS[deedStep]]);
+		try {
+			const deedStep = await this.workflowService.getDeedStep(deedId);
+			const navigatedStep = STEPS[accessedRoute];
+			if (navigatedStep > deedStep) {
+				this.router.navigate([`/transaction-tool/`, deedId, REVERSE_STEPS[deedStep]]);
+				return false;
+			}
+
+			return true;
+		} catch (e) {
+			this.router.navigate(['/']);
 			return false;
 		}
-
-		return true;
 	}
 }

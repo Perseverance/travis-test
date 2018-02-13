@@ -16,9 +16,16 @@ export class WalletSetGuard implements CanActivate {
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
 		return new Promise((resolve, reject) => {
+			const self = this;
 			const subscription = this.authService.subscribeToUserData({
 				next: (userInfo: UserData) => {
-					resolve(!!userInfo.user.jsonFile);
+					if (!!userInfo.user.jsonFile) {
+						self.router.navigate(['/']);
+						resolve(false);
+						return;
+					}
+
+					resolve(true);
 					subscription.unsubscribe();
 				}
 			});

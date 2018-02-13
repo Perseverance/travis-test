@@ -1,11 +1,11 @@
-import {UserData, AuthenticationService} from './../authentication/authentication.service';
-import {SmartContractConnectionService} from './../smart-contract-connection/smart-contract-connection.service';
-import {REVERSE_STEPS, STEPS} from './workflow/workflow.model';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {MenuItem} from 'primeng/primeng';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
-import {DeedsService} from '../shared/deeds.service';
-import {Status} from '../smart-contract-connection/smart-contract-connection.service';
+import { UserData, AuthenticationService } from './../authentication/authentication.service';
+import { SmartContractConnectionService } from './../smart-contract-connection/smart-contract-connection.service';
+import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MenuItem } from 'primeng/primeng';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { DeedsService } from '../shared/deeds.service';
+import { Status } from '../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -22,8 +22,8 @@ export class TransactionToolComponent implements OnInit {
 	public areStepsActive = false;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-				private deedsService: DeedsService, private smartContractService: SmartContractConnectionService,
-				private authService: AuthenticationService) {
+		private deedsService: DeedsService, private smartContractService: SmartContractConnectionService,
+		private authService: AuthenticationService) {
 		this.router.events
 			.filter(event => event instanceof NavigationEnd)
 			.subscribe((event: NavigationEnd) => {
@@ -41,8 +41,6 @@ export class TransactionToolComponent implements OnInit {
 				this.smartContractService.saveCredentials(JSON.parse(userInfo.user.jsonFile));
 			}
 		});
-
-
 	}
 
 	async ngOnInit() {
