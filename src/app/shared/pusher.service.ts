@@ -99,7 +99,7 @@ export class PusherService {
 			});
 		});
 
-		//test event 
+		// Event for notifications
 		channel.bind(PUSHER_EVENTS_ENUM.NOTIFICATIONS, (data) => {
 			this.triggerNotificationsSubject(data);
 		});
