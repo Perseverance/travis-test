@@ -118,13 +118,22 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			PhoneNumberValidators.phoneNumberValidator,
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
-		await this.authService.updateUser(this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber);
-		this.notificationService.pushSuccess({
-			title: this.successMessage,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
+		if (!!this.firstName.value.trim().length && !!this.lastName.value.trim().length) {
+			await this.authService.updateUser(this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber);
+			this.notificationService.pushSuccess({
+				title: this.successMessage,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 4000
+			});
+		} else {
+			this.notificationService.pushInfo({
+				title: 'ERROR: ',
+				message: 'Please enter valid First name and/or Last name',
+				time: (new Date().getTime()),
+				timeout: 3000
+			});
+		}
 	}
 
 	public cancelEdit() {
