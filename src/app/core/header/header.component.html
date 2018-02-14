@@ -60,13 +60,14 @@
 						| bigNumberFormat : false: true}}&nbsp;PRO<span class="no-wallet-badge"
 																		*ngIf="userInfo.walletId === null || userInfo.walletId === ''"></span></a>
                 </li>
-                <li *ngIf="!isUserAnonymous" class="dropdown notifications-dropdown hidden-xs">
+                <li *ngIf="!isUserAnonymous" class="dropdown notifications-dropdown hidden-xs" (click)="browseNotification()">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                         aria-expanded="false">
-						<i class="fa fa-bell" aria-hidden="true"></i>
+                        <i class="fa" [ngClass]="{'fa-bell':notificationToggled,'fa-bell-o':!notificationToggled}" aria-hidden="true"></i>
+                        <span [hidden]="!newNotifications" class="notification-number">{{numberOfNotifications}}</span>
 					</a>
                     <div class="dropdown-menu">
-                        <app-notifications></app-notifications>
+                        <app-notifications (onNewNotifications)="NewNotifications($event)"></app-notifications>
                     </div>
                 </li>
                 <li *ngIf="!isUserAnonymous">

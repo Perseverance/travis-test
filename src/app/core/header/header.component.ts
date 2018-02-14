@@ -31,10 +31,11 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public isLanding = false;
 	public settingsTabs = SETTINGS_TABS;
 	public isEmailVerified = false;
-
+	public newNotifications = false;
+	public notificationToggled = false;
 	private verificationError: string;
 	private verificationMessage: string;
-
+	public numberOfNotifications: number;
 	private notLoggedInError: string;
 
 	constructor(router: Router,
@@ -152,5 +153,18 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
 		this.router.navigate(['map', { latitude, longitude, locationName }]);
+	}
+
+	NewNotifications(event) {
+		//this.newNotifications = event;
+		if (event.newNotifications > 0) {
+			this.newNotifications = true;
+		}
+		this.numberOfNotifications = event.newNotifications;
+	}
+	browseNotification() {
+		this.notificationToggled = !this.notificationToggled;
+		this.newNotifications = false;
+		this.numberOfNotifications = 0;
 	}
 }
