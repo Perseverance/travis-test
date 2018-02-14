@@ -39,7 +39,6 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	}
 
 	ngOnInit() {
-
 		this.queryParamsSubscription = this.setupQueryParamsWatcher();
 	}
 
@@ -50,7 +49,9 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	private setupQueryParamsWatcher(): Subscription {
 		return this.route.queryParams
 			.subscribe(params => {
-				if (!params.redirect) {
+				// Check if there are no params passed in 
+				// OR if redirect points to forgotten pass page
+				if (!params.redirect || params.redirect === '/forgot') {
 					return;
 				}
 				this.redirectToUrl = params.redirect;
