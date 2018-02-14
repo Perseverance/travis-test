@@ -215,43 +215,52 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
-		const result = await this.authService
-			.performSignUp(
-			this.email.value,
-			this.password.value,
-			this.firstName.value.trim(),
-			this.lastName.value.trim(),
-			phoneNumber,
-			this.rememberMe.value
-			);
-		if (this.iAmAnAgent.value) {
-			if (this.agencyId == null) {
-				if (this.agency.value.length === 0) {
-					return;
+		if (!!this.firstName.value.trim().length && !!this.lastName.value.trim().length) {
+			const result = await this.authService
+				.performSignUp(
+				this.email.value,
+				this.password.value,
+				this.firstName.value.trim(),
+				this.lastName.value.trim(),
+				phoneNumber,
+				this.rememberMe.value
+				);
+			if (this.iAmAnAgent.value) {
+				if (this.agencyId == null) {
+					if (this.agency.value.length === 0) {
+						return;
+					}
+					this.agencyId = await this.createAgency(this.agency.value);
 				}
-				this.agencyId = await this.createAgency(this.agency.value);
+				const agentResult = await this.authService.performAgentSignup({
+					firstName: this.firstName.value.trim(),
+					lastName: this.lastName.value.trim(),
+					email: this.email.value,
+					agencyId: this.agencyId,
+					agencyName: this.agency.value,
+					locations: this.agentLocations,
+					info: this.expertise.value
+				});
 			}
-			const agentResult = await this.authService.performAgentSignup({
-				firstName: this.firstName.value.trim(),
-				lastName: this.lastName.value.trim(),
-				email: this.email.value,
-				agencyId: this.agencyId,
-				agencyName: this.agency.value,
-				locations: this.agentLocations,
-				info: this.expertise.value
+			this.notificationsService.pushSuccess({
+				title: this.emailSentSuccess,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 4000
 			});
-		}
-		this.notificationsService.pushSuccess({
-			title: this.emailSentSuccess,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
-		this.googleAnalyticsEventsService.emitEvent('click', 'signup_submission');
-		this.router.navigate([this.redirectToUrl]);
-		if (result && this.referralId) {
-			const email = this.email.value;
-			this.referralPost(email, this.referralId);
+			this.googleAnalyticsEventsService.emitEvent('click', 'signup_submission');
+			this.router.navigate([this.redirectToUrl]);
+			if (result && this.referralId) {
+				const email = this.email.value;
+				this.referralPost(email, this.referralId);
+			}
+		} else {
+			this.notificationsService.pushInfo({
+				title: 'ERROR: ',
+				message: 'Please enter valid First name and/or Last name',
+				time: (new Date().getTime()),
+				timeout: 3000
+			});
 		}
 	}
 
