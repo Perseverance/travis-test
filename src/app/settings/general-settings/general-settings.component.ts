@@ -129,7 +129,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		} else {
 			this.notificationService.pushInfo({
 				title: 'ERROR: ',
-				message: 'Nice try :)',
+				message: 'Please enter valid First name and/or Last name',
 				time: (new Date().getTime()),
 				timeout: 3000
 			});
