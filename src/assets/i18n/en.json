@@ -137,7 +137,8 @@
         "country5": "Russia",
         "company": "Company",
         "about-us": "About Us",
-        "blog": "Blog"
+        "blog": "Blog",
+        "terms": "Terms & Conditions"
     },
     "signup": {
         "agent-checkbox": "I am an agent",
