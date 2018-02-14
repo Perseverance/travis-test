@@ -50,6 +50,7 @@ $section-border-color: #F0F0F0;
     }
     .property-sold {
         opacity: 0.2;
+        pointer-events:none;
         .listing-buttons {
             .row {
                 a {
