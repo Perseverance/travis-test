@@ -19,6 +19,7 @@ import {WalletAddressValidator} from './pro-wallet-address-validator';
 import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
 import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
 import {PhoneNumberValidators} from '../shared/validators/phone-number.validators';
+import {Country} from '../shared/country.interface';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -41,10 +42,11 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public jsonWallet: string;
 	public defaultPhoneCountryCode: string;
 	public userInfo: any;
-	public updatedCountryCode: string;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
 	public selectedCountryOnGenerateWallet: any;
+	// ToDo: Get from userInfo and remove mocked one below
+	public userPhoneCountry: Country;
 
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
@@ -233,6 +235,16 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }

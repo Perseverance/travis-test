@@ -1,17 +1,18 @@
-import { VerificationService } from './../../verification/verification.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService, UserData } from './../../authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
+import {VerificationService} from './../../verification/verification.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService, UserData} from './../../authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
 import {
 	Component, EventEmitter, Input, OnInit, Output, ViewChild,
 	ViewEncapsulation
 } from '@angular/core';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
-import { PhoneNumberValidators } from '../../shared/validators/phone-number.validators';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
+import {PhoneNumberValidators} from '../../shared/validators/phone-number.validators';
+import {Country} from '../../shared/country.interface';
 
 @Component({
 	selector: 'app-general-settings',
@@ -30,25 +31,31 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public hasUserDataLoaded = false;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
-	public selectedCountryOnEditProfile: any;
 
 	private userInfo: any;
-	public updatedCountryCode: string;
+	// ToDo: Get from userInfo and remove mocked one below
+	public userPhoneCountry: Country;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 	@Input() generalTabIsActive = false;
 
+	// private mockedSelectedCountry = {
+	// 	name: '',
+	// 	dialCode: '1',
+	// 	countryCode: 'ca'
+	// };
+
 	constructor(private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private notificationService: NotificationsService,
-		private verificationService: VerificationService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private formBuilder: FormBuilder,
+				private notificationService: NotificationsService,
+				private verificationService: VerificationService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
-			email: [{ value: '', disabled: true }, []],
+			email: [{value: '', disabled: true}, []],
 			phoneNumber: ['', Validators.compose([
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
@@ -66,11 +73,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				this.setUserInfo(this.userInfo);
 				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
-				}
-				if (this.selectedCountryOnEditProfile) {
-					if (this.childPhoneComponent) {
-						this.childPhoneComponent.selectedCountry = this.selectedCountryOnEditProfile;
-					}
 				}
 
 				this.hasUserDataLoaded = true;
@@ -112,7 +114,6 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
-		this.selectedCountryOnEditProfile = this.childPhoneComponent.selectedCountry;
 		const phoneNumber = this.handlePhoneNumber();
 		this.phoneNumber.setValidators(Validators.compose([
 			PhoneNumberValidators.phoneNumberValidator,
@@ -128,6 +129,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	}
 
 	public cancelEdit() {
+		this.phoneNumber.setValidators(Validators.compose([
+			PhoneNumberValidators.phoneNumberValidator,
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		this.setUserInfo(this.userInfo, true);
 	}
 
@@ -176,6 +181,16 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }

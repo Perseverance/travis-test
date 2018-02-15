@@ -1,18 +1,19 @@
-import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
-import { Subscription } from 'rxjs/Subscription';
-import { UserData } from './../../authentication/authentication.service';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { PropertiesService } from './../properties.service';
-import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild } from '@angular/core';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { AuthenticationService } from '../../authentication/authentication.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
+import {Subscription} from 'rxjs/Subscription';
+import {UserData} from './../../authentication/authentication.service';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {PropertiesService} from './../properties.service';
+import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, Input, ViewEncapsulation, ViewChild} from '@angular/core';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
+import {Country} from '../../shared/country.interface';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -29,18 +30,20 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	public userInfo: any;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
+	// ToDo: Get from userInfo and remove mocked one below
+	public userPhoneCountry: Country;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private propertiesService: PropertiesService,
-		private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+				private authService: AuthenticationService,
+				private formBuilder: FormBuilder,
+				private notificationService: NotificationsService,
+				errorsService: ErrorsService,
+				translateService: TranslateService,
+				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(errorsService, translateService);
 
 		this.contactAgentForm = this.formBuilder.group({
@@ -163,6 +166,16 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }
