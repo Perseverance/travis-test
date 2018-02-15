@@ -1,16 +1,16 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {UIParams, UIResponse, FacebookService} from 'ngx-facebook';
-import {ImageSizePipe} from '../pipes/image-size.pipe';
-import {ImageEnvironmentPrefixPipe} from '../pipes/image-environment-prefix.pipe';
-import {PropertyConversionService} from '../property-conversion.service';
+import {ImageSizePipe} from '../../../pipes/image-size.pipe';
+import {ImageEnvironmentPrefixPipe} from '../../../pipes/image-environment-prefix.pipe';
+import {PropertyConversionService} from '../../../property-conversion.service';
 import {MetaService} from '@ngx-meta/core';
-import {AuthenticationService} from '../../authentication/authentication.service';
+import {AuthenticationService} from '../../../../authentication/authentication.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {RedirectableComponent} from '../redirectable/redirectable.component';
-import {environment} from '../../../environments/environment';
-import {PropertiesService} from '../../properties/properties.service';
-import {TranslateService} from "@ngx-translate/core";
-import {NotificationsService} from "../notifications/notifications.service";
+import {RedirectableComponent} from '../../../redirectable/redirectable.component';
+import {environment} from '../../../../../environments/environment';
+import {PropertiesService} from '../../../../properties/properties.service';
+import {TranslateService} from '@ngx-translate/core';
+import {NotificationsService} from '../../../notifications/notifications.service';
 
 @Component({
 	selector: 'app-facebook-share',
