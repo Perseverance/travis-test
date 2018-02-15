@@ -19,14 +19,13 @@ export class WalletSetGuard implements CanActivate {
 			const self = this;
 			const subscription = this.authService.subscribeToUserData({
 				next: (userInfo: UserData) => {
-					if (!!userInfo.user.jsonFile) {
+					if (!userInfo.user.jsonFile) {
 						self.router.navigate(['/']);
 						resolve(false);
 						return;
 					}
 
 					resolve(true);
-					subscription.unsubscribe();
 				}
 			});
 		});
