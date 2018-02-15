@@ -51,9 +51,9 @@ export class NotificationsComponent implements OnInit {
 		}
 	}
 
-	async ngOnInit() {
+	ngOnInit() {
 		this.notificationSubscription = this.pusherService.subscribeToNotificationsSubject({
-			next: async (data: any) => {
+			next: (data: any) => {
 				this.notifications.notifications.push(data);
 				this.notifications.newNotifications += 1;
 				this.onNewNotifications.emit(this.notifications);
