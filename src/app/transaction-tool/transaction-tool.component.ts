@@ -49,7 +49,6 @@ export class TransactionToolComponent implements OnInit {
 		this.areStepsActive = (deedStatus >= 0);
 
 		this.deedStatusIndex = this.getDeedIndexByStatus(deedStatus);
-		console.log(this.deedStatusIndex);
 		this.activeIndex = STEPS[this.addressRoute];
 		this.workflowSteps = [
 			{
