@@ -1,6 +1,6 @@
 @import "../../../../variables";
 @import "../../../../mixins";
-$blue-light-notification: rgb(205, 238, 255);
+$blue-light-notification: #DCF6FF;
 .notifications {
     font-size: $font-size-small; //padding: 10px;
     margin: 0px;
@@ -13,10 +13,9 @@ $blue-light-notification: rgb(205, 238, 255);
             background-color: $blue-light-notification;
         }
         .timestamp {
+            color: rgb(173, 173, 173);
             float: right;
-            .timestamp-label {
-                font-size: 12px;
-            }
+            font-size: 12px;
         }
     }
     .media:hover {
