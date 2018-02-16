@@ -200,6 +200,11 @@ $header-margin-sm: 15px;
             @include border-radius(5px);
             @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
         }
+        .scrollable-menu {
+            height: auto;
+            max-height: 500px;
+            overflow-x: hidden;
+        }
     }
     &.propy-header-top {
         &.navbar {
