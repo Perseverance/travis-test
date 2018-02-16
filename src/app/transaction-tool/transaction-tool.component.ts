@@ -60,6 +60,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Invitation',
+				disabled: (this.deedStatusIndex < 1),
 				command: (event: any) => {
 					this.activeIndex = 1;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -67,6 +68,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Purchase Agreement',
+				disabled: (this.deedStatusIndex < 2),
 				command: (event: any) => {
 					this.activeIndex = 2;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -74,6 +76,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Title Report',
+				disabled: (this.deedStatusIndex < 3),
 				command: (event: any) => {
 					this.activeIndex = 3;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -82,6 +85,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Disclosures',
+				disabled: (this.deedStatusIndex < 4),
 				command: (event: any) => {
 					this.activeIndex = 4;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -89,6 +93,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Settlement Statements',
+				disabled: (this.deedStatusIndex < 5),
 				command: (event: any) => {
 					this.activeIndex = 5;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -96,6 +101,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Payment',
+				disabled: (this.deedStatusIndex < 6),
 				command: (event: any) => {
 					this.activeIndex = 6;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -103,6 +109,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Affidavit',
+				disabled: (this.deedStatusIndex < 7),
 				command: (event: any) => {
 					this.activeIndex = 7;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -110,6 +117,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Closing Documents',
+				disabled: (this.deedStatusIndex < 8),
 				command: (event: any) => {
 					this.activeIndex = 8;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -117,6 +125,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Ownership Transfer',
+				disabled: (this.deedStatusIndex < 9),
 				command: (event: any) => {
 					this.activeIndex = 9;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);

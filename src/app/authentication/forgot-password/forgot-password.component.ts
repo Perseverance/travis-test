@@ -1,7 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
 import { ErrorsService } from './../../shared/errors/errors.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthenticationService } from '../authentication.service';
@@ -12,7 +12,7 @@ import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorat
 	templateUrl: './forgot-password.component.html',
 	styleUrls: ['./forgot-password.component.scss']
 })
-export class ForgotPasswordComponent extends ErrorsDecoratableComponent implements OnInit {
+export class ForgotPasswordComponent extends ErrorsDecoratableComponent {
 	public isResetRequest = false;
 	public forgotForm: FormGroup;
 
@@ -25,11 +25,11 @@ export class ForgotPasswordComponent extends ErrorsDecoratableComponent implemen
 			email: ['', [Validators.required, Validators.email]]
 		});
 	}
-	ngOnInit() {
-	}
+
 	public get email() {
 		return this.forgotForm.get('email');
 	}
+	
 	@DefaultAsyncAPIErrorHandling('forgot-password.reset-password-fail')
 	public async onSubmit() {
 		const result = await this.authService.forgotPassword(this.email.value);

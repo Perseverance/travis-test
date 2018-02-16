@@ -87,7 +87,7 @@
                     </div>
                 </ng-template>
                 <ng-template #allSigned>
-                    <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated && !userIsTitleCompany">
+                    <div class="col-xs-12 text-center" *ngIf="!reuploadingDocumentActivated">
                         <app-document-preview [previewTitle]="purchaseTitle" [previewLink]="previewLink"
                             [showSignatureDelayNotes]="shouldShowSignatureDelayNotes"></app-document-preview>
                     </div>
