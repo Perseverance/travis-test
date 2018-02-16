@@ -18,7 +18,7 @@ $header-margin-sm: 15px;
             text-transform: uppercase;
             font-size: 22px;
             letter-spacing: .1em;
-            color: $black;
+            color: $white;
             @media #{$xs} {
                 font-size: 18px;
                 padding: 15px 5px 15px 15px;
@@ -32,7 +32,7 @@ $header-margin-sm: 15px;
                     @media (min-width: 768px) and (max-width: 880px) {
                         display: none;
                     }
-                    color: $gray-lighter;
+                    color: $black;
                     margin: 0px 7px;
                     position: relative;
                     top: 14px;
@@ -67,6 +67,7 @@ $header-margin-sm: 15px;
                         font-size: $font-size-medium;
                     }
                     &.list-property {
+                        color: $white;
                         @media (min-width: 768px) and (max-width: 880px) {
                             margin-left: 0px;
                         }
@@ -75,6 +76,7 @@ $header-margin-sm: 15px;
                         }
                     }
                     &.about-pro-token {
+                        color: $white;
                         @media (min-width: 768px) and (max-width: 880px) {
                             margin-left: 0px;
                         }
@@ -115,7 +117,7 @@ $header-margin-sm: 15px;
                     }
                     font-size: 10px;
                     top: -2px;
-                    color: $button-filter-arrow;
+                    color: $white;
                 }
             }
             a.language-selector {
@@ -123,6 +125,7 @@ $header-margin-sm: 15px;
                 letter-spacing: 1px;
                 cursor: pointer;
                 background-color: transparent;
+                color: $white;
             }
             .dropdown-menu {
                 min-width: 80px;
@@ -132,6 +135,7 @@ $header-margin-sm: 15px;
                 @include border-radius(5px);
                 @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
                 a.language-selector {
+                    color: $black !important;
                     text-align: center;
                     font-weight: 100;
                     &:hover {
@@ -202,6 +206,24 @@ $header-margin-sm: 15px;
                 }
                 border: none;
             }
+        }
+        .text-uppercase {
+            color: $black;
+        }
+        .user-separator {
+            color: $gray-lighter !important;
+        }
+        .fa-chevron-down {
+            color: $button-filter-arrow !important
+        }
+        .list-property {
+            color: $black !important;
+        }
+        .about-pro-token {
+            color: $black !important;
+        }
+        a.language-selector {
+            color: $black !important;
         }
     }
     .loc-search-nav {
