@@ -145,6 +145,7 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedBuyerDocument) {
 			return;
 		}
+		this.processingUploadBuyerDocumentActivated = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -159,6 +160,7 @@ export class SettlementStatementComponent implements OnInit {
 		);
 		this.previewBuyerLink = response.fileName;
 		this.reuploadingBuyerDocumentActivated = false;
+		this.processingUploadBuyerDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
