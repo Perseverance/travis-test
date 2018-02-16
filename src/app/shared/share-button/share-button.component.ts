@@ -17,7 +17,7 @@ export class ShareButtonComponent implements OnInit {
 	@Input() userInfo: any;
 	@Input() isFeaturedProperty: any;
 
-	private _isChina: boolean;
+	public _isChina: boolean;
 
 	constructor() {
 	}
