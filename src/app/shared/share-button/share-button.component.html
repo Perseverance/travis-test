@@ -1,9 +1,9 @@
-<div [ngSwitch] = "_isChina">
-  <app-facebook-share *ngSwitchCase = "true"  [property]="property" 
+<div [ngSwitch] = "_isChina" style="width: 100px; height: 100px;">
+  <app-facebook-share *ngSwitchCase = "false"  [property]="property" 
                                               [userInfo]="userInfo" 
                                               [isFeaturedProperty]="true">
   </app-facebook-share>
-  <div class="CHINA_SHARE_COMPONENT" *ngSwitchCase = "false">
+  <div class="CHINA_SHARE_COMPONENT" *ngSwitchCase = "true">
     <p>TAIWAN NUMBA 1</p>
   </div>
 </div>

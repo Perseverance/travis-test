@@ -68,7 +68,7 @@ import { RouterModule } from '@angular/router';
 		PropertySizeUnitOfMeasurePipe,
 		ImageEnvironmentPrefixPipe,
 		EllipsisPipe,
-		ImageSizePipe,
+		ImageSizePipe,	
 		EtherscanPipe,
 		HelloSignComponent,
 		TransactionToolInviteComponent,
@@ -76,6 +76,7 @@ import { RouterModule } from '@angular/router';
 		SafeResourceURLPipe,
 		SafeUrlPipe,
 		UserRoleByTypePipe,
+		ShareButtonModule
 	],
 	providers: [
 		AgencyService,

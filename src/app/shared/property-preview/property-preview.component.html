@@ -29,6 +29,6 @@
     <span class="property-price" [ngClass]="isPropertyShareable ? 'price-small' : 'price-big'"
         *ngIf="property.price.value">{{ property.price.value | thousandSeparator | currencySymbol}}
 	</span>
-    <app-facebook-share *ngIf="isPropertyShareable" [property]="property" [userInfo]="userInfo"
-        [isFeaturedProperty]="true"></app-facebook-share>
+    <app-share-button *ngIf="isPropertyShareable" [property]="property" [userInfo]="userInfo"
+        [isFeaturedProperty]="true"></app-share-button>
 </div>
