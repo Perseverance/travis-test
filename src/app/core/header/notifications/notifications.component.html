@@ -1,5 +1,5 @@
 <div class="row notifications" *ngFor="let notification of notifications.notifications">
-    <a href="#">
+    <a href="" [routerLink]="['/property', notification.propertyId]">
         <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
             <div class="media-left">
                 <a href="#">
@@ -10,9 +10,11 @@
             </div>
             <div class="media-body">
                 <p class="media-heading">{{ notification.actor.firstName }} {{ notification.actor.lastName
-                    }} test test test test test test</p>
+                    }} {{notificationMessage(notification.eventType)}}</p>
             </div>
             <div class="timestamp">
+                <i class="fa fa-building-o"></i>
+                <span>transaction tool</span>
                 <i class="fa fa-clock-o"></i>
                 <span class="timestamp-label">{{ (notification.timestamp | amFromUnix) | amTimeAgo }} </span>
 
@@ -21,3 +23,29 @@
     </a>
 
 </div>
+<!-- <p-dataScroller [value]="notifications.notifications" [rows]="5" [inline]="true">
+    <ng-template let-notification pTemplate="item">
+        <a href="" [routerLink]="['/property', notification.propertyId]">
+            <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
+                <div class="media-left">
+                    <a href="#">
+                        <ngx-avatar name="{{ notification.actor.firstName }} {{ notification.actor.lastName }}"
+                            src="{{ (notification.actor.imageAvatar ? (notification.actor.imageAvatar | imageEnvPrefix) : '') }}"
+                            size="35" initialsSize="2" cornerRadius="4"></ngx-avatar>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <p class="media-heading">{{ notification.actor.firstName }} {{ notification.actor.lastName
+                        }} {{notificationMessage(notification.eventType)}}</p>
+                </div>
+                <div class="timestamp">
+                    <i class="fa fa-building-o"></i>
+                    <span>transaction tool</span>
+                    <i class="fa fa-clock-o"></i>
+                    <span class="timestamp-label">{{ (notification.timestamp | amFromUnix) | amTimeAgo }} </span>
+
+                </div>
+            </div>
+        </a>
+    </ng-template>
+</p-dataScroller> -->

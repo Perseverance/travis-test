@@ -1,3 +1,4 @@
+import { NotificationMessagesService } from './header/notifications/notification-messages.service';
 import { WebpackTranslateLoader } from './../../webpack-translate-loader';
 import { TextLimitationPipe } from './../shared/pipes/text-limitation.pipe';
 import { AuthenticatedGuard } from './../authentication/authenticated-guard.service';
@@ -53,6 +54,7 @@ import { PrerenderHelperService } from '../shared/prerender-helper.service';
 import { TokenGuardLazyLoading } from '../authentication/token-guard-lazy-loading.service';
 import { MapEventsService } from '../google-map/map-events.service';
 import { MomentModule } from 'angular2-moment/moment.module';
+import { DataScrollerModule } from 'primeng/components/datascroller/datascroller';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -74,7 +76,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		SharedModule,
 		AvatarModule,
 		GrowlModule,
-		MomentModule
+		MomentModule,
+		DataScrollerModule
 	],
 	declarations: [
 		HeaderComponent,
@@ -124,7 +127,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		LoadPropertyService,
 		VerificationService,
 		MessageService,
-		PrerenderHelperService
+		PrerenderHelperService,
+		NotificationMessagesService
 	],
 	exports: [
 		TranslateModule,
