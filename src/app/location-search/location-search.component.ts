@@ -50,10 +50,15 @@ export class LocationSearchComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loadPlacesAutoCompleteSearch();
+		let gInterval = setInterval(() => {
+			if (typeof google !== "undefined") {
+				this.loadPlacesAutoCompleteSearch();
+				clearInterval(gInterval);
+			}
+		}, 100);
 	}
 
-	async loadPlacesAutoCompleteSearch() {
+	loadPlacesAutoCompleteSearch() {
 		this.autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {});
 		this.autoCompleteService = new google.maps.places.AutocompleteService();
 
