@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class APIEndpointsService {
@@ -60,7 +60,8 @@ export class APIEndpointsService {
 		AGREE_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
 		VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/verifyemail`,
 		RESEND_VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/resendemailverification`,
-		FEATURED_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/featuredproperties`
+		FEATURED_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/featuredproperties`,
+		CHECKED_NOTIFICATIONS: `${this.INTERNAL_API_PREFIX}/Users/checkednotification`
 	};
 
 	constructor() {

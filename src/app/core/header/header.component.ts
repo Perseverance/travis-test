@@ -1,3 +1,4 @@
+import { NotificationMessagesService } from './notifications/notification-messages.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { SETTINGS_TABS } from './../../settings/settings/settings.component';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
@@ -47,7 +48,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		private translateService: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
 		private momentService: MomentService,
-		public pusherService: PusherService) {
+		public pusherService: PusherService,
+		public notificationService: NotificationMessagesService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -163,9 +165,13 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		}
 		this.numberOfNotifications = event.newNotifications;
 	}
-	public onToggleNotifications() {
-		this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
-		this.newNotifications = false;
-		this.numberOfNotifications = 0;
+	public async onToggleNotifications() {
+		const result = await this.notificationService.checkedNotifications();
+		console.log(result);
+
+		// this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
+		// this.newNotifications = false;
+		// this.numberOfNotifications = 0;
+
 	}
 }
