@@ -39,6 +39,7 @@ export class LocationSearchComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+			
 		this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
 			if (event.url.startsWith('/map')) {
 				// NOTICE: Fixes buggy angular not redrawing when there is google map in the view
@@ -48,8 +49,8 @@ export class LocationSearchComponent implements OnInit {
 		});
 	}
 
-	async ngOnInit() {
-		await this.loadPlacesAutoCompleteSearch();
+	ngOnInit() {
+		this.loadPlacesAutoCompleteSearch();
 	}
 
 	async loadPlacesAutoCompleteSearch() {

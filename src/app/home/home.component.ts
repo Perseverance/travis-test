@@ -11,12 +11,17 @@ declare function SmartBanner(param1: any): void;
 })
 export class HomeComponent implements OnInit {
 
+	public taiwan = false;
+
 	constructor(private router: Router,
 		private authService: AuthenticationService,
 		private zone: NgZone) {
 	}
 
 	ngOnInit() {
+		setTimeout(() => {
+			this.taiwan = true;
+		}, 7000); // TODO: DELETE!
 		this.authService.refreshTokenOrLoginAnonym();
 		const banner = new SmartBanner({
 			// force: 'ios', // Uncomment for platform emulation

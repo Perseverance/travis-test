@@ -6,8 +6,6 @@ import {environment} from './environments/environment';
 
 const mapsScript = document.createElement('script');
 mapsScript.setAttribute('type', 'text/javascript');
-mapsScript.setAttribute('async', '');
-mapsScript.setAttribute('defer', '');
 
 // Check if in China
 if (environment.china) {

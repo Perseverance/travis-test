@@ -26,9 +26,9 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	private HEADER_CHANGE_THRESHOLD_PX = 1;
 
 	public hasUserLoaded = false;
-	public isUserAnonymous: boolean;
+	public isUserAnonymous: Boolean;
 	public userInfo: any;
-	public isLanding = false;
+	public isLanding = true;
 	public settingsTabs = SETTINGS_TABS;
 	public isEmailVerified = false;
 
