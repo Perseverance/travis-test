@@ -72,19 +72,19 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
 		const result = await this.authService.performLogin(this.email.value, this.password.value, this.rememberMe.value);
-		this.router.navigate([this.redirectToUrl]);
+		this.router.navigateByUrl(this.redirectToUrl);
 	}
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
-		this.router.navigate([this.redirectToUrl]);
+		this.router.navigateByUrl(this.redirectToUrl);
 	}
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async linkedInLogin() {
 		const result = await this.authService.performLinkedInLogin();
-		this.router.navigate([this.redirectToUrl]);
+		this.router.navigateByUrl(this.redirectToUrl);
 	}
 
 }
