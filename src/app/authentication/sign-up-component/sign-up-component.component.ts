@@ -41,6 +41,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
 
+	public barLabel = 'PASSWORD STRENGTH:';
+	public barColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
+
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	protected agencyAutoCompleteDataService: RemoteData;

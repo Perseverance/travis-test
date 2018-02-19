@@ -14,6 +14,7 @@ import {FacebookButtonComponent} from './facebook-button/facebook-button.compone
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {InlineSVGModule} from 'ng-inline-svg';
 import {InternationalPhoneModule} from 'ng4-intl-phone/src/lib';
+import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 
 @NgModule({
 	imports: [
@@ -25,7 +26,8 @@ import {InternationalPhoneModule} from 'ng4-intl-phone/src/lib';
 		Ng2CompleterModule,
 		TranslateModule,
 		InlineSVGModule,
-		InternationalPhoneModule
+		InternationalPhoneModule,
+		PasswordStrengthBarModule
 	],
 	declarations: [
 		LoginComponentComponent,

@@ -93,6 +93,12 @@
 				</div>
 			</div>
 
+			<ng2-password-strength-bar 
+				[passwordToCheck]="this.password()" 
+				[barLabel]="barLabel"
+				[barColors]="barColors">
+			</ng2-password-strength-bar>
+
 			<div class="form-group checkbox">
 				<div class="form-group checkbox form-check abc-checkbox">
 					<input type="checkbox" class="form-check-input" formControlName="iAmAnAgent" id="agentCheckbox">
