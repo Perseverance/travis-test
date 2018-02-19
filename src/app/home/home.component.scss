@@ -36,9 +36,16 @@ $sub-header-color: #929292;
     margin-top: -55px;
     @media #{$xl} {
         min-height: 750px;
-        background-position: center -200px;
+        background-position: center -100px;
         .find-property {
             padding-top: 150px;
+        }
+    }
+    @media (min-width: 1680px) {
+        min-height: 650px;
+        background-position: center -100px;
+        .find-property {
+            padding-top: 130px;
         }
     }
 }
