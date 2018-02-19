@@ -73,7 +73,7 @@ export class AuthenticationService {
 			return;
 		}
 		if (!this.restClient.isTokenExpired) {
-			this.getCurrentUser(true);
+			this.getCurrentUser(true, true);
 		}
 	}
 
@@ -172,7 +172,7 @@ export class AuthenticationService {
 			rememberMe);
 
 		if (fetchUser) {
-			this.getCurrentUser();
+			this.getCurrentUser(true, true);
 		}
 
 		return true;
