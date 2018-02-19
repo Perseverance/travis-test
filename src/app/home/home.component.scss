@@ -39,6 +39,9 @@ $sub-header-color: #929292;
     @media #{$sm} {
         background-attachment: scroll;
     }
+    @media (max-width: 1025px) {
+        background-attachment: scroll;
+    }
     @media #{$xl} {
         min-height: 750px;
         background-position: center -100px;
