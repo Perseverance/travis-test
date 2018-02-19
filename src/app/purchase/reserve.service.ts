@@ -18,4 +18,12 @@ export class ReserveService {
 		return await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.RESERVE_PROPERTY, {}, { params });
 	}
 
+	public async confirmReserveProperty(propertyId: string): Promise<any> {
+		const params = {
+			propertyId
+		};
+
+		return await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.CONFIRM_RESERVE_PROPERTY, params);
+	}
+
 }

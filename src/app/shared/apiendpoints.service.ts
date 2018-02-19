@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class APIEndpointsService {
@@ -41,6 +41,7 @@ export class APIEndpointsService {
 		MARK_PROPERTY_AS_UNLISTED: `${this.INTERNAL_API_PREFIX}/Properties/unlist/`,
 		HIDE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/hidden`,
 		RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/createChargeForReservation`,
+		CONFIRM_RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/confirmReserveProperty`,
 		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/notifications/authPusher`,
 		DEAL_PARTIES: `${this.INTERNAL_API_PREFIX}/deeds/dealparties`,
 		CREATE_DEED: `${this.INTERNAL_API_PREFIX}/deeds/createDeed`,
