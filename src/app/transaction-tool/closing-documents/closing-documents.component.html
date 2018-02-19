@@ -27,7 +27,7 @@
 										class="btn propy-control button-big pull-right"
 										(click)="reuploadingDocumentActivated = true">Reupload
 								</button>
-								<button type="button" *ngIf="reuploadingDocumentActivated"
+								<button type="button" *ngIf="reuploadingDocumentActivated && !processingUpload"
 										class="btn propy-control cancel-reuploading button-big btn-white pull-right"
 										(click)="reuploadingDocumentActivated = false">Cancel reuploading
 								</button>

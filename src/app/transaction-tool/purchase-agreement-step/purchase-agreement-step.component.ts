@@ -1,27 +1,27 @@
-import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
-import { environment } from './../../../environments/environment';
-import { NotificationsService } from './../../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorsService } from './../../shared/errors/errors.service';
-import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationService, UserData } from '../../authentication/authentication.service';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { TransactionToolWorkflowService } from '../workflow/workflow.service';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
+import {environment} from './../../../environments/environment';
+import {NotificationsService} from './../../shared/notifications/notifications.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorsService} from './../../shared/errors/errors.service';
+import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AuthenticationService, UserData} from '../../authentication/authentication.service';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {TransactionToolWorkflowService} from '../workflow/workflow.service';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
-import { DeedsService } from '../../shared/deeds.service';
-import { Base64Service } from '../../shared/base64.service';
-import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
-import { PusherService } from '../../shared/pusher.service';
+import {HelloSignService} from '../../shared/hello-sign.service';
+import {DeedsService} from '../../shared/deeds.service';
+import {Base64Service} from '../../shared/base64.service';
+import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
+import {PusherService} from '../../shared/pusher.service';
 
 declare const HelloSign;
 
@@ -63,18 +63,19 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
 	private documentSignatureUpdatedSubscription: Subscription;
+	public processingUpload: boolean;
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private deedsService: DeedsService,
-		private base64Service: Base64Service,
-		private notificationService: NotificationsService,
-		private router: Router,
-		private pusherService: PusherService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private deedsService: DeedsService,
+				private base64Service: Base64Service,
+				private notificationService: NotificationsService,
+				private router: Router,
+				private pusherService: PusherService,
+				errorsService: ErrorsService,
+				translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -147,6 +148,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		if (!this.selectedDocument) {
 			return;
 		}
+		this.processingUpload = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -158,6 +160,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		this.signingDocument = response;
 		await this.setupDocumentPreview(this.signingDocument);
 		this.reuploadingDocumentActivated = false;
+		this.processingUpload = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
