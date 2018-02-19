@@ -15,6 +15,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import {PhoneNumberValidators} from '../../shared/validators/phone-number.validators';
 
 @Component({
 	selector: 'app-sign-up-component',
@@ -296,6 +297,16 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			this.phoneNumber.setValidators(Validators.compose([
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }

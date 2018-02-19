@@ -48,6 +48,7 @@
 								  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
 								  formControlName="phoneNumber"
 								  (phoneInputChangedEvent)="handlePhoneInputChanged()"
+								  (selectedCountryChanged)="handleSelectedCountryChanged()"
 								  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
 				<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
 					<div class="propy-validation"
