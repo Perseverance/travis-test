@@ -34,6 +34,13 @@ $sub-header-color: #929292;
     margin-left: -15px;
     margin-right: -15px;
     margin-top: -55px;
+    @media #{$xl} {
+        min-height: 750px;
+        background-position: center -200px;
+        .find-property {
+            padding-top: 150px;
+        }
+    }
 }
 
 .landing-heading {
