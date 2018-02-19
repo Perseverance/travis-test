@@ -1,10 +1,10 @@
-<div class="row notifications" *ngFor="let notification of notifications.notifications">
+<div class="row notifications" *ngFor="let notification of notifications">
     <a href="" [routerLink]="['/property', notification.propertyId]">
         <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
             <div class="media-left">
                 <a href="#">
                     <ngx-avatar name="{{ notification.actor.firstName }} {{ notification.actor.lastName }}"
-                        src="{{ (notification.actor.imageAvatar ? (notification.actor.imageAvatar | imageEnvPrefix) : '') }}"
+                        src="{{ (notification.actor.avatar ? (notification.actor.imageAvatar | imageEnvPrefix) : '') }}"
                         size="35" initialsSize="2" cornerRadius="4"></ngx-avatar>
                 </a>
             </div>
@@ -16,7 +16,7 @@
                 <i class="fa fa-building-o"></i>
                 <span>transaction tool</span>
                 <i class="fa fa-clock-o"></i>
-                <span class="timestamp-label">{{ (notification.timestamp | amFromUnix) | amTimeAgo }} </span>
+                <span class="timestamp-label">{{ (notification.createdOn | amFromUnix) | amTimeAgo }} </span>
 
             </div>
         </div>

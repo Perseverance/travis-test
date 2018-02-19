@@ -158,20 +158,17 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		this.router.navigate(['map', { latitude, longitude, locationName }]);
 	}
 
-	public onNewNotifications(event) {
-		//this.newNotifications = event;
-		if (event.newNotifications > 0) {
+	public onNewNotifications(newNotifications) {
+		if (newNotifications > 0) {
 			this.newNotifications = true;
 		}
-		this.numberOfNotifications = event.newNotifications;
+		this.numberOfNotifications = newNotifications;
 	}
 	public async onToggleNotifications() {
-		const result = await this.notificationService.checkedNotifications();
-		console.log(result);
-
-		// this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
-		// this.newNotifications = false;
-		// this.numberOfNotifications = 0;
+		//const result = await this.notificationService.checkedNotifications();
+		this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
+		this.newNotifications = false;
+		this.numberOfNotifications = 0;
 
 	}
 }
