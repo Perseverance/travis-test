@@ -21,7 +21,6 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	private queryParamsSubscription: Subscription;
 
 	private redirectToUrl = environment.defaultRedirectRoute;
-	public test;
 
 
 	constructor(private authService: AuthenticationService,
