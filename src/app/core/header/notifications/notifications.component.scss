@@ -8,6 +8,11 @@ $blue-light-notification: #DCF6FF;
         text-decoration: none;
     }
     .media {
+        .media-body {
+            .media-heading {
+                font-size: 14px;
+            }
+        }
         padding: 10px;
         &.notRead {
             background-color: $blue-light-notification;
