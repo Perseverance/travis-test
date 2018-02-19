@@ -11,7 +11,9 @@
             margin-top: 0px;
         }
         .stripe-header {
-            margin-bottom: 20px;
+            &.reservation {
+                margin-bottom: 20px;
+            }
             h3 {
                 margin: 0px;
                 margin-bottom: 10px;

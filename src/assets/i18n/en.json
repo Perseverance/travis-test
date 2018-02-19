@@ -413,7 +413,9 @@
         "login-or-signup": "To reserve your property, just sign up or login through the header above.",
         "reserve-property": "Reserve this property",
         "disclaimer": "To be able to reserve the property and purchase it online you will need to add credit card.",
-        "deposit-5000": "Deposit $5000"
+        "deposit-5000": "Deposit $5000",
+        "confirmation-text": "If you are interested in this property, please confirm your reservation",
+        "confirmation-button": "Confirm Reservation"
     },
     "verification": {
         "resend-button": "Resend Verification Email",

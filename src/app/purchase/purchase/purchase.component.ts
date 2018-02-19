@@ -33,11 +33,13 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 	public successMessage: string;
 	public errorMessage: string;
 	public hasUserLoaded = false;
+	public hasPropertyLoaded = false;
 	public isUserAnonymous: boolean;
 
 	private idSubscription: Subscription;
 
 	private propertyId: string;
+	public property: any;
 
 	constructor(
 		private router: Router,
@@ -102,6 +104,8 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 				throw new Error('No property id supplied');
 			}
 			self.propertyId = propertyId;
+			self.property = await self.propertiesService.getProperty(self.propertyId, CurrencyTypeEnum.ETH);
+			self.hasPropertyLoaded = true;
 		});
 
 	}
@@ -121,7 +125,6 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 			time: (new Date().getTime()),
 			timeout: 15000
 		});
-		const property = await this.propertiesService.getProperty(this.propertyId, CurrencyTypeEnum.ETH); // TODO: Get price in ETH
 		const name = this.name.value;
 		this.stripeService
 			.createToken(this.card.getCard(), { name })
@@ -144,6 +147,32 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 					console.error(result.error.message);
 				}
 			});
+	}
+
+	public async confirmReservation() {
+		this.notificationService.pushInfo({
+			title: 'Sending data...',
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 15000
+		});
+		try {
+			await this.reserveService.confirmReserveProperty(this.propertyId);
+			this.notificationService.pushSuccess({
+				title: this.successTitle,
+				message: this.successMessage,
+				time: (new Date().getTime()),
+				timeout: 5000
+			});
+			this.goToProperty(this.propertyId);
+		} catch (error) {
+			this.errorsService.pushError({
+				errorTitle: this.errorMessage,
+				errorMessage: error.message,
+				errorTime: (new Date()).getTime()
+			});
+			console.error(error.message);
+		}
 	}
 
 	private goToProperty(id: string) {

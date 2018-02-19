@@ -196,6 +196,7 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 					errorTime: (new Date()).getTime()
 				});
 				this.recordButtonEnabled = true;
+				return;
 			}
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');
