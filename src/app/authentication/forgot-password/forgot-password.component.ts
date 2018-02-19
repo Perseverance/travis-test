@@ -29,7 +29,7 @@ export class ForgotPasswordComponent extends ErrorsDecoratableComponent {
 	public get email() {
 		return this.forgotForm.get('email');
 	}
-	
+
 	@DefaultAsyncAPIErrorHandling('forgot-password.reset-password-fail')
 	public async onSubmit() {
 		const result = await this.authService.forgotPassword(this.email.value);

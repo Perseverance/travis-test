@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {CanLoad, Route} from '@angular/router';
-import {AuthenticationService} from './authentication.service';
+import { Injectable } from '@angular/core';
+import { CanLoad, Route } from '@angular/router';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class TokenGuardLazyLoading implements CanLoad {

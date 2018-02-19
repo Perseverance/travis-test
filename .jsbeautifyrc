@@ -1,5 +1,5 @@
 {
-    "tab_size": 4,
-    "indent_withtabs": true,
-    "wrap_line_length": 80
+	 "tab_size": 3,
+	 "indent_withtabs": true,
+	 "wrap_line_length": 80
 }
