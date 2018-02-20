@@ -57,7 +57,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 				this.userInfo = userInfo.user;
 				if (this.userInfo) {
 					this.isEmailVerified = this.userInfo.isEmailVerified;
-					console.log(this.userInfo);
 				}
 
 				this.hasUserLoaded = true;
@@ -172,7 +171,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 				this.numberOfNotifications = 0;
 				const result = await this.notificationMessageService.checkedNotifications();
 			} catch (error) {
-				console.log(error);
+				return null;
 			}
 		}
 
