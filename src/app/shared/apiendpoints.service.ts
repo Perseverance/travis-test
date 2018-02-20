@@ -61,7 +61,8 @@ export class APIEndpointsService {
 		VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/verifyemail`,
 		RESEND_VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/resendemailverification`,
 		FEATURED_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/featuredproperties`,
-		CHECKED_NOTIFICATIONS: `${this.INTERNAL_API_PREFIX}/Users/checkednotifications`
+		CHECKED_NOTIFICATIONS: `${this.INTERNAL_API_PREFIX}/Users/checkednotifications`,
+		SEEN_NOTIFICATION: `${this.INTERNAL_API_PREFIX}/UserNotifications/setasseen`
 	};
 
 	constructor() {

@@ -1,9 +1,6 @@
-<div class="row notifications" *ngIf="newNotifications>0; else noNewNotifications">
-    <p>No new notifications</p>
-</div>
-<ng-template #noNewNotifications>
+<div *ngIf="notifications && notifications.length !== 0; else noNotifications">
     <div class="row notifications" *ngFor="let notification of notifications">
-        <a href="" [routerLink]="['/property', notification.propertyId]">
+        <a (click)="goToRelatedEvent(notification.notificationId)">
             <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
                 <div class="media-left">
                     <a href="#">
@@ -26,7 +23,20 @@
             </div>
         </a>
     </div>
+</div>
+<ng-template #noNotifications>
+
+    <div class="row notifications">
+        <div class="media">
+            <div class="media-body">
+                <p class="media-heading">No new notifications</p>
+            </div>
+        </div>
+    </div>
+
+
 </ng-template>
+
 <!-- <p-dataScroller [value]="notifications.notifications" [rows]="5" [inline]="true">
     <ng-template let-notification pTemplate="item">
         <a href="" [routerLink]="['/property', notification.propertyId]">

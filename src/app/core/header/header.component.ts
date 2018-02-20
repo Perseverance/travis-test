@@ -49,7 +49,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		@Inject(DOCUMENT) private document: Document,
 		private momentService: MomentService,
 		public pusherService: PusherService,
-		public notificationService: NotificationMessagesService) {
+		public notificationMessageService: NotificationMessagesService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -167,10 +167,10 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public async onToggleNotifications() {
 		if (this.numberOfNotifications > 0) {
 			try {
-				const result = await this.notificationService.checkedNotifications();
 				this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
 				this.newNotifications = false;
 				this.numberOfNotifications = 0;
+				const result = await this.notificationMessageService.checkedNotifications();
 			} catch (error) {
 				console.log(error);
 			}

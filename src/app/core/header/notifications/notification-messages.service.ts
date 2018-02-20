@@ -25,11 +25,16 @@ export class NotificationMessagesService {
 		return this.notificationTranslations[notificationMessages[eventType]];
 	}
 	public async checkedNotifications(): Promise<any> {
-		const result = await this.restClient.get(this.apiEndpoints.INTERNAL_ENDPOINTS.CHECKED_NOTIFICATIONS, {});
+		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CHECKED_NOTIFICATIONS, {});
+		return result;
 	}
 
-	public setNotificaitonSeen() {
-
+	public async setNotificaitonSeen(id) {
+		const params = {
+			id,
+		};
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SEEN_NOTIFICATION, {}, { params });
+		return result;
 	}
 
 }

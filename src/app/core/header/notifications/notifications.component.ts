@@ -1,3 +1,4 @@
+import { notificationMessages } from './notificationMessages.model';
 import { Router } from '@angular/router';
 import { NotificationMessagesService } from './notification-messages.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -22,7 +23,7 @@ export class NotificationsComponent implements OnInit {
 	ngOnInit() {
 		this.notificationSubscription = this.pusherService.subscribeToNotificationsSubject({
 			next: (data: any) => {
-				this.notifications.push(data);
+				this.notifications.push(data.message);
 				this.newNotifications += 1;
 				this.onNewNotifications.emit(this.newNotifications);
 			}
@@ -40,8 +41,10 @@ export class NotificationsComponent implements OnInit {
 	onReadNotification() {
 
 	}
-	private goToRelatedEvent(propertyId: string) {
-		this.router.navigate(['property', propertyId]);
+	private async goToRelatedEvent(notificationId) {
+		console.log(notificationId);
+		const result = await this.notificationMessageService.setNotificaitonSeen(notificationId);
+		//this.router.navigate(['property', propertyId]);
 	}
 
 }
