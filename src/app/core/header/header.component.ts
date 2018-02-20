@@ -171,7 +171,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 				this.numberOfNotifications = 0;
 				const result = await this.notificationMessageService.checkedNotifications();
 			} catch (error) {
-				return null;
+				console.log(error);
 			}
 		}
 
