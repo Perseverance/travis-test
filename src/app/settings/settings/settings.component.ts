@@ -16,13 +16,15 @@ export const SETTINGS_TABS = {
 	REFFERAL_LINK: 'REFFERAL_LINK'
 };
 
+// TODO: Make MY_DEALS 3, Passwords 4 and refferal 5
+
 export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
 	WALLET: 2,
-	MY_DEALS: 3,
-	PASSWORD: 4,
-	REFFERAL_LINK: 5
+	// MY_DEALS: 3,
+	PASSWORD: 3,
+	REFFERAL_LINK: 4
 };
 
 @Component({
@@ -97,10 +99,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				queryParams['selectedTab'] = SETTINGS_TABS.PASSWORD;
 				break;
 			}
-			case TABS_INDEX.MY_DEALS: {
-				queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
-				break;
-			}
+			// TODO: Uncomment when we have my deals
+
+			// case TABS_INDEX.MY_DEALS: {
+			// 	queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
+			// 	break;
+			// }
 			case TABS_INDEX.REFFERAL_LINK: {
 				queryParams['selectedTab'] = SETTINGS_TABS.REFFERAL_LINK;
 				break;
