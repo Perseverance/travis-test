@@ -18,7 +18,9 @@ import { Subscription } from 'rxjs/Subscription';
 export class LoginComponentComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public loginForm: FormGroup;
+	public verifyForm: FormGroup;
 	private queryParamsSubscription: Subscription;
+	public showVerificationDialog = false;
 
 	private redirectToUrl = environment.defaultRedirectRoute;
 
@@ -36,6 +38,9 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 			password: ['', [Validators.required]],
 			rememberMe: [true]
 		});
+		this.verifyForm = this.formBuilder.group({
+			verifyEmail: ['', [Validators.required, Validators.email]]
+		});
 	}
 
 	ngOnInit() {
@@ -49,7 +54,7 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	private setupQueryParamsWatcher(): Subscription {
 		return this.route.queryParams
 			.subscribe(params => {
-				// Check if there are no params passed in 
+				// Check if there are no params passed in
 				// OR if redirect points to forgotten pass page
 				if (!params.redirect || params.redirect === '/forgot') {
 					return;
@@ -60,6 +65,10 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 
 	public get email() {
 		return this.loginForm.get('email');
+	}
+
+	public get verifyEmail() {
+		return this.verifyForm.get('verifyEmail');
 	}
 
 	public get password() {
@@ -79,12 +88,21 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
 		const result = await this.authService.performFacebookLogin();
+		if (!result.isEmailVerified) {
+			this.openVerifyEmailPopup();
+			return;
+		}
+
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	private openVerifyEmailPopup() {
+		this.showVerificationDialog = true;
+	}
+
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
-	public async linkedInLogin() {
-		const result = await this.authService.performLinkedInLogin();
+	public async sendVerificationEmailAddress() {
+		const result = await this.authService.updateVerificationEmail(this.verifyEmail.value);
 		this.router.navigate([this.redirectToUrl]);
 	}
 
