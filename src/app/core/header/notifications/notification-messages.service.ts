@@ -2,6 +2,7 @@ import { APIEndpointsService } from './../../../shared/apiendpoints.service';
 import { RestClientService } from './../../../shared/rest-client.service';
 import { TranslateService } from '@ngx-translate/core';
 import { notificationMessages } from './notificationMessages.model';
+import { transactionToolSteps } from './notificationMessages.model';
 import { Injectable } from '@angular/core';
 @Injectable()
 export class NotificationMessagesService {
@@ -10,7 +11,7 @@ export class NotificationMessagesService {
 		public restClient: RestClientService,
 		public apiEndpoints: APIEndpointsService) { }
 
-	public returnMessage(eventType: number, parameter: any) {
+	public returnMessage(eventType: number, parameter?: any) {
 		this.translateService.stream([
 			'notifications.reserved',
 			'notifications.invited',
@@ -23,6 +24,9 @@ export class NotificationMessagesService {
 
 		});
 		return this.notificationTranslations[notificationMessages[eventType]];
+	}
+	public returnDeedStatus(deedStatus) {
+		return transactionToolSteps[deedStatus];
 	}
 	public async checkedNotifications(): Promise<any> {
 		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CHECKED_NOTIFICATIONS, {});

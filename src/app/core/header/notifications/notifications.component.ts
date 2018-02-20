@@ -16,9 +16,7 @@ export class NotificationsComponent implements OnInit {
 	@Input() notifications: any[];
 	@Input() newNotifications: number;
 	constructor(private router: Router, private pusherService: PusherService,
-		private notificationMessageService: NotificationMessagesService) {
-		// TO DO SERVICE TO LOAD THE DATA
-	}
+		private notificationMessageService: NotificationMessagesService) { }
 
 	ngOnInit() {
 		this.notificationSubscription = this.pusherService.subscribeToNotificationsSubject({
@@ -32,20 +30,12 @@ export class NotificationsComponent implements OnInit {
 		this.onNewNotifications.emit(this.newNotifications);
 	}
 	public notificationMessage(notificationType) {
-		return this.notificationMessageService.returnMessage(notificationType, 'test');
+		return this.notificationMessageService.returnMessage(notificationType);
 	}
 
-	onShowNotifications() {
-
-	}
-
-	onReadNotification() {
-
-	}
-	private async goToRelatedEvent(notificationId) {
-		console.log(notificationId);
+	private async goToRelatedEvent(notificationId, deedId, deedStatus) {
+		this.router.navigate(['transaction-tool', deedId, this.notificationMessageService.returnDeedStatus(deedStatus)]);
 		const result = await this.notificationMessageService.setNotificaitonSeen(notificationId);
-		//this.router.navigate(['property', propertyId]);
 	}
 
 }
