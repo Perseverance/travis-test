@@ -174,7 +174,11 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 			} catch (error) {
 				console.log(error);
 			}
+		} else {
+			this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
+
 		}
+
 
 	}
 }
