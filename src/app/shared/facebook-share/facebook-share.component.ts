@@ -51,7 +51,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		this.isAnonymous = this.authService.isUserAnonymous;
 		if (this.isAnonymous && this.isFeaturedProperty) {
 			this.notificationService.pushInfo({
-				title: this.succesShareLabel,
+				title: this.notLoggedInError,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 5000
@@ -76,7 +76,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			.then(async (res: UIResponse) => {
 				if (res && !res.error_message && this.property.isShareRewardEnabled) {
 					this.notificationService.pushInfo({
-						title: this.notLoggedInError,
+						title: this.succesShareLabel,
 						message: '',
 						time: (new Date().getTime()),
 						timeout: 5000
