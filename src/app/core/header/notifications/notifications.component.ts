@@ -24,6 +24,7 @@ export class NotificationsComponent implements OnInit {
 				this.notifications.push(data.message);
 				this.newNotifications += 1;
 				this.onNewNotifications.emit(this.newNotifications);
+				console.log(data);
 			}
 		});
 		this.onNewNotifications.emit(this.newNotifications);
