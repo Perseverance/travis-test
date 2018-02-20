@@ -348,8 +348,9 @@ export class AuthenticationService {
 		return result.data.data.value;
 	}
 
-	public async updateUser(firstName: string, lastName: string, phoneNumber: string, saveUser = true): Promise<any> {
+	public async updateUser(email: string, firstName: string, lastName: string, phoneNumber: string, saveUser = true): Promise<any> {
 		const params = {
+			email,
 			firstName,
 			lastName,
 			phoneNumber,

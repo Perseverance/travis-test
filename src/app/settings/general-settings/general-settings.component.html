@@ -1,70 +1,62 @@
 <div class="col-xs-12 general-settings">
-	<h5 *ngIf="!isEmailVerified" class="warning-message">{{'settings.not-verified-subtitle' | translate}}</h5>
-	<form [formGroup]="editProfileForm" class="propy-form">
-		<div class="form-group">
-			<label for="firstName" class="propy-label">{{ 'common.placeholder.firstName' | translate }}</label>
-			<input formControlName="firstName" type="text" class="form-control propy-control"
-				   id="firstName" placeholder="{{ 'common.placeholder.firstName' | translate }}">
-			<div *ngIf="firstName.touched" class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">{{
-					'common.validation-errors.required' | translate }}
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="lastName" class="propy-label">{{ 'common.placeholder.lastName' | translate }}</label>
-			<input formControlName="lastName" type="text" class="form-control propy-control"
-				   (keydown.Tab)="activatePhoneDropDown()"
-				   id="lastName" placeholder="{{ 'common.placeholder.lastName' | translate }}">
-			<div *ngIf="lastName.touched" class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{
-					'common.validation-errors.required' | translate }}
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
-			<span [ngClass]="{'verified': isEmailVerified, 'not-verified': !isEmailVerified}"
-				  *ngIf="hasUserDataLoaded">{{ isEmailVerified ? 'Verified' : 'Not Verified'}}</span>
-			<input formControlName="email" type="text" class="form-control propy-control" id="email">
-			<div *ngIf="email.touched || verificationTouched" class="propy-validation-errors-box">
-				<div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{
-					'common.validation-errors.required' | translate }}
-				</div>
-				<div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{
-					'common.validation-errors.invalid-email' | translate }}
-				</div>
-			</div>
-		</div>
-		<div class="form-group" *ngIf="!isEmailVerified">
-			<button type="button" class="btn propy-control button-big" (click)="resendVerification()">{{
+    <h5 *ngIf="!isEmailVerified" class="warning-message">{{'settings.not-verified-subtitle' | translate}}</h5>
+    <form [formGroup]="editProfileForm" class="propy-form">
+        <div class="form-group">
+            <label for="firstName" class="propy-label">{{ 'common.placeholder.firstName' | translate }}</label>
+            <input formControlName="firstName" type="text" class="form-control propy-control"
+                id="firstName" placeholder="{{ 'common.placeholder.firstName' | translate }}">
+            <div *ngIf="firstName.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName" class="propy-label">{{ 'common.placeholder.lastName' | translate }}</label>
+            <input formControlName="lastName" type="text" class="form-control propy-control"
+                (keydown.Tab)="activatePhoneDropDown()" id="lastName" placeholder="{{ 'common.placeholder.lastName' | translate }}">
+            <div *ngIf="lastName.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="propy-label">{{ 'common.label.email' | translate }}</label>
+            <span [ngClass]="{'verified': isEmailVerified, 'not-verified': !isEmailVerified}"
+                *ngIf="hasUserDataLoaded">{{ isEmailVerified ? 'Verified' : 'Not Verified'}}</span>
+            <input formControlName="email" type="text" class="form-control propy-control" id="email">
+            <div *ngIf="email.touched || verificationTouched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{ 'common.validation-errors.required' | translate }}
+                </div>
+                <div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{ 'common.validation-errors.invalid-email' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="!isEmailVerified">
+            <button type="button" class="btn propy-control button-big" (click)="resendVerification()">{{
 				'verification.resend-button' | translate }}
 			</button>
-		</div>
-		<div class="form-group" *ngIf="generalTabIsActive">
-			<int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode"
-							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
-							  formControlName="phoneNumber"
-							  (phoneInputChangedEvent)="handlePhoneInputChanged()"
-							  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
-			<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
-				<div class="propy-validation"
-					 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
-					{{ 'common.validation-errors.invalid-phone-number' | translate }}
-				</div>
-			</div>
-			<div class="propy-validation-errors-box invalid-existing-number"
-				 *ngIf="phoneNumber.value && phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">
-				{{ 'common.validation-errors.invalid-existing-phone-number' | translate }}
-			</div>
-			<br/>
-			<button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
-					[disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">{{
+        </div>
+        <div class="form-group" *ngIf="generalTabIsActive">
+            <label for="email" class="propy-label">{{ 'common.placeholder.phoneNumber' | translate }}</label>
+            <int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode" [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
+                formControlName="phoneNumber" (phoneInputChangedEvent)="handlePhoneInputChanged()"
+                (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
+            <div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
+                <div class="propy-validation" *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
+                    {{ 'common.validation-errors.invalid-phone-number' | translate }}
+                </div>
+            </div>
+            <div class="propy-validation-errors-box invalid-existing-number" *ngIf="phoneNumber.value && phoneNumber.invalid && phoneNumber.errors['invalidPhoneNumber']">
+                {{ 'common.validation-errors.invalid-existing-phone-number' | translate }}
+            </div>
+            <br/>
+            <button type="button" class="btn propy-control button-big btn-edit" (click)="editUser()"
+                [disabled]="firstName.invalid || lastName.invalid || email.invalid || phoneNumber.invalid">{{
 				'common.label.save-changes' | translate }}
 			</button>
-			<button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{
+            <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="cancelEdit()">{{
 				'common.label.cancel' | translate }}
 			</button>
-		</div>
-	</form>
+        </div>
+    </form>
 </div>
