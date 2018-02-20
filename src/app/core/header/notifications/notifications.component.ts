@@ -21,10 +21,10 @@ export class NotificationsComponent implements OnInit {
 	ngOnInit() {
 		this.notificationSubscription = this.pusherService.subscribeToNotificationsSubject({
 			next: (data: any) => {
-				this.notifications.push(data.message);
+				this.notifications.push(JSON.parse(data.message));
 				this.newNotifications += 1;
 				this.onNewNotifications.emit(this.newNotifications);
-				console.log(data);
+				//console.log(JSON.parse(data.message));
 			}
 		});
 		this.onNewNotifications.emit(this.newNotifications);
