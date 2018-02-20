@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default propy-header propy-header-top" [ngClass]="{'propy-header-top': !isHeaderScrolledPastThreshold, 'propy-header-scrolled': isHeaderScrolledPastThreshold}">
+<nav class="navbar navbar-default propy-header-top" [ngClass]="{'propy-header-top': !isHeaderScrolledPastThreshold, 'propy-header-scrolled': isHeaderScrolledPastThreshold, 'propy-header': !isLanding, 'propy-header-landing': isLanding}">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -54,7 +54,7 @@
 
                 </li>
                 <li *ngIf="!isUserAnonymous">
-                    <a href="" [routerLink]="['/settings']" [queryParams]="{selectedTab: settingsTabs.WALLET}"><span
+                    <a href="" class="balance" [routerLink]="['/settings']" [queryParams]="{selectedTab: settingsTabs.WALLET}"><span
 						class="text-capitalize">{{'common.label.balance'| translate}}</span>
 						:&nbsp;{{userInfo.proTokens
 						| bigNumberFormat : false: true}}&nbsp;PRO<span class="no-wallet-badge"
