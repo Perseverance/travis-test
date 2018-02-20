@@ -10,4 +10,20 @@ export const notificationMessages = {
 	8: 'payment'
 };
 
+export const transactionToolSteps = {
+	'-2': 'rejected',
+	'-1': 'canceled',
+	0: 'property-preview',
+	1: 'invite',
+	2: 'purchase-agreement',
+	3: 'title-report',
+	4: 'disclosures',
+	5: 'settlement-statements',
+	6: 'payment',
+	7: 'affidavit',
+	8: 'closing-documents',
+	9: 'transfer'
+};
+
 export type notificationMessages = string;
+export type transactionToolSteps = string;

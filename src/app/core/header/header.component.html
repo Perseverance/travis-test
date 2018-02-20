@@ -67,7 +67,8 @@
                         <span [hidden]="!newNotifications" class="notification-number">{{numberOfNotifications}}</span>
 					</a>
                     <div class="dropdown-menu scrollable-menu">
-                        <app-notifications (onNewNotifications)="onNewNotifications($event)"></app-notifications>
+                        <app-notifications [notifications]="userInfo.userNotifications" [newNotifications]="userInfo.newNotifications"
+                            (onNewNotifications)="onNewNotifications($event)"></app-notifications>
                     </div>
                 </li>
                 <li *ngIf="!isUserAnonymous">
