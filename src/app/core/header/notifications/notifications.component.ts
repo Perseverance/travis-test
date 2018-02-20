@@ -31,8 +31,8 @@ export class NotificationsComponent implements OnInit {
 		});
 		this.onNewNotifications.emit(this.newNotifications);
 	}
-	public notificationMessage(eventType) {
-		return this.notificationMessageService.returnMessage(eventType, 'test');
+	public notificationMessage(notificationType) {
+		return this.notificationMessageService.returnMessage(notificationType, 'test');
 	}
 
 	onShowNotifications() {
