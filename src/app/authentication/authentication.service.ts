@@ -332,7 +332,7 @@ export class AuthenticationService {
 				rememberUser);
 
 			if (fetchUser) {
-				await this.getCurrentUser(true, true);
+				await this.getCurrentUser(true);
 			}
 
 			return true;
