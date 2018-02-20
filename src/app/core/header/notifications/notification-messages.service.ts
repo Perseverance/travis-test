@@ -41,4 +41,8 @@ export class NotificationMessagesService {
 		return result;
 	}
 
+	public deSerializeData(data) {
+		return JSON.parse(data);
+	}
+
 }
