@@ -41,19 +41,18 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 	private propertyId: string;
 	public property: any;
 
-	constructor(
-		private router: Router,
-		private route: ActivatedRoute,
-		public authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private stripeService: StripeService,
-		private notificationService: NotificationsService,
-		translateService: TranslateService,
-		errorsService: ErrorsService,
-		private reserveService: ReserveService,
-		private deedsService: DeedsService,
-		private propertiesService: PropertiesService,
-		private smartcontractConnectionService: SmartContractConnectionService) {
+	constructor(private router: Router,
+	            private route: ActivatedRoute,
+	            public authService: AuthenticationService,
+	            private formBuilder: FormBuilder,
+	            private stripeService: StripeService,
+	            private notificationService: NotificationsService,
+	            translateService: TranslateService,
+	            errorsService: ErrorsService,
+	            private reserveService: ReserveService,
+	            private deedsService: DeedsService,
+	            private propertiesService: PropertiesService,
+	            private smartcontractConnectionService: SmartContractConnectionService) {
 		super(errorsService, translateService);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -73,7 +72,7 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 		});
 
 		this.stripeForm = this.formBuilder.group({
-			name: ['', [Validators.required]]
+			name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ,.\'-]+$')]]
 		});
 	}
 
@@ -127,7 +126,7 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 		});
 		const name = this.name.value;
 		this.stripeService
-			.createToken(this.card.getCard(), { name })
+			.createToken(this.card.getCard(), {name})
 			.subscribe(async result => {
 				if (result.token) {
 					await this.reserveService.reserveProperty(this.propertyId, result.token.id);

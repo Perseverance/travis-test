@@ -58,7 +58,8 @@
 			"invalid-phone-number": "Your phone number appears to be invalid",
 			"invalid-existing-phone-number": "This field should contain only numbers. Additionally please select a country.",
 			"toc-required": "You need to accept the terms and conditions of the site",
-			"fill-in-required": "Please fill in required fields"
+			"fill-in-required": "Please fill in required fields",
+			"only-letters": "This field accepts alphabetic characters only"
 		},
 		"terms": "Terms & Conditions",
 		"no-properties": "No properties found in this area!",
