@@ -27,7 +27,6 @@ export class PropertyItemViewComponent implements OnInit, OnChanges {
 		this._deedId = deedId.currentValue;
 		console.log(this._deedId);
 		this.loadComponentData(this._deedId);
-
 	}
 
 	public async loadComponentData(deedId) {
