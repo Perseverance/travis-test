@@ -43,8 +43,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	private paramsSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
-		private route: ActivatedRoute,
-		private router: Router) {
+	            private route: ActivatedRoute,
+	            private router: Router) {
 	}
 
 	async ngOnInit() {
@@ -64,7 +64,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.paramsSubscription.unsubscribe();
+		if (this.paramsSubscription) {
+			this.paramsSubscription.unsubscribe();
+		}
 	}
 
 	private setupParamsWatcher() {
@@ -116,7 +118,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		}
 
 		const currentPath = window.location.pathname;
-		this.router.navigate([currentPath], { queryParams: queryParams });
+		this.router.navigate([currentPath], {queryParams: queryParams});
 	}
 
 }
