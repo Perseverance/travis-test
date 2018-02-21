@@ -58,8 +58,12 @@
 			"invalid-phone-number": "Your phone number appears to be invalid",
 			"invalid-existing-phone-number": "This field should contain only numbers. Additionally please select a country.",
 			"toc-required": "You need to accept the terms and conditions of the site",
-			"fill-in-required": "Please fill in required fields",
-			"only-letters": "This field accepts alphabetic characters only"
+			"fill-in-required": "Please fill in required fields"
+		},
+		"verification-popup": {
+			"header": "Email for verification",
+			"body": "As you login with your Facebook account we will not receive your email. Please type your email here so we can send you our verification confirmation.",
+			"submit": "Submit Email"
 		},
 		"terms": "Terms & Conditions",
 		"no-properties": "No properties found in this area!",
@@ -201,7 +205,7 @@
 		"from": "from",
 		"thank-you": "Thank you for using propy beta!",
 		"find-properties": {
-			"heading": "Buy and sell unique homes all over the world in bitcoin",
+			"heading": "Buy and sell unique homes all over the world",
 			"sub-heading": "Property Transactions Secured Through Blockchain"
 		},
 		"how-propy-works": {

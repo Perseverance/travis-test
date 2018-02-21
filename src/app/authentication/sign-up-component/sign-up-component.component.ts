@@ -29,6 +29,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private AGENCY_MAX_SUGGESTIONS = 5;
 
 	public signupForm: FormGroup;
+	public verifyForm: FormGroup;
+	public showVerificationDialog = false;
+
 	private paramsSubscriptions = new Array<Subscription>();
 
 	public agencyId: string = null;
@@ -92,6 +95,10 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			}),
 			rememberMe: [true]
 		});
+
+		this.verifyForm = this.formBuilder.group({
+			verifyEmail: ['', [Validators.required, Validators.email]]
+		});
 	}
 
 	ngOnInit() {
@@ -130,6 +137,10 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				}
 
 			});
+	}
+
+	public get verifyEmail() {
+		return this.verifyForm.get('verifyEmail');
 	}
 
 	public get email() {
@@ -218,12 +229,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		if (!!this.firstName.value.trim().length && !!this.lastName.value.trim().length) {
 			const result = await this.authService
 				.performSignUp(
-				this.email.value,
-				this.password.value,
-				this.firstName.value.trim(),
-				this.lastName.value.trim(),
-				phoneNumber,
-				this.rememberMe.value
+					this.email.value,
+					this.password.value,
+					this.firstName.value.trim(),
+					this.lastName.value.trim(),
+					phoneNumber,
+					this.rememberMe.value
 				);
 			if (this.iAmAnAgent.value) {
 				if (this.agencyId == null) {
@@ -275,16 +286,22 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			const email = this.authService.user.email;
 			this.referralPost(email, this.referralId);
 		}
+
+		if (!result.isEmailVerified) {
+			this.openVerifyEmailPopup();
+			return;
+		}
+
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	private openVerifyEmailPopup() {
+		this.showVerificationDialog = true;
+	}
+
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
-	public async linkedInLogin() {
-		const result = await this.authService.performLinkedInLogin();
-		if (result && this.referralId) {
-			const email = this.authService.user.email;
-			this.referralPost(email, this.referralId);
-		}
+	public async sendVerificationEmailAddress() {
+		const result = await this.authService.updateVerificationEmail(this.verifyEmail.value);
 		this.router.navigate([this.redirectToUrl]);
 	}
 
