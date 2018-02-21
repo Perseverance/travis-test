@@ -14,7 +14,7 @@
                         }} {{notificationMessage(notification.type)}}</p>
                 </div>
                 <div class="timestamp">
-                    <i *ngIf="iconClass" [ngClass]="iconClass" class="fa fa-building-o"></i>
+                    <i [ngClass]="getIconClass(notification)"></i>
                     <span>transaction tool</span>
                     <i class="fa fa-clock-o"></i>
                     <span class="timestamp-label">{{ (notification.createdOn | amFromUnix) | amTimeAgo }} </span>
