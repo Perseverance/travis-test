@@ -18,7 +18,7 @@ export class PropertyItemViewComponent implements OnInit, OnChanges {
 	constructor(private propertiesService: PropertiesService,
 		private deedsService: DeedsService) { }
 
-	async ngOnInit() {
+	ngOnInit() {
 		this.loadComponentData(this.deedId);
 	}
 
