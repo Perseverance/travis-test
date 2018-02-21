@@ -1,57 +1,60 @@
-import {WebpackTranslateLoader} from './../../webpack-translate-loader';
-import {TextLimitationPipe} from './../shared/pipes/text-limitation.pipe';
-import {AuthenticatedGuard} from './../authentication/authenticated-guard.service';
-import {ReferralComponent} from './../referral/referral.component';
-import {NotificationMessageComponent} from './notification-message/notification-message.component';
-import {RouterModule} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HeaderComponent} from './header/header.component';
-import {SharedModule} from '../shared/shared.module';
-import {FooterComponent} from './footer/footer.component';
-import {RestClientService} from '../shared/rest-client.service';
-import {LocalStorageService} from '../shared/localStorage.service';
-import {SessionStorageService} from '../shared/session-storage.service';
-import {APIEndpointsService} from '../shared/apiendpoints.service';
-import {ErrorsService} from '../shared/errors/errors.service';
-import {NotificationsService} from '../shared/notifications/notifications.service';
-import {TokenGuard} from '../authentication/token-guard.service';
-import {TranslateStore} from '@ngx-translate/core/src/translate.store';
-import {environment} from '../../environments/environment';
-import {TermsComponent} from './terms/terms.component';
-import {AboutUsComponent} from './about/about.component';
-import {BigNumberFormatPipe} from '../shared/pipes/big-number-format.pipe';
-import {CurrencySymbolPipe} from '../shared/pipes/currency-symbol.pipe';
-import {ImageEnvironmentPrefixPipe} from '../shared/pipes/image-environment-prefix.pipe';
-import {ImageSizePipe} from '../shared/pipes/image-size.pipe';
-import {PropertySizeUnitOfMeasurePipe} from '../shared/pipes/property-size-unit-of-measure.pipe';
-import {ThousandSeparatorPipe} from '../shared/pipes/thousand-separator.pipe';
-import {BrowserDetectionService} from '../shared/browser-detection.service';
-import {LanguageLabelPipe} from '../shared/pipes/language-label.pipe';
-import {ConfirmationService} from 'primeng/primeng';
-import {ProWalletService} from '../pro-wallet/pro-wallet.service';
-import {AvatarModule} from 'ngx-avatar';
-import {ProWalletTranslationsService} from '../pro-wallet/translations/pro-wallet-translations.service';
-import {PusherService} from '../shared/pusher.service';
-import {NotificationsComponent} from './header/notifications/notifications.component';
-import {SmartContractConnectionService} from '../smart-contract-connection/smart-contract-connection.service';
-import {TransactionToolWorkflowService} from '../transaction-tool/workflow/workflow.service';
-import {TransactionToolDocumentService} from '../transaction-tool/transaction-tool-document.service';
-import {WorkflowGuard} from '../transaction-tool/workflow/workflow-guard.service';
-import {HelloSignService} from '../shared/hello-sign.service';
-import {LoadPropertyService} from '../transaction-tool/load-property.service';
-import {NotificationGrowlComponent} from '../notification-growl/notification-growl.component';
-import {GrowlModule} from 'primeng/components/growl/growl';
-import {WalletSetGuard} from '../transaction-tool/workflow/wallet-set-guard.service';
-import {VerificationService} from '../verification/verification.service';
-import {MessageService} from 'primeng/components/common/messageservice';
-import {NotAuthenticatedGuard} from '../authentication/not-authenticated-guard.service';
-import {PrerenderHelperService} from '../shared/prerender-helper.service';
-import {TokenGuardLazyLoading} from '../authentication/token-guard-lazy-loading.service';
-import {MapEventsService} from '../google-map/map-events.service';
+import { NotificationMessagesService } from './header/notifications/notification-messages.service';
+import { WebpackTranslateLoader } from './../../webpack-translate-loader';
+import { TextLimitationPipe } from './../shared/pipes/text-limitation.pipe';
+import { AuthenticatedGuard } from './../authentication/authenticated-guard.service';
+import { ReferralComponent } from './../referral/referral.component';
+import { NotificationMessageComponent } from './notification-message/notification-message.component';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HeaderComponent } from './header/header.component';
+import { SharedModule } from '../shared/shared.module';
+import { FooterComponent } from './footer/footer.component';
+import { RestClientService } from '../shared/rest-client.service';
+import { LocalStorageService } from '../shared/localStorage.service';
+import { SessionStorageService } from '../shared/session-storage.service';
+import { APIEndpointsService } from '../shared/apiendpoints.service';
+import { ErrorsService } from '../shared/errors/errors.service';
+import { NotificationsService } from '../shared/notifications/notifications.service';
+import { TokenGuard } from '../authentication/token-guard.service';
+import { TranslateStore } from '@ngx-translate/core/src/translate.store';
+import { environment } from '../../environments/environment';
+import { TermsComponent } from './terms/terms.component';
+import { AboutUsComponent } from './about/about.component';
+import { BigNumberFormatPipe } from '../shared/pipes/big-number-format.pipe';
+import { CurrencySymbolPipe } from '../shared/pipes/currency-symbol.pipe';
+import { ImageEnvironmentPrefixPipe } from '../shared/pipes/image-environment-prefix.pipe';
+import { ImageSizePipe } from '../shared/pipes/image-size.pipe';
+import { PropertySizeUnitOfMeasurePipe } from '../shared/pipes/property-size-unit-of-measure.pipe';
+import { ThousandSeparatorPipe } from '../shared/pipes/thousand-separator.pipe';
+import { BrowserDetectionService } from '../shared/browser-detection.service';
+import { LanguageLabelPipe } from '../shared/pipes/language-label.pipe';
+import { ConfirmationService } from 'primeng/primeng';
+import { ProWalletService } from '../pro-wallet/pro-wallet.service';
+import { AvatarModule } from 'ngx-avatar';
+import { ProWalletTranslationsService } from '../pro-wallet/translations/pro-wallet-translations.service';
+import { PusherService } from '../shared/pusher.service';
+import { NotificationsComponent } from './header/notifications/notifications.component';
+import { SmartContractConnectionService } from '../smart-contract-connection/smart-contract-connection.service';
+import { TransactionToolWorkflowService } from '../transaction-tool/workflow/workflow.service';
+import { TransactionToolDocumentService } from '../transaction-tool/transaction-tool-document.service';
+import { WorkflowGuard } from '../transaction-tool/workflow/workflow-guard.service';
+import { HelloSignService } from '../shared/hello-sign.service';
+import { LoadPropertyService } from '../transaction-tool/load-property.service';
+import { NotificationGrowlComponent } from '../notification-growl/notification-growl.component';
+import { GrowlModule } from 'primeng/components/growl/growl';
+import { WalletSetGuard } from '../transaction-tool/workflow/wallet-set-guard.service';
+import { VerificationService } from '../verification/verification.service';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { NotAuthenticatedGuard } from '../authentication/not-authenticated-guard.service';
+import { PrerenderHelperService } from '../shared/prerender-helper.service';
+import { TokenGuardLazyLoading } from '../authentication/token-guard-lazy-loading.service';
+import { MapEventsService } from '../google-map/map-events.service';
+import { MomentModule } from 'angular2-moment/moment.module';
+import { DataScrollerModule } from 'primeng/components/datascroller/datascroller';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -72,7 +75,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		}),
 		SharedModule,
 		AvatarModule,
-		GrowlModule
+		GrowlModule,
+		MomentModule,
+		DataScrollerModule
 	],
 	declarations: [
 		HeaderComponent,
@@ -99,8 +104,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		AuthenticatedGuard,
 		NotAuthenticatedGuard,
 		TranslateStore,
-		{provide: 'apiKey', useValue: environment.linkedInApiKey},
-		{provide: 'authorize', useValue: true},
+		{ provide: 'apiKey', useValue: environment.linkedInApiKey },
+		{ provide: 'authorize', useValue: true },
 		BigNumberFormatPipe,
 		CurrencySymbolPipe,
 		ImageEnvironmentPrefixPipe,
@@ -122,7 +127,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		LoadPropertyService,
 		VerificationService,
 		MessageService,
-		PrerenderHelperService
+		PrerenderHelperService,
+		NotificationMessagesService
 	],
 	exports: [
 		TranslateModule,

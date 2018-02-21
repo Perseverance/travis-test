@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {APIEndpointsService} from './apiendpoints.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MessageService} from 'primeng/components/common/messageservice';
-import {Subject} from 'rxjs/Subject';
-import {NextObserver} from 'rxjs/Observer';
-import {Subscription} from 'rxjs/Subscription';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { APIEndpointsService } from './apiendpoints.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { Subject } from 'rxjs/Subject';
+import { NextObserver } from 'rxjs/Observer';
+import { Subscription } from 'rxjs/Subscription';
 
 declare const Pusher: any;
 
@@ -14,7 +14,8 @@ export enum PUSHER_EVENTS_ENUM {
 	DEAL_INVITATION = '1',
 	DEAL_STATUS_CHANGED = '2',
 	NEW_DOCUMENT_UPLOADED = '3',
-	DOCUMENT_SIGNATURE_UPDATED = '4'
+	DOCUMENT_SIGNATURE_UPDATED = '4',
+	NOTIFICATIONS = '5'
 }
 
 @Injectable()
@@ -22,13 +23,15 @@ export class PusherService {
 	private pusher: any;
 	private pusherChannel: any;
 	private documentSignatureUpdatedSubject: Subject<any>;
+	private notificationsSubject: Subject<any>;
 	private DEFAULT_VALUE_TIMEOUT = 5000;
 
 	constructor(private apiEndpointsService: APIEndpointsService,
-				private route: ActivatedRoute,
-				private router: Router,
-				private messageService: MessageService) {
+		private route: ActivatedRoute,
+		private router: Router,
+		private messageService: MessageService) {
 		this.documentSignatureUpdatedSubject = new Subject();
+		this.notificationsSubject = new Subject();
 	}
 
 	public initializePusher(accessToken: string, userId: string): void {
@@ -96,6 +99,11 @@ export class PusherService {
 			});
 		});
 
+		// Event for notifications
+		channel.bind(PUSHER_EVENTS_ENUM.NOTIFICATIONS, (data) => {
+			this.triggerNotificationsSubject(data);
+		});
+
 		// Event for downloadable signed document
 		channel.bind(PUSHER_EVENTS_ENUM.DOCUMENT_SIGNATURE_UPDATED, (data) => {
 			this.triggerDocumentSignatureUpdatedSubject(data);
@@ -108,5 +116,13 @@ export class PusherService {
 
 	private triggerDocumentSignatureUpdatedSubject(event: any) {
 		return this.documentSignatureUpdatedSubject.next(event);
+	}
+
+	public subscribeToNotificationsSubject(observer: NextObserver<any>): Subscription {
+		return this.notificationsSubject.subscribe(observer);
+	}
+
+	private triggerNotificationsSubject(event: any) {
+		return this.notificationsSubject.next(event);
 	}
 }

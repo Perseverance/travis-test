@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { DeedDocumentType } from '../enums/deed-document-type.enum';
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
-import { TransactionToolDocumentService } from '../transaction-tool-document.service';
+import {Component, OnInit} from '@angular/core';
+import {DeedDocumentType} from '../enums/deed-document-type.enum';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute} from '@angular/router';
+import {TransactionToolDocumentService} from '../transaction-tool-document.service';
 import {
 	SmartContractConnectionService,
 	Status
 } from '../../smart-contract-connection/smart-contract-connection.service';
-import { HelloSignService } from '../../shared/hello-sign.service';
-import { DeedsService } from '../../shared/deeds.service';
-import { Observable } from 'rxjs/Observable';
-import { UserRoleEnum } from '../enums/user-role.enum';
-import { Base64Service } from '../../shared/base64.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
+import {HelloSignService} from '../../shared/hello-sign.service';
+import {DeedsService} from '../../shared/deeds.service';
+import {Observable} from 'rxjs/Observable';
+import {UserRoleEnum} from '../enums/user-role.enum';
+import {Base64Service} from '../../shared/base64.service';
+import {NotificationsService} from '../../shared/notifications/notifications.service';
 
 declare const HelloSign;
 
@@ -46,16 +46,18 @@ export class SettlementStatementComponent implements OnInit {
 	public hasDataLoaded = false;
 	public reuploadingBuyerDocumentActivated: boolean;
 	public reuploadingSellerDocumentActivated: boolean;
+	public processingUploadBuyerDocumentActivated: boolean;
+	public processingUploadSellerDocumentActivated: boolean;
 	public deed: any;
 	public deedStatus = Status;
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private base64Service: Base64Service,
-		private deedsService: DeedsService,
-		private notificationService: NotificationsService) {
+				private documentService: TransactionToolDocumentService,
+				private smartContractService: SmartContractConnectionService,
+				private helloSignService: HelloSignService,
+				private base64Service: Base64Service,
+				private deedsService: DeedsService,
+				private notificationService: NotificationsService) {
 	}
 
 	async ngOnInit() {
@@ -113,6 +115,7 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedSellerDocument) {
 			return;
 		}
+		this.processingUploadSellerDocumentActivated = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -127,6 +130,7 @@ export class SettlementStatementComponent implements OnInit {
 		);
 		this.previewSellerLink = response.fileName;
 		this.reuploadingSellerDocumentActivated = false;
+		this.processingUploadSellerDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -141,6 +145,7 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedBuyerDocument) {
 			return;
 		}
+		this.processingUploadBuyerDocumentActivated = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -155,6 +160,7 @@ export class SettlementStatementComponent implements OnInit {
 		);
 		this.previewBuyerLink = response.fileName;
 		this.reuploadingBuyerDocumentActivated = false;
+		this.processingUploadBuyerDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
