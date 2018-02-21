@@ -336,6 +336,9 @@ $header-margin-sm: 15px;
                 .fa-bell {
                     color: $white;
                 }
+                .fa-bell-o {
+                    color: $white;
+                }
             }
         }
         .languages-dropdown.dropdown {
@@ -481,6 +484,9 @@ $header-margin-sm: 15px;
             color: $button-filter-arrow !important
         }
         .fa-bell {
+            color: $black !important;
+        }
+        .fa-bell-o {
             color: $black !important;
         }
         .balance {
