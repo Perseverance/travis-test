@@ -60,6 +60,11 @@
             "toc-required": "You need to accept the terms and conditions of the site",
             "fill-in-required": "Please fill in required fields"
         },
+        "verification-popup": {
+            "header": "Email for verification",
+            "body": "As you login with your Facebook account we will not receive your email. Please type your email here so we can send you our verification confirmation.",
+            "submit": "Submit Email"
+        },
         "terms": "Terms & Conditions",
         "no-properties": "No properties found in this area!",
         "scales": {

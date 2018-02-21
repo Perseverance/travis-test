@@ -3,14 +3,16 @@
         <form class="propy-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <h3 class="text-center">{{ 'common.label.signin' | translate }}</h3>
             <div class="form-group">
-                <input formControlName="email" type="email" class="form-control propy-control" id="email" placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
+                <input formControlName="email" type="email" class="form-control propy-control" id="email"
+                    placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
                 <div *ngIf="email.touched" class="propy-validation-errors-box">
                     <div class="propy-validation" *ngIf="email.invalid && email.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
                     <div class="propy-validation" *ngIf="email.invalid && email.errors['email']">{{ 'common.validation-errors.invalid-email' | translate }}</div>
                 </div>
             </div>
             <div class="form-group">
-                <input formControlName="password" type="password" class="form-control propy-control" id="password" placeholder="{{ 'common.placeholder.password' | translate }}">
+                <input formControlName="password" type="password" class="form-control propy-control"
+                    id="password" placeholder="{{ 'common.placeholder.password' | translate }}">
             </div>
             <div class="form-group checkbox form-check abc-checkbox">
                 <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="rememberMeCheckbox">
@@ -32,10 +34,31 @@
             </div>
             <hr class="separator">
             <div class="social">
-                <p class="title text-center"><span class="text-capitalize">{{ 'common.misc.or' | translate }}&nbsp;</span>{{ 'common.social.connect-with'
-                    | translate }}</p>
+                <p class="title text-center"><span class="text-capitalize">{{ 'common.misc.or' | translate }}&nbsp;</span>{{
+                    'common.social.connect-with' | translate }}</p>
                 <app-facebook-button (click)="facebookLogin()"></app-facebook-button>
             </div>
         </form>
     </div>
+    <p-dialog header="{{ 'common.verification-popup.header' | translate }}" verifyEmail
+        [(visible)]="showVerificationDialog" modal="true" draggable="false" resizable="false"
+        dismissableMask="true" minWidth="400">
+        <div class="col-xs-12">
+            <form [formGroup]="verifyForm">
+                <p class="text-center">{{ 'common.verification-popup.body' | translate }}
+                </p>
+                <div class="form-group">
+                    <input formControlName="verifyEmail" type="email" class="form-control propy-control"
+                        id="verifyEmail" placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
+                    <div *ngIf="verifyEmail.touched" class="propy-validation-errors-box">
+                        <div class="propy-validation" *ngIf="verifyEmail.invalid && verifyEmail.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
+                        <div class="propy-validation" *ngIf="verifyEmail.invalid && verifyEmail.errors['email']">{{ 'common.validation-errors.invalid-email' | translate }}</div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-block propy-control button-big" (click)="sendVerificationEmailAddress()"
+                    [disabled]="verifyEmail.invalid">{{ 'common.verification-popup.submit' | translate }}</button>
+            </form>
+        </div>
+    </p-dialog>
+
 </div>

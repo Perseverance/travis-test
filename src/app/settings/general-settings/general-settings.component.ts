@@ -48,7 +48,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
-			email: [{ value: '', disabled: true }, []],
+			email: [{ value: '' }, []],
 			phoneNumber: ['', Validators.compose([
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
@@ -64,7 +64,9 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				this.userInfo = userInfo.user;
 				this.isEmailVerified = this.userInfo.isEmailVerified;
 				this.setUserInfo(this.userInfo);
-				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
+				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber
+					&& this.phoneNumber.invalid &&
+					this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
 				}
 				if (this.selectedCountryOnEditProfile) {
@@ -119,7 +121,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		if (!!this.firstName.value.trim().length && !!this.lastName.value.trim().length) {
-			await this.authService.updateUser(this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber);
+			await this.authService.updateUser(this.email.value, this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber);
 			this.notificationService.pushSuccess({
 				title: this.successMessage,
 				message: '',

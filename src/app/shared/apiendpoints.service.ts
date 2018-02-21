@@ -22,6 +22,7 @@ export class APIEndpointsService {
 		UPDATE_USER: `${this.INTERNAL_API_PREFIX}/Users/update`,
 		CHANGE_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/changepassword`,
 		FORGOT_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/forgotpasswordweb`,
+		UPDATE_EMAIL: `${this.INTERNAL_API_PREFIX}/Users/updateemail`,
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
 		USER_TRANSACTION_HISTORY: `${this.INTERNAL_API_PREFIX}/users/transactions`,
 		USER_UPDATE_WALLET: `${this.INTERNAL_API_PREFIX}/users/updatewallet`,
