@@ -28,6 +28,9 @@ export class NotificationMessagesService {
 	public returnDeedStatus(deedStatus) {
 		return transactionToolSteps[deedStatus];
 	}
+	public returnNotificationType(type) {
+		return notificationMessages[type];
+	}
 	public async checkedNotifications(): Promise<any> {
 		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.CHECKED_NOTIFICATIONS, {});
 		return result;

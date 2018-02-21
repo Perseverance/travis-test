@@ -1,6 +1,6 @@
 <div *ngIf="notifications && notifications.length !== 0; else noNotifications">
     <div class="row notifications" *ngFor="let notification of notifications">
-        <a (click)="goToRelatedEvent(notification.notificationId, notification.deedInfo.deedId, notification.deedInfo.deedStatus)">
+        <a (click)="goToRelatedEvent(notification)">
             <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
                 <div class="media-left">
                     <a href="#">

@@ -7,7 +7,8 @@ export const notificationMessages = {
 	5: 'requires-signature',
 	6: 'signed',
 	7: 'action',
-	8: 'payment'
+	8: 'payment',
+	9: 'transfer'
 };
 
 export const transactionToolSteps = {
