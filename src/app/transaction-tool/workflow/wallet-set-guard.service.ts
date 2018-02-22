@@ -24,7 +24,6 @@ export class WalletSetGuard extends ErrorsDecoratableComponent implements CanAct
 			const subscription = this.authService.subscribeToUserData({
 				next: (userInfo: UserData) => {
 					if (!userInfo.user.jsonFile) {
-						console.log(route);
 						self.router.navigate(['/settings']);
 						this.errorsService.pushError({
 							errorTitle: 'In order to proceed with a deal, you need to have a wallet generated. Please generate one in the PRO wallet section.',

@@ -1,4 +1,4 @@
-export const notificationMessages = {
+export const notificationType = {
 	0: 'reserved',
 	1: 'invited',
 	2: 'accepted',
@@ -7,7 +7,8 @@ export const notificationMessages = {
 	5: 'requires-signature',
 	6: 'signed',
 	7: 'action',
-	8: 'payment'
+	8: 'payment',
+	9: 'transfer'
 };
 
 export const transactionToolSteps = {
@@ -25,5 +26,5 @@ export const transactionToolSteps = {
 	9: 'transfer'
 };
 
-export type notificationMessages = string;
+export type notificationType = string;
 export type transactionToolSteps = string;

@@ -1,6 +1,6 @@
 <div *ngIf="notifications && notifications.length !== 0; else noNotifications">
     <div class="row notifications" *ngFor="let notification of notifications">
-        <a (click)="goToRelatedEvent(notification.notificationId, notification.deedInfo.deedId, notification.deedInfo.deedStatus)">
+        <a (click)="goToRelatedEvent(notification)">
             <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
                 <div class="media-left">
                     <a href="#">
@@ -14,7 +14,7 @@
                         }} {{notificationMessage(notification.type)}}</p>
                 </div>
                 <div class="timestamp">
-                    <i class="fa fa-building-o"></i>
+                    <i [ngClass]="getIconClass(notification)"></i>
                     <span>transaction tool</span>
                     <i class="fa fa-clock-o"></i>
                     <span class="timestamp-label">{{ (notification.createdOn | amFromUnix) | amTimeAgo }} </span>
@@ -29,7 +29,7 @@
     <div class="row notifications">
         <div class="media">
             <div class="media-body">
-                <p class="media-heading">No new notifications</p>
+                <p class="media-heading">{{ 'common.no-new-notifications' | translate }}</p>
             </div>
         </div>
     </div>

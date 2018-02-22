@@ -137,7 +137,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.shouldShowRedeemSection = this.userTransactionsHistory.isCanRedeemStashedTokens;
 		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
 		try {
-			await this.authService.getCurrentUser();
+			await this.authService.getCurrentUser(true, true);
 		} catch (e) {
 			// This happens when you press logout while loading. Nothing to do here
 		}
