@@ -281,7 +281,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			return;
 		}
 
-		const currentUser = await this.authService.getCurrentUser();
+		const currentUser = await this.authService.getCurrentUser(true, true);
 		this.isPropertyReservedByYou = (currentUser.data.data.id === property.reservedByUserId);
 	}
 
