@@ -8,6 +8,7 @@ import { AuthenticationService } from './../authentication.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	public verifyForm: FormGroup;
 	private queryParamsSubscription: Subscription;
 	public showVerificationDialog = false;
+	private loginProgress: string;
+	private loginSuccess: string;
 
 	private redirectToUrl = environment.defaultRedirectRoute;
 
@@ -29,6 +32,7 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
+		private notificationsService: NotificationsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -40,6 +44,11 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 		});
 		this.verifyForm = this.formBuilder.group({
 			verifyEmail: ['', [Validators.required, Validators.email]]
+		});
+
+		this.translateService.stream(['signup.logging-you-in', 'signup.success']).subscribe(translations => {
+			this.loginProgress = translations['signup.logging-you-in'];
+			this.loginSuccess = translations['signup.success'];
 		});
 	}
 
@@ -87,11 +96,24 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
+		this.notificationsService.pushInfo({
+			title: this.loginProgress,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 5000
+		});
 		const result = await this.authService.performFacebookLogin();
 		if (!result.isEmailVerified) {
 			this.openVerifyEmailPopup();
 			return;
 		}
+
+		this.notificationsService.pushSuccess({
+			title: this.loginSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 
 		this.router.navigateByUrl(this.redirectToUrl);
 	}
