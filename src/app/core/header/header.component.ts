@@ -124,6 +124,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public logout(event: Event) {
 		event.preventDefault();
 		event.stopPropagation();
+		this.isUserAnonymous = true;
 		this.router.navigate(['/']);
 		const userId = this.userInfo.id;
 		this.authService.performLogout();
