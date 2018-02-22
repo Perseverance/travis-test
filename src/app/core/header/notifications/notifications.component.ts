@@ -33,6 +33,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
+		this.onNewNotifications.emit(this.newNotifications);
 
 	}
 	public notificationMessage(notificationType) {
