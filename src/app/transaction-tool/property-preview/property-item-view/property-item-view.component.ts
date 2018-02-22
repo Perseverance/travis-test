@@ -25,7 +25,6 @@ export class PropertyItemViewComponent implements OnInit, OnChanges {
 	ngOnChanges(changes: SimpleChanges) {
 		const deedId: SimpleChange = changes.deedId;
 		this._deedId = deedId.currentValue;
-		console.log(this._deedId);
 		this.loadComponentData(this._deedId);
 	}
 
