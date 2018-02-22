@@ -414,7 +414,7 @@
         "media-info-2": "Feel free to get in touch with our media team at:"
     },
     "purchase": {
-        "successfull-reservation": "Successfull Reservation",
+        "successfull-reservation": "Successful Reservation",
         "successfull-message": "This property was reserved for you.",
         "error-reserving": "We could not reserve this property for you.",
         "wait-message": "Wait a second.",
