@@ -114,6 +114,10 @@ export class AuthenticationService {
 		return this.restClient.accessToken != null;
 	}
 
+	public subscribeToUserDataOnce(observer: NextObserver<UserData>): Subscription {
+		return this.userDataSubject.first().subscribe(observer);
+	}
+
 	public subscribeToUserData(observer: NextObserver<UserData>): Subscription {
 		return this.userDataSubject.subscribe(observer);
 	}
