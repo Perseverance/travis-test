@@ -1,24 +1,24 @@
-import {Web3Service} from './../web3-connection/web3-connection.service';
-import {Subscription} from 'rxjs/Subscription';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserData} from './../authentication/authentication.service';
+import { Web3Service } from './../web3-connection/web3-connection.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../shared/errors/errors.decoratable.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserData } from './../authentication/authentication.service';
 import {
 	Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, OnChanges, Output,
 	EventEmitter
 } from '@angular/core';
-import {ProWalletService} from './pro-wallet.service';
-import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
-import {AuthenticationService} from '../authentication/authentication.service';
-import {NotificationsService} from '../shared/notifications/notifications.service';
-import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
-import {ConfirmationService} from 'primeng/primeng';
-import {WalletAddressValidator} from './pro-wallet-address-validator';
-import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
-import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
-import {PhoneNumberValidators} from '../shared/validators/phone-number.validators';
+import { ProWalletService } from './pro-wallet.service';
+import { UserTransactionsHistoryResponse } from './pro-wallet-responses';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { NotificationsService } from '../shared/notifications/notifications.service';
+import { DefaultAsyncAPIErrorHandling } from '../shared/errors/errors.decorators';
+import { ConfirmationService } from 'primeng/primeng';
+import { WalletAddressValidator } from './pro-wallet-address-validator';
+import { SignUpFormValidators } from '../authentication/sign-up-component/sign-up-components.validators';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import { PhoneNumberValidators } from '../shared/validators/phone-number.validators';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -49,20 +49,20 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
-				private formBuilder: FormBuilder,
-				private authService: AuthenticationService,
-				private notificationsService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService,
-				private confirmationService: ConfirmationService,
-				private web3Service: Web3Service) {
+		private formBuilder: FormBuilder,
+		private authService: AuthenticationService,
+		private notificationsService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService,
+		private confirmationService: ConfirmationService,
+		private web3Service: Web3Service) {
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
 			passwords: this.formBuilder.group({
 				password: ['', [Validators.required]],
 				repeatPassword: ['', [Validators.required]]
-			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
+			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
 				PhoneNumberValidators.phoneNumberValidator,
@@ -118,7 +118,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		document.body.appendChild(downloader); // Needed for ff;
 
 		const data = JSON.stringify(this.jsonWallet);
-		const blob = new Blob([data], {type: 'text/json'});
+		const blob = new Blob([data], { type: 'text/json' });
 		const url = window.URL;
 		const fileUrl = url.createObjectURL(blob);
 
@@ -136,7 +136,11 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
 		this.shouldShowRedeemSection = this.userTransactionsHistory.isCanRedeemStashedTokens;
 		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
-		this.authService.getCurrentUser();
+		try {
+			await this.authService.getCurrentUser();
+		} catch (e) {
+			// This happens when you press logout while loading. Nothing to do here
+		}
 	}
 
 	public get passwords() {
