@@ -198,6 +198,7 @@ export class AuthenticationService {
 			result.authResponse.userID,
 			result.authResponse.accessToken);
 
+
 		if (!loginResult.isFirstLogin) {
 			if (fetchUser) {
 				this.getCurrentUser();
