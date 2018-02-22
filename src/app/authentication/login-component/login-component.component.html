@@ -42,7 +42,7 @@
     </div>
     <p-dialog header="{{ 'common.verification-popup.header' | translate }}" verifyEmail
         [(visible)]="showVerificationDialog" modal="true" draggable="false" resizable="false"
-        dismissableMask="true" minWidth="400">
+        dismissableMask="true" width="500" styleClass="verifyFacebook">
         <div class="col-xs-12">
             <form [formGroup]="verifyForm">
                 <p class="text-center">{{ 'common.verification-popup.body' | translate }}

@@ -146,22 +146,24 @@
                 <app-facebook-button (click)="facebookLogin()"></app-facebook-button>
             </div>
         </form>
-        <p-dialog header="TODO: Text for the header" verifyEmail [(visible)]="showVerificationDialog"
-            modal="true" draggable="false" resizable="false" dismissableMask="true" minWidth="400">
+        <p-dialog header="{{ 'common.verification-popup.header' | translate }}" verifyEmail
+            [(visible)]="showVerificationDialog" modal="true" draggable="false" resizable="false"
+            dismissableMask="true" width="500" styleClass="verifyFacebook">
             <div class="col-xs-12">
                 <form [formGroup]="verifyForm">
-                    <p class="text-center">TODO: Text for verification</p>
+                    <p class="text-center">{{ 'common.verification-popup.body' | translate }}</p>
                     <div class="form-group">
                         <input formControlName="verifyEmail" type="email" class="form-control propy-control"
                             id="verifyEmail" placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
                         <div *ngIf="verifyEmail.touched" class="propy-validation-errors-box">
                             <div class="propy-validation" *ngIf="verifyEmail.invalid && verifyEmail.errors['required']">{{ 'common.validation-errors.required' | translate }}</div>
                             <div class="propy-validation" *ngIf="verifyEmail.invalid && verifyEmail.errors['email']">{{ 'common.validation-errors.invalid-email' | translate
-                                }}</div>
+                                }}
+                            </div>
                         </div>
                     </div>
                     <button type="button" class="btn btn-block propy-control button-big" (click)="sendVerificationEmailAddress()"
-                        [disabled]="verifyEmail.invalid">TODO: Text for the button</button>
+                        [disabled]="verifyEmail.invalid">{{ 'common.verification-popup.submit' | translate }}</button>
                 </form>
             </div>
         </p-dialog>
