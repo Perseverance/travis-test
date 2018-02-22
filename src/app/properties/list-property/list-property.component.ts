@@ -330,7 +330,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				};
 				preparedImages.push(currentImageObj);
 			} catch (error) {
-				// Should not stop on one unsuccessfull convertion
+				// Should not stop on one unsuccessful convertion
 				continue;
 			}
 		}
