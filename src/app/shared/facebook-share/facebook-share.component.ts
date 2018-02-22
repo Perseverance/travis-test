@@ -25,7 +25,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	private refIdRoute = 'refId';
 	private isAnonymous: boolean;
 	private notLoggedInError: string;
-	private succesShareLabel: string;
+	private successShareBonusLabel: string;
 
 	constructor(private fb: FacebookService,
 	            private propertiesService: PropertiesService,
@@ -43,7 +43,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			'common.label.share-bonus-received'
 		]).subscribe((translations) => {
 			this.notLoggedInError = translations['common.only-registered-share'];
-			this.succesShareLabel = translations['common.label.share-bonus-received'];
+			this.successShareBonusLabel = translations['common.label.share-bonus-received'];
 		});
 	}
 
@@ -75,12 +75,14 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 		this.fb.ui(params)
 			.then(async (res: UIResponse) => {
 				if (res && !res.error_message && this.property.isShareRewardEnabled) {
-					this.notificationService.pushInfo({
-						title: this.succesShareLabel,
-						message: '',
-						time: (new Date().getTime()),
-						timeout: 5000
-					});
+					if (this.property.isFeaturedProperty) {
+						this.notificationService.pushInfo({
+							title: this.successShareBonusLabel,
+							message: '',
+							time: (new Date().getTime()),
+							timeout: 5000
+						});
+					}
 					await this.propertiesService.socialMediaShare(this.property.id);
 					this.authService.getCurrentUser();
 					this.property.isShareRewardEnabled = false;
