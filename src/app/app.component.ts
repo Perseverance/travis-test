@@ -18,7 +18,7 @@ import { PusherService } from './shared/pusher.service';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
+	public userId;
 	constructor(public authService: AuthenticationService,
 		public translateService: TranslateService,
 		private localStorageService: LocalStorageService,
@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
 			next: (userInfo: UserData) => {
 				if (!userInfo.isAnonymous) {
 					this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
+					this.userId = userInfo.user.id;
 				}
 			}
 		});
@@ -69,5 +70,13 @@ export class AppComponent implements OnInit {
 				});
 			}
 		});
+		const self = this;
+		window.onbeforeunload = function (e) {
+			self.pusherService.unsubscribePusherChannel(self.userId);
+		};
+
+		window.onunload = function (e) {
+			self.pusherService.unsubscribePusherChannel(self.userId);
+		};
 	}
 }
