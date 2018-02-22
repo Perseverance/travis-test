@@ -7,6 +7,7 @@ import {environment} from './environments/environment';
 const mapsScript = document.createElement('script');
 mapsScript.setAttribute('type', 'text/javascript');
 
+
 // Check if in China
 if (environment.china) {
 	mapsScript.setAttribute(
@@ -18,6 +19,18 @@ if (environment.china) {
 		'src',
 		'https://maps.googleapis.com/maps/api/js?key=AIzaSyDzuZpv8iXJL2lPLqvKU0J4KdFONwSPjGk&libraries=places&callback'
 	);
+
+	// FACEBOOK EVENTS --------------------------------
+	const fbScript = document.createElement('script');
+	fbScript.setAttribute('type', 'text/javascript');
+
+	fbScript.setAttribute(
+		'src',
+		'assets/libs/facebook.js'
+	);
+
+	document.head.appendChild(fbScript);
+	// ------------------------------------------------
 }
 
 document.head.appendChild(mapsScript);
