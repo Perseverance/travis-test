@@ -1,3 +1,4 @@
+import { GoogleAnalyticsEventsService } from './../google-analytics.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
 import { ImageSizePipe } from '../pipes/image-size.pipe';
@@ -11,6 +12,7 @@ import { environment } from '../../../environments/environment';
 import { PropertiesService } from '../../properties/properties.service';
 import { TranslateService } from "@ngx-translate/core";
 import { NotificationsService } from "../notifications/notifications.service";
+declare let fbq: any;
 
 @Component({
 	selector: 'app-facebook-share',
@@ -28,12 +30,13 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	private successShareBonusLabel: string;
 
 	constructor(private fb: FacebookService,
-	            private propertiesService: PropertiesService,
-	            private translateService: TranslateService,
-	            private authService: AuthenticationService,
-	            public router: Router,
-	            private route: ActivatedRoute,
-	            private notificationService: NotificationsService) {
+		private propertiesService: PropertiesService,
+		private translateService: TranslateService,
+		private authService: AuthenticationService,
+		public router: Router,
+		private route: ActivatedRoute,
+		private notificationService: NotificationsService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 	}
 
@@ -48,6 +51,8 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	}
 
 	public async shareInFacebook() {
+		this.googleAnalyticsEventsService.emitEvent('facebook-share', 'share-button');
+		fbq('track', 'Facebook-Share');
 		this.isAnonymous = this.authService.isUserAnonymous;
 		if (this.isAnonymous && this.isFeaturedProperty) {
 			this.notificationService.pushInfo({
@@ -58,7 +63,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			});
 			const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
 			queryParams['redirect'] = this.componentUrl;
-			this.router.navigate(['signup'], {queryParams: queryParams});
+			this.router.navigate(['signup'], { queryParams: queryParams });
 			return;
 		}
 
