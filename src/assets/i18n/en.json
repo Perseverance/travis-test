@@ -148,7 +148,9 @@
     },
     "signup": {
         "agent-checkbox": "I am an agent",
-        "agency-not-found": "No such agency found. Submitting this will create it."
+        "agency-not-found": "No such agency found. Submitting this will create it.",
+        "logging-you-in": "Logging You Into Your Account",
+        "success": "Successful Log In"
     },
     "forgot-password": {
         "forgot-your-password": "Forgot your password?",

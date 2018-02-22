@@ -40,6 +40,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private redirectToUrl = environment.defaultRedirectRoute;
 	private referralId: string;
 	private emailSentSuccess: string;
+	private loginProgress: string;
+	private loginSuccess: string;
 	public defaultPhoneCountryCode: string;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
@@ -68,9 +70,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			return `${this.agencySuggestionsService.agenciesSearchURL}${term}`;
 		});
 		this.agencyAutoCompleteDataService.dataField('data');
-		this.translateService.stream(['verification.activation-email-sent']).subscribe(translations => {
-			this.emailSentSuccess = translations['verification.activation-email-sent'];
-		});
+		this.translateService.stream(['verification.activation-email-sent',
+			'signup.logging-you-in', 'signup.success']).subscribe(translations => {
+				this.emailSentSuccess = translations['verification.activation-email-sent'];
+				this.loginProgress = translations['signup.logging-you-in'];
+				this.loginSuccess = translations['signup.success'];
+			});
 
 		this.signupForm = this.formBuilder.group({
 			email: ['',
@@ -281,6 +286,12 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
+		this.notificationsService.pushInfo({
+			title: this.loginProgress,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 5000
+		});
 		const result = await this.authService.performFacebookLogin();
 		if (result && this.referralId) {
 			const email = this.authService.user.email;
@@ -291,6 +302,13 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			this.openVerifyEmailPopup();
 			return;
 		}
+
+		this.notificationsService.pushSuccess({
+			title: this.loginSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
 
 		this.router.navigate([this.redirectToUrl]);
 	}
