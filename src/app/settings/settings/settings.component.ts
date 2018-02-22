@@ -41,10 +41,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public isEmailVerified = true;
 
 	private paramsSubscription: Subscription;
+	private userDataSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
-	            private route: ActivatedRoute,
-	            private router: Router) {
+		private route: ActivatedRoute,
+		private router: Router) {
 	}
 
 	async ngOnInit() {
@@ -61,11 +62,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			this.shouldShowPassword = currentUser.data.data.externalLoginProviders.length === 0;
 		}
 		this.paramsSubscription = this.setupParamsWatcher();
+		this.userDataSubscription = this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.isEmailVerified = userInfo.user.isEmailVerified;
+			}
+		});
 	}
 
 	ngOnDestroy(): void {
 		if (this.paramsSubscription) {
 			this.paramsSubscription.unsubscribe();
+		}
+
+		if (this.userDataSubscription) {
+			this.userDataSubscription.unsubscribe();
 		}
 	}
 
@@ -118,7 +128,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		}
 
 		const currentPath = window.location.pathname;
-		this.router.navigate([currentPath], {queryParams: queryParams});
+		this.router.navigate([currentPath], { queryParams: queryParams });
 	}
 
 }

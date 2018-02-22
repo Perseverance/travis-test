@@ -48,7 +48,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
-			email: [{ value: '' }, []],
+			email: [{ value: '' }, [Validators.required, Validators.email]],
 			phoneNumber: ['', Validators.compose([
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
