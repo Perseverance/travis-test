@@ -1,15 +1,15 @@
-import {Subscription} from 'rxjs/Subscription';
-import {NextObserver} from 'rxjs/Observer';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {environment} from './../../environments/environment';
-import {OAuth2TokenTypes} from './oauth2-token-types';
-import {OAuth2GrantTypes} from './oauth2-grant-types';
-import {APIEndpointsService} from './../shared/apiendpoints.service';
-import {RestClientService} from './../shared/rest-client.service';
-import {Injectable} from '@angular/core';
-import {FacebookService, InitParams, LoginResponse, LoginOptions} from 'ngx-facebook';
-import {LinkedInService} from 'angular-linkedin-sdk';
-import {BrowserDetectionService} from '../shared/browser-detection.service';
+import { Subscription } from 'rxjs/Subscription';
+import { NextObserver } from 'rxjs/Observer';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { environment } from './../../environments/environment';
+import { OAuth2TokenTypes } from './oauth2-token-types';
+import { OAuth2GrantTypes } from './oauth2-grant-types';
+import { APIEndpointsService } from './../shared/apiendpoints.service';
+import { RestClientService } from './../shared/rest-client.service';
+import { Injectable } from '@angular/core';
+import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
+import { LinkedInService } from 'angular-linkedin-sdk';
+import { BrowserDetectionService } from '../shared/browser-detection.service';
 
 export class AnonymousUserCredentials {
 	public static firstName = 'Anonymous';
@@ -53,10 +53,10 @@ export class AuthenticationService {
 	private userDataSubject: ReplaySubject<UserData>;
 
 	constructor(public restClient: RestClientService,
-				public apiEndpoints: APIEndpointsService,
-				private fbService: FacebookService,
-				private linkedinService: LinkedInService,
-				private browserDetectionService: BrowserDetectionService) {
+	            public apiEndpoints: APIEndpointsService,
+	            private fbService: FacebookService,
+	            private linkedinService: LinkedInService,
+	            private browserDetectionService: BrowserDetectionService) {
 
 		const initParams: InitParams = {
 			appId: environment.fbConfigParams.appId,
@@ -128,17 +128,19 @@ export class AuthenticationService {
 	}
 
 	public async performSignUp(email: string,
-							   password: string,
-							   firstName: string,
-							   lastName: string,
-							   phoneNumber: string,
-							   rememberMe = false, fetchUser = true): Promise<boolean> {
+	                           password: string,
+	                           firstName: string,
+	                           lastName: string,
+	                           phoneNumber: string,
+	                           phoneCountryCode: string,
+	                           rememberMe = false, fetchUser = true): Promise<boolean> {
 		const data = {
 			email,
 			password,
 			firstName,
 			lastName,
-			phoneNumber
+			phoneNumber,
+			phoneCountryCode
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
 		if (fetchUser) {
@@ -278,8 +280,8 @@ export class AuthenticationService {
 	 * @param accessToken - the oauth access token of the corresponding login service
 	 */
 	private async externalLogin(externalLoginService: ExternalAuthenticationProviders,
-								userId: string,
-								accessToken: string): Promise<boolean> {
+	                            userId: string,
+	                            accessToken: string): Promise<boolean> {
 		const data: ExternalLoginRequest = {
 			loginProvider: externalLoginService,
 			providerKey: userId,

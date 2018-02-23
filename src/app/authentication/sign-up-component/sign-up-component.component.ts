@@ -15,7 +15,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
-import {PhoneNumberValidators} from '../../shared/validators/phone-number.validators';
+import { PhoneNumberValidators } from '../../shared/validators/phone-number.validators';
 
 @Component({
 	selector: 'app-sign-up-component',
@@ -47,16 +47,16 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	protected agencyAutoCompleteDataService: RemoteData;
 
 	constructor(private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private router: Router,
-		private route: ActivatedRoute,
-		private agencySuggestionsService: AgencySuggestionsService,
-		private completerService: CompleterService,
-		private agencyService: AgencyService,
-		private notificationsService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+	            private formBuilder: FormBuilder,
+	            private router: Router,
+	            private route: ActivatedRoute,
+	            private agencySuggestionsService: AgencySuggestionsService,
+	            private completerService: CompleterService,
+	            private agencyService: AgencyService,
+	            private notificationsService: NotificationsService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService,
+	            public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(errorsService, translateService);
 
@@ -78,7 +78,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			passwords: this.formBuilder.group({
 				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
 				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
-			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
+			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
@@ -218,12 +218,13 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		const result = await this.authService
 			.performSignUp(
-			this.email.value,
-			this.password.value,
-			this.firstName.value.trim(),
-			this.lastName.value.trim(),
-			phoneNumber,
-			this.rememberMe.value
+				this.email.value,
+				this.password.value,
+				this.firstName.value.trim(),
+				this.lastName.value.trim(),
+				phoneNumber,
+				this.childPhoneComponent.selectedCountry.countryCode,
+				this.rememberMe.value
 			);
 		if (this.iAmAnAgent.value) {
 			if (this.agencyId == null) {

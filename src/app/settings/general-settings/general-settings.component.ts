@@ -1,18 +1,18 @@
-import {VerificationService} from './../../verification/verification.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
+import { VerificationService } from './../../verification/verification.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
 import {
 	Component, EventEmitter, Input, OnInit, Output, ViewChild,
 	ViewEncapsulation
 } from '@angular/core';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
-import {PhoneNumberValidators} from '../../shared/validators/phone-number.validators';
-import {Country} from '../../shared/country.interface';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import { PhoneNumberValidators } from '../../shared/validators/phone-number.validators';
+import { Country } from '../../shared/country.interface';
 
 @Component({
 	selector: 'app-general-settings',
@@ -45,11 +45,11 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	// };
 
 	constructor(private authService: AuthenticationService,
-				private formBuilder: FormBuilder,
-				private notificationService: NotificationsService,
-				private verificationService: VerificationService,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+	            private formBuilder: FormBuilder,
+	            private notificationService: NotificationsService,
+	            private verificationService: VerificationService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.editProfileForm = this.formBuilder.group({
@@ -70,6 +70,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				}
 				this.userInfo = userInfo.user;
 				this.isEmailVerified = this.userInfo.isEmailVerified;
+				this.userPhoneCountry = this.userInfo.phoneCountryCode;
 				this.setUserInfo(this.userInfo);
 				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
