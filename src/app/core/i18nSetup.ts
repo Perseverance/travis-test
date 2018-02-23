@@ -1,2 +1,11 @@
+import { environment as env } from './../../environments/environment' ;
+
 export const AllSupportedLanguage = ['en', 'ru', 'ar', 'zh'];
-export const DefaultLanguage = 'en';
+
+export let DefaultLanguage: string;
+
+if (env.china) {
+	DefaultLanguage = 'zh';
+} else {
+	DefaultLanguage = 'en';
+}
