@@ -1,51 +1,68 @@
 <div class="row purchase">
-    <div *ngIf="isUserAnonymous; then anonymous; else notAnonymous">
-    </div>
+	<div *ngIf="isUserAnonymous; then anonymous; else notAnonymous">
+	</div>
 
-    <ng-template #anonymous>
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 propy-payment">
-            <div class="row stripe-header">
-                <div class="col-xs-12">
-                    <h3>{{ 'purchase.wait-message' | translate }}</h3>
-                    <h4>{{ 'purchase.login-or-signup' | translate }}.</h4>
-                </div>
-            </div>
-        </div>
-    </ng-template>
+	<ng-template #anonymous>
+		<div
+			class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 propy-payment">
+			<div class="row stripe-header">
+				<div class="col-xs-12">
+					<h3>{{ 'purchase.wait-message' | translate }}</h3>
+					<h4>{{ 'purchase.login-or-signup' | translate }}.</h4>
+				</div>
+			</div>
+		</div>
+	</ng-template>
 
-    <ng-template #notAnonymous>
-        <div *ngIf="hasPropertyLoaded">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 propy-payment">
-                <div *ngIf="property.isReservationFeeEnabled;else noReservationFee">
-                    <div class="row stripe-header reservation">
-                        <div class="col-xs-12">
-                            <h3 class="text-center">{{ 'purchase.reserve-property' | translate }}</h3>
-                            <p class="text-center">{{ 'purchase.disclaimer' | translate }}</p>
-                        </div>
-                    </div>
-                    <div class="row stripe-form">
-                        <div class="col-xs-12">
-                            <form novalidate (ngSubmit)="reserveProperty($event)" [formGroup]="stripeForm">
-                                <input class="name" type="text" formControlName="name" placeholder="Name on card">
-                                <ngx-stripe-card [options]="cardOptions"></ngx-stripe-card>
-                                <button class="btn btn-block propy-control button-big btn-purchase" type="submit">{{ 'purchase.deposit-5000' | translate }}</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <ng-template #noReservationFee>
-                    <div class="row stripe-header">
-                        <div class="col-xs-12">
-                            <h3 class="text-center">{{ 'purchase.reserve-property' | translate }}</h3>
-                            <p class="text-center">{{ 'purchase.confirmation-text' | translate }}</p>
-                            <button type="button" class="btn btn-block propy-control button-big btn-purchase"
-                                (click)="confirmReservation()">{{ 'purchase.confirmation-button' | translate }}</button>
-                        </div>
-                    </div>
-                </ng-template>
-            </div>
+	<ng-template #notAnonymous>
+		<div *ngIf="hasPropertyLoaded">
+			<div
+				class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 propy-payment">
+				<div *ngIf="property.isReservationFeeEnabled;else noReservationFee">
+					<div class="row stripe-header reservation">
+						<div class="col-xs-12">
+							<h3 class="text-center">{{ 'purchase.reserve-property' | translate }}</h3>
+							<p class="text-center">{{ 'purchase.disclaimer' | translate }}</p>
+						</div>
+					</div>
+					<div class="row stripe-form">
+						<div class="col-xs-12">
+							<form novalidate (ngSubmit)="reserveProperty($event)" [formGroup]="stripeForm">
+								<input class="name" type="text" formControlName="name"
+									   placeholder="Name on card">
+								<div *ngIf="name.touched" class="propy-validation-errors-box">
+									<div class="propy-validation" *ngIf="name.invalid && name.errors['required']">{{
+										'common.validation-errors.required' | translate }}
+									</div>
+								</div>
+								<div *ngIf="name.touched" class="propy-validation-errors-box">
+									<div class="propy-validation" *ngIf="name.invalid && name.errors['pattern']">{{
+										'common.validation-errors.only-letters' | translate }}
+									</div>
+								</div>
+								<ngx-stripe-card [options]="cardOptions"></ngx-stripe-card>
+								<button [disabled]="name.invalid"
+										class="btn btn-block propy-control button-big btn-purchase" type="submit">
+									{{ 'purchase.deposit-5000' | translate }}
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<ng-template #noReservationFee>
+					<div class="row stripe-header">
+						<div class="col-xs-12">
+							<h3 class="text-center">{{ 'purchase.reserve-property' | translate }}</h3>
+							<p class="text-center">{{ 'purchase.confirmation-text' | translate }}</p>
+							<button type="button" class="btn btn-block propy-control button-big btn-purchase"
+									(click)="confirmReservation()">{{ 'purchase.confirmation-button' | translate }}
+							</button>
+						</div>
+					</div>
+				</ng-template>
+			</div>
 
-        </div>
-    </ng-template>
+		</div>
+	</ng-template>
 
 </div>

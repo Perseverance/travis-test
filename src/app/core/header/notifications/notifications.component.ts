@@ -1,162 +1,84 @@
-import { Router } from '@angular/router';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { notificationType } from './notification-types-messages.model';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationMessagesService } from './notification-messages.service';
 import { Subscription } from 'rxjs/Subscription';
 import { PusherService } from './../../../shared/pusher.service';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Notification } from 'rxjs/Notification';
 
 @Component({
 	selector: 'app-notifications',
 	templateUrl: './notifications.component.html',
 	styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit, OnDestroy {
 	private notificationSubscription: Subscription;
-	public notifications: any;
-	@Output() onNewNotifications = new EventEmitter<boolean>();
-
+	@Output() onNewNotifications = new EventEmitter();
+	@Input() notifications: any[];
+	@Input() newNotifications: number;
 	constructor(private router: Router, private pusherService: PusherService,
-		private notificationMessageService: NotificationMessagesService) {
-		// TO DO SERVICE TO LOAD THE DATA
-		this.notifications = {
-			"newNotifications": 2,
-			"notifications": [{
-				"notificationId": "rfdfsd1244312",
-				"eventType": 1,
-				"isSeen": false,
-				"transactionToolRelatedInfo": {
-					"deedId": "1231312312",
-					"currentStatus": 3
-				},
-				"propertyId": "5a6cfebf49a7653fb8a29438",
-				"timestamp": 1518613654,
-				"actor": {
-					"firstName": "Ivan",
-					"lastName": "Ivanov",
-					"imageAvatar": "path to the image avatar of the actor of the notification"
+		private notificationMessageService: NotificationMessagesService,
+		private route: ActivatedRoute) {
+		this.notificationSubscription = this.pusherService.subscribeToNotificationsSubject({
+			next: (data: any) => {
+				if (this.notifications) {
+					this.notifications.unshift(this.notificationMessageService.deSerializeData(data.message));
+					this.newNotifications++;
+					this.onNewNotifications.emit(this.newNotifications);
 				}
-			},
-			{
-				"notificationId": "rfdfsd1244312",
-				"eventType": 0,
-				"isSeen": true,
-				"transactionToolRelatedInfo": {
-					"deedId": "1231312312",
-					"currentStatus": 3
-				},
-				"propertyId": "5a6cfebf49a7653fb8a29438",
-				"timestamp": 1518613654,
-				"actor": {
-					"firstName": "Ognyan",
-					"lastName": "Chikov",
-					"imageAvatar": "path to the image avatar of the actor of the notification"
-				}
-			},
-			{
-				"notificationId": "rfdfsd1244312",
-				"eventType": 0,
-				"isSeen": true,
-				"transactionToolRelatedInfo": {
-					"deedId": "1231312312",
-					"currentStatus": 3
-				},
-				"propertyId": "5a6cfebf49a7653fb8a29438",
-				"timestamp": 1518613654,
-				"actor": {
-					"firstName": "Ognyan",
-					"lastName": "Chikov",
-					"imageAvatar": "path to the image avatar of the actor of the notification"
-				}
-			},
-			{
-				"notificationId": "rfdfsd1244312",
-				"eventType": 0,
-				"isSeen": true,
-				"transactionToolRelatedInfo": {
-					"deedId": "1231312312",
-					"currentStatus": 3
-				},
-				"propertyId": "5a6cfebf49a7653fb8a29438",
-				"timestamp": 1518613654,
-				"actor": {
-					"firstName": "Ognyan",
-					"lastName": "Chikov",
-					"imageAvatar": "path to the image avatar of the actor of the notification"
-				}
-			},
-			{
-				"notificationId": "rfdfsd1244312",
-				"eventType": 0,
-				"isSeen": true,
-				"transactionToolRelatedInfo": {
-					"deedId": "1231312312",
-					"currentStatus": 3
-				},
-				"propertyId": "5a6cfebf49a7653fb8a29438",
-				"timestamp": 1518613654,
-				"actor": {
-					"firstName": "Ognyan",
-					"lastName": "Chikov",
-					"imageAvatar": "path to the image avatar of the actor of the notification"
-				}
-			},
-			{
-				"notificationId": "rfdfsd1244312",
-				"eventType": 0,
-				"isSeen": true,
-				"transactionToolRelatedInfo": {
-					"deedId": "1231312312",
-					"currentStatus": 3
-				},
-				"propertyId": "5a6cfebf49a7653fb8a29438",
-				"timestamp": 1518613654,
-				"actor": {
-					"firstName": "Ognyan",
-					"lastName": "Chikov",
-					"imageAvatar": "path to the image avatar of the actor of the notification"
-				}
-			},
-			{
-				"notificationId": "rfdfsd1244312",
-				"eventType": 0,
-				"isSeen": true,
-				"transactionToolRelatedInfo": {
-					"deedId": "1231312312",
-					"currentStatus": 3
-				},
-				"propertyId": "5a6cfebf49a7653fb8a29438",
-				"timestamp": 1518613654,
-				"actor": {
-					"firstName": "Ognyan",
-					"lastName": "Chikov",
-					"imageAvatar": "path to the image avatar of the actor of the notification"
-				}
-			}]
-		}
+			}
+		});
+		this.onNewNotifications.emit(this.newNotifications);
 	}
 
 	ngOnInit() {
-		this.notificationSubscription = this.pusherService.subscribeToNotificationsSubject({
-			next: (data: any) => {
-				this.notifications.notifications.push(data);
-				this.notifications.newNotifications += 1;
-				this.onNewNotifications.emit(this.notifications);
-			}
-		});
-		this.onNewNotifications.emit(this.notifications);
-	}
-	public notificationMessage(eventType) {
-		return this.notificationMessageService.returnMessage(eventType, 'test');
-	}
-
-	onShowNotifications() {
+		this.onNewNotifications.emit(this.newNotifications);
 
 	}
-
-	onReadNotification() {
-
+	public notificationMessage(notificationType) {
+		return this.notificationMessageService.returnMessage(notificationType);
 	}
-	private goToRelatedEvent(propertyId: string) {
-		this.router.navigate(['property', propertyId]);
+
+	private async goToRelatedEvent(notification) {
+		switch (this.notificationMessageService.returnNotificationType(notification.details.deedStatus)) {
+			// TO DO add another case type here when we implement new notification types
+			case 'reserved':
+			case 'invited':
+			case 'accepted':
+			case 'move-to-next-step':
+			case 'new-document-uploaded':
+			case 'requires-signature':
+			case 'signed':
+			case 'action':
+			case 'payment':
+			case 'transfer':
+				notification.isSeen = true;
+				this.router.navigate(['transaction-tool', notification.details.deedId,
+					this.notificationMessageService.returnDeedStatus(notification.details.deedStatus)]);
+				await this.notificationMessageService.setNotificaitonSeen(notification.notificationId);
+				break;
+		}
+	}
+	private getIconClass(notification) {
+		switch (this.notificationMessageService.returnNotificationType(notification.details.deedStatus)) {
+			// TO DO add another case type here when we implement new notification types
+			case 'reserved':
+			case 'invited':
+			case 'accepted':
+			case 'move-to-next-step':
+			case 'new-document-uploaded':
+			case 'requires-signature':
+			case 'signed':
+			case 'action':
+			case 'payment':
+			case 'transfer':
+				return 'fa fa-building-o';
+		}
+	}
+
+	ngOnDestroy() {
+		this.notificationSubscription.unsubscribe();
 	}
 
 }

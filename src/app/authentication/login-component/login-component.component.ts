@@ -8,6 +8,7 @@ import { AuthenticationService } from './../authentication.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 
 @Component({
@@ -18,7 +19,11 @@ import { Subscription } from 'rxjs/Subscription';
 export class LoginComponentComponent extends ErrorsDecoratableComponent implements OnInit, OnDestroy {
 
 	public loginForm: FormGroup;
+	public verifyForm: FormGroup;
 	private queryParamsSubscription: Subscription;
+	public showVerificationDialog = false;
+	private loginProgress: string;
+	private loginSuccess: string;
 
 	private redirectToUrl = environment.defaultRedirectRoute;
 
@@ -27,6 +32,7 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
+		private notificationsService: NotificationsService,
 		errorsService: ErrorsService,
 		translateService: TranslateService) {
 		super(errorsService, translateService);
@@ -35,6 +41,14 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 			email: ['', [Validators.required, Validators.email]],
 			password: ['', [Validators.required]],
 			rememberMe: [true]
+		});
+		this.verifyForm = this.formBuilder.group({
+			verifyEmail: ['', [Validators.required, Validators.email]]
+		});
+
+		this.translateService.stream(['signup.logging-you-in', 'signup.success']).subscribe(translations => {
+			this.loginProgress = translations['signup.logging-you-in'];
+			this.loginSuccess = translations['signup.success'];
 		});
 	}
 
@@ -49,7 +63,7 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	private setupQueryParamsWatcher(): Subscription {
 		return this.route.queryParams
 			.subscribe(params => {
-				// Check if there are no params passed in 
+				// Check if there are no params passed in
 				// OR if redirect points to forgotten pass page
 				if (!params.redirect || params.redirect === '/forgot') {
 					return;
@@ -60,6 +74,10 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 
 	public get email() {
 		return this.loginForm.get('email');
+	}
+
+	public get verifyEmail() {
+		return this.verifyForm.get('verifyEmail');
 	}
 
 	public get password() {
@@ -73,18 +91,40 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async onSubmit() {
 		const result = await this.authService.performLogin(this.email.value, this.password.value, this.rememberMe.value);
-		this.router.navigate([this.redirectToUrl]);
+		this.router.navigateByUrl(this.redirectToUrl);
 	}
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
+		this.notificationsService.pushInfo({
+			title: this.loginProgress,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 5000
+		});
 		const result = await this.authService.performFacebookLogin();
-		this.router.navigate([this.redirectToUrl]);
+		if (!result.isEmailVerified) {
+			this.openVerifyEmailPopup();
+			return;
+		}
+
+		this.notificationsService.pushSuccess({
+			title: this.loginSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
+		this.router.navigateByUrl(this.redirectToUrl);
+	}
+
+	private openVerifyEmailPopup() {
+		this.showVerificationDialog = true;
 	}
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
-	public async linkedInLogin() {
-		const result = await this.authService.performLinkedInLogin();
+	public async sendVerificationEmailAddress() {
+		const result = await this.authService.updateVerificationEmail(this.verifyEmail.value);
 		this.router.navigate([this.redirectToUrl]);
 	}
 

@@ -1,3 +1,4 @@
+import { NotificationMessagesService } from './notifications/notification-messages.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { SETTINGS_TABS } from './../../settings/settings/settings.component';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
@@ -47,7 +48,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		private translateService: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
 		private momentService: MomentService,
-		public pusherService: PusherService) {
+		public pusherService: PusherService,
+		public notificationMessageService: NotificationMessagesService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -122,6 +124,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public logout(event: Event) {
 		event.preventDefault();
 		event.stopPropagation();
+		this.isUserAnonymous = true;
 		this.router.navigate(['/']);
 		const userId = this.userInfo.id;
 		this.authService.performLogout();
@@ -155,16 +158,22 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		this.router.navigate(['map', { latitude, longitude, locationName }]);
 	}
 
-	public onNewNotifications(event) {
-		//this.newNotifications = event;
-		if (event.newNotifications > 0) {
-			this.newNotifications = true;
-		}
-		this.numberOfNotifications = event.newNotifications;
+	public onNewNotifications(newNotifications) {
+		this.newNotifications = (newNotifications > 0);
+		this.numberOfNotifications = newNotifications;
 	}
-	public onToggleNotifications() {
+	public async onToggleNotifications() {
 		this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
-		this.newNotifications = false;
-		this.numberOfNotifications = 0;
+		if (this.numberOfNotifications > 0) {
+			try {
+				this.newNotifications = false;
+				this.numberOfNotifications = 0;
+				const result = await this.notificationMessageService.checkedNotifications();
+			} catch (error) {
+				console.log(error);
+			}
+		}
+
+
 	}
 }

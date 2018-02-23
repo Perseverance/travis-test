@@ -14,6 +14,7 @@ import { FacebookButtonComponent } from './facebook-button/facebook-button.compo
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { InternationalPhoneModule } from 'ng4-intl-phone/src/lib';
+import { DialogModule } from 'primeng/primeng';
 
 @NgModule({
 	imports: [
@@ -26,6 +27,7 @@ import { InternationalPhoneModule } from 'ng4-intl-phone/src/lib';
 		TranslateModule,
 		InlineSVGModule,
 		InternationalPhoneModule,
+		DialogModule
 	],
 	declarations: [
 		LoginComponentComponent,

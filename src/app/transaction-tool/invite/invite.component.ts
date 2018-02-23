@@ -202,7 +202,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async onInvite(email) {
 		this.notificationService.pushInfo({
-			title: `Inviting all praties. Please wait.`,
+			title: `Inviting all parties. Please wait.`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000
@@ -227,7 +227,7 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	@DefaultAsyncAPIErrorHandling('property-details.contact-agent.contact-error')
 	public async partyAccept() {
 		this.notificationService.pushInfo({
-			title: `Inviting Accepting invitation`,
+			title: `Accepting invitation`,
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 60000

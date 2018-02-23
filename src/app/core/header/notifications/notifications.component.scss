@@ -7,7 +7,16 @@ $blue-light-notification: #DCF6FF;
     a:link {
         text-decoration: none;
     }
+    a {
+        text-decoration: none;
+        cursor: pointer;
+    }
     .media {
+        .media-body {
+            .media-heading {
+                font-size: 14px;
+            }
+        }
         padding: 10px;
         &.notRead {
             background-color: $blue-light-notification;

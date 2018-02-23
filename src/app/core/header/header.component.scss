@@ -202,7 +202,7 @@ $header-margin-sm: 15px;
         }
         .scrollable-menu {
             height: auto;
-            max-height: 500px;
+            max-height: 400px;
             overflow-x: hidden;
         }
     }
@@ -233,6 +233,321 @@ $header-margin-sm: 15px;
         @media #{$md} {
             margin-left: 2px;
         }
+    }
+}
+
+.propy-header-landing {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    &.navbar {
+        height: 52px;
+        margin: 0px;
+        @include border-radius(0px);
+        @include transition(background-color 300ms linear);
+        .navbar-brand {
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: 22px;
+            letter-spacing: .1em;
+            color: $white;
+            @media #{$xs} {
+                font-size: 18px;
+                padding: 15px 5px 15px 15px;
+            }
+        }
+    }
+    .nav {
+        &.propy-links {
+            li {
+                .user-separator {
+                    color: $white;
+                    @media (min-width: 768px) and (max-width: 880px) {
+                        display: none;
+                    }
+                    color: $gray-lighter;
+                    margin: 0px 7px;
+                    position: relative;
+                    top: 14px;
+                }
+                a {
+                    font-size: $font-size-small;
+                    color: $black;
+                    &.propy-control {
+                        margin-top: 8px;
+                        margin-left: 8px;
+                        @media #{$xs} {
+                            margin-right: 8px;
+                        }
+                        min-width: 86px;
+                        padding: 6px 10px;
+                        background-color: $blue-regular;
+                        color: $white;
+                        font-weight: 400;
+                        &:hover {
+                            background-color: $blue-light;
+                        }
+                    }
+                    &.account-name {
+                        margin-top: -7px;
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+                        padding: 15px 5px;
+                        @include ellipsis(120px);
+                        @media (min-width: 768px) and (max-width: 880px) {
+                            @include ellipsis(90px);
+                        }
+                        font-size: $font-size-medium;
+                    }
+                    &.list-property {
+                        color: $white;
+                        @media (min-width: 768px) and (max-width: 880px) {
+                            margin-left: 0px;
+                        }
+                        @media (min-width: 768px) and (max-width: 784px) {
+                            display: none;
+                        }
+                    }
+                    &.about-pro-token {
+                        color: $white;
+                        @media (min-width: 768px) and (max-width: 880px) {
+                            margin-left: 0px;
+                        }
+                    }
+                    .no-wallet-badge {
+                        position: absolute;
+                        width: 8px;
+                        height: 8px;
+                        background-color: $red-main;
+                        @include border-radius(50%);
+                    }
+                }
+                &.separator {
+                    color: $white;
+                    padding-right: $links-to-languages-distance;
+                    @media #{$xs} {
+                        padding-right: 0px;
+                    }
+                }
+                .balance {
+                    color: $white;
+                }
+                .fa-bell {
+                    color: $white;
+                }
+                .fa-bell-o {
+                    color: $white;
+                }
+            }
+        }
+        .languages-dropdown.dropdown {
+            a.dropdown-toggle {
+                color: $white;
+                padding-right: 5px;
+                @media (max-width: 767px) {
+                    text-align: center;
+                    border: 1px solid $blue-light;
+                    margin: 0px 10px;
+                    padding-left: 45px;
+                    @include border-radius(10px);
+                }
+                height: 40px;
+                background-color: transparent;
+                .fa {
+                    position: relative;
+                    margin-left: 5px;
+                    @media #{$sm} {
+                        margin-right: 5px;
+                    }
+                    font-size: 10px;
+                    top: -2px;
+                    color: $white;
+                }
+            }
+            a.language-selector {
+                font-size: $font-size-medium;
+                letter-spacing: 1px;
+                cursor: pointer;
+                background-color: transparent;
+            }
+            .dropdown-menu {
+                min-width: 80px;
+                padding: 0px;
+                border: 0px;
+                margin-top: 5px;
+                @include border-radius(5px);
+                @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
+                a.language-selector {
+                    text-align: center;
+                    font-weight: 100;
+                    &:hover {
+                        background-color: rgba(76, 202, 247, 0.1);
+                    }
+                }
+            }
+        }
+    }
+    .notifications-dropdown.dropdown {
+        margin-left: 5px;
+        @media (min-width: 768px) and (max-width: 880px) {
+            margin: 0px;
+        }
+        @media #{$xs} {
+            margin-right: 5px;
+        }
+        .notification-number {
+            position: absolute;
+            top: 0px;
+            background-color: red;
+            right: 5px;
+            padding-top: 0px;
+            padding-right: 4px;
+            padding-left: 4px;
+            border-radius: 5px;
+            color: white;
+            font-size: 12px;
+        }
+        a.dropdown-toggle {
+            height: 40px;
+            width: 40px;
+            background-color: transparent;
+            @include border-radius(20px);
+            position: relative;
+            margin: 5px;
+            @media (min-width: 768px) and (max-width: 880px) {
+                margin: 0px;
+            }
+            &:hover {
+                background-color: $gray-lighter;
+            }
+            .fa-bell {
+                position: relative;
+                font-size: 16px;
+                top: -3px;
+                left: -3px;
+            }
+            .fa-bell-o {
+                position: relative;
+                font-size: 16px;
+                top: -3px;
+                left: -3px;
+            }
+        }
+        &.open {
+            a.dropdown-toggle {
+                background-color: $gray-lighter;
+            }
+        }
+        .dropdown-menu {
+            min-width: 280px;
+            padding: 0px;
+            border: 0px;
+            margin-top: 5px;
+            @include border-radius(5px);
+            @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
+        }
+        .scrollable-menu {
+            height: auto;
+            max-height: 400px;
+            overflow-x: hidden;
+        }
+    }
+    &.propy-header-top {
+        &.navbar {
+            &.navbar-default {
+                background-color: transparent;
+                border: none;
+                @media #{$xs} {
+                    background-color: $white;
+                }
+            }
+        }
+    }
+    &.propy-header-scrolled {
+        &.navbar {
+            &.navbar-default {
+                background-color: rgba($color: $white, $alpha: 0.95);
+                @media #{$sm} {
+                    background-color: $white;
+                }
+                border: none;
+            }
+        }
+        .text-uppercase {
+            color: $black;
+        }
+        .user-separator {
+            color: $gray-lighter !important;
+        }
+        .fa-chevron-down {
+            color: $button-filter-arrow !important
+        }
+        .fa-bell {
+            color: $black !important;
+        }
+        .fa-bell-o {
+            color: $black !important;
+        }
+        .balance {
+            color: $black !important;
+        }
+        .list-property {
+            color: $black !important;
+        }
+        .about-pro-token {
+            color: $black !important;
+        }
+        a.language-selector {
+            color: $black !important;
+        }
+    }
+    .loc-search-nav {
+        margin-top: 8px;
+        @media #{$md} {
+            margin-left: 2px;
+        }
+    }
+}
+
+@media #{$xs} {
+    .propy-header-landing.propy-header-top,
+    .propy-header-landing.propy-header-scrolled {
+        &.navbar {
+            &.navbar-default {
+                >div.container-fluid {
+                    background-color: $white;
+                    @include box-shadow(0px, 1px, 6px, rgba(0, 0, 0, 0.15));
+                }
+            }
+        }
+    }
+    .navbar-brand {
+        color: $black !important;
+    }
+    .text-uppercase {
+        color: $black;
+    }
+    .user-separator {
+        color: $gray-lighter !important;
+    }
+    .fa-chevron-down {
+        color: $button-filter-arrow !important
+    }
+    .fa-bell {
+        color: $black !important;
+    }
+    .balance {
+        color: $black !important;
+    }
+    .list-property {
+        color: $black !important;
+    }
+    .about-pro-token {
+        color: $black !important;
+    }
+    a.language-selector {
+        color: $black !important;
     }
 }
 
