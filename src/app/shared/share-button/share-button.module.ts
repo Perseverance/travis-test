@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 
 import { ShareButtonComponent } from './share-button.component';
 import { FacebookShareComponent } from './components/index';
+import { ChinaShareComponent } from './components/china-share/china-share.component';
 
 @NgModule({
 	imports: [
@@ -18,7 +19,8 @@ import { FacebookShareComponent } from './components/index';
 	],
 	declarations: [
 		ShareButtonComponent,
-		FacebookShareComponent
+		FacebookShareComponent,
+		ChinaShareComponent
 	],
 	providers: [],
 })
