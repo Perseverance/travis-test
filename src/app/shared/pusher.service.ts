@@ -55,7 +55,7 @@ export class PusherService {
 			return;
 		}
 		this.pusher.unsubscribe(`${userId}_private`);
-		this.pusher.disconnectPusher();
+		this.pusher.disconnect();
 	}
 
 	public bindEventsToChannel(channel: any) {
