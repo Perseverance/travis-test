@@ -50,6 +50,10 @@ export class PusherService {
 		this.bindEventsToChannel(this.pusherChannel);
 	}
 
+	public disconnectPusher() {
+		this.pusher.disconnect();
+	}
+
 	public unsubscribePusherChannel(userId: string): void {
 		if (!this.pusher) {
 			return;
