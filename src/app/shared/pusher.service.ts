@@ -48,6 +48,15 @@ export class PusherService {
 
 		this.pusherChannel = this.pusher.subscribe(`${userId}_private`);
 		this.bindEventsToChannel(this.pusherChannel);
+		console.log('initialize pusher');
+	}
+
+	public disconnectPusher() {
+		if (!this.pusher) {
+			return;
+		}
+		this.pusher.disconnect();
+		console.log('disconnect pusher');
 	}
 
 	public unsubscribePusherChannel(userId: string): void {
@@ -55,7 +64,7 @@ export class PusherService {
 			return;
 		}
 		this.pusher.unsubscribe(`${userId}_private`);
-		this.pusher.disconnect();
+		console.log('unsubscribe pusher');
 	}
 
 	public bindEventsToChannel(channel: any) {
