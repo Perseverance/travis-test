@@ -51,11 +51,13 @@ export class PusherService {
 	}
 
 	public unsubscribePusherChannel(userId: string): void {
+		if (!this.pusher) {
+			return;
+		}
 		this.pusher.unsubscribe(`${userId}_private`);
 	}
 
 	public bindEventsToChannel(channel: any) {
-
 		// Event for Invitation
 		channel.bind(PUSHER_EVENTS_ENUM.DEAL_INVITATION, (data) => {
 			this.messageService.add({
@@ -97,6 +99,11 @@ export class PusherService {
 				summary: 'A new document has been uploaded to one of your deals',
 				detail: data.message
 			});
+			const self = this;
+			setTimeout(function () {
+				self.messageService.clear();
+			}, this.DEFAULT_VALUE_TIMEOUT);
+			return;
 		});
 
 		// Event for notifications
