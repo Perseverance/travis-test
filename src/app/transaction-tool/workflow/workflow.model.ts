@@ -1,3 +1,5 @@
+// ToDo: Affidavit step hide, next steps are decremented with 1
+
 export const STEPS = {
 	'rejected': -2,
 	'canceled': -1,
@@ -8,9 +10,9 @@ export const STEPS = {
 	'disclosures': 4,
 	'settlement-statements': 5,
 	'payment': 6,
-	'affidavit': 7,
-	'closing-documents': 8,
-	'transfer': 9
+	// 'affidavit': 7,
+	'closing-documents': 7,
+	'transfer': 8
 };
 
 export const REVERSE_STEPS = {
@@ -23,9 +25,9 @@ export const REVERSE_STEPS = {
 	4: 'disclosures',
 	5: 'settlement-statements',
 	6: 'payment',
-	7: 'affidavit',
-	8: 'closing-documents',
-	9: 'transfer'
+	// 7: 'affidavit',
+	7: 'closing-documents',
+	8: 'transfer'
 };
 
 export type Step = string;
