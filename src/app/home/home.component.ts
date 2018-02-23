@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';
@@ -11,10 +12,13 @@ declare function SmartBanner(param1: any): void;
 })
 export class HomeComponent implements OnInit {
 
-	constructor(private router: Router,
+	public _isChina: Boolean = environment.china;
+
+	constructor(
+		private router: Router,
 		private authService: AuthenticationService,
-		private zone: NgZone) {
-	}
+		private zone: NgZone
+	) {}
 
 	ngOnInit() {
 		this.authService.refreshTokenOrLoginAnonym();
