@@ -11,13 +11,13 @@
 			</button>
             <a class="navbar-brand text-uppercase" [routerLink]="['/']">Propy</a>
             <div class="nav navbar-nav col-xs-7 hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl loc-search-nav"
-                *ngIf="!isLanding">
+                *ngIf="!isLanding && !isChina">
                 <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}"
                     (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
             </div>
         </div>
 
-        <div class="nav hidden-xs col-sm-4 col-lg-5 loc-search-nav" *ngIf="!isLanding">
+        <div class="nav hidden-xs col-sm-4 col-lg-5 loc-search-nav" *ngIf="!isLanding && !isChina">
             <app-location-search inputTheme="small" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}"
                 (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
         </div>

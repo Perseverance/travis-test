@@ -38,6 +38,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	private verificationMessage: string;
 	public numberOfNotifications: number;
 	private notLoggedInError: string;
+	public isChina: Boolean = environment.china;
 
 	constructor(router: Router,
 		private route: ActivatedRoute,

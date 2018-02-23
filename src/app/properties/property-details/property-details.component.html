@@ -68,7 +68,7 @@
                                         <a data-toggle="tab" href="#features">{{ 'property-details.features' | translate
 											}}</a>
                                     </li>
-                                    <li role="presentation">
+                                    <li role="presentation" *ngIf="!isChina">
                                         <a data-toggle="tab" href="#location" (click)="draw()">{{
 											'property-details.location' | translate }}</a>
                                     </li>

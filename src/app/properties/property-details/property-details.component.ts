@@ -72,6 +72,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public cryptoEth = false;
 	public cryptoFiat = false;
 
+	public isChina: Boolean = environment.china;
+
 	constructor(router: Router,
 		private route: ActivatedRoute,
 		private propertiesService: PropertiesService,
