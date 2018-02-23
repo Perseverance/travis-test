@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.isAnonymous) {
+					this.pusherService.unsubscribePusherChannel(userInfo.user.id);
 					this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
 				}
 			}
