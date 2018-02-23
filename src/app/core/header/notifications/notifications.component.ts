@@ -14,12 +14,15 @@ import { Notification } from 'rxjs/Notification';
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
 	private notificationSubscription: Subscription;
+	content: any[] = new Array();
+	counter: number;
 	@Output() onNewNotifications = new EventEmitter();
 	@Input() notifications: any[];
 	@Input() newNotifications: number;
 	constructor(private router: Router, private pusherService: PusherService,
 		private notificationMessageService: NotificationMessagesService,
 		private route: ActivatedRoute) {
+		this.counter = 0;
 		this.notificationSubscription = this.pusherService.subscribeToNotificationsSubject({
 			next: (data: any) => {
 				if (this.notifications) {
@@ -34,6 +37,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.onNewNotifications.emit(this.newNotifications);
+		this.getData();
 
 	}
 	public notificationMessage(notificationType) {
@@ -75,6 +79,17 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			case 'transfer':
 				return 'fa fa-building-o';
 		}
+	}
+
+	public getData() {
+		//console.log(this.counter + 'dat size' + this.notifications.length);
+
+		for (let i = this.counter + 1; i < this.notifications.length; i++) {
+			this.content.push(this.notifications[i]);
+			if (i % 5 == 0) { break; };
+		}
+		this.counter += 10;
+
 	}
 
 	ngOnDestroy() {

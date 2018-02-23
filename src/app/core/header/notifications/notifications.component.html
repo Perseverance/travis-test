@@ -1,5 +1,5 @@
 <div *ngIf="notifications && notifications.length !== 0; else noNotifications">
-    <div class="row notifications" *ngFor="let notification of notifications">
+    <div class="row notifications" *ngFor="let notification of content">
         <a (click)="goToRelatedEvent(notification)">
             <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
                 <div class="media-left">
@@ -23,6 +23,13 @@
             </div>
         </a>
     </div>
+    <div class="row notifications">
+        <button class="show-more" (click)="getData()">
+                    Show more
+                  </button>
+    </div>
+
+
 </div>
 <ng-template #noNotifications>
 
