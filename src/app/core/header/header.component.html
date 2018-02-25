@@ -69,7 +69,6 @@
                     <div class="dropdown-menu scrollable-menu">
                         <app-notifications [notifications]="userInfo.userNotifications" [newNotifications]="userInfo.newNotifications"
                             (onNewNotifications)="onNewNotifications($event)"></app-notifications>
-                        <a class='dropdown-toggle' data-toggle='dropdown-menu'>Test</a>
                     </div>
                 </li>
                 <li *ngIf="!isUserAnonymous">

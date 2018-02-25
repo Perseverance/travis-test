@@ -1,6 +1,7 @@
 @import "../../../../variables";
 @import "../../../../mixins";
 $blue-light-notification: #DCF6FF;
+$blue-widget: #42C3F6;
 .notifications {
     font-size: $font-size-small; //padding: 10px;
     margin: 0px;
@@ -29,5 +30,20 @@ $blue-light-notification: #DCF6FF;
     }
     .media:hover {
         background-color: $blue-light;
+    }
+    .load-more {
+        font-size: 12px;
+        display: inline-block;
+        width: 100%;
+        border: 2px solid $blue-widget;
+        padding: 10px;
+        color: white;
+        text-align: center;
+        background-color: $blue-widget;
+        box-shadow: 0px 1px 3px rgba(35, 197, 255, 0.4);
+        &:hover {
+            background-color: $blue-light;
+            border-color: $blue-light;
+        }
     }
 }
