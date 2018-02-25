@@ -1,5 +1,5 @@
 <div *ngIf="notifications && notifications.length !== 0; else noNotifications">
-    <div class="row notifications" *ngFor="let notification of currentNotifications">
+    <div class="row notifications" *ngFor="let notification of notifications|slice:0:notificationsToShow let i=index">
         <a (click)="goToRelatedEvent(notification)">
             <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
                 <div class="media-left">
@@ -24,8 +24,9 @@
         </a>
     </div>
     <div class="notifications" (click)="$event.stopPropagation()">
-        <a class="load-more" (click)="getData()">Load More</a>
+        <a class="load-more" (click)="loadMoreNotifications()">Load More</a>
     </div>
+
     <!-- <button class="btn propy-control button-small" data-toggle="dropdown" data-target=".dropdown-menu"
         (click)="getData() "> Show more</button> -->
 
