@@ -21,11 +21,12 @@
     </div>
     <ng-template #notFinished>
         <div *ngIf="userIsTitleCompany;else notTitleCompany">
-            <div *ngIf="transactionDetails == null">
-                <i>Status: Waiting For You To Record The Transfer Ownership Change To The Blockchain. Please use the button below!</i>
+            <div *ngIf="transactionDetails == null;else hasTxDetails">
+                <i>Status: Waiting For You To Record The Transfer of Ownership To The Blockchain. Please use the button below!</i>
                 <br>
                 <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
             </div>
+        <ng-template #hasTxDetails>
             <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
                 <div class="tx-result tx-fail">
                     <i class="fa fa-times-circle"></i><span>Your Blockchain action was not successfully recorded. Please try again.</span>
@@ -44,6 +45,7 @@
                 <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
                             etherscan}}</a>
             </div>
+        </ng-template>
         </div>
         <ng-template #notTitleCompany>
             <i>Status: Waiting for the Title Company to record the ownership transfer to the blockchain</i>
