@@ -162,7 +162,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		this.numberOfNotifications = newNotifications;
 	}
 	public async onToggleNotifications() {
-		//this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
 		if (this.numberOfNotifications > 0) {
 			try {
 				this.newNotifications = false;
