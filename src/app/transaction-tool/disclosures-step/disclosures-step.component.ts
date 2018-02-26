@@ -116,7 +116,6 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.DISCLOSURES) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}

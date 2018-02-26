@@ -117,7 +117,6 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.AFFIDAVIT) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}

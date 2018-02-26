@@ -124,7 +124,6 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.PURCHASE_AGREEMENT) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}

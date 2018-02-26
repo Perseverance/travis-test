@@ -130,7 +130,6 @@ export class TitleReportComponent extends ErrorsDecoratableComponent implements 
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.TITLE_REPORT) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}
