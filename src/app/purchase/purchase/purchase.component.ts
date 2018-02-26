@@ -72,7 +72,7 @@ export class PurchaseComponent extends ErrorsDecoratableComponent implements OnI
 		});
 
 		this.stripeForm = this.formBuilder.group({
-			name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ,.\'-]+$')]]
+			name: ['', [Validators.required, Validators.pattern('^([a-zA-Z][a-zA-Z\\\'-\\s]*)?')]]
 		});
 	}
 
