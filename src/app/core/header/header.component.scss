@@ -436,7 +436,7 @@ $header-margin-sm: 15px;
         }
         &.open {
             a.dropdown-toggle {
-                background-color: $gray-lighter;
+                background-color: $gray-dark;
             }
         }
         .dropdown-menu {
@@ -472,6 +472,13 @@ $header-margin-sm: 15px;
                     background-color: $white;
                 }
                 border: none;
+            }
+        }
+        .notifications-dropdown.dropdown {
+            &.open {
+                a.dropdown-toggle {
+                    background-color: $gray-lighter !important;
+                }
             }
         }
         a.dropdown-toggle {
