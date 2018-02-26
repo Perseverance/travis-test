@@ -1,10 +1,10 @@
-import {CurrencyTypeEnum} from './../shared/enums/currency-type.enum';
-import {MockedFavouriteLocationsService} from './mocked-favourite-locations.service';
-import {PropertiesFilter} from './properties.service';
-import {environment} from './../../environments/environment';
-import {APIEndpointsService} from './../shared/apiendpoints.service';
-import {RestClientService} from './../shared/rest-client.service';
-import {Injectable} from '@angular/core';
+import { CurrencyTypeEnum } from './../shared/enums/currency-type.enum';
+import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
+import { PropertiesFilter } from './properties.service';
+import { environment } from './../../environments/environment';
+import { APIEndpointsService } from './../shared/apiendpoints.service';
+import { RestClientService } from './../shared/rest-client.service';
+import { Injectable } from '@angular/core';
 import {
 	GetPropertiesResponse,
 	PropertyAgentResponse,
@@ -18,7 +18,7 @@ import {
 	HidePropertyRequest,
 	GetFeaturePropertiesResponse
 } from './properties-responses';
-import {LocalStorageService} from '../shared/localStorage.service';
+import { LocalStorageService } from '../shared/localStorage.service';
 
 interface Bounds {
 	southWestLatitude: number;
@@ -46,9 +46,9 @@ export interface PropertiesFilter {
 export class PropertiesService {
 
 	constructor(private restService: RestClientService,
-				private apiEndpoint: APIEndpointsService,
-				private localStorageService: LocalStorageService,
-				private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
+	            private apiEndpoint: APIEndpointsService,
+	            private localStorageService: LocalStorageService,
+	            private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
 	}
 
 	public async getProperty(propertyId: string, currency?: CurrencyTypeEnum): Promise<any> {
@@ -79,10 +79,10 @@ export class PropertiesService {
 	}
 
 	public async getPropertiesInRectangle(southWestLatitude: number,
-										  northEastLatitude: number,
-										  southWestLongitude: number,
-										  northEastLongitude: number,
-										  filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
+	                                      northEastLatitude: number,
+	                                      southWestLongitude: number,
+	                                      northEastLongitude: number,
+	                                      filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createRectangleBounds(southWestLatitude,
 			northEastLatitude,
 			southWestLongitude,
@@ -108,9 +108,9 @@ export class PropertiesService {
 	}
 
 	private createRectangleBounds(southWestLatitude: number,
-								  northEastLatitude: number,
-								  southWestLongitude: number,
-								  northEastLongitude: number) {
+	                              northEastLatitude: number,
+	                              southWestLongitude: number,
+	                              northEastLongitude: number) {
 		const bounds: Bounds = {
 			southWestLatitude: southWestLatitude,
 			northEastLatitude: northEastLatitude,
@@ -233,17 +233,19 @@ export class PropertiesService {
 	}
 
 	public async requestInfo(propertyId: string,
-							 agentId: string,
-							 userName: string,
-							 userEmail: string,
-							 userPhone: string,
-							 userRequestDescription: string): Promise<boolean> {
+	                         agentId: string,
+	                         userName: string,
+	                         userEmail: string,
+	                         userPhone: string,
+	                         phoneCountryCode: string,
+	                         userRequestDescription: string): Promise<boolean> {
 		const params = {
 			propertyId,
 			agentId,
 			userName,
 			userEmail,
 			userPhone,
+			phoneCountryCode,
 			userRequestDescription
 		};
 		await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.REQUEST_PROPERTY_INFO, params);
