@@ -64,10 +64,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 				throw new Error('No deed address supplied');
 			}
 			self.deedId = deedId;
-			await self.mapCurrentUserToRole(deedId);
-			await self.setupDocument(deedId);
-			self.setupTransactionLink();
-			self.hasDataLoaded = true;
+			self.reloadView();
 		});
 	}
 
@@ -92,7 +89,6 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.OWNERSHIP_TRANSFER) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}
@@ -121,9 +117,6 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 				this.recordButtonEnabled = true;
 				return;
 			}
-			if (result.status === '0x0') {
-				throw new Error('Could not save to the blockchain. Try Again');
-			}
 			this.notificationService.pushInfo({
 				title: `Sending the document to the system.`,
 				message: '',
@@ -131,7 +124,7 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 				timeout: 10000
 			});
 			await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
-			this.router.navigate(['transaction-tool', this.deedId]);
+			await this.reloadView();
 			this.notificationService.pushSuccess({
 				title: 'Successfully Sent',
 				message: '',
@@ -149,5 +142,13 @@ export class TransferOwnershipComponent extends ErrorsDecoratableComponent imple
 		this.userIsTitleCompany = (deed.currentUserRole === UserRoleEnum.TitleCompany);
 		this.userIsBuyer = (deed.currentUserRole === UserRoleEnum.Buyer);
 
+	}
+
+	private async reloadView() {
+		this.hasDataLoaded = false;
+		await this.mapCurrentUserToRole(this.deedId);
+		await this.setupDocument(this.deedId);
+		this.setupTransactionLink();
+		this.hasDataLoaded = true;
 	}
 }
