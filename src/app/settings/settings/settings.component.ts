@@ -16,6 +16,8 @@ export const SETTINGS_TABS = {
 	REFFERAL_LINK: 'REFFERAL_LINK'
 };
 
+// TODO: Make MY_DEALS 3, Passwords 4 and refferal 5
+
 export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
@@ -39,6 +41,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public isEmailVerified = true;
 
 	private paramsSubscription: Subscription;
+	private userDataSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
 		private route: ActivatedRoute,
@@ -46,7 +49,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	async ngOnInit() {
-		const currentUser = await this.authService.getCurrentUser();
+		const currentUser = await this.authService.getCurrentUser(true, true);
 		if (currentUser.data.data === null) {
 			this.shouldShowPassword = true;
 			this.paramsSubscription = this.setupParamsWatcher();
@@ -59,10 +62,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			this.shouldShowPassword = currentUser.data.data.externalLoginProviders.length === 0;
 		}
 		this.paramsSubscription = this.setupParamsWatcher();
+		this.userDataSubscription = this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.isEmailVerified = userInfo.user.isEmailVerified;
+			}
+		});
 	}
 
 	ngOnDestroy(): void {
-		this.paramsSubscription.unsubscribe();
+		if (this.paramsSubscription) {
+			this.paramsSubscription.unsubscribe();
+		}
+
+		if (this.userDataSubscription) {
+			this.userDataSubscription.unsubscribe();
+		}
 	}
 
 	private setupParamsWatcher() {
@@ -97,6 +111,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				queryParams['selectedTab'] = SETTINGS_TABS.PASSWORD;
 				break;
 			}
+			// TODO: Uncomment when we have my deals
+
 			case TABS_INDEX.MY_DEALS: {
 				queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
 				break;

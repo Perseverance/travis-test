@@ -35,6 +35,7 @@ export class ClosingDocumentsComponent implements OnInit {
 	public successMessage = 'Success!';
 	public hasDataLoaded = false;
 	public reuploadingDocumentActivated: boolean;
+	public processingUpload: boolean;
 
 	constructor(private route: ActivatedRoute,
 				private documentService: TransactionToolDocumentService,
@@ -87,6 +88,7 @@ export class ClosingDocumentsComponent implements OnInit {
 		if (!this.selectedDocument) {
 			return;
 		}
+		this.processingUpload = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -97,6 +99,7 @@ export class ClosingDocumentsComponent implements OnInit {
 		const response = await this.documentService.uploadTransactionToolDocument(DeedDocumentType.ClosingDocuments, this.deedAddress, base64);
 		this.previewLink = response.fileName;
 		this.reuploadingDocumentActivated = false;
+		this.processingUpload = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',

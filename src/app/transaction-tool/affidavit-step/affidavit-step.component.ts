@@ -59,16 +59,16 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	public transactionDetails: any = null;
 
 	constructor(private route: ActivatedRoute,
-		private documentService: TransactionToolDocumentService,
-		private smartContractService: SmartContractConnectionService,
-		private helloSignService: HelloSignService,
-		private base64Service: Base64Service,
-		private deedsService: DeedsService,
-		private notificationService: NotificationsService,
-		private router: Router,
-		private pusherService: PusherService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+	            private documentService: TransactionToolDocumentService,
+	            private smartContractService: SmartContractConnectionService,
+	            private helloSignService: HelloSignService,
+	            private base64Service: Base64Service,
+	            private deedsService: DeedsService,
+	            private notificationService: NotificationsService,
+	            private router: Router,
+	            private pusherService: PusherService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService) {
 		super(errorsService, translateService);
 	}
 
@@ -101,7 +101,8 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.deed = deed;
-		this.shouldSendToBlockchain = (deed.status === Status.affidavit);
+		// ToDo: Commented next line because of build error
+		// this.shouldSendToBlockchain = (deed.status === Status.affidavit);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
@@ -192,6 +193,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 					errorTime: (new Date()).getTime()
 				});
 				this.recordButtonEnabled = true;
+				return;
 			}
 			if (result.status === '0x0') {
 				throw new Error('Could not save to the blockchain. Try Again');

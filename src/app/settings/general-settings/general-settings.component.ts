@@ -55,7 +55,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
-			email: [{value: '', disabled: true}, []],
+			email: [{value: ''}, [Validators.required, Validators.email]],
 			phoneNumber: ['', Validators.compose([
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
@@ -72,7 +72,9 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				this.isEmailVerified = this.userInfo.isEmailVerified;
 				this.userPhoneCountry = this.userInfo.phoneCountryCode;
 				this.setUserInfo(this.userInfo);
-				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
+				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber
+						&& this.phoneNumber.invalid &&
+						this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
 				}
 
@@ -120,13 +122,22 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			PhoneNumberValidators.phoneNumberValidator,
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
-		await this.authService.updateUser(this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber, this.childPhoneComponent.selectedCountry.countryCode);
-		this.notificationService.pushSuccess({
-			title: this.successMessage,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
+		if (!!this.firstName.value.trim().length && !!this.lastName.value.trim().length) {
+			await this.authService.updateUser(this.email.value, this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber, this.childPhoneComponent.selectedCountry.countryCode);
+			this.notificationService.pushSuccess({
+				title: this.successMessage,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 4000
+			});
+		} else {
+			this.notificationService.pushInfo({
+				title: 'ERROR: ',
+				message: 'Please enter valid First name and/or Last name',
+				time: (new Date().getTime()),
+				timeout: 3000
+			});
+		}
 	}
 
 	public cancelEdit() {

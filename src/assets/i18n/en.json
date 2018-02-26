@@ -23,6 +23,7 @@
             "share": "Share to Facebook",
             "special-share": "Share & get 1 PRO",
             "simple-share": "Share Property",
+            "share-bonus-received": "You will soon receive your PRO bonus",
             "about": "About",
             "record-to-blockchain": "Record to Blockchain",
             "copy": "Copy"
@@ -58,6 +59,11 @@
             "invalid-existing-phone-number": "This field should contain only numbers. Additionally please select a country.",
             "toc-required": "You need to accept the terms and conditions of the site",
             "fill-in-required": "Please fill in required fields"
+        },
+        "verification-popup": {
+            "header": "Email for verification",
+            "body": "Due to unverified Facebook email we canot activate your email. Please type active email of yours here, so we can send you our verification confirmation.",
+            "submit": "Submit Email"
         },
         "terms": "Terms & Conditions",
         "no-properties": "No properties found in this area!",
@@ -137,11 +143,14 @@
         "country5": "Russia",
         "company": "Company",
         "about-us": "About Us",
-        "blog": "Blog"
+        "blog": "Blog",
+        "terms": "Terms & Conditions"
     },
     "signup": {
         "agent-checkbox": "I am an agent",
-        "agency-not-found": "No such agency found. Submitting this will create it."
+        "agency-not-found": "No such agency found. Submitting this will create it.",
+        "logging-you-in": "Logging you into your account",
+        "success": "Successful log in"
     },
     "forgot-password": {
         "forgot-your-password": "Forgot your password?",
@@ -198,7 +207,7 @@
         "from": "from",
         "thank-you": "Thank you for using propy beta!",
         "find-properties": {
-            "heading": "Buy and sell unique homes all over the world in bitcoin",
+            "heading": "Buy and sell unique homes all over the world",
             "sub-heading": "Property Transactions Secured Through Blockchain"
         },
         "how-propy-works": {
@@ -405,14 +414,16 @@
         "media-info-2": "Feel free to get in touch with our media team at:"
     },
     "purchase": {
-        "successfull-reservation": "Successfull Reservation",
+        "successfull-reservation": "Successful Reservation",
         "successfull-message": "This property was reserved for you.",
         "error-reserving": "We could not reserve this property for you.",
         "wait-message": "Wait a second.",
         "login-or-signup": "To reserve your property, just sign up or login through the header above.",
         "reserve-property": "Reserve this property",
         "disclaimer": "To be able to reserve the property and purchase it online you will need to add credit card.",
-        "deposit-5000": "Deposit $5000"
+        "deposit-5000": "Deposit $5000",
+        "confirmation-text": "If you are interested in this property, please confirm your reservation",
+        "confirmation-button": "Confirm Reservation"
     },
     "verification": {
         "resend-button": "Resend Verification Email",
@@ -421,5 +432,9 @@
         "verification-error": "Could not verify your account. Please try again or resend yourself a verification email.",
         "resend-success": "Successfully re-sent the verification email",
         "resend-error": "Could not re-send verification email. Are you sure you used the correct email?"
+    },
+    "notifications": {
+        "reserved": "has reserved your listing.",
+        "invited": "has invited you to a property deal."
     }
 }

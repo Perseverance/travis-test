@@ -6,8 +6,9 @@
                 Blockchain.
             </div>
             <div>Here is your receipt:</div>
-            <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
-                        etherscan}}</a>
+            <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash
+				|
+				etherscan}}</a>
         </div>
         <div *ngIf="isWaitingForReservation;else notWaiting">
             <div *ngIf="userRole === userRoleEnum.SellerBroker; else notSellerBroker">
@@ -16,20 +17,24 @@
                         <i class="fa fa-times-circle"></i><span>Your Blockchain action was not successfully recorded. Please try again.</span>
                     </div>
                     <div>Here is your receipt:</div>
-                    <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
-                                etherscan}}</a>
+                    <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash
+						|
+						etherscan}}</a>
                 </div>
                 <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.PENDING">
                     <div class="tx-result tx-pending"><i class="fa fa-clock-o"></i>Your action is being recorded on
                         the Blockchain.
                     </div>
                     <div>To check the current status, please follow the link below.</div>
-                    <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
-                                etherscan}}</a>
+                    <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash
+						|
+						etherscan}}</a>
                 </div>
             </div>
             <ng-template #notSellerBroker>
-                <h5>Waiting for blockchain reservation</h5>
+                <div class="text-center">
+                    <h5>Waiting for blockchain reservation</h5>
+                </div>
             </ng-template>
         </div>
         <ng-template #notWaiting>
@@ -53,7 +58,8 @@
                     </div>
                     <div *ngIf="userRole === userRoleEnum.Buyer">
                         <div *ngIf="!hasBuyerResponded; else waitingForAllOther;">
-                            <span>You are invited as a <strong class="role">Buyer</strong>, respond to this invitation</span>
+                            <span>You are invited as a <strong
+								class="role">Buyer</strong>, respond to this invitation</span>
                             <app-transaction-tool-invite-respond (onAccept)="partyAccept()" (onReject)="partyReject($event)"></app-transaction-tool-invite-respond>
                         </div>
                     </div>
@@ -169,8 +175,9 @@
                     <div class="row">
                         <div class="col-xs-12 buttons-holder">
                             <button type="button" [disabled]="inviteForm.invalid" [ngClass]="{disabled : !disclosuresLink}"
-                                class="btn propy-control invite-btn button-big" (click)="onInvite()">Invite & Continue
-                            </button>
+                                class="btn propy-control invite-btn button-big" (click)="onInvite()">Invite &
+								Continue
+							</button>
                             <p-confirmDialog key="cancelTransactionDialog"></p-confirmDialog>
                             <button type="button" class="btn propy-control button-big btn-white btn-cancel" (click)="showCancelDialog()">{{
 								'common.label.cancel' | translate }}
@@ -232,7 +239,7 @@
                                 <button type="button" *ngIf="!reuploadingDocumentActivated" class="btn propy-control button-big pull-right"
                                     (click)="reuploadingDocumentActivated = true">Reupload
 								</button>
-                                <button type="button" *ngIf="reuploadingDocumentActivated" class="btn propy-control cancel-reuploading button-big btn-white pull-right"
+                                <button type="button" *ngIf="reuploadingDocumentActivated && !processingUpload" class="btn propy-control cancel-reuploading button-big btn-white pull-right"
                                     (click)="reuploadingDocumentActivated = false">Cancel reuploading
 								</button>
                             </div>

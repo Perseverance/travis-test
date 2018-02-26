@@ -4,8 +4,7 @@
 			<h3 class="text-center">{{ 'common.label.signup' | translate }}</h3>
 			<div class="form-group">
 				<input formControlName="email" type="email" class="form-control propy-control" id="email"
-					   autocomplete="username"
-					   placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
+					   autocomplete="username" placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
 				<div class="propy-validation-errors-box">
 					<div class="propy-validation propy-pending-validation" *ngIf="email.pending">{{
 						'common.misc.checking' | translate }}...
@@ -24,8 +23,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<input formControlName="firstName" type="text" class="form-control propy-control" id="firstName"
-					   placeholder="{{ 'common.placeholder.firstName' | translate }}">
+				<input formControlName="firstName" type="text" class="form-control propy-control"
+					   id="firstName" placeholder="{{ 'common.placeholder.firstName' | translate }}">
 				<div *ngIf="firstName.touched" class="propy-validation-errors-box">
 					<div class="propy-validation" *ngIf="firstName.invalid && firstName.errors['required']">{{
 						'common.validation-errors.required' | translate }}
@@ -33,8 +32,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<input formControlName="lastName" type="text" class="form-control propy-control" id="lastName"
-					   (keydown.Tab)="activatePhoneDropDown()"
+				<input formControlName="lastName" type="text" class="form-control propy-control"
+					   id="lastName" (keydown.Tab)="activatePhoneDropDown()"
 					   placeholder="{{ 'common.placeholder.lastName' | translate }}">
 				<div *ngIf="lastName.touched" class="propy-validation-errors-box">
 					<div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{
@@ -53,22 +52,22 @@
 				<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
 					<div class="propy-validation"
 						 *ngIf="phoneNumber.invalid && (phoneNumber.errors['minlength'] || phoneNumber.errors['maxlength'])">
-						{{
-						'common.validation-errors.invalid-phone-number' | translate }}
+						{{ 'common.validation-errors.invalid-phone-number' | translate }}
 					</div>
 				</div>
 			</div>
 			<div formGroupName="passwords">
 				<div class="form-group">
-					<input formControlName="password" type="password" class="form-control propy-control" id="password"
-						   placeholder="{{ 'common.placeholder.password' | translate }}">
+					<input formControlName="password" type="password" class="form-control propy-control"
+						   id="password" placeholder="{{ 'common.placeholder.password' | translate }}">
 					<div *ngIf="password.touched" class="propy-validation-errors-box">
 						<div class="propy-validation" *ngIf="password.invalid && password.errors['required']">{{
 							'common.validation-errors.required' | translate }}
 						</div>
 						<div class="propy-validation"
 							 *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">{{
-							'common.validation-errors.invalid-password' | translate }}
+							'common.validation-errors.invalid-password' | translate
+							}}
 						</div>
 					</div>
 				</div>
@@ -82,7 +81,8 @@
 						</div>
 						<div class="propy-validation"
 							 *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">{{
-							'common.validation-errors.invalid-password' | translate }}
+							'common.validation-errors.invalid-password' | translate
+							}}
 						</div>
 					</div>
 				</div>
@@ -105,8 +105,8 @@
 
 			<div formGroupName="agentFields" *ngIf="iAmAnAgent.value">
 				<div class="form-group">
-					<input formControlName="expertise" type="text" class="form-control propy-control" id="expertise"
-						   placeholder="{{ 'common.placeholder.expertise' | translate }}">
+					<input formControlName="expertise" type="text" class="form-control propy-control"
+						   id="expertise" placeholder="{{ 'common.placeholder.expertise' | translate }}">
 					<div *ngIf="expertise.touched" class="propy-validation-errors-box">
 						<div class="propy-validation" *ngIf="expertise.invalid && expertise.errors['required']">{{
 							'common.validation-errors.required' | translate }}
@@ -115,10 +115,10 @@
 				</div>
 				<div class="form-group agency-form-group">
 					<ng2-completer formControlName="agency" [datasource]="agencyAutoCompleteDataService"
-								   fillHighlighted="false" inputId="agency"
-								   inputName="agency" inputClass="form-control propy-control ng-no-margin"
-								   (selected)="onAgencySelected($event)"
-								   [autoMatch]="true" placeholder="{{ 'common.placeholder.agency' | translate }}"
+								   fillHighlighted="false" inputId="agency" inputName="agency"
+								   inputClass="form-control propy-control ng-no-margin"
+								   (selected)="onAgencySelected($event)" [autoMatch]="true"
+								   placeholder="{{ 'common.placeholder.agency' | translate }}"
 								   minSearchLength="3"
 								   textNoResults="{{ 'signup.agency-not-found' | translate }}"></ng2-completer>
 				</div>
@@ -174,10 +174,35 @@
 			<div class="social">
 				<p class="title text-center"><span
 					class="text-capitalize">{{ 'common.misc.or' | translate }}&nbsp;</span>{{
-					'common.social.connect-with'
-					| translate }}</p>
+					'common.social.connect-with' | translate }}</p>
 				<app-facebook-button (click)="facebookLogin()"></app-facebook-button>
 			</div>
 		</form>
+		<p-dialog header="{{ 'common.verification-popup.header' | translate }}" verifyEmail
+				  [(visible)]="showVerificationDialog" modal="true" draggable="false" resizable="false"
+				  dismissableMask="true" width="500" styleClass="verifyFacebook">
+			<div class="col-xs-12">
+				<form [formGroup]="verifyForm">
+					<p class="text-center">{{ 'common.verification-popup.body' | translate }}</p>
+					<div class="form-group">
+						<input formControlName="verifyEmail" type="email" class="form-control propy-control"
+							   id="verifyEmail" placeholder="{{ 'common.placeholder.yourEmail' | translate }}">
+						<div *ngIf="verifyEmail.touched" class="propy-validation-errors-box">
+							<div class="propy-validation" *ngIf="verifyEmail.invalid && verifyEmail.errors['required']">
+								{{ 'common.validation-errors.required' | translate }}
+							</div>
+							<div class="propy-validation" *ngIf="verifyEmail.invalid && verifyEmail.errors['email']">{{
+								'common.validation-errors.invalid-email' | translate
+								}}
+							</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-block propy-control button-big"
+							(click)="sendVerificationEmailAddress()"
+							[disabled]="verifyEmail.invalid">{{ 'common.verification-popup.submit' | translate }}
+					</button>
+				</form>
+			</div>
+		</p-dialog>
 	</div>
 </div>

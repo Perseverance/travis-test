@@ -2,17 +2,18 @@
 <ng-template #dataLoaded>
     <div *ngIf="isTransferFinished;else notFinished">
         <div *ngIf="userIsBuyer; else notBuyer">
-            <h5>Congratulations! The property transfer has been completed successfully.
-                The local registry will soon be sending you the Property Deed to
-                your physical address.</h5>
+            <div class="tx-result tx-success"><i class="fa fa-check-circle"></i> Congratulations! The property transfer
+                has been completed successfully. The local registry will soon be
+                sending you the Property Deed to your physical address.
+            </div>
         </div>
         <ng-template #notBuyer>
-            <h5>The transfer of this property was completed succesfully!</h5>
+            <div class="tx-result tx-success"><i class="fa fa-check-circle"></i> Congratulations! The transfer of this
+                property was completed succesfully!
+            </div>
         </ng-template>
         <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.SUCCESS">
-            <div class="tx-result tx-success"><i class="fa fa-check-circle"></i> Action successfully recorded to the
-                Blockchain.
-            </div>
+
             <div>Here is your receipt:</div>
             <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
                         etherscan}}</a>
@@ -20,11 +21,12 @@
     </div>
     <ng-template #notFinished>
         <div *ngIf="userIsTitleCompany;else notTitleCompany">
-            <div *ngIf="transactionDetails == null">
-                <i>Status: Waiting For You To Record The Transfer Ownership Change To The Blockchain. Please use the button below!</i>
+            <div *ngIf="transactionDetails == null;else hasTxDetails">
+                <i>Status: Waiting For You To Record The Transfer of Ownership To The Blockchain. Please use the button below!</i>
                 <br>
                 <app-record-blockchain-form [recordButtonEnabled]="recordButtonEnabled" (onRecord)="onRecordClick($event)"></app-record-blockchain-form>
             </div>
+        <ng-template #hasTxDetails>
             <div *ngIf="transactionDetails.status == TRANSACTION_STATUSES.FAILED">
                 <div class="tx-result tx-fail">
                     <i class="fa fa-times-circle"></i><span>Your Blockchain action was not successfully recorded. Please try again.</span>
@@ -43,6 +45,7 @@
                 <a [href]="transactionDetails.txHash | etherscan" target="_blank" class="tx-link">{{transactionDetails.txHash |
                             etherscan}}</a>
             </div>
+        </ng-template>
         </div>
         <ng-template #notTitleCompany>
             <i>Status: Waiting for the Title Company to record the ownership transfer to the blockchain</i>

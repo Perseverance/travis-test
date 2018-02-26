@@ -1,16 +1,16 @@
-import {GoogleAnalyticsEventsService} from './shared/google-analytics.service';
-import {Router} from '@angular/router';
-import {environment} from './../environments/environment';
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService, UserData} from './authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
-import {LocalStorageService} from './shared/localStorage.service';
-import {AllSupportedLanguage, DefaultLanguage} from './core/i18nSetup';
-import {CurrencyTypeEnum} from './shared/enums/currency-type.enum';
-import {MomentService} from './shared/moment.service';
-import {Intercom} from 'ng2-intercom/intercom';
-import {default as smartlookClient} from 'smartlook-client';
-import {PusherService} from './shared/pusher.service';
+import { GoogleAnalyticsEventsService } from './shared/google-analytics.service';
+import { Router } from '@angular/router';
+import { environment } from './../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService, UserData } from './authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from './shared/localStorage.service';
+import { AllSupportedLanguage, DefaultLanguage } from './core/i18nSetup';
+import { CurrencyTypeEnum } from './shared/enums/currency-type.enum';
+import { MomentService } from './shared/moment.service';
+import { Intercom } from 'ng2-intercom/intercom';
+import { default as smartlookClient } from 'smartlook-client';
+import { PusherService } from './shared/pusher.service';
 
 @Component({
 	selector: 'app-root',
@@ -18,15 +18,15 @@ import {PusherService} from './shared/pusher.service';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
+	public userId;
 	constructor(public authService: AuthenticationService,
-				public translateService: TranslateService,
-				private localStorageService: LocalStorageService,
-				private momentService: MomentService,
-				private intercom: Intercom,
-				public router: Router,
-				public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-				public pusherService: PusherService) {
+		public translateService: TranslateService,
+		private localStorageService: LocalStorageService,
+		private momentService: MomentService,
+		private intercom: Intercom,
+		public router: Router,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+		public pusherService: PusherService) {
 
 		translateService.addLangs(AllSupportedLanguage);
 		// this language will be used as a fallback when a translation isn't found in the current language
@@ -42,7 +42,10 @@ export class AppComponent implements OnInit {
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				if (!userInfo.isAnonymous) {
+					this.pusherService.disconnectPusher();
+					this.pusherService.unsubscribePusherChannel(userInfo.user.id);
 					this.pusherService.initializePusher(localStorageService.accessToken, userInfo.user.id);
+					this.userId = userInfo.user.id;
 				}
 			}
 		});
@@ -69,5 +72,13 @@ export class AppComponent implements OnInit {
 				});
 			}
 		});
+		const self = this;
+		window.onbeforeunload = function (e) {
+			self.pusherService.unsubscribePusherChannel(self.userId);
+		};
+
+		window.onunload = function (e) {
+			self.pusherService.unsubscribePusherChannel(self.userId);
+		};
 	}
 }

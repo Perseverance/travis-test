@@ -13,8 +13,10 @@ export class TransactionToolWorkflowService {
 	public deedAddress;
 	private statusToStepMap = {};
 
+	// ToDo: Affidavit step hide, next steps are decremented with 1
+
 	constructor(private smartContractService: SmartContractConnectionService,
-		private deedService: DeedsService) {
+	            private deedService: DeedsService) {
 		this.statusToStepMap[`${Status.rejectedDeal}`] = STEPS['rejected'];
 		this.statusToStepMap[`${Status.canceledDeal}`] = STEPS['canceled'];
 		this.statusToStepMap[`${Status.reserve}`] = STEPS['invite'];
@@ -26,11 +28,11 @@ export class TransactionToolWorkflowService {
 		this.statusToStepMap[`${Status.titleReport}`] = STEPS['title-report'];
 		this.statusToStepMap[`${Status.titleReportBlockchain}`] = STEPS['disclosures'];
 		this.statusToStepMap[`${Status.Disclosures}`] = STEPS['disclosures'];
-		this.statusToStepMap[`${Status.DisclosuresBlockchain}`] = STEPS['settlement-statement'];
+		this.statusToStepMap[`${Status.DisclosuresBlockchain}`] = STEPS['settlement-statements'];
 		this.statusToStepMap[`${Status.settlementStatement}`] = STEPS['payment'];
-		this.statusToStepMap[`${Status.payment}`] = STEPS['affidavit'];
-		this.statusToStepMap[`${Status.affidavit}`] = STEPS['affidavit'];
-		this.statusToStepMap[`${Status.affidavitBlockchain}`] = STEPS['closing-documents'];
+		this.statusToStepMap[`${Status.payment}`] = STEPS['closing-documents'];
+		// this.statusToStepMap[`${Status.affidavit}`] = STEPS['affidavit'];
+		// this.statusToStepMap[`${Status.affidavitBlockchain}`] = STEPS['closing-documents'];
 		this.statusToStepMap[`${Status.closingDocuments}`] = STEPS['transfer'];
 
 	}

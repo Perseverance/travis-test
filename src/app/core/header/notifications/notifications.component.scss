@@ -1,9 +1,33 @@
 @import "../../../../variables";
 @import "../../../../mixins";
-
-.no-new-notifications {
-	font-size: $font-size-small;
-	color: $gray-dark;
-	padding: 10px;
-	margin: 0px;
+$blue-light-notification: #DCF6FF;
+.notifications {
+    font-size: $font-size-small; //padding: 10px;
+    margin: 0px;
+    a:link {
+        text-decoration: none;
+    }
+    a {
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .media {
+        .media-body {
+            .media-heading {
+                font-size: 14px;
+            }
+        }
+        padding: 10px;
+        &.notRead {
+            background-color: $blue-light-notification;
+        }
+        .timestamp {
+            color: rgb(173, 173, 173);
+            float: right;
+            font-size: 12px;
+        }
+    }
+    .media:hover {
+        background-color: $blue-light;
+    }
 }

@@ -39,6 +39,7 @@
 		"ethereumjs-tx": "^1.3.3",
 		"ethereumjs-wallet": "^0.6.0",
 		"font-awesome": "^4.7.0",
+		"hammerjs": "^2.0.8",
 		"hellosign-sdk": "^1.1.14",
 		"jquery": "^3.2.1",
 		"ng-inline-svg": "^4.0.1",

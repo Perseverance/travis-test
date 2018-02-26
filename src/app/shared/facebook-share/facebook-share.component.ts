@@ -1,16 +1,18 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {UIParams, UIResponse, FacebookService} from 'ngx-facebook';
-import {ImageSizePipe} from '../pipes/image-size.pipe';
-import {ImageEnvironmentPrefixPipe} from '../pipes/image-environment-prefix.pipe';
-import {PropertyConversionService} from '../property-conversion.service';
-import {MetaService} from '@ngx-meta/core';
-import {AuthenticationService} from '../../authentication/authentication.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {RedirectableComponent} from '../redirectable/redirectable.component';
-import {environment} from '../../../environments/environment';
-import {PropertiesService} from '../../properties/properties.service';
-import {TranslateService} from "@ngx-translate/core";
-import {NotificationsService} from "../notifications/notifications.service";
+import { GoogleAnalyticsEventsService } from './../google-analytics.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
+import { ImageSizePipe } from '../pipes/image-size.pipe';
+import { ImageEnvironmentPrefixPipe } from '../pipes/image-environment-prefix.pipe';
+import { PropertyConversionService } from '../property-conversion.service';
+import { MetaService } from '@ngx-meta/core';
+import { AuthenticationService } from '../../authentication/authentication.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { RedirectableComponent } from '../redirectable/redirectable.component';
+import { environment } from '../../../environments/environment';
+import { PropertiesService } from '../../properties/properties.service';
+import { TranslateService } from "@ngx-translate/core";
+import { NotificationsService } from "../notifications/notifications.service";
+declare let fbq: any;
 
 @Component({
 	selector: 'app-facebook-share',
@@ -25,27 +27,32 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	private refIdRoute = 'refId';
 	private isAnonymous: boolean;
 	private notLoggedInError: string;
+	private successShareBonusLabel: string;
 
 	constructor(private fb: FacebookService,
-				private propertiesService: PropertiesService,
-				private translateService: TranslateService,
-				private authService: AuthenticationService,
-				public router: Router,
-				private route: ActivatedRoute,
-				private notificationService: NotificationsService) {
+		private propertiesService: PropertiesService,
+		private translateService: TranslateService,
+		private authService: AuthenticationService,
+		public router: Router,
+		private route: ActivatedRoute,
+		private notificationService: NotificationsService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 	}
 
 	ngOnInit() {
 		this.translateService.stream([
-			'common.only-registered-share'
+			'common.only-registered-share',
+			'common.label.share-bonus-received'
 		]).subscribe((translations) => {
 			this.notLoggedInError = translations['common.only-registered-share'];
-
+			this.successShareBonusLabel = translations['common.label.share-bonus-received'];
 		});
 	}
 
 	public async shareInFacebook() {
+		this.googleAnalyticsEventsService.emitEvent('facebook-share', 'share-button');
+		fbq('track', 'Facebook-Share');
 		this.isAnonymous = this.authService.isUserAnonymous;
 		if (this.isAnonymous && this.isFeaturedProperty) {
 			this.notificationService.pushInfo({
@@ -56,7 +63,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			});
 			const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
 			queryParams['redirect'] = this.componentUrl;
-			this.router.navigate(['signup'], {queryParams: queryParams});
+			this.router.navigate(['signup'], { queryParams: queryParams });
 			return;
 		}
 
@@ -72,7 +79,15 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 
 		this.fb.ui(params)
 			.then(async (res: UIResponse) => {
-				if (this.property.isShareRewardEnabled) {
+				if (res && !res.error_message && this.property.isShareRewardEnabled) {
+					if (this.property.isFeaturedProperty) {
+						this.notificationService.pushInfo({
+							title: this.successShareBonusLabel,
+							message: '',
+							time: (new Date().getTime()),
+							timeout: 5000
+						});
+					}
 					await this.propertiesService.socialMediaShare(this.property.id);
 					this.authService.getCurrentUser();
 					this.property.isShareRewardEnabled = false;

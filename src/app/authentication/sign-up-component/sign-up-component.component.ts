@@ -30,6 +30,9 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private AGENCY_MAX_SUGGESTIONS = 5;
 
 	public signupForm: FormGroup;
+	public verifyForm: FormGroup;
+	public showVerificationDialog = false;
+
 	private paramsSubscriptions = new Array<Subscription>();
 
 	public agencyId: string = null;
@@ -38,6 +41,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	private redirectToUrl = environment.defaultRedirectRoute;
 	private referralId: string;
 	private emailSentSuccess: string;
+	private loginProgress: string;
+	private loginSuccess: string;
 	public defaultPhoneCountryCode: string;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
@@ -66,8 +71,11 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			return `${this.agencySuggestionsService.agenciesSearchURL}${term}`;
 		});
 		this.agencyAutoCompleteDataService.dataField('data');
-		this.translateService.stream(['verification.activation-email-sent']).subscribe(translations => {
+		this.translateService.stream(['verification.activation-email-sent',
+			'signup.logging-you-in', 'signup.success']).subscribe(translations => {
 			this.emailSentSuccess = translations['verification.activation-email-sent'];
+			this.loginProgress = translations['signup.logging-you-in'];
+			this.loginSuccess = translations['signup.success'];
 		});
 
 		this.signupForm = this.formBuilder.group({
@@ -92,6 +100,10 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				agencyPassword: ['']
 			}),
 			rememberMe: [true]
+		});
+
+		this.verifyForm = this.formBuilder.group({
+			verifyEmail: ['', [Validators.required, Validators.email]]
 		});
 	}
 
@@ -131,6 +143,10 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 				}
 
 			});
+	}
+
+	public get verifyEmail() {
+		return this.verifyForm.get('verifyEmail');
 	}
 
 	public get email() {
@@ -216,44 +232,53 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
-		const result = await this.authService
-			.performSignUp(
-				this.email.value,
-				this.password.value,
-				this.firstName.value.trim(),
-				this.lastName.value.trim(),
-				phoneNumber,
-				this.childPhoneComponent.selectedCountry.countryCode,
-				this.rememberMe.value
-			);
-		if (this.iAmAnAgent.value) {
-			if (this.agencyId == null) {
-				if (this.agency.value.length === 0) {
-					return;
+		if (!!this.firstName.value.trim().length && !!this.lastName.value.trim().length) {
+			const result = await this.authService
+				.performSignUp(
+					this.email.value,
+					this.password.value,
+					this.firstName.value.trim(),
+					this.lastName.value.trim(),
+					phoneNumber,
+					this.childPhoneComponent.selectedCountry.countryCode,
+					this.rememberMe.value
+				);
+			if (this.iAmAnAgent.value) {
+				if (this.agencyId == null) {
+					if (this.agency.value.length === 0) {
+						return;
+					}
+					this.agencyId = await this.createAgency(this.agency.value);
 				}
-				this.agencyId = await this.createAgency(this.agency.value);
+				const agentResult = await this.authService.performAgentSignup({
+					firstName: this.firstName.value.trim(),
+					lastName: this.lastName.value.trim(),
+					email: this.email.value,
+					agencyId: this.agencyId,
+					agencyName: this.agency.value,
+					locations: this.agentLocations,
+					info: this.expertise.value
+				});
 			}
-			const agentResult = await this.authService.performAgentSignup({
-				firstName: this.firstName.value.trim(),
-				lastName: this.lastName.value.trim(),
-				email: this.email.value,
-				agencyId: this.agencyId,
-				agencyName: this.agency.value,
-				locations: this.agentLocations,
-				info: this.expertise.value
+			this.notificationsService.pushSuccess({
+				title: this.emailSentSuccess,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 4000
 			});
-		}
-		this.notificationsService.pushSuccess({
-			title: this.emailSentSuccess,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
-		this.googleAnalyticsEventsService.emitEvent('click', 'signup_submission');
-		this.router.navigate([this.redirectToUrl]);
-		if (result && this.referralId) {
-			const email = this.email.value;
-			this.referralPost(email, this.referralId);
+			this.googleAnalyticsEventsService.emitEvent('click', 'signup_submission');
+			this.router.navigate([this.redirectToUrl]);
+			if (result && this.referralId) {
+				const email = this.email.value;
+				this.referralPost(email, this.referralId);
+			}
+		} else {
+			this.notificationsService.pushInfo({
+				title: 'ERROR: ',
+				message: 'Please enter valid First name and/or Last name',
+				time: (new Date().getTime()),
+				timeout: 3000
+			});
 		}
 	}
 
@@ -263,21 +288,40 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async facebookLogin() {
+		this.notificationsService.pushInfo({
+			title: this.loginProgress,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 5000
+		});
 		const result = await this.authService.performFacebookLogin();
 		if (result && this.referralId) {
 			const email = this.authService.user.email;
 			this.referralPost(email, this.referralId);
 		}
+
+		if (!result.isEmailVerified) {
+			this.openVerifyEmailPopup();
+			return;
+		}
+
+		this.notificationsService.pushSuccess({
+			title: this.loginSuccess,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
 		this.router.navigate([this.redirectToUrl]);
 	}
 
+	private openVerifyEmailPopup() {
+		this.showVerificationDialog = true;
+	}
+
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
-	public async linkedInLogin() {
-		const result = await this.authService.performLinkedInLogin();
-		if (result && this.referralId) {
-			const email = this.authService.user.email;
-			this.referralPost(email, this.referralId);
-		}
+	public async sendVerificationEmailAddress() {
+		const result = await this.authService.updateVerificationEmail(this.verifyEmail.value);
 		this.router.navigate([this.redirectToUrl]);
 	}
 

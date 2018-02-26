@@ -16,6 +16,7 @@ import { BigNumberFormatPipe } from '../../shared/pipes/big-number-format.pipe';
 import { CurrencySymbolPipe } from '../../shared/pipes/currency-symbol.pipe';
 import { log } from 'util';
 import { Base64Service } from '../../shared/base64.service';
+import { Router } from '@angular/router';
 
 export enum LIST_PROPERTY_MODES {
 	NEW = 'new',
@@ -74,7 +75,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		private bigNumberPipe: BigNumberFormatPipe,
 		private currencySymbolPipe: CurrencySymbolPipe,
 		private propertiesService: PropertiesService,
-		private base64Service: Base64Service) {
+		private base64Service: Base64Service,
+		private router: Router) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
@@ -328,7 +330,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 				};
 				preparedImages.push(currentImageObj);
 			} catch (error) {
-				// Should not stop on one unsuccessfull convertion
+				// Should not stop on one unsuccessful convertion
 				continue;
 			}
 		}
@@ -406,6 +408,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 			time: (new Date().getTime()),
 			timeout: 3000
 		});
+
+		this.router.navigate(['/property/', result.data]);
 
 		this.resetListingForm();
 		this.processingSubmit = false;

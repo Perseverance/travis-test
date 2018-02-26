@@ -19,7 +19,6 @@ import { WalletAddressValidator } from './pro-wallet-address-validator';
 import { SignUpFormValidators } from '../authentication/sign-up-component/sign-up-components.validators';
 import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
 import { PhoneNumberValidators } from '../shared/validators/phone-number.validators';
-import { Country } from '../shared/country.interface';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -138,7 +137,11 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
 		this.shouldShowRedeemSection = this.userTransactionsHistory.isCanRedeemStashedTokens;
 		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
-		this.authService.getCurrentUser();
+		try {
+			await this.authService.getCurrentUser(true, true);
+		} catch (e) {
+			// This happens when you press logout while loading. Nothing to do here
+		}
 	}
 
 	public get passwords() {
