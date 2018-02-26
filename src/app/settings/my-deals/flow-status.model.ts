@@ -12,11 +12,9 @@ export const FlowStatus = {
 	8: 'Recording Disclosures to Blockchain',
 	9: 'Settlement Statements - Pending Upload & Acceptance',
 	10: 'Awaiting Payment',
-	11: 'Affidavit - Pending Signatures',
-	12: 'Recording Affidavit to Blockchain',
-	13: 'Closing Documents - Pending Upload',
-	14: 'Recording Transfer of Ownership to Blockchain',
-	15: 'Completed',
+	11: 'Closing Documents - Pending Upload',
+	12: 'Recording Transfer of Ownership to Blockchain',
+	13: 'Completed',
 };
 
 export type FlowStatus = string;

@@ -149,8 +149,8 @@
     "signup": {
         "agent-checkbox": "I am an agent",
         "agency-not-found": "No such agency found. Submitting this will create it.",
-        "logging-you-in": "Logging You Into Your Account",
-        "success": "Successful Log In"
+        "logging-you-in": "Logging you into your account",
+        "success": "Successful log in"
     },
     "forgot-password": {
         "forgot-your-password": "Forgot your password?",
@@ -434,7 +434,7 @@
         "resend-error": "Could not re-send verification email. Are you sure you used the correct email?"
     },
     "notifications": {
-        "reserved": "reserved your listing.",
-        "invited": "have just been invited you to a property deal."
+        "reserved": "has reserved your listing.",
+        "invited": "has invited you to a property deal."
     }
 }

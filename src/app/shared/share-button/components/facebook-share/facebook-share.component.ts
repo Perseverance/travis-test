@@ -1,3 +1,4 @@
+import { GoogleAnalyticsEventsService } from './../google-analytics.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
 import { ImageSizePipe } from '../../../pipes/image-size.pipe';
@@ -50,6 +51,8 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	}
 
 	public async shareInFacebook() {
+		this.googleAnalyticsEventsService.emitEvent('facebook-share', 'share-button');
+		fbq('track', 'Facebook-Share');
 		this.isAnonymous = this.authService.isUserAnonymous;
 		if (this.isAnonymous && this.isFeaturedProperty) {
 			this.notificationService.pushInfo({
@@ -60,7 +63,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 			});
 			const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
 			queryParams['redirect'] = this.componentUrl;
-			this.router.navigate(['signup'], {queryParams: queryParams});
+			this.router.navigate(['signup'], { queryParams: queryParams });
 			return;
 		}
 

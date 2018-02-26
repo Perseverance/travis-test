@@ -4,6 +4,8 @@ import { environment } from '../../environments/environment';
 import { Web3Service } from '../web3-connection/web3-connection.service';
 import { BaseContract } from '../web3-connection/BaseContract';
 
+// ToDo: Affidavit step hide, next steps are decremented with 1
+
 export enum Status {
 	rejectedDeal = -2,
 	canceledDeal = -1,
@@ -19,10 +21,10 @@ export enum Status {
 	DisclosuresBlockchain = 9,
 	settlementStatement = 10,
 	payment = 11,
-	affidavit = 12,
-	affidavitBlockchain = 13,
-	closingDocuments = 14,
-	transferred = 15
+		// affidavit = 12,
+		// affidavitBlockchain = 13,
+	closingDocuments = 12,
+	transferred = 13
 }
 
 export enum SMART_CONTRACT_DOCUMENT_TYPES {
@@ -93,12 +95,11 @@ export class SmartContractConnectionService {
 		}
 	}
 
-	private async recordDocument(
-		walletPassword: string,
-		deedAddress: string,
-		docType: SMART_CONTRACT_DOCUMENT_TYPES,
-		docKey: string,
-		doc: string) {
+	private async recordDocument(walletPassword: string,
+	                             deedAddress: string,
+	                             docType: SMART_CONTRACT_DOCUMENT_TYPES,
+	                             docKey: string,
+	                             doc: string) {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
