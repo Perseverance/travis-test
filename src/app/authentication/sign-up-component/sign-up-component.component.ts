@@ -7,7 +7,7 @@ import { ErrorsService } from './../../shared/errors/errors.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
 import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decorators';
-import { environment } from './../../../environments/environment';
+import { environment } from './../../../environments/environment.prod';
 import { SignUpFormValidators } from './sign-up-components.validators';
 import { AuthenticationService } from './../authentication.service';
 import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';

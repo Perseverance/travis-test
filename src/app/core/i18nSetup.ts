@@ -1,4 +1,4 @@
-import { environment as env } from './../../environments/environment' ;
+import { environment as env } from './../../environments/environment.prod' ;
 
 export const AllSupportedLanguage = ['en', 'ru', 'ar', 'zh'];
 

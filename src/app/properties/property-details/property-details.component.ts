@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { GoogleMapsMarkersService } from './../../shared/google-maps-markers.service';
 import { CurrencySymbolPipe } from './../../shared/pipes/currency-symbol.pipe';
 import { BigNumberFormatPipe } from './../../shared/pipes/big-number-format.pipe';
-import { environment } from './../../../environments/environment';
+import { environment } from './../../../environments/environment.prod';
 import { NgxCarousel } from 'ngx-carousel';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
