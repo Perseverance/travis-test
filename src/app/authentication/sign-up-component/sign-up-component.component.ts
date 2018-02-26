@@ -223,12 +223,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async registerUser() {
 		this.googleAnalyticsEventsService.emitEvent('page-sign-up', 'sign-up');
-		let phoneNumber;
-		if (this.phoneNumber.value) {
-			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
-		} else {
-			phoneNumber = '';
-		}
+		const phoneNumber = this.handlePhoneNumber();
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
@@ -335,6 +330,22 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	public activatePhoneDropDown() {
 		this.childPhoneComponent.showDropDown();
+	}
+
+	public handlePhoneNumber(): string {
+		let phoneNumber;
+
+		if (!this.phoneNumber.value) {
+			return '';
+		}
+
+		if (this.phoneNumber.value.startsWith('+')) {
+			return this.phoneNumber.value;
+		}
+
+		phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+
+		return phoneNumber;
 	}
 
 	public handlePhoneInputChanged() {
