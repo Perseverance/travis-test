@@ -15,6 +15,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import { PhoneNumberValidators } from '../../shared/validators/phone-number.validators';
 
 @Component({
 	selector: 'app-sign-up-component',
@@ -51,16 +52,16 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	protected agencyAutoCompleteDataService: RemoteData;
 
 	constructor(private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private router: Router,
-		private route: ActivatedRoute,
-		private agencySuggestionsService: AgencySuggestionsService,
-		private completerService: CompleterService,
-		private agencyService: AgencyService,
-		private notificationsService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+	            private formBuilder: FormBuilder,
+	            private router: Router,
+	            private route: ActivatedRoute,
+	            private agencySuggestionsService: AgencySuggestionsService,
+	            private completerService: CompleterService,
+	            private agencyService: AgencyService,
+	            private notificationsService: NotificationsService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService,
+	            public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
 		super(errorsService, translateService);
 
@@ -72,10 +73,10 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.agencyAutoCompleteDataService.dataField('data');
 		this.translateService.stream(['verification.activation-email-sent',
 			'signup.logging-you-in', 'signup.success']).subscribe(translations => {
-				this.emailSentSuccess = translations['verification.activation-email-sent'];
-				this.loginProgress = translations['signup.logging-you-in'];
-				this.loginSuccess = translations['signup.success'];
-			});
+			this.emailSentSuccess = translations['verification.activation-email-sent'];
+			this.loginProgress = translations['signup.logging-you-in'];
+			this.loginSuccess = translations['signup.success'];
+		});
 
 		this.signupForm = this.formBuilder.group({
 			email: ['',
@@ -85,7 +86,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 			passwords: this.formBuilder.group({
 				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
 				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
-			}, { validator: SignUpFormValidators.differentPasswordsValidator }),
+			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			phoneNumber: ['', Validators.compose([
@@ -222,12 +223,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	@DefaultAsyncAPIErrorHandling('common.label.authentication-error')
 	public async registerUser() {
 		this.googleAnalyticsEventsService.emitEvent('page-sign-up', 'sign-up');
-		let phoneNumber;
-		if (this.phoneNumber.value) {
-			phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
-		} else {
-			phoneNumber = '';
-		}
+		const phoneNumber = this.handlePhoneNumber();
 		this.phoneNumber.setValidators(Validators.compose([
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
@@ -239,6 +235,7 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 					this.firstName.value.trim(),
 					this.lastName.value.trim(),
 					phoneNumber,
+					this.childPhoneComponent.selectedCountry.countryCode,
 					this.rememberMe.value
 				);
 			if (this.iAmAnAgent.value) {
@@ -335,11 +332,37 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 		this.childPhoneComponent.showDropDown();
 	}
 
+	public handlePhoneNumber(): string {
+		let phoneNumber;
+
+		if (!this.phoneNumber.value) {
+			return '';
+		}
+
+		if (this.phoneNumber.value.startsWith('+')) {
+			return this.phoneNumber.value;
+		}
+
+		phoneNumber = `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
+
+		return phoneNumber;
+	}
+
 	public handlePhoneInputChanged() {
 		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
 			this.phoneNumber.setValidators(Validators.compose([
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }

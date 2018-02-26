@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {RestClientService} from '../shared/rest-client.service';
-import {APIEndpointsService} from '../shared/apiendpoints.service';
-import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
+import { Injectable } from '@angular/core';
+import { RestClientService } from '../shared/rest-client.service';
+import { APIEndpointsService } from '../shared/apiendpoints.service';
+import { UserTransactionsHistoryResponse } from './pro-wallet-responses';
 
 @Injectable()
 export class ProWalletService {
 
 	constructor(public restClient: RestClientService,
-				public apiEndpoints: APIEndpointsService) {
+	            public apiEndpoints: APIEndpointsService) {
 	}
 
 	public async updateAddress(walletAddress: string) {
@@ -28,11 +28,12 @@ export class ProWalletService {
 		return result;
 	}
 
-	public async setWallet(publicKey: string, jsonFile: string, userPhone: string) {
+	public async setWallet(publicKey: string, jsonFile: string, userPhone: string, phoneCountryCode: string) {
 		const params = {
 			publicKey,
 			jsonFile,
-			userPhone
+			userPhone,
+			phoneCountryCode
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.SET_WALLET, params);
 		return result.data.data;

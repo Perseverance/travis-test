@@ -14,6 +14,7 @@ import { Notification } from 'rxjs/Notification';
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
 	private notificationSubscription: Subscription;
+	public notificationsToShow = 5;
 	@Output() onNewNotifications = new EventEmitter();
 	@Input() notifications: any[];
 	@Input() newNotifications: number;
@@ -34,7 +35,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.onNewNotifications.emit(this.newNotifications);
-
 	}
 	public notificationMessage(notificationType) {
 		return this.notificationMessageService.returnMessage(notificationType);
@@ -75,6 +75,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			case 'transfer':
 				return 'fa fa-building-o';
 		}
+	}
+	public loadMoreNotifications() {
+		this.notificationsToShow += 5;
 	}
 
 	ngOnDestroy() {
