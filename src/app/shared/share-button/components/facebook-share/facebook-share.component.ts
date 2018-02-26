@@ -1,4 +1,4 @@
-import { GoogleAnalyticsEventsService } from './../google-analytics.service';
+import { GoogleAnalyticsEventsService } from '../../../google-analytics.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UIParams, UIResponse, FacebookService } from 'ngx-facebook';
 import { ImageSizePipe } from '../../../pipes/image-size.pipe';
@@ -12,6 +12,7 @@ import { environment } from '../../../../../environments/environment';
 import { PropertiesService } from '../../../../properties/properties.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from '../../../notifications/notifications.service';
+declare var fbq;
 
 @Component({
 	selector: 'app-facebook-share',
@@ -29,6 +30,7 @@ export class FacebookShareComponent extends RedirectableComponent implements OnI
 	private successShareBonusLabel: string;
 
 	constructor(
+		private googleAnalyticsEventsService: GoogleAnalyticsEventsService,
 		private fb: FacebookService,
 		private propertiesService: PropertiesService,
 		private translateService: TranslateService,
