@@ -24,7 +24,7 @@
         </a>
     </div>
     <div class="notifications" (click)="$event.stopPropagation()">
-        <a class="load-more" (click)="loadMoreNotifications()">Load More</a>
+        <a *ngIf="notifications.length > notificationsToShow" class="load-more" (click)="loadMoreNotifications()">Load More</a>
     </div>
 
 
