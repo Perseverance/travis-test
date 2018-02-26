@@ -434,7 +434,7 @@
         "resend-error": "Could not re-send verification email. Are you sure you used the correct email?"
     },
     "notifications": {
-        "reserved": "reserved your listing.",
-        "invited": "have just been invited you to a property deal."
+        "reserved": "has reserved your listing.",
+        "invited": "has invited you to a property deal."
     }
 }
