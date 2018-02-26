@@ -46,9 +46,9 @@ export interface PropertiesFilter {
 export class PropertiesService {
 
 	constructor(private restService: RestClientService,
-	            private apiEndpoint: APIEndpointsService,
-	            private localStorageService: LocalStorageService,
-	            private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
+		private apiEndpoint: APIEndpointsService,
+		private localStorageService: LocalStorageService,
+		private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
 	}
 
 	public async getProperty(propertyId: string, currency?: CurrencyTypeEnum): Promise<any> {
@@ -58,11 +58,15 @@ export class PropertiesService {
 
 		let result;
 		if (currency) {
-			result = await this.restService.getWithAccessTokenAndCurrency(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params}, currency);
+			result = await this.restService.getWithAccessTokenAndCurrency(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params }, currency);
 		} else {
-			result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params});
+			result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
 		}
 
+		return result.data.data;
+	}
+	public async getPendingProperties(): Promise<any> {
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.GET_PENDING_PROPERTIES);
 		return result.data.data;
 	}
 
@@ -74,15 +78,15 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
-		return {properties: result.data.data.properties};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
 	}
 
 	public async getPropertiesInRectangle(southWestLatitude: number,
-	                                      northEastLatitude: number,
-	                                      southWestLongitude: number,
-	                                      northEastLongitude: number,
-	                                      filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number,
+		filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createRectangleBounds(southWestLatitude,
 			northEastLatitude,
 			southWestLongitude,
@@ -93,8 +97,8 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
-		return {properties: result.data.data.properties};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
 	}
 
 	private createBoundsFromCenter(centerLatitude: number, centerLongitude: number, degreesOfIncreaseArea = 1) {
@@ -108,9 +112,9 @@ export class PropertiesService {
 	}
 
 	private createRectangleBounds(southWestLatitude: number,
-	                              northEastLatitude: number,
-	                              southWestLongitude: number,
-	                              northEastLongitude: number) {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number) {
 		const bounds: Bounds = {
 			southWestLatitude: southWestLatitude,
 			northEastLatitude: northEastLatitude,
@@ -184,7 +188,7 @@ export class PropertiesService {
 			propertyid: propertyId
 		};
 		const result = await this.restService.postWithAccessToken(
-			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_SOLD, {}, {params: queryParams});
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_SOLD, {}, { params: queryParams });
 		return true;
 	}
 
@@ -193,7 +197,7 @@ export class PropertiesService {
 			propertyid: propertyId
 		};
 		const result = await this.restService.postWithAccessToken(
-			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_UNLISTED, {}, {params: queryParams});
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_UNLISTED, {}, { params: queryParams });
 		return true;
 	}
 
@@ -211,7 +215,7 @@ export class PropertiesService {
 			option: isHidden
 		};
 		const result = await this.restService.postWithAccessToken(
-			this.apiEndpoint.INTERNAL_ENDPOINTS.HIDE_PROPERTY, params, {params: queryParams});
+			this.apiEndpoint.INTERNAL_ENDPOINTS.HIDE_PROPERTY, params, { params: queryParams });
 		return result.data;
 	}
 
@@ -227,18 +231,18 @@ export class PropertiesService {
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
 			propertyImages,
-			{params: queryParams});
+			{ params: queryParams });
 
 		return true;
 	}
 
 	public async requestInfo(propertyId: string,
-	                         agentId: string,
-	                         userName: string,
-	                         userEmail: string,
-	                         userPhone: string,
-	                         phoneCountryCode: string,
-	                         userRequestDescription: string): Promise<boolean> {
+		agentId: string,
+		userName: string,
+		userEmail: string,
+		userPhone: string,
+		phoneCountryCode: string,
+		userRequestDescription: string): Promise<boolean> {
 		const params = {
 			propertyId,
 			agentId,
@@ -256,7 +260,7 @@ export class PropertiesService {
 		const params = {
 			propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, {params});
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, { params });
 		return result.data.data;
 	}
 
@@ -265,7 +269,7 @@ export class PropertiesService {
 			propertyId,
 			agentId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.DEAL_PARTIES, {params});
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.DEAL_PARTIES, { params });
 		return result.data.data;
 	}
 

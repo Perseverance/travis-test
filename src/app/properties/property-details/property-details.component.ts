@@ -71,6 +71,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public cryptoBtc = false;
 	public cryptoEth = false;
 	public cryptoFiat = false;
+	public isAdmin = false;
 
 	constructor(router: Router,
 		private route: ActivatedRoute,
@@ -111,6 +112,8 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	}
 
 	async ngOnInit() {
+		const currentUser = await this.authService.getCurrentUser(true, true);
+		this.isAdmin = currentUser.data.data.isAdmin;
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
 
 		this.propertyImagesCarouselConfig = {
@@ -374,5 +377,13 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			return;
 		}
 		this.router.navigate(['/purchase', this.property.id]);
+	}
+
+	public markPropertyAsAccepted() {
+
+	}
+
+	public markPropertyAsRejected() {
+
 	}
 }

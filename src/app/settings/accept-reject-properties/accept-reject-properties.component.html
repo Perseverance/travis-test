@@ -1,0 +1,21 @@
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12 propy-table">
+            <p-dataTable [value]="myDeals" (onRowClick)="goToTransactionToolWorkflow($event.data)"
+                styleClass="propy-deals">
+                <p-column field="propertyAddress" header="Address"></p-column>
+
+                <p-column field="createdAtDateTime" header="Created">
+                    <ng-template let-ri="rowIndex" pTemplate="body">
+                        <span>{{ (myDeals[ri].createdAtTimeStamp | amFromUnix) | amTimeAgo }}</span>
+                    </ng-template>
+                </p-column>
+                <p-column field="lastUpdatedAtDateTime" header="Updated">
+                    <ng-template let-ri="rowIndex" pTemplate="body">
+                        <span>{{ (myDeals[ri].lastUpdatedAtTimeStamp | amFromUnix) | amTimeAgo }}</span>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+</div>
