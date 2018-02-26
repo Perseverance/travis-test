@@ -40,7 +40,7 @@
                         <span class="hidden-xs">{{ 'property-details.published' | translate }} {{ (property.addedOnTimeStamp | amFromUnix) | amTimeAgo }}</span>&nbsp;
                         <app-share-button [property]="property" [userInfo]="userInfo" [isFeaturedProperty]="property?.isFeaturedProperty"></app-share-button>
                     </div>
-                    <div class="col-xs-3 col-sm-3 col-lg-3 text-right">
+                    <div class="col-xs-3 col-sm-3 col-lg-3 text-right" *ngIf="!isChina">
                         <a href="" class="btn btn-block propy-control button-small btn-purchase text-uppercase"
                             [ngClass]="{'disabled-reservation': isPropertyReserved}"
                             (click)="reserveProperty($event)">
