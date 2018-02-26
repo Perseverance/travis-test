@@ -25,6 +25,8 @@ export class LoginComponentComponent extends ErrorsDecoratableComponent implemen
 	private loginProgress: string;
 	private loginSuccess: string;
 
+	public isChina: Boolean = environment.china;
+
 	private redirectToUrl = environment.defaultRedirectRoute;
 
 

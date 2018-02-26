@@ -32,8 +32,8 @@
                     <a [routerLink]="['/forgot']">{{ 'forgot-password.forgot-your-password' | translate}}</a>
                 </div>
             </div>
-            <hr class="separator">
-            <div class="social">
+            <hr class="separator" *ngIf="!isChina">
+            <div class="social" *ngIf="!isChina">
                 <p class="title text-center"><span class="text-capitalize">{{ 'common.misc.or' | translate }}&nbsp;</span>{{
                     'common.social.connect-with' | translate }}</p>
                 <app-facebook-button (click)="facebookLogin()"></app-facebook-button>

@@ -46,6 +46,8 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
 
+	public isChina: Boolean = environment.china;
+
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	protected agencyAutoCompleteDataService: RemoteData;
