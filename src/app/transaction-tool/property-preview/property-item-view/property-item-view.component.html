@@ -25,9 +25,9 @@
                     <div class="media-body">
                         <div class="row property-details">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <p>{{ property.bedrooms }} BEDROOMS | {{ property.size.value
-                                    | sizeUnitOfMeasure }}
-                                </p>
+                                <span *ngIf="property.bedrooms !== 0">{{ property.bedrooms }} BEDROOMS |</span>
+                                <span>{{ property.size.value
+                                        | sizeUnitOfMeasure }}</span>
                             </div>
                         </div>
 
