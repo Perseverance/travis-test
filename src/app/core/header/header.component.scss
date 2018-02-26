@@ -419,7 +419,7 @@ $header-margin-sm: 15px;
                 margin: 0px;
             }
             &:hover {
-                background-color: $gray-lighter;
+                background-color: $gray-dark;
             }
             .fa-bell {
                 position: relative;
@@ -472,6 +472,11 @@ $header-margin-sm: 15px;
                     background-color: $white;
                 }
                 border: none;
+            }
+        }
+        a.dropdown-toggle {
+            &:hover {
+                background-color: $gray-lighter !important;
             }
         }
         .text-uppercase {

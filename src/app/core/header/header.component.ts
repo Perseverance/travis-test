@@ -33,7 +33,6 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public settingsTabs = SETTINGS_TABS;
 	public isEmailVerified = false;
 	public newNotifications = false;
-	public isNotificationsMenuShown = false;
 	private verificationError: string;
 	private verificationMessage: string;
 	public numberOfNotifications: number;
@@ -163,7 +162,7 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		this.numberOfNotifications = newNotifications;
 	}
 	public async onToggleNotifications() {
-		this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
+		//this.isNotificationsMenuShown = !this.isNotificationsMenuShown;
 		if (this.numberOfNotifications > 0) {
 			try {
 				this.newNotifications = false;
