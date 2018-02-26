@@ -83,7 +83,4 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		this.notificationSubscription.unsubscribe();
 	}
-	public get currentLenght() {
-		return this.notificationsToShow;
-	}
 }
