@@ -1,6 +1,8 @@
+import { environment } from './../../../environments/environment';
 import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+
 
 @Component({
 	selector: 'app-footer',
@@ -10,7 +12,9 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 export class FooterComponent implements OnInit {
 	public currentYear: number;
 	public locations: MapLocation[];
-	public shouldShowFooter: boolean;
+	public shouldShowFooter: Boolean;
+
+	public isChina: Boolean = environment.china;
 
 	constructor(private router: Router,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {

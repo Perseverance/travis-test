@@ -10,7 +10,7 @@
             <h6 class="footer-suggestion" (click)="goToMapLocation(3)">{{'footer.city4' | translate}}</h6>
             <h6 class="footer-suggestion" (click)="goToMapLocation(5)">{{'footer.city6' | translate}}</h6>
         </div>
-        <div class="hidden-xs hidden-sm hidden-md col-lg-4">
+        <div class="hidden-xs hidden-sm hidden-md col-lg-4" *ngIf="!isChina">
             <div class="footer-title">
                 {{'footer.social' | translate}}
             </div>

@@ -12,6 +12,7 @@ import { environment } from '../../../../../environments/environment';
 import { PropertiesService } from '../../../../properties/properties.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from '../../../notifications/notifications.service';
+
 declare var fbq;
 
 @Component({
