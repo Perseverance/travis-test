@@ -208,7 +208,7 @@ export class AuthenticationService {
 				this.getCurrentUser();
 			}
 			// TODO this is to be refactored soon in the API and here
-			if (!(await this.performLogin('facebook', result.authResponse.userID, true))) {
+			if (!(await this.performLogin('facebook', result.authResponse.accessToken, true))) {
 				throw new Error('Could not login');
 			}
 			return loginResult;
