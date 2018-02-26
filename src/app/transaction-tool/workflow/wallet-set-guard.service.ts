@@ -21,8 +21,12 @@ export class WalletSetGuard extends ErrorsDecoratableComponent implements CanAct
 
 		return new Promise((resolve, reject) => {
 			const self = this;
-			const subscription = this.authService.subscribeToUserData({
+			const subscription = this.authService.subscribeToUserDataOnce({
 				next: (userInfo: UserData) => {
+					if (!userInfo.user) {
+						resolve(false);
+						return;
+					}
 					if (!userInfo.user.jsonFile) {
 						self.router.navigate(['/settings']);
 						this.errorsService.pushError({
