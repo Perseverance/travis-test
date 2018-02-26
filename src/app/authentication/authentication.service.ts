@@ -403,11 +403,12 @@ export class AuthenticationService {
 		return result.data.data.value;
 	}
 
-	public async updateUser(firstName: string, lastName: string, phoneNumber: string, saveUser = true): Promise<any> {
+	public async updateUser(firstName: string, lastName: string, phoneNumber: string, phoneCountryCode: string, saveUser = true): Promise<any> {
 		const params = {
 			firstName,
 			lastName,
 			phoneNumber,
+			phoneCountryCode,
 			isBasicInfoUpdate: true // required by the API
 		};
 		const result = await this.restClient.putWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.UPDATE_USER, params);

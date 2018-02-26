@@ -1,19 +1,19 @@
-import {GoogleAnalyticsEventsService} from './../../shared/google-analytics.service';
-import {Subscription} from 'rxjs/Subscription';
-import {UserData} from './../../authentication/authentication.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {PropertiesService} from './../properties.service';
-import {PhoneNumberValidators} from './../../shared/validators/phone-number.validators';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Component, OnInit, Input, ViewEncapsulation, ViewChild} from '@angular/core';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {AuthenticationService} from '../../authentication/authentication.service';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
-import {Country} from '../../shared/country.interface';
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
+import { Subscription } from 'rxjs/Subscription';
+import { UserData } from './../../authentication/authentication.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { PropertiesService } from './../properties.service';
+import { PhoneNumberValidators } from './../../shared/validators/phone-number.validators';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, ViewEncapsulation, ViewChild } from '@angular/core';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { AuthenticationService } from '../../authentication/authentication.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import { Country } from '../../shared/country.interface';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -30,20 +30,19 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	public userInfo: any;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
-	// ToDo: Get from userInfo and remove mocked one below
-	public userPhoneCountry: Country;
+	public userPhoneCountry: any;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private propertiesService: PropertiesService,
-				private authService: AuthenticationService,
-				private formBuilder: FormBuilder,
-				private notificationService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService,
-				public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+	            private authService: AuthenticationService,
+	            private formBuilder: FormBuilder,
+	            private notificationService: NotificationsService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService,
+	            public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(errorsService, translateService);
 
 		this.contactAgentForm = this.formBuilder.group({
@@ -67,6 +66,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 					return;
 				}
 				this.name.setValue(`${userInfo.user.firstName} ${userInfo.user.lastName}`);
+				this.userPhoneCountry = this.userInfo.user.phoneCountryCode;
 				this.phoneNumber.setValue(userInfo.user.phoneNumber);
 				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
@@ -127,6 +127,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			this.name.value,
 			this.email.value,
 			phoneNumber,
+			this.childPhoneComponent.selectedCountry.countryCode,
 			this.message.value);
 		this.message.reset();
 		this.notificationService.pushSuccess({
@@ -151,6 +152,10 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 
 		if (!this.phoneNumber.value) {
 			return '';
+		}
+
+		if (this.phoneNumber.value.startsWith('+')) {
+			return this.phoneNumber.value;
 		}
 
 		phoneNumber = this.phoneNumber.value === this.userInfo.user.phoneNumber ?

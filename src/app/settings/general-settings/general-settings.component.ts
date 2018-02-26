@@ -34,7 +34,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	private userInfo: any;
 	// ToDo: Get from userInfo and remove mocked one below
-	public userPhoneCountry: Country;
+	public userPhoneCountry: any;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 	@Input() generalTabIsActive = false;
 
@@ -120,7 +120,7 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			PhoneNumberValidators.phoneNumberValidator,
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
-		await this.authService.updateUser(this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber);
+		await this.authService.updateUser(this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber, this.childPhoneComponent.selectedCountry.countryCode);
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -167,6 +167,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 		if (!this.phoneNumber.value) {
 			return '';
+		}
+
+		if (this.phoneNumber.value.startsWith('+')) {
+			return this.phoneNumber.value;
 		}
 
 		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
