@@ -13,7 +13,6 @@ import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorat
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
-import { Country } from '../../shared/country.interface';
 
 @Component({
 	selector: 'app-contact-agent',

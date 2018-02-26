@@ -12,7 +12,6 @@ import {
 import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
 import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
 import { PhoneNumberValidators } from '../../shared/validators/phone-number.validators';
-import { Country } from '../../shared/country.interface';
 
 @Component({
 	selector: 'app-general-settings',
