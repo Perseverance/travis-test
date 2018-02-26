@@ -199,7 +199,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 				throw new Error('Could not save to the blockchain. Try Again');
 			}
 			this.notificationService.pushInfo({
-				title: `Sending the document to the backend.`,
+				title: `Sending the document to the system.`,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 10000
