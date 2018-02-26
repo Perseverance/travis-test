@@ -126,8 +126,13 @@ export class AuthenticationService {
 		this.userDataSubject.next(data);
 	}
 
-	public performLogout(): Promise<boolean> {
+	public async performLogout(): Promise<boolean> {
 		this.restClient.removeSavedTokens();
+		const fbStatus = await this.fbService.getLoginStatus();
+		if (fbStatus.status === 'connected') {
+			await this.fbService.logout();
+		}
+
 		return this.performAnonymousLogin();
 	}
 
@@ -136,13 +141,15 @@ export class AuthenticationService {
 		firstName: string,
 		lastName: string,
 		phoneNumber: string,
+		phoneCountryCode: string,
 		rememberMe = false, fetchUser = true): Promise<boolean> {
 		const data = {
 			email,
 			password,
 			firstName,
 			lastName,
-			phoneNumber
+			phoneNumber,
+			phoneCountryCode
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
 		if (fetchUser) {
@@ -208,7 +215,7 @@ export class AuthenticationService {
 				this.getCurrentUser();
 			}
 			// TODO this is to be refactored soon in the API and here
-			if (!(await this.performLogin('facebook', result.authResponse.userID, true))) {
+			if (!(await this.performLogin('facebook', result.authResponse.accessToken, true))) {
 				throw new Error('Could not login');
 			}
 			return loginResult;
@@ -353,12 +360,13 @@ export class AuthenticationService {
 		return result.data.data.value;
 	}
 
-	public async updateUser(email: string, firstName: string, lastName: string, phoneNumber: string, saveUser = true): Promise<any> {
+	public async updateUser(email: string, firstName: string, lastName: string, phoneNumber: string, phoneCountryCode: string, saveUser = true): Promise<any> {
 		const params = {
 			email,
 			firstName,
 			lastName,
 			phoneNumber,
+			phoneCountryCode,
 			isBasicInfoUpdate: true // required by the API
 		};
 		const result = await this.restClient.putWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.UPDATE_USER, params);
