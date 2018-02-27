@@ -80,10 +80,7 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 				throw new Error('No deed address supplied');
 			}
 			self.deedId = deedId;
-			await self.mapCurrentUserToRole(deedId);
-			await self.setupDocument(deedId);
-			self.setupTransactionLink();
-			self.hasDataLoaded = true;
+			self.reloadView();
 		});
 
 		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
@@ -119,7 +116,6 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.DISCLOSURES) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}
@@ -170,23 +166,21 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 				this.recordButtonEnabled = true;
 				return;
 			}
-			if (result.status === '0x0') {
-				throw new Error('Could not save to the blockchain. Try Again');
-			}
 			this.notificationService.pushInfo({
-				title: `Sending the document to the backend.`,
+				title: `Sending the document to the system.`,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 10000
 			});
 			await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
-			this.router.navigate(['transaction-tool', this.deedId]);
+			await this.reloadView();
 			this.notificationService.pushSuccess({
 				title: 'Successfully Sent',
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 4000
 			});
+
 		} catch (err) {
 			this.recordButtonEnabled = true;
 			throw err;
@@ -234,6 +228,15 @@ export class DisclosuresStepComponent extends ErrorsDecoratableComponent impleme
 
 	private hideSignatureDelayNote() {
 		this.shouldShowSignatureDelayNotes = false;
+	}
+
+	private async reloadView() {
+		this.hasDataLoaded = false;
+		await this.mapCurrentUserToRole(this.deedId);
+		await this.setupDocument(this.deedId);
+		this.setupTransactionLink();
+		this.hasDataLoaded = true;
+
 	}
 
 }

@@ -58,7 +58,8 @@
             "invalid-phone-number": "Your phone number appears to be invalid",
             "invalid-existing-phone-number": "This field should contain only numbers. Additionally please select a country.",
             "toc-required": "You need to accept the terms and conditions of the site",
-            "fill-in-required": "Please fill in required fields"
+            "fill-in-required": "Please fill in required fields",
+            "only-letters": "Your name appears to be invalid"
         },
         "verification-popup": {
             "header": "Email for verification",
@@ -336,7 +337,7 @@
             "refferal-link": "Referral Link"
         },
         "general-settings": {
-            "update-success": "Your profile was updated succesfully!",
+            "update-success": "Your profile was updated successfully!",
             "update-error": "Could not update your profile",
             "delete-account": "Delete account",
             "upload-new-photo": "Upload new photo",
