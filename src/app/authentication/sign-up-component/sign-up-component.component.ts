@@ -53,17 +53,19 @@ export class SignUpComponentComponent extends ErrorsDecoratableComponent impleme
 
 	protected agencyAutoCompleteDataService: RemoteData;
 
-	constructor(private authService: AuthenticationService,
-	            private formBuilder: FormBuilder,
-	            private router: Router,
-	            private route: ActivatedRoute,
-	            private agencySuggestionsService: AgencySuggestionsService,
-	            private completerService: CompleterService,
-	            private agencyService: AgencyService,
-	            private notificationsService: NotificationsService,
-	            errorsService: ErrorsService,
-	            translateService: TranslateService,
-	            public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+	constructor(
+		private authService: AuthenticationService,
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private route: ActivatedRoute,
+		private agencySuggestionsService: AgencySuggestionsService,
+		private completerService: CompleterService,
+		private agencyService: AgencyService,
+		private notificationsService: NotificationsService,
+		errorsService: ErrorsService,
+		translateService: TranslateService,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService
+	) {
 
 		super(errorsService, translateService);
 

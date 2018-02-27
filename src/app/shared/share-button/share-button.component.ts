@@ -24,7 +24,6 @@ export class ShareButtonComponent implements OnInit {
 
 	ngOnInit() {
 		environment.china ? this._isChina = true : this._isChina = false;
-		console.log ("ENV: " + JSON.stringify(environment));
 	}
 
 }
