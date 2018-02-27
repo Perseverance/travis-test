@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import {Component, OnInit} from '@angular/core';
 import {NgxCarousel} from 'ngx-carousel';
 import {NgxCarouselStore} from 'ngx-carousel/src/ngx-carousel/ngx-carousel.interface';
@@ -23,6 +24,8 @@ export class HowPropyWorksComponent implements OnInit {
 	public inverviewHolderStyleObject: object;
 	public bloombergHolderStyleObject: object;
 	public bgOfficeHolderStyleObject: object;
+
+	public isChina: Boolean = environment.china;
 
 	constructor() {
 	}

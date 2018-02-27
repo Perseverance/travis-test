@@ -1,7 +1,7 @@
 <div class="row how-propy-works-holder">
 	<h3 class="text-center">{{ 'landing.how-propy-works.heading' | translate }}</h3>
 	<h6 class="text-center">{{ 'landing.how-propy-works.sub-heading' | translate }}</h6>
-	<div class="carousel-holder">
+	<div class="carousel-holder" *ngIf="!isChina">
 		<ngx-carousel [inputs]="carouselBanner" (onMove)="onVideoChanged()" [moveToSlide]="1">
 			<ngx-item NgxCarouselItem>
 				<div class="dummy-preview-box"></div>
