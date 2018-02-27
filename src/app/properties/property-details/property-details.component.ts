@@ -108,13 +108,14 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				this.userInfo = userInfo;
+				if (userInfo.user) {
+					this.isAdmin = userInfo.user.isAdmin;
+				}
 			}
 		});
 	}
 
 	async ngOnInit() {
-		const currentUser = await this.authService.getCurrentUser(true, true);
-		this.isAdmin = currentUser.data.data.isAdmin;
 		this.googleAnalyticsEventsService.emitEvent('page-property', 'property');
 
 		this.propertyImagesCarouselConfig = {
