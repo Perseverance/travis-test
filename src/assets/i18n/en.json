@@ -6,7 +6,7 @@
         },
         "label": {
             "not-selected": "Not selected",
-            "authentication-error": "Authentication еrror",
+            "authentication-error": "Authentication еrror (This email is already associated with another account)",
             "login": "Login",
             "signin": "Sign in",
             "signup": "Sign up",
