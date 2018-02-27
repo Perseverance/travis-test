@@ -55,6 +55,19 @@ if (environment.china) {
 
 	document.body.appendChild(helloSign);
 	// ------------------------------------------------
+
+
+	// INFO BUBBLE ------------------------------------
+	const infoBubble = document.createElement('script');
+	infoBubble.setAttribute('type', 'text/javascript');
+
+	infoBubble.setAttribute(
+		'src',
+		'assets/libs/InfoBubble.js'
+	);
+
+	document.body.appendChild(infoBubble);
+	// ------------------------------------------------
 }
 
 document.head.appendChild(mapsScript);
