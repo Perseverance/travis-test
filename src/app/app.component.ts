@@ -19,21 +19,26 @@ import { PusherService } from './shared/pusher.service';
 })
 export class AppComponent implements OnInit {
 	public userId;
+
 	constructor(public authService: AuthenticationService,
-		public translateService: TranslateService,
-		private localStorageService: LocalStorageService,
-		private momentService: MomentService,
-		private intercom: Intercom,
-		public router: Router,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-		public pusherService: PusherService) {
+	            public translateService: TranslateService,
+	            private localStorageService: LocalStorageService,
+	            private momentService: MomentService,
+	            private intercom: Intercom,
+	            public router: Router,
+	            public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+	            public pusherService: PusherService) {
 
 		translateService.addLangs(AllSupportedLanguage);
 		// this language will be used as a fallback when a translation isn't found in the current language
 		translateService.setDefaultLang(DefaultLanguage);
 
 		// the lang to use, if the lang isn't available, it will use the default language
-		const translationLanguage = AllSupportedLanguage.includes(localStorageService.selectedLanguage) ? localStorageService.selectedLanguage : DefaultLanguage;
+		let translationLanguage = AllSupportedLanguage.includes(localStorageService.selectedLanguage) ? localStorageService.selectedLanguage : DefaultLanguage;
+		if (environment.china) {
+			translationLanguage = DefaultLanguage;
+		}
+
 		translateService.use(translationLanguage);
 		this.momentService.moment.locale([translationLanguage, DefaultLanguage]);
 		localStorageService.selectedCurrencyType = CurrencyTypeEnum.NONE;
