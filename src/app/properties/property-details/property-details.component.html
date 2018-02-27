@@ -234,6 +234,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row admin-buttons" *ngIf="isAdmin">
+                                    <a class="propy-control button button-small mark-sold-listing" (click)="markPropertyAsAccepted(property.id)">{{
+                                            'settings.my-listed-properties-settings.mark-as-accepted' | translate }}
+                                        </a>
+                                    <a class="propy-control button button-small mark-unlist-listing" (click)="markPropertyAsRejected(property.id)">{{
+                                                'settings.my-listed-properties-settings.mark-as-rejected' | translate }}
+                                            </a>
+                                </div>
                                 <!--
                                 <div id="reviews" class="tab-pane fade ">
                                     <h3>{{ 'property-details.reviews' | translate }}</h3>

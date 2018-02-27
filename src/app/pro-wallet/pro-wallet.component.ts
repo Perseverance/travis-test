@@ -60,8 +60,8 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 
 		this.proWalletAddressForm = this.formBuilder.group({
 			passwords: this.formBuilder.group({
-				password: ['', [Validators.required]],
-				repeatPassword: ['', [Validators.required]]
+				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
+				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
 			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
