@@ -403,7 +403,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		const imagesResult = await this.propertiesService.uploadPropertyImages(propertyId, this.propertyImages.value);
 
 		this.notificationService.pushSuccess({
-			title: 'Property Upload success',
+			title: 'Property successfully uploaded. It will be soon checked and then accepted or rejected by admin.',
 			message: '',
 			time: (new Date().getTime()),
 			timeout: 3000
