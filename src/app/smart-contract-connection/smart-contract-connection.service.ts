@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Web3Service } from '../web3-connection/web3-connection.service';
 import { BaseContract } from '../web3-connection/BaseContract';
+import { TransactionReceipt, PromiEvent } from 'web3/types';
 
 // ToDo: Affidavit step hide, next steps are decremented with 1
 
@@ -21,8 +22,8 @@ export enum Status {
 	DisclosuresBlockchain = 9,
 	settlementStatement = 10,
 	payment = 11,
-		// affidavit = 12,
-		// affidavitBlockchain = 13,
+	// affidavit = 12,
+	// affidavitBlockchain = 13,
 	closingDocuments = 12,
 	transferred = 13
 }
@@ -64,23 +65,23 @@ export class SmartContractConnectionService {
 		return (this.jsonFile !== undefined);
 	}
 
-	public async recordPurchaseAgreement(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+	public recordPurchaseAgreement(walletPassword: string, deedAddress: string, doc: string) {
 		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.PURCHASE_AGREEMENT, 'PURCHASE_AGREEMENT', doc);
 	}
 
-	public async recordTitleReport(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+	public recordTitleReport(walletPassword: string, deedAddress: string, doc: string) {
 		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.TITLE_REPORT, 'TITLE_REPORT', doc);
 	}
 
-	public async recordSellerDisclosures(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+	public recordSellerDisclosures(walletPassword: string, deedAddress: string, doc: string) {
 		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.SELLER_DISCLOSURES, 'SELLER_DISCLOSURES', doc);
 	}
 
-	public async recordAffidavit(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+	public recordAffidavit(walletPassword: string, deedAddress: string, doc: string) {
 		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.AFFIDAVIT, 'AFFIDAVIT', doc);
 	}
 
-	public async recordOwnershipTransfer(walletPassword: string, deedAddress: string, doc: string): Promise<any> {
+	public recordOwnershipTransfer(walletPassword: string, deedAddress: string, doc: string) {
 		return this.recordDocument(walletPassword, deedAddress, SMART_CONTRACT_DOCUMENT_TYPES.OWNERSHIP_TRANSFER, 'TITLE_HASH', doc);
 	}
 
@@ -96,10 +97,10 @@ export class SmartContractConnectionService {
 	}
 
 	private async recordDocument(walletPassword: string,
-	                             deedAddress: string,
-	                             docType: SMART_CONTRACT_DOCUMENT_TYPES,
-	                             docKey: string,
-	                             doc: string) {
+		deedAddress: string,
+		docType: SMART_CONTRACT_DOCUMENT_TYPES,
+		docKey: string,
+		doc: string) {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
@@ -131,8 +132,16 @@ export class SmartContractConnectionService {
 			funcData,
 		);
 
-		const result = await this.web3Service.web3.eth.sendSignedTransaction(signedData);
-		return result;
+		const self = this;
+
+		return new Promise(function (resolve, reject) {
+			self.web3Service.web3.eth.sendSignedTransaction(signedData)
+				.once('transactionHash', function (transactionHash) {
+					resolve({ transactionHash });
+				});
+		});
+
+
 	}
 
 }

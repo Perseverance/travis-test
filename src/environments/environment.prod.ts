@@ -39,7 +39,7 @@ export const environment = {
 		agentId: '5a255409495fda1268997297'
 	},
 	contractAddress: '0x6dae591ae5a4cc8a65ef88c9367564be1a317bf0',
-	infuraLink: 'https://rinkeby.infura.io/Up5uvBHSCSqtOmnlhL87',
+	infuraLink: 'https://mainnet.infura.io/Up5uvBHSCSqtOmnlhL87',
 	escrowAddress: '0x9BaA0E7c890E356c050326EC8EFf627d9fa59625',
 	etherscanTxLink: 'https://etherscan.io/tx/'
 };
