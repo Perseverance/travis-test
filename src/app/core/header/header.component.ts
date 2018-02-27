@@ -3,7 +3,7 @@ import { ErrorsService } from './../../shared/errors/errors.service';
 import { SETTINGS_TABS } from './../../settings/settings/settings.component';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { DefaultLanguage } from './../i18nSetup';
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { RedirectableComponent } from './../../shared/redirectable/redirectable.component';
 import { Component, OnInit, HostListener, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';

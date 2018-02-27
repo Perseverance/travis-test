@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';

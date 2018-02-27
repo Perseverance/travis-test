@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';

@@ -12,7 +12,7 @@ export const environment = {
 		xfbml: true,
 		version: 'v2.10'
 	},
-	china: true,
+	china: false,
 	linkedInApiKey: '758vh4r0yqsbn9', // Otherwise known as ClientID
 	skippedRedirectRoutes: ['/login', '/signup'],
 	defaultRedirectRoute: '/',

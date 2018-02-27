@@ -4,7 +4,7 @@ import { NgSwitch } from '@angular/common';
 import { FacebookShareComponent } from './components/index';
 
 
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 @Component({
 	selector: 'app-share-button',
@@ -24,6 +24,7 @@ export class ShareButtonComponent implements OnInit {
 
 	ngOnInit() {
 		environment.china ? this._isChina = true : this._isChina = false;
+		console.log ("ENV: " + JSON.stringify(environment));
 	}
 
 }

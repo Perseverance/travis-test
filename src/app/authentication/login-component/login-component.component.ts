@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorsService } from './../../shared/errors/errors.service';
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
 import { DefaultAsyncAPIErrorHandling } from './../../shared/errors/errors.decorators';
 import { ActivatedRoute, Router } from '@angular/router';
