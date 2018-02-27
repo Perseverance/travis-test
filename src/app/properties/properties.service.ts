@@ -41,6 +41,10 @@ export interface PropertiesFilter {
 	};
 	bedFilter?: string;
 }
+enum PROPERTY_LIST_STATUSES {
+	ACCEPTED = 1,
+	REJECTED = 2
+}
 
 @Injectable()
 export class PropertiesService {
@@ -73,7 +77,7 @@ export class PropertiesService {
 	public async approveProperty(id) {
 		const params = {
 			propertyId: id,
-			approvalStatus: 1
+			approvalStatus: PROPERTY_LIST_STATUSES.ACCEPTED
 		};
 		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.APPROVE_PROPERTY, params);
 		return result;
@@ -82,7 +86,7 @@ export class PropertiesService {
 	public async rejectProperty(id) {
 		const params = {
 			propertyId: id,
-			approvalStatus: 2
+			approvalStatus: PROPERTY_LIST_STATUSES.REJECTED
 		};
 		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.APPROVE_PROPERTY, params);
 		return result;
