@@ -64,7 +64,9 @@ export class AuthenticationService {
 			version: environment.fbConfigParams.version
 		};
 
-		fbService.init(initParams);
+		if (!environment.china) {
+			fbService.init(initParams);
+		}
 
 		this.userDataSubject = new ReplaySubject(1);
 
@@ -128,9 +130,12 @@ export class AuthenticationService {
 
 	public async performLogout(): Promise<boolean> {
 		this.restClient.removeSavedTokens();
-		const fbStatus = await this.fbService.getLoginStatus();
-		if (fbStatus.status === 'connected') {
-			await this.fbService.logout();
+
+		if (!environment.china) {
+			const fbStatus = await this.fbService.getLoginStatus();
+			if (fbStatus.status === 'connected') {
+				await this.fbService.logout();
+			}
 		}
 
 		return this.performAnonymousLogin();

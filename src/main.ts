@@ -31,6 +31,30 @@ if (environment.china) {
 
 	document.head.appendChild(fbScript);
 	// ------------------------------------------------
+
+	// FB SDK -----------------------------------------
+	const fbSDK = document.createElement('script');
+	fbSDK.setAttribute('type', 'text/javascript');
+
+	fbSDK.setAttribute(
+		'src',
+		'https://connect.facebook.net/en_US/sdk.js'
+	);
+
+	document.body.appendChild(fbSDK);
+	// ------------------------------------------------
+
+	// HELLOSIGN --------------------------------------
+	const helloSign = document.createElement('script');
+	helloSign.setAttribute('type', 'text/javascript');
+
+	helloSign.setAttribute(
+		'src',
+		'https://s3.amazonaws.com/cdn.hellosign.com/public/js/hellosign-embedded.LATEST.min.js'
+	);
+
+	document.body.appendChild(helloSign);
+	// ------------------------------------------------
 }
 
 document.head.appendChild(mapsScript);
