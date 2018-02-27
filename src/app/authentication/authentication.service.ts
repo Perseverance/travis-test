@@ -10,6 +10,8 @@ import { Injectable } from '@angular/core';
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
 import { BrowserDetectionService } from '../shared/browser-detection.service';
 
+import 'rxjs/add/operator/first';
+
 export class AnonymousUserCredentials {
 	public static firstName = 'Anonymous';
 	public static lastName = 'Anonymous';
