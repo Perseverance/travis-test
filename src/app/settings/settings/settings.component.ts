@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public shouldShowPassword: any;
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
-	public isEmailVerified = true;
+	public isEmailVerified = false;
 
 	private paramsSubscription: Subscription;
 	private userDataSubscription: Subscription;
