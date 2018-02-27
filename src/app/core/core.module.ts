@@ -104,7 +104,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 		AuthenticatedGuard,
 		NotAuthenticatedGuard,
 		TranslateStore,
-		{ provide: 'apiKey', useValue: environment.linkedInApiKey },
 		{ provide: 'authorize', useValue: true },
 		BigNumberFormatPipe,
 		CurrencySymbolPipe,

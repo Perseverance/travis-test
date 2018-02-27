@@ -8,7 +8,6 @@ import { APIEndpointsService } from './../shared/apiendpoints.service';
 import { RestClientService } from './../shared/rest-client.service';
 import { Injectable } from '@angular/core';
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
-import { LinkedInService } from 'angular-linkedin-sdk';
 import { BrowserDetectionService } from '../shared/browser-detection.service';
 
 export class AnonymousUserCredentials {
@@ -18,7 +17,6 @@ export class AnonymousUserCredentials {
 
 export enum ExternalAuthenticationProviders {
 	FACEBOOK = 'facebook',
-	LINKEDIN = 'linkedin'
 }
 
 export interface ExternalLoginRequest {
@@ -36,12 +34,6 @@ export interface RegisterAgentRequest {
 	locations: string[];
 	info: string;
 }
-
-export interface LinkedInAuthParams {
-	userId: string;
-	accessToken: string;
-}
-
 export interface UserData {
 	isAnonymous: boolean;
 	user: any | null;
@@ -55,7 +47,6 @@ export class AuthenticationService {
 	constructor(public restClient: RestClientService,
 		public apiEndpoints: APIEndpointsService,
 		private fbService: FacebookService,
-		private linkedinService: LinkedInService,
 		private browserDetectionService: BrowserDetectionService) {
 
 		const initParams: InitParams = {
@@ -235,7 +226,7 @@ export class AuthenticationService {
 
 	/**
 	 * @notice External login just upgrades the anonymous user to not anonymous one
-	 * @param externalLoginService - Facebook or Linkedin
+	 * @param externalLoginService - Facebook
 	 * @param userId - the userid in the appropriate login service
 	 * @param accessToken - the oauth access token of the corresponding login service
 	 */

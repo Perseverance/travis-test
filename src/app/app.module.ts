@@ -11,7 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 import { FacebookModule } from 'ngx-facebook';
 import { HomeModule } from './home/home.module';
-import { LinkedInSdkModule } from 'angular-linkedin-sdk';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PageTitlePositioning, MetaLoader, MetaStaticLoader } from '@ngx-meta/core';
 import { IntercomModule, INTERCOM_DIRECTIVES } from 'ng2-intercom';
@@ -56,7 +55,6 @@ export function metaFactory(): MetaLoader {
 		Web3Module,
 		AppRoutingModule,
 		FacebookModule.forRoot(),
-		LinkedInSdkModule,
 		InlineSVGModule.forRoot({ baseUrl: '' }),
 		MetaModule.forRoot({
 			provide: MetaLoader,
