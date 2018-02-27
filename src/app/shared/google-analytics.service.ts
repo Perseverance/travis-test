@@ -10,6 +10,9 @@ export class GoogleAnalyticsEventsService {
 		this.setupGoogleAnalytics();
 	}
 	private setupGoogleAnalytics() {
+		if (environment.china) {
+			return;
+		}
 		(function (i, s, o, g, r, a, m) {
 			i['GoogleAnalyticsObject'] = r;
 			i[r] = i[r] || function () {
@@ -31,12 +34,18 @@ export class GoogleAnalyticsEventsService {
 		});
 	}
 	public setPageEvent(event) {
+		if (environment.china) {
+			return;
+		}
 		ga('set', 'page', event.urlAfterRedirects);
 		ga('send', 'pageview');
 	}
 	public emitEvent(
 		eventCategory: string,
 		eventAction: string) {
+		if (environment.china) {
+			return;
+		}
 		ga('send', 'event', {
 			eventCategory: eventCategory,
 			eventAction: eventAction,
