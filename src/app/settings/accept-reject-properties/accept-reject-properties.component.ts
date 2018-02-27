@@ -6,13 +6,15 @@ import { DeedsService } from './../../shared/deeds.service';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { SmartContractConnectionService } from './../../smart-contract-connection/smart-contract-connection.service';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoadPropertyService } from '../../transaction-tool/load-property.service';
 
 @Component({
 	selector: 'app-accept-reject-properties',
 	templateUrl: './accept-reject-properties.component.html',
-	styleUrls: ['./accept-reject-properties.component.scss']
+	styleUrls: ['./accept-reject-properties.component.scss'],
+	encapsulation: ViewEncapsulation.None
+
 })
 export class AcceptRejectPropertiesComponent implements OnInit {
 	public myPendingProperties: any[];
@@ -30,13 +32,12 @@ export class AcceptRejectPropertiesComponent implements OnInit {
 					return;
 				}
 				this.myPendingProperties = await this.getMyPendingProperties();
-
-
 			}
 		});
 	}
 
 	ngOnInit() {
+
 	}
 
 	private async getMyPendingProperties(): Promise<any[]> {
@@ -44,6 +45,6 @@ export class AcceptRejectPropertiesComponent implements OnInit {
 	}
 
 	public goToTransactionToolWorkflow(data: any) {
-		this.router.navigate(['/property', data.deedId]);
+		this.router.navigate(['/property', data.id]);
 	}
 }

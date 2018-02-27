@@ -70,6 +70,24 @@ export class PropertiesService {
 		return result.data.data;
 	}
 
+	public async approveProperty(id) {
+		const params = {
+			propertyId: id,
+			approvalStatus: 1
+		};
+		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.APPROVE_PROPERTY, params);
+		return result;
+	}
+
+	public async rejectProperty(id) {
+		const params = {
+			propertyId: id,
+			approvalStatus: 2
+		};
+		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.APPROVE_PROPERTY, params);
+		return result;
+	}
+
 	public async getPropertiesByCenter(centerLatitude: number, centerLongitude: number, filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createBoundsFromCenter(centerLatitude, centerLongitude);
 		const boundsQuery = this.propertiesInRectangleQueryFormat(bounds);

@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { currencyLabels } from './currencyLabels.model';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
@@ -379,11 +380,22 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.router.navigate(['/purchase', this.property.id]);
 	}
 
-	public markPropertyAsAccepted() {
+	public async markPropertyAsAccepted(propertyId) {
+		try {
+			const result = await this.propertiesService.approveProperty(propertyId);
+			this.router.navigate(['/settings'], { queryParams: { selectedTab: 'ADMIN' } });
+		} catch (error) {
+			console.log(error);
+		}
 
 	}
 
-	public markPropertyAsRejected() {
-
+	public async markPropertyAsRejected(propertyId) {
+		try {
+			const result = await this.propertiesService.rejectProperty(propertyId);
+			this.router.navigate(['/settings'], { queryParams: { selectedTab: 'ADMIN' } });
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }
