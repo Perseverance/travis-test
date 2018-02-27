@@ -31,7 +31,9 @@ export class AcceptRejectPropertiesComponent implements OnInit {
 				if (!userInfo.user) {
 					return;
 				}
-				this.myPendingProperties = await this.getMyPendingProperties();
+				if (userInfo.user.isAdmin) {
+					this.myPendingProperties = await this.getMyPendingProperties();
+				}
 			}
 		});
 	}
