@@ -14,8 +14,8 @@
 		<div class="form-group">
 			<label for="lastName" class="propy-label">{{ 'common.placeholder.lastName' | translate }}</label>
 			<input formControlName="lastName" type="text" class="form-control propy-control"
-				   (keydown.Tab)="activatePhoneDropDown()"
-				   id="lastName" placeholder="{{ 'common.placeholder.lastName' | translate }}">
+				   (keydown.Tab)="activatePhoneDropDown()" id="lastName"
+				   placeholder="{{ 'common.placeholder.lastName' | translate }}">
 			<div *ngIf="lastName.touched" class="propy-validation-errors-box">
 				<div class="propy-validation" *ngIf="lastName.invalid && lastName.errors['required']">{{
 					'common.validation-errors.required' | translate }}
@@ -42,10 +42,13 @@
 			</button>
 		</div>
 		<div class="form-group" *ngIf="generalTabIsActive">
+			<label for="email" class="propy-label">{{ 'common.placeholder.phoneNumber' | translate }}</label>
 			<int-phone-prefix [locale]="'en'" [defaultCountry]="defaultPhoneCountryCode"
+							  [storedUserCountry]="userPhoneCountry"
 							  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
 							  formControlName="phoneNumber"
 							  (phoneInputChangedEvent)="handlePhoneInputChanged()"
+							  (selectedCountryChanged)="handleSelectedCountryChanged()"
 							  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
 			<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
 				<div class="propy-validation"

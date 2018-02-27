@@ -1,15 +1,15 @@
-import {Subscription} from 'rxjs/Subscription';
-import {NextObserver} from 'rxjs/Observer';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {environment} from './../../environments/environment';
-import {OAuth2TokenTypes} from './oauth2-token-types';
-import {OAuth2GrantTypes} from './oauth2-grant-types';
-import {APIEndpointsService} from './../shared/apiendpoints.service';
-import {RestClientService} from './../shared/rest-client.service';
-import {Injectable} from '@angular/core';
-import {FacebookService, InitParams, LoginResponse, LoginOptions} from 'ngx-facebook';
-import {LinkedInService} from 'angular-linkedin-sdk';
-import {BrowserDetectionService} from '../shared/browser-detection.service';
+import { Subscription } from 'rxjs/Subscription';
+import { NextObserver } from 'rxjs/Observer';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { environment } from './../../environments/environment';
+import { OAuth2TokenTypes } from './oauth2-token-types';
+import { OAuth2GrantTypes } from './oauth2-grant-types';
+import { APIEndpointsService } from './../shared/apiendpoints.service';
+import { RestClientService } from './../shared/rest-client.service';
+import { Injectable } from '@angular/core';
+import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
+import { LinkedInService } from 'angular-linkedin-sdk';
+import { BrowserDetectionService } from '../shared/browser-detection.service';
 
 export class AnonymousUserCredentials {
 	public static firstName = 'Anonymous';
@@ -53,10 +53,10 @@ export class AuthenticationService {
 	private userDataSubject: ReplaySubject<UserData>;
 
 	constructor(public restClient: RestClientService,
-				public apiEndpoints: APIEndpointsService,
-				private fbService: FacebookService,
-				private linkedinService: LinkedInService,
-				private browserDetectionService: BrowserDetectionService) {
+		public apiEndpoints: APIEndpointsService,
+		private fbService: FacebookService,
+		private linkedinService: LinkedInService,
+		private browserDetectionService: BrowserDetectionService) {
 
 		const initParams: InitParams = {
 			appId: environment.fbConfigParams.appId,
@@ -69,11 +69,11 @@ export class AuthenticationService {
 		this.userDataSubject = new ReplaySubject(1);
 
 		if (!this.hasAuthCredentials) {
-			this.pushUserData({isAnonymous: true, user: null});
+			this.pushUserData({ isAnonymous: true, user: null });
 			return;
 		}
 		if (!this.restClient.isTokenExpired) {
-			this.getCurrentUser(true);
+			this.getCurrentUser(true, true);
 		}
 	}
 
@@ -114,6 +114,10 @@ export class AuthenticationService {
 		return this.restClient.accessToken != null;
 	}
 
+	public subscribeToUserDataOnce(observer: NextObserver<UserData>): Subscription {
+		return this.userDataSubject.first().subscribe(observer);
+	}
+
 	public subscribeToUserData(observer: NextObserver<UserData>): Subscription {
 		return this.userDataSubject.subscribe(observer);
 	}
@@ -122,23 +126,30 @@ export class AuthenticationService {
 		this.userDataSubject.next(data);
 	}
 
-	public performLogout(): Promise<boolean> {
+	public async performLogout(): Promise<boolean> {
 		this.restClient.removeSavedTokens();
+		const fbStatus = await this.fbService.getLoginStatus();
+		if (fbStatus.status === 'connected') {
+			await this.fbService.logout();
+		}
+
 		return this.performAnonymousLogin();
 	}
 
 	public async performSignUp(email: string,
-							   password: string,
-							   firstName: string,
-							   lastName: string,
-							   phoneNumber: string,
-							   rememberMe = false, fetchUser = true): Promise<boolean> {
+		password: string,
+		firstName: string,
+		lastName: string,
+		phoneNumber: string,
+		phoneCountryCode: string,
+		rememberMe = false, fetchUser = true): Promise<boolean> {
 		const data = {
 			email,
 			password,
 			firstName,
 			lastName,
-			phoneNumber
+			phoneNumber,
+			phoneCountryCode
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.REGISTER, data);
 		if (fetchUser) {
@@ -152,7 +163,7 @@ export class AuthenticationService {
 
 	public async performLogin(email: string, password: string, rememberMe = false, fetchUser = true): Promise<boolean> {
 		const config = {
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		};
 		let result;
 		let data;
@@ -172,7 +183,7 @@ export class AuthenticationService {
 			rememberMe);
 
 		if (fetchUser) {
-			this.getCurrentUser();
+			this.getCurrentUser(true, true);
 		}
 
 		return true;
@@ -181,11 +192,11 @@ export class AuthenticationService {
 	public async performAnonymousLogin(): Promise<boolean> {
 		const doNotRememberUser = false;
 		const result = this.performLogin('', '', doNotRememberUser);
-		this.pushUserData({isAnonymous: true, user: null});
+		this.pushUserData({ isAnonymous: true, user: null });
 		return result;
 	}
 
-	public async performFacebookLogin(fetchUser = true): Promise<boolean> {
+	public async performFacebookLogin(fetchUser = true): Promise<any> {
 
 		const options: LoginOptions = {
 			scope: 'public_profile,email'
@@ -193,83 +204,29 @@ export class AuthenticationService {
 
 		const result: LoginResponse = await this.fbService.login();
 
-		const isFirstLogin = await this.externalLogin(
+		const loginResult = await this.externalLogin(
 			ExternalAuthenticationProviders.FACEBOOK,
 			result.authResponse.userID,
 			result.authResponse.accessToken);
 
-		if (!isFirstLogin) {
+
+		if (!loginResult.isFirstLogin) {
 			if (fetchUser) {
 				this.getCurrentUser();
 			}
 			// TODO this is to be refactored soon in the API and here
-			return this.performLogin('facebook', result.authResponse.userID, true);
-		}
-		if (fetchUser) {
-			this.getCurrentUser();
-		}
-		return this.refreshStoredAccessToken(true);
-	}
-
-	public async performLinkedInLogin(fetchUser = true): Promise<boolean> {
-
-		await this.waitForLinkedInToInitialize();
-
-		const linkedInAuthParams = await this.signInAtLinkedIn();
-
-		const isFirstLogin = await this.externalLogin(
-			ExternalAuthenticationProviders.LINKEDIN,
-			linkedInAuthParams.userId,
-			linkedInAuthParams.accessToken);
-
-		if (!isFirstLogin) {
-			if (fetchUser) {
-				this.getCurrentUser();
+			if (!(await this.performLogin('facebook', result.authResponse.accessToken, true))) {
+				throw new Error('Could not login');
 			}
-			// TODO this is to be refactored soon in the API and here
-			return this.performLogin('linkedin', linkedInAuthParams.userId, true);
+			return loginResult;
 		}
 		if (fetchUser) {
 			this.getCurrentUser();
 		}
-		return this.refreshStoredAccessToken(true);
+
+		await this.refreshStoredAccessToken(true);
+		return loginResult;
 	}
-
-	private waitForLinkedInToInitialize() {
-		return new Promise<boolean>((resolve, reject) => {
-			this.linkedinService.isInitialized$.subscribe({
-				complete: () => {
-					resolve();
-				}
-			});
-		});
-	}
-
-	private async signInAtLinkedIn(): Promise<LinkedInAuthParams> {
-		return new Promise<LinkedInAuthParams>(async (resolve, reject) => {
-			this.linkedinService.login()
-				.subscribe({
-					complete: async () => {
-						const linkedInParams = this.getLinkedInAuthParams();
-						resolve(linkedInParams);
-					}
-				});
-		});
-	}
-
-	private getLinkedInAuthParams(): LinkedInAuthParams {
-		const linkedInMainObject = this.linkedinService.getSdkIN();
-		if (!linkedInMainObject) {
-			throw new Error('Could not get params from linked in. Please try again');
-		}
-		const linkedInAuthObject = linkedInMainObject.ENV.auth;
-		return {
-			userId: linkedInAuthObject.member_id,
-			accessToken: linkedInAuthObject.oauth_token
-		};
-
-	}
-
 
 	/**
 	 * @notice External login just upgrades the anonymous user to not anonymous one
@@ -278,8 +235,8 @@ export class AuthenticationService {
 	 * @param accessToken - the oauth access token of the corresponding login service
 	 */
 	private async externalLogin(externalLoginService: ExternalAuthenticationProviders,
-								userId: string,
-								accessToken: string): Promise<boolean> {
+		userId: string,
+		accessToken: string): Promise<any> {
 		const data: ExternalLoginRequest = {
 			loginProvider: externalLoginService,
 			providerKey: userId,
@@ -287,7 +244,7 @@ export class AuthenticationService {
 		};
 		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.EXTERNAL_LOGIN, data);
 
-		return result.data.data.value;
+		return result.data.data;
 	}
 
 	/**
@@ -303,7 +260,7 @@ export class AuthenticationService {
 		}
 
 		const config = {
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		};
 
 		let data;
@@ -374,20 +331,22 @@ export class AuthenticationService {
 		return true;
 	}
 
-	public async getCurrentUser(saveUser = true): Promise<any> {
-		const result = await this.getUser('');
+	public async getCurrentUser(saveUser = true, getNotifications?: any): Promise<any> {
+		const result = await this.getUser('', getNotifications);
 		if (saveUser) {
 			this.user = result.data.data;
-			this.pushUserData({isAnonymous: this.isUserAnonymous, user: this.user});
+			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
 		}
 		return result;
 	}
 
-	public async getUser(id: string): Promise<any> {
+	public async getUser(id: string, getNotifications?: any): Promise<any> {
 		const params = {
-			id
+			id,
+			getNotifications
+
 		};
-		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_USER, {params});
+		const result = await this.restClient.getWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.GET_USER, { params });
 		return result;
 	}
 
@@ -401,17 +360,19 @@ export class AuthenticationService {
 		return result.data.data.value;
 	}
 
-	public async updateUser(firstName: string, lastName: string, phoneNumber: string, saveUser = true): Promise<any> {
+	public async updateUser(email: string, firstName: string, lastName: string, phoneNumber: string, phoneCountryCode: string, saveUser = true): Promise<any> {
 		const params = {
+			email,
 			firstName,
 			lastName,
 			phoneNumber,
+			phoneCountryCode,
 			isBasicInfoUpdate: true // required by the API
 		};
 		const result = await this.restClient.putWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.UPDATE_USER, params);
 		if (saveUser) {
 			this.user = result.data.data;
-			this.pushUserData({isAnonymous: this.isUserAnonymous, user: this.user});
+			this.pushUserData({ isAnonymous: this.isUserAnonymous, user: this.user });
 		}
 		return result.data.data;
 	}
@@ -432,7 +393,14 @@ export class AuthenticationService {
 		const params = {
 			email
 		};
-		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.FORGOT_PASSWORD, {}, {params});
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.FORGOT_PASSWORD, {}, { params });
+	}
+
+	public async updateVerificationEmail(email: string): Promise<any> {
+		const params = {
+			email
+		};
+		const result = await this.restClient.postWithAccessToken(this.apiEndpoints.INTERNAL_ENDPOINTS.UPDATE_EMAIL, params);
 	}
 
 }

@@ -29,18 +29,19 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	public userInfo: any;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
+	public userPhoneCountry: any;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private propertiesService: PropertiesService,
-		private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private notificationService: NotificationsService,
-		errorsService: ErrorsService,
-		translateService: TranslateService,
-		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+	            private authService: AuthenticationService,
+	            private formBuilder: FormBuilder,
+	            private notificationService: NotificationsService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService,
+	            public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(errorsService, translateService);
 
 		this.contactAgentForm = this.formBuilder.group({
@@ -64,6 +65,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 					return;
 				}
 				this.name.setValue(`${userInfo.user.firstName} ${userInfo.user.lastName}`);
+				this.userPhoneCountry = this.userInfo.user.phoneCountryCode;
 				this.phoneNumber.setValue(userInfo.user.phoneNumber);
 				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
@@ -124,6 +126,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			this.name.value,
 			this.email.value,
 			phoneNumber,
+			this.childPhoneComponent.selectedCountry.countryCode,
 			this.message.value);
 		this.message.reset();
 		this.notificationService.pushSuccess({
@@ -150,6 +153,10 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 			return '';
 		}
 
+		if (this.phoneNumber.value.startsWith('+')) {
+			return this.phoneNumber.value;
+		}
+
 		phoneNumber = this.phoneNumber.value === this.userInfo.user.phoneNumber ?
 			this.userInfo.user.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 
@@ -163,6 +170,16 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }

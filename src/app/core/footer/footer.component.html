@@ -1,5 +1,5 @@
 <footer *ngIf="shouldShowFooter">
-    <div class="footer-container row col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10">
+    <div class="footer-container col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10">
         <div class="hidden-xs col-sm-6 col-lg-4">
             <div class="footer-title">
                 {{'footer.search-by-city' | translate}}
@@ -14,16 +14,19 @@
             <div class="footer-title">
                 {{'footer.social' | translate}}
             </div>
-            <a (click)="emitFacebookAnalyticsClickEvent()" href="https://www.facebook.com/propyinc/?fref=ts" target="_blank">
+            <a (click)="emitFacebookAnalyticsClickEvent()" href="https://www.facebook.com/propyinc/?fref=ts"
+                target="_blank">
                 <h6 class="footer-suggestion">Facebook</h6>
             </a>
-            <a (click)="emitTwitterAnalyticsClickEvent()" href="https://twitter.com/propyinc" target="_blank">
+            <a (click)="emitTwitterAnalyticsClickEvent()" href="https://twitter.com/propyinc"
+                target="_blank">
                 <h6 class="footer-suggestion">Twitter</h6>
             </a>
             <a (click)="emitTelegramAnalyticsClickEvent()" href="https://t.me/propy" target="_blank">
                 <h6 class="footer-suggestion">Telegram</h6>
             </a>
-            <a (click)="emitRedditAnalyticsClickEvent()" href="https://www.reddit.com/user/PropyInc/" target="_blank">
+            <a (click)="emitRedditAnalyticsClickEvent()" href="https://www.reddit.com/user/PropyInc/"
+                target="_blank">
                 <h6 class="footer-suggestion">Reddit</h6>
             </a>
         </div>
@@ -36,6 +39,7 @@
                 <a href="https://blog.propy.com/" target="_blank">
                     <h6 class="footer-suggestion">{{'footer.blog' | translate}}</h6>
                 </a>
+                <h6 class="footer-suggestion" (click)="goToTermsAndConditions()">{{'footer.terms' | translate}}</h6>
             </div>
             <div class="pull-right col-xs-12 footer-details text-xs-center">
                 <p>

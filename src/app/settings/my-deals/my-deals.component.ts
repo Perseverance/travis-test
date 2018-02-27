@@ -16,28 +16,29 @@ import { TransactionToolWorkflowService } from '../../transaction-tool/workflow/
 })
 export class MyDealsComponent implements OnInit {
 	public myDeals: any[];
+	private userInfo: any;
 
 	constructor(private smartContractService: SmartContractConnectionService,
-		private authService: AuthenticationService,
-		private deedsService: DeedsService,
-		private router: Router,
-		private workflowService: TransactionToolWorkflowService,
-		private momentService: MomentService) {
+	            private authService: AuthenticationService,
+	            private deedsService: DeedsService,
+	            private router: Router,
+	            private workflowService: TransactionToolWorkflowService,
+	            private momentService: MomentService) {
 		this.authService.subscribeToUserData({
 			next: async (userInfo: UserData) => {
-				if (!userInfo.user) {
+				if (userInfo.isAnonymous) {
 					return;
 				}
-				this.myDeals = await this.getMyDeals(userInfo.user.role);
-				this.myDeals.forEach((deal) => {
-					deal.status = FlowStatus[deal.status];
-				});
-
+				this.userInfo = userInfo.user;
 			}
 		});
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
+		this.myDeals = await this.getMyDeals(this.userInfo.role);
+		this.myDeals.forEach((deal) => {
+			deal.status = FlowStatus[deal.status];
+		});
 	}
 
 	private async getMyDeals(userRole: number): Promise<any[]> {

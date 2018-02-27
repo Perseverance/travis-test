@@ -33,8 +33,8 @@ export const environment = {
 	stripePublicKey: 'pk_test_6wYpDH9rwqlyS2V6Vagdtsi2',
 	googleAnalyticsId: 'UA-110127661-1',
 	pusher: {
-		key: '5f7c7a18cc55e6c0d7d3',
-		cluster: 'eu'
+		key: 'c1f5c3f44164e55ece8e',
+		cluster: 'mt1'
 	},
 	helloSign: {
 		clientId: '30a28cd02d7f49d1293ab1207d23fdce',

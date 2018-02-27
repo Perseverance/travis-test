@@ -63,6 +63,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 	public TRANSACTION_STATUSES = TRANSACTION_STATUSES;
 	public transactionDetails: any = null;
 	private documentSignatureUpdatedSubscription: Subscription;
+	public processingUpload: boolean;
 
 	constructor(private route: ActivatedRoute,
 		private documentService: TransactionToolDocumentService,
@@ -86,10 +87,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 				throw new Error('No deed address supplied');
 			}
 			self.deedId = deedId;
-			await self.mapCurrentUserToRole(deedId);
-			await self.setupDocument(deedId);
-			self.setupTransactionLink();
-			self.hasDataLoaded = true;
+			self.reloadView();
 
 		});
 
@@ -126,7 +124,6 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.PURCHASE_AGREEMENT) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}
@@ -147,6 +144,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		if (!this.selectedDocument) {
 			return;
 		}
+		this.processingUpload = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -158,6 +156,7 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 		this.signingDocument = response;
 		await this.setupDocumentPreview(this.signingDocument);
 		this.reuploadingDocumentActivated = false;
+		this.processingUpload = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -201,18 +200,16 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 					errorTime: (new Date()).getTime()
 				});
 				this.recordButtonEnabled = true;
-			}
-			if (result.status === '0x0') {
-				throw new Error('Could not save to the blockchain. Try Again');
+				return;
 			}
 			this.notificationService.pushInfo({
-				title: `Sending the document to the backend.`,
+				title: `Sending the document to the system.`,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 10000
 			});
 			await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
-			this.router.navigate(['transaction-tool', this.deedId]);
+			await this.reloadView();
 			this.notificationService.pushSuccess({
 				title: 'Successfully Sent',
 				message: '',
@@ -268,5 +265,14 @@ export class PurchaseAgreementStepComponent extends ErrorsDecoratableComponent i
 
 	private hideSignatureDelayNote() {
 		this.shouldShowSignatureDelayNotes = false;
+	}
+
+	private async reloadView() {
+		this.hasDataLoaded = false;
+		await this.mapCurrentUserToRole(this.deedId);
+		await this.setupDocument(this.deedId);
+		this.setupTransactionLink();
+		this.hasDataLoaded = true;
+
 	}
 }

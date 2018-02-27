@@ -17,10 +17,12 @@
                 <app-pro-wallet></app-pro-wallet>
             </ng-template>
         </p-tabPanel>
-        <!-- <p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}" [selected]="selectedTab === settingsTabs.MY_DEALS"
-            headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified'>
-            <app-my-deals></app-my-deals>
-        </p-tabPanel> -->
+        <p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}" [selected]="selectedTab === settingsTabs.MY_DEALS"
+            headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified' [cache]="false">
+            <ng-template pTemplate="content">
+                <app-my-deals></app-my-deals>
+            </ng-template>
+        </p-tabPanel>
         <p-tabPanel *ngIf="shouldShowPassword" header="{{ 'settings.headers.password-settings' | translate }}"
             [selected]="selectedTab === settingsTabs.PASSWORD" headerStyleClass="settings-panel-header"
             [disabled]='!isEmailVerified'>
@@ -29,6 +31,10 @@
         <p-tabPanel header="{{ 'settings.headers.refferal-link' | translate }}" [selected]="selectedTab === settingsTabs.REFFERAL_LINK"
             headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified'>
             <app-refferal-link></app-refferal-link>
+        </p-tabPanel>
+        <p-tabPanel *ngIf="isAdmin" header="{{ 'settings.headers.admin' | translate }}" [selected]="selectedTab === settingsTabs.ADMIN"
+            headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified'>
+            <app-accept-reject-properties></app-accept-reject-properties>
         </p-tabPanel>
         <!--<p-tabPanel header="{{ 'settings.headers.email-notifications-settings' | translate }}" headerStyleClass="settings-panel-header">
             {{ 'settings.headers.email-notifications-settings' | translate }}

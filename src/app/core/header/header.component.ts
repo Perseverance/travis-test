@@ -1,3 +1,4 @@
+import { NotificationMessagesService } from './notifications/notification-messages.service';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { SETTINGS_TABS } from './../../settings/settings/settings.component';
 import { AuthenticationService, UserData } from './../../authentication/authentication.service';
@@ -31,10 +32,10 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public isLanding = false;
 	public settingsTabs = SETTINGS_TABS;
 	public isEmailVerified = false;
-
+	public newNotifications = false;
 	private verificationError: string;
 	private verificationMessage: string;
-
+	public numberOfNotifications: number;
 	private notLoggedInError: string;
 
 	constructor(router: Router,
@@ -46,7 +47,8 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 		private translateService: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
 		private momentService: MomentService,
-		public pusherService: PusherService) {
+		public pusherService: PusherService,
+		public notificationMessageService: NotificationMessagesService) {
 		super(router, environment.skippedRedirectRoutes, environment.defaultRedirectRoute);
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
@@ -121,11 +123,12 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 	public logout(event: Event) {
 		event.preventDefault();
 		event.stopPropagation();
+		this.isUserAnonymous = true;
 		this.router.navigate(['/']);
 		const userId = this.userInfo.id;
 		this.authService.performLogout();
 		// ToDo: Comment out when start to use pusher
-		// this.pusherService.unsubscribePusherChannel(userId);
+		this.pusherService.unsubscribePusherChannel(userId);
 	}
 
 	public goListProperty(event: Event) {
@@ -152,5 +155,23 @@ export class HeaderComponent extends RedirectableComponent implements OnInit {
 
 	onLocationFoundHandler(latitude: number, longitude: number, locationName: string) {
 		this.router.navigate(['map', { latitude, longitude, locationName }]);
+	}
+
+	public onNewNotifications(newNotifications) {
+		this.newNotifications = (newNotifications > 0);
+		this.numberOfNotifications = newNotifications;
+	}
+	public async onToggleNotifications() {
+		if (this.numberOfNotifications > 0) {
+			try {
+				this.newNotifications = false;
+				this.numberOfNotifications = 0;
+				const result = await this.notificationMessageService.checkedNotifications();
+			} catch (error) {
+				console.log(error);
+			}
+		}
+
+
 	}
 }

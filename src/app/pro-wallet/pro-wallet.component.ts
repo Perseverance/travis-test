@@ -1,24 +1,24 @@
-import {Web3Service} from './../web3-connection/web3-connection.service';
-import {Subscription} from 'rxjs/Subscription';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../shared/errors/errors.decoratable.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserData} from './../authentication/authentication.service';
+import { Web3Service } from './../web3-connection/web3-connection.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../shared/errors/errors.decoratable.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserData } from './../authentication/authentication.service';
 import {
 	Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, OnChanges, Output,
 	EventEmitter
 } from '@angular/core';
-import {ProWalletService} from './pro-wallet.service';
-import {UserTransactionsHistoryResponse} from './pro-wallet-responses';
-import {AuthenticationService} from '../authentication/authentication.service';
-import {NotificationsService} from '../shared/notifications/notifications.service';
-import {DefaultAsyncAPIErrorHandling} from '../shared/errors/errors.decorators';
-import {ConfirmationService} from 'primeng/primeng';
-import {WalletAddressValidator} from './pro-wallet-address-validator';
-import {SignUpFormValidators} from '../authentication/sign-up-component/sign-up-components.validators';
-import {IntPhonePrefixComponent} from 'ng4-intl-phone/src/lib';
-import {PhoneNumberValidators} from '../shared/validators/phone-number.validators';
+import { ProWalletService } from './pro-wallet.service';
+import { UserTransactionsHistoryResponse } from './pro-wallet-responses';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { NotificationsService } from '../shared/notifications/notifications.service';
+import { DefaultAsyncAPIErrorHandling } from '../shared/errors/errors.decorators';
+import { ConfirmationService } from 'primeng/primeng';
+import { WalletAddressValidator } from './pro-wallet-address-validator';
+import { SignUpFormValidators } from '../authentication/sign-up-component/sign-up-components.validators';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import { PhoneNumberValidators } from '../shared/validators/phone-number.validators';
 
 @Component({
 	selector: 'app-pro-wallet',
@@ -41,27 +41,27 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 	public jsonWallet: string;
 	public defaultPhoneCountryCode: string;
 	public userInfo: any;
-	public updatedCountryCode: string;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
 	public selectedCountryOnGenerateWallet: any;
+	public userPhoneCountry: any;
 
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 
 	constructor(private proWalletService: ProWalletService,
-				private formBuilder: FormBuilder,
-				private authService: AuthenticationService,
-				private notificationsService: NotificationsService,
-				errorsService: ErrorsService,
-				translateService: TranslateService,
-				private confirmationService: ConfirmationService,
-				private web3Service: Web3Service) {
+	            private formBuilder: FormBuilder,
+	            private authService: AuthenticationService,
+	            private notificationsService: NotificationsService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService,
+	            private confirmationService: ConfirmationService,
+	            private web3Service: Web3Service) {
 		super(errorsService, translateService);
 
 		this.proWalletAddressForm = this.formBuilder.group({
 			passwords: this.formBuilder.group({
-				password: ['', [Validators.required]],
-				repeatPassword: ['', [Validators.required]]
+				password: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]],
+				repeatPassword: ['', [Validators.required, SignUpFormValidators.passwordSymbolsValidator]]
 			}, {validator: SignUpFormValidators.differentPasswordsValidator}),
 			phoneNumber: ['', Validators.compose([
 				Validators.required,
@@ -75,6 +75,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			next: async (userInfo: UserData) => {
 				if (userInfo.user) {
 					this.userInfo = userInfo.user;
+					this.userPhoneCountry = this.userInfo.phoneCountryCode;
 					this.phoneNumber.setValue(userInfo.user.phoneNumber);
 					if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
 						this.defaultPhoneCountryCode = 'us';
@@ -136,7 +137,11 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 		this.userTransactionsHistory = await this.proWalletService.userTransactionsHistory();
 		this.shouldShowRedeemSection = this.userTransactionsHistory.isCanRedeemStashedTokens;
 		this.stashedTokensBalance = this.userTransactionsHistory.stashedTokensBalance;
-		this.authService.getCurrentUser();
+		try {
+			await this.authService.getCurrentUser(true, true);
+		} catch (e) {
+			// This happens when you press logout while loading. Nothing to do here
+		}
 	}
 
 	public get passwords() {
@@ -165,7 +170,7 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		const result = await this.web3Service.createAccount(this.password.value);
-		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile), phoneNumber);
+		await this.proWalletService.setWallet(result.address, JSON.stringify(result.jsonFile), phoneNumber, this.childPhoneComponent.selectedCountry.countryCode);
 		this.authService.getCurrentUser();
 		this.getTransactionHistory();
 		this.jsonWallet = result.jsonFile;
@@ -220,6 +225,10 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 			return '';
 		}
 
+		if (this.phoneNumber.value.startsWith('+')) {
+			return this.phoneNumber.value;
+		}
+
 		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
 			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 
@@ -233,6 +242,16 @@ export class ProWalletComponent extends ErrorsDecoratableComponent implements On
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }

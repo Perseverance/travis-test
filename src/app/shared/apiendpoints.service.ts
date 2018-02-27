@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class APIEndpointsService {
@@ -21,7 +21,8 @@ export class APIEndpointsService {
 		GET_USER: `${this.INTERNAL_API_PREFIX}/Users/single`,
 		UPDATE_USER: `${this.INTERNAL_API_PREFIX}/Users/update`,
 		CHANGE_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/changepassword`,
-		FORGOT_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/forgotpassword`,
+		FORGOT_PASSWORD: `${this.INTERNAL_API_PREFIX}/Users/forgotpasswordweb`,
+		UPDATE_EMAIL: `${this.INTERNAL_API_PREFIX}/Users/updateemail`,
 		REFERRAL: `${this.INTERNAL_API_PREFIX}/Users/referral`,
 		USER_TRANSACTION_HISTORY: `${this.INTERNAL_API_PREFIX}/users/transactions`,
 		USER_UPDATE_WALLET: `${this.INTERNAL_API_PREFIX}/users/updatewallet`,
@@ -41,6 +42,7 @@ export class APIEndpointsService {
 		MARK_PROPERTY_AS_UNLISTED: `${this.INTERNAL_API_PREFIX}/Properties/unlist/`,
 		HIDE_PROPERTY: `${this.INTERNAL_API_PREFIX}/Properties/hidden`,
 		RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/createChargeForReservation`,
+		CONFIRM_RESERVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/payments/reserveproperty`,
 		PUSHER_AUTH_ENDPOINT: `${this.INTERNAL_API_PREFIX}/notifications/authPusher`,
 		DEAL_PARTIES: `${this.INTERNAL_API_PREFIX}/deeds/dealparties`,
 		CREATE_DEED: `${this.INTERNAL_API_PREFIX}/deeds/createDeed`,
@@ -60,7 +62,11 @@ export class APIEndpointsService {
 		AGREE_DOCUMENT: `${this.INTERNAL_API_PREFIX}/Deeds/signdocument`,
 		VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/verifyemail`,
 		RESEND_VERIFY_ACCOUNT: `${this.INTERNAL_API_PREFIX}/Users/resendemailverification`,
-		FEATURED_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/featuredproperties`
+		FEATURED_PROPERTIES: `${this.INTERNAL_API_PREFIX}/Properties/featuredproperties`,
+		CHECKED_NOTIFICATIONS: `${this.INTERNAL_API_PREFIX}/Users/checkednotifications`,
+		SEEN_NOTIFICATION: `${this.INTERNAL_API_PREFIX}/UserNotifications/setasseen`,
+		GET_PENDING_PROPERTIES: `${this.INTERNAL_API_PREFIX}/admin/pendinglistings`,
+		APPROVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/admin/approvelisting`
 	};
 
 	constructor() {

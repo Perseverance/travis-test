@@ -60,6 +60,9 @@ export class FooterComponent implements OnInit {
 	public goToAbout() {
 		this.router.navigate(['about']);
 	}
+	public goToTermsAndConditions() {
+		this.router.navigate(['terms']);
+	}
 }
 
 export class MapLocation {

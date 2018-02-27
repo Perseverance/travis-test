@@ -281,7 +281,7 @@ export class RestClientService {
 	}
 
 	/**
-	 * putWithAccessToken - makes a put equest and adds the stored access token;
+	 * putWithAccessToken - makes a put request and adds the stored access token;
 	 */
 	public putWithAccessToken(endpoint: string, data: object, config: object = {}) {
 		const configWithToken = {

@@ -30,25 +30,31 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 	public hasUserDataLoaded = false;
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
-	public selectedCountryOnEditProfile: any;
 
 	private userInfo: any;
-	public updatedCountryCode: string;
+	// ToDo: Get from userInfo and remove mocked one below
+	public userPhoneCountry: any;
 	@ViewChild(IntPhonePrefixComponent) childPhoneComponent: IntPhonePrefixComponent;
 	@Input() generalTabIsActive = false;
 
+	// private mockedSelectedCountry = {
+	// 	name: '',
+	// 	dialCode: '1',
+	// 	countryCode: 'ca'
+	// };
+
 	constructor(private authService: AuthenticationService,
-		private formBuilder: FormBuilder,
-		private notificationService: NotificationsService,
-		private verificationService: VerificationService,
-		errorsService: ErrorsService,
-		translateService: TranslateService) {
+	            private formBuilder: FormBuilder,
+	            private notificationService: NotificationsService,
+	            private verificationService: VerificationService,
+	            errorsService: ErrorsService,
+	            translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.editProfileForm = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
-			email: [{ value: '', disabled: true }, []],
+			email: [{value: ''}, [Validators.required, Validators.email]],
 			phoneNumber: ['', Validators.compose([
 				PhoneNumberValidators.phoneNumberValidator,
 				Validators.minLength(this.phoneMinLength),
@@ -63,14 +69,12 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				}
 				this.userInfo = userInfo.user;
 				this.isEmailVerified = this.userInfo.isEmailVerified;
+				this.userPhoneCountry = this.userInfo.phoneCountryCode;
 				this.setUserInfo(this.userInfo);
-				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber && this.phoneNumber.invalid && this.phoneNumber.errors['invalidPhoneNumber'])) {
+				if (!userInfo.user.phoneNumber || (userInfo.user.phoneNumber
+						&& this.phoneNumber.invalid &&
+						this.phoneNumber.errors['invalidPhoneNumber'])) {
 					this.defaultPhoneCountryCode = 'us';
-				}
-				if (this.selectedCountryOnEditProfile) {
-					if (this.childPhoneComponent) {
-						this.childPhoneComponent.selectedCountry = this.selectedCountryOnEditProfile;
-					}
 				}
 
 				this.hasUserDataLoaded = true;
@@ -112,22 +116,34 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 
 	@DefaultAsyncAPIErrorHandling('settings.general-settings')
 	public async editUser() {
-		this.selectedCountryOnEditProfile = this.childPhoneComponent.selectedCountry;
 		const phoneNumber = this.handlePhoneNumber();
 		this.phoneNumber.setValidators(Validators.compose([
 			PhoneNumberValidators.phoneNumberValidator,
 			Validators.minLength(this.phoneMinLength),
 			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
-		await this.authService.updateUser(this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber);
-		this.notificationService.pushSuccess({
-			title: this.successMessage,
-			message: '',
-			time: (new Date().getTime()),
-			timeout: 4000
-		});
+		if (!!this.firstName.value.trim().length && !!this.lastName.value.trim().length) {
+			await this.authService.updateUser(this.email.value, this.firstName.value.trim(), this.lastName.value.trim(), phoneNumber, this.childPhoneComponent.selectedCountry.countryCode);
+			this.notificationService.pushSuccess({
+				title: this.successMessage,
+				message: '',
+				time: (new Date().getTime()),
+				timeout: 4000
+			});
+		} else {
+			this.notificationService.pushInfo({
+				title: 'ERROR: ',
+				message: 'Please enter valid First name and/or Last name',
+				time: (new Date().getTime()),
+				timeout: 3000
+			});
+		}
 	}
 
 	public cancelEdit() {
+		this.phoneNumber.setValidators(Validators.compose([
+			PhoneNumberValidators.phoneNumberValidator,
+			Validators.minLength(this.phoneMinLength),
+			Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
 		this.setUserInfo(this.userInfo, true);
 	}
 
@@ -163,6 +179,10 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 			return '';
 		}
 
+		if (this.phoneNumber.value.startsWith('+')) {
+			return this.phoneNumber.value;
+		}
+
 		phoneNumber = this.phoneNumber.value === this.userInfo.phoneNumber ?
 			this.userInfo.phoneNumber : `+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`;
 
@@ -176,6 +196,16 @@ export class GeneralSettingsComponent extends ErrorsDecoratableComponent impleme
 				Validators.minLength(this.phoneMinLength),
 				Validators.maxLength(this.phoneMaxLengthWithPlusSign - (this.childPhoneComponent.selectedCountry.dialCode.length + 1))]));
 
+		}
+	}
+
+	public handleSelectedCountryChanged() {
+		if (this.childPhoneComponent && this.childPhoneComponent.selectedCountry) {
+			this.phoneNumber.setValidators(Validators.compose([
+				PhoneNumberValidators.phoneNumberValidator,
+				Validators.minLength(this.phoneMinLength),
+				Validators.maxLength(this.phoneMaxLengthWithPlusSign)]));
+			this.phoneNumber.setValue(`+${this.childPhoneComponent.selectedCountry.dialCode}${this.phoneNumber.value}`);
 		}
 	}
 }

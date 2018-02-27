@@ -1,11 +1,11 @@
-import {UserData, AuthenticationService} from './../authentication/authentication.service';
-import {SmartContractConnectionService} from './../smart-contract-connection/smart-contract-connection.service';
-import {REVERSE_STEPS, STEPS} from './workflow/workflow.model';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {MenuItem} from 'primeng/primeng';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
-import {DeedsService} from '../shared/deeds.service';
-import {Status} from '../smart-contract-connection/smart-contract-connection.service';
+import { UserData, AuthenticationService } from './../authentication/authentication.service';
+import { SmartContractConnectionService } from './../smart-contract-connection/smart-contract-connection.service';
+import { REVERSE_STEPS, STEPS } from './workflow/workflow.model';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MenuItem } from 'primeng/primeng';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { DeedsService } from '../shared/deeds.service';
+import { Status } from '../smart-contract-connection/smart-contract-connection.service';
 
 @Component({
 	selector: 'app-transaction-tool',
@@ -22,8 +22,8 @@ export class TransactionToolComponent implements OnInit {
 	public areStepsActive = false;
 
 	constructor(private route: ActivatedRoute, private router: Router,
-				private deedsService: DeedsService, private smartContractService: SmartContractConnectionService,
-				private authService: AuthenticationService) {
+	            private deedsService: DeedsService, private smartContractService: SmartContractConnectionService,
+	            private authService: AuthenticationService) {
 		this.router.events
 			.filter(event => event instanceof NavigationEnd)
 			.subscribe((event: NavigationEnd) => {
@@ -41,8 +41,6 @@ export class TransactionToolComponent implements OnInit {
 				this.smartContractService.saveCredentials(JSON.parse(userInfo.user.jsonFile));
 			}
 		});
-
-
 	}
 
 	async ngOnInit() {
@@ -62,6 +60,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Invitation',
+				disabled: (this.deedStatusIndex < 1),
 				command: (event: any) => {
 					this.activeIndex = 1;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -69,6 +68,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Purchase Agreement',
+				disabled: (this.deedStatusIndex < 2),
 				command: (event: any) => {
 					this.activeIndex = 2;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -76,6 +76,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Title Report',
+				disabled: (this.deedStatusIndex < 3),
 				command: (event: any) => {
 					this.activeIndex = 3;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -84,6 +85,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Disclosures',
+				disabled: (this.deedStatusIndex < 4),
 				command: (event: any) => {
 					this.activeIndex = 4;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -91,6 +93,7 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Settlement Statements',
+				disabled: (this.deedStatusIndex < 5),
 				command: (event: any) => {
 					this.activeIndex = 5;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
@@ -98,29 +101,33 @@ export class TransactionToolComponent implements OnInit {
 			},
 			{
 				label: 'Payment',
+				disabled: (this.deedStatusIndex < 6),
 				command: (event: any) => {
 					this.activeIndex = 6;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
+			// {
+			// 	label: 'Affidavit',
+			// 	disabled: (this.deedStatusIndex < 7),
+			// 	command: (event: any) => {
+			// 		this.activeIndex = 7;
+			// 		this.activeIndex = this.getCurrentStatus(this.activeIndex);
+			// 	}
+			// },
 			{
-				label: 'Affidavit',
+				label: 'Closing Documents',
+				disabled: (this.deedStatusIndex < 7),
 				command: (event: any) => {
 					this.activeIndex = 7;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
-				label: 'Closing Documents',
+				label: 'Ownership Transfer',
+				disabled: (this.deedStatusIndex < 8),
 				command: (event: any) => {
 					this.activeIndex = 8;
-					this.activeIndex = this.getCurrentStatus(this.activeIndex);
-				}
-			},
-			{
-				label: 'Ownership Transfer',
-				command: (event: any) => {
-					this.activeIndex = 9;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			}
@@ -164,6 +171,8 @@ export class TransactionToolComponent implements OnInit {
 		return deed.status;
 	}
 
+	// ToDo: Affidavit step hide, next steps are decremented with 1
+
 	private getDeedIndexByStatus(idx: number): number {
 		switch (idx) {
 			case Status.reserve: {
@@ -202,17 +211,17 @@ export class TransactionToolComponent implements OnInit {
 			case Status.payment: {
 				return 7;
 			}
-			case Status.affidavit: {
-				return 7;
-			}
-			case Status.affidavitBlockchain: {
+			// case Status.affidavit: {
+			// 	return 7;
+			// }
+			// case Status.affidavitBlockchain: {
+			// 	return 8;
+			// }
+			case Status.closingDocuments: {
 				return 8;
 			}
-			case Status.closingDocuments: {
-				return 9;
-			}
 			case Status.transferred: {
-				return 10;
+				return 8;
 			}
 			default: {
 				return 0;

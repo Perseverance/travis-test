@@ -1,10 +1,10 @@
-import {CurrencyTypeEnum} from './../shared/enums/currency-type.enum';
-import {MockedFavouriteLocationsService} from './mocked-favourite-locations.service';
-import {PropertiesFilter} from './properties.service';
-import {environment} from './../../environments/environment';
-import {APIEndpointsService} from './../shared/apiendpoints.service';
-import {RestClientService} from './../shared/rest-client.service';
-import {Injectable} from '@angular/core';
+import { CurrencyTypeEnum } from './../shared/enums/currency-type.enum';
+import { MockedFavouriteLocationsService } from './mocked-favourite-locations.service';
+import { PropertiesFilter } from './properties.service';
+import { environment } from './../../environments/environment';
+import { APIEndpointsService } from './../shared/apiendpoints.service';
+import { RestClientService } from './../shared/rest-client.service';
+import { Injectable } from '@angular/core';
 import {
 	GetPropertiesResponse,
 	PropertyAgentResponse,
@@ -18,7 +18,7 @@ import {
 	HidePropertyRequest,
 	GetFeaturePropertiesResponse
 } from './properties-responses';
-import {LocalStorageService} from '../shared/localStorage.service';
+import { LocalStorageService } from '../shared/localStorage.service';
 
 interface Bounds {
 	southWestLatitude: number;
@@ -46,9 +46,9 @@ export interface PropertiesFilter {
 export class PropertiesService {
 
 	constructor(private restService: RestClientService,
-				private apiEndpoint: APIEndpointsService,
-				private localStorageService: LocalStorageService,
-				private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
+		private apiEndpoint: APIEndpointsService,
+		private localStorageService: LocalStorageService,
+		private mockedFavouriteLocationsService: MockedFavouriteLocationsService) {
 	}
 
 	public async getProperty(propertyId: string, currency?: CurrencyTypeEnum): Promise<any> {
@@ -58,12 +58,34 @@ export class PropertiesService {
 
 		let result;
 		if (currency) {
-			result = await this.restService.getWithAccessTokenAndCurrency(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params}, currency);
+			result = await this.restService.getWithAccessTokenAndCurrency(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params }, currency);
 		} else {
-			result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, {params});
+			result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.SINGLE_PROPERTY, { params });
 		}
 
 		return result.data.data;
+	}
+	public async getPendingProperties(): Promise<any> {
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.GET_PENDING_PROPERTIES);
+		return result.data.data;
+	}
+
+	public async approveProperty(id) {
+		const params = {
+			propertyId: id,
+			approvalStatus: 1
+		};
+		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.APPROVE_PROPERTY, params);
+		return result;
+	}
+
+	public async rejectProperty(id) {
+		const params = {
+			propertyId: id,
+			approvalStatus: 2
+		};
+		const result = await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.APPROVE_PROPERTY, params);
+		return result;
 	}
 
 	public async getPropertiesByCenter(centerLatitude: number, centerLongitude: number, filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
@@ -74,15 +96,15 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
-		return {properties: result.data.data.properties};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
 	}
 
 	public async getPropertiesInRectangle(southWestLatitude: number,
-										  northEastLatitude: number,
-										  southWestLongitude: number,
-										  northEastLongitude: number,
-										  filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number,
+		filterObject?: PropertiesFilter): Promise<GetPropertiesResponse> {
 		const bounds: Bounds = this.createRectangleBounds(southWestLatitude,
 			northEastLatitude,
 			southWestLongitude,
@@ -93,8 +115,8 @@ export class PropertiesService {
 			search: `${boundsQuery}${filterQuery}`
 		};
 
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, {params});
-		return {properties: result.data.data.properties};
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.PROPERTIES_BY_RECTANGLE, { params });
+		return { properties: result.data.data.properties };
 	}
 
 	private createBoundsFromCenter(centerLatitude: number, centerLongitude: number, degreesOfIncreaseArea = 1) {
@@ -108,9 +130,9 @@ export class PropertiesService {
 	}
 
 	private createRectangleBounds(southWestLatitude: number,
-								  northEastLatitude: number,
-								  southWestLongitude: number,
-								  northEastLongitude: number) {
+		northEastLatitude: number,
+		southWestLongitude: number,
+		northEastLongitude: number) {
 		const bounds: Bounds = {
 			southWestLatitude: southWestLatitude,
 			northEastLatitude: northEastLatitude,
@@ -184,7 +206,7 @@ export class PropertiesService {
 			propertyid: propertyId
 		};
 		const result = await this.restService.postWithAccessToken(
-			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_SOLD, {}, {params: queryParams});
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_SOLD, {}, { params: queryParams });
 		return true;
 	}
 
@@ -193,7 +215,7 @@ export class PropertiesService {
 			propertyid: propertyId
 		};
 		const result = await this.restService.postWithAccessToken(
-			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_UNLISTED, {}, {params: queryParams});
+			this.apiEndpoint.INTERNAL_ENDPOINTS.MARK_PROPERTY_AS_UNLISTED, {}, { params: queryParams });
 		return true;
 	}
 
@@ -211,7 +233,7 @@ export class PropertiesService {
 			option: isHidden
 		};
 		const result = await this.restService.postWithAccessToken(
-			this.apiEndpoint.INTERNAL_ENDPOINTS.HIDE_PROPERTY, params, {params: queryParams});
+			this.apiEndpoint.INTERNAL_ENDPOINTS.HIDE_PROPERTY, params, { params: queryParams });
 		return result.data;
 	}
 
@@ -227,23 +249,25 @@ export class PropertiesService {
 		const result = await this.restService.postWithAccessToken(
 			this.apiEndpoint.INTERNAL_ENDPOINTS.UPLOAD_IMAGES,
 			propertyImages,
-			{params: queryParams});
+			{ params: queryParams });
 
 		return true;
 	}
 
 	public async requestInfo(propertyId: string,
-							 agentId: string,
-							 userName: string,
-							 userEmail: string,
-							 userPhone: string,
-							 userRequestDescription: string): Promise<boolean> {
+		agentId: string,
+		userName: string,
+		userEmail: string,
+		userPhone: string,
+		phoneCountryCode: string,
+		userRequestDescription: string): Promise<boolean> {
 		const params = {
 			propertyId,
 			agentId,
 			userName,
 			userEmail,
 			userPhone,
+			phoneCountryCode,
 			userRequestDescription
 		};
 		await this.restService.postWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.REQUEST_PROPERTY_INFO, params);
@@ -254,7 +278,7 @@ export class PropertiesService {
 		const params = {
 			propertyId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, {params});
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.IS_PROPERTY_OWNER, { params });
 		return result.data.data;
 	}
 
@@ -263,7 +287,7 @@ export class PropertiesService {
 			propertyId,
 			agentId
 		};
-		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.DEAL_PARTIES, {params});
+		const result = await this.restService.getWithAccessToken(this.apiEndpoint.INTERNAL_ENDPOINTS.DEAL_PARTIES, { params });
 		return result.data.data;
 	}
 

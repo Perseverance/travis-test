@@ -21,6 +21,11 @@
 						<div class="propy-validation" *ngIf="password.invalid && password.errors['required']">{{
 							'common.validation-errors.required' | translate }}
 						</div>
+						<div class="propy-validation"
+							 *ngIf="password.invalid && password.errors['invalidPasswordSymbols']">{{
+							'common.validation-errors.invalid-password' | translate
+							}}
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -31,11 +36,6 @@
 						<div class="propy-validation"
 							 *ngIf="repeatPassword.invalid && repeatPassword.errors['required']">{{
 							'common.validation-errors.required' | translate }}
-						</div>
-						<div class="propy-validation"
-							 *ngIf="repeatPassword.invalid && repeatPassword.errors['invalidPasswordSymbols']">{{
-							'common.validation-errors.invalid-password' | translate
-							}}
 						</div>
 						<div *ngIf="password.touched && repeatPassword.touched">
 							<div class="propy-validation"
@@ -51,6 +51,8 @@
 								  [phonePlaceholder]="'common.placeholder.phoneNumberFormat' | translate"
 								  formControlName="phoneNumber"
 								  (phoneInputChangedEvent)="handlePhoneInputChanged()"
+								  [storedUserCountry]="userPhoneCountry"
+								  (selectedCountryChanged)="handleSelectedCountryChanged()"
 								  (blurEvent)="updateControlAsTouched()"></int-phone-prefix>
 				<div *ngIf="phoneNumber.touched" class="propy-validation-errors-box">
 					<div class="propy-validation" *ngIf="phoneNumber.invalid && phoneNumber.errors['required']">{{
@@ -118,7 +120,7 @@
 								<input readonly type="text" class="form-control" value="{{transaction.txId}}"
 									   #txIdInput>
 								<span class="input-group-btn">
-									<button *ngIf="transaction.status == 1" class="btn btn-default"
+									<button *ngIf="transaction.status != 2" class="btn btn-default"
 											class="btn btn-default copy-btn" type="button"
 											[ngxClipboard]="txIdInput">{{ 'common.label.copy' | translate }}</button>
 								</span>

@@ -1,1 +1,44 @@
-<p class="no-new-notifications text-center">{{'common.no-new-notifications'| translate}}.</p>
+<div *ngIf="notifications && notifications.length !== 0; else noNotifications">
+    <div class="row notifications" *ngFor="let notification of notifications|slice:0:notificationsToShow let i=index">
+        <a (click)="goToRelatedEvent(notification)">
+            <div class="media" [ngClass]="{'notRead': !notification.isSeen}">
+                <div class="media-left">
+                    <a href="#">
+                        <ngx-avatar name="{{ notification.actor.firstName }} {{ notification.actor.lastName }}"
+                            src="{{ (notification.actor.avatar ? (notification.actor.avatar | imageEnvPrefix) : '') }}"
+                            size="35" initialsSize="2" cornerRadius="4"></ngx-avatar>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <p class="media-heading">{{ notification.actor.firstName }} {{ notification.actor.lastName
+                        }} {{notificationMessage(notification.type)}}</p>
+                </div>
+                <div class="timestamp">
+                    <i [ngClass]="getIconClass(notification)"></i>
+                    <span>transaction tool</span>
+                    <i class="fa fa-clock-o"></i>
+                    <span class="timestamp-label">{{ (notification.createdOn | amFromUnix) | amTimeAgo }} </span>
+
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="notifications" (click)="$event.stopPropagation()">
+        <a *ngIf="notifications.length > notificationsToShow" class="load-more" (click)="loadMoreNotifications()">Load More</a>
+    </div>
+
+
+
+</div>
+<ng-template #noNotifications>
+
+    <div class="row notifications ">
+        <div class="media ">
+            <div class="media-body ">
+                <p class="media-heading ">{{ 'common.no-new-notifications' | translate }}</p>
+            </div>
+        </div>
+    </div>
+
+
+</ng-template>

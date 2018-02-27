@@ -256,6 +256,39 @@
                         }
                     }
                 }
+                .admin-buttons {
+                    margin: 0;
+                    a {
+                        display: block;
+                        height: 36px;
+                        line-height: 36px;
+                        width: auto;
+                        border: none;
+                        text-align: center;
+                        cursor: pointer;
+                        &.edit-listing {
+                            margin-bottom: 10px;
+                            &:hover {
+                                text-decoration: none;
+                            }
+                        }
+                        &.mark-sold-listing {
+                            background: $green-dark;
+                            margin-bottom: 10px;
+                            &:hover {
+                                background: $green-sec;
+                                text-decoration: none;
+                            }
+                        }
+                        &.mark-unlist-listing {
+                            background: $red-button;
+                            &:hover {
+                                background: $red-button-bright;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

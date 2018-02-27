@@ -13,7 +13,8 @@ export const SETTINGS_TABS = {
 	WALLET: 'WALLET',
 	PASSWORD: 'PASSWORD',
 	MY_DEALS: 'MY_DEALS',
-	REFFERAL_LINK: 'REFFERAL_LINK'
+	REFFERAL_LINK: 'REFFERAL_LINK',
+	ADMIN: 'ADMIN'
 };
 
 // TODO: Make MY_DEALS 3, Passwords 4 and refferal 5
@@ -22,9 +23,10 @@ export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
 	WALLET: 2,
-	// MY_DEALS: 3,
-	PASSWORD: 3,
-	REFFERAL_LINK: 4
+	MY_DEALS: 3,
+	PASSWORD: 4,
+	REFFERAL_LINK: 5,
+	ADMIN: 6
 };
 
 @Component({
@@ -38,9 +40,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public shouldShowPassword: any;
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
-	public isEmailVerified = true;
+	public isEmailVerified = false;
+	public isAdmin = false;
 
 	private paramsSubscription: Subscription;
+	private userDataSubscription: Subscription;
 
 	constructor(private authService: AuthenticationService,
 		private route: ActivatedRoute,
@@ -48,7 +52,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	async ngOnInit() {
-		const currentUser = await this.authService.getCurrentUser();
+		const currentUser = await this.authService.getCurrentUser(true, true);
+		this.isAdmin = currentUser.data.data.isAdmin;
 		if (currentUser.data.data === null) {
 			this.shouldShowPassword = true;
 			this.paramsSubscription = this.setupParamsWatcher();
@@ -61,10 +66,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			this.shouldShowPassword = currentUser.data.data.externalLoginProviders.length === 0;
 		}
 		this.paramsSubscription = this.setupParamsWatcher();
+		this.userDataSubscription = this.authService.subscribeToUserData({
+			next: (userInfo: UserData) => {
+				this.isEmailVerified = userInfo.user.isEmailVerified;
+			}
+		});
 	}
 
 	ngOnDestroy(): void {
-		this.paramsSubscription.unsubscribe();
+		if (this.paramsSubscription) {
+			this.paramsSubscription.unsubscribe();
+		}
+
+		if (this.userDataSubscription) {
+			this.userDataSubscription.unsubscribe();
+		}
 	}
 
 	private setupParamsWatcher() {
@@ -101,12 +117,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			// TODO: Uncomment when we have my deals
 
-			// case TABS_INDEX.MY_DEALS: {
-			// 	queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
-			// 	break;
-			// }
+			case TABS_INDEX.MY_DEALS: {
+				queryParams['selectedTab'] = SETTINGS_TABS.MY_DEALS;
+				break;
+			}
 			case TABS_INDEX.REFFERAL_LINK: {
 				queryParams['selectedTab'] = SETTINGS_TABS.REFFERAL_LINK;
+				break;
+			}
+			case TABS_INDEX.ADMIN: {
+				queryParams['selectedTab'] = SETTINGS_TABS.ADMIN;
 				break;
 			}
 			default: {

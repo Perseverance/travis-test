@@ -46,6 +46,8 @@ export class SettlementStatementComponent implements OnInit {
 	public hasDataLoaded = false;
 	public reuploadingBuyerDocumentActivated: boolean;
 	public reuploadingSellerDocumentActivated: boolean;
+	public processingUploadBuyerDocumentActivated: boolean;
+	public processingUploadSellerDocumentActivated: boolean;
 	public deed: any;
 	public deedStatus = Status;
 
@@ -113,6 +115,7 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedSellerDocument) {
 			return;
 		}
+		this.processingUploadSellerDocumentActivated = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -127,6 +130,7 @@ export class SettlementStatementComponent implements OnInit {
 		);
 		this.previewSellerLink = response.fileName;
 		this.reuploadingSellerDocumentActivated = false;
+		this.processingUploadSellerDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -141,6 +145,7 @@ export class SettlementStatementComponent implements OnInit {
 		if (!this.selectedBuyerDocument) {
 			return;
 		}
+		this.processingUploadBuyerDocumentActivated = true;
 		this.notificationService.pushInfo({
 			title: `Please wait. A document is uploading, so be patient.`,
 			message: '',
@@ -155,6 +160,7 @@ export class SettlementStatementComponent implements OnInit {
 		);
 		this.previewBuyerLink = response.fileName;
 		this.reuploadingBuyerDocumentActivated = false;
+		this.processingUploadBuyerDocumentActivated = false;
 		this.notificationService.pushSuccess({
 			title: this.successMessage,
 			message: '',
@@ -164,6 +170,13 @@ export class SettlementStatementComponent implements OnInit {
 	}
 
 	public async agreeBuyerDocument() {
+		this.notificationService.pushInfo({
+			title: `Please wait.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 		const buyerDocument = this.getBuyerDocument(deed.documents);
 		await this.deedsService.markDocumentAgreed(buyerDocument.id);
@@ -177,6 +190,14 @@ export class SettlementStatementComponent implements OnInit {
 	}
 
 	public async agreeSellerDocument() {
+		this.notificationService.pushInfo({
+			title: `Please wait.`,
+			message: '',
+			time: (new Date().getTime()),
+			timeout: 4000
+		});
+
+
 		const deed = await this.deedsService.getDeedDetails(this.deedAddress);
 		const sellerDocument = this.getSellerDocument(deed.documents);
 		await this.deedsService.markDocumentAgreed(sellerDocument.id);

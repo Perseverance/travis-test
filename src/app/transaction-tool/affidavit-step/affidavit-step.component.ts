@@ -80,10 +80,7 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 				throw new Error('No deed address supplied');
 			}
 			self.deedId = deedId;
-			await self.mapCurrentUserToRole(deedId);
-			await self.setupDocument(deedId);
-			self.setupTransactionLink();
-			self.hasDataLoaded = true;
+			self.reloadView();
 		});
 
 		this.documentSignatureUpdatedSubscription = this.pusherService.subscribeToDocumentSignatureUpdatedSubject({
@@ -101,7 +98,8 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 	private async setupDocument(deedId: string) {
 		const deed = await this.deedsService.getDeedDetails(deedId);
 		this.deed = deed;
-		this.shouldSendToBlockchain = (deed.status === Status.affidavit);
+		// ToDo: Commented next line because of build error
+		// this.shouldSendToBlockchain = (deed.status === Status.affidavit);
 		this.signingDocument = this.getSignatureDocument(deed.documents);
 		this.deedAddress = deed.deedContractAddress;
 		await this.setupDocumentPreview(this.signingDocument);
@@ -119,7 +117,6 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 		for (const deal of this.deed.transactions) {
 			if (deal.type === BLOCKCHAIN_TRANSACTION_STEPS.AFFIDAVIT) {
 				this.transactionDetails = deal;
-				return;
 			}
 		}
 	}
@@ -192,18 +189,16 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 					errorTime: (new Date()).getTime()
 				});
 				this.recordButtonEnabled = true;
-			}
-			if (result.status === '0x0') {
-				throw new Error('Could not save to the blockchain. Try Again');
+				return;
 			}
 			this.notificationService.pushInfo({
-				title: `Sending the document to the backend.`,
+				title: `Sending the document to the system.`,
 				message: '',
 				time: (new Date().getTime()),
 				timeout: 10000
 			});
 			await this.deedsService.sendDocumentTxHash(this.signingDocument.id, result.transactionHash);
-			this.router.navigate(['/transaction-tool', this.deedId]);
+			await this.reloadView();
 			this.notificationService.pushSuccess({
 				title: 'Successfully Sent',
 				message: '',
@@ -252,6 +247,14 @@ export class AffidavitStepComponent extends ErrorsDecoratableComponent implement
 
 	private hideSignatureDelayNote() {
 		this.shouldShowSignatureDelayNotes = false;
+	}
+
+	private async reloadView() {
+		this.hasDataLoaded = false;
+		await this.mapCurrentUserToRole(this.deedId);
+		await this.setupDocument(this.deedId);
+		this.setupTransactionLink();
+		this.hasDataLoaded = true;
 	}
 
 }
