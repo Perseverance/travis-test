@@ -221,7 +221,7 @@ export class TransactionToolComponent implements OnInit {
 				return 8;
 			}
 			case Status.transferred: {
-				return 9;
+				return 8;
 			}
 			default: {
 				return 0;
