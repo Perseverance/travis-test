@@ -30,7 +30,6 @@ export class PreferencesComponent implements OnInit {
 			notifications: (this.notifications.value),
 			newsletter: (this.newsletter.value)
 		};
-		console.log(request);
 
 	}
 
