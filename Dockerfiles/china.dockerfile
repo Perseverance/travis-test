@@ -19,7 +19,7 @@ RUN $(npm bin)/ng build
 FROM nginx:1.13.9 as website-server
 
 ## Copy our default nginx config
-COPY nginx-config/test.conf /etc/nginx/conf.d/
+COPY nginx-config/china.conf /etc/nginx/conf.d/
 
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
