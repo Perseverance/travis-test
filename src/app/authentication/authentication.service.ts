@@ -6,7 +6,7 @@ import { OAuth2TokenTypes } from './oauth2-token-types';
 import { OAuth2GrantTypes } from './oauth2-grant-types';
 import { APIEndpointsService } from './../shared/apiendpoints.service';
 import { RestClientService } from './../shared/rest-client.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
 import { BrowserDetectionService } from '../shared/browser-detection.service';
 
@@ -42,24 +42,23 @@ export interface UserData {
 }
 
 @Injectable()
-export class AuthenticationService {
+export class AuthenticationService implements OnInit {
 
 	private userDataSubject: ReplaySubject<UserData>;
+	private initParams: InitParams;
+	private _user: any;
 
 	constructor(public restClient: RestClientService,
 		public apiEndpoints: APIEndpointsService,
 		private fbService: FacebookService,
 		private browserDetectionService: BrowserDetectionService) {
 
-		const initParams: InitParams = {
+		this.initParams = {
 			appId: environment.fbConfigParams.appId,
 			xfbml: environment.fbConfigParams.xfbml,
 			version: environment.fbConfigParams.version
 		};
 
-		if (!environment.china) {
-			fbService.init(initParams);
-		}
 
 		this.userDataSubject = new ReplaySubject(1);
 
@@ -72,7 +71,12 @@ export class AuthenticationService {
 		}
 	}
 
-	private _user: any;
+	ngOnInit() {
+		if (!environment.china) {
+			this.fbService.init(this.initParams);
+		}
+	}
+
 
 	public set user(inUser: any) {
 		this._user = inUser;
@@ -358,7 +362,14 @@ export class AuthenticationService {
 		return result.data.data.value;
 	}
 
-	public async updateUser(email: string, firstName: string, lastName: string, phoneNumber: string, phoneCountryCode: string, saveUser = true): Promise<any> {
+	public async updateUser(
+		email: string,
+		firstName: string,
+		lastName: string,
+		phoneNumber: string,
+		phoneCountryCode: string,
+		saveUser = true
+	): Promise<any> {
 		const params = {
 			email,
 			firstName,

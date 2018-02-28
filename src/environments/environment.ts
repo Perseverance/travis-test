@@ -17,7 +17,7 @@ export const environment = {
 		xfbml: true,
 		version: 'v2.10'
 	},
-	china: true,
+	china: false,
 	skippedRedirectRoutes: ['/login', '/signup'],
 	defaultRedirectRoute: '/',
 	mapConfig: {

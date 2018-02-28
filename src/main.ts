@@ -14,11 +14,27 @@ if (environment.china) {
 		'src',
 		'https://maps.google.cn/maps/api/js?key=AIzaSyDzuZpv8iXJL2lPLqvKU0J4KdFONwSPjGk&libraries=places&callback'
 	);
+
+	enableProdMode();
 } else {
 	mapsScript.setAttribute(
 		'src',
 		'https://maps.googleapis.com/maps/api/js?key=AIzaSyDzuZpv8iXJL2lPLqvKU0J4KdFONwSPjGk&libraries=places&callback'
 	);
+
+
+
+	// FB SDK -----------------------------------------
+	const fbSDK = document.createElement('script');
+	fbSDK.setAttribute('type', 'text/javascript');
+
+	fbSDK.setAttribute(
+		'src',
+		'https://connect.facebook.net/en_US/sdk.js'
+	);
+
+	document.body.appendChild(fbSDK);
+	// ------------------------------------------------
 
 	// FACEBOOK EVENTS --------------------------------
 	const fbScript = document.createElement('script');
@@ -32,17 +48,6 @@ if (environment.china) {
 	document.head.appendChild(fbScript);
 	// ------------------------------------------------
 
-	// FB SDK -----------------------------------------
-	const fbSDK = document.createElement('script');
-	fbSDK.setAttribute('type', 'text/javascript');
-
-	fbSDK.setAttribute(
-		'src',
-		'https://connect.facebook.net/en_US/sdk.js'
-	);
-
-	document.body.appendChild(fbSDK);
-	// ------------------------------------------------
 
 	// HELLOSIGN --------------------------------------
 	const helloSign = document.createElement('script');
