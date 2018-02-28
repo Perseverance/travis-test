@@ -1,12 +1,12 @@
 <div class="row background-image">
-    <div class="col-xs-12">
+    <div class="col-xs-12" *ngIf="!isChina">
         <app-crypto-widget-mobile></app-crypto-widget-mobile>
     </div>
     <div class="find-property">
         <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-10 col-lg-offset-1 text-center">
             <h3 class="landing-heading">{{ 'landing.find-properties.heading' | translate }}</h3>
             <h6 class="landing-heading">{{ 'landing.find-properties.sub-heading' | translate }}</h6>
-            <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 text-center" *ngIf="!_isChina">
+            <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 text-center" *ngIf="!isChina">
                 <div class="col-md-12 col-lg-10 col-lg-offset-1">
                     <app-location-search inputTheme="big" inputPlaceholder="{{ 'landing.location-search' | translate | ellipsis }}"
                         (onLocationFound)="onLocationFoundHandler($event.latitude, $event.longitude, $event.locationName)"></app-location-search>
@@ -20,7 +20,7 @@
         <app-featured-properties></app-featured-properties>
     </div>
 </div>
-<div class="row" *ngIf="!_isChina">
+<div class="row" *ngIf="!isChina">
     <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
         <app-favourite-locations></app-favourite-locations>
     </div>
@@ -51,7 +51,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12" *ngIf="!isChina">
         <app-crypto-widget></app-crypto-widget>
     </div>
 </div>

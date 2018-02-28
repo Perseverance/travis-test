@@ -12,7 +12,7 @@ declare function SmartBanner(param1: any): void;
 })
 export class HomeComponent implements OnInit {
 
-	public _isChina: Boolean = environment.china;
+	public isChina: Boolean = environment.china;
 
 	constructor(
 		private router: Router,
