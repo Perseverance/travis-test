@@ -32,7 +32,7 @@
                         </div>
 
 
-                        <p>{{ property.desc | textLimitation : 100 }}</p>
+                        <p *ngIf="property.desc">{{ property.desc | textLimitation : 100 }}</p>
                     </div>
                 </div>
             </div>
