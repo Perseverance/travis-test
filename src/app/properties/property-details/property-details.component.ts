@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { currencyLabels } from './currencyLabels.model';
 import { ErrorsService } from './../../shared/errors/errors.service';
 import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
@@ -71,6 +72,7 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 	public cryptoBtc = false;
 	public cryptoEth = false;
 	public cryptoFiat = false;
+	public isAdmin = false;
 
 	public isChina: Boolean = environment.china;
 
@@ -108,6 +110,9 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 		this.authService.subscribeToUserData({
 			next: (userInfo: UserData) => {
 				this.userInfo = userInfo;
+				if (userInfo.user) {
+					this.isAdmin = userInfo.user.isAdmin;
+				}
 			}
 		});
 	}
@@ -376,5 +381,24 @@ export class PropertyDetailsComponent extends RedirectableComponent implements O
 			return;
 		}
 		this.router.navigate(['/purchase', this.property.id]);
+	}
+
+	public async markPropertyAsAccepted(propertyId) {
+		try {
+			const result = await this.propertiesService.approveProperty(propertyId);
+			this.router.navigate(['/settings'], { queryParams: { selectedTab: 'ADMIN' } });
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+
+	public async markPropertyAsRejected(propertyId) {
+		try {
+			const result = await this.propertiesService.rejectProperty(propertyId);
+			this.router.navigate(['/settings'], { queryParams: { selectedTab: 'ADMIN' } });
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }

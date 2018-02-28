@@ -1,0 +1,53 @@
+@import "../../../_variables";
+@import "../../../_mixins";
+$table-header: #D5D5D5;
+$table-hover: #F3F9FB;
+.accept-properties {
+    .propy-deals {
+        .ui-datatable-tablewrapper {
+            .ui-datatable-thead {
+                .ui-state-default {
+                    padding: 10px;
+                    border: none;
+                    &:first-child {
+                        @include border-radius-separate(5px, 0, 0, 0);
+                    }
+                    &:last-child {
+                        @include border-radius-separate(0, 5px, 0, 0);
+                    }
+                    text-align: left;
+                }
+            }
+            .ui-widget-content {
+                background: $gray-lightest;
+                cursor: pointer;
+                border-bottom: 1px solid $table-header;
+                border-top: 1px solid $table-header;
+                border-right: none;
+                border-left: none;
+                &:last-child {
+                    border-bottom: none;
+                }
+                td {
+                    border: none;
+                    border-right: none;
+                }
+                :hover {
+                    background-color: $table-hover;
+                    color: $blue-dark;
+                    .ui-cell-data {
+                        background: none;
+                    }
+                }
+                .ui-cell-data {
+                    .workflow-completed {
+                        color: $green-main;
+                    }
+                    .fa-check-circle::before {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -17,6 +17,7 @@ import {MyDealsComponent} from './my-deals/my-deals.component';
 import {RefferalLinkComponent} from './refferal-link/refferal-link.component';
 import {ClipboardModule} from 'ngx-clipboard/dist/src';
 import {InternationalPhoneModule} from 'ng4-intl-phone/src/lib';
+import { AcceptRejectPropertiesComponent } from './accept-reject-properties/accept-reject-properties.component';
 
 @NgModule({
 	imports: [
@@ -35,7 +36,7 @@ import {InternationalPhoneModule} from 'ng4-intl-phone/src/lib';
 		ClipboardModule,
 		InternationalPhoneModule
 	],
-	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent, RefferalLinkComponent]
+	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent, RefferalLinkComponent, AcceptRejectPropertiesComponent]
 })
 export class SettingsModule {
 }

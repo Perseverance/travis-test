@@ -6,7 +6,7 @@
         },
         "label": {
             "not-selected": "Not selected",
-            "authentication-error": "Authentication еrror",
+            "authentication-error": "Authentication еrror (This email is already associated with another account)",
             "login": "Login",
             "signin": "Sign in",
             "signup": "Sign up",
@@ -334,10 +334,11 @@
             "my-listed-properties": "My Listings",
             "pro-wallet": "My PRO Wallet",
             "my-deals": "My Deals",
-            "refferal-link": "Referral Link"
+            "refferal-link": "Referral Link",
+            "admin": "Admin"
         },
         "general-settings": {
-            "update-success": "Your profile was updated successfully!",
+            "update-success": "Your profile was updated succesfully!",
             "update-error": "Could not update your profile",
             "delete-account": "Delete account",
             "upload-new-photo": "Upload new photo",
@@ -354,6 +355,8 @@
         "my-listed-properties-settings": {
             "edit-button": "Edit",
             "mark-as-sold": "Mark as Sold",
+            "mark-as-accepted": "Accept",
+            "mark-as-rejected": "Reject",
             "confirmation-heading": "Confirmation",
             "confirmation-message": "Are you sure that you want to mark property as sold?",
             "confirmation-message-unlist": "Are you sure that you want to unlist this property",

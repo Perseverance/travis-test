@@ -13,7 +13,8 @@ export const SETTINGS_TABS = {
 	WALLET: 'WALLET',
 	PASSWORD: 'PASSWORD',
 	MY_DEALS: 'MY_DEALS',
-	REFFERAL_LINK: 'REFFERAL_LINK'
+	REFFERAL_LINK: 'REFFERAL_LINK',
+	ADMIN: 'ADMIN'
 };
 
 // TODO: Make MY_DEALS 3, Passwords 4 and refferal 5
@@ -24,7 +25,8 @@ export const TABS_INDEX = {
 	WALLET: 2,
 	MY_DEALS: 3,
 	PASSWORD: 4,
-	REFFERAL_LINK: 5
+	REFFERAL_LINK: 5,
+	ADMIN: 6
 };
 
 @Component({
@@ -38,7 +40,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public shouldShowPassword: any;
 	public settingsTabs = SETTINGS_TABS;
 	public selectedTab = this.settingsTabs.GENERAL;
-	public isEmailVerified = true;
+	public isEmailVerified = false;
+	public isAdmin = false;
 
 	private paramsSubscription: Subscription;
 	private userDataSubscription: Subscription;
@@ -50,6 +53,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	async ngOnInit() {
 		const currentUser = await this.authService.getCurrentUser(true, true);
+		this.isAdmin = currentUser.data.data.isAdmin;
 		if (currentUser.data.data === null) {
 			this.shouldShowPassword = true;
 			this.paramsSubscription = this.setupParamsWatcher();
@@ -119,6 +123,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			case TABS_INDEX.REFFERAL_LINK: {
 				queryParams['selectedTab'] = SETTINGS_TABS.REFFERAL_LINK;
+				break;
+			}
+			case TABS_INDEX.ADMIN: {
+				queryParams['selectedTab'] = SETTINGS_TABS.ADMIN;
 				break;
 			}
 			default: {
