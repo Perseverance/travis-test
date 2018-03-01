@@ -1,5 +1,4 @@
 #!/bin/bash
-if [[] "$TRAVIS_BRANCH" =~ ^sprint-.*$ ]]; then
-	echo "sprint"
+if [[ "sprint-luke" =~ ^sprint-.*$ ]]; then
 	docker ps -a
 fi
