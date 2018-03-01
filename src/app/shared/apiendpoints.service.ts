@@ -66,7 +66,8 @@ export class APIEndpointsService {
 		CHECKED_NOTIFICATIONS: `${this.INTERNAL_API_PREFIX}/Users/checkednotifications`,
 		SEEN_NOTIFICATION: `${this.INTERNAL_API_PREFIX}/UserNotifications/setasseen`,
 		GET_PENDING_PROPERTIES: `${this.INTERNAL_API_PREFIX}/admin/pendinglistings`,
-		APPROVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/admin/approvelisting`
+		APPROVE_PROPERTY: `${this.INTERNAL_API_PREFIX}/admin/approvelisting`,
+		SUBSCRIPTIONS_EMAIL: `${this.INTERNAL_API_PREFIX}/Users/preferences`
 	};
 
 	constructor() {

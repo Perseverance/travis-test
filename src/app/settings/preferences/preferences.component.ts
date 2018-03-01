@@ -1,5 +1,7 @@
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { PreferencesService } from './preferences.service';
 
 @Component({
 	selector: 'app-preferences',
@@ -10,9 +12,19 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class PreferencesComponent implements OnInit {
 	public subscriptionsPropertyForm: FormGroup;
-	constructor(private formBuilder: FormBuilder) {
+	public currentUser;
+	constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private preferencesService: PreferencesService) {
+		this.authService.subscribeToUserData({
+			next: async (userInfo: UserData) => {
+				if (!userInfo.user) {
+					return;
+				}
+				this.currentUser = userInfo.user;
+			}
+		});
+
 		this.subscriptionsPropertyForm = this.formBuilder.group({
-			notifications: [''],
+			notifications: [this.currentUser.preferences.receiveEmailNotifications],
 			newsletter: [{ value: '', disabled: true }],
 		});
 	}
@@ -27,10 +39,10 @@ export class PreferencesComponent implements OnInit {
 	}
 	public saveChanges() {
 		const request = {
-			notifications: (this.notifications.value),
-			newsletter: (this.newsletter.value)
+			receiveEmailNotifications: (this.notifications.value),
+			// TO DO add here another object elements to be sent when we implement another subscriptions
 		};
-
+		this.preferencesService.onSubscriptionEmailChange(request);
 	}
 
 }

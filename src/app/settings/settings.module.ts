@@ -19,6 +19,7 @@ import { ClipboardModule } from 'ngx-clipboard/dist/src';
 import { InternationalPhoneModule } from 'ng4-intl-phone/src/lib';
 import { AcceptRejectPropertiesComponent } from './accept-reject-properties/accept-reject-properties.component';
 import { PreferencesComponent } from './preferences/preferences.component';
+import { PreferencesService } from './preferences/preferences.service';
 
 @NgModule({
 	imports: [
@@ -38,7 +39,17 @@ import { PreferencesComponent } from './preferences/preferences.component';
 		InternationalPhoneModule,
 		CheckboxModule
 	],
-	declarations: [SettingsComponent, GeneralSettingsComponent, ChangePasswordComponent, MyListedPropertiesComponent, MyDealsComponent, RefferalLinkComponent, AcceptRejectPropertiesComponent, PreferencesComponent]
+	declarations: [SettingsComponent,
+		GeneralSettingsComponent,
+		ChangePasswordComponent,
+		MyListedPropertiesComponent,
+		MyDealsComponent,
+		RefferalLinkComponent,
+		AcceptRejectPropertiesComponent,
+		PreferencesComponent],
+	providers: [
+		PreferencesService
+	]
 })
 export class SettingsModule {
 }
