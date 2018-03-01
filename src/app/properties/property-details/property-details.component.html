@@ -124,8 +124,6 @@
                                     </div>
                                     <div class="row property-desc" [innerHTML]="property.desc">
                                     </div>
-                                    <div class="row property-disclaimer" [innerHTML]="property.disclaimer">
-                                    </div>
                                 </div>
                                 <div id="features" class="tab-pane fade">
                                     <div class="row">
@@ -258,6 +256,10 @@
                                             <p-gmap #gmap [options]="options" [overlays]="overlays" styleClass="google-map-holder"></p-gmap>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="row property-disclaimer" [innerHTML]="property.disclaimer">
                                 </div>
                             </div>
                         </div>
