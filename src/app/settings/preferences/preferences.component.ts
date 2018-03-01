@@ -56,6 +56,7 @@ export class PreferencesComponent implements OnInit {
 			// TO DO add here another object elements to be sent when we implement another subscriptions
 		};
 		this.preferencesService.onSubscriptionUserChange(request);
+		this.authService.getCurrentUser(true, true);
 	}
 
 }
