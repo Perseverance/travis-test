@@ -62,7 +62,7 @@ export class UnsubscribeComponent extends ErrorsDecoratableComponent implements 
 			});
 	}
 
-	@DefaultAsyncAPIErrorHandling('verification.verification-error')
+	@DefaultAsyncAPIErrorHandling('unsubscribe.unsubscribe-error')
 	private async sendUnsubscribeCode(code: string, email: string) {
 		try {
 			await this.preferencesService.emailUnsubscribe(code, email);
