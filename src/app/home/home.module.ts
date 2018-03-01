@@ -17,6 +17,7 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
 import { FeaturedPropertiesComponent } from './featured-properties/featured-properties.component';
 import { CurrencyDataService } from '../core/crypto-widget/currency-data.service';
 import { CryptoWidgetMobileComponent } from '../core/crypto-widget-mobile/crypto-widget-mobile.component';
+import { ShareWidgetComponent } from './share-widget/share-widget.component';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,8 @@ import { CryptoWidgetMobileComponent } from '../core/crypto-widget-mobile/crypto
 		CryptoWidgetComponent,
 		NewsletterComponent,
 		FeaturedPropertiesComponent,
-		CryptoWidgetMobileComponent
+		CryptoWidgetMobileComponent,
+		ShareWidgetComponent
 	],
 	imports: [
 		CommonModule,
