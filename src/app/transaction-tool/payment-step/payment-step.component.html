@@ -12,7 +12,7 @@
                     <hr id="horizontal-line">
                     <div class="payment">
                         <h5><span>Please select the currency in which you want to pay for this property:</span></h5>
-                        <form [formGroup]="contactAgentForm">
+                        <form [formGroup]="contactAgentForm" class="col-xs-11">
                             <div class="form-check abc-radio abc-radio-info payment-radio" *ngFor="let payment of payments; let i = index">
                                 <input class="form-check-input" type="radio" formControlName="paymentId" [id]="payment.id"
                                     [value]="payment.id" [attr.disabled]="i >= 1 ? true : null">
@@ -29,8 +29,7 @@
                         <div class="row payment-info">
                             <div class="col-xs-12">
                                 <p><span>The ETH will be sent to address </span>
-                                    <span
-                                        class="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn"
+                                    <span class="escrowAddress">{{escrowAddress}} <button class="btn btn-default copy-btn"
                                             type="button" ngxClipboard [cbContent]="escrowAddress">Copy</button></span><span> the Escrow address.</span>
                                 </p>
                             </div>
