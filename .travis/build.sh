@@ -1,8 +1,6 @@
 #!/bin/bash
-if [[ "sprint-luke" =~ ^sprint-.*$ ]]; then
+if [[ "$TRAVIS_BRANCH" =~ ^sprint-.*$ ]]; then
 	docker build -f ./Dockerfiles/dev.dockerfile -t dev_website_image .
-fi
-
-if [[ "sprint-luke" =~ ^stable-.*$ ]]; then
+elif [[ "$TRAVIS_BRANCH" =~ ^stable-.*$ ]]; then
 	docker build -f ./Dockerfiles/stage.dockerfile -t stage_website_image .
 fi
