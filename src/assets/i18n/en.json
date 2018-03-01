@@ -335,7 +335,8 @@
             "pro-wallet": "My PRO Wallet",
             "my-deals": "My Deals",
             "refferal-link": "Referral Link",
-            "admin": "Admin"
+            "admin": "Admin",
+            "preferences": "Preferences"
         },
         "general-settings": {
             "update-success": "Your profile was updated succesfully!",
@@ -344,6 +345,11 @@
             "upload-new-photo": "Upload new photo",
             "upload-new-photo-success": "Your photo has been updated successfuly",
             "upload-new-photo-fail": "Your photo failed to upload"
+        },
+        "preferences": {
+            "preferences-section": "Subscriptions",
+            "notifications": "Notifications",
+            "newsletter": "Newsletter"
         },
         "password-settings": {
             "current-password": "Current password",

@@ -16,16 +16,17 @@ export enum Status {
 	reservedOnBlockchain = 3,
 	purchaseAgreement = 4,
 	purchaseAgreementBlockchain = 5,
-	titleReport = 6,
-	titleReportBlockchain = 7,
-	Disclosures = 8,
-	DisclosuresBlockchain = 9,
-	settlementStatement = 10,
-	payment = 11,
-	// affidavit = 12,
-	// affidavitBlockchain = 13,
-	closingDocuments = 12,
-	transferred = 13
+	depositPayment = 6,
+	titleReport = 7,
+	titleReportBlockchain = 8,
+	Disclosures = 9,
+	DisclosuresBlockchain = 10,
+	settlementStatement = 11,
+	payment = 12,
+		// affidavit = 12,
+		// affidavitBlockchain = 13,
+	closingDocuments = 13,
+	transferred = 14
 }
 
 export enum SMART_CONTRACT_DOCUMENT_TYPES {
@@ -97,10 +98,10 @@ export class SmartContractConnectionService {
 	}
 
 	private async recordDocument(walletPassword: string,
-		deedAddress: string,
-		docType: SMART_CONTRACT_DOCUMENT_TYPES,
-		docKey: string,
-		doc: string) {
+	                             deedAddress: string,
+	                             docType: SMART_CONTRACT_DOCUMENT_TYPES,
+	                             docKey: string,
+	                             doc: string) {
 		if (!this.credentialsSet) {
 			throw new Error('No credentials');
 		}
@@ -137,7 +138,7 @@ export class SmartContractConnectionService {
 		return new Promise(function (resolve, reject) {
 			self.web3Service.web3.eth.sendSignedTransaction(signedData)
 				.once('transactionHash', function (transactionHash) {
-					resolve({ transactionHash });
+					resolve({transactionHash});
 				});
 		});
 

@@ -11,6 +11,7 @@ export const SETTINGS_TABS = {
 	GENERAL: 'GENERAL',
 	MY_LISTINGS: 'MY_LISTINGS',
 	WALLET: 'WALLET',
+	PREFERENCES: 'PREFERENCES',
 	PASSWORD: 'PASSWORD',
 	MY_DEALS: 'MY_DEALS',
 	REFFERAL_LINK: 'REFFERAL_LINK',
@@ -23,10 +24,11 @@ export const TABS_INDEX = {
 	GENERAL: 0,
 	MY_LISTINGS: 1,
 	WALLET: 2,
-	MY_DEALS: 3,
-	PASSWORD: 4,
-	REFFERAL_LINK: 5,
-	ADMIN: 6
+	PREFERENCES: 3,
+	MY_DEALS: 4,
+	PASSWORD: 5,
+	REFFERAL_LINK: 6,
+	ADMIN: 7
 };
 
 @Component({
@@ -109,6 +111,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 			case TABS_INDEX.WALLET: {
 				queryParams['selectedTab'] = SETTINGS_TABS.WALLET;
+				break;
+			}
+			case TABS_INDEX.PREFERENCES: {
+				queryParams['selectedTab'] = SETTINGS_TABS.PREFERENCES;
 				break;
 			}
 			case TABS_INDEX.PASSWORD: {

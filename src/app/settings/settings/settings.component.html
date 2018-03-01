@@ -17,6 +17,12 @@
                 <app-pro-wallet></app-pro-wallet>
             </ng-template>
         </p-tabPanel>
+        <p-tabPanel header="{{ 'settings.headers.preferences' | translate }}" [selected]="selectedTab === settingsTabs.PREFERENCES"
+            headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified' [cache]="false">
+            <ng-template pTemplate="content">
+                <app-preferences></app-preferences>
+            </ng-template>
+        </p-tabPanel>
         <p-tabPanel header="{{ 'settings.headers.my-deals' | translate }}" [selected]="selectedTab === settingsTabs.MY_DEALS"
             headerStyleClass="settings-panel-header" [disabled]='!isEmailVerified' [cache]="false">
             <ng-template pTemplate="content">
