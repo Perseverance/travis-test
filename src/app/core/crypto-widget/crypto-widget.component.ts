@@ -15,7 +15,7 @@ export class CryptoWidgetComponent implements OnInit {
 
 	async ngOnInit() {
 		this.cryptoData = await this.currecyService.loadCurrencyData('https://api.coinmarketcap.com/v1/ticker/propy/');
-		this.cryptoPrice = (+this.cryptoData.price_usd).toFixed(4);
+		this.cryptoPrice = (+this.cryptoData.price_usd).toFixed(2);
 	}
 
 }
