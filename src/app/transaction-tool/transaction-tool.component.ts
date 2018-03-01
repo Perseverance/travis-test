@@ -75,24 +75,24 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Title Report',
+				label: 'Deposit Payment',
 				disabled: (this.deedStatusIndex < 3),
 				command: (event: any) => {
 					this.activeIndex = 3;
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
+				}
+			},
+			{
+				label: 'Title Report',
+				disabled: (this.deedStatusIndex < 4),
+				command: (event: any) => {
+					this.activeIndex = 4;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 
 				}
 			},
 			{
 				label: 'Disclosures',
-				disabled: (this.deedStatusIndex < 4),
-				command: (event: any) => {
-					this.activeIndex = 4;
-					this.activeIndex = this.getCurrentStatus(this.activeIndex);
-				}
-			},
-			{
-				label: 'Settlement Statements',
 				disabled: (this.deedStatusIndex < 5),
 				command: (event: any) => {
 					this.activeIndex = 5;
@@ -100,10 +100,18 @@ export class TransactionToolComponent implements OnInit {
 				}
 			},
 			{
-				label: 'Payment',
+				label: 'Settlement Statements',
 				disabled: (this.deedStatusIndex < 6),
 				command: (event: any) => {
 					this.activeIndex = 6;
+					this.activeIndex = this.getCurrentStatus(this.activeIndex);
+				}
+			},
+			{
+				label: 'Payment',
+				disabled: (this.deedStatusIndex < 7),
+				command: (event: any) => {
+					this.activeIndex = 7;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
@@ -117,17 +125,17 @@ export class TransactionToolComponent implements OnInit {
 			// },
 			{
 				label: 'Closing Documents',
-				disabled: (this.deedStatusIndex < 7),
+				disabled: (this.deedStatusIndex < 8),
 				command: (event: any) => {
-					this.activeIndex = 7;
+					this.activeIndex = 8;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			},
 			{
 				label: 'Ownership Transfer',
-				disabled: (this.deedStatusIndex < 8),
+				disabled: (this.deedStatusIndex < 9),
 				command: (event: any) => {
-					this.activeIndex = 8;
+					this.activeIndex = 9;
 					this.activeIndex = this.getCurrentStatus(this.activeIndex);
 				}
 			}
@@ -193,23 +201,26 @@ export class TransactionToolComponent implements OnInit {
 			case Status.purchaseAgreementBlockchain: {
 				return 3;
 			}
+			case Status.depositPayment: {
+				return 4;
+			}
 			case Status.titleReport: {
-				return 3;
+				return 4;
 			}
 			case Status.titleReportBlockchain: {
-				return 4;
-			}
-			case Status.Disclosures: {
-				return 4;
-			}
-			case Status.DisclosuresBlockchain: {
 				return 5;
 			}
-			case Status.settlementStatement: {
+			case Status.Disclosures: {
+				return 5;
+			}
+			case Status.DisclosuresBlockchain: {
 				return 6;
 			}
-			case Status.payment: {
+			case Status.settlementStatement: {
 				return 7;
+			}
+			case Status.payment: {
+				return 8;
 			}
 			// case Status.affidavit: {
 			// 	return 7;
@@ -218,7 +229,7 @@ export class TransactionToolComponent implements OnInit {
 			// 	return 8;
 			// }
 			case Status.closingDocuments: {
-				return 8;
+				return 9;
 			}
 			case Status.transferred: {
 				return 8;
