@@ -13,6 +13,7 @@ import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorat
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { IntPhonePrefixComponent } from 'ng4-intl-phone/src/lib';
+import { AgentTypeEnum } from '../../shared/enums/agent-types.enum';
 
 @Component({
 	selector: 'app-contact-agent',
@@ -30,6 +31,7 @@ export class ContactAgentComponent extends ErrorsDecoratableComponent implements
 	public phoneMinLength = 4;
 	public phoneMaxLengthWithPlusSign = 21;
 	public userPhoneCountry: any;
+	public agentTypeEnum = AgentTypeEnum;
 
 	@Input() agents: any[];
 	@Input() propertyId: string;
