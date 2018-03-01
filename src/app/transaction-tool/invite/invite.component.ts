@@ -1,29 +1,29 @@
-import {TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS} from './../../shared/deeds.service';
-import {ConfirmationService} from 'primeng/primeng';
-import {CustomNumberValidator} from './eth-price-validator';
-import {REVERSE_STEPS} from './../workflow/workflow.model';
-import {TransactionToolDocumentService} from './../transaction-tool-document.service';
-import {DeedDocumentType} from './../enums/deed-document-type.enum';
-import {Base64Service} from './../../shared/base64.service';
-import {FormGroup, Validators, FormBuilder, FormControl, ValidationErrors} from '@angular/forms';
-import {UserRoleEnum} from './../enums/user-role.enum';
-import {AuthenticationService, UserData} from './../../authentication/authentication.service';
-import {NotificationsService} from './../../shared/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorsService} from './../../shared/errors/errors.service';
-import {ErrorsDecoratableComponent} from './../../shared/errors/errors.decoratable.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { TRANSACTION_STATUSES, BLOCKCHAIN_TRANSACTION_STEPS } from './../../shared/deeds.service';
+import { ConfirmationService } from 'primeng/primeng';
+import { CustomNumberValidator } from './eth-price-validator';
+import { REVERSE_STEPS } from './../workflow/workflow.model';
+import { TransactionToolDocumentService } from './../transaction-tool-document.service';
+import { DeedDocumentType } from './../enums/deed-document-type.enum';
+import { Base64Service } from './../../shared/base64.service';
+import { FormGroup, Validators, FormBuilder, FormControl, ValidationErrors } from '@angular/forms';
+import { UserRoleEnum } from './../enums/user-role.enum';
+import { AuthenticationService, UserData } from './../../authentication/authentication.service';
+import { NotificationsService } from './../../shared/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorsService } from './../../shared/errors/errors.service';
+import { ErrorsDecoratableComponent } from './../../shared/errors/errors.decoratable.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import {
 	SmartContractAddress,
 	Status,
 	SmartContractConnectionService
 } from './../../smart-contract-connection/smart-contract-connection.service';
-import {Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {DefaultAsyncAPIErrorHandling} from '../../shared/errors/errors.decorators';
-import {DeedsService} from '../../shared/deeds.service';
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DefaultAsyncAPIErrorHandling } from '../../shared/errors/errors.decorators';
+import { DeedsService } from '../../shared/deeds.service';
 
 export enum InvitationStatus {
 	NotInvited = 0,
@@ -70,17 +70,17 @@ export class InviteComponent extends ErrorsDecoratableComponent implements OnIni
 	public processingUpload: boolean;
 
 	constructor(private authService: AuthenticationService,
-				private route: ActivatedRoute,
-				private deedsService: DeedsService,
-				private notificationService: NotificationsService,
-				private confirmationService: ConfirmationService,
-				private formBuilder: FormBuilder,
-				private base64Service: Base64Service,
-				private documentService: TransactionToolDocumentService,
-				private smartContractConnection: SmartContractConnectionService,
-				private router: Router,
-				errorsService: ErrorsService,
-				translateService: TranslateService) {
+		private route: ActivatedRoute,
+		private deedsService: DeedsService,
+		private notificationService: NotificationsService,
+		private confirmationService: ConfirmationService,
+		private formBuilder: FormBuilder,
+		private base64Service: Base64Service,
+		private documentService: TransactionToolDocumentService,
+		private smartContractConnection: SmartContractConnectionService,
+		private router: Router,
+		errorsService: ErrorsService,
+		translateService: TranslateService) {
 		super(errorsService, translateService);
 
 		this.inviteForm = this.formBuilder.group({
