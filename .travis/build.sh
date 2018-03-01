@@ -1,2 +1,4 @@
 #!/bin/bash
-docker ps -a
+if [ "$TRAVIS_BRANCH" == "sprint-luke" ]; then
+  docker ps -a
+fi
