@@ -67,9 +67,8 @@ $reason-gray: #F4F4F4;
 		padding: 35px 0;
 		.ui-steps.progress-indicator {
 			.ui-steps-item {
-				// ToDo: Affidavit step is hide
-				//width: 10%;
-				width: 11.1%;
+				// ToDo: Percentage have to be - 100% / count of transaction tool steps
+				width: 10%;
 				opacity: 1;
 				background: $success-color;
 				height: 5px;
