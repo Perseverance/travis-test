@@ -443,6 +443,10 @@
         "resend-success": "Successfully re-sent the verification email",
         "resend-error": "Could not re-send verification email. Are you sure you used the correct email?"
     },
+    "unsubscribe": {
+        "successfull-unsubscription": "You have successfully unsubscribe from email notifications!",
+        "unsubscribe-error": "Could not unsubscribe your account. Please try again."
+    },
     "notifications": {
         "reserved": "has reserved your listing.",
         "invited": "has invited you to a property deal."

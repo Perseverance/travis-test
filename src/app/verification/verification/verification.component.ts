@@ -85,7 +85,7 @@ export class VerificationComponent extends ErrorsDecoratableComponent implements
 			});
 	}
 
-	@DefaultAsyncAPIErrorHandling('verification.verification-error')
+	@DefaultAsyncAPIErrorHandling('unsubscribe.unsubscribe-error')
 	private async sendActivationCode(code: string, email: string) {
 		try {
 			await this.verificationService.sendVerificationCode(code, email);

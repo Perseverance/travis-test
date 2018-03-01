@@ -1,3 +1,4 @@
+import { PreferencesRoutingModule } from './preferences/preferences-routing.module';
 import { MomentModule } from 'angular2-moment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,6 +21,7 @@ import { InternationalPhoneModule } from 'ng4-intl-phone/src/lib';
 import { AcceptRejectPropertiesComponent } from './accept-reject-properties/accept-reject-properties.component';
 import { PreferencesComponent } from './preferences/preferences.component';
 import { PreferencesService } from './preferences/preferences.service';
+import { UnsubscribeComponent } from './preferences/subscriptions/unsubscribe/unsubscribe.component';
 
 @NgModule({
 	imports: [
@@ -37,7 +39,8 @@ import { PreferencesService } from './preferences/preferences.service';
 		MomentModule,
 		ClipboardModule,
 		InternationalPhoneModule,
-		CheckboxModule
+		CheckboxModule,
+		PreferencesRoutingModule
 	],
 	declarations: [SettingsComponent,
 		GeneralSettingsComponent,
@@ -46,7 +49,8 @@ import { PreferencesService } from './preferences/preferences.service';
 		MyDealsComponent,
 		RefferalLinkComponent,
 		AcceptRejectPropertiesComponent,
-		PreferencesComponent],
+		PreferencesComponent,
+		UnsubscribeComponent],
 	providers: [
 		PreferencesService
 	]
