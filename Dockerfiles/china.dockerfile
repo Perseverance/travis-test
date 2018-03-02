@@ -13,7 +13,7 @@ RUN npm install --only=production
 COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN $(npm bin)/ng build
+RUN $(npm bin)/ng build --aot --environment=china
 
 # Nginx 1.13.9
 FROM nginx:1.13.9 as website-server
