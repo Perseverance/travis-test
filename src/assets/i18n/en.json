@@ -26,7 +26,8 @@
             "share-bonus-received": "You will soon receive your PRO bonus",
             "about": "About",
             "record-to-blockchain": "Record to Blockchain",
-            "copy": "Copy"
+            "copy": "Copy",
+            "token-sale": "Token Sale"
         },
         "placeholder": {
             "yourEmail": "Your Email",
@@ -297,7 +298,8 @@
             "message": "Your message",
             "contact-success": "Your request was sent succesfully!",
             "contact-error": "Could not contact this seller",
-            "not-logged-in-message": "In order to contact the seller you need to be signed in. Please sign in or sign up using the buttons in the header."
+            "not-logged-in-message": "In order to contact the seller you need to be signed in. Please sign in or sign up using the buttons in the header.",
+            "agent-prefix": "Listing agent:"
         },
         "verification-error": "Your account is not activated.",
         "verification-error-message": "Please activate your account in order to reserve this property",
@@ -335,7 +337,8 @@
             "pro-wallet": "My PRO Wallet",
             "my-deals": "My Deals",
             "refferal-link": "Referral Link",
-            "admin": "Admin"
+            "admin": "Admin",
+            "preferences": "Preferences"
         },
         "general-settings": {
             "update-success": "Your profile was updated succesfully!",
@@ -344,6 +347,11 @@
             "upload-new-photo": "Upload new photo",
             "upload-new-photo-success": "Your photo has been updated successfuly",
             "upload-new-photo-fail": "Your photo failed to upload"
+        },
+        "preferences": {
+            "preferences-section": "Subscriptions",
+            "notifications": "Notifications",
+            "newsletter": "Newsletter"
         },
         "password-settings": {
             "current-password": "Current password",

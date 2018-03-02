@@ -6,13 +6,14 @@ export const STEPS = {
 	'property-preview': 0,
 	'invite': 1,
 	'purchase-agreement': 2,
-	'title-report': 3,
-	'disclosures': 4,
-	'settlement-statements': 5,
-	'payment': 6,
+	'deposit-payment': 3,
+	'title-report': 4,
+	'disclosures': 5,
+	'settlement-statements': 6,
+	'payment': 7,
 	// 'affidavit': 7,
-	'closing-documents': 7,
-	'transfer': 8
+	'closing-documents': 8,
+	'transfer': 9
 };
 
 export const REVERSE_STEPS = {
@@ -21,13 +22,14 @@ export const REVERSE_STEPS = {
 	0: 'property-preview',
 	1: 'invite',
 	2: 'purchase-agreement',
-	3: 'title-report',
-	4: 'disclosures',
-	5: 'settlement-statements',
-	6: 'payment',
+	3: 'deposit-payment',
+	4: 'title-report',
+	5: 'disclosures',
+	6: 'settlement-statements',
+	7: 'payment',
 	// 7: 'affidavit',
-	7: 'closing-documents',
-	8: 'transfer'
+	8: 'closing-documents',
+	9: 'transfer'
 };
 
 export type Step = string;

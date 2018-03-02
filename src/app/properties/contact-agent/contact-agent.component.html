@@ -8,7 +8,7 @@
 			<label class="form-check-label" [for]="agent.id">
                 <span class="agent-wrapper">
                     <img class="agent-img" [src]="agent.avatar | imageEnvPrefix | imageSize : 40: 40: true" alt=""> 
-                    <span class="name">{{agent.firstName}} {{agent.lastName}}</span>
+                    <span class="name"><span *ngIf="agent.type == agentTypeEnum.ListingAgent">{{ 'property-details.contact-agent.agent-prefix' | translate}} </span>{{agent.firstName}} {{agent.lastName}}</span>
                     <span class="rating">
                         <p-rating [readonly]="true" [cancel]="false" [ngModel]="agent.rating"
 								  [ngModelOptions]="{standalone: true}" iconOffClass="fa fa-star agent-rating-off"

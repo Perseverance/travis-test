@@ -1,3 +1,4 @@
+import { GoogleAnalyticsEventsService } from './../../shared/google-analytics.service';
 import { CreatePropertyResponse, PropertyImage } from './../properties-responses';
 import { PropertiesService } from './../properties.service';
 import { NotificationsService } from './../../shared/notifications/notifications.service';
@@ -76,7 +77,8 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 		private currencySymbolPipe: CurrencySymbolPipe,
 		private propertiesService: PropertiesService,
 		private base64Service: Base64Service,
-		private router: Router) {
+		private router: Router,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		super(errorsService, translateService);
 
 		this.propertyTypes = [];
@@ -344,6 +346,7 @@ export class ListPropertyComponent extends ErrorsDecoratableComponent implements
 
 	@DefaultAsyncAPIErrorHandling('list-property.error-listing-property')
 	public async onSubmit() {
+		this.googleAnalyticsEventsService.emitEvent('page-list-property', 'list-property');
 		this.isSubmitClicked = true;
 		if (this.selectedImages.length === 0) {
 			// Cannot continue without selected images

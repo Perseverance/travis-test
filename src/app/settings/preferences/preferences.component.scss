@@ -1,0 +1,27 @@
+@import "../../../variables";
+@import "../../../mixins";
+.propy-form {
+    .row-section-holder {
+        h2 {
+            padding-bottom: 20px;
+        }
+    }
+    .checkbox-holder {
+        .notifications-checkbox,
+        .newsletter-checkbox {
+            .ui-chkbox-box {
+                height: 16px;
+                width: 16px;
+                margin-bottom: 5px;
+            }
+            .ui-chkbox-box.ui-state-active {
+                border-color: $blue-dark;
+                background-color: $blue-main;
+            }
+        }
+        label {
+            color: $green-darkest;
+            font-weight: normal;
+        }
+    }
+}
